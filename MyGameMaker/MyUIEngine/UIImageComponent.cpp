@@ -87,7 +87,11 @@ void UIImageComponent::Update(float deltaTime)
 				}
 				else
 				{
-					animIndex++;
+					if (playAnimation) 
+					{
+						animIndex++;
+					}
+					
 				}
 			}
 			else if (animationNum == 1)
@@ -99,7 +103,10 @@ void UIImageComponent::Update(float deltaTime)
 				}
 				else
 				{
-					animIndex++;
+					if (playAnimation)
+					{
+						animIndex++;
+					}
 				}
 			}
 			

@@ -12,7 +12,7 @@ public class UIGameplay : MonoBehaviour
     private PlayerData playerData;
     private UITransform transform;
     private PlayerShooting playerShootingScript;
-    private Audio sound;
+    private AudioSource sound;
 
     public override void Awake()
     {
@@ -24,7 +24,7 @@ public class UIGameplay : MonoBehaviour
         
         playerData = playerController.playerData;
         playerShootingScript = GameObject.Find("Player").GetComponent<PlayerShooting>();
-        sound = GameObject.Find("Player").GetComponent<Audio>();
+        sound = GameObject.Find("Player").GetComponent<AudioSource>();
         transform = GameObject.Find("PlayerLife").GetComponent<UITransform>();
         boltgunIcon = GameObject.Find("BoltgunIcon").GetComponent<UIImage>();
         shotgunIcon = GameObject.Find("ShotgunIcon").GetComponent<UIImage>();
@@ -39,13 +39,11 @@ public class UIGameplay : MonoBehaviour
             playerData.SetHealth(playerData.GetHealth() - 10);
             if (playerData.GetHealth() <= 0)
             {
-                sound.LoadAudio(playerController.DeathAudio);
-                sound.Play();
+                sound.Play(playerController.deathFX);
             }
             else
             {
-                sound.LoadAudio(playerController.HitAudio);
-                sound.Play();
+                sound.Play(playerController.hitFX);
             }
         }
 

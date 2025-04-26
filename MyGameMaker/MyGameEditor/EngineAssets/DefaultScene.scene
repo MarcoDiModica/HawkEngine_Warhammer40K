@@ -1,1626 +1,8 @@
 SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
-  name: MainCamera
-  uuid: 16367339155609384460
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -14
-        - 20
-        - 14
-      localRotation:
-        - -130.0000007620315
-        - 44.999999846574461
-        - 179.99999583712059
-      localScale:
-        - 1
-        - 1
-        - 1
-    CameraComponent:
-      name: CameraComponent
-      enabled: true
-      projection_type: perspective
-      fov: 0.95993108859688125
-      size: 0
-      near_plane: 0.10000000000000001
-      far_plane: 500
-      priority: 1
-    ScriptComponents:
-      Script0:
-        name: PlayerCamera
-  Children: ~
-GameObject1:
-  name: Hormagaunt
-  uuid: 5767896956019985238
-  tag: Melee
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 55.761245727539062
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 2.2000000476837158
-        - 2.2000000476837158
-        - 2.2000000476837158
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 0
-      emissionRate: 1
-      particlesPerSecond: 1
-      minLifetime: 1
-      maxLifetime: 1
-      minSpeed: 0
-      maxSpeed: 0
-      startSize: 2
-      endSize: 2
-      minSize: 1
-      maxSize: 1
-      startColor:
-        - 1
-        - 1
-        - 1
-      endColor:
-        - 1
-        - 1
-        - 1
-      startAlpha: 1
-      endAlpha: 1
-      rotationSpeed: 0
-      gravity:
-        - 0
-        - 0.00100000005
-        - 0
-      shapeParam1: 0.200000003
-      shapeParam2: 1
-      shapeParam3: 20
-      isOneShot: true
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 640
-        - 360
-      useAnimation: true
-      animSpeed: 0.0500000007
-      startRotation: 0
-      randomRotation: false
-      material:
-        billboardType: 0
-        particleType: 9
-        softness: 0
-        useColorGradient: false
-        texturePath: Assets/Textures/EnemyDash.png
-      particleType: 9
-    BoxColliderComponent:
-      size:
-        - 0.699999988
-        - 2
-        - 1.60000002
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -9.80000019
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: EnemyControllerMelee
-  Children:
-    - name: HormagauntMesh
-      uuid: 9271041740969710806
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0.87002267044394355
-            - -0
-            - 0
-          localScale:
-            - 0.0099999997764825821
-            - 0.0099999997764825821
-            - 0.0099999997764825821
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 721985124442083796
-          material:
-            name: Low_BSurfaceMesh_BaseColor
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_HormagauntMesh
-        ScriptComponents:
-          Script0:
-            name: HormagauntAnimation
-      Children:
-        - name: root.x
-          uuid: 3016336426152687729
-          tag: Untagged
-          active: true
-          isStatic: false
-          Components:
-            Transform_Component:
-              name: Transform_Component
-              enabled: true
-              localPosition:
-                - -0.038825549185276031
-                - 98.123992919921875
-                - -35.655178070068359
-              localRotation:
-                - 78.538517487449667
-                - -1.4901979672754635
-                - -0.3711692864044378
-              localScale:
-                - 99.999992370605469
-                - 100.00000762939453
-                - 100.00002288818359
-          Children:
-            - name: spine_01.x
-              uuid: 11651768606231187451
-              tag: Untagged
-              active: true
-              isStatic: false
-              Components:
-                Transform_Component:
-                  name: Transform_Component
-                  enabled: true
-                  localPosition:
-                    - -2.8865089873875149e-08
-                    - 0.37227547168731689
-                    - -4.9952262770602829e-07
-                  localRotation:
-                    - -1.0185757454823541
-                    - -0.0023972455947832249
-                    - 0.00034330429054306276
-                  localScale:
-                    - 0.99999988079071045
-                    - 0.99999982118606567
-                    - 0.9999997615814209
-              Children:
-                - name: spine_02.x
-                  uuid: 13679412700639063047
-                  tag: Untagged
-                  active: true
-                  isStatic: false
-                  Components:
-                    Transform_Component:
-                      name: Transform_Component
-                      enabled: true
-                      localPosition:
-                        - 2.726650016882104e-08
-                        - 0.23583382368087769
-                        - 3.3812324318205356e-07
-                      localRotation:
-                        - -7.2929594701522662
-                        - 0.0020286525788329847
-                        - 0.00085877324250743987
-                      localScale:
-                        - 0.99999994039535522
-                        - 1
-                        - 1
-                  Children:
-                    - name: spine_03.x
-                      uuid: 3642915958329437182
-                      tag: Untagged
-                      active: true
-                      isStatic: false
-                      Components:
-                        Transform_Component:
-                          name: Transform_Component
-                          enabled: true
-                          localPosition:
-                            - -3.1780324150076922e-08
-                            - 0.17099156975746155
-                            - -5.6575572671135888e-07
-                          localRotation:
-                            - -1.8293492309691064
-                            - -8.2385515753077119e-05
-                            - -3.4081205112371621e-08
-                          localScale:
-                            - 1
-                            - 1
-                            - 0.99999982118606567
-                      Children:
-                        - name: c_subneck_1.x
-                          uuid: 6315821564376829120
-                          tag: Untagged
-                          active: true
-                          isStatic: false
-                          Components:
-                            Transform_Component:
-                              name: Transform_Component
-                              enabled: true
-                              localPosition:
-                                - 2.1838481245595176e-08
-                                - 0.15295043587684631
-                                - 0.024443082511425018
-                              localRotation:
-                                - -20.059178519782286
-                                - 0.015278135918514275
-                                - 0.010839662263120043
-                              localScale:
-                                - 1
-                                - 0.99999994039535522
-                                - 1
-                          Children:
-                            - name: neck.x
-                              uuid: 9863075140397944687
-                              tag: Untagged
-                              active: true
-                              isStatic: false
-                              Components:
-                                Transform_Component:
-                                  name: Transform_Component
-                                  enabled: true
-                                  localPosition:
-                                    - -2.1382632553468284e-08
-                                    - 0.11078955233097076
-                                    - -6.7471609099811758e-07
-                                  localRotation:
-                                    - -1.8027149556438049
-                                    - 0.00027177576027550231
-                                    - 0.00036973067450356474
-                                  localScale:
-                                    - 0.99999988079071045
-                                    - 0.99999982118606567
-                                    - 0.99999994039535522
-                              Children:
-                                - name: head.x
-                                  uuid: 552571065607019685
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        - 9.7187271563825561e-09
-                                        - 0.11079040914773941
-                                        - 1.0479973866495129e-07
-                                      localRotation:
-                                        - -28.358868007156786
-                                        - 0.078328214914349728
-                                        - -0.041913136117712031
-                                      localScale:
-                                        - 1
-                                        - 1.0000001192092896
-                                        - 0.99999964237213135
-                                  Children:
-                                    - name: c_eyebrow_full.l
-                                      uuid: 9111880372191209317
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            - 0.11149977147579193
-                                            - 0.25231018662452698
-                                            - 0.2509748637676239
-                                          localRotation:
-                                            - 163.84643031923113
-                                            - 7.8470079405304274
-                                            - -169.70977905556359
-                                          localScale:
-                                            - 1.0000001192092896
-                                            - 0.99999994039535522
-                                            - 1.0000001192092896
-                                      Children:
-                                        - name: c_eyebrow_03.l
-                                          uuid: 15272118599702739886
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - 0.00040878166328184307
-                                                - -0.041006039828062057
-                                                - 0.033513829112052917
-                                              localRotation:
-                                                - 59.600513221992834
-                                                - -87.196775980861275
-                                                - -44.391587065678173
-                                              localScale:
-                                                - 1.0000002384185791
-                                                - 1.0000001192092896
-                                                - 1.0000002384185791
-                                          Children: ~
-                                        - name: c_eyebrow_02.l
-                                          uuid: 3266556706786809377
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - -0.0015726843848824501
-                                                - -0.035325426608324051
-                                                - 0.013326630927622318
-                                              localRotation:
-                                                - -86.227050210537058
-                                                - -86.54043004310158
-                                                - 89.152208199349417
-                                              localScale:
-                                                - 1
-                                                - 0.99999970197677612
-                                                - 1
-                                          Children: ~
-                                        - name: c_eyebrow_01.l
-                                          uuid: 10320181517521533980
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - 0.00088132469682022929
-                                                - -0.038137275725603104
-                                                - -0.011400951072573662
-                                              localRotation:
-                                                - -99.08399025042911
-                                                - -82.348254753489627
-                                                - 86.96874764201344
-                                              localScale:
-                                                - 1.0000002384185791
-                                                - 1.0000002384185791
-                                                - 1
-                                          Children: ~
-                                        - name: c_eyebrow_01_end.l
-                                          uuid: 15307694103796939680
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - 0.011414286680519581
-                                                - -0.04711763933300972
-                                                - -0.038730252534151077
-                                              localRotation:
-                                                - -90.244257505658837
-                                                - -85.644211238170044
-                                                - 89.541856613232198
-                                              localScale:
-                                                - 0.99999994039535522
-                                                - 1
-                                                - 1
-                                          Children: ~
-                                    - name: c_eyebrow_full.r
-                                      uuid: 18026290899503358034
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            - -0.10685215145349503
-                                            - 0.25865882635116577
-                                            - 0.25613600015640259
-                                          localRotation:
-                                            - 159.79772684053586
-                                            - -7.6007658072824222
-                                            - 170.28598697167777
-                                          localScale:
-                                            - 1
-                                            - 1
-                                            - 0.99999994039535522
-                                      Children:
-                                        - name: c_eyebrow_03.r
-                                          uuid: 12456509898175852099
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - 0.00072632287628948689
-                                                - -0.044302619993686676
-                                                - 0.036527849733829498
-                                              localRotation:
-                                                - -0.93995259183561974
-                                                - 89.985008387568939
-                                                - -0.93989652232180487
-                                              localScale:
-                                                - 1.0000001192092896
-                                                - 1
-                                                - 1
-                                          Children: ~
-                                        - name: c_eyebrow_02.r
-                                          uuid: 10568753601115631447
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - -0.00034081406192854047
-                                                - -0.044302918016910553
-                                                - 0.011864977888762951
-                                              localRotation:
-                                                - -0.22746235535354695
-                                                - 90
-                                                - -0.22774536285716693
-                                              localScale:
-                                                - 1
-                                                - 1
-                                                - 1.0000001192092896
-                                          Children: ~
-                                        - name: c_eyebrow_01.r
-                                          uuid: 3991022289959812007
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - -0.0014053711201995611
-                                                - -0.044301986694335938
-                                                - -0.01274406909942627
-                                              localRotation:
-                                                - -0.16766409497629758
-                                                - 89.963494828505532
-                                                - -0.16805240261776344
-                                              localScale:
-                                                - 0.9999997615814209
-                                                - 0.99999982118606567
-                                                - 0.99999988079071045
-                                          Children: ~
-                                        - name: c_eyebrow_01_end.r
-                                          uuid: 1383552936904876452
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - -0.0024892599321901798
-                                                - -0.044301692396402359
-                                                - -0.037798609584569931
-                                              localRotation:
-                                                - -0.3274225980275981
-                                                - 90
-                                                - -0.32727161415579825
-                                              localScale:
-                                                - 0.99999988079071045
-                                                - 0.99999994039535522
-                                                - 0.99999988079071045
-                                          Children: ~
-                                    - name: c_jawbone.x
-                                      uuid: 15382603474372393734
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            - -1.69771908531402e-06
-                                            - 0.094657547771930695
-                                            - 0.037781178951263428
-                                          localRotation:
-                                            - 108.12367394635216
-                                            - 0.82368671300706142
-                                            - 0.3270850519224171
-                                          localScale:
-                                            - 0.99999994039535522
-                                            - 0.99999982118606567
-                                            - 0.99999982118606567
-                                      Children:
-                                        - name: c_lips_bot.l
-                                          uuid: 982831247431057376
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - 0.080270729959011078
-                                                - 0.21143355965614319
-                                                - 0.0062248329631984234
-                                              localRotation:
-                                                - -89.999834668109827
-                                                - 25.205319403829012
-                                                - 90.000168191875389
-                                              localScale:
-                                                - 1.0000001192092896
-                                                - 1
-                                                - 1
-                                          Children: ~
-                                        - name: c_lips_bot.r
-                                          uuid: 10863228264266524246
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - -0.080267190933227539
-                                                - 0.2114337831735611
-                                                - 0.0062247877940535545
-                                              localRotation:
-                                                - -90.000046104257933
-                                                - -25.205315114066781
-                                                - -90.000091175031741
-                                              localScale:
-                                                - 1
-                                                - 1
-                                                - 0.99999988079071045
-                                          Children: ~
-                                        - name: c_lips_bot.x
-                                          uuid: 2173935893361685323
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - 1.6571127616771264e-06
-                                                - 0.32400625944137573
-                                                - -0.027743404731154442
-                                              localRotation:
-                                                - -89.99985664342222
-                                                - 25.204393289002791
-                                                - 90.000109036578905
-                                              localScale:
-                                                - 1
-                                                - 1.0000003576278687
-                                                - 1.0000004768371582
-                                          Children: ~
-                                        - name: tong_01.x
-                                          uuid: 14424027456594848793
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - -0.00049615040188655257
-                                                - -0.027589121833443642
-                                                - 0.08349127322435379
-                                              localRotation:
-                                                - -138.81510832455959
-                                                - -0.10737552046333897
-                                                - 179.84710438948554
-                                              localScale:
-                                                - 0.76172041893005371
-                                                - 0.76172053813934326
-                                                - 0.76172047853469849
-                                          Children:
-                                            - name: tong_02.x
-                                              uuid: 17193672702906391788
-                                              tag: Untagged
-                                              active: true
-                                              isStatic: false
-                                              Components:
-                                                Transform_Component:
-                                                  name: Transform_Component
-                                                  enabled: true
-                                                  localPosition:
-                                                    - 5.2186641674722978e-09
-                                                    - 0.11529746651649475
-                                                    - -1.6785321577117429e-08
-                                                  localRotation:
-                                                    - -18.575021614695316
-                                                    - -0.11693920571424678
-                                                    - -0.065369504525780844
-                                                  localScale:
-                                                    - 0.99999994039535522
-                                                    - 0.99999970197677612
-                                                    - 1
-                                              Children:
-                                                - name: tong_03.x
-                                                  uuid: 6277160016747007499
-                                                  tag: Untagged
-                                                  active: true
-                                                  isStatic: false
-                                                  Components:
-                                                    Transform_Component:
-                                                      name: Transform_Component
-                                                      enabled: true
-                                                      localPosition:
-                                                        - -0.012752843089401722
-                                                        - 0.2479158341884613
-                                                        - 0.0088284853845834732
-                                                      localRotation:
-                                                        - -21.814718408641863
-                                                        - -5.2868700128916526
-                                                        - -3.1176084705919531
-                                                      localScale:
-                                                        - 0.99999982118606567
-                                                        - 1
-                                                        - 1.0000001192092896
-                                                  Children: ~
-                                    - name: c_lips_top.x
-                                      uuid: 16438997735290410956
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            - 0.00039283354999497533
-                                            - 0.15781445801258087
-                                            - 0.34548544883728027
-                                          localRotation:
-                                            - 0.25178649161316424
-                                            - -90
-                                            - -0.25178645387928389
-                                          localScale:
-                                            - 0.99999994039535522
-                                            - 1.0000001192092896
-                                            - 0.99999994039535522
-                                      Children: ~
-                                    - name: c_lips_top.l
-                                      uuid: 8774510078019211165
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            - 0.091619901359081268
-                                            - 0.12279949337244034
-                                            - 0.22661945223808289
-                                          localRotation:
-                                            - 2.9273485953515315
-                                            - -90
-                                            - -2.9273473881302112
-                                          localScale:
-                                            - 1
-                                            - 0.99999988079071045
-                                            - 1
-                                      Children: ~
-                                    - name: c_lips_top.r
-                                      uuid: 2023462180916133671
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            - -0.090662896633148193
-                                            - 0.11536438763141632
-                                            - 0.22835783660411835
-                                          localRotation:
-                                            - 1.5662907341367587
-                                            - 89.985008858047493
-                                            - 1.566291639829346
-                                          localScale:
-                                            - 1
-                                            - 0.99999988079071045
-                                            - 0.99999994039535522
-                                      Children: ~
-                                    - name: c_lips_smile.l
-                                      uuid: 14926428340209036421
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            - 0.10551141947507858
-                                            - 0.082733757793903351
-                                            - 0.077473632991313934
-                                          localRotation:
-                                            - 2.9273485953515315
-                                            - -90
-                                            - -2.9273473881302112
-                                          localScale:
-                                            - 1
-                                            - 1
-                                            - 1
-                                      Children:
-                                        - name: c_lips_corner_mini.l
-                                          uuid: 10613295648343465399
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - -1.8905879528574587e-08
-                                                - 0.0023590426426380873
-                                                - 0.00041135479114018381
-                                              localRotation:
-                                                - 5.2071776313381348e-09
-                                                - -1.1785654305939946e-06
-                                                - -0.0010525658559518869
-                                              localScale:
-                                                - 0.99999994039535522
-                                                - 1
-                                                - 1
-                                          Children: ~
-                                    - name: c_lips_smile.r
-                                      uuid: 18113485807583658136
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            - -0.1055113822221756
-                                            - 0.082733191549777985
-                                            - 0.07747272402048111
-                                          localRotation:
-                                            - 1.5662916397488025
-                                            - 89.985008858047493
-                                            - 1.5662907342173022
-                                          localScale:
-                                            - 1
-                                            - 1
-                                            - 1
-                                      Children:
-                                        - name: c_lips_corner_mini.r
-                                          uuid: 3711814384962625132
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                - -6.3568160157956299e-07
-                                                - 0.0023590212222188711
-                                                - 0.00041137402877211571
-                                              localRotation:
-                                                - 7.5604149639046996e-09
-                                                - 1.2922433188651098e-06
-                                                - 0.0010490782239578073
-                                              localScale:
-                                                - 1
-                                                - 1
-                                                - 1
-                                          Children: ~
-                        - name: shoulder.l
-                          uuid: 16967949486199060959
-                          tag: Untagged
-                          active: true
-                          isStatic: false
-                          Components:
-                            Transform_Component:
-                              name: Transform_Component
-                              enabled: true
-                              localPosition:
-                                - 0.049841500818729401
-                                - 0.032837431877851486
-                                - -0.058782801032066345
-                              localRotation:
-                                - -163.0113829211613
-                                - -18.612213391281621
-                                - 87.996241936629545
-                              localScale:
-                                - 0.99999994039535522
-                                - 0.99999970197677612
-                                - 0.99999988079071045
-                          Children:
-                            - name: arm_stretch.l
-                              uuid: 7639964555749317368
-                              tag: Untagged
-                              active: true
-                              isStatic: false
-                              Components:
-                                Transform_Component:
-                                  name: Transform_Component
-                                  enabled: true
-                                  localPosition:
-                                    - 9.6395297077833675e-07
-                                    - 0.16584868729114532
-                                    - 1.2797228521321813e-07
-                                  localRotation:
-                                    - -84.361336673205059
-                                    - -23.782785334682657
-                                    - -12.586329902910284
-                                  localScale:
-                                    - 0.9999997615814209
-                                    - 0.99999988079071045
-                                    - 0.99999994039535522
-                              Children:
-                                - name: forearm_stretch.l
-                                  uuid: 10433476365205737239
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        - 2.2734582216799026e-08
-                                        - 0.55363136529922485
-                                        - 1.0461934607519652e-07
-                                      localRotation:
-                                        - 1.0427847276908486e-05
-                                        - -4.6423010535120322e-06
-                                        - -116.21823739380174
-                                      localScale:
-                                        - 1
-                                        - 1
-                                        - 1
-                                  Children:
-                                    - name: hand.l
-                                      uuid: 10593423932674180219
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            - 7.1578836013941327e-07
-                                            - 0.30724146962165833
-                                            - -7.9809218789250735e-08
-                                          localRotation:
-                                            - 19.543734790751337
-                                            - 14.197215007661752
-                                            - 116.04253604563931
-                                          localScale:
-                                            - 0.9999997615814209
-                                            - 1.0000001192092896
-                                            - 0.99999982118606567
-                                      Children: ~
-                        - name: shoulder.r
-                          uuid: 2893901582066415501
-                          tag: Untagged
-                          active: true
-                          isStatic: false
-                          Components:
-                            Transform_Component:
-                              name: Transform_Component
-                              enabled: true
-                              localPosition:
-                                - -0.049841508269309998
-                                - 0.032838203012943268
-                                - -0.058782558888196945
-                              localRotation:
-                                - -163.01138424474354
-                                - 18.612225294096227
-                                - -87.996235677101737
-                              localScale:
-                                - 0.99999994039535522
-                                - 1.0000001192092896
-                                - 0.99999964237213135
-                          Children:
-                            - name: arm_stretch.r
-                              uuid: 15797572594633149296
-                              tag: Untagged
-                              active: true
-                              isStatic: false
-                              Components:
-                                Transform_Component:
-                                  name: Transform_Component
-                                  enabled: true
-                                  localPosition:
-                                    - 4.3853823683548399e-08
-                                    - 0.16584868729114532
-                                    - -3.7735142655037635e-07
-                                  localRotation:
-                                    - -84.21797268592438
-                                    - 31.349036465365341
-                                    - 13.565587921615974
-                                  localScale:
-                                    - 0.99999964237213135
-                                    - 0.99999994039535522
-                                    - 0.99999994039535522
-                              Children:
-                                - name: forearm_stretch.r
-                                  uuid: 3478334983846811767
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        - 3.6481836218626995e-08
-                                        - 0.55363094806671143
-                                        - 1.4732384556737088e-07
-                                      localRotation:
-                                        - -3.1636563233241497e-06
-                                        - -2.5322175897993134e-05
-                                        - 112.99649721383447
-                                      localScale:
-                                        - 1.0000003576278687
-                                        - 0.99999970197677612
-                                        - 0.99999994039535522
-                                  Children:
-                                    - name: hand.r
-                                      uuid: 7323077397775621300
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            - -8.5575101138601894e-07
-                                            - 0.30724158883094788
-                                            - 2.644586416522543e-08
-                                          localRotation:
-                                            - 15.900714202591136
-                                            - -9.0168299651894248
-                                            - -115.77416603428482
-                                          localScale:
-                                            - 1.0000003576278687
-                                            - 1.0000003576278687
-                                            - 0.99999988079071045
-                                      Children: ~
-                    - name: shoulder_dupli_001.l
-                      uuid: 842599948038244103
-                      tag: Untagged
-                      active: true
-                      isStatic: false
-                      Components:
-                        Transform_Component:
-                          name: Transform_Component
-                          enabled: true
-                          localPosition:
-                            - 0.049171373248100281
-                            - 0.01862618699669838
-                            - -0.082906022667884827
-                          localRotation:
-                            - 164.62097405518151
-                            - -15.339930477341046
-                            - 85.577791737725406
-                          localScale:
-                            - 1.0000002384185791
-                            - 1
-                            - 1.0000001192092896
-                      Children:
-                        - name: arm_stretch_dupli_001.l
-                          uuid: 6006737971429465387
-                          tag: Untagged
-                          active: true
-                          isStatic: false
-                          Components:
-                            Transform_Component:
-                              name: Transform_Component
-                              enabled: true
-                              localPosition:
-                                - -3.2146616035788611e-08
-                                - 0.1281682550907135
-                                - 2.5430338723708701e-07
-                              localRotation:
-                                - -50.674723421372391
-                                - 5.6597071642626444
-                                - -21.540316450639075
-                              localScale:
-                                - 0.99999982118606567
-                                - 0.99999982118606567
-                                - 0.99999988079071045
-                          Children:
-                            - name: forearm_stretch_dupli_001.l
-                              uuid: 3745696280303631993
-                              tag: Untagged
-                              active: true
-                              isStatic: false
-                              Components:
-                                Transform_Component:
-                                  name: Transform_Component
-                                  enabled: true
-                                  localPosition:
-                                    - 1.6553993020806956e-07
-                                    - 0.22907191514968872
-                                    - -1.3441487034526745e-08
-                                  localRotation:
-                                    - 1.4036492579314801e-05
-                                    - -1.59635919926785e-05
-                                    - -71.942110027517785
-                                  localScale:
-                                    - 0.99999988079071045
-                                    - 0.99999982118606567
-                                    - 1
-                              Children:
-                                - name: hand_dupli_001.l
-                                  uuid: 76289371890803000
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        - 5.8733579777481282e-08
-                                        - 0.20310351252555847
-                                        - 8.668020967661505e-08
-                                      localRotation:
-                                        - -23.35090326349793
-                                        - -12.772777496054443
-                                        - 79.901620448518671
-                                      localScale:
-                                        - 0.99999988079071045
-                                        - 0.99999982118606567
-                                        - 1.0000001192092896
-                                  Children: ~
-                    - name: shoulder_dupli_001.r
-                      uuid: 7651591085020556520
-                      tag: Untagged
-                      active: true
-                      isStatic: false
-                      Components:
-                        Transform_Component:
-                          name: Transform_Component
-                          enabled: true
-                          localPosition:
-                            - -0.049171153455972672
-                            - 0.018626967445015907
-                            - -0.082906171679496765
-                          localRotation:
-                            - 164.62113688813608
-                            - 15.339922375619196
-                            - -85.577730177397754
-                          localScale:
-                            - 1
-                            - 0.9999997615814209
-                            - 0.99999994039535522
-                      Children:
-                        - name: arm_stretch_dupli_001.r
-                          uuid: 13535031753840885460
-                          tag: Untagged
-                          active: true
-                          isStatic: false
-                          Components:
-                            Transform_Component:
-                              name: Transform_Component
-                              enabled: true
-                              localPosition:
-                                - 3.6173631201563694e-07
-                                - 0.1281685084104538
-                                - 5.3057195970040993e-08
-                              localRotation:
-                                - -53.165990243032653
-                                - -30.705983956749961
-                                - 9.7493025575513688
-                              localScale:
-                                - 0.99999982118606567
-                                - 0.99999850988388062
-                                - 1
-                          Children:
-                            - name: forearm_stretch_dupli_001.r
-                              uuid: 1280457913144264977
-                              tag: Untagged
-                              active: true
-                              isStatic: false
-                              Components:
-                                Transform_Component:
-                                  name: Transform_Component
-                                  enabled: true
-                                  localPosition:
-                                    - -8.5080154121897067e-07
-                                    - 0.2290719747543335
-                                    - 2.5881860210574814e-07
-                                  localRotation:
-                                    - -6.2434617097482066e-06
-                                    - -1.4161693485556732e-06
-                                    - 95.691946459740691
-                                  localScale:
-                                    - 1.0000015497207642
-                                    - 1.0000001192092896
-                                    - 1.0000002384185791
-                              Children:
-                                - name: hand_dupli_001.r
-                                  uuid: 2393955189695540117
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        - 2.4830131906128372e-07
-                                        - 0.2031027227640152
-                                        - -2.3926955350361823e-07
-                                      localRotation:
-                                        - -14.14563820039935
-                                        - 21.593232144069685
-                                        - -77.933452800974763
-                                      localScale:
-                                        - 1
-                                        - 1.0000002384185791
-                                        - 1.0000001192092896
-                                  Children: ~
-            - name: c_tail_00.x
-              uuid: 12781070764245345512
-              tag: Untagged
-              active: true
-              isStatic: false
-              Components:
-                Transform_Component:
-                  name: Transform_Component
-                  enabled: true
-                  localPosition:
-                    - -4.6904048645046714e-08
-                    - -0.0062130060978233814
-                    - 7.4742310971487314e-05
-                  localRotation:
-                    - -175.86021354225525
-                    - -0.40119995392962216
-                    - 8.2018740358416515
-                  localScale:
-                    - 0.99999988079071045
-                    - 1.0000002384185791
-                    - 1
-              Children:
-                - name: c_tail_01.x
-                  uuid: 12183336206360317099
-                  tag: Untagged
-                  active: true
-                  isStatic: false
-                  Components:
-                    Transform_Component:
-                      name: Transform_Component
-                      enabled: true
-                      localPosition:
-                        - 4.273688247735663e-08
-                        - 0.40412488579750061
-                        - -1.7624870451982133e-07
-                      localRotation:
-                        - 1.2157470992494028
-                        - -0.024858328742198847
-                        - -8.2113745642102796
-                      localScale:
-                        - 0.99999994039535522
-                        - 0.99999988079071045
-                        - 0.99999982118606567
-                  Children:
-                    - name: c_tail_02.x
-                      uuid: 4411318667345400815
-                      tag: Untagged
-                      active: true
-                      isStatic: false
-                      Components:
-                        Transform_Component:
-                          name: Transform_Component
-                          enabled: true
-                          localPosition:
-                            - 1.4020945116044459e-07
-                            - 0.33925342559814453
-                            - 2.121265367804881e-07
-                          localRotation:
-                            - 0.67656580126531729
-                            - -0.10266207812930495
-                            - -8.2107754827910675
-                          localScale:
-                            - 0.99999994039535522
-                            - 1
-                            - 0.99999988079071045
-                      Children:
-                        - name: c_tail_03.x
-                          uuid: 6512325201828356694
-                          tag: Untagged
-                          active: true
-                          isStatic: false
-                          Components:
-                            Transform_Component:
-                              name: Transform_Component
-                              enabled: true
-                              localPosition:
-                                - -1.0334022704228119e-07
-                                - 0.22678981721401215
-                                - 1.725664020568729e-07
-                              localRotation:
-                                - -4.4432784367714779
-                                - -0.83997377362585057
-                                - -8.1686268145494552
-                              localScale:
-                                - 0.99999994039535522
-                                - 0.99999994039535522
-                                - 0.9999997615814209
-                          Children:
-                            - name: c_tail_04.x
-                              uuid: 7355734391349219062
-                              tag: Untagged
-                              active: true
-                              isStatic: false
-                              Components:
-                                Transform_Component:
-                                  name: Transform_Component
-                                  enabled: true
-                                  localPosition:
-                                    - 6.554597575814114e-08
-                                    - 0.25114473700523376
-                                    - -1.2983835517843545e-07
-                                  localRotation:
-                                    - 1.5508206154115169
-                                    - 0.023492837049904448
-                                    - -8.2113679383308611
-                                  localScale:
-                                    - 0.99999970197677612
-                                    - 0.99999958276748657
-                                    - 0.9999997615814209
-                              Children:
-                                - name: c_tail_05.x
-                                  uuid: 16914993200286987788
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        - -8.9017055415752111e-07
-                                        - 0.23845463991165161
-                                        - 2.0541001788387803e-07
-                                      localRotation:
-                                        - 2.1580004411697953
-                                        - 0.11111036648143659
-                                        - -8.2106587127075805
-                                      localScale:
-                                        - 0.9999997615814209
-                                        - 0.9999997615814209
-                                        - 0.99999970197677612
-                                  Children: ~
-            - name: thigh_b_str.l
-              uuid: 12198060436415107322
-              tag: Untagged
-              active: true
-              isStatic: false
-              Components:
-                Transform_Component:
-                  name: Transform_Component
-                  enabled: true
-                  localPosition:
-                    - 0.038180597126483917
-                    - 0.16527433693408966
-                    - 0.042036421597003937
-                  localRotation:
-                    - -157.36959115658607
-                    - 43.386908511073287
-                    - 130.10794601457857
-                  localScale:
-                    - 1.0000001192092896
-                    - 1.0000002384185791
-                    - 1.0000001192092896
-              Children:
-                - name: thigh_stretch.l
-                  uuid: 3718966529534611794
-                  tag: Untagged
-                  active: true
-                  isStatic: false
-                  Components:
-                    Transform_Component:
-                      name: Transform_Component
-                      enabled: true
-                      localPosition:
-                        - -1.812462215866617e-07
-                        - 0.14963676035404205
-                        - -3.9952183783498185e-09
-                      localRotation:
-                        - -68.237302147051977
-                        - 40.433926230905648
-                        - 14.516268194712517
-                      localScale:
-                        - 0.9999995231628418
-                        - 1.0000008344650269
-                        - 0.9999997615814209
-                  Children:
-                    - name: leg_stretch.l
-                      uuid: 2282414742102880874
-                      tag: Untagged
-                      active: true
-                      isStatic: false
-                      Components:
-                        Transform_Component:
-                          name: Transform_Component
-                          enabled: true
-                          localPosition:
-                            - 5.0693921593847335e-07
-                            - 0.3744102418422699
-                            - 1.3323230518835771e-07
-                          localRotation:
-                            - -13.765538713946652
-                            - 8.9131544363727606
-                            - 67.220749754286217
-                          localScale:
-                            - 0.9999992847442627
-                            - 0.9999995231628418
-                            - 1.0000002384185791
-                      Children:
-                        - name: foot.l
-                          uuid: 16036580423552505462
-                          tag: Untagged
-                          active: true
-                          isStatic: false
-                          Components:
-                            Transform_Component:
-                              name: Transform_Component
-                              enabled: true
-                              localPosition:
-                                - -4.8545416575507261e-07
-                                - 0.35727420449256897
-                                - -1.0071105549513959e-07
-                              localRotation:
-                                - -145.09652371164134
-                                - 81.170729641413473
-                                - 143.99091747458527
-                              localScale:
-                                - 0.99999988079071045
-                                - 1.0000003576278687
-                                - 1.0000003576278687
-                          Children:
-                            - name: toes_01.l
-                              uuid: 5392829294566403897
-                              tag: Untagged
-                              active: true
-                              isStatic: false
-                              Components:
-                                Transform_Component:
-                                  name: Transform_Component
-                                  enabled: true
-                                  localPosition:
-                                    - -7.018189052132584e-08
-                                    - 0.39389285445213318
-                                    - 3.7243458450575417e-07
-                                  localRotation:
-                                    - 136.74089292247027
-                                    - 15.063493241692083
-                                    - 154.27871604330014
-                                  localScale:
-                                    - 1
-                                    - 0.99999988079071045
-                                    - 0.99999994039535522
-                              Children: ~
-            - name: thigh_b_str.r
-              uuid: 18131935953198058591
-              tag: Untagged
-              active: true
-              isStatic: false
-              Components:
-                Transform_Component:
-                  name: Transform_Component
-                  enabled: true
-                  localPosition:
-                    - -0.038186848163604736
-                    - 0.16527515649795532
-                    - 0.042031083256006241
-                  localRotation:
-                    - -160.95752827381773
-                    - -60.881732268144276
-                    - -110.34011117183869
-                  localScale:
-                    - 0.9999997615814209
-                    - 0.99999982118606567
-                    - 1
-              Children:
-                - name: thigh_stretch.r
-                  uuid: 9057831147043709298
-                  tag: Untagged
-                  active: true
-                  isStatic: false
-                  Components:
-                    Transform_Component:
-                      name: Transform_Component
-                      enabled: true
-                      localPosition:
-                        - 4.4487453010333411e-07
-                        - 0.14963670074939728
-                        - 1.1149749070682446e-06
-                      localRotation:
-                        - -71.182780267896163
-                        - -28.973462906828349
-                        - -9.3741108046632338
-                      localScale:
-                        - 0.99999988079071045
-                        - 1.0000064373016357
-                        - 0.99999994039535522
-                  Children:
-                    - name: leg_stretch.r
-                      uuid: 15420529250513264772
-                      tag: Untagged
-                      active: true
-                      isStatic: false
-                      Components:
-                        Transform_Component:
-                          name: Transform_Component
-                          enabled: true
-                          localPosition:
-                            - -6.7906302092524129e-07
-                            - 0.37441086769104004
-                            - -1.9908975446014665e-07
-                          localRotation:
-                            - 1.526383623663788
-                            - 2.4386585870095829
-                            - -90.611356809876753
-                          localScale:
-                            - 0.99999350309371948
-                            - 1.0000002384185791
-                            - 0.99999982118606567
-                      Children:
-                        - name: foot.r
-                          uuid: 12922650962521034139
-                          tag: Untagged
-                          active: true
-                          isStatic: false
-                          Components:
-                            Transform_Component:
-                              name: Transform_Component
-                              enabled: true
-                              localPosition:
-                                - 5.6041966445263824e-07
-                                - 0.35727405548095703
-                                - 1.9842791232349555e-07
-                              localRotation:
-                                - -123.55691630270552
-                                - -69.012627180621649
-                                - -179.90090331346258
-                              localScale:
-                                - 1
-                                - 1.0000001192092896
-                                - 1.0000003576278687
-                          Children:
-                            - name: toes_01.r
-                              uuid: 573983449009779087
-                              tag: Untagged
-                              active: true
-                              isStatic: false
-                              Components:
-                                Transform_Component:
-                                  name: Transform_Component
-                                  enabled: true
-                                  localPosition:
-                                    - 6.8922311413643911e-08
-                                    - 0.39389291405677795
-                                    - 7.0286819209286477e-07
-                                  localRotation:
-                                    - 121.93638617523972
-                                    - -4.8584503849061447
-                                    - -168.15532311643102
-                                  localScale:
-                                    - 1.0000002384185791
-                                    - 1.0000001192092896
-                                    - 1.0000002384185791
-                              Children: ~
-GameObject2:
-  name: Floor
-  uuid: 17620420122764171135
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - -1
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 500
-        - 1
-        - 500
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 0
-      material:
-        name: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-  Children: ~
-GameObject3:
   name: Player
-  uuid: 4989120157862110611
+  uuid: 11042721965890067235
   tag: Player
   active: true
   isStatic: false
@@ -1640,15 +22,6 @@ GameObject3:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -1699,6 +72,9 @@ GameObject3:
         useColorGradient: false
         texturePath: Assets/Textures/BloodSplash_decals1_Yiwei.png
       particleType: 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -1760,7 +136,7 @@ GameObject3:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 9939419991618057095
+      uuid: 3064755049466550749
       tag: Untagged
       active: true
       isStatic: false
@@ -1773,7 +149,7 @@ GameObject3:
             - 0
             - 0
           localRotation:
-            - -90
+            - -90.000002504478161
             - 0
             - 0
           localScale:
@@ -1797,13 +173,14 @@ GameObject3:
         SkeletalAnimationComponent:
           name: SkeletalAnimationComponent
           enabled: true
+          bone_names: ~
           animation_file: skeletal_anim_playerMesh
         ScriptComponents:
           Script0:
             name: PlayerAnimations
       Children:
         - name: ROOT
-          uuid: 16301620877195900872
+          uuid: 2243782158230499641
           tag: Untagged
           active: true
           isStatic: false
@@ -1813,19 +190,19 @@ GameObject3:
               enabled: true
               localPosition:
                 - 0
-                - 0.2239999920129776
-                - 2.2520003318786621
+                - 0.22399999788304087
+                - 2.2520003416700161
               localRotation:
-                - 102.81312736062429
-                - -0.27010425372295038
-                - 0.5130569890226776
+                - 102.81312963865112
+                - -0.27010418796227681
+                - 0.51305697438447684
               localScale:
-                - 1
-                - 1
-                - 1
+                - 1.0000000025867122
+                - 1.0000000283830897
+                - 0.99999998914193367
           Children:
             - name: HIP.L
-              uuid: 7383424537281435839
+              uuid: 9557855929158236839
               tag: Untagged
               active: true
               isStatic: false
@@ -1834,20 +211,20 @@ GameObject3:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -1.2402799620669924e-10
-                    - 2.6553018983577203e-07
-                    - 9.2420677333393542e-08
+                    - -1.2402799100252881e-10
+                    - 2.6553019782937781e-07
+                    - 9.2420678332594264e-08
                   localRotation:
-                    - -179.99993460765418
-                    - -80.537726423620256
-                    - 89.999982582441405
+                    - -179.99995893173548
+                    - -80.537700822213395
+                    - 90.000000220786831
                   localScale:
-                    - 0.99999988079071045
-                    - 0.99999988079071045
-                    - 0.99999994039535522
+                    - 0.9999998843390111
+                    - 0.9999998835355759
+                    - 0.99999991970219648
               Children:
                 - name: THIGH.L
-                  uuid: 15534112622158327783
+                  uuid: 2143584264911578785
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -1857,19 +234,19 @@ GameObject3:
                       enabled: true
                       localPosition:
                         - 1.0384600956925283e-09
-                        - 0.29999998211860657
-                        - 3.0407264262066747e-07
+                        - 0.29999997144957652
+                        - 3.0407263640341853e-07
                       localRotation:
-                        - -78.151043458209315
-                        - -15.877638301666773
-                        - 0.029303792773112125
+                        - -78.151043269578224
+                        - -15.877641037566177
+                        - 0.029304225232500078
                       localScale:
-                        - 0.99999964237213135
-                        - 1
-                        - 1.0000005960464478
+                        - 0.99999964147702858
+                        - 1.000000049589066
+                        - 1.0000005650391619
                   Children:
                     - name: TIBIA.L
-                      uuid: 14302608117120410028
+                      uuid: 11922702089784222111
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -1878,20 +255,20 @@ GameObject3:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 1.2972265039934427e-07
-                            - 1.0392307043075562
-                            - -1.0254206728177451e-07
+                            - 1.2972265545085906e-07
+                            - 1.0392307101441991
+                            - -1.0254206728177452e-07
                           localRotation:
-                            - -5.5709768966030548
-                            - 2.6664243935420453
-                            - 36.915091944506564
+                            - -5.5709769484902809
+                            - 2.6664247918877235
+                            - 36.915094049936236
                           localScale:
-                            - 1.0000002384185791
-                            - 0.99999940395355225
-                            - 0.99999958276748657
+                            - 1.0000001950069619
+                            - 0.99999941198670994
+                            - 0.99999956912778309
                       Children:
                         - name: FOOT.L
-                          uuid: 14027731126871757200
+                          uuid: 16071203311563863971
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -1900,20 +277,20 @@ GameObject3:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 2.2999811832846717e-08
-                                - 1.1680755615234375
-                                - -6.7573694195743883e-08
+                                - 2.2999812443469381e-08
+                                - 1.1680755842613304
+                                - -6.7573691309164019e-08
                               localRotation:
-                                - -3.8093042221061864
-                                - -2.9687785646549814
-                                - -105.7540041553371
+                                - -3.8093042504150989
+                                - -2.9687782246809244
+                                - -105.75400432180109
                               localScale:
-                                - 1.0000002384185791
-                                - 1.0000001192092896
-                                - 1.0000002384185791
+                                - 1.0000002810268347
+                                - 1.0000001577071242
+                                - 1.0000002527375222
                           Children:
                             - name: TOE.L
-                              uuid: 2064123071345824333
+                              uuid: 17161491453201980096
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -1922,20 +299,20 @@ GameObject3:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - -3.608304055546796e-08
-                                    - 0.39319229125976562
-                                    - 2.6693568244695598e-08
+                                    - -3.6083040361178931e-08
+                                    - 0.39319228265089035
+                                    - 2.6693567578561783e-08
                                   localRotation:
-                                    - 0.28259257038511254
-                                    - 0.017273979221657156
-                                    - -7.3750867248683738
+                                    - 0.28259258580378022
+                                    - 0.01727397755145741
+                                    - -7.3750864784291963
                                   localScale:
-                                    - 0.99999988079071045
-                                    - 0.99999988079071045
-                                    - 1
+                                    - 0.99999988272531293
+                                    - 0.99999986400657526
+                                    - 0.99999998761685238
                               Children: ~
             - name: SPINE
-              uuid: 2615500441489863214
+              uuid: 13007568392321036929
               tag: Untagged
               active: true
               isStatic: false
@@ -1944,20 +321,20 @@ GameObject3:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - 4.3751463563168613e-10
-                    - 0.60827648639678955
-                    - -2.0992075633330387e-08
+                    - 4.3751464430530351e-10
+                    - 0.60827648306856519
+                    - -2.099207574435269e-08
                   localRotation:
-                    - -3.9215701005733474
-                    - -1.0997592050451166e-07
-                    - -2.3444357458935186e-09
+                    - -3.9215702057732993
+                    - -1.0997591634665576e-07
+                    - -2.3444361791966519e-09
                   localScale:
-                    - 1
-                    - 1.0000001192092896
-                    - 1.0000002384185791
+                    - 0.9999999999811261
+                    - 1.0000001417932896
+                    - 1.000000238710965
               Children:
                 - name: SHOULDER.L
-                  uuid: 9344752076336447861
+                  uuid: 3883258348299516751
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -1966,20 +343,20 @@ GameObject3:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 2.2409271660528418e-10
-                        - 0.90553861856460571
+                        - 2.2409271834000766e-10
+                        - 0.90553860453845303
                         - -7.775822652433817e-09
                       localRotation:
-                        - -5.4996159142990821
-                        - -15.388341244011819
-                        - -110.08965328340379
+                        - -5.499616975485992
+                        - -15.388341607249412
+                        - -110.08965592930248
                       localScale:
-                        - 0.99999982118606567
-                        - 1.0000002384185791
-                        - 0.99999994039535522
+                        - 0.99999984230635808
+                        - 1.0000002610983489
+                        - 0.99999991531827592
                   Children:
                     - name: ARM.L
-                      uuid: 283937171027404949
+                      uuid: 11296511547867148113
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -1988,20 +365,20 @@ GameObject3:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -2.5180713691952405e-07
-                            - 0.7352069616317749
-                            - 1.4208788812197781e-08
+                            - -2.5180712359684776e-07
+                            - 0.73520696324876356
+                            - 1.420878920077584e-08
                           localRotation:
-                            - -13.569160795644445
-                            - 28.089480167628611
-                            - -48.844514072067412
+                            - -13.569160906115783
+                            - 28.089481350805194
+                            - -48.844514670721239
                           localScale:
-                            - 0.9999995231628418
-                            - 0.99999964237213135
-                            - 0.9999995231628418
+                            - 0.99999950891992639
+                            - 0.99999963983325779
+                            - 0.99999949893507711
                       Children:
                         - name: FOREARM.L
-                          uuid: 7342367566286782095
+                          uuid: 9521451142962952738
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -2010,20 +387,20 @@ GameObject3:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 6.8680662934639258e-08
-                                - 0.80925250053405762
-                                - -6.9669269464611716e-08
+                                - 6.8680661380327037e-08
+                                - 0.80925248167436525
+                                - -6.9669272573236198e-08
                               localRotation:
-                                - 79.55595785094566
-                                - 7.2776881803286573
-                                - 19.754215866178807
+                                - 79.555958315140671
+                                - 7.2776874347581044
+                                - 19.754215523681697
                               localScale:
-                                - 1.0000001192092896
-                                - 1.0000003576278687
-                                - 1.0000003576278687
+                                - 1.0000001542243868
+                                - 1.0000003869464122
+                                - 1.0000003397967103
                           Children:
                             - name: HAND.L
-                              uuid: 13865511725645024523
+                              uuid: 9014646334722255946
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -2032,20 +409,20 @@ GameObject3:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 3.8871030483278446e-07
-                                    - 0.69208729267120361
-                                    - 5.15773876941239e-08
+                                    - 3.8871031238230103e-07
+                                    - 0.69208730662751461
+                                    - 5.1577388915369227e-08
                                   localRotation:
-                                    - 168.44012830057517
-                                    - -36.794863859697024
-                                    - -167.7580393542097
+                                    - 168.44012214278652
+                                    - -36.794865526987941
+                                    - -167.75804103652638
                                   localScale:
-                                    - 1.0000003576278687
-                                    - 0.99999970197677612
-                                    - 1.0000001192092896
+                                    - 1.0000003197614307
+                                    - 0.99999970482063805
+                                    - 1.0000000932334743
                               Children:
                                 - name: INDEX1.L
-                                  uuid: 14396556964756895734
+                                  uuid: 4194424793314313654
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -2054,20 +431,20 @@ GameObject3:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.0084814634174108505
-                                        - 0.32837775349617004
-                                        - 0.058274656534194946
+                                        - 0.0084814636044567848
+                                        - 0.32837775665261904
+                                        - 0.058274655266665532
                                       localRotation:
-                                        - 6.8973019286826727
-                                        - 11.500652702991852
-                                        - -35.657235567350234
+                                        - 6.8973015271713018
+                                        - 11.500653719243282
+                                        - -35.657236463103054
                                       localScale:
-                                        - 0.99999988079071045
-                                        - 0.99999988079071045
-                                        - 0.99999988079071045
+                                        - 0.99999990244948322
+                                        - 0.99999990247551329
+                                        - 0.9999998877263736
                                   Children:
                                     - name: INDEX2.L
-                                      uuid: 16334816024781449946
+                                      uuid: 11704950628848661401
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -2076,20 +453,20 @@ GameObject3:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 4.6513591200891824e-08
-                                            - 0.13528183102607727
-                                            - 4.3161158203020022e-08
+                                            - 4.6513589868624194e-08
+                                            - 0.13528182850828618
+                                            - 4.3161159646309954e-08
                                           localRotation:
-                                            - 0.59058729099930252
-                                            - -31.485113745940779
-                                            - -15.749568808423948
+                                            - 0.59058761220774514
+                                            - -31.485120570465881
+                                            - -15.749566943735672
                                           localScale:
-                                            - 1.0000001192092896
-                                            - 0.99999970197677612
-                                            - 0.99999982118606567
+                                            - 1.0000001122016018
+                                            - 0.99999969837676395
+                                            - 0.99999982530468745
                                       Children:
                                         - name: INDEX3.L
-                                          uuid: 2572135210889336000
+                                          uuid: 11855261001165046179
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -2098,20 +475,20 @@ GameObject3:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -9.2718046573736501e-08
-                                                - 0.14030998945236206
-                                                - -3.4941685100875475e-08
+                                                - -9.2718047239870316e-08
+                                                - 0.14030999171694547
+                                                - -3.4941684587397326e-08
                                               localRotation:
-                                                - 3.0021491738735158
-                                                - 6.9385039151798287
-                                                - 2.6219530590986948
+                                                - 3.0021493368258381
+                                                - 6.9385041942703438
+                                                - 2.6219532411634803
                                               localScale:
-                                                - 1
-                                                - 0.99999994039535522
-                                                - 0.99999994039535522
+                                                - 1.0000000002906384
+                                                - 0.99999992314765795
+                                                - 0.99999996574093175
                                           Children: ~
                                 - name: MIDDLE1.L
-                                  uuid: 3607061598693965134
+                                  uuid: 14954177045887356264
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -2120,20 +497,20 @@ GameObject3:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.034889437258243561
-                                        - 0.36481720209121704
-                                        - -0.017056537792086601
+                                        - 0.034889436205963076
+                                        - 0.36481721153723157
+                                        - -0.017056537749110423
                                       localRotation:
-                                        - -8.5895935649736543
-                                        - -2.5416056130982305
-                                        - -26.291286055324349
+                                        - -8.5895945914086518
+                                        - -2.5416052534902551
+                                        - -26.291285951732114
                                       localScale:
-                                        - 0.99999982118606567
-                                        - 0.99999988079071045
-                                        - 0.99999994039535522
+                                        - 0.99999980990997306
+                                        - 0.99999987017878
+                                        - 0.9999999314739606
                                   Children:
                                     - name: MIDDLE2.L
-                                      uuid: 7590552672551763692
+                                      uuid: 4317058698159820632
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -2142,20 +519,20 @@ GameObject3:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -1.8963925185744301e-07
-                                            - 0.14866061508655548
-                                            - -2.3876609578366015e-09
+                                            - -1.8963925541015669e-07
+                                            - 0.14866060784053126
+                                            - -2.3876610688589039e-09
                                           localRotation:
-                                            - 0.66838976617220369
-                                            - 4.5332431111553726
-                                            - -39.806947276171044
+                                            - 0.66838983765366045
+                                            - 4.5332432472671726
+                                            - -39.806945947175123
                                           localScale:
-                                            - 1.0000001192092896
-                                            - 1.0000001192092896
-                                            - 1.0000002384185791
+                                            - 1.0000000676443075
+                                            - 1.0000001775091216
+                                            - 1.0000002597408568
                                       Children:
                                         - name: MIDDLE3.L
-                                          uuid: 8136137318927980600
+                                          uuid: 12649145050916684327
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -2164,20 +541,20 @@ GameObject3:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 1.6583739181896817e-07
-                                                - 0.11445529758930206
-                                                - -2.3730187592718721e-08
+                                                - 1.6583738826625449e-07
+                                                - 0.11445529689795375
+                                                - -2.3730188369874838e-08
                                               localRotation:
-                                                - 6.1958769779875258
-                                                - -5.3819514125939447
-                                                - -46.925577823600776
+                                                - 6.1958770628976465
+                                                - -5.3819513007250395
+                                                - -46.925580855223892
                                               localScale:
-                                                - 1
-                                                - 0.99999994039535522
-                                                - 1
+                                                - 1.0000000499445061
+                                                - 0.99999996554788706
+                                                - 1.0000000424654096
                                           Children: ~
                                 - name: RING1.L
-                                  uuid: 6317996546461320039
+                                  uuid: 15590205823094897999
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -2186,20 +563,20 @@ GameObject3:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.049477756023406982
-                                        - 0.33854711055755615
-                                        - -0.097661092877388
+                                        - 0.04947775521338782
+                                        - 0.33854710951595735
+                                        - -0.097661095253241625
                                       localRotation:
-                                        - -20.830466675438252
-                                        - -9.1092571897290444
-                                        - -19.25662217378013
+                                        - -20.83046778951481
+                                        - -9.1092557580579765
+                                        - -19.256622889666559
                                       localScale:
-                                        - 0.99999964237213135
-                                        - 0.99999994039535522
-                                        - 0.9999997615814209
+                                        - 0.99999966262573814
+                                        - 0.99999994781613333
+                                        - 0.99999975811785402
                                   Children:
                                     - name: RING2.L
-                                      uuid: 4504827520168076508
+                                      uuid: 9270359660895917661
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -2208,20 +585,20 @@ GameObject3:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 3.5781783935817657e-07
-                                            - 0.13784031569957733
+                                            - 3.5781784823996077e-07
+                                            - 0.13784031724889195
                                             - 6.5996835774129181e-10
                                           localRotation:
-                                            - -1.1652106708648275
-                                            - 6.5606754606441378
-                                            - -17.75587516930597
+                                            - -1.165210692865007
+                                            - 6.5606749723404105
+                                            - -17.7558765945465
                                           localScale:
-                                            - 0.99999958276748657
-                                            - 0.99999982118606567
-                                            - 0.99999982118606567
+                                            - 0.99999960269996446
+                                            - 0.99999983586156616
+                                            - 0.99999983713575435
                                       Children:
                                         - name: RING3.L
-                                          uuid: 5724683894623572016
+                                          uuid: 832967414536064541
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -2230,20 +607,20 @@ GameObject3:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 2.9927107902949501e-08
-                                                - 0.10049884766340256
-                                                - -2.5751536014695375e-08
+                                                - 2.9927107014771088e-08
+                                                - 0.10049884477781569
+                                                - -2.5751535737139622e-08
                                               localRotation:
-                                                - 0.4280064215725129
-                                                - 0.62468820253964352
-                                                - -54.245444858054839
+                                                - 0.42800637356845955
+                                                - 0.62468827791286352
+                                                - -54.245444793751659
                                               localScale:
-                                                - 1
-                                                - 1.0000002384185791
-                                                - 1.0000001192092896
+                                                - 1.000000057069933
+                                                - 1.0000002067206368
+                                                - 1.0000000884756783
                                           Children: ~
                                 - name: PINKY1.L
-                                  uuid: 13990749664620820293
+                                  uuid: 13351835509272552889
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -2252,20 +629,20 @@ GameObject3:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.068656027317047119
-                                        - 0.30464985966682434
-                                        - -0.17370837926864624
+                                        - 0.068656026185615726
+                                        - 0.3046498545648807
+                                        - -0.17370837982416942
                                       localRotation:
-                                        - -34.476385806234212
-                                        - -16.908075906838878
-                                        - -14.991639070460067
+                                        - -34.476388651412648
+                                        - -16.908076817625005
+                                        - -14.991636368628173
                                       localScale:
-                                        - 0.99999994039535522
-                                        - 1.0000001192092896
-                                        - 0.99999982118606567
+                                        - 0.99999991824156564
+                                        - 1.0000000823789859
+                                        - 0.99999982539212873
                                   Children:
                                     - name: PINKY2.L
-                                      uuid: 16955550853692288347
+                                      uuid: 15069266832383436143
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -2275,19 +652,19 @@ GameObject3:
                                           enabled: true
                                           localPosition:
                                             - -8.5026776730501297e-09
-                                            - 0.092195376753807068
-                                            - -4.441952938805116e-08
+                                            - 0.092195375766636833
+                                            - -4.4419529610095765e-08
                                           localRotation:
-                                            - -3.2520165228182139
-                                            - -0.48837331777215265
-                                            - -17.07774768230956
+                                            - -3.2520165153902312
+                                            - -0.4883734120828187
+                                            - -17.077747500299818
                                           localScale:
-                                            - 0.99999982118606567
-                                            - 1
-                                            - 0.99999994039535522
+                                            - 0.99999983852860952
+                                            - 0.99999997158132903
+                                            - 0.99999993637479012
                                       Children:
                                         - name: PINKY3.L
-                                          uuid: 5008095193440470479
+                                          uuid: 7875785196772906231
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -2296,20 +673,20 @@ GameObject3:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -2.0202570283345267e-07
-                                                - 0.076157920062541962
-                                                - -9.7992320036155434e-08
+                                                - -2.0202570194527425e-07
+                                                - 0.076157918678938286
+                                                - -9.7992322922735298e-08
                                               localRotation:
-                                                - -2.8262870911883136
-                                                - -0.36687224683212727
-                                                - -14.788929020243216
+                                                - -2.8262870695801938
+                                                - -0.36687222483529025
+                                                - -14.788928384179295
                                               localScale:
-                                                - 0.99999988079071045
-                                                - 0.99999988079071045
-                                                - 1
+                                                - 0.99999985476748154
+                                                - 0.99999990200239441
+                                                - 0.99999997752009273
                                           Children: ~
                                 - name: THUMB1.L
-                                  uuid: 3538395419971010258
+                                  uuid: 18107803187727589771
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -2318,20 +695,20 @@ GameObject3:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.024536151438951492
-                                        - 0.23643189668655396
-                                        - 0.12960666418075562
+                                        - 0.024536152274953427
+                                        - 0.23643189665757158
+                                        - 0.12960666400537735
                                       localRotation:
-                                        - 18.723508445869836
-                                        - 26.238317252955934
-                                        - -36.985889293162892
+                                        - 18.723509448604762
+                                        - 26.238314916115868
+                                        - -36.985887984769398
                                       localScale:
-                                        - 0.99999970197677612
-                                        - 1
-                                        - 0.99999994039535522
+                                        - 0.99999968179188237
+                                        - 1.0000000224004526
+                                        - 0.99999994626556143
                                   Children:
                                     - name: THUMB2.L
-                                      uuid: 11069675878356324124
+                                      uuid: 15303725880944449242
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -2340,20 +717,20 @@ GameObject3:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 1.5562547162062401e-07
-                                            - 0.14899691939353943
+                                            - 1.5562547406311467e-07
+                                            - 0.14899692654551133
                                             - -1.924212966741834e-08
                                           localRotation:
-                                            - 34.183167120836721
-                                            - -0.66938523831697672
-                                            - -9.5659026942686101
+                                            - 34.183165939984391
+                                            - -0.66938514161977702
+                                            - -9.5659033736021861
                                           localScale:
-                                            - 1
-                                            - 1.0000001192092896
-                                            - 0.99999988079071045
+                                            - 1.0000000279970012
+                                            - 1.0000001492958861
+                                            - 0.99999988747372959
                                       Children: ~
                 - name: HEAD
-                  uuid: 13904187300335084536
+                  uuid: 113327699670918027
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -2362,20 +739,20 @@ GameObject3:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 2.2409271660528418e-10
-                        - 0.90553861856460571
+                        - 2.2409271834000766e-10
+                        - 0.90553860453845303
                         - -7.775822652433817e-09
                       localRotation:
-                        - 14.263129264547381
-                        - 1.31646919982745e-05
-                        - 3.3678527378781732e-06
+                        - 14.263129036471133
+                        - 1.3164692218595554e-05
+                        - 3.3678526728451164e-06
                       localScale:
-                        - 1
-                        - 0.9999995231628418
-                        - 0.99999970197677612
+                        - 1.0000000023926752
+                        - 0.99999950771153245
+                        - 0.99999970071533384
                   Children: ~
                 - name: SHOULDER.R
-                  uuid: 4020154831044796784
+                  uuid: 1908384427437316951
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -2384,20 +761,20 @@ GameObject3:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 2.2409271660528418e-10
-                        - 0.90553861856460571
+                        - 2.2409271834000766e-10
+                        - 0.90553860453845303
                         - -7.775822652433817e-09
                       localRotation:
-                        - -5.932314813269115
-                        - 5.8214749554598271
-                        - 106.23663584986905
+                        - -5.932314190406311
+                        - 5.8214748535241254
+                        - 106.23664287841851
                       localScale:
-                        - 0.9999997615814209
-                        - 1
-                        - 0.9999997615814209
+                        - 0.9999997873518135
+                        - 1.0000000043423944
+                        - 0.99999978172513138
                   Children:
                     - name: ARM.R
-                      uuid: 13214171648182100014
+                      uuid: 17424034160653733841
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -2406,20 +783,20 @@ GameObject3:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -4.0749827689978702e-07
-                            - 0.7352067232131958
-                            - -1.3628527639752974e-08
+                            - -4.074982897783741e-07
+                            - 0.73520671677853477
+                            - -1.3628527695264125e-08
                           localRotation:
-                            - 69.52320693699275
-                            - -17.738070426803034
-                            - 20.881162619181513
+                            - 69.523205400247519
+                            - -17.738069219870027
+                            - 20.881163337644971
                           localScale:
-                            - 0.9999995231628418
-                            - 0.9999997615814209
-                            - 0.99999970197677612
+                            - 0.99999953350685333
+                            - 0.99999978413236146
+                            - 0.99999972491822997
                       Children:
                         - name: FOREARM.R
-                          uuid: 18321608015380059820
+                          uuid: 2541009310740222275
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -2429,19 +806,19 @@ GameObject3:
                               enabled: true
                               localPosition:
                                 - -6.6874306092756797e-09
-                                - 0.80925267934799194
+                                - 0.80925267398968348
                                 - 2.9372904108981857e-09
                               localRotation:
-                                - 77.665864549711088
-                                - -51.13021800281237
-                                - -5.4381402320079735
+                                - 77.665860484166274
+                                - -51.130219229557184
+                                - -5.4381369247922127
                               localScale:
-                                - 0.99999994039535522
-                                - 1
-                                - 1.0000001192092896
+                                - 0.99999996446701123
+                                - 1.0000000029045502
+                                - 1.0000001461277024
                           Children:
                             - name: HAND.R
-                              uuid: 2633530447551109684
+                              uuid: 208594598884685030
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -2450,20 +827,20 @@ GameObject3:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - -1.0149454254815282e-07
-                                    - 0.69208723306655884
-                                    - 1.8827591929948539e-07
+                                    - -1.0149454343633124e-07
+                                    - 0.69208724679410993
+                                    - 1.8827592598857912e-07
                                   localRotation:
-                                    - 24.331610197453148
-                                    - 54.686413988305993
-                                    - 1.2844980595240159
+                                    - 24.331612712965484
+                                    - 54.686403698080831
+                                    - 1.2844995843765639
                                   localScale:
-                                    - 1.0000001192092896
-                                    - 0.99999964237213135
-                                    - 1.0000002384185791
+                                    - 1.0000001339098543
+                                    - 0.99999966466048751
+                                    - 1.0000001836582337
                               Children:
                                 - name: INDEX1.R
-                                  uuid: 1750468957298999405
+                                  uuid: 15295196825970278579
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -2472,20 +849,20 @@ GameObject3:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.0084823053330183029
-                                        - 0.32837760448455811
-                                        - 0.058274611830711365
+                                        - -0.0084823055561962235
+                                        - 0.32837759717744486
+                                        - 0.058274613035454337
                                       localRotation:
-                                        - 10.409327849043596
-                                        - -8.4636433375802813
-                                        - 15.604447531458352
+                                        - 10.409328161037182
+                                        - -8.4636440155890824
+                                        - 15.604447776909783
                                       localScale:
-                                        - 0.99999988079071045
-                                        - 0.99999988079071045
-                                        - 1
+                                        - 0.99999986492954229
+                                        - 0.99999989549685164
+                                        - 1.0000000123084496
                                   Children:
                                     - name: INDEX2.R
-                                      uuid: 1720615738168714892
+                                      uuid: 10699061131570377137
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -2494,20 +871,20 @@ GameObject3:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 2.7056941576120153e-08
-                                            - 0.13528183102607727
-                                            - 1.1934086785458931e-07
+                                            - 2.7056940687941733e-08
+                                            - 0.1352818305859432
+                                            - 1.1934086119325116e-07
                                           localRotation:
-                                            - -13.1027867124454
-                                            - 3.62540822190741
-                                            - 20.706266563371528
+                                            - -13.102786501106653
+                                            - 3.6254085261762565
+                                            - 20.706267117122547
                                           localScale:
-                                            - 0.99999994039535522
-                                            - 0.99999958276748657
-                                            - 1
+                                            - 0.99999996103394417
+                                            - 0.99999957359676628
+                                            - 0.99999997146652764
                                       Children:
                                         - name: INDEX3.R
-                                          uuid: 8094887720651111474
+                                          uuid: 4636383026918015515
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -2516,20 +893,20 @@ GameObject3:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 7.2263290462615259e-08
-                                                - 0.14030985534191132
-                                                - 2.7363634558241756e-07
+                                                - 7.2263292016927507e-08
+                                                - 0.14030984895520873
+                                                - 2.736363584610047e-07
                                               localRotation:
-                                                - 10.55611332226365
-                                                - 7.4190282354545305
-                                                - 30.174664087858154
+                                                - 10.55611344896008
+                                                - 7.4190272129335471
+                                                - 30.174658490162109
                                               localScale:
-                                                - 0.99999994039535522
-                                                - 1.0000001192092896
-                                                - 1
+                                                - 0.99999993333955517
+                                                - 1.0000000690824971
+                                                - 0.99999998228083253
                                           Children: ~
                                 - name: MIDDLE1.R
-                                  uuid: 10933934474148444435
+                                  uuid: 9238639228906981099
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -2538,20 +915,20 @@ GameObject3:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.044995486736297607
-                                        - 0.3837076723575592
-                                        - -0.02520056813955307
+                                        - -0.044995487511518162
+                                        - 0.38370765752205149
+                                        - -0.025200568470504336
                                       localRotation:
-                                        - 16.025997432919951
-                                        - 2.6633178147629342
-                                        - 78.095437456306769
+                                        - 16.025996447170282
+                                        - 2.663318170624263
+                                        - 78.095434595779736
                                       localScale:
-                                        - 0.99999994039535522
-                                        - 0.99999988079071045
-                                        - 1
+                                        - 0.99999993185544589
+                                        - 0.99999987748305641
+                                        - 0.99999997937159468
                                   Children:
                                     - name: MIDDLE2.R
-                                      uuid: 12399053978735864800
+                                      uuid: 5246976766843537307
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -2560,20 +937,20 @@ GameObject3:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -1.5353490923075697e-08
-                                            - 0.14866064488887787
-                                            - -1.8278861091403087e-07
+                                            - -1.5353490090408428e-08
+                                            - 0.14866064709632798
+                                            - -1.8278860558496035e-07
                                           localRotation:
-                                            - 10.655602597310315
-                                            - -4.4731454275667595
-                                            - 35.654711512454753
+                                            - 10.65560167994718
+                                            - -4.4731458568240656
+                                            - 35.654712717352339
                                           localScale:
-                                            - 0.99999982118606567
-                                            - 1
-                                            - 1.0000002384185791
+                                            - 0.99999984482549775
+                                            - 1.0000000155213942
+                                            - 1.000000256285531
                                       Children:
                                         - name: MIDDLE3.R
-                                          uuid: 11864153767549376735
+                                          uuid: 1960052010069648530
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -2582,20 +959,20 @@ GameObject3:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -1.7853873934825515e-09
-                                                - 0.11445534974336624
-                                                - 1.5800435448909411e-07
+                                                - -1.7853873379714003e-09
+                                                - 0.11445534860350125
+                                                - 1.5800435493318332e-07
                                               localRotation:
-                                                - -3.6386316630452908
-                                                - 2.3268195921766406
-                                                - 75.570748283947651
+                                                - -3.6386316567714214
+                                                - 2.3268195636755546
+                                                - 75.570747319387834
                                               localScale:
-                                                - 1.0000002384185791
-                                                - 1.0000003576278687
-                                                - 1.0000002384185791
+                                                - 1.0000002696220343
+                                                - 1.0000003588117112
+                                                - 1.0000002165407351
                                           Children: ~
                                 - name: RING1.R
-                                  uuid: 246553449038029751
+                                  uuid: 11271768010766790065
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -2604,20 +981,20 @@ GameObject3:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.05237695574760437
-                                        - 0.33865228295326233
-                                        - -0.09763462096452713
+                                        - -0.052376956774263572
+                                        - 0.33865229699619726
+                                        - -0.097634622303168772
                                       localRotation:
-                                        - 16.001052441129353
-                                        - 18.603699310721616
-                                        - 86.774644653449045
+                                        - 16.001050973511976
+                                        - 18.603701085648893
+                                        - 86.774642320275007
                                       localScale:
-                                        - 0.99999994039535522
-                                        - 0.9999997615814209
-                                        - 0.9999997615814209
+                                        - 0.99999991393670185
+                                        - 0.99999974116512391
+                                        - 0.99999976048893613
                                   Children:
                                     - name: RING2.R
-                                      uuid: 6308909661994204702
+                                      uuid: 3853356088127977315
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -2626,20 +1003,20 @@ GameObject3:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 4.4987647385141827e-08
-                                            - 0.1378403902053833
-                                            - -7.426302772728377e-08
+                                            - 4.4987648273320247e-08
+                                            - 0.137840390365008
+                                            - -7.4263025062748511e-08
                                           localRotation:
-                                            - 5.3755840956418863
-                                            - -5.1066334012569587
-                                            - 47.75525002393001
+                                            - 5.3755838056724592
+                                            - -5.1066336992622219
+                                            - 47.755252184579163
                                           localScale:
-                                            - 1
-                                            - 0.99999958276748657
-                                            - 0.99999982118606567
+                                            - 1.0000000143195973
+                                            - 0.99999960313813774
+                                            - 0.99999981848065733
                                       Children:
                                         - name: RING3.R
-                                          uuid: 2652208623802335349
+                                          uuid: 14420840694424647614
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -2648,20 +1025,20 @@ GameObject3:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 4.172408551994522e-08
-                                                - 0.10049882531166077
-                                                - -1.8215089880868618e-07
+                                                - 4.1724085964034436e-08
+                                                - 0.10049882360840674
+                                                - -1.8215090014095384e-07
                                               localRotation:
-                                                - 0.30418916336970075
-                                                - -0.69346822306777733
-                                                - 64.97809630761283
+                                                - 0.30418916957529618
+                                                - -0.69346824792989348
+                                                - 64.978096197842873
                                               localScale:
-                                                - 1.0000002384185791
-                                                - 1.0000003576278687
-                                                - 1
+                                                - 1.0000002713127474
+                                                - 1.0000003473971142
+                                                - 1.000000003179305
                                           Children: ~
                                 - name: PINKY1.R
-                                  uuid: 8135325904213619436
+                                  uuid: 8965552061009606914
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -2670,20 +1047,20 @@ GameObject3:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.073668479919433594
-                                        - 0.29854017496109009
-                                        - -0.16958671808242798
+                                        - -0.073668481115624296
+                                        - 0.29854018259905429
+                                        - -0.16958671247177604
                                       localRotation:
-                                        - 8.2355537106342318
-                                        - 29.269785819349181
-                                        - 70.386314926251018
+                                        - 8.235553246570225
+                                        - 29.2697880705439
+                                        - 70.386311668872054
                                       localScale:
-                                        - 0.99999988079071045
-                                        - 1
-                                        - 0.99999988079071045
+                                        - 0.99999989952920421
+                                        - 1.00000003410719
+                                        - 0.99999990066101352
                                   Children:
                                     - name: PINKY2.R
-                                      uuid: 10318866827772463023
+                                      uuid: 10153564506990307037
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -2692,20 +1069,20 @@ GameObject3:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -5.9924353479345882e-08
-                                            - 0.092195332050323486
-                                            - -3.1059138905220607e-07
+                                            - -5.992435114787753e-08
+                                            - 0.092195334970795906
+                                            - -3.1059139349309817e-07
                                           localRotation:
-                                            - 7.08355056649064
-                                            - 2.0428296852818533
-                                            - 46.920608041718793
+                                            - 7.083551052490086
+                                            - 2.0428300457641044
+                                            - 46.920609484390511
                                           localScale:
-                                            - 1
-                                            - 0.99999988079071045
-                                            - 0.99999982118606567
+                                            - 1.0000000426339026
+                                            - 0.99999989167140579
+                                            - 0.99999982648011732
                                       Children:
                                         - name: PINKY3.R
-                                          uuid: 5387273451587068128
+                                          uuid: 7985947656587945170
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -2714,20 +1091,20 @@ GameObject3:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -3.9664602269340321e-08
-                                                - 0.076158016920089722
-                                                - 4.7062781050044578e-07
+                                                - -3.9664602047295723e-08
+                                                - 0.076158013510026726
+                                                - 4.7062780694773215e-07
                                               localRotation:
-                                                - -0.73546651662189833
-                                                - 2.7535340012528433
-                                                - 82.438147902436853
+                                                - -0.73546643938231793
+                                                - 2.7535340234303649
+                                                - 82.438148860904889
                                               localScale:
-                                                - 0.99999988079071045
-                                                - 1.0000001192092896
-                                                - 0.99999982118606567
+                                                - 0.9999998769910009
+                                                - 1.0000000894039873
+                                                - 0.99999981174326646
                                           Children: ~
                                 - name: THUMB1.R
-                                  uuid: 12509647751708103685
+                                  uuid: 3269063891468740244
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -2736,20 +1113,20 @@ GameObject3:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.024537092074751854
-                                        - 0.23643165826797485
-                                        - 0.12960666418075562
+                                        - -0.024537092396822668
+                                        - 0.23643166042011932
+                                        - 0.12960667014385496
                                       localRotation:
-                                        - 26.977966953607709
-                                        - -26.238306675100119
-                                        - 36.985883344983378
+                                        - 26.977966735600688
+                                        - -26.23830665196412
+                                        - 36.985884872083645
                                       localScale:
-                                        - 0.99999970197677612
-                                        - 1.0000001192092896
-                                        - 0.99999994039535522
+                                        - 0.99999971611486638
+                                        - 1.0000000608529656
+                                        - 0.9999999479416114
                                   Children:
                                     - name: THUMB2.R
-                                      uuid: 3048855629161233224
+                                      uuid: 6638313275451621306
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -2758,20 +1135,20 @@ GameObject3:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 1.3217893979344808e-07
-                                            - 0.14899666607379913
-                                            - -1.7875601088235271e-07
+                                            - 1.321789362407344e-07
+                                            - 0.1489966708948201
+                                            - -1.7875601443506639e-07
                                           localRotation:
-                                            - -1.6071659223752384
-                                            - 0.66938383805840762
-                                            - 9.5659023636609586
+                                            - -1.607166078333039
+                                            - 0.66938384743404278
+                                            - 9.5659020913789288
                                           localScale:
-                                            - 0.99999994039535522
-                                            - 0.99999994039535522
-                                            - 1.0000002384185791
+                                            - 0.99999993607876558
+                                            - 0.99999993852369529
+                                            - 1.0000002790110629
                                       Children: ~
             - name: HIP.R
-              uuid: 15005523052671759461
+              uuid: 4913436817730953019
               tag: Untagged
               active: true
               isStatic: false
@@ -2780,20 +1157,20 @@ GameObject3:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -1.2403010563044603e-10
-                    - 2.6553018983577203e-07
-                    - 9.2420677333393542e-08
+                    - -1.240301004262756e-10
+                    - 2.6553019782937781e-07
+                    - 9.2420678332594264e-08
                   localRotation:
-                    - -179.99993460765418
-                    - 80.537726423620256
-                    - -89.999982582441405
+                    - -179.99995850627792
+                    - 80.537700822213367
+                    - -89.999999779213084
                   localScale:
-                    - 0.99999988079071045
-                    - 0.99999988079071045
-                    - 0.99999994039535522
+                    - 0.9999998843390111
+                    - 0.99999987803750345
+                    - 0.99999991446689807
               Children:
                 - name: THIGH.R
-                  uuid: 11938213823378412085
+                  uuid: 13843501734437588722
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -2803,19 +1180,19 @@ GameObject3:
                       enabled: true
                       localPosition:
                         - -2.7188438167513596e-09
-                        - 0.29999998211860657
-                        - 2.191541881302328e-07
+                        - 0.29999996930948863
+                        - 2.191541836893407e-07
                       localRotation:
-                        - -77.559409029885884
-                        - 19.701452906528605
-                        - -0.91633148901961814
+                        - -77.559407162481094
+                        - 19.701451379717895
+                        - -0.91633080240214415
                       localScale:
-                        - 0.99999922513961792
-                        - 0.99999988079071045
-                        - 0.9999997615814209
+                        - 0.99999923077659303
+                        - 0.99999986821175135
+                        - 0.99999974574496309
                   Children:
                     - name: TIBIA.R
-                      uuid: 1377449115226306218
+                      uuid: 5408091424426043469
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -2824,20 +1201,20 @@ GameObject3:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -1.0765906210963294e-07
-                            - 1.0392313003540039
-                            - 1.2161976314928324e-07
+                            - -1.0765905905651962e-07
+                            - 1.039231339774469
+                            - 1.2161975948554726e-07
                           localRotation:
-                            - -5.5318307792956416
-                            - -2.8298969584337468
-                            - -38.016161330005474
+                            - -5.5318308642003888
+                            - -2.8298969585574061
+                            - -38.016157999420273
                           localScale:
-                            - 1.0000004768371582
-                            - 0.9999992847442627
-                            - 1.0000002384185791
+                            - 1.0000004920484309
+                            - 0.99999929327761183
+                            - 1.0000002759321915
                       Children:
                         - name: FOOT.R
-                          uuid: 10157544135121966714
+                          uuid: 564976604524168645
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -2846,20 +1223,20 @@ GameObject3:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -6.6534845188925829e-08
-                                - 1.1680755615234375
-                                - -3.9192002532217884e-08
+                                - -6.6534843190524384e-08
+                                - 1.1680755405807624
+                                - -3.9192002754262489e-08
                               localRotation:
-                                - -3.9975984246608425
-                                - 2.8422683905481829
-                                - 104.3728238194153
+                                - -3.9975981794712818
+                                - 2.8422682708613771
+                                - 104.37281590623466
                               localScale:
-                                - 1
-                                - 1
-                                - 1.0000001192092896
+                                - 0.99999997907800087
+                                - 1.0000000205426542
+                                - 1.0000000600245262
                           Children:
                             - name: TOE.R
-                              uuid: 17685311063914185135
+                              uuid: 7598512933744849451
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -2868,20 +1245,20 @@ GameObject3:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 3.2185898390935108e-08
-                                    - 0.3931923508644104
-                                    - 2.4843595625156922e-08
+                                    - 3.2185897488878907e-08
+                                    - 0.39319234266567454
+                                    - 2.4843596180268438e-08
                                   localRotation:
-                                    - 0.23687275860214307
-                                    - -0.012724365864088597
-                                    - 6.1778852045415622
+                                    - 0.23687274561019392
+                                    - -0.012724366094867139
+                                    - 6.1778851941048814
                                   localScale:
-                                    - 0.99999988079071045
-                                    - 0.99999988079071045
-                                    - 1.0000002384185791
+                                    - 0.99999989506893827
+                                    - 0.9999998675877958
+                                    - 1.0000001923318333
                               Children: ~
         - name: KNEE.L
-          uuid: 12702691036774321492
+          uuid: 3360154014096255909
           tag: Untagged
           active: true
           isStatic: false
@@ -2891,19 +1268,19 @@ GameObject3:
               enabled: true
               localPosition:
                 - 0.48428362607955933
-                - -1.4360001087188721
-                - 1.5000002384185791
+                - -1.436000055076682
+                - 1.5000002948583118
               localRotation:
-                - 5.7827277559333754e-11
-                - -89.690400378278369
-                - -179.99999134858919
+                - 4.6451664490327887e-11
+                - -89.690065003049128
+                - -179.99997768824835
               localScale:
-                - 1
-                - 1
-                - 1
+                - 1.0000000275560932
+                - 1.0000000000000768
+                - 1.0000000269113221
           Children: ~
         - name: FOOT.R.002
-          uuid: 10406450069364294875
+          uuid: 11985179183324277036
           tag: Untagged
           active: true
           isStatic: false
@@ -2913,19 +1290,19 @@ GameObject3:
               enabled: true
               localPosition:
                 - -0.59999996423721313
-                - 0.37999996542930603
-                - 0.20000019669532776
+                - 0.3799999566870198
+                - 0.20000019840449312
               localRotation:
-                - -73.329020150282105
-                - 82.371792236159237
-                - 106.81154492645751
+                - -73.32900831091473
+                - 82.371806549801903
+                - 106.8115554777642
               localScale:
-                - 1
-                - 1.0000003576278687
-                - 1.0000019073486328
+                - 1.0000000328734338
+                - 1.0000003320716135
+                - 1.0000018716804941
           Children: ~
         - name: TOE.R.001
-          uuid: 6803024861058419988
+          uuid: 17564974938842540277
           tag: Untagged
           active: true
           isStatic: false
@@ -2935,19 +1312,19 @@ GameObject3:
               enabled: true
               localPosition:
                 - -0.60000002384185791
-                - -0.52000004053115845
-                - 0.14000017940998077
+                - -0.52000004665076172
+                - 0.14000018648237844
               localRotation:
-                - 152.94738903149963
-                - -87.529736292030051
-                - -152.96894404041043
+                - 152.94736677307162
+                - -87.529560575398079
+                - -152.96893999685179
               localScale:
-                - 0.99999994039535522
-                - 1
-                - 1.0000001192092896
+                - 0.99999993111005903
+                - 1.0000000117029981
+                - 1.0000000607157133
           Children: ~
         - name: PIVOTHEEL.L
-          uuid: 1149624561802332738
+          uuid: 13140410156338998753
           tag: Untagged
           active: true
           isStatic: false
@@ -2957,19 +1334,19 @@ GameObject3:
               enabled: true
               localPosition:
                 - 0.60000002384185791
-                - 0.54000002145767212
-                - 0.068000182509422302
+                - 0.54000001848529011
+                - 0.068000183761832034
               localRotation:
-                - -29.685995809602364
-                - -87.462783632834402
-                - -150.33826234012116
+                - -29.686031921548111
+                - -87.462835236536279
+                - -150.33822699051044
               localScale:
-                - 0.99999982118606567
-                - 1.0000001192092896
-                - 1
+                - 0.99999984428161215
+                - 1.0000000769782718
+                - 0.99999999384612981
           Children:
             - name: PIVOTTOE.L
-              uuid: 16722634608782823898
+              uuid: 579050223057718339
               tag: Untagged
               active: true
               isStatic: false
@@ -2978,20 +1355,20 @@ GameObject3:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - 0.090503990650177002
-                    - 0.94640660285949707
-                    - 0.0034774856176227331
+                    - 0.090503993384310297
+                    - 0.94640660469488569
+                    - 0.0034774855399085651
                   localRotation:
-                    - 1.228810747991133e-08
-                    - 4.4008257261949382
-                    - -179.99999134857757
+                    - 1.22880860659321e-08
+                    - 4.4008260121761165
+                    - -179.99997781203945
                   localScale:
-                    - 0.99999982118606567
-                    - 0.99999994039535522
-                    - 1
+                    - 0.99999980829833168
+                    - 0.99999994890346566
+                    - 1.000000059433624
               Children:
                 - name: FOOT.L.001
-                  uuid: 10267644020362636885
+                  uuid: 12622700005664974524
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -3000,20 +1377,20 @@ GameObject3:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -1.4500230349767662e-08
-                        - 0.51009821891784668
-                        - 1.7887337833144556e-07
+                        - -1.4500230710590145e-08
+                        - 0.51009820964109176
+                        - 1.7887338243927076e-07
                       localRotation:
-                        - -0.28259398393044871
-                        - 0.018199971951072366
-                        - 7.3750767729848432
+                        - -0.28259400024818887
+                        - 0.018199972905252298
+                        - 7.3750770195720969
                       localScale:
-                        - 0.9999997615814209
-                        - 1.0000002384185791
-                        - 1
+                        - 0.99999973747117399
+                        - 1.0000002486155362
+                        - 1.000000006434989
                   Children:
                     - name: IKLEG.L
-                      uuid: 14662084300394792367
+                      uuid: 10082340928328402151
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -3022,20 +1399,20 @@ GameObject3:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -3.8822541625904705e-08
-                            - 0.39319193363189697
-                            - 1.0663335103799909e-07
+                            - -3.8822542069993922e-08
+                            - 0.39319194327542012
+                            - 1.0663335436866818e-07
                           localRotation:
-                            - 2.0399827866805861e-08
-                            - 4.4007417060248208
-                            - -179.99999134857768
+                            - 2.0399833044189746e-08
+                            - 4.4007418077190454
+                            - -179.99997771597864
                           localScale:
-                            - 1.0000002384185791
-                            - 1.0000001192092896
-                            - 0.99999988079071045
+                            - 1.0000002808393582
+                            - 1.0000001193468051
+                            - 0.99999987430960269
                       Children: ~
         - name: KNEE.R
-          uuid: 12987907824505919206
+          uuid: 10324901692857174622
           tag: Untagged
           active: true
           isStatic: false
@@ -3045,19 +1422,19 @@ GameObject3:
               enabled: true
               localPosition:
                 - -0.5
-                - -1.4360001087188721
-                - 1.5000002384185791
+                - -1.436000055076682
+                - 1.5000002948583118
               localRotation:
-                - -8.8917453192692342e-11
-                - 89.690400378278369
-                - -179.9999913485581
+                - -1.0876143053016939e-10
+                - 89.690065003049128
+                - -179.99997768831068
               localScale:
-                - 1
-                - 1
-                - 1
+                - 1.0000000275560934
+                - 1.0000000000000768
+                - 1.0000000269113218
           Children: ~
         - name: PIVOTHEEL.R
-          uuid: 6927511712344581501
+          uuid: 10336659125918624216
           tag: Untagged
           active: true
           isStatic: false
@@ -3067,19 +1444,19 @@ GameObject3:
               enabled: true
               localPosition:
                 - -0.60000002384185791
-                - 0.41999998688697815
-                - 0.068000182509422302
+                - 0.41999998391459598
+                - 0.06800018596704431
               localRotation:
-                - -27.052746788968122
-                - 87.529511954034717
-                - 152.96893019935038
+                - -27.052761691801162
+                - 87.529560040536822
+                - 152.96892235328176
               localScale:
-                - 0.99999988079071045
-                - 1.0000001192092896
-                - 1
+                - 0.99999987185271844
+                - 1.0000001326804948
+                - 0.99999999117235117
           Children:
             - name: PIVOTTOE.R
-              uuid: 325689164210422160
+              uuid: 11466591598402491864
               tag: Untagged
               active: true
               isStatic: false
@@ -3088,20 +1465,20 @@ GameObject3:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -0.09050402045249939
-                    - 0.94640666246414185
-                    - 0.00347752938978374
+                    - -0.090504021798777978
+                    - 0.94640665573366378
+                    - 0.003477529475435559
                   localRotation:
-                    - -1.1677910261398864e-09
-                    - -4.4008257261949399
-                    - 179.99999134857799
+                    - -1.1678005425135715e-09
+                    - -4.4008259266034155
+                    - 179.99997774685443
                   localScale:
-                    - 0.9999997615814209
-                    - 0.99999994039535522
-                    - 1
+                    - 0.9999997506170043
+                    - 0.99999994800208369
+                    - 1.0000000002508791
               Children:
                 - name: FOOT.R.001
-                  uuid: 4452595670384765956
+                  uuid: 14102068459808746250
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -3110,20 +1487,20 @@ GameObject3:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 5.8364091337637092e-09
-                        - 0.51009827852249146
-                        - 2.1531700156174338e-07
+                        - 5.8364092447860116e-09
+                        - 0.5100982887147042
+                        - 2.153170066687693e-07
                       localRotation:
-                        - -0.23691524970900663
-                        - -0.012772269186806842
-                        - -6.1778770017014173
+                        - -0.23691523974033707
+                        - -0.012772270809504915
+                        - -6.1778763684729947
                       localScale:
-                        - 0.9999997615814209
-                        - 1.0000002384185791
-                        - 1
+                        - 0.9999997718298419
+                        - 1.0000002642776378
+                        - 0.99999998338830043
                   Children:
                     - name: IKLEG.R
-                      uuid: 8672178069899509867
+                      uuid: 14274526815852113149
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -3132,20 +1509,20 @@ GameObject3:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 5.0435133402970678e-08
-                            - 0.39319196343421936
-                            - 1.526850468280827e-07
+                            - 5.0435132459281107e-08
+                            - 0.39319195992548206
+                            - 1.5268504838239494e-07
                           localRotation:
-                            - 9.0439488474666229e-08
-                            - -4.4007417060248155
-                            - 179.99999134857794
+                            - 9.0439496130942353e-08
+                            - -4.4007417696117708
+                            - 179.9999773000776
                           localScale:
-                            - 1.0000002384185791
-                            - 1.0000001192092896
-                            - 0.99999988079071045
+                            - 1.0000002689897283
+                            - 1.0000001102831593
+                            - 0.99999985974296324
                       Children: ~
     - name: RiffleShotFX
-      uuid: 8821723373894864059
+      uuid: 14987210929426933725
       tag: Untagged
       active: true
       isStatic: false
@@ -3175,8 +1552,8 @@ GameObject3:
           maxLifetime: 0.25
           minSpeed: 0
           maxSpeed: 0
-          startSize: 1
-          endSize: 1
+          startSize: 3
+          endSize: 3
           minSize: 1
           maxSize: 1
           startColor:
@@ -3217,7 +1594,7 @@ GameObject3:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 13466501499344938025
+      uuid: 2536798903155868705
       tag: Untagged
       active: true
       isStatic: false
@@ -3247,7 +1624,7 @@ GameObject3:
           maxLifetime: 4
           minSpeed: 0.5
           maxSpeed: 1.5
-          startSize: 0.5
+          startSize: 2
           endSize: 2
           minSize: 0.5
           maxSize: 0
@@ -3289,7 +1666,7 @@ GameObject3:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 7835624383973363366
+      uuid: 7827033712594278158
       tag: Untagged
       active: true
       isStatic: false
@@ -3360,3 +1737,85 @@ GameObject3:
             texturePath: Assets/Textures/Smoke30Frames.png
           particleType: 1
       Children: ~
+GameObject1:
+  name: MainCamera
+  uuid: 16672448040149392944
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -14
+        - 20
+        - 14
+      localRotation:
+        - -130.00000393764998
+        - 45.000002600858409
+        - -179.99999565358834
+      localScale:
+        - 1
+        - 1
+        - 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 0.95993108859688125
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500
+      priority: 1
+    ScriptComponents:
+      Script0:
+        name: PlayerCamera
+  Children: ~
+GameObject2:
+  name: Floor
+  uuid: 4274692140017587119
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - -1
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 50
+        - 1
+        - 50
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 0
+      material:
+        name: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+  Children: ~

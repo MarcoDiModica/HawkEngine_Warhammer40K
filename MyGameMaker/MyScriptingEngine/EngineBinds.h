@@ -44,6 +44,7 @@ namespace EngineBinds {
 	void SetTag(MonoObject* ref, MonoString* tag);
     MonoObject* GetGameObjectByName(MonoString* name);	
     void GameObjectSetActive(MonoObject* ref, bool active);
+    MonoObject* InstantiatePrefab(MonoObject* prefabObj, MonoObject* parentTransformObj, bool worldPositionStays);
 	bool GameObjectIsActive(MonoObject* ref);
 
     // Input
@@ -144,13 +145,12 @@ namespace EngineBinds {
 	MonoObject* Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance, glm::vec3& hitPoint, glm::vec3& normal, float& distance);
     
     //Audio
-    void Play(MonoObject* audioRef, bool loop = false);
-    void Stop(MonoObject* audioRef);
-    void Pause(MonoObject* audioRef);
-    void Resume(MonoObject* audioRef);
-    void SetVolume(MonoObject* audioRef, float volume);
-    float GetVolume(MonoObject* audioRef);
-	void LoadAudioClip(MonoObject* audioRef, MonoString* path);
+    void Play(MonoObject* audioRef, MonoString* path);
+    void Stop(MonoObject* audioRef, MonoString* path);
+    void Pause(MonoObject* audioRef, MonoString* path);
+    void Resume(MonoObject* audioRef, MonoString* path);
+    void SetVolume(MonoObject* audioRef, MonoString* path, float volume);
+	void LoadAudioClip(MonoObject* audioRef, MonoString* path, bool loop);
 
     //UIImage
     void SetTexture(MonoObject* uiImageRef, MonoString* path);
@@ -160,6 +160,8 @@ namespace EngineBinds {
 	void SetImageAnimationIndexLimit(MonoObject* uiImageRef, int indexLimit);
 	void SetImageAnimation(MonoObject* uiImageRef, int index);
 	void SetImageSpriteSize(MonoObject* uiImageRef, float width, float height);
+	void SetImageAnimIndex(MonoObject* uiImageRef, int index);
+	void PlayStopAnimation(MonoObject* uiImageRef, bool play);
 
 	//UIButton
     int GetState(MonoObject* uiButtonRef);

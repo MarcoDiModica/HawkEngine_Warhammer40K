@@ -126,6 +126,7 @@ bool UIMainMenuBar::Draw()
 					pressing_play = false;
 					Application->play = true;
 					SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+					
 					SceneManagement->Awake();
 					SceneManagement->Start();
 					Application->scene_serializer->Serialize(std::string("EnigneAssets/" + Application->root->GetActiveScene()->GetName() + ".scene"), true);
@@ -141,6 +142,7 @@ bool UIMainMenuBar::Draw()
 					Application->play = false;
 					isPaused = false;
 					SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
+					Application->audioEngine->StopAllChannels();
 					Application->physicsModule->linkPhysicsToScene = false;
 					Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");
 				}
@@ -150,6 +152,7 @@ bool UIMainMenuBar::Draw()
 					Application->play = true;
 					isPaused = false;
 					SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+					Application->audioEngine->ResumeAllChannels();
 					Application->physicsModule->linkPhysicsToScene = true;
 				}
 			}
@@ -161,6 +164,7 @@ bool UIMainMenuBar::Draw()
 				Application->play = false;
 				isPaused = false;
 				SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
+				Application->audioEngine->StopAllChannels();
 				Application->physicsModule->linkPhysicsToScene = false;
 				Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");				
 			}
@@ -170,6 +174,7 @@ bool UIMainMenuBar::Draw()
 				Application->play = false;
 				isPaused = true;
 				SceneManagement->currentScene->sceneState = Scene::SceneState::PAUSE;
+				Application->audioEngine->PauseAllChannels();
 				Application->physicsModule->linkPhysicsToScene = false;
 			}
 		}

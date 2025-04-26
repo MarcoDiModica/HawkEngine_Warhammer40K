@@ -6,12 +6,12 @@
 
 UIAudioTest::UIAudioTest(UIType type, std::string name) : UIElement(type, name)
 {
-    m_AudioEngine = std::make_shared<AudioEngine>();
-    if (!m_AudioEngine->Initialize()) {
+    //m_AudioEngine = std::make_shared<AudioEngine>();
+    /*if (!m_AudioEngine->Initialize()) {
         LOG(LogType::LOG_ERROR, "Failed to initialize Audio Engine");
     } else {
         LOG(LogType::LOG_OK, "Audio Engine initialized successfully");
-    }
+    }*/
 }
 
 UIAudioTest::~UIAudioTest()
@@ -22,13 +22,13 @@ UIAudioTest::~UIAudioTest()
 
     m_AudioEngine = nullptr;
 
-    if (m_CurrentMusicSource != 0) {
+    /*if (m_CurrentMusicSource != 0) {
 		m_AudioEngine->StopSound(m_CurrentMusicSource);
 	}
 
     if (m_CurrentEffectSource != 0) {
 		m_AudioEngine->StopSound(m_CurrentEffectSource);
-	}
+	}*/
 }
 
 bool UIAudioTest::Draw()
@@ -47,20 +47,20 @@ bool UIAudioTest::Draw()
 
     // Device Information Section
     if (ImGui::CollapsingHeader("Audio Device Info", ImGuiTreeNodeFlags_DefaultOpen)) {
-        if (ImGui::Button("Print Device Info")) {
+        /*if (ImGui::Button("Print Device Info")) {
             m_AudioEngine->PrintAudioDeviceInfo();
         }
         ImGui::SameLine();
         if (ImGui::Button("Print Active Sources")) {
             m_AudioEngine->PrintActiveSourcesInfo();
-        }
+        }*/
     }
 
     // Background Music Section
     if (ImGui::CollapsingHeader("Background Music", ImGuiTreeNodeFlags_DefaultOpen)) {
         ImGui::InputText("Music File Path", m_MusicPath, sizeof(m_MusicPath));
         
-        if (ImGui::Button("Play Music")) {
+        /*if (ImGui::Button("Play Music")) {
             m_CurrentMusicSource = m_AudioEngine->TestPlayMusic(m_MusicPath, true);
         }
         ImGui::SameLine();
@@ -74,7 +74,7 @@ bool UIAudioTest::Draw()
             } else {
                 m_AudioEngine->ResumeSound(m_CurrentMusicSource);
             }
-        }
+        }*/
     }
 
     // Sound Effects Section
@@ -84,7 +84,7 @@ bool UIAudioTest::Draw()
         ImGui::Text("Effect Position");
         ImGui::DragFloat3("Position", m_Position, 0.1f);
         
-        if (ImGui::Button("Play Effect")) {
+        /*if (ImGui::Button("Play Effect")) {
             m_CurrentEffectSource = m_AudioEngine->TestPlaySoundEffect(
                 m_SoundEffectPath, 
                 m_Position[0], 
@@ -95,24 +95,24 @@ bool UIAudioTest::Draw()
         ImGui::SameLine();
         if (ImGui::Button("Stop Effect") && m_CurrentEffectSource != 0) {
             m_AudioEngine->StopSound(m_CurrentEffectSource);
-        }
+        }*/
     }
 
     // Listener Settings
     if (ImGui::CollapsingHeader("Listener Settings", ImGuiTreeNodeFlags_DefaultOpen)) {
         ImGui::Text("Listener Position");
-        if (ImGui::DragFloat3("Listener Pos", m_ListenerPosition, 0.1f)) {
+        /*if (ImGui::DragFloat3("Listener Pos", m_ListenerPosition, 0.1f)) {
             m_AudioEngine->TestSetListenerPosition(
                 m_ListenerPosition[0],
                 m_ListenerPosition[1],
                 m_ListenerPosition[2]
             );
-        }
+        }*/
     }
 
     // Volume Controls
     if (ImGui::CollapsingHeader("Volume Controls", ImGuiTreeNodeFlags_DefaultOpen)) {
-        if (ImGui::SliderFloat("Master Volume", &m_MasterVolume, 0.0f, 1.0f)) {
+        /*if (ImGui::SliderFloat("Master Volume", &m_MasterVolume, 0.0f, 1.0f)) {
             m_AudioEngine->SetMasterVolume(m_MasterVolume);
         }
 
@@ -124,14 +124,14 @@ bool UIAudioTest::Draw()
             if (m_CurrentEffectSource != 0) {
                 m_AudioEngine->SetVolume(m_CurrentEffectSource, m_Volume);
             }
-        }
+        }*/
     }
 
     // Format Testing
     if (ImGui::CollapsingHeader("Format Testing")) {
-        if (ImGui::Button("Test All Formats")) {
+        /*if (ImGui::Button("Test All Formats")) {
             m_AudioEngine->TestPlayAllSupportedFormats();
-        }
+        }*/
     }
 
     ImGui::End();

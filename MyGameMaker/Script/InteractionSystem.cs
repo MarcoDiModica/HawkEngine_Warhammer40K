@@ -9,11 +9,14 @@ public class InteractionSystem : MonoBehaviour
     public float areaInteractionRadius = 3.0f;
 
     private PlayerInput playerInput;
+    private PlayerMovement playerMovement;
     private UIImage interactionImage;
     private bool isInteracting = false;
     private GameObject currentInteractable = null;
     private AreaTrigger currentAreaTrigger = null;
     private bool interactionImageIsEnabled = false;
+
+    private Transform cachedTransform;
 
     public override void Awake()
     {
@@ -24,6 +27,12 @@ public class InteractionSystem : MonoBehaviour
         if (playerInput == null)
         {
             Engineson.print("ERROR: InteractionSystem requires PlayerInput");
+            return;
+        }
+        playerMovement = gameObject.GetComponent<PlayerMovement>();
+        if (playerMovement == null)
+        {
+            Engineson.print("ERROR: InteractionSystem requires PlayerMovement");
             return;
         }
 
@@ -37,19 +46,27 @@ public class InteractionSystem : MonoBehaviour
         {
             Engineson.print("ERROR: InteractionSystem requires a GameObject named InteractText.");
         }
+
+        cachedTransform = gameObject.GetComponent<Transform>();
+        if (cachedTransform == null)
+        {
+            Engineson.print("ERROR: InteractionSystem requires Transform");
+            return;
+        }
     }
 
     public override void Update(float deltaTime)
     {
         if (playerInput == null) return;
+
         CheckForInteractions();
     }
 
     private void CheckForInteractions()
     {
-        var transform = gameObject.GetComponent<Transform>();
+        Vector3 position = cachedTransform.position;
 
-        var interactable = Physics.OverlapSphere(transform.position, interactionRadius, "Interactable")
+        var interactable = Physics.OverlapSphere(position, interactionRadius, "Interactable")
                                   .Select(obj => obj.GetComponent<Item>())
                                   .FirstOrDefault(i => i != null);
 
@@ -62,8 +79,9 @@ public class InteractionSystem : MonoBehaviour
             ShowInteractionMessage(false);
         }
 
-        HandleAreaTriggers(transform);
+        HandleAreaTriggers(position);
     }
+
 
     private void HandleInteraction(Item interactable)
     {
@@ -90,9 +108,9 @@ public class InteractionSystem : MonoBehaviour
         }
     }
 
-    private void HandleAreaTriggers(Transform transform)
+    private void HandleAreaTriggers(Vector3 position)
     {
-        var areaObjects = Physics.OverlapSphere(transform.position, areaInteractionRadius, "AreaTrigger");
+        var areaObjects = Physics.OverlapSphere(position, areaInteractionRadius, "AreaTrigger");
 
         if (areaObjects.Length > 0)
         {

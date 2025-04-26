@@ -38,12 +38,10 @@ public class PlayerShooting : MonoBehaviour
     public bool hasBoltgun = true;
 
     //private AudioSource sound;
-    //private string boltgunEquiped = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunEqquiped.wav";
-    //private string shotgunEquiped = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunEqquiped.wav";
-    //private string railgunEquiped = "Assets/Audio/SFX/Weapons/Railgun/RailgunEqquiped.wav";
-    //private AudioClip boltgunEquipedFX;
-    //private AudioClip shotgunEquipedFX;
-    //private AudioClip railgunEquipedFX;
+    private const string boltgunEquiped = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunEqquiped.wav";
+    private const string shotgunEquiped = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunEqquiped.wav";
+    private const string railgunEquiped = "Assets/Audio/SFX/Weapons/Railgun/RailgunEqquiped.wav";
+
 
     public ParticleFX rifleShotFX;
     public ParticleFX shotgunShotFX;
@@ -84,12 +82,6 @@ public class PlayerShooting : MonoBehaviour
         {
             Engineson.print("ERROR: PlayerShooting requires a Transform component!");
         }
-
-        //sound = gameObject.GetComponent<AudioSource>();
-        //if (sound == null)
-        //{
-        //    Engineson.print("PlayerShooting: Audio component not found");
-        //}
 
         boltgun = gameObject.GetComponent<Boltgun>();
         boltgun.Start();
@@ -142,13 +134,6 @@ public class PlayerShooting : MonoBehaviour
                 shootTimer = 0;
                 break;
         }
-
-        //boltgunEquipedFX = new AudioClip(boltgunEquiped, "BoltgunEquipedFX", false, false);
-        //shotgunEquipedFX = new AudioClip(shotgunEquiped, "ShotgunEquipedFX", false, false);
-        //railgunEquipedFX = new AudioClip(railgunEquiped, "RailgunEquipedFX", false, false);
-        //sound.LoadAudioClip(boltgunEquipedFX);
-        //sound.LoadAudioClip(shotgunEquipedFX);
-        //sound.LoadAudioClip(railgunEquipedFX);
 
     }
 
@@ -346,7 +331,7 @@ public class PlayerShooting : MonoBehaviour
                 shotgunMesh.SetActive(false);
                 boltgunMesh.SetActive(true);
                 railgunMesh.SetActive(false);
-                //sound?.Play(boltgunEquipedFX);
+                int audio = Audio.PlayOneShot(boltgunEquiped);
                 break;
             case GunType.SHOTGUN:
                 shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
@@ -354,7 +339,7 @@ public class PlayerShooting : MonoBehaviour
                 shotgunMesh.SetActive(true);
                 boltgunMesh.SetActive(false);
                 railgunMesh.SetActive(false);
-                //sound?.Play(shotgunEquipedFX);
+                int audioo = Audio.PlayOneShot(shotgunEquiped);
                 break;
             case GunType.RAILGUN:
                 shootCooldown = 1f / railgun.shootCadence * playerData.bonusCadence;
@@ -362,7 +347,7 @@ public class PlayerShooting : MonoBehaviour
                 shotgunMesh.SetActive(false);
                 boltgunMesh.SetActive(false);
                 railgunMesh.SetActive(true);
-                //sound?.Play(railgunEquipedFX);
+                int audiooo = Audio.PlayOneShot(railgunEquiped);
                 break;
         }
         Engineson.print("Changed weapon right");
@@ -407,15 +392,14 @@ public class PlayerShooting : MonoBehaviour
                 boltgunMesh.SetActive(true);
                 shotgunMesh.SetActive(false);
                 railgunMesh.SetActive(false);
-                //sound?.Play(boltgunEquipedFX);
+                int audio = Audio.PlayOneShot(boltgunEquiped);
                 break;
             case GunType.SHOTGUN:
                 shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 boltgunMesh.SetActive(false);
                 shotgunMesh.SetActive(true);
-                railgunMesh.SetActive(false);
-                //sound?.Play(shotgunEquipedFX);
+                int audioo = Audio.PlayOneShot(shotgunEquiped);
                 break;
             case GunType.RAILGUN:
                 shootCooldown = 1f / railgun.shootCadence * playerData.bonusCadence;
@@ -423,7 +407,7 @@ public class PlayerShooting : MonoBehaviour
                 boltgunMesh.SetActive(false);
                 shotgunMesh.SetActive(false);
                 railgunMesh.SetActive(true);
-                //sound?.Play(railgunEquipedFX);
+                int audiooo = Audio.PlayOneShot(railgunEquiped);
                 break;
         }
         Engineson.print("Changed weapon left");

@@ -32,6 +32,6 @@ private:
    FT_Face face;  
 
    std::map<char, Character> Characters;  
-
+   bool isFontLoaded = false;
    GLuint VAO, VBO;  
 };

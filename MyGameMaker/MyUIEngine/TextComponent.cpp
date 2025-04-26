@@ -6,6 +6,7 @@
 #include "../MyUIEngine/FontManager.h"
 #include "../MyUIEngine/UITransformComponent.h"
 #include "../MyGameEngine/CameraComponent.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 TextComponent::TextComponent(GameObject* owner, const std::string& text, const glm::vec2& position, const glm::vec3& color, float fontSize)
     : Component(owner), m_owner(owner), m_text(text), m_position(position), m_color(color), m_fontSize(fontSize)
@@ -55,25 +56,18 @@ void TextComponent::Render() const {
         return;
     }
 
-    CameraComponent* mainCamera = Application->root->mainCamera->GetComponent<CameraComponent>();
-    if (!mainCamera) {
-        std::cerr << "ERROR: No se encontró la cámara principal." << std::endl;
-        return;
-    }
+    float screenWidth = Application->window->width();
+    float screenHeight = Application->window->height();
+	
+    glm::mat4 orthoProjection = glm::ortho(0.0f, (float)screenWidth, 0.0f, (float)screenHeight);
 
-    glm::mat4 projectionMatrix = mainCamera->projection();
-    glm::mat4 viewMatrix = mainCamera->view();
+    glm::mat4 viewMatrix = glm::mat4(1.0f);
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
 
-	glm::mat4 modelMatrix = glm::mat4(1.0f);
     customShader->Bind();
-    customShader->SetUniform("projection", projectionMatrix);
+    customShader->SetUniform("projection", orthoProjection);
     customShader->SetUniform("view", viewMatrix);
-	customShader->SetUniform("model", modelMatrix);
-    customShader->SetUniform("u_HasTexture", true);
-    customShader->SetUniform("modColor", m_color);
-    customShader->SetUniformVec2("SheetSize", sheetSize); 
-	customShader->SetUniformVec2("SpriteSize", spriteSize);
-	customShader->SetUniformVec2("SpriteOffset", spriteOffset);
+    customShader->SetUniform("model", modelMatrix);
 
     glm::vec2 renderPosition = m_position;
     if (m_owner->HasComponent<UITransformComponent>()) {

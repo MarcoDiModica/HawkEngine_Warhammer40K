@@ -61,10 +61,36 @@ bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
             continue;
         }
 
+        // Validar que el glyph tenga un bitmap válido
         if (!face->glyph->bitmap.buffer || face->glyph->bitmap.width == 0 || face->glyph->bitmap.rows == 0) {
-            std::cerr << "[ERROR] Glyph vacío para char '" << c << "' en " << fontPath << std::endl;
+            std::cerr << "[WARNING] Glyph vacío para char '" << c << "' en " << fontPath << ". Usando carácter de reemplazo." << std::endl;
+
+            // Crear un carácter de reemplazo (un cuadro vacío)
+            GLuint emptyTexture;
+            glGenTextures(1, &emptyTexture);
+            glBindTexture(GL_TEXTURE_2D, emptyTexture);
+
+            unsigned char emptyBitmap[4] = { 0, 0, 0, 0 }; // Un píxel transparente
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, emptyBitmap);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+            Character replacementCharacter = {
+                emptyTexture,
+                glm::ivec2(1, 1), // Tamaño de 1x1 píxel
+                glm::ivec2(0, 0), // Sin desplazamiento
+                static_cast<GLuint>(face->glyph->advance.x)
+            };
+            Characters.insert(std::pair<char, Character>(c, replacementCharacter));
             continue;
         }
+
+        int width = face->glyph->bitmap.width;
+        int height = face->glyph->bitmap.rows;
+        std::cout << "[LoadFont] Glyph '" << c << "' - Size: (" << width << "x" << height << ") Pitch: " << face->glyph->bitmap.pitch << "\n";
 
         GLuint texture;
         glGenTextures(1, &texture);
@@ -75,19 +101,16 @@ bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
 
         glBindTexture(GL_TEXTURE_2D, texture);
 
-        int width = face->glyph->bitmap.width;
-        int height = face->glyph->bitmap.rows;
         const unsigned char* buffer = face->glyph->bitmap.buffer;
-
         std::vector<unsigned char> rgbaBuffer(width * height * 4, 255);
         for (int j = 0; j < height; ++j) {
             for (int i = 0; i < width; ++i) {
                 int gray = buffer[j * face->glyph->bitmap.pitch + i];
                 int idx = (j * width + i) * 4;
-                rgbaBuffer[idx + 0] = 255;
-                rgbaBuffer[idx + 1] = 255;
-                rgbaBuffer[idx + 2] = 255;
-                rgbaBuffer[idx + 3] = gray;
+                rgbaBuffer[idx + 0] = 255; // R
+                rgbaBuffer[idx + 1] = 255; // G
+                rgbaBuffer[idx + 2] = 255; // B
+                rgbaBuffer[idx + 3] = gray; // A
             }
         }
 
@@ -123,6 +146,11 @@ bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
 }
 
 void FontManager::RenderTextWithShader(Shaders* shader, const std::string& text, float x, float y, float scale) {
+	
+    if (isFontLoaded == false) {
+		LoadFont("Assets/Arial.ttf", 16);
+		isFontLoaded = true;
+    }
     if (Characters.empty()) {
         std::cerr << "ERROR: No se ha cargado ninguna fuente. Llama a LoadFont primero." << std::endl;
         return;
@@ -130,7 +158,6 @@ void FontManager::RenderTextWithShader(Shaders* shader, const std::string& text,
 
     shader->Bind();
     shader->SetUniform("u_HasTexture", true);
-    shader->SetUniformVec2("SheetSize", glm::vec2(512.0f, 512.0f)); // Placeholder
     shader->SetUniform("modColor", glm::vec4(1.0, 1.0, 1.0, 1.0));
 
     glActiveTexture(GL_TEXTURE0);
@@ -138,6 +165,7 @@ void FontManager::RenderTextWithShader(Shaders* shader, const std::string& text,
 
     for (const char& c : text) {
         if (Characters.find(c) == Characters.end()) {
+            std::cerr << "[RenderText] Warning: Character '" << c << "' not found in font.\n";
             continue;
         }
 
@@ -147,6 +175,13 @@ void FontManager::RenderTextWithShader(Shaders* shader, const std::string& text,
         float ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
         float w = ch.Size.x * scale;
         float h = ch.Size.y * scale;
+
+        if (w <= 0.0f || h <= 0.0f) {
+            std::cerr << "[RenderText] Warning: Invalid character size for '" << c << "', skipping.\n";
+            continue;
+        }
+
+        std::cout << "[RenderText] Drawing char '" << c << "' at (" << xpos << ", " << ypos << ") Size (" << w << "x" << h << ")\n";
 
         float vertices[6][4] = {
             { xpos,     ypos + h,   0.0f, 0.0f },
@@ -161,6 +196,7 @@ void FontManager::RenderTextWithShader(Shaders* shader, const std::string& text,
 
         shader->SetUniformVec2("SpriteOffset", glm::vec2(0.0f, 0.0f));
         shader->SetUniformVec2("SpriteSize", glm::vec2(ch.Size));
+        shader->SetUniformVec2("SheetSize", glm::vec2(ch.Size));
 
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);

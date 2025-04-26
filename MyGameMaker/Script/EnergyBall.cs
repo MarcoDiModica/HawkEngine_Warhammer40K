@@ -55,11 +55,16 @@ public class EnergyBall : BaseAbilities
             }
             energyBall.AddScript("Ball");
             energyBall.GetComponent<Ball>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-            var explosionFX = Engineson.CreateGameObject("ExplosionFX", null);
-            energyBall.AddChild(explosionFX);
-            explosionFX.AddComponent<ParticleFX>().ApplyPreset(12);
-            explosionFX.GetComponent<ParticleFX>().EmitBurst(1);
-            explosionFX.GetComponent<Transform>().SetLocalPosition(0, 0.5f, 0);
+            var energyBallFX = Engineson.CreateGameObject("ExplosionFX", null);
+            energyBall.AddChild(energyBallFX);
+            energyBallFX.AddComponent<ParticleFX>().ApplyPreset(12);
+            //energyBallFX.GetComponent<Transform>().SetLocalPosition(0, 0.5f, 0);
+            energyBallFX.GetComponent<ParticleFX>().EmitBurst(1);
+            energyBallFX.GetComponent<Transform>().SetPosition(
+                energyBall.GetComponent<Transform>().GetPosition().X,
+                energyBall.GetComponent<Transform>().GetPosition().Y,
+                energyBall.GetComponent<Transform>().GetPosition().Z
+            );
             sound.LoadAudio(energyBallSound);
             sound.Play();
             canThrow = false;

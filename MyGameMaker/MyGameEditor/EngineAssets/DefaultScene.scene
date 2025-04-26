@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: MainCamera
-  uuid: 16695947476941305041
+  uuid: 13882981839627654894
   tag: Untagged
   active: true
   isStatic: false
@@ -37,7 +37,7 @@ GameObject0:
   Children: ~
 GameObject1:
   name: Player
-  uuid: 9337344244291884495
+  uuid: 11492685674257281965
   tag: Player
   active: true
   isStatic: false
@@ -177,7 +177,7 @@ GameObject1:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 5621723548040174949
+      uuid: 18395912348173131736
       tag: Untagged
       active: true
       isStatic: false
@@ -220,7 +220,7 @@ GameObject1:
             name: PlayerAnimations
       Children:
         - name: ROOT
-          uuid: 16630984634392991771
+          uuid: 2869804149600857436
           tag: Untagged
           active: true
           isStatic: false
@@ -242,7 +242,7 @@ GameObject1:
                 - 0.99999998914193367
           Children:
             - name: HIP.L
-              uuid: 47767451806615860
+              uuid: 14045285703036131290
               tag: Untagged
               active: true
               isStatic: false
@@ -264,7 +264,7 @@ GameObject1:
                     - 0.99999991970219648
               Children:
                 - name: THIGH.L
-                  uuid: 16489193290253395567
+                  uuid: 3010318464829983948
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -286,7 +286,7 @@ GameObject1:
                         - 1.0000005650391619
                   Children:
                     - name: TIBIA.L
-                      uuid: 12355897282424797940
+                      uuid: 10372765577713065688
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -308,7 +308,7 @@ GameObject1:
                             - 0.99999956912778309
                       Children:
                         - name: FOOT.L
-                          uuid: 8452536580289344077
+                          uuid: 4602088703033252743
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -330,7 +330,7 @@ GameObject1:
                                 - 1.0000002527375222
                           Children:
                             - name: TOE.L
-                              uuid: 15698391704535868528
+                              uuid: 1124100415336983773
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -352,7 +352,7 @@ GameObject1:
                                     - 0.99999998761685238
                               Children: ~
             - name: SPINE
-              uuid: 9147972246200948999
+              uuid: 14045258481309624294
               tag: Untagged
               active: true
               isStatic: false
@@ -374,7 +374,7 @@ GameObject1:
                     - 1.000000238710965
               Children:
                 - name: SHOULDER.L
-                  uuid: 9643919701905036858
+                  uuid: 6672779556647826006
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -396,7 +396,7 @@ GameObject1:
                         - 0.99999991531827592
                   Children:
                     - name: ARM.L
-                      uuid: 2205131953262639692
+                      uuid: 748297803811229434
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -418,7 +418,7 @@ GameObject1:
                             - 0.99999949893507711
                       Children:
                         - name: FOREARM.L
-                          uuid: 14624502542167135510
+                          uuid: 13595787283657075203
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -440,7 +440,7 @@ GameObject1:
                                 - 1.0000003397967103
                           Children:
                             - name: HAND.L
-                              uuid: 9471190330990501712
+                              uuid: 13150757685559043039
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -462,7 +462,7 @@ GameObject1:
                                     - 1.0000000932334743
                               Children:
                                 - name: INDEX1.L
-                                  uuid: 5510522721870377553
+                                  uuid: 18001414276828735248
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -484,7 +484,7 @@ GameObject1:
                                         - 0.9999998877263736
                                   Children:
                                     - name: INDEX2.L
-                                      uuid: 9713158731044697879
+                                      uuid: 17792611479451410184
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -506,7 +506,7 @@ GameObject1:
                                             - 0.99999982530468745
                                       Children:
                                         - name: INDEX3.L
-                                          uuid: 13334139245652876009
+                                          uuid: 11257235958390876408
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -528,7 +528,7 @@ GameObject1:
                                                 - 0.99999996574093175
                                           Children: ~
                                 - name: MIDDLE1.L
-                                  uuid: 18270520720634510201
+                                  uuid: 17318884230182900339
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -550,7 +550,7 @@ GameObject1:
                                         - 0.9999999314739606
                                   Children:
                                     - name: MIDDLE2.L
-                                      uuid: 207662924334095210
+                                      uuid: 18373166630456420551
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -572,7 +572,7 @@ GameObject1:
                                             - 1.0000002597408568
                                       Children:
                                         - name: MIDDLE3.L
-                                          uuid: 9423204414753030909
+                                          uuid: 11511841461369863762
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -594,7 +594,7 @@ GameObject1:
                                                 - 1.0000000424654096
                                           Children: ~
                                 - name: RING1.L
-                                  uuid: 2234998878179765771
+                                  uuid: 5339378479375820924
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -616,7 +616,7 @@ GameObject1:
                                         - 0.99999975811785402
                                   Children:
                                     - name: RING2.L
-                                      uuid: 1519288347915510532
+                                      uuid: 14681292932446405847
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -638,7 +638,7 @@ GameObject1:
                                             - 0.99999983713575435
                                       Children:
                                         - name: RING3.L
-                                          uuid: 7730250207506845993
+                                          uuid: 17911200610274097975
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -660,7 +660,7 @@ GameObject1:
                                                 - 1.0000000884756783
                                           Children: ~
                                 - name: PINKY1.L
-                                  uuid: 793963740965766298
+                                  uuid: 11852116377016311346
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -682,7 +682,7 @@ GameObject1:
                                         - 0.99999982539212873
                                   Children:
                                     - name: PINKY2.L
-                                      uuid: 9911098358555233223
+                                      uuid: 7484481112350531847
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -704,7 +704,7 @@ GameObject1:
                                             - 0.99999993637479012
                                       Children:
                                         - name: PINKY3.L
-                                          uuid: 602325715382428556
+                                          uuid: 26705764708500709
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -726,7 +726,7 @@ GameObject1:
                                                 - 0.99999997752009273
                                           Children: ~
                                 - name: THUMB1.L
-                                  uuid: 1479922466610527664
+                                  uuid: 11947365454662564553
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -748,7 +748,7 @@ GameObject1:
                                         - 0.99999994626556143
                                   Children:
                                     - name: THUMB2.L
-                                      uuid: 8004978680574578585
+                                      uuid: 1929064603046887021
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -770,7 +770,7 @@ GameObject1:
                                             - 0.99999988747372959
                                       Children: ~
                 - name: HEAD
-                  uuid: 11346319853626998416
+                  uuid: 9299312507767481769
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -792,7 +792,7 @@ GameObject1:
                         - 0.99999970071533384
                   Children: ~
                 - name: SHOULDER.R
-                  uuid: 17186075391036281753
+                  uuid: 5068564910546495174
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -814,7 +814,7 @@ GameObject1:
                         - 0.99999978172513138
                   Children:
                     - name: ARM.R
-                      uuid: 10618644295374557431
+                      uuid: 14837619002166477718
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -836,7 +836,7 @@ GameObject1:
                             - 0.99999972491822997
                       Children:
                         - name: FOREARM.R
-                          uuid: 16581765106467249057
+                          uuid: 15093185061437567244
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -858,7 +858,7 @@ GameObject1:
                                 - 1.0000001461277024
                           Children:
                             - name: HAND.R
-                              uuid: 1383990466602224751
+                              uuid: 7707359773488636572
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -880,7 +880,7 @@ GameObject1:
                                     - 1.0000001836582337
                               Children:
                                 - name: INDEX1.R
-                                  uuid: 6213307468784430749
+                                  uuid: 14068365839680255153
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -902,7 +902,7 @@ GameObject1:
                                         - 1.0000000123084496
                                   Children:
                                     - name: INDEX2.R
-                                      uuid: 7616952092591378597
+                                      uuid: 1315538423184555684
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -924,7 +924,7 @@ GameObject1:
                                             - 0.99999997146652764
                                       Children:
                                         - name: INDEX3.R
-                                          uuid: 7227005565187173751
+                                          uuid: 15879301747553328699
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -946,7 +946,7 @@ GameObject1:
                                                 - 0.99999998228083253
                                           Children: ~
                                 - name: MIDDLE1.R
-                                  uuid: 10410554845979035781
+                                  uuid: 11426874374507127766
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -968,7 +968,7 @@ GameObject1:
                                         - 0.99999997937159468
                                   Children:
                                     - name: MIDDLE2.R
-                                      uuid: 8707532883130320934
+                                      uuid: 11859773988605338718
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -990,7 +990,7 @@ GameObject1:
                                             - 1.000000256285531
                                       Children:
                                         - name: MIDDLE3.R
-                                          uuid: 7118971685561109291
+                                          uuid: 12190430282898213160
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -1012,7 +1012,7 @@ GameObject1:
                                                 - 1.0000002165407351
                                           Children: ~
                                 - name: RING1.R
-                                  uuid: 7813332188109052565
+                                  uuid: 16800007293026193856
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -1034,7 +1034,7 @@ GameObject1:
                                         - 0.99999976048893613
                                   Children:
                                     - name: RING2.R
-                                      uuid: 16703789655921344188
+                                      uuid: 9934624619137220181
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -1056,7 +1056,7 @@ GameObject1:
                                             - 0.99999981848065733
                                       Children:
                                         - name: RING3.R
-                                          uuid: 18335731064192539803
+                                          uuid: 12172748112907589343
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -1078,7 +1078,7 @@ GameObject1:
                                                 - 1.000000003179305
                                           Children: ~
                                 - name: PINKY1.R
-                                  uuid: 6735541529312867352
+                                  uuid: 12174337290177396121
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -1100,7 +1100,7 @@ GameObject1:
                                         - 0.99999990066101352
                                   Children:
                                     - name: PINKY2.R
-                                      uuid: 9838164402464876509
+                                      uuid: 10455048570945763430
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -1122,7 +1122,7 @@ GameObject1:
                                             - 0.99999982648011732
                                       Children:
                                         - name: PINKY3.R
-                                          uuid: 4677958101931624781
+                                          uuid: 12364258747378988760
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -1144,7 +1144,7 @@ GameObject1:
                                                 - 0.99999981174326646
                                           Children: ~
                                 - name: THUMB1.R
-                                  uuid: 15487504333470441292
+                                  uuid: 1705400362488294240
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -1166,7 +1166,7 @@ GameObject1:
                                         - 0.9999999479416114
                                   Children:
                                     - name: THUMB2.R
-                                      uuid: 9599182744566676713
+                                      uuid: 18212736709244752936
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -1188,7 +1188,7 @@ GameObject1:
                                             - 1.0000002790110629
                                       Children: ~
             - name: HIP.R
-              uuid: 16457296421611306869
+              uuid: 14039801195661142769
               tag: Untagged
               active: true
               isStatic: false
@@ -1210,7 +1210,7 @@ GameObject1:
                     - 0.99999991446689807
               Children:
                 - name: THIGH.R
-                  uuid: 9481522343383021028
+                  uuid: 8061642166555824429
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -1232,7 +1232,7 @@ GameObject1:
                         - 0.99999974574496309
                   Children:
                     - name: TIBIA.R
-                      uuid: 1381957242131680471
+                      uuid: 770487263117395208
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -1254,7 +1254,7 @@ GameObject1:
                             - 1.0000002759321915
                       Children:
                         - name: FOOT.R
-                          uuid: 127475171858331908
+                          uuid: 6404455444049539978
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -1276,7 +1276,7 @@ GameObject1:
                                 - 1.0000000600245262
                           Children:
                             - name: TOE.R
-                              uuid: 11558114937962960266
+                              uuid: 2811120389502994806
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -1298,7 +1298,7 @@ GameObject1:
                                     - 1.0000001923318333
                               Children: ~
         - name: KNEE.L
-          uuid: 5313931311273304984
+          uuid: 13625621585291010672
           tag: Untagged
           active: true
           isStatic: false
@@ -1320,7 +1320,7 @@ GameObject1:
                 - 1.0000000269113221
           Children: ~
         - name: FOOT.R.002
-          uuid: 5480163258173870498
+          uuid: 17735907386923416757
           tag: Untagged
           active: true
           isStatic: false
@@ -1342,7 +1342,7 @@ GameObject1:
                 - 1.0000018716804941
           Children: ~
         - name: TOE.R.001
-          uuid: 7119126098901973542
+          uuid: 8132458223040152598
           tag: Untagged
           active: true
           isStatic: false
@@ -1364,7 +1364,7 @@ GameObject1:
                 - 1.0000000607157133
           Children: ~
         - name: PIVOTHEEL.L
-          uuid: 7853373983978855021
+          uuid: 13922124198063566907
           tag: Untagged
           active: true
           isStatic: false
@@ -1386,7 +1386,7 @@ GameObject1:
                 - 0.99999999384612981
           Children:
             - name: PIVOTTOE.L
-              uuid: 1872093169812755015
+              uuid: 13661999223527291140
               tag: Untagged
               active: true
               isStatic: false
@@ -1408,7 +1408,7 @@ GameObject1:
                     - 1.000000059433624
               Children:
                 - name: FOOT.L.001
-                  uuid: 18245637602998328202
+                  uuid: 16670348922559052424
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -1430,7 +1430,7 @@ GameObject1:
                         - 1.000000006434989
                   Children:
                     - name: IKLEG.L
-                      uuid: 4501588078675134328
+                      uuid: 9786846886035369814
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -1452,7 +1452,7 @@ GameObject1:
                             - 0.99999987430960269
                       Children: ~
         - name: KNEE.R
-          uuid: 16600420168879005167
+          uuid: 7576048434100258106
           tag: Untagged
           active: true
           isStatic: false
@@ -1474,7 +1474,7 @@ GameObject1:
                 - 1.0000000269113218
           Children: ~
         - name: PIVOTHEEL.R
-          uuid: 9730159666177977561
+          uuid: 8933931733906197109
           tag: Untagged
           active: true
           isStatic: false
@@ -1496,7 +1496,7 @@ GameObject1:
                 - 0.99999999117235117
           Children:
             - name: PIVOTTOE.R
-              uuid: 9612997911627831094
+              uuid: 9866396166229001243
               tag: Untagged
               active: true
               isStatic: false
@@ -1518,7 +1518,7 @@ GameObject1:
                     - 1.0000000002508791
               Children:
                 - name: FOOT.R.001
-                  uuid: 8014367628039130546
+                  uuid: 3081410158512567418
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -1540,7 +1540,7 @@ GameObject1:
                         - 0.99999998338830043
                   Children:
                     - name: IKLEG.R
-                      uuid: 7659585671247954557
+                      uuid: 1663940404367849202
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -1562,7 +1562,7 @@ GameObject1:
                             - 0.99999985974296324
                       Children: ~
     - name: RiffleShotFX
-      uuid: 2134800412118408058
+      uuid: 8414766181563817939
       tag: Untagged
       active: true
       isStatic: false
@@ -1634,7 +1634,7 @@ GameObject1:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 9033385014126874817
+      uuid: 9142749901625859640
       tag: Untagged
       active: true
       isStatic: false
@@ -1706,7 +1706,7 @@ GameObject1:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 7353449555480030372
+      uuid: 14700592735985605482
       tag: Untagged
       active: true
       isStatic: false
@@ -1779,7 +1779,7 @@ GameObject1:
       Children: ~
 GameObject2:
   name: Cube
-  uuid: 8901877163723352364
+  uuid: 3501428071700559502
   tag: Untagged
   active: true
   isStatic: false
@@ -1819,7 +1819,7 @@ GameObject2:
   Children: ~
 GameObject3:
   name: Floor
-  uuid: 18198068157288626001
+  uuid: 16534436333524523621
   tag: Untagged
   active: true
   isStatic: false
@@ -1866,7 +1866,7 @@ GameObject3:
   Children: ~
 GameObject4:
   name: shotgun
-  uuid: 16316304842133430646
+  uuid: 648020924001659687
   tag: Weapon
   active: true
   isStatic: false
@@ -1915,7 +1915,7 @@ GameObject4:
         name: ShotgunPickUp
   Children:
     - name: bOLTER.010
-      uuid: 778284333087259074
+      uuid: 17784765423588156177
       tag: Untagged
       active: true
       isStatic: false
@@ -1951,7 +1951,7 @@ GameObject4:
           enabled: true
       Children: ~
     - name: Cone
-      uuid: 8924315723197177200
+      uuid: 3327547846430657182
       tag: Untagged
       active: true
       isStatic: false
@@ -1988,7 +1988,7 @@ GameObject4:
       Children: ~
 GameObject5:
   name: bOLTER.012
-  uuid: 11223742656887352971
+  uuid: 4471948899905019320
   tag: Weapon
   active: true
   isStatic: false

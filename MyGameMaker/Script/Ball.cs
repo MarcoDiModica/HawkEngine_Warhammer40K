@@ -15,6 +15,10 @@ public class Ball : MonoBehaviour
     private float damage = 100.0f; // Placeholder damage value
     public override void Awake(){ }
 
+    public override void Start() 
+    {
+        
+    }
     public void Init(Vector3 pos, Vector3 dir)
     {
         //AddComponent<MeshRenderer>();
@@ -28,13 +32,6 @@ public class Ball : MonoBehaviour
         rigidbody.AddForce(dir * 20);
         rigidbody.SetFriction(0.5f);
         
-        //explosionFX.GetComponent<Transform>().SetPosition(
-        //    GetComponent<Transform>().GetPosition().X,
-        //    GetComponent<Transform>().GetPosition().Y,
-        //    GetComponent<Transform>().GetPosition().Z
-        //);
-
-
     }
     public override void Update(float deltaTime)
     {
@@ -47,8 +44,8 @@ public class Ball : MonoBehaviour
                 needsDestroy = false;
             }
         }
-
         
+
     }
 
     public override void OnCollisionEnter(GameObject other)

@@ -58,6 +58,15 @@ GameObject1:
         - 1
         - 1
         - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -108,15 +117,6 @@ GameObject1:
         useColorGradient: false
         texturePath: Assets/Textures/Smoke30Frames.png
       particleType: 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -256,9 +256,9 @@ GameObject1:
                     - 2.6553018983577203e-07
                     - 9.2420677333393542e-08
                   localRotation:
-                    - -179.99991219033797
-                    - -80.537941307777757
-                    - 89.999963591888033
+                    - -179.99991219018011
+                    - -80.537932598482087
+                    - 89.999963591731699
                   localScale:
                     - 0.99999988079071045
                     - 0.99999988079071045
@@ -367,8 +367,8 @@ GameObject1:
                     - -2.0992075633330387e-08
                   localRotation:
                     - -3.9215701005733474
-                    - -1.0997626400734465e-07
-                    - -2.3444299529292963e-09
+                    - -1.099762767357176e-07
+                    - -2.3444299149690838e-09
                   localScale:
                     - 1
                     - 1.0000001192092896
@@ -652,9 +652,9 @@ GameObject1:
                                                 - 0.10049884766340256
                                                 - -2.5751536014695375e-08
                                               localRotation:
-                                                - 0.42800715254296345
-                                                - 0.62468665839756499
-                                                - -54.245444859837356
+                                                - 0.42800717687001355
+                                                - 0.62468661090340571
+                                                - -54.245444859882127
                                               localScale:
                                                 - 1
                                                 - 1.0000002384185791
@@ -1202,9 +1202,9 @@ GameObject1:
                     - 2.6553018983577203e-07
                     - 9.2420677333393542e-08
                   localRotation:
-                    - -179.99991219033797
-                    - 80.537941307777757
-                    - -89.999963591888033
+                    - -179.99991219018011
+                    - 80.537932598482087
+                    - -89.999963591731699
                   localScale:
                     - 0.99999988079071045
                     - 0.99999988079071045
@@ -1334,9 +1334,9 @@ GameObject1:
                 - 0.37999996542930603
                 - 0.20000019669532776
               localRotation:
-                - -73.329141511362707
-                - 82.371871449772556
-                - 106.8113751555379
+                - -73.329117829065169
+                - 82.371859603987076
+                - 106.81139641764037
               localScale:
                 - 1
                 - 1.0000003576278687
@@ -1356,9 +1356,9 @@ GameObject1:
                 - -0.52000004053115845
                 - 0.14000017940998077
               localRotation:
-                - 152.9475561881525
-                - -87.530026022520872
-                - -152.96915467422059
+                - 152.94752092720447
+                - -87.530080872504342
+                - -152.96913390474714
               localScale:
                 - 0.99999994039535522
                 - 1
@@ -1378,9 +1378,9 @@ GameObject1:
                 - 0.54000002145767212
                 - 0.068000182509422302
               localRotation:
-                - -29.686067472641348
-                - -87.462832767252081
-                - -150.3381906770822
+                - -29.686065708290457
+                - -87.462889166935355
+                - -150.33820330983846
               localScale:
                 - 0.99999982118606567
                 - 1.0000001192092896
@@ -1466,9 +1466,9 @@ GameObject1:
                 - -1.4360001087188721
                 - 1.5000002384185791
               localRotation:
-                - -4.6045633411552916e-10
+                - -4.6074420611213432e-10
                 - 89.690738643731535
-                - -179.99999134857813
+                - -179.99999134857788
               localScale:
                 - 1
                 - 1
@@ -1488,9 +1488,9 @@ GameObject1:
                 - 0.41999998688697815
                 - 0.068000182509422302
               localRotation:
-                - -27.052851248505842
-                - 87.528346350212786
-                - 152.96885110606436
+                - -27.052908192244718
+                - 87.528236590938789
+                - 152.96880624023257
               localScale:
                 - 0.99999988079071045
                 - 1.0000001192092896
@@ -1800,6 +1800,15 @@ GameObject2:
         - 1
         - 1
         - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -1819,15 +1828,6 @@ GameObject2:
         - 0
         - 1
         - 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -4545,6 +4545,15 @@ GameObject3:
         - 1
         - 1
         - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -4564,15 +4573,6 @@ GameObject3:
         - 0
         - 1
         - 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -4880,7 +4880,7 @@ GameObject4:
   name: Canvas_OptionsMenu
   uuid: 11199687553851354564
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -4898,15 +4898,6 @@ GameObject4:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -4926,6 +4917,15 @@ GameObject4:
         - 0
         - 1
         - 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -5932,6 +5932,694 @@ GameObject4:
           position:
             - 0.598999977
             - 0.504999995
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_right_hovered.png
+          use_animation: false
+          sprite_size:
+            - 28
+            - 30
+          sheet_size:
+            - 28
+            - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: BGM_bar
+      uuid: 12307474310206640511
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.479999989
+            - 0.545000017
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0970000029
+            - 0.0599999987
+            - 1
+          pivot_offset:
+            - 0
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_sliderBar.png
+          use_animation: false
+          sprite_size:
+            - 234
+            - 22
+          sheet_size:
+            - 234
+            - 22
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: BGM_slider
+      uuid: 15669669105475428713
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.574999988
+            - 0.545000017
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00999999978
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_slider.png
+          use_animation: false
+          sprite_size:
+            - 14
+            - 43
+          sheet_size:
+            - 14
+            - 43
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: BGM_left
+      uuid: 7810721967217168916
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.474999994
+            - 0.545000017
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_left.png
+          use_animation: false
+          sprite_size:
+            - 24
+            - 30
+          sheet_size:
+            - 24
+            - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: BGM_right
+      uuid: 12716039150984572011
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.600000024
+            - 0.545000017
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_right.png
+          use_animation: false
+          sprite_size:
+            - 24
+            - 30
+          sheet_size:
+            - 24
+            - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: BGM_lefthover
+      uuid: 4408088665495761672
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.476000011
+            - 0.545000017
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_left_hovered.png
+          use_animation: false
+          sprite_size:
+            - 28
+            - 30
+          sheet_size:
+            - 28
+            - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: BGM_righthover
+      uuid: 6808702941255626575
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.598999977
+            - 0.545000017
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_right_hovered.png
+          use_animation: false
+          sprite_size:
+            - 28
+            - 30
+          sheet_size:
+            - 28
+            - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: SFX_bar
+      uuid: 7066989023326374973
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.479999989
+            - 0.584999979
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0970000029
+            - 0.0599999987
+            - 1
+          pivot_offset:
+            - 0
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_sliderBar.png
+          use_animation: false
+          sprite_size:
+            - 234
+            - 22
+          sheet_size:
+            - 234
+            - 22
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: SFX_slider
+      uuid: 7020127028926549303
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.574999988
+            - 0.584999979
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00999999978
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_slider.png
+          use_animation: false
+          sprite_size:
+            - 14
+            - 43
+          sheet_size:
+            - 14
+            - 43
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: SFX_left
+      uuid: 1487120735255696772
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.474999994
+            - 0.584999979
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_left.png
+          use_animation: false
+          sprite_size:
+            - 24
+            - 30
+          sheet_size:
+            - 24
+            - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: SFX_right
+      uuid: 8357628846653034722
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.600000024
+            - 0.584999979
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_right.png
+          use_animation: false
+          sprite_size:
+            - 24
+            - 30
+          sheet_size:
+            - 24
+            - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: SFX_lefthover
+      uuid: 9675554126862746947
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.476000011
+            - 0.584999979
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_left_hovered.png
+          use_animation: false
+          sprite_size:
+            - 28
+            - 30
+          sheet_size:
+            - 28
+            - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: SFX_righthover
+      uuid: 6675588602036596279
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.598999977
+            - 0.584999979
             - 0
           rotation:
             - 0

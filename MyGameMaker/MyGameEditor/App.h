@@ -62,6 +62,41 @@ public:
 	// Add a new module to handle
 	void AddModule(Module* module, bool activate);
 
+	void LoadAllParticleTextures() {
+		// Lista de texturas utilizadas en los presets
+		std::vector<std::string> texturePaths = {
+			"Assets/Textures/Smoke30Frames.png",
+			"Assets/Textures/fire_spritesheet.png",
+			"Assets/Textures/smoke_spritesheet.png",
+			"Assets/Textures/ixplosion.png",
+			"Assets/Textures/muzzle.png",
+			"Assets/Textures/ShotGun Muzzle Flash_Spritesheet_Yiwei.png",
+			"Assets/Textures/EnemyDash.png",
+			"Assets/Textures/Acid_Splash.png",
+			"Assets/Textures/acid_puddle.png",
+			"Assets/Textures/ElectricityBall.png",
+			"Assets/Textures/RailGunAuto.png",
+			"Assets/Textures/RailGunSemi.png",
+			"Assets/Textures/dropplet.png",
+			"Assets/Textures/Spark.png",
+			"Assets/Textures/thundaaar2.png",
+			"Assets/Textures/Medicae_Stim.png",
+			"Assets/Textures/Project3_Velocity_effect.png",
+			"Assets/Textures/Project3_AmmunitionBlessing_effect_Yiwei.png",
+			"Assets/Textures/BloodSplash_decals1_Yiwei.png"
+		};
+
+		for (const auto& path : texturePaths) {
+			auto image = std::make_shared<Image>();
+			if (image->LoadTexture(path)) {
+				Application->loadedPartTextures[path] = image;
+			}
+			else {
+				std::cerr << "Failed to load texture: " << path << std::endl;
+			}
+		}
+	}
+
 	Window* window = nullptr;
 	Input* input = nullptr;
 	HardwareInfo* hardwareInfo = nullptr;
@@ -75,6 +110,7 @@ public:
 
 
 	Mesh ElMesh;
+	std::unordered_map<std::string, std::shared_ptr<Image>> loadedPartTextures;
 
 	bool play = false;
 	bool hasChangedScene = false;

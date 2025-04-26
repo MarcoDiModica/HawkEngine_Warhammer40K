@@ -886,6 +886,7 @@ int main(int argc, char** argv) {
 
 			Application->physicsModule->Awake();
 			Application->audioEngine->Init();
+			Application->LoadAllParticleTextures();
 			if (Application->Awake()) { state = START; }
 			else { printf("Failed on Awake"); state = FAIL; }
 			break;

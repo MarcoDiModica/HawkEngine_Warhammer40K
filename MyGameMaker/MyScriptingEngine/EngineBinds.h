@@ -145,12 +145,29 @@ namespace EngineBinds {
 	MonoObject* Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance, glm::vec3& hitPoint, glm::vec3& normal, float& distance);
     
     //Audio
-    void Play(MonoObject* audioRef, MonoString* path);
-    void Stop(MonoObject* audioRef, MonoString* path);
-    void Pause(MonoObject* audioRef, MonoString* path);
-    void Resume(MonoObject* audioRef, MonoString* path);
-    void SetVolume(MonoObject* audioRef, MonoString* path, float volume);
-	void LoadAudioClip(MonoObject* audioRef, MonoString* path, bool loop);
+	static int AudioPlay(MonoString* path, bool loop);
+	static int AudioPlayOneShot(MonoString* path);
+	static void AudioStop(int audioId);
+	static void AudioStopPath(MonoString* path);
+	static void AudioPause(int audioId);
+	static void AudioPausePath(MonoString* path);
+	static void AudioResume(int audioId);
+	static void AudioResumePath(MonoString* path);
+	static int AudioPlayMusic(MonoString* path);
+	static void AudioStopMusic(MonoString* path);
+	static void AudioStopAllMusic();
+	static float AudioGetMasterVolume();
+	static void AudioSetMasterVolume(float volume);
+	static float AudioGetMusicVolume();
+	static void AudioSetMusicVolume(float volume);
+	static float AudioGetSfxVolume();
+	static void AudioSetSfxVolume(float volume);
+	static void AudioSetVolumeById(int audioId, float volume);
+	static void AudioSetVolumeByPath(MonoString* path, float volume);
+	static void AudioStopAll();
+	static void AudioPauseAll();
+	static void AudioResumeAll();
+	static void AudioSchedulePlay(MonoString* path, float delay, bool loop);
 
     //UIImage
     void SetTexture(MonoObject* uiImageRef, MonoString* path);

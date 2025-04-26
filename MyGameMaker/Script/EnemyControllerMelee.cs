@@ -46,6 +46,22 @@ public class EnemyControllerMelee : EnemyController
     private float pathSmoothingFactor = 0.2f;
     private List<Vector3> smoothedVelocity = new List<Vector3>();
 
+    private float obstacleDetectDist = 5.0f; 
+    private bool isAvoidingObstacle = false;
+    private Vector3 avoidDirection = Vector3.Zero;
+    private float avoidRotationSpeed = 5f;
+    private float avoidTimer = 0f;
+    private float avoidTimeLimit = 1.0f;
+    private static readonly Random _rng = new Random();
+
+
+    private Vector3 GetDodgeDirection(Vector3 forward)
+    {
+        Vector3 left = Vector3.Normalize(new Vector3(-forward.Z, 0, forward.X));
+        Vector3 right = Vector3.Normalize(new Vector3(forward.Z, 0, -forward.X));
+        return (_rng.NextDouble() < 0.5) ? left : right;
+    }
+
     public override void Awake()
     {
         music = gameObject.GetComponent<Audio>();
@@ -226,57 +242,93 @@ public class EnemyControllerMelee : EnemyController
 
                 if (chasePath != null && pathPointIndex < chasePath.Count)
                 {
-                    int furthestVisibleIndex = pathPointIndex;
                     Vector3 myPos = enemyTransform.position;
+                    Vector3 targetPosition = chasePath[pathPointIndex];
+                    Vector3 toTarget = targetPosition - myPos;
+                    float dist = toTarget.Length();
 
-                    for (int i = pathPointIndex + 1; i < Math.Min(chasePath.Count, pathPointIndex + 4); i++)
+                    if (dist < 0.5f)
                     {
-                        Vector3 pointPos = chasePath[i];
-                        Vector3 dirToPoint = pointPos - myPos;
-                        float distToPoint = dirToPoint.Length();
-
-                        if (distToPoint > 0.1f)
-                        {
-                            // si es visible el target
-                        }
+                        pathPointIndex++;
+                        break;
                     }
 
-                    Vector3 targetPosition = chasePath[furthestVisibleIndex];
-                    Vector3 delta = targetPosition - myPos;
-                    float distance = delta.Length();
+                    Vector3 forward = Vector3.Normalize(toTarget);
+                    GameObject hitObject = null;
 
-                    if (distance < 0.5f)
                     {
-                        pathPointIndex = furthestVisibleIndex + 1;
+                        RayCast ray = new RayCast();
+                        ray.PerformRaycast(myPos, forward, obstacleDetectDist);
+                        if (ray.hit.isHit)
+                            hitObject = ray.hit.gameObject;
+                    }
 
-                        if (pathPointIndex >= chasePath.Count && chasePath.Count > 0)
+                    if (!isAvoidingObstacle)
+                    {
+                        if (hitObject != null && hitObject.tag == "Obstacle")
                         {
-                            float distanceToPlayerNow = Vector3.Distance(myPos, playerTransform.position);
-                            if (distanceToPlayerNow > 1.5f)
-                            {
-                                chasePath = pathfinder.FindPath(myPos, playerTransform.position);
-                                if (chasePath != null && chasePath.Count > 1)
-                                {
-                                    pathPointIndex = 1;
-                                    smoothedVelocity.Clear();
-                                }
-                            }
+                            isAvoidingObstacle = true;
+                            avoidDirection = GetDodgeDirection(forward);
+                            avoidTimer = 0f;
+                        }
+                        else
+                        {
+                            moveDirection = forward;
                         }
                     }
                     else
                     {
-                        Vector3 moveDir = Vector3.Normalize(delta);
-                        moveDirection = moveDir;
+                        avoidTimer += deltaTime;
 
-                        Vector3 desiredVelocity = moveDir * speedMovement;
-                        Vector3 currentVelocity = rb.GetVelocity();
+                        if (avoidTimer >= avoidTimeLimit)
+                        {
+                            moveDirection = avoidDirection;
+                        }
+                        else
+                        {
+                            bool forwardBlocked = false;
+                            {
+                                RayCast ray = new RayCast();
+                                ray.PerformRaycast(myPos, forward, obstacleDetectDist);
+                                forwardBlocked = ray.hit.isHit && ray.hit.gameObject.tag == "Obstacle";
+                            }
 
-                        Vector3 smoothedVel = SmoothVelocity(desiredVelocity, currentVelocity, deltaTime);
-                        rb.SetVelocity(smoothedVel);
-
-                        anim.SetRunningAnimation();
-                        isRunning = true;
+                            if (!forwardBlocked)
+                            {
+                                isAvoidingObstacle = false;
+                                moveDirection = forward;
+                            }
+                            else
+                            {
+                                {
+                                    RayCast checkDodge = new RayCast();
+                                    checkDodge.PerformRaycast(myPos, avoidDirection, obstacleDetectDist);
+                                    if (checkDodge.hit.isHit && checkDodge.hit.gameObject.tag == "Obstacle")
+                                    {
+                                        avoidDirection = -avoidDirection;
+                                    }
+                                }
+                                moveDirection = avoidDirection;
+                            }
+                        }
                     }
+                    float currentYAngle = enemyTransform.eulerAngles.Y;
+                    float targetYAngle = (float)(Math.Atan2(moveDirection.X, moveDirection.Z) * 180.0 / Math.PI);
+                    float deltaAngle = targetYAngle - currentYAngle;
+                    while (deltaAngle > 180f) deltaAngle -= 360f;
+                    while (deltaAngle < -180f) deltaAngle += 360f;
+                    float newY = currentYAngle + deltaAngle * Math.Min(1f, avoidRotationSpeed * deltaTime);
+                    collider.SetRotation(
+                        Quaternion.CreateFromYawPitchRoll(newY * ((float)Math.PI / 180f), 0, 0)
+                    );
+
+                    Vector3 desiredVel = moveDirection * speedMovement;
+                    Vector3 currVel = rb.GetVelocity();
+                    Vector3 smoothVel = SmoothVelocity(desiredVel, currVel, deltaTime);
+                    rb.SetVelocity(smoothVel);
+
+                    anim.SetRunningAnimation();
+                    isRunning = true;
                 }
                 else if (chasePath == null || chasePath.Count == 0)
                 {

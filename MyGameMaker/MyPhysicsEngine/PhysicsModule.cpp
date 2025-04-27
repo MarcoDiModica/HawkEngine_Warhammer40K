@@ -594,7 +594,25 @@ GameObject* PhysicsModule::Raycast(btVector3& origin, btVector3& direction, floa
     return nullptr;
 }
 
+void PhysicsModule::ResetAllColliderTransforms() {
+    for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+        BaseColliderComponent* collider = nullptr;
 
+        if (gameObject->HasComponent<BoxColliderComponent>()) {
+            collider = gameObject->GetComponent<BoxColliderComponent>();
+        }
+        else if (gameObject->HasComponent<CapsuleColliderComponent>()) {
+            collider = gameObject->GetComponent<CapsuleColliderComponent>();
+        }
+        else if (gameObject->HasComponent<MeshColliderComponent>()) {
+            collider = gameObject->GetComponent<MeshColliderComponent>();
+        }
+
+        if (collider) {
+            collider->SnapToPosition();
+        }
+    }
+}
 
 
 

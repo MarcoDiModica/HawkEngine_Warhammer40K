@@ -25,10 +25,10 @@ public class EnemyControllerBossTail : EnemyController
 
     private Vector3[] fixedPositions = new Vector3[]
     {
-        new Vector3(10, 0, -10),
-        new Vector3(-10, 0, -10),
-        new Vector3(10, 0, 10),
-        new Vector3(-10, 0, 10)
+        new Vector3(-108.0f, 10.0f, -32.0f),
+        new Vector3(-108.0f, 10.0f, 29.0f),
+        new Vector3(-41.0f, 10.0f, -32.0f),
+        new Vector3(-41.0f, 10.0f, 29.0f)
     };
     private int currentPositionIndex = -1;
 
@@ -226,7 +226,7 @@ public class EnemyControllerBossTail : EnemyController
         hurtbox.tag = "EnemyAttack";
 
         Vector3 direction = enemyTransform.forward;
-        float range = 5f;
+        float range = 10f;
         float width = 2.5f;
         float height = 2f;
         float angle = (float)Math.Atan2(direction.X, direction.Z);
@@ -257,7 +257,7 @@ public class EnemyControllerBossTail : EnemyController
         float angle = (float)Math.Atan2(direction.X, direction.Z);
         Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, angle);
 
-        float length = 8f;
+        float length = 20f;
         float width = 1f;
         Vector3 position = enemyTransform.position + direction * (length / 2f);
 

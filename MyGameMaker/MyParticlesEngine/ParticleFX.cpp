@@ -565,20 +565,20 @@ namespace ParticlePresets {
 	ParticleType::ENVIRONMENT_DROPPLET,
 	true,						   // PlayOnAwake
 	5,						   // Duration (only if one-shot)
-	glm::vec3(1,1,1),   // Start color (light gray)
-	glm::vec3(1,1,1),   // End color (dark gray)
+	glm::vec3(74.0 /255.0, 65.0/255.0, 42.0/255.0),   // Start color (light gray)
+	glm::vec3(74.0 / 255.0, 65.0 / 255.0, 42.0 / 255.0),    // End color (dark gray)
 	1.0f,                          // Alpha start
 	1.0f,                          // Alpha end
 	1.0f,                          // Size start
 	1.0f,                          // Size end
 	3.5f,                          // Min lifetime
 	4.0f,                          // Max lifetime
-	0.0f,                          // Min speed
-	0.0f,                          // Max speed
+	1.0f,                          // Min speed
+	1.5f,                          // Max speed
 	0.0f,						   // End Speed
 	glm::vec3(0.0f,-10.0f,0.0f),	   // Gravity (negative for upward)
 	0,                          // Rotation speed
-	1,                         // Emission rate (particles per second)
+	0.2f,                         // Emission rate (particles per second)
 	EmitterShape::POINT,            // Shape
 	0.1f,                          // Cone base radius
 	1.0f,                          // Cone height
@@ -589,8 +589,8 @@ namespace ParticlePresets {
 	0.05f,						   // Animation speed
 	180.0f,						   // Start rotation
 	false,						   // Random rotation
-	0.3f,						   // Min scale
-	0.3f,						   // Max scale
+	1.0f,						   // Min scale
+	1.5f,						   // Max scale
 	"Assets/Textures/dropplet.png", // Texture path
 	false						   // Is Local Space
 	};
@@ -599,8 +599,8 @@ namespace ParticlePresets {
 	ParticleType::ENVIRONMENT_SPARK,
 	true,						   // PlayOnAwake
 	5,						   // Duration (only if one-shot)
-	glm::vec3(1,1,1),   // Start color (light gray)
-	glm::vec3(1,1,1),   // End color (dark gray)
+	glm::vec3(1,0,1),   // Start color (light gray)
+	glm::vec3(1,0,1),   // End color (dark gray)
 	1.0f,                          // Alpha start
 	1.0f,                          // Alpha end
 	3.0f,                          // Size start

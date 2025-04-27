@@ -492,9 +492,6 @@ void PhysicsModule::CheckCollisions() {
 
 
 bool PhysicsModule::Update(double dt) {
-#ifndef _BUILD
-    DrawDebugDrawer();
-#endif // !_BUILD
 
 #ifdef PROFILE
     OPTICK_EVENT();

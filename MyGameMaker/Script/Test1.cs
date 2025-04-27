@@ -77,16 +77,16 @@ public class Test1 : MonoBehaviour
         bool isMoving = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
                     Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
 
-        if (isMoving && !isWalkingSoundPlaying)
-        {
-            walkingSoundId = Audio.Play(SFX_FOOTSTEP, loop: true);
-            isWalkingSoundPlaying = true;
-        }
-        else if (!isMoving && isWalkingSoundPlaying)
-        {
-            Audio.Stop(walkingSoundId);
-            isWalkingSoundPlaying = false;
-        }
+        //if (isMoving && !isWalkingSoundPlaying)
+        //{
+        //    walkingSoundId = Audio.Play(SFX_FOOTSTEP, loop: true);
+        //    isWalkingSoundPlaying = true;
+        //}
+        //else if (!isMoving && isWalkingSoundPlaying)
+        //{
+        //    Audio.Stop(walkingSoundId);
+        //    isWalkingSoundPlaying = false;
+        //}
     }
 
     private bool IsPlaying(int audioId)

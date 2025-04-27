@@ -1,17 +1,17 @@
-name: stim.001_1
-prefabPath: ""
-uuid: 5036070449053879695
+name: stim.001_1_1_Instance
+prefabPath: Assets\Prefabs\MedicaeStimmPrefab.prefab.yaml
+uuid: 2015743065372181199
 tag: PowerUp
-active: false
+active: true
 isStatic: false
 Components:
   Transform_Component:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 10
+      - 2.6485965251922607
       - 3
-      - 5
+      - -14.520302772521973
     localRotation:
       - 0
       - -0
@@ -31,9 +31,6 @@ Components:
       - 1
       - 1
       - 1
-  Shader:
-    name: Shader
-    enabled: true
   BoxColliderComponent:
     size:
       - 1
@@ -44,6 +41,31 @@ Components:
       - 0
       - 0
     isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.20000000298023224
+      - 0.80000001192092896
+      - 0.20000000298023224
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - 1
+      - 1
+      - 1
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 7.19999981
+    intensity: 2.5
+    direction:
+      - -1
+      - -1
+      - 0
   ScriptComponents:
     Script0:
       name: MedicaeStimm

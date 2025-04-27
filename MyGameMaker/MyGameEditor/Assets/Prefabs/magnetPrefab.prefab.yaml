@@ -1,17 +1,17 @@
-name: magnet.001_1
-prefabPath: ""
-uuid: 9498214317621616040
+name: magnet.001_1_1_Instance
+prefabPath: Assets\Prefabs\magnetPrefab.prefab.yaml
+uuid: 2436652902732066924
 tag: PowerUp
-active: false
+active: true
 isStatic: false
 Components:
   Transform_Component:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 0
+      - 1.9941643476486206
       - 3
-      - -10
+      - -14.749327659606934
     localRotation:
       - 0
       - -0
@@ -31,9 +31,6 @@ Components:
       - 1
       - 1
       - 1
-  Shader:
-    name: Shader
-    enabled: true
   BoxColliderComponent:
     size:
       - 1
@@ -44,6 +41,31 @@ Components:
       - 0
       - 0
     isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.63813233375549316
+      - 0.6314658522605896
+      - 0.29547762870788574
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - 1
+      - 1
+      - 1
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 10
+    intensity: 2.5
+    direction:
+      - -1
+      - -1
+      - 0
   ScriptComponents:
     Script0:
       name: Magnet

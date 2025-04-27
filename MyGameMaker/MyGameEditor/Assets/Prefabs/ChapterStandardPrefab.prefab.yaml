@@ -1,6 +1,6 @@
-name: estandarte.001_1
-prefabPath: ""
-uuid: 2837259723708779123
+name: estandarte.001_1_1_Instance
+prefabPath: Assets\Prefabs\ChapterStandardPrefab.prefab.yaml
+uuid: 1608509582278439579
 tag: PowerUp
 active: true
 isStatic: false
@@ -9,9 +9,9 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - -30
+      - 0.67105412483215332
       - 3
-      - 0
+      - -15.855119705200195
     localRotation:
       - 0
       - -0
@@ -31,9 +31,6 @@ Components:
       - 1
       - 1
       - 1
-  Shader:
-    name: Shader
-    enabled: true
   BoxColliderComponent:
     size:
       - 1
@@ -41,9 +38,34 @@ Components:
       - 1
     offset:
       - 0
-      - 2.5
+      - -0.699999988
       - 0
     isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.85992217063903809
+      - 0.63135254383087158
+      - 0.097034022212028503
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - 1
+      - 1
+      - 1
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 6.5999999
+    intensity: 2.5
+    direction:
+      - -1
+      - -1
+      - 0
   ScriptComponents:
     Script0:
       name: ChapterStandard

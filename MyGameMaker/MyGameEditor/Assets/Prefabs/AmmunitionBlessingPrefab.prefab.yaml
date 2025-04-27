@@ -1,6 +1,6 @@
-name: bullett.001_1
-prefabPath: ""
-uuid: 13457631755286323286
+name: bullett.001_1_1_Instance
+prefabPath: Assets\Prefabs\AmmunitionBlessingPrefab.prefab.yaml
+uuid: 13768086689783007896
 tag: PowerUp
 active: true
 isStatic: false
@@ -11,7 +11,7 @@ Components:
     localPosition:
       - 0
       - 3
-      - 10
+      - -14.595637321472168
     localRotation:
       - 0
       - -0
@@ -31,9 +31,6 @@ Components:
       - 1
       - 1
       - 1
-  Shader:
-    name: Shader
-    enabled: true
   BoxColliderComponent:
     size:
       - 1
@@ -44,6 +41,31 @@ Components:
       - 0
       - 0
     isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.7708544135093689
+      - 0.85603111982345581
+      - 0.14988872408866882
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - 1
+      - 1
+      - 1
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 5.69999981
+    intensity: 2.5
+    direction:
+      - -1
+      - -1
+      - 0
   ScriptComponents:
     Script0:
       name: AmmunitionBlessing

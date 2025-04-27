@@ -184,9 +184,9 @@ void Material::SaveBinary(const std::string& filename) const {
 		std::filesystem::create_directory("Library/Materials");
 	}
 
-	if (std::filesystem::exists(fullPath)) {
-		return;
-	}
+	//if (std::filesystem::exists(fullPath)) {
+	//	return;
+	//}
 
 	std::ofstream fout(fullPath, std::ios::binary);
 	if (!fout.is_open()) {

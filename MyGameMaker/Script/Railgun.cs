@@ -18,9 +18,9 @@ public class Railgun : BaseWeapon
     public PlayerData playerData;
 
     private RedThirstManager redThirstManager;
-    //private Audio sound;
-    //private string railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
-    //private string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
+
+    private const string  railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
+    private const string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
 
     private float timeSinceLastShot = 0.0f;
 
@@ -55,7 +55,6 @@ public class Railgun : BaseWeapon
         timeToLerp = 2;
         ammoType = AmmoType.RAILGUN;
         transform = gameObject.GetComponent<Transform>();
-        //sound = gameObject.GetComponent<Audio>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
         toggleMode = gameObject.GetComponent<ToggleMode>();
@@ -150,13 +149,16 @@ public class Railgun : BaseWeapon
                             case "Boss":
                                 hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
                                 break;
+                            case "Warrior":
+                                hitObject.GetComponent<EnemyControllerWarrior>()?.TakeDamage(finalDamage);
+                                break;
                             case "Destroyable":
                                 hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
                                 break;
                         }
                     }
 
-                    if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss"))
+                    if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss" && tag != "Warrior"))
                     {
                         shouldDestroy = true;
                     }
@@ -190,8 +192,7 @@ public class Railgun : BaseWeapon
             if (!playerData.infiniteBullets)
                 currentMagazineAmmo--;
 
-            //sound?.LoadAudio(railgunShot);
-            //sound?.Play();
+            int audio = Audio.PlayOneShot(railgunShot);
 
             Vector3 localOffset = new Vector3(0f, 2.5f, 0.5f);
             Vector3 bulletStart = transform.position +
@@ -244,8 +245,7 @@ public class Railgun : BaseWeapon
         isRecharged = true;
         coolTimer = 0f;
         currentMagazineAmmo = magazineSize;
-        //sound?.LoadAudio(railgunReload);
-        //sound?.Play();
+        int audioo = Audio.PlayOneShot(railgunReload);
     }
 
     public override void Reload()

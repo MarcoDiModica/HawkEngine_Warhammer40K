@@ -9,8 +9,7 @@
 
 
 class Image{
-
-	unsigned int _id = 0;
+	unsigned int _id = 0; // OpenGL texture ID
 	unsigned short _width = 0;
 	unsigned short _height = 0;
 	unsigned char _channels = 0;

@@ -470,13 +470,6 @@ void Input::HandleFileDrop(const std::string& fileDir)
         catch (const std::exception& e) {
             LOG(LogType::LOG_ERROR, "Error processing audio file: %s", e.what());
         }
-        
-        if (InputManagement->draggedObject != nullptr) {
-            auto soundComponent = InputManagement->draggedObject->GetComponent<SoundComponent>();
-            if (soundComponent) {
-                soundComponent->LoadSound(targetPath.string(), false, false);
-            }
-        }
     }
     else if (fileExt == "image") {
         if (InputManagement->draggedObject != nullptr) {

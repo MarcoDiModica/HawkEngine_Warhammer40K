@@ -117,7 +117,7 @@ void SkeletalAnimationComponent::AutoTransitionAnimation(int newAnim, float time
 
 void SkeletalAnimationComponent::PlayAnimOnce(int index, float timeToTransitionAnim) 
 {
-	animation1 = std::make_unique<Animation>(*animator->GetCurrentAnimation());
+	animation1 = std::make_unique<Animation>(*animations[index].get());
 	newAnimation = std::make_unique<Animation>(*animations[index].get());
 	animator->isLooping = false; 
 	animator->currentDuration = 0.0f;

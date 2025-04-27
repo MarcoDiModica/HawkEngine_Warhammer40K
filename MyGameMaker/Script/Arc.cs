@@ -16,9 +16,9 @@ public class Arc : MonoBehaviour
     public bool needsDestroy = false;
     float deathTimerPrevention = 0;
 
-    private AudioSource sound;
+    //private AudioSource sound;
     private string arcExplosion = "Assets/Audio/SFX/Weapons/Boltgun/ArcSnareExplosion.wav";
-    AudioClip arcFX;
+    //AudioClip arcFX;
 
     public override void Awake()
     {
@@ -26,15 +26,15 @@ public class Arc : MonoBehaviour
     }
     public override void Start()
     {
-        sound = gameObject.GetComponent<AudioSource>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
+        //sound = gameObject.GetComponent<AudioSource>();
+        //if (sound == null)
+        //{
+        //    Engineson.print("PlayerShooting: Audio component not found");
+        //}
 
-        arcFX = new AudioClip(arcExplosion, "ArcExplosionFX", false, false);
+        //arcFX = new AudioClip(arcExplosion, "ArcExplosionFX", false, false);
 
-        sound.LoadAudioClip(arcFX);
+        //sound.LoadAudioClip(arcFX);
     }
 
     public void Init(Vector3 pos, Vector3 dir)
@@ -110,7 +110,7 @@ public class Arc : MonoBehaviour
         );
         Engineson.print("Explosion");
         
-        sound.Play(arcFX);
+        Audio.PlayOneShot(arcExplosion);
         isExploded = true;
 
         for (int i = 0; i < collisionNames.Count; i++)

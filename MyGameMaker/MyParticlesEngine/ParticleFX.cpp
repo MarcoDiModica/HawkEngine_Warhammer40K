@@ -490,7 +490,7 @@ namespace ParticlePresets {
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
 	"Assets/Textures/ElectricityBall.png", // Texture path
-	false						   // Is Local Space
+	true						   // Is Local Space
 	};
 
 	const ParticlePreset RailGun_Auto = {
@@ -1212,6 +1212,14 @@ glm::vec3 ParticleFX::GenerateRandomVelocity() {
 	return {0.0f, speed, 0.0f};
 }
 
+std::shared_ptr<Image> ParticleFX::GetTexture(const std::string& texturePath) {
+	auto it = Application->loadedPartTextures.find(texturePath);
+	if (it != Application->loadedPartTextures.end()) {
+		return it->second;
+	}
+	return nullptr;
+}
+
 glm::vec2 ParticleFX::GenerateRandomSize(float minSize, float maxSize) {
 	
 	float tSize = minSize + (maxSize - minSize) * dist01(rng);
@@ -1346,7 +1354,16 @@ void ParticleFX::ApplyPreset(int particleID) {
 	maxSize = preset.maxSize;
 	randomAnimIndex = preset.randomAnimIndex;
 	isLocalSpace = preset.isLocalSpace;
-	SetTexture(preset.texturePath);
+	//SetTexture(preset.texturePath);
+
+	// Asignar textura desde el mapa
+	auto texture = GetTexture(preset.texturePath);
+	if (texture) {
+		material->setImage(texture);
+	}
+	else {
+		std::cerr << "Texture not found: " << preset.texturePath << std::endl;
+	}
 }
 
 void ParticleFX::SetEndSpeed(float Espeed) 

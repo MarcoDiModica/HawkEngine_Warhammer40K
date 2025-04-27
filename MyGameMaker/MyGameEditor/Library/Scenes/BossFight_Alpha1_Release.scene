@@ -1,0 +1,1709 @@
+SceneMetadata:
+  SceneName: BossFight_Alpha1_Release
+GameObject0:
+  name: AllLevel
+  prefabPath: ""
+  uuid: 12812841670872833864
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 179.99999499104393
+        - 3.0000049503845383
+        - 179.99999499104416
+      localScale:
+        - 1.0000000398291957
+        - 1.0000000000000071
+        - 1.0000000398291953
+  Children:
+    - name: Empty_2_copy_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 15461143147352341282
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -671.4439697265625
+            - -36.248634338378906
+            - 34.788475036621094
+          localRotation:
+            - 179.99999134857779
+            - -9.0443084146171092e-23
+            - -179.99999499104388
+          localScale:
+            - 1.0000001192092896
+            - 1
+            - 1.0000001192092896
+        BoxColliderComponent:
+          size:
+            - 300
+            - 2
+            - 200
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_2_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 18005503265647414221
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -594.0911865234375
+            - -21.089298248291016
+            - -4.566530704498291
+          localRotation:
+            - 179.99999134857762
+            - -34.600003599089554
+            - -179.99999499104376
+          localScale:
+            - 1.0000001192092896
+            - 1
+            - 1.0000001192092896
+        BoxColliderComponent:
+          size:
+            - 2
+            - 30
+            - 61.2999992
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_2_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 15014016528377798287
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -629.64080810546875
+            - -21.089298248291016
+            - -34.61846923828125
+          localRotation:
+            - 179.99999134857742
+            - 16.400002653060508
+            - 179.99999499104399
+          localScale:
+            - 1.0000001192092896
+            - 1
+            - 1.0000001192092896
+        BoxColliderComponent:
+          size:
+            - 37.9000015
+            - 30
+            - 2
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_2_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 16559134083365770326
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -673.29962158203125
+            - -21.089300155639648
+            - -39.4444580078125
+          localRotation:
+            - 179.99999134857779
+            - -1.1000001815578861
+            - -179.99999499104408
+          localScale:
+            - 0.99999988079071045
+            - 1
+            - 0.99999988079071045
+        BoxColliderComponent:
+          size:
+            - 51.5999985
+            - 30
+            - 2.20000005
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_2_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 1227943597875464082
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -722.1605224609375
+            - -21.089273452758789
+            - -29.517866134643555
+          localRotation:
+            - 179.99999134857765
+            - -20.999999870605667
+            - -179.99999499104379
+          localScale:
+            - 0.99999982118606567
+            - 1
+            - 0.99999982118606567
+        BoxColliderComponent:
+          size:
+            - 50.9000015
+            - 30
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_2_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 15470982202417296675
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -756.1781005859375
+            - -21.089353561401367
+            - 6.5750226974487305
+          localRotation:
+            - -8.6514270190282568e-06
+            - 68.399997195057949
+            - 5.0089548377396895e-06
+          localScale:
+            - 1
+            - 1
+            - 1
+        BoxColliderComponent:
+          size:
+            - 60.9000015
+            - 30
+            - 2
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_2_copy_copy_copy
+      prefabPath: ""
+      uuid: 359314986473238698
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -762.65838623046875
+            - -21.089382171630859
+            - 59.587287902832031
+          localRotation:
+            - -8.6514160717825782e-06
+            - 10.799999055575977
+            - 5.0089649769106517e-06
+          localScale:
+            - 1
+            - 1
+            - 1
+        BoxColliderComponent:
+          size:
+            - 2.0999999
+            - 30
+            - 51.9000015
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_2_copy_copy
+      prefabPath: ""
+      uuid: 16077698038012612269
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -734.614990234375
+            - -21.089384078979492
+            - 103.41441345214844
+          localRotation:
+            - -8.6515093738698445e-06
+            - 49.999999051109725
+            - -5.0088698078340038e-06
+          localScale:
+            - 1
+            - 1
+            - 1
+        BoxColliderComponent:
+          size:
+            - 2
+            - 30
+            - 60.7999992
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_2_copy
+      prefabPath: ""
+      uuid: 14661868463879882087
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -683.3701171875
+            - -21.089384078979492
+            - 121.97146606445312
+          localRotation:
+            - 0
+            - -89.301011560012427
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        BoxColliderComponent:
+          size:
+            - 2.20000005
+            - 30
+            - 56.7000008
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_2
+      prefabPath: ""
+      uuid: 7143740123900250945
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -626.22601318359375
+            - -21.089380264282227
+            - 101.39311218261719
+          localRotation:
+            - 0
+            - -56.200004461976228
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        BoxColliderComponent:
+          size:
+            - 1
+            - 30
+            - 70.5
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_1_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 8807183546048921601
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -586.99835205078125
+            - -21.039882659912109
+            - 67.505714416503906
+          localRotation:
+            - 0
+            - -33.300009365096216
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        BoxColliderComponent:
+          size:
+            - 2.29999995
+            - 30
+            - 35.5999985
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_1_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 9596192833719107295
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -577.302001953125
+            - -21.039844512939453
+            - 37.701530456542969
+          localRotation:
+            - 0
+            - -3.3000001860568231
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        BoxColliderComponent:
+          size:
+            - 2.29999995
+            - 30
+            - 36.2999992
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_1_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_1
+      prefabPath: ""
+      uuid: 18297364714691511905
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -549.675537109375
+            - -0.594268798828125
+            - 40.989761352539062
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        BoxColliderComponent:
+          size:
+            - 46.2000008
+            - 1
+            - 150
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Cube_copy
+      prefabPath: ""
+      uuid: 4492310684391749027
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -669.22918701171875
+            - -59.261524200439453
+            - 33.701652526855469
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 94.000152587890625
+            - 23.004449844360352
+            - 108.75166320800781
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 0
+          material:
+            name: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.006_copy_copy_copy
+      prefabPath: ""
+      uuid: 2096582295335946842
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -663.72186279296875
+            - -17.863065719604492
+            - -83.5819091796875
+          localRotation:
+            - -90.000007093551375
+            - 58.676850735004713
+            - 7.0935513677441977e-06
+          localScale:
+            - 8.1442346572875977
+            - 8.99993896484375
+            - 15.24443244934082
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 16985549430831654082
+          material:
+            name: Estalacmitas_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019_copy_copy_copy_copy_copy_copy_1
+      prefabPath: ""
+      uuid: 13695212186891639362
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -642.59112548828125
+            - -11.656133651733398
+            - 160.22178649902344
+          localRotation:
+            - 89.999995457790391
+            - 6.9744726132607511
+            - -179.99999513575111
+          localScale:
+            - 2.659550666809082
+            - 2.6595501899719238
+            - 5.7946267127990723
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 7221681576189101636
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -785.826171875
+            - -14.297639846801758
+            - 132.61651611328125
+          localRotation:
+            - 89.999995457790391
+            - 6.9744726132607511
+            - -179.99999513575111
+          localScale:
+            - 2.659550666809082
+            - 2.6595501899719238
+            - 5.0910701751708984
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.006_copy_copy_2
+      prefabPath: ""
+      uuid: 463251749726749431
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -606.35394287109375
+            - -15.195431709289551
+            - -79.659263610839844
+          localRotation:
+            - -90.000007093551375
+            - 58.676850735004713
+            - 7.0935513677441977e-06
+          localScale:
+            - 6.7094449996948242
+            - 8.99993896484375
+            - 5.4227023124694824
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 16985549430831654082
+          material:
+            name: Estalacmitas_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 5926665365417018936
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -609.628662109375
+            - -28.222217559814453
+            - 107.4677734375
+          localRotation:
+            - 89.999995457790391
+            - 6.9744726132607511
+            - -179.99999513575111
+          localScale:
+            - 2.659550666809082
+            - 2.6595501899719238
+            - 6.6552953720092773
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.006_copy_5
+      prefabPath: ""
+      uuid: 9387943600606133475
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -673.3665771484375
+            - -12.410489082336426
+            - 166.90858459472656
+          localRotation:
+            - -79.431006845443349
+            - 71.418249284795053
+            - 10.849803651139222
+          localScale:
+            - 8.653101921081543
+            - 8.2893085479736328
+            - 13.333806991577148
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 16985549430831654082
+          material:
+            name: Estalacmitas_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019_copy_copy_copy_copy_1
+      prefabPath: ""
+      uuid: 15582776188737611803
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -752.31744384765625
+            - -29.411073684692383
+            - 121.80161285400391
+          localRotation:
+            - 89.999995457790391
+            - 6.9744726132607511
+            - -179.99999513575111
+          localScale:
+            - 2.659550666809082
+            - 2.6595501899719238
+            - 4.8044896125793457
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.006_copy_copy_1
+      prefabPath: ""
+      uuid: 3031073225807247199
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -819.58648681640625
+            - -20.084297180175781
+            - 84.651130676269531
+          localRotation:
+            - 99.921771559596408
+            - -75.340597294804866
+            - 171.46254435546328
+          localScale:
+            - 9.0800342559814453
+            - 5.4767632484436035
+            - 12.011016845703125
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 16985549430831654082
+          material:
+            name: Estalacmitas_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 17963885246548455515
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -601.85870361328125
+            - -29.31329345703125
+            - -31.182197570800781
+          localRotation:
+            - 90.000007670642376
+            - 70.619415659835056
+            - -179.99999752614713
+          localScale:
+            - 2.6595499515533447
+            - 2.6595499515533447
+            - 5.5798664093017578
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019_copy_copy_2
+      prefabPath: ""
+      uuid: 2356637303777615973
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -635.54046630859375
+            - -14.667819023132324
+            - -78.395698547363281
+          localRotation:
+            - 79.976764321501079
+            - 70.411031546277314
+            - 171.71681609097783
+          localScale:
+            - 2.6595499515533447
+            - 2.6595499515533447
+            - 5.3766937255859375
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.006_copy_copy
+      prefabPath: ""
+      uuid: 5956057999255008061
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -814.3428955078125
+            - -17.121776580810547
+            - 114.27696228027344
+          localRotation:
+            - -90.000015148286394
+            - 30.868406329221731
+            - -4.2449121362886962e-07
+          localScale:
+            - 8.4538459777832031
+            - 5.0154790878295898
+            - 10.100632667541504
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 16985549430831654082
+          material:
+            name: Estalacmitas_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019_copy_copy_1
+      prefabPath: ""
+      uuid: 11162904421740598689
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -805.0556640625
+            - -3.7640376091003418
+            - 15.643352508544922
+          localRotation:
+            - 90.000013753858823
+            - 70.619204246982449
+            - -178.83131849185884
+          localScale:
+            - 2.6595494747161865
+            - 2.6595492362976074
+            - 4.4408445358276367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019_copy_copy_copy_3
+      prefabPath: ""
+      uuid: 5539212438158869690
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -821.5360107421875
+            - -8.0260419845581055
+            - 52.019447326660156
+          localRotation:
+            - 91.988606941641606
+            - 70.608521157151799
+            - -178.12406650228991
+          localScale:
+            - 2.6595499515533447
+            - 2.6595497131347656
+            - 6.7824010848999023
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019_copy_copy_copy_2
+      prefabPath: ""
+      uuid: 15904839534949622093
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -808.5821533203125
+            - -2.1733989715576172
+            - 36.735317230224609
+          localRotation:
+            - 89.999974373418041
+            - 70.619344902926287
+            - 175.46361314084325
+          localScale:
+            - 2.6595497131347656
+            - 2.6595501899719238
+            - 4.4215021133422852
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019_copy_copy_copy_1
+      prefabPath: ""
+      uuid: 9892640061280601588
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -821.42828369140625
+            - -4.7815804481506348
+            - 22.860374450683594
+          localRotation:
+            - 80.101027745868095
+            - 70.348765230368826
+            - 172.37487643090046
+          localScale:
+            - 2.6595494747161865
+            - 2.6595499515533447
+            - 6.4239954948425293
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019_copy_copy_copy
+      prefabPath: ""
+      uuid: 16131113059600883969
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -716.26898193359375
+            - -8.60491943359375
+            - 177.01657104492188
+          localRotation:
+            - 89.999995457790391
+            - 6.9744726132607511
+            - -179.99999513575111
+          localScale:
+            - 2.659550666809082
+            - 2.6595501899719238
+            - 5.0538902282714844
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019_copy_copy
+      prefabPath: ""
+      uuid: 3014893345116592775
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -829.62060546875
+            - -5.9227728843688965
+            - 38.248489379882812
+          localRotation:
+            - 70.364105842085351
+            - 69.519564456187965
+            - 153.26637393447291
+          localScale:
+            - 2.6595504283905029
+            - 2.659550666809082
+            - 4.4408187866210938
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.006_copy_4
+      prefabPath: ""
+      uuid: 13794687930627266040
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -793.7713623046875
+            - -14.444392204284668
+            - -54.657279968261719
+          localRotation:
+            - 90.33818878169501
+            - 58.865726106038537
+            - -177.82265605373075
+          localScale:
+            - 8.6530971527099609
+            - 8.2893104553222656
+            - 6.7609586715698242
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 16985549430831654082
+          material:
+            name: Estalacmitas_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.006_copy_3
+      prefabPath: ""
+      uuid: 17141472007240359416
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -758.63763427734375
+            - -9.7868509292602539
+            - 160.58128356933594
+          localRotation:
+            - 96.148215415596439
+            - -64.345637951942734
+            - 175.02165297457751
+          localScale:
+            - 6.2061491012573242
+            - 9.7597484588623047
+            - 11.551056861877441
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 16985549430831654082
+          material:
+            name: Estalacmitas_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.006_copy_2
+      prefabPath: ""
+      uuid: 6109851150369211306
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -754.1834716796875
+            - -13.452554702758789
+            - -70.41351318359375
+          localRotation:
+            - -90.000015148286394
+            - 30.868406329221731
+            - -4.2449121362886962e-07
+          localScale:
+            - 8.4538459777832031
+            - 5.015479564666748
+            - 10.129766464233398
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 16985549430831654082
+          material:
+            name: Estalacmitas_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.006_copy_1
+      prefabPath: ""
+      uuid: 1135205758964411891
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -722.89892578125
+            - -13.223793029785156
+            - -86.1815185546875
+          localRotation:
+            - 89.999971407356654
+            - -44.27764038471436
+            - 179.99999338352802
+          localScale:
+            - 7.0854859352111816
+            - 7.8299469947814941
+            - 11.398778915405273
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 16985549430831654082
+          material:
+            name: Estalacmitas_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.006_copy
+      prefabPath: ""
+      uuid: 10890389386339425390
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -610.8585205078125
+            - -11.527710914611816
+            - 144.69508361816406
+          localRotation:
+            - 90.000064822551536
+            - 81.889383778144961
+            - -179.99989580528316
+          localScale:
+            - 4.3183484077453613
+            - 6.8110980987548828
+            - 10.367100715637207
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 16985549430831654082
+          material:
+            name: Estalacmitas_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.006
+      prefabPath: ""
+      uuid: 2567357726388814686
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -802.10638427734375
+            - -8.9302949905395508
+            - -14.572080612182617
+          localRotation:
+            - -90.000016093922511
+            - -4.5230268325505323
+            - 3.4495751692122605
+          localScale:
+            - 8.653101921081543
+            - 8.2893056869506836
+            - 9.3935861587524414
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 16985549430831654082
+          material:
+            name: Estalacmitas_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019_copy
+      prefabPath: ""
+      uuid: 13368014178997093000
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -696.63525390625
+            - -12.222635269165039
+            - -79.441230773925781
+          localRotation:
+            - 79.976764321501079
+            - 70.411031546277314
+            - 171.71681609097783
+          localScale:
+            - 2.6595499515533447
+            - 2.6595499515533447
+            - 5.3745293617248535
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.019
+      prefabPath: ""
+      uuid: 11388603022525165852
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -560.90386962890625
+            - -7.9284439086914062
+            - -34.6810302734375
+          localRotation:
+            - 89.999995271388428
+            - 2.3582247407573624
+            - -179.99999504019098
+          localScale:
+            - 2.6595497131347656
+            - 2.6595494747161865
+            - 2.6595494747161865
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 7994363321730715637
+          material:
+            name: Estalacmita1_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.015_copy_3
+      prefabPath: ""
+      uuid: 8459786057452587383
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -629.04168701171875
+            - -35.552619934082031
+            - 78.022010803222656
+          localRotation:
+            - -90.000025421857401
+            - -32.079834338322442
+            - 1.0271325434012491e-06
+          localScale:
+            - 10.319049835205078
+            - 10.319050788879395
+            - 11.650527954101562
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 11876945135872829347
+          material:
+            name: Socabon_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.015_copy_2
+      prefabPath: ""
+      uuid: 16853656954926948118
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -670.37640380859375
+            - -35.843978881835938
+            - 35.772666931152344
+          localRotation:
+            - -90.000014884343173
+            - 43.821653759288026
+            - 1.8218195306191076e-06
+          localScale:
+            - 10.784191131591797
+            - 10.784189224243164
+            - 10.784191131591797
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 11876945135872829347
+          material:
+            name: Socabon_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.015_copy_1
+      prefabPath: ""
+      uuid: 3505406236606408424
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -707.17010498046875
+            - -34.204421997070312
+            - -3.9232769012451172
+          localRotation:
+            - -90.000024373301613
+            - 17.844516467027599
+            - 4.5126718857010908e-07
+          localScale:
+            - 10.784191131591797
+            - 10.784191131591797
+            - 10.78419303894043
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 11876945135872829347
+          material:
+            name: Socabon_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.015_copy
+      prefabPath: ""
+      uuid: 2855877790077426586
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -703.83917236328125
+            - -31.297431945800781
+            - 89.601348876953125
+          localRotation:
+            - -90.000039679305814
+            - 50.646856904779362
+            - -1.6104625210043747e-05
+          localScale:
+            - 10.78419303894043
+            - 10.78419303894043
+            - 10.784193992614746
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 11876945135872829347
+          material:
+            name: Socabon_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.015
+      prefabPath: ""
+      uuid: 18326094689791750669
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -632.21502685546875
+            - -35.877773284912109
+            - -6.0747976303100586
+          localRotation:
+            - -90.000003140441819
+            - -68.954372644803257
+            - -1.2490358447003186e-05
+          localScale:
+            - 10.784194946289062
+            - 10.784194946289062
+            - 10.78419303894043
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 11876945135872829347
+          material:
+            name: Socabon_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Plane.005
+      prefabPath: ""
+      uuid: 13266548619434382741
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -674.03314208984375
+            - -36.112213134765625
+            - 51.396156311035156
+          localRotation:
+            - -90.000037963264305
+            - 75.804632376630991
+            - -1.7314463561867278e-05
+          localScale:
+            - 116.96053314208984
+            - 116.96053314208984
+            - 116.9605712890625
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 18208302357217048971
+          material:
+            name: CaveGround_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.002
+      prefabPath: ""
+      uuid: 7928971250198233121
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -671.20159912109375
+            - -37.957813262939453
+            - 41.383544921875
+          localRotation:
+            - 89.999975503225144
+            - 7.1190000162052893
+            - 179.99999514935905
+          localScale:
+            - 1.5124396085739136
+            - 1.5124396085739136
+            - 1.512438178062439
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 5424527990416365795
+          material:
+            name: Cueva_low_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject1:
+  name: Camera
+  prefabPath: ""
+  uuid: 15768331057276765890
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 549.9256591796875
+        - 242.43267822265625
+        - 0
+      localRotation:
+        - 88.039193927657024
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 0.99999997731046253
+        - 0.99999997731046253
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975803375244
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500.89999389648438
+      priority: 0
+  Children: ~

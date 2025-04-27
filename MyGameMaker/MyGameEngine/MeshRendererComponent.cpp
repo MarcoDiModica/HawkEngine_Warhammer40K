@@ -149,37 +149,59 @@ void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPo
 
 	int numPointLights = static_cast<int>(Application->root->GetActiveScene()->_lights.size());
 	shader->SetUniform("numPointLights", numPointLights);
+	bool hasDirLight = false;
 
 	int i = 0;
 	for (const auto& light : Application->root->GetActiveScene()->_lights) {
 		if (!light) continue;
+		if (!light->GetComponent<Transform_Component>() || !light->GetComponent<LightComponent>()) continue;
+		if (light->GetComponent<LightComponent>()->GetLightType() == LightType::POINT)
+		{
+			std::string pointLightstr = "pointLights[" + std::to_string(i) + "]";
+			auto transformComponent = light->GetComponent<Transform_Component>();
+			auto lightComponent = light->GetComponent<LightComponent>();
 
-		std::string pointLightstr = "pointLights[" + std::to_string(i) + "]";
-		auto transformComponent = light->GetComponent<Transform_Component>();
-		auto lightComponent = light->GetComponent<LightComponent>();
+			if (!transformComponent || !lightComponent) continue;
 
-		if (!transformComponent || !lightComponent) continue;
-
-		shader->SetUniform(pointLightstr + ".position", transformComponent->GetPosition());
-		shader->SetUniform(pointLightstr + ".ambient", lightComponent->GetAmbient());
-		shader->SetUniform(pointLightstr + ".diffuse", lightComponent->GetDiffuse());
-		shader->SetUniform(pointLightstr + ".specular", lightComponent->GetSpecular());
-		shader->SetUniform(pointLightstr + ".constant", lightComponent->GetConstant());
-		shader->SetUniform(pointLightstr + ".linear", lightComponent->GetLinear());
-		shader->SetUniform(pointLightstr + ".quadratic", lightComponent->GetQuadratic());
-		shader->SetUniform(pointLightstr + ".radius", lightComponent->GetRadius());
-		shader->SetUniform(pointLightstr + ".intensity", lightComponent->GetIntensity());
-		i++;
+			shader->SetUniform(pointLightstr + ".position", transformComponent->GetPosition());
+			shader->SetUniform(pointLightstr + ".ambient", lightComponent->GetAmbient());
+			shader->SetUniform(pointLightstr + ".diffuse", lightComponent->GetDiffuse());
+			shader->SetUniform(pointLightstr + ".specular", lightComponent->GetSpecular());
+			shader->SetUniform(pointLightstr + ".constant", lightComponent->GetConstant());
+			shader->SetUniform(pointLightstr + ".linear", lightComponent->GetLinear());
+			shader->SetUniform(pointLightstr + ".quadratic", lightComponent->GetQuadratic());
+			shader->SetUniform(pointLightstr + ".radius", lightComponent->GetRadius());
+			shader->SetUniform(pointLightstr + ".intensity", lightComponent->GetIntensity());
+			i++;
+		}
+		if (light->GetComponent<LightComponent>()->GetLightType() == LightType::DIRECTIONAL)
+		{
+			hasDirLight = true;
+			auto lightComponent = light->GetComponent<LightComponent>();
+			shader->SetUniform("dirLight.ambient", lightComponent->GetAmbient());
+			shader->SetUniform("dirLight.diffuse", lightComponent->GetDiffuse());
+			shader->SetUniform("dirLight.specular", lightComponent->GetSpecular());
+			shader->SetUniform("dirLight.direction", lightComponent->GetDirection());
+			shader->SetUniform("dirLight.intensity", lightComponent->GetIntensity());
+		}
 	}
+	if (hasDirLight == false) 
+	{
+		shader->SetUniform("dirLight.ambient", vec3(0, 0, 0));
+		shader->SetUniform("dirLight.diffuse", vec3(0, 0, 0));
+		shader->SetUniform("dirLight.specular", vec3(0, 0, 0));
+		shader->SetUniform("dirLight.direction", vec3(0,0,0));
+		shader->SetUniform("dirLight.intensity", 0);
+	}
+	//shader->SetUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+	//shader->SetUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+	//shader->SetUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+	//shader->SetUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+	//shader->SetUniform("dirLight.intensity", 3.0f);
 
 	glBindVertexArray(mesh->model.get()->GetModelData().vA);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
 
-	shader->SetUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-	shader->SetUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-	shader->SetUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-	shader->SetUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
-	shader->SetUniform("dirLight.intensity", 3.0f);
 }
 
 void MeshRenderer::BindMeshForRendering() const {

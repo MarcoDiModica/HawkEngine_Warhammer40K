@@ -726,6 +726,8 @@ static void RenderEditor()
 		}
 	}
 	
+	Application->physicsModule->DrawDebugDrawer();
+
 	objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;

@@ -407,8 +407,8 @@ bool Root::Start()
 	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
 	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
 	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.6, 1.3, 0.5));
-	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -0.7, 0));
+	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.4, 0.8, 0.4));
+	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -1.8, -0.8));
 	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor.fbx");
 	//lictorMesh->SetName("LictorMesh");
 	//lictorMesh->AddComponent<ScriptComponent>()->LoadScript("LictorAnimation");
@@ -690,16 +690,15 @@ bool Root::Start()
 	//railgunPickUp->AddComponent<ScriptComponent>()->LoadScript("RailgunPickUp");
 	//railgunPickUp->SetTag("Weapon");
 	//
-	//auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/bible.fbx");
-	//biblePagePickUp->SetName("BiblePagePickUp");
+	//auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BibblePage.fbx");
 	//std::shared_ptr<Image> BiblePageBaseColor = std::make_shared<Image>();
 	//std::shared_ptr<Image> BiblePageRoughness = std::make_shared<Image>();
 	//std::shared_ptr<Image> BiblePageNormal = std::make_shared<Image>();
 	//std::shared_ptr<Image> BiblePageMetallic = std::make_shared<Image>();
-	//BiblePageBaseColor->LoadTexture("Assets/Textures/bible_DefaultMaterial_BaseColor.png");
-	//BiblePageRoughness->LoadTexture("Assets/Textures/bible_DefaultMaterial_Roughness.png");
-	//BiblePageNormal->LoadTexture("Assets/Textures/bible_DefaultMaterial_Normal.png");
-	//BiblePageMetallic->LoadTexture("Assets/Textures/bible_DefaultMaterial_Metallic.png");
+	//BiblePageBaseColor->LoadTexture("Assets/Textures/bible page_DefaultMaterial_BaseColor.png");
+	//BiblePageRoughness->LoadTexture("Assets/Textures/bible page_DefaultMaterial_Roughness.png");
+	//BiblePageNormal->LoadTexture("Assets/Textures/bible page_DefaultMaterial_Normal.png");
+	//BiblePageMetallic->LoadTexture("Assets/Textures/bible page_DefaultMaterial_Metallic.png");
 	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BiblePageBaseColor);
 	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(BiblePageRoughness);
 	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(BiblePageNormal);

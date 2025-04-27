@@ -10,7 +10,6 @@ public class EnemyControllerStalker : EnemyController
     private float clawDamage = 25.0f;
     private float pounceDamage = 35.0f;
     private float distanceToPlayer;
-    private bool hasDropped = false;
 
     // Hurtbox
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
@@ -261,11 +260,6 @@ public class EnemyControllerStalker : EnemyController
                 break;
 
             case EnemyState.DEAD:
-                if ((!hasDropped))
-                {
-                    GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
-                }
-                hasDropped = true;
                 collider.SetActive(false);
                 break;
 

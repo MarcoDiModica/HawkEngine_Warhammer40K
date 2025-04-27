@@ -10,7 +10,6 @@ public class EnemyControllerWarrior : EnemyController
     private float projectileDamage = 15.0f;
     private float swordDamage = 25.0f;
     private float distanceToPlayer;
-    private bool hasDropped = false;
 
     // Hurtbox
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
@@ -243,11 +242,6 @@ public class EnemyControllerWarrior : EnemyController
             case EnemyState.STUNNED:
                 break;
             case EnemyState.DEAD:
-                if ((!hasDropped))
-                {
-                    GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
-                }
-                hasDropped = true;
                 break;
             default:
                 break;

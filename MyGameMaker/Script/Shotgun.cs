@@ -100,16 +100,13 @@ public class Shotgun : BaseWeapon
                             case "Boss":
                                 hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
                                 break;
-                            case "Warrior":
-                                hitObject.GetComponent<EnemyControllerWarrior>()?.TakeDamage(finalDamage);
-                                break;
                             case "Destroyable":
                                 hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
                                 break;
                         }
                     }
 
-                    if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss" && tag != "Warrior"))
+                    if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss"))
                         shouldDestroy = true;
                 }
             }

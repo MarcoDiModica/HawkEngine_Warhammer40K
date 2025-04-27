@@ -111,7 +111,7 @@ public class EnemyControllerBossTail : EnemyController
                     TailSlash();
                     actionTimer = 2.0f;
                 }
-                else if (distanceToPlayer <= 30f)
+                else if (distanceToPlayer <= 25f)
                 {
                     TailStab();
                     actionTimer = 2.0f;

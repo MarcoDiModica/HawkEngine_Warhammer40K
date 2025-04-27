@@ -55,7 +55,7 @@ public class EnemyControllerBoss : EnemyController
         new Vector3(10, 0, 10),
         new Vector3(-10, 0, 10)
     };
-    private float slamAttackDistance = 20.0f;
+    private float slamAttackDistance = 40.0f;
     private float slamAttackCooldown = 2.0f;
     private float slamAttackTimer = 0.0f;
     private bool isSlamActive = false;
@@ -69,6 +69,7 @@ public class EnemyControllerBoss : EnemyController
     private bool isPhase3Attacking = false;
 
     private EnemyControllerBossTail tailController;
+    private bool hasUnburiedInPhase2 = false;
 
     private enum BossPhase
     {
@@ -204,7 +205,7 @@ public class EnemyControllerBoss : EnemyController
                         {
                             if (playerTransform != null)
                             {
-                                if (distanceToPlayer <= 8.0f && slamAttackTimer <= 0.0f)
+                                if (distanceToPlayer <= 33.0f && slamAttackTimer <= 0.0f)
                                 {
                                     ClawStrike();
                                     slamAttackTimer = slamAttackCooldown;
@@ -214,13 +215,14 @@ public class EnemyControllerBoss : EnemyController
                                     SlamAttack();
                                     slamAttackTimer = slamAttackCooldown;
                                 }
-                                else if (distanceToPlayer > slamAttackDistance && distanceToPlayer < 30.0f && metalSlideObject == null)
+                                else if (distanceToPlayer > slamAttackDistance && distanceToPlayer < 50.0f && metalSlideObject == null)
                                 {
                                     MetalSlide();
                                     slamAttackTimer = slamAttackCooldown;
                                 }
-                                else if (distanceToPlayer > 30.0f)
+                                else if (distanceToPlayer > 50.0f)
                                 {
+                                    Engineson.print("ChangePositionToClosest");
                                     ChangePositionToClosest();
                                 }
                             }
@@ -232,6 +234,7 @@ public class EnemyControllerBoss : EnemyController
                             slamAttackTimer -= deltaTime;
                         }
                         break;
+
 
                     case BossPhase.PHASE3:
                         timer += deltaTime;
@@ -254,7 +257,7 @@ public class EnemyControllerBoss : EnemyController
                         {
                             if (playerTransform != null)
                             {
-                                if (distanceToPlayer <= 10.0f && slamAttackTimer <= 0.0f)
+                                if (distanceToPlayer <= 33.0f && slamAttackTimer <= 0.0f)
                                 {
                                     ClawStrike();
                                     slamAttackTimer = slamAttackCooldown;
@@ -352,7 +355,7 @@ public class EnemyControllerBoss : EnemyController
             {
                 enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
                 collider.SetPosition(enemyTransform.position);
-                Engineson.print("Unburrowing Attack");
+                Engineson.print("Unburrowing Attack Phase 2");
             }
             isBuried = false;
         }
@@ -362,10 +365,10 @@ public class EnemyControllerBoss : EnemyController
     {
         if (isDead == false)
         {
-            Vector3 center = new Vector3(0, 0, 0);
-            enemyTransform.position = center;
-            collider.SetPosition(center);
+            enemyTransform.position = fixedPositions[2];
+            collider.SetPosition(enemyTransform.position);
         }
+        isBuried = false;
     }
 
     private void SlamAttack()
@@ -492,7 +495,7 @@ public class EnemyControllerBoss : EnemyController
         float halfLength = slamHurtboxSize.Z / 2.0f;
         float offset = 5.0f;
 
-        Vector3 hurtboxPosition = bossPosition + forward * (halfLength + offset);
+        Vector3 hurtboxPosition = bossPosition + forward * (halfLength + offset) + new Vector3(0, 32, 0);
 
         var hurtboxTransform = slamHurtboxObject.GetComponent<Transform>();
         hurtboxTransform.position = hurtboxPosition;
@@ -523,7 +526,7 @@ public class EnemyControllerBoss : EnemyController
             Vector3 size = new Vector3(width, height, length);
 
             Vector3 offset = forward * ((length + spacing) * i);
-            Vector3 position = origin + offset;
+            Vector3 position = origin + offset + new Vector3(0, 32, 0);
 
             GameObject clawSegment = Engineson.CreateGameObject("ClawHurtbox", null);
             clawSegment.AddComponent<MeshRenderer>();

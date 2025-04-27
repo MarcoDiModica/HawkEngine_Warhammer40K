@@ -85,9 +85,14 @@ public class LaserBeam : BaseAbilities
             gameObject.AddChild(laserBeam);
             laserBeam.AddComponent<MeshRenderer>();
             laserBeam.AddComponent<BoxCollider>();
-            laserBeam.GetComponent<Transform>().position = gameObject.transform.GetPosition() + gameObject.transform.forward * 22.0f + new Vector3(0, 3, 0);
+            laserBeam.GetComponent<Transform>().position = gameObject.transform.GetPosition() + gameObject.transform.forward * 20.0f + new Vector3(0, 3, 0);
             laserBeam.GetComponent<Transform>().SetScale(0.5f, 0.5f, 20.0f);
             laserActive = true;
+            var energyBallFX = Engineson.CreateGameObject("LaserBeamFX", null);
+            gameObject.AddChild(energyBallFX);
+            energyBallFX.AddComponent<ParticleFX>().ApplyPreset(12);
+            //energyBallFX.GetComponent<ParticleFX>().EmitBurst(1);
+            energyBallFX.GetComponent<ParticleFX>().Play();
             Audio.Play(laserBeamSound, true);
             canThrow = false; // Inicia el cooldown
             abilityTimer = 0.0f;

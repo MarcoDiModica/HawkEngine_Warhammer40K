@@ -115,7 +115,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 500.0f;
+        currentHealth = 1500.0f;
         gameObject.tag = "Boss";
         isDead = false;
 //         musicClip = new AudioClip(combatMusic, "BossMusic", true, false);
@@ -140,11 +140,11 @@ public class EnemyControllerBoss : EnemyController
                     collider.SetRotation(newRotation);
                 }
 
-                if (currentHealth < 200)
+                if (currentHealth < 500)
                 {
                     currentPhase = BossPhase.PHASE3;
                 }
-                else if (currentHealth < 400)
+                else if (currentHealth < 1000)
                 {
                     currentPhase = BossPhase.PHASE2;
                 }

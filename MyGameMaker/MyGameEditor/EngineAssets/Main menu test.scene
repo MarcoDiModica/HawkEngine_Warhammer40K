@@ -84,9 +84,6 @@ GameObject1:
         - 0
         - 1
         - 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -476,9 +473,6 @@ GameObject2:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
     UITransformComponent:
       name: UITransformComponent
       enabled: true

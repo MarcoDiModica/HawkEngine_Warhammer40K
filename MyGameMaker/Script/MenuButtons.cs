@@ -202,12 +202,12 @@ public class MenuButtons : MonoBehaviour
             if (selectedButton == button_newGameButton)
             {
                 //sound?.Play(buttonStartGameFX);
-                SceneManager.LoadScene("Mortis_Level1");
+                SceneManager.LoadScene("Lvl1Alpha1Release");
             }
             else if (selectedButton == button_continueButton)
             {
                 //sound?.Play(buttonStartGameFX);
-                SceneManager.LoadScene("SpaceShip");
+                SceneManager.LoadScene("Lvl2AlphaRelease");
             }
             else if (selectedButton == button_optionsButton)
             {

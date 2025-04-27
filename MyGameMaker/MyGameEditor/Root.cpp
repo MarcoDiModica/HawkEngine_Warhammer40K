@@ -396,21 +396,6 @@ bool Root::Start()
 	//ParentGameObject(*tyranidWarriorMesh, *tyranidWarrior);
 	//tyranidWarrior->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerWarrior");
 
-	////Tyranid Warrior
-	//auto tyranidWarrior = CreateGameObject("Tyranid_Warrior");
-	//tyranidWarrior->SetTag("Enemy");
-	//tyranidWarrior->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
-	//tyranidWarrior->GetComponent<Transform_Component>()->SetScale(glm::vec3(1, 1, 1));
-	//tyranidWarrior->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//tyranidWarrior->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.1, 0));
-	//tyranidWarrior->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(1.6,3.7,1.8));
-	//auto tyranidWarriorMesh = CreateGameObjectWithPath("Assets/Meshes/TyranidWarriorCollapsed.fbx");
-	//tyranidWarriorMesh->SetName("TyranidWarriorMesh");
-	//tyranidWarriorMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//tyranidWarriorMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	//ParentGameObject(*tyranidWarriorMesh, *tyranidWarrior);
-	//tyranidWarrior->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerWarrior");
-
 	/*auto mawloc = CreateGameObject("Mawloc");
 	mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-76, 40, -2));
 	mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));

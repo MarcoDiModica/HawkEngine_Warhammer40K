@@ -62,4 +62,7 @@ public  class MonoBehaviour
     }
     public virtual void OnTriggerExit(GameObject other) {
     }
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern GameObject Instantiate(Prefab prefab, Transform parent = null, bool worldPositionStays = true);
 }

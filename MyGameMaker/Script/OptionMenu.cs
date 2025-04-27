@@ -6,7 +6,7 @@ using System.Numerics;
 
 public class OptionMenu : MonoBehaviour
 {
-    private Audio sound;
+    //private Audio sound;
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
     private GameObject pauseMenu;
     private List<string> resolutions = new List<string>();
@@ -21,6 +21,7 @@ public class OptionMenu : MonoBehaviour
     UIButton rRightButton;
 
     GameObject fullScreenCheckbox;
+    GameObject fullScreenCheckboxHover;
     GameObject fullScreenTick;
     UIButton fullScreenButton;
 
@@ -29,6 +30,8 @@ public class OptionMenu : MonoBehaviour
     GameObject masterSlider;
     GameObject masterLeft;
     GameObject masterRight;
+    GameObject masterLeftHover;
+    GameObject masterRightHover;
     UIButton masterLeftButton;
     UIButton masterRightButton;
     UITransform transform_masterSlider;
@@ -39,6 +42,8 @@ public class OptionMenu : MonoBehaviour
     GameObject bgmSlider;
     GameObject bgmLeft;
     GameObject bgmRight;
+    GameObject bgmLeftHover;
+    GameObject bgmRightHover;
     UIButton bgmLeftButton;
     UIButton bgmRightButton;
     UITransform transform_bgmSlider;
@@ -49,6 +54,8 @@ public class OptionMenu : MonoBehaviour
     GameObject sfxSlider;
     GameObject sfxLeft;
     GameObject sfxRight;
+    GameObject sfxLeftHover;
+    GameObject sfxRightHover;
     UIButton sfxLeftButton;
     UIButton sfxRightButton;
     UITransform transform_sfxSlider;
@@ -84,7 +91,7 @@ public class OptionMenu : MonoBehaviour
     public override void Start()
     {
         Engineson.print("OptionMenu Start");
-        sound = gameObject.GetComponent<Audio>();
+        //sound = gameObject.GetComponent<Audio>();
         pauseMenu = GameObject.Find("Canvas_PauseMenu");
         resolutions.Add("1280x720");
         resolutions.Add("1920x1080");
@@ -101,11 +108,16 @@ public class OptionMenu : MonoBehaviour
         rLeftButton = rLeft.GetComponent<UIButton>();
         rRightButton = rRight.GetComponent<UIButton>();
         fullScreenCheckbox = GameObject.Find("Fullscreen_checkbox");
+        fullScreenCheckboxHover = GameObject.Find("Fullscreen_checkboxhover");
         fullScreenTick = GameObject.Find("Fullscreen_tick");
         fullScreenButton = fullScreenCheckbox.GetComponent<UIButton>();
+
+
         masterSlider = GameObject.Find("Master_slider");
         masterLeft = GameObject.Find("Master_left");
         masterRight = GameObject.Find("Master_right");
+        masterLeftHover = GameObject.Find("Master_lefthover");
+        masterRightHover = GameObject.Find("Master_righthover");
         masterLeftButton = masterLeft.GetComponent<UIButton>();
         masterRightButton = masterRight.GetComponent<UIButton>();
         transform_masterSlider = masterSlider.GetComponent<UITransform>();
@@ -113,6 +125,8 @@ public class OptionMenu : MonoBehaviour
         bgmSlider = GameObject.Find("BGM_slider");
         bgmLeft = GameObject.Find("BGM_left");
         bgmRight = GameObject.Find("BGM_right");
+        bgmLeftHover = GameObject.Find("BGM_lefthover");
+        bgmRightHover = GameObject.Find("BGM_righthover");
         bgmLeftButton = bgmLeft.GetComponent<UIButton>();
         bgmRightButton = bgmRight.GetComponent<UIButton>();
         transform_bgmSlider = bgmSlider.GetComponent<UITransform>();
@@ -120,6 +134,8 @@ public class OptionMenu : MonoBehaviour
         sfxSlider = GameObject.Find("SFX_slider");
         sfxLeft = GameObject.Find("SFX_left");
         sfxRight = GameObject.Find("SFX_right");
+        sfxLeftHover = GameObject.Find("SFX_lefthover");
+        sfxRightHover = GameObject.Find("SFX_righthover");
         sfxLeftButton = sfxLeft.GetComponent<UIButton>();
         sfxRightButton = sfxRight.GetComponent<UIButton>();
         transform_sfxSlider = sfxSlider.GetComponent<UITransform>();
@@ -137,21 +153,21 @@ public class OptionMenu : MonoBehaviour
                 pauseMenu.SetActive(true);
             }
             gameObject.SetActive(false);
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
         }
 
         if (rLeftButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             PreviousResolution();
         }
 
         if (rRightButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             NextResolution();
         }
 
@@ -185,8 +201,8 @@ public class OptionMenu : MonoBehaviour
 
         if (fullScreenButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
 
             if (fullScreenTick.IsActive())
             {
@@ -202,11 +218,20 @@ public class OptionMenu : MonoBehaviour
             }
         }
 
+        if (fullScreenButton.GetState() == ButtonState.HOVERED)
+        {
+            fullScreenCheckboxHover.SetActive(true);
+        }
+        else
+        {
+            fullScreenCheckboxHover.SetActive(false);
+        }
+
 
         if (masterLeftButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             if (masterVolume > 0)
             {
                 masterVolume -= 10;
@@ -215,10 +240,20 @@ public class OptionMenu : MonoBehaviour
             }
         }
 
+
+        if(masterLeftButton.GetState() == ButtonState.HOVERED)
+        {
+            masterLeftHover.SetActive(true);
+        }
+        else
+        {
+            masterLeftHover.SetActive(false);
+        }
+
         if (masterRightButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             if (masterVolume < 100)
             {
                 masterVolume += 10;
@@ -227,10 +262,20 @@ public class OptionMenu : MonoBehaviour
             }
         }
 
+
+        if(masterRightButton.GetState() == ButtonState.HOVERED)
+        {
+            masterRightHover.SetActive(true);
+        }
+        else
+        {
+            masterRightHover.SetActive(false);
+        }
+
         if (bgmLeftButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             if (bgmVolume > 0)
             {
                 bgmVolume -= 10;
@@ -241,8 +286,8 @@ public class OptionMenu : MonoBehaviour
 
         if (bgmRightButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             if (bgmVolume < 100)
             {
                 bgmVolume += 10;
@@ -251,10 +296,29 @@ public class OptionMenu : MonoBehaviour
             }
         }
 
+        if (bgmLeftButton.GetState() == ButtonState.HOVERED)
+        {
+            bgmLeftHover.SetActive(true);
+        }
+        else
+        {
+            bgmLeftHover.SetActive(false);
+        }
+
+
+        if (bgmRightButton.GetState() == ButtonState.HOVERED)
+        {
+            bgmRightHover.SetActive(true);
+        }
+        else
+        {
+            bgmRightHover.SetActive(false);
+        }
+
         if (sfxLeftButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             if (sfxVolume > 0)
             {
                 sfxVolume -= 10;
@@ -265,8 +329,8 @@ public class OptionMenu : MonoBehaviour
 
         if (sfxRightButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             if (sfxVolume < 100)
             {
                 sfxVolume += 10;
@@ -275,6 +339,23 @@ public class OptionMenu : MonoBehaviour
             }
         }
 
+        if (sfxLeftButton.GetState() == ButtonState.HOVERED)
+        {
+            sfxLeftHover.SetActive(true);
+        }
+        else
+        {
+            sfxLeftHover.SetActive(false);
+        }
+
+        if (sfxRightButton.GetState() == ButtonState.HOVERED)
+        {
+            sfxRightHover.SetActive(true);
+        }
+        else
+        {
+            sfxRightHover.SetActive(false);
+        }
 
     }
 

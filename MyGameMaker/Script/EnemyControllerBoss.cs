@@ -17,8 +17,9 @@ public class EnemyControllerBoss : EnemyController
     private List<GameObject> clawHurtboxObjects = new List<GameObject>();
 
     //audio
-    private Audio music;
-    private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+//     private AudioSource music;
+//     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+//     private AudioClip musicClip;
    
     //stats
     bool isCombatMusicPlaying = false;
@@ -80,7 +81,7 @@ public class EnemyControllerBoss : EnemyController
 
     public override void Awake()
     {
-        music = gameObject.GetComponent<Audio>();
+        //music = gameObject.GetComponent<AudioSource>();
     }
 
     public override void Start()
@@ -102,11 +103,11 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Collider component!");
             return;
         }
-        sound = gameObject.GetComponent<Audio>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
+//         sound = gameObject.GetComponent<AudioSource>();
+//         if (sound == null)
+//         {
+//             Engineson.print("PlayerShooting: Audio component not found");
+//         }
         enemyTransform = gameObject.GetComponent<Transform>();
         if (enemyTransform == null)
         {
@@ -116,6 +117,9 @@ public class EnemyControllerBoss : EnemyController
         currentHealth = 500.0f;
         gameObject.tag = "Boss";
         isDead = false;
+//         musicClip = new AudioClip(combatMusic, "BossMusic", true, false);
+//         sound.LoadAudioClip(musicClip);
+
     }
 
     public override void Update(float deltaTime)

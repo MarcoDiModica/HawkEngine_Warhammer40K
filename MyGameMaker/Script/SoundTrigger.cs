@@ -2,7 +2,7 @@ using HawkEngine;
 public class SoundTrigger : MonoBehaviour
 {
     private Collider soundCollider;
-    private Audio sound;
+//     private AudioSource sound;
 
     public override void Awake()
     {
@@ -17,7 +17,7 @@ public class SoundTrigger : MonoBehaviour
             Engineson.print("Error");
         }
 
-        sound = gameObject.GetComponent<Audio>();
+        //sound = gameObject.GetComponent<AudioSource>();
 
     }
     public override void Update(float deltaTime)
@@ -26,26 +26,26 @@ public class SoundTrigger : MonoBehaviour
     }
     public override void OnTriggerEnter(GameObject other)
     {
-        if(sound != null)
-        {
-            sound.Play();
-        }
-        else
-        {
-            Engineson.print("Sound not found");
-        }
+//         if(sound != null)
+//         {
+//             //sound.Play();
+//         }
+//         else
+//         {
+//             Engineson.print("Sound not found");
+//         }
     }
 
     public override void OnTriggerExit(GameObject other)
     {
-        if (sound != null)
-        {
-            sound.Stop();
-        }
-        else
-        {
-            Engineson.print("Sound not found");
-        }
+//         if (sound != null)
+//         {
+//             //sound.Stop();
+//         }
+//         else
+//         {
+//             Engineson.print("Sound not found");
+//         }
     }
 
     public override void OnCollisionStay(GameObject other)

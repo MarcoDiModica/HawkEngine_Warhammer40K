@@ -12,7 +12,7 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected Rigidbody rb;
     protected BoxCollider collider;
     protected Transform enemyTransform;
-    protected Audio sound;
+    //protected AudioSource sound;
     protected ParticleFX particles;
     protected EnemyState currentState = EnemyState.IDLE;
 
@@ -21,14 +21,13 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     public bool isStunned = false;
     protected float stunDuration = 2.0f;
     protected float stunTimer = 0.0f;
-    protected bool isIdle = false;
     protected bool isDead = false;
     protected bool isAttacking = false;
-    protected bool isRunning = false;
+    protected bool isShooting = false;
     protected bool isFootstepPlaying = false;
     protected bool hasStoppedFootsteps = false;
 
-    public float distToChase = 50.0F;
+    public float distToChase = 50.0f;
     public float minDistToChase = 10.0f;
     public float speedMovement = 10.0f;
     public float acceleration = 15.0f;

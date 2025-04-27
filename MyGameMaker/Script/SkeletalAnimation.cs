@@ -46,6 +46,8 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void PlayAnimOnce(int index,float timeToTransition);
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern bool IsAnimationFinished();
 
         private GameObject owner;
 

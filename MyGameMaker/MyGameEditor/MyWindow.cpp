@@ -128,3 +128,10 @@ void Window::ToggleFullscreen()
         SDL_SetWindowPosition(_window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	}
 }
+
+void Window::SetTitle(std::string title)
+{
+    if (!_window) return;
+
+	SDL_SetWindowTitle(_window, title.c_str());
+}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
 
-public enum EnemyState { IDLE, CHASE, ATTACK, STUNNED, DEAD };
+public enum EnemyState { IDLE, CHASE, ATTACK, STUNNED, DEAD, LEAP };
 
 public abstract class EnemyController : MonoBehaviour, IEnemyController
 {
@@ -29,12 +29,19 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
 
     public float distToChase = 50.0f;
     public float minDistToChase = 10.0f;
-    public float speedMovement = 10.0f;
-    public float acceleration = 15.0f;
+    public float speedMovement = 25.0f;
+    public float acceleration = 40.0f;
     public float rotationSpeed = 300.0f;
     protected Vector3 moveDirection;
     protected float currentRotationAngle;
 
+    protected Pathfinding pathfinder;
+    protected List<Vector3> chasePath;
+    protected int chaseIndex;
+    protected bool pathInitialized;
+
+    protected const int gridWidth = 500, gridHeight = 500;
+    protected const float cellSize = 1f;
     public abstract void Start();
     public abstract void Update(float deltaTime);
     public abstract void Attack();

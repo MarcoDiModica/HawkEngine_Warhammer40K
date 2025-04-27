@@ -64,6 +64,7 @@
 #include "MyGameEngine/ShaderManager.h"
 #include "MyParticlesEngine/ParticleFX.h"
 #include "SDL2/SDL_timer.h"
+#include "MyAudioEngine/AudioManager.h"
 
 using namespace std;
 
@@ -730,7 +731,6 @@ static void RenderEditor()
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
-	Application->audioEngine->Update();
 
 	/*std::vector<GameObject*> selectedObjects = Application->input->GetSelectedGameObjects();
 	for (auto& object : objects) {
@@ -835,7 +835,6 @@ static void GameRelease() {
 	}
 
 	Application->physicsModule->Update(Application->GetDt());
-	Application->audioEngine->Update();
 
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
@@ -867,7 +866,6 @@ int main(int argc, char** argv) {
 			Application = new App();
 			
 			MonoManager::GetInstance().Initialize();
-			//SoundComponent::InitSharedAudioEngine();
 
 			ilInit();
 			iluInit();
@@ -886,6 +884,8 @@ int main(int argc, char** argv) {
 
 			Application->physicsModule->Awake();
 			Application->audioEngine->Init();
+			Application->LoadAllParticleTextures();
+			AudioManager::Initialize();
 			if (Application->Awake()) { state = START; }
 			else { printf("Failed on Awake"); state = FAIL; }
 			break;
@@ -924,6 +924,7 @@ int main(int argc, char** argv) {
 
 			MonoManager::GetInstance().Shutdown();
 			ShaderManager::GetInstance().Cleanup();
+			AudioManager::Shutdown();
 
 			if (Application->CleanUP()) {
 				state = EXIT;

@@ -1,0 +1,353 @@
+name: Canvas_PauseMenu
+prefabPath: ""
+uuid: 11283441919564461973
+tag: Untagged
+active: false
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0
+      - 0
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  UITransformComponent:
+    name: UITransformComponent
+    enabled: true
+    position:
+      - 0
+      - 0
+      - 0
+    rotation:
+      - 0
+      - 0
+      - 0
+    scale:
+      - 1
+      - 1
+      - 1
+    pivot_offset:
+      - 0
+      - 1
+      - 0
+  SoundComponent:
+    name: SoundComponent
+    enabled: true
+  UICanvasComponent:
+    name: UICanvasComponent
+    enabled: true
+  ScriptComponents:
+    Script0:
+      name: PauseMenu
+      fields: ~
+Children:
+  - name: PauseMenu
+    prefabPath: ""
+    uuid: 17700280379754614811
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0
+          - 0
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 1
+          - 1
+          - 1
+        pivot_offset:
+          - 0
+          - 0
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/pause_menu.png
+        use_animation: false
+        sprite_size:
+          - 2560
+          - 1440
+        sheet_size:
+          - 2560
+          - 1440
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+    Children: ~
+  - name: Resume_Button
+    prefabPath: ""
+    uuid: 519435442222220610
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.5
+          - 0.323000014
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.142000005
+          - 0.0829999968
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/pause_resume.png
+        use_animation: false
+        sprite_size:
+          - 375
+          - 108
+        sheet_size:
+          - 375
+          - 108
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~
+  - name: Options_Button
+    prefabPath: ""
+    uuid: 14659157041526325061
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.5
+          - 0.426999986
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.142000005
+          - 0.0829999968
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/pause_options.png
+        use_animation: false
+        sprite_size:
+          - 375
+          - 108
+        sheet_size:
+          - 375
+          - 108
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~
+  - name: MainMenu_Button
+    prefabPath: ""
+    uuid: 11667810225204397874
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.5
+          - 0.528999984
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.142000005
+          - 0.0829999968
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/pause_mainmenu.png
+        use_animation: false
+        sprite_size:
+          - 375
+          - 108
+        sheet_size:
+          - 375
+          - 108
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~
+  - name: Exit_Button
+    prefabPath: ""
+    uuid: 1441304683655922513
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.5
+          - 0.630999982
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.142000005
+          - 0.0829999968
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/pause_exit.png
+        use_animation: false
+        sprite_size:
+          - 375
+          - 108
+        sheet_size:
+          - 375
+          - 108
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~

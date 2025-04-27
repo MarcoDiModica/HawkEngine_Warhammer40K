@@ -40,10 +40,10 @@ namespace HawkEngine
             {
                 return 4;
             }
-            else if(type == typeof(AudioSource))
-            {
-                return 5;
-            }
+//             else if(type == typeof(AudioSource))
+//             {
+//                 return 5;
+//             }
             else if (type == typeof(SkeletalAnimation))
             {
                 return 6;

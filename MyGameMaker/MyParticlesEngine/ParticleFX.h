@@ -158,6 +158,8 @@ public:
 	int GetMaxParticles() const { return renderer ? static_cast<int>(renderer->GetMaxParticles()) : 0; }
 	glm::vec2 GenerateRandomSize(float minSize, float maxSize);
 
+	std::shared_ptr<Image> GetTexture(const std::string& texturePath);
+
 	//void ConfigureSmoke();
 	//void ConfigureFire();
 	//void ConfigureMuzzleFlash();

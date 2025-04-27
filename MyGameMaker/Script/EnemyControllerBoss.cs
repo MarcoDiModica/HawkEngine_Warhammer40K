@@ -49,11 +49,11 @@ public class EnemyControllerBoss : EnemyController
 
     private Vector3[] fixedPositions = new Vector3[]
     {
-        new Vector3(10, 0, -10),
-        new Vector3(-10, 0, -10),
-        new Vector3(0, 0, 0),
-        new Vector3(10, 0, 10),
-        new Vector3(-10, 0, 10)
+        new Vector3(-108.0f, 10.0f, -32.0f),
+        new Vector3(-108.0f, 10.0f, 29.0f),
+        new Vector3(-76.0f, 10.0f, -2.0f),
+        new Vector3(-41.0f, 10.0f, -32.0f),
+        new Vector3(-41.0f, 10.0f, 29.0f)
     };
     private float slamAttackDistance = 40.0f;
     private float slamAttackCooldown = 2.0f;
@@ -476,7 +476,7 @@ public class EnemyControllerBoss : EnemyController
         tailController.Die();
         Engineson.Destroy(GetGameObject());
         isDead = true;
-        //SceneManager.LoadScene("WinScene");
+        SceneManager.LoadScene("WinScene");
     }
 
     private void CreateSlamHurtbox()

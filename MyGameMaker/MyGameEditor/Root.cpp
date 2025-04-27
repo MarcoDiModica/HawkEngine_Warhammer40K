@@ -65,7 +65,10 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
+	//resourceManager->LoadResources();
+	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
+
+
 
 	
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
@@ -372,6 +375,15 @@ bool Root::Start()
 	
 	//ARMAS NO TOCAR
 	
+	auto objMainCamera = CreateCameraObject("MainCamera");
+	objMainCamera->GetTransform()->SetPosition(glm::dvec3(-14, 20, 14.0f));
+	objMainCamera->GetTransform()->SetRotation(glm::dvec3(glm::radians(-130.0), glm::radians(45.0), glm::radians(180.0)));
+	auto camera = objMainCamera->AddComponent<CameraComponent>();
+	camera->priority = 1;
+	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+	mainCamera = objMainCamera;
+	UpdateCameraPriority();
+
 	/*auto boltgun = CreateGameObject("Boltgun");
 	boltgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	auto boltgunMesh = CreateGameObjectWithPath("Assets/boltgun.fbx");

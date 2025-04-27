@@ -30,7 +30,8 @@ public class LictorAnimation : MonoBehaviour
     {
         if (lictorAnimation.GetAnimationIndex() != 0)
         {
-            lictorAnimation.PlayAnimOnce(0, 1.0f);
+            lictorAnimation.PlayAnimOnce(0, 0.2f);
+            animIndex = 0;
         }
     }
 
@@ -38,7 +39,8 @@ public class LictorAnimation : MonoBehaviour
     {
         if (lictorAnimation.GetAnimationIndex() != 1)
         {
-            lictorAnimation.PlayAnimOnce(1, 1.0f);
+            lictorAnimation.PlayAnimOnce(1, 0.2f);
+            animIndex = 1;
         }
     }
 
@@ -46,8 +48,8 @@ public class LictorAnimation : MonoBehaviour
     {
         if (lictorAnimation.GetAnimationIndex() != 2)
         {
-            lictorAnimation.SetAnimation(2);
-            lictorAnimation.SetAnimationSpeed(1.0f);
+            lictorAnimation.TransitionAnimations(animIndex, 2, 0.2f);
+            animIndex = 2;
         }
     }
 
@@ -55,14 +57,16 @@ public class LictorAnimation : MonoBehaviour
     {
         if (lictorAnimation.GetAnimationIndex() != 3)
         {
-            lictorAnimation.PlayAnimOnce(3, 1.0f);
+            lictorAnimation.PlayAnimOnce(3, 0.2f);
+            animIndex = 3;
         }
     }
     public void SetPiercingAnimation()
     {
         if (lictorAnimation.GetAnimationIndex() != 4)
         {
-            lictorAnimation.PlayAnimOnce(4, 1.0f);
+            lictorAnimation.PlayAnimOnce(4, 0.2f);
+            animIndex = 4;
         }
     }
 
@@ -70,7 +74,8 @@ public class LictorAnimation : MonoBehaviour
     {
         if (lictorAnimation.GetAnimationIndex() != 5)
         {
-            lictorAnimation.PlayAnimOnce(5, 1.0f);
+            lictorAnimation.PlayAnimOnce(5, 0.2f);
+            animIndex = 5;
         }
     }
 
@@ -78,7 +83,8 @@ public class LictorAnimation : MonoBehaviour
     {
         if (lictorAnimation.GetAnimationIndex() != 6)
         {
-            lictorAnimation.PlayAnimOnce(6, 1.0f);
+            lictorAnimation.PlayAnimOnce(6, 0.2f);
+            animIndex = 6;
         }
     }
 
@@ -86,8 +92,8 @@ public class LictorAnimation : MonoBehaviour
     {
         if (lictorAnimation.GetAnimationIndex() != 7)
         {
-            lictorAnimation.SetAnimation(7);
-            lictorAnimation.SetAnimationSpeed(1.0f);
+            lictorAnimation.TransitionAnimations(animIndex, 7, 0.2f);
+            animIndex = 7;
         }
     }
 
@@ -95,8 +101,8 @@ public class LictorAnimation : MonoBehaviour
     {
         if (lictorAnimation.GetAnimationIndex() != 8)
         {
-            lictorAnimation.SetAnimation(8);
-            lictorAnimation.SetAnimationSpeed(1.0f);
+            lictorAnimation.TransitionAnimations(animIndex,8, 0.2f);
+            animIndex = 8;
         }
     }
 }

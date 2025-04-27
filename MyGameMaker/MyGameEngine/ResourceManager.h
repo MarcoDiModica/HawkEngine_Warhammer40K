@@ -123,6 +123,14 @@ public:
 		imageIndex.clear();
 	}
 
+	std::shared_ptr<Mesh> Cube;
+	std::shared_ptr<Material> DefaultMaterial;
+
+	void CreateCube() {
+		Cube = Mesh::CreateCube();
+		DefaultMaterial = materials[0];
+	}
+
 private:
 	//meshes
 	std::unordered_map<size_t, size_t> meshIndex;
@@ -133,6 +141,7 @@ private:
 	//images
 	std::unordered_map<std::string, size_t> imageIndex;
 	std::vector<std::shared_ptr<Image>> images;
+
 
 };
 

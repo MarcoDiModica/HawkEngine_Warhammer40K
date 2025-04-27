@@ -65,8 +65,10 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
+	resourceManager->LoadResources(); // Esto no se mutea
+	resourceManager->CreateCube(); // Esto no se mutea
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");
 
@@ -214,14 +216,14 @@ bool Root::Start()
 	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Level1SundayDelivery.Scene");
 
-	//auto objMainCamera = CreateCameraObject("MainCamera");
-	//objMainCamera->GetTransform()->SetPosition(glm::dvec3(-14, 20, 14.0f));
-	//objMainCamera->GetTransform()->SetRotation(glm::dvec3(glm::radians(-130.0), glm::radians(45.0), glm::radians(180.0)));
-	//auto camera = objMainCamera->AddComponent<CameraComponent>();
-	//camera->priority = 1;
-	//objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
-	//mainCamera = objMainCamera;
-	//UpdateCameraPriority();
+	/*auto objMainCamera = CreateCameraObject("MainCamera");
+	objMainCamera->GetTransform()->SetPosition(glm::dvec3(-14, 20, 14.0f));
+	objMainCamera->GetTransform()->SetRotation(glm::dvec3(glm::radians(-130.0), glm::radians(45.0), glm::radians(180.0)));
+	auto camera = objMainCamera->AddComponent<CameraComponent>();
+	camera->priority = 1;
+	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+	mainCamera = objMainCamera;
+	UpdateCameraPriority();*/
 
 	//particle->ApplyPreset(Particle)
 
@@ -407,8 +409,8 @@ bool Root::Start()
 	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
 	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
 	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.4, 0.8, 0.4));
-	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -1.8, -0.8));
+	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.6, 1.3, 0.5));
+	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -0.7, 0));
 	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor.fbx");
 	//lictorMesh->SetName("LictorMesh");
 	//lictorMesh->AddComponent<ScriptComponent>()->LoadScript("LictorAnimation");
@@ -449,24 +451,29 @@ bool Root::Start()
 	//tyranidWarrior->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerWarrior");
 
 	//auto mawloc = CreateGameObject("Mawloc");
-	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));
+	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
 	//mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
-	//mawloc->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//auto mawlocMesh = CreateCube("MawlocMesh");
+	//mawloc->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0,36,0));
+	//mawloc->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(5, 3, 5));
+	//auto mawlocMesh = CreateGameObjectWithPath("Assets/Meshes/Mawloc.fbx");
+	//mawlocMesh->SetName("MawlocMesh");
+	//mawlocMesh->GetTransform()->SetScale(glm::vec3(0.035, 0.014, 0.035));
+	//mawlocMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//ParentGameObject(*mawlocMesh, *mawloc);
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	//auto mawlocTail = CreateGameObject("MawlocTail");
-	//mawlocTail->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));
+	//mawlocTail->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 5, 15));
 	//mawlocTail->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
-	//mawlocTail->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//mawlocTail->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//auto mawlocTailMesh = CreateCube("MawlocTailMesh");
+	//mawlocTail->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 0));
+	//auto mawlocTailMesh = CreateGameObjectWithPath("Assets/Meshes/MawlocTail.fbx");
+	//mawlocTailMesh->SetName("MawlocTailMesh");
 	//ParentGameObject(*mawlocTailMesh, *mawlocTail);
 	//mawlocTail->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBossTail");
 
-	//Floor
+	////Floor
 	//auto floor = CreateCube("Floor");
 	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	//floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
@@ -690,15 +697,16 @@ bool Root::Start()
 	//railgunPickUp->AddComponent<ScriptComponent>()->LoadScript("RailgunPickUp");
 	//railgunPickUp->SetTag("Weapon");
 	//
-	//auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BibblePage.fbx");
+	//auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/bible.fbx");
+	//biblePagePickUp->SetName("BiblePagePickUp");
 	//std::shared_ptr<Image> BiblePageBaseColor = std::make_shared<Image>();
 	//std::shared_ptr<Image> BiblePageRoughness = std::make_shared<Image>();
 	//std::shared_ptr<Image> BiblePageNormal = std::make_shared<Image>();
 	//std::shared_ptr<Image> BiblePageMetallic = std::make_shared<Image>();
-	//BiblePageBaseColor->LoadTexture("Assets/Textures/bible page_DefaultMaterial_BaseColor.png");
-	//BiblePageRoughness->LoadTexture("Assets/Textures/bible page_DefaultMaterial_Roughness.png");
-	//BiblePageNormal->LoadTexture("Assets/Textures/bible page_DefaultMaterial_Normal.png");
-	//BiblePageMetallic->LoadTexture("Assets/Textures/bible page_DefaultMaterial_Metallic.png");
+	//BiblePageBaseColor->LoadTexture("Assets/Textures/bible_DefaultMaterial_BaseColor.png");
+	//BiblePageRoughness->LoadTexture("Assets/Textures/bible_DefaultMaterial_Roughness.png");
+	//BiblePageNormal->LoadTexture("Assets/Textures/bible_DefaultMaterial_Normal.png");
+	//BiblePageMetallic->LoadTexture("Assets/Textures/bible_DefaultMaterial_Metallic.png");
 	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BiblePageBaseColor);
 	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(BiblePageRoughness);
 	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(BiblePageNormal);

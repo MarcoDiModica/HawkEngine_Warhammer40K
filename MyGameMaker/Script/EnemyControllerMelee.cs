@@ -286,15 +286,14 @@ public class EnemyControllerMelee : EnemyController
                         if (avoidTimer >= avoidTimeLimit)
                         {
                             moveDirection = avoidDirection;
+                            isAvoidingObstacle = false;
                         }
                         else
                         {
                             bool forwardBlocked = false;
-                            {
-                                RayCast ray = new RayCast();
-                                ray.PerformRaycast(myPos, forward, obstacleDetectDist);
-                                forwardBlocked = ray.hit.isHit && ray.hit.gameObject.tag == "Obstacle";
-                            }
+                            RayCast ray = new RayCast();
+                            ray.PerformRaycast(myPos, forward, obstacleDetectDist);
+                            forwardBlocked = ray.hit.isHit && ray.hit.gameObject.tag == "Obstacle";
 
                             if (!forwardBlocked)
                             {
@@ -303,15 +302,13 @@ public class EnemyControllerMelee : EnemyController
                             }
                             else
                             {
+                                RayCast checkDodge = new RayCast();
+                                checkDodge.PerformRaycast(myPos, avoidDirection, obstacleDetectDist);
+                                if (checkDodge.hit.isHit && checkDodge.hit.gameObject.tag == "Obstacle")
                                 {
-                                    RayCast checkDodge = new RayCast();
-                                    checkDodge.PerformRaycast(myPos, avoidDirection, obstacleDetectDist);
-                                    if (checkDodge.hit.isHit && checkDodge.hit.gameObject.tag == "Obstacle")
-                                    {
-                                        avoidDirection = -avoidDirection;
-                                    }
+                                    avoidDirection = -avoidDirection;
+                                    moveDirection = avoidDirection;
                                 }
-                                moveDirection = avoidDirection;
                             }
                         }
                     }

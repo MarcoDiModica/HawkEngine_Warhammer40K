@@ -321,7 +321,10 @@ public class EnemyControllerWarrior : EnemyController
 
     public override void TakeDamage(float damage)
     {
-        throw new NotImplementedException();
+        if (currentHealth > 0)
+        {
+            currentHealth -= damage;
+        }
     }
 
     private bool IsPlayerInHurtbox(Vector3 playerPos)

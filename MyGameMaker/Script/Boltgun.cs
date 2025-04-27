@@ -12,9 +12,9 @@ public class Boltgun : BaseWeapon
     public ArcSnare arcSnare;
     private PlayerController playerController;
     public PlayerData playerData;
-    private Audio sound;
-    private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
-    private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
+
+    private const string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
+    private const string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
     GameObject projectile;
     private RedThirstManager redThirstManager;
     private float timeSinceLastShot = 0.0f;
@@ -46,10 +46,10 @@ public class Boltgun : BaseWeapon
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
         arcSnare = gameObject.GetComponent<ArcSnare>();
-        sound = gameObject.GetComponent<Audio>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
+
     }
 
     public override void Update(float deltaTime)
@@ -109,13 +109,16 @@ public class Boltgun : BaseWeapon
                             case "Boss":
                                 hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
                                 break;
+                            case "Warrior":
+                                hitObject.GetComponent<EnemyControllerWarrior>()?.TakeDamage(finalDamage);
+                                break;
                             case "Destroyable":
                                 hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
                                 break;
                         }
                     }
 
-                    if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss"))
+                    if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss" && tag != "Warrior"))
                     {
                         shouldDestroy = true;
                     }
@@ -148,9 +151,7 @@ public class Boltgun : BaseWeapon
             if (!playerData.infiniteBullets)
                 currentMagazineAmmo--;
 
-            sound?.LoadAudio(boltgunShot);
-            sound?.Play();
-
+            int audio = Audio.PlayOneShot(boltgunShot);
             Vector3 localOffset = new Vector3(0.0f, 2.5f, 0.5f); // Y = altura, Z = hacia adelante, X = lateral si se desea
 
             Vector3 bulletStart = transform.position +
@@ -165,11 +166,15 @@ public class Boltgun : BaseWeapon
             float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
 
 
-            GameObject projectile = Engineson.CreateGameObject("Projectile", null);
-            projectile.AddComponent<MeshRenderer>();
-            projectile.transform.SetScale(0.2f, 0.2f, 0.2f);
+            GameObject projectile = Engineson.CreateGameObject("BoltgunProjectile", null);
+            //projectile.AddComponent<MeshRenderer>();
+            projectile.transform.SetScale(0.25f, 0.25f, 0.25f);
             projectile.transform.position = bulletStart;
             projectile.transform.SetRotation(pitch, yaw, 0f);
+            projectile.AddComponent<ParticleFX>();
+            projectile.GetComponent<ParticleFX>().ApplyPreset(14);
+            projectile.GetComponent<ParticleFX>().EmitBurst(1);
+            
 
             bulletsObjects.Add(projectile);
             bulletsPos.Add(bulletStart);
@@ -178,7 +183,7 @@ public class Boltgun : BaseWeapon
             bulletLifetimes.Add(0);
             bulletHitEnemies.Add(new HashSet<GameObject>());
             bulletStartPositions.Add(bulletStart);
-
+            playerController.playerShooting.rifleShotFX.EmitBurst(1);
         }
 
     }
@@ -187,10 +192,8 @@ public class Boltgun : BaseWeapon
     {
         if (currentTotalAmmo > 0)
         {
-            sound?.LoadAudio(boltgunReload);
-            sound?.Play();
-           
-            if(currentTotalAmmo >= magazineSize)
+           int audioo = Audio.PlayOneShot(boltgunReload);
+            if (currentTotalAmmo >= magazineSize)
             {
                 currentMagazineAmmo = magazineSize;
                 currentTotalAmmo = currentTotalAmmo - magazineSize;

@@ -15,6 +15,9 @@ public class PlayerData
     public bool GodMode = false;
     public float blackRageSpeed = 0f;
     public float stimmSpeed = 0f;
+    public bool BoltgunUpgraded = false;
+    public bool ShotgunUpgraded = false;
+    public bool RailgunUpgraded = false;
 
 
 

@@ -175,7 +175,7 @@ void Animator::BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayered
     //}
 	std::string currentTime = std::to_string(currentTimeBase);
 
-    if (!isLooping && currentDuration >= pLayeredAnimation->GetDuration()/m_PlaySpeed)
+    if (!isLooping && currentDuration >= pLayeredAnimation->GetDuration())
     {
 		LOG(LogType::LOG_INFO, "Animation finished");
 		animationFinished = true;

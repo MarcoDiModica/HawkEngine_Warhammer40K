@@ -19,12 +19,20 @@ public class PlayerPowerUp : MonoBehaviour
     private float piercingBulletsDuration = 5.0f;
     private float piercingBulletsTimer = 0.0f;
 
-    private Audio sound;
-    private string AmmunitionBlessingActivated = "Assets/Audio/SFX/PickUps/PowerUps/AmmunitionBlessing/AmmunitionBlessingActivated.wav";
-    private string BlackHeartActivated = "Assets/Audio/SFX/PickUps/PowerUps/BlackHeart/BlackHeartActivated.wav";
-    private string ChapterStandardActivated = "Assets/Audio/SFX/PickUps/PowerUps/ChapterStandard/ChapterStandardActivated.wav";
-    private string MagnetEffect = "Assets/Audio/SFX/PickUps/PowerUps/Magnet/MagnetEffect.wav";
-    private string MedicaeStimmActivated = "Assets/Audio/SFX/PickUps/PowerUps/MedicaeStimm/Injection Heal Sound Effect.wav";
+   // private AudioSource sound;
+    private const string AmmunitionBlessingActivated = "Assets/Audio/SFX/PickUps/PowerUps/AmmunitionBlessing/AmmunitionBlessingActivated.wav";
+    private const string BlackHeartActivated = "Assets/Audio/SFX/PickUps/PowerUps/BlackHeart/BlackHeartActivated.wav";
+    private const string ChapterStandardActivated = "Assets/Audio/SFX/PickUps/PowerUps/ChapterStandard/ChapterStandardActivated.wav";
+    private const string MagnetEffect = "Assets/Audio/SFX/PickUps/PowerUps/Magnet/MagnetEffect.wav";
+    private const string MedicaeStimmActivated = "Assets/Audio/SFX/PickUps/PowerUps/MedicaeStimm/Injection Heal Sound Effect.wav";
+    private const string PiercingBulletsPicked = "Assets/Audio/SFX/PickUps/PowerUps/PiercingBullets/PiercingBulletsPicked.wav";
+    private const string BoltgunBulletsPicked = "Assets/Audio/SFX/PickUps/Ammunition/BoltgunBulletsPicked.wav";
+    private const string ShotgunShellsPicked = "Assets/Audio/SFX/PickUps/Ammunition/ShotgunShellsPicked.wav";
+    private const string ShotgunObtained = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunEqquiped.wav";
+    private const string RailgunObtained = "Assets/Audio/SFX/Weapons/Railgun/RailGunEquipped.wav";
+    private ParticleFX MedicaeStimmSpeed;
+    private ParticleFX AmmunitionBlessing;
+
 
     public override void Awake()
     {
@@ -34,8 +42,10 @@ public class PlayerPowerUp : MonoBehaviour
     public override void Start()
     {
         playerController = gameObject.GetComponent<PlayerController>();
-        sound = gameObject.GetComponent<Audio>();
-
+        MedicaeStimmSpeed = GameObject.Find("SpeedBoostFX").GetComponent<ParticleFX>();
+        AmmunitionBlessing = GameObject.Find("AmmunitionBlessingFX").GetComponent<ParticleFX>();
+        AmmunitionBlessing.Stop();
+        MedicaeStimmSpeed.Stop();
     }
 
     public override void Update(float deltatime)
@@ -43,9 +53,10 @@ public class PlayerPowerUp : MonoBehaviour
         if (hasMedicaeStimm)
         {
             medicaeStimmTimer += deltatime;
-
+            MedicaeStimmSpeed.Play();
             if (medicaeStimmTimer >= medicaeStimmDuration)
             {
+                MedicaeStimmSpeed.Stop();
                 hasMedicaeStimm = false;
                 medicaeStimmTimer = 0.0f;
                 playerController.playerData.movSpeed = playerController.playerData.stimmSpeed = 0;
@@ -56,8 +67,10 @@ public class PlayerPowerUp : MonoBehaviour
         if (hasAmmunitionBlessing)
         {
             ammunitionBlessingTimer += deltatime;
+            AmmunitionBlessing.Play();
             if (ammunitionBlessingTimer >= ammunitionBlessingDuration)
             {
+                AmmunitionBlessing.Stop();
                 hasAmmunitionBlessing = false;
                 ammunitionBlessingTimer = 0.0f;
                 playerController.playerData.infiniteBullets = false;
@@ -84,7 +97,7 @@ public class PlayerPowerUp : MonoBehaviour
             if (magnetTimer >= magnetDuration)
             {
                 hasMagnet = false;
-                sound.Stop();
+                Audio.Stop(MagnetEffect);
                 magnetTimer = 0.0f;
                 playerController.playerShooting.boltgun.shootCadence = playerController.playerShooting.boltgun.shootCadence * 1.5f;
                 playerController.playerShooting.shotgun.shootCadence = playerController.playerShooting.shotgun.shootCadence * 1.5f;
@@ -131,44 +144,38 @@ public class PlayerPowerUp : MonoBehaviour
             if (other.GetComponent<BlackHeart>() != null)
             {
                 other.GetComponent<BlackHeart>().OnPickUp(playerController);
-                sound.LoadAudio(BlackHeartActivated);
-                sound.Play();
+                int audioBlackHeart = Audio.PlayOneShot(BlackHeartActivated);
 
             }
             else if (other.GetComponent<MedicaeStimm>() != null)
             {
                 other.GetComponent<MedicaeStimm>().OnPickUp(playerController);
                 hasMedicaeStimm = true;
-                sound.LoadAudio(MedicaeStimmActivated);
-                sound.Play();
+                int audioMedicaeStimm = Audio.PlayOneShot(MedicaeStimmActivated);
             }
             else if (other.GetComponent<ChapterStandard>() != null)
             {
                 other.GetComponent<ChapterStandard>().OnPickUp(playerController);
-                sound.LoadAudio(ChapterStandardActivated);
-                sound.Play();
+                int audioChapterStandard = Audio.PlayOneShot(ChapterStandardActivated);
 
             }
             else if (other.GetComponent<AmmunitionBlessing>() != null)
             {
                 other.GetComponent<AmmunitionBlessing>().OnPickUp(playerController);
                 hasAmmunitionBlessing = true;
-                sound.LoadAudio(AmmunitionBlessingActivated);
-                sound.Play();
+                int audioAmmunitionBlessing = Audio.PlayOneShot(AmmunitionBlessingActivated);
             }
             else if (other.GetComponent<Magnet>() != null)
             {
                 other.GetComponent<Magnet>().OnPickUp(playerController);
                 hasMagnet = true;
-                sound.LoadAudio(MagnetEffect);
-                sound.Play();
+                int audioMagnet = Audio.PlayOneShot(MagnetEffect);
             }
             else if(other.GetComponent<PiercingBullets>() != null)
             {
                 other.GetComponent<PiercingBullets>().OnPickUp(playerController);
                 hasPiercingBullets = true;
-                //sound.LoadAudio(MagnetEffect);
-                sound.Play();
+                int audioPiercingBullets = Audio.PlayOneShot(PiercingBulletsPicked);
             }
 
 
@@ -182,11 +189,13 @@ public class PlayerPowerUp : MonoBehaviour
             if (other.GetComponent<BoltgunBullets>() != null && playerController.playerShooting.boltgun.currentTotalAmmo < playerController.playerShooting.boltgun.maxAmmo)
             {
                 other.GetComponent<BoltgunBullets>().OnPickUp(playerController);
+                int audioBoltgun = Audio.PlayOneShot(BoltgunBulletsPicked);
                 Engineson.Destroy(other);
             }
             else if (other.GetComponent<ShotgunShells>() != null && playerController.playerShooting.shotgun.currentTotalAmmo < playerController.playerShooting.shotgun.maxAmmo)
             {
                 other.GetComponent<ShotgunShells>().OnPickUp(playerController);
+                int audioShotgunShells = Audio.PlayOneShot(ShotgunShellsPicked);
                 Engineson.Destroy(other);
             }
         }
@@ -196,12 +205,14 @@ public class PlayerPowerUp : MonoBehaviour
             if (other.GetComponent<ShotgunPickUp>() != null)
             {
                 other.GetComponent<ShotgunPickUp>().OnPickUp(playerController);
+                int audioShotgun = Audio.PlayOneShot(ShotgunObtained);
                 Engineson.Destroy(other);
 
             }
             else if (other.GetComponent<RailgunPickUp>() != null)
             {
                 other.GetComponent<RailgunPickUp>().OnPickUp(playerController);
+                int audioRailgun = Audio.PlayOneShot(RailgunObtained);
                 Engineson.Destroy(other);
 
             }

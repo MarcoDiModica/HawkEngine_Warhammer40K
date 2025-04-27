@@ -280,3 +280,188 @@ void ScriptComponent::InvokeMonoMethod(const std::string& methodName, GameObject
 
 	HandleException(exception, methodName);
 }
+
+
+YAML::Node ScriptComponent::encode()
+{
+	YAML::Node node;
+	node["name"] = GetTypeName();
+
+	if (!monoScript) return node;
+
+	MonoClass* scriptClass = mono_object_get_class(monoScript);
+	void* iter = nullptr;
+	MonoClassField* field = nullptr;
+	YAML::Node fieldsNode;
+
+	while ((field = mono_class_get_fields(scriptClass, &iter))) {
+		uint32_t flags = mono_field_get_flags(field);
+		if ((flags & MONO_FIELD_ATTR_STATIC) || !(flags & MONO_FIELD_ATTR_PUBLIC)) continue;
+
+		const char* fieldName = mono_field_get_name(field);
+		MonoType* type = mono_field_get_type(field);
+		int typeCode = mono_type_get_type(type);
+
+		switch (typeCode) {
+		case MONO_TYPE_STRING: {
+			MonoString* str = nullptr;
+			mono_field_get_value(monoScript, field, &str);
+			if (str) {
+				char* cstr = mono_string_to_utf8(str);
+				fieldsNode[fieldName] = std::string(cstr);
+				mono_free(cstr);
+			}
+			break;
+		}
+		case MONO_TYPE_BOOLEAN: {
+			bool value = false;
+			mono_field_get_value(monoScript, field, &value);
+			fieldsNode[fieldName] = value;
+			break;
+		}
+		case MONO_TYPE_I4: {
+			int value = 0;
+			mono_field_get_value(monoScript, field, &value);
+			fieldsNode[fieldName] = value;
+			break;
+		}
+		case MONO_TYPE_R4: {
+			float value = 0.0f;
+			mono_field_get_value(monoScript, field, &value);
+			fieldsNode[fieldName] = value;
+			break;
+		}
+		case MONO_TYPE_CLASS: {
+			MonoClass* fieldClass = mono_class_from_mono_type(type);
+			const char* className = mono_class_get_name(fieldClass);
+			const char* nameSpace = mono_class_get_namespace(fieldClass);
+
+			MonoObject* fieldObj = nullptr;
+			mono_field_get_value(monoScript, field, &fieldObj);
+
+			if (!fieldObj) break;
+
+			if (strcmp(nameSpace, "HawkEngine") == 0) {
+				if (strcmp(className, "Prefab") == 0) {
+					MonoClassField* pathField = mono_class_get_field_from_name(fieldClass, "path");
+					if (pathField) {
+						MonoString* str = nullptr;
+						mono_field_get_value(fieldObj, pathField, &str);
+						if (str) {
+							char* cstr = mono_string_to_utf8(str);
+							fieldsNode[fieldName] = std::string(cstr);
+							mono_free(cstr);
+						}
+					}
+				}
+				else if (strcmp(className, "GameObject") == 0) {
+					MonoClassField* cppField = mono_class_get_field_from_name(fieldClass, "CplusplusInstance");
+					if (cppField) {
+						uintptr_t ptr = 0;
+						mono_field_get_value(fieldObj, cppField, &ptr);
+						if (ptr) {
+							GameObject* refGO = reinterpret_cast<GameObject*>(ptr);
+							fieldsNode[fieldName] = refGO->GetName();
+						}
+					}
+				}
+			}
+			break;
+		}
+		}
+	}
+
+	node["fields"] = fieldsNode;
+	return node;
+}
+
+
+
+
+bool ScriptComponent::decode(const YAML::Node& node)
+{
+	if (!node["name"]) return false;
+
+	std::string scriptName = node["name"].as<std::string>();
+	if (!LoadScript(scriptName)) return false;
+
+	if (!monoScript || !node["fields"]) return true;
+
+	YAML::Node fieldsNode = node["fields"];
+	MonoClass* scriptClass = mono_object_get_class(monoScript);
+
+	void* iter = nullptr;
+	MonoClassField* field = nullptr;
+
+	while ((field = mono_class_get_fields(scriptClass, &iter))) {
+		uint32_t flags = mono_field_get_flags(field);
+		if ((flags & MONO_FIELD_ATTR_STATIC) || !(flags & MONO_FIELD_ATTR_PUBLIC)) continue;
+
+		const char* fieldName = mono_field_get_name(field);
+		if (!fieldsNode[fieldName]) continue;
+
+		MonoType* type = mono_field_get_type(field);
+		int typeCode = mono_type_get_type(type);
+
+		switch (typeCode) {
+		case MONO_TYPE_STRING: {
+			std::string value = fieldsNode[fieldName].as<std::string>();
+			MonoString* monoStr = mono_string_new(mono_domain_get(), value.c_str());
+			mono_field_set_value(monoScript, field, monoStr);
+			break;
+		}
+		case MONO_TYPE_BOOLEAN: {
+			bool value = fieldsNode[fieldName].as<bool>();
+			mono_field_set_value(monoScript, field, &value);
+			break;
+		}
+		case MONO_TYPE_I4: {
+			int value = fieldsNode[fieldName].as<int>();
+			mono_field_set_value(monoScript, field, &value);
+			break;
+		}
+		case MONO_TYPE_R4: {
+			float value = fieldsNode[fieldName].as<float>();
+			mono_field_set_value(monoScript, field, &value);
+			break;
+		}
+		case MONO_TYPE_CLASS: {
+			MonoClass* fieldClass = mono_class_from_mono_type(type);
+			const char* className = mono_class_get_name(fieldClass);
+			const char* nameSpace = mono_class_get_namespace(fieldClass);
+
+			if (strcmp(nameSpace, "HawkEngine") == 0) {
+				if (strcmp(className, "Prefab") == 0) {
+					std::string path = fieldsNode[fieldName].as<std::string>();
+					MonoObject* prefabObj = MonoManager::GetInstance().CreatePrefabReference(path);
+					if (prefabObj) {
+						MonoClassField* pathField = mono_class_get_field_from_name(fieldClass, "path");
+						if (pathField) {
+							MonoString* str = mono_string_new(mono_domain_get(), path.c_str());
+							mono_field_set_value(prefabObj, pathField, str);
+						}
+						mono_field_set_value(monoScript, field, prefabObj);
+					}
+				}
+				else if (strcmp(className, "GameObject") == 0) {
+					std::string goName = fieldsNode[fieldName].as<std::string>();
+					std::shared_ptr<GameObject> target = Application->root->FindGOByName(goName);
+
+					if (target) {
+						MonoObject* managedGO = MonoManager::GetInstance().CreateGameObjectReference(target.get());
+						if (managedGO) {
+							mono_field_set_value(monoScript, field, managedGO);
+						}
+					}
+					else {
+						Application->scene_serializer->g_PendingScriptReferences.push_back({ this, field, goName });
+					}
+				}
+			}
+			break;
+		}
+		}
+	}
+
+	return true;
+}

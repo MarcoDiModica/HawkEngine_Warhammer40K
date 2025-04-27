@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.InteropServices;
 using HawkEngine;
 
 public class Shotgun : BaseWeapon
 {
-    private Audio sound;
-    private string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
-    private string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
+
+    private const string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
+    private const string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
 
 
     private PlayerController playerController;
@@ -16,7 +17,7 @@ public class Shotgun : BaseWeapon
     public HookShot hookShot;
     private RedThirstManager redThirstManager;
 
-    private float timeSinceLastShot = 0.0f;
+    public float timeSinceLastShot = 0.0f;
     private List<Vector3> bulletDirections = new List<Vector3>();
     private List<HashSet<GameObject>> bulletHitEnemies = new List<HashSet<GameObject>>();
     private List<Vector3> bulletStartPositions = new List<Vector3>();
@@ -39,7 +40,6 @@ public class Shotgun : BaseWeapon
         timeToLerp = 0.3f;
         ammoType = AmmoType.SHOTGUN;
         transform = gameObject.GetComponent<Transform>();
-        sound = gameObject.GetComponent<Audio>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
         barrage = gameObject.GetComponent<Barrage>();
@@ -100,13 +100,16 @@ public class Shotgun : BaseWeapon
                             case "Boss":
                                 hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
                                 break;
+                            case "Warrior":
+                                hitObject.GetComponent<EnemyControllerWarrior>()?.TakeDamage(finalDamage);
+                                break;
                             case "Destroyable":
                                 hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
                                 break;
                         }
                     }
 
-                    if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss"))
+                    if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss" && tag != "Warrior"))
                         shouldDestroy = true;
                 }
             }
@@ -133,14 +136,13 @@ public class Shotgun : BaseWeapon
     {
         if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence)
         {
+
             timeSinceLastShot = 0f;
 
             if (!playerData.infiniteBullets)
                 currentMagazineAmmo--;
 
-            sound?.LoadAudio(shotgunShot);
-            sound?.Play();
-
+            int audio = Audio.PlayOneShot(shotgunShot);
             int numProjectiles = 5;
             float maxSpreadAngle = 5f;
 
@@ -174,11 +176,15 @@ public class Shotgun : BaseWeapon
                 float yaw = (float)(Math.Atan2(direction.X, direction.Z) * (180.0 / Math.PI));
                 float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
 
-                GameObject projectile = Engineson.CreateGameObject("Projectile", null);
-                projectile.AddComponent<MeshRenderer>();
-                projectile.transform.SetScale(0.2f, 0.2f, 0.2f);
+                GameObject projectile = Engineson.CreateGameObject("ShotgunProjectile", null);
+                //projectile.AddComponent<MeshRenderer>();
+                projectile.transform.SetScale(0.25f, 0.25f, 0.25f);
                 projectile.transform.position = bulletStart;
                 projectile.transform.SetRotation(pitch, yaw, 0f);
+                projectile.AddComponent<ParticleFX>();
+                projectile.GetComponent<ParticleFX>().ApplyPreset(14);
+                projectile.GetComponent<ParticleFX>().EmitBurst(1);
+
 
                 bulletsObjects.Add(projectile);
                 bulletsPos.Add(bulletStart);
@@ -187,6 +193,7 @@ public class Shotgun : BaseWeapon
                 bulletLifetimes.Add(0);
                 bulletHitEnemies.Add(new HashSet<GameObject>());
                 bulletStartPositions.Add(bulletStart);
+                playerController.playerShooting.shotgunShotFX.EmitBurst(1);
             }
         }
     }
@@ -196,8 +203,7 @@ public class Shotgun : BaseWeapon
     {
         if (currentTotalAmmo > 0)
         {
-            sound?.LoadAudio(shotgunReload);
-            sound?.Play();
+            int audioo = Audio.PlayOneShot(shotgunReload);
 
             if (currentTotalAmmo >= magazineSize)
             {

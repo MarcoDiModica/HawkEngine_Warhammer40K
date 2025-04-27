@@ -1,366 +1,323 @@
 #include "AudioEngine.h"
-#include "AudioAssetProcessor.h"
-#include <iostream>
-#include <filesystem>
 
-AudioEngine::AudioEngine()
-    : m_Device(nullptr)
-    , m_Context(nullptr)
-    , m_Initialized(false)
-    , m_MasterVolume(1.0f)
-{
+
+Implementation::Implementation() {
+    mpStudioSystem = NULL;
+    FMOD::Studio::System::create(&mpStudioSystem);
+    mpStudioSystem->initialize(32, FMOD_STUDIO_INIT_LIVEUPDATE, FMOD_INIT_PROFILE_ENABLE, NULL);
+
+    mpSystem = NULL;
+	mpStudioSystem->getCoreSystem(&mpSystem);
+}
+
+Implementation::~Implementation() {
+    mpStudioSystem->unloadAll();
+    mpStudioSystem->release();
+}
+
+AudioEngine::AudioEngine() {
+
 }
 
 AudioEngine::~AudioEngine() {
-    Shutdown();
+	Shutdown();
 }
 
-bool AudioEngine::Initialize() {
-    // Open the default device
-    m_Device = alcOpenDevice(nullptr);
-    if (!m_Device) {
-        std::cout << "Failed to open default audio device!" << std::endl;
-        return false;
+void Implementation::Update() {
+    std::vector<ChannelMap::iterator> pStoppedChannels;
+    for (auto it = mChannels.begin(), itEnd = mChannels.end(); it != itEnd; ++it)
+    {
+        bool bIsPlaying = false;
+        it->second->isPlaying(&bIsPlaying);
+
+        if (!bIsPlaying)
+        {
+            pStoppedChannels.push_back(it);
+        }
     }
-
-    // Create and set the context
-    m_Context = alcCreateContext(m_Device, nullptr);
-    if (!m_Context) {
-        std::cout << "Failed to create audio context!" << std::endl;
-        alcCloseDevice(m_Device);
-        m_Device = nullptr;
-        return false;
+    for (auto& it : pStoppedChannels)
+    {
+        mChannels.erase(it);
     }
-
-    if (!alcMakeContextCurrent(m_Context)) {
-        std::cout << "Failed to make audio context current!" << std::endl;
-        alcDestroyContext(m_Context);
-        alcCloseDevice(m_Device);
-        m_Context = nullptr;
-        m_Device = nullptr;
-        return false;
-    }
-
-    // Set default listener properties
-    alListener3f(AL_POSITION, 0.0f, 0.0f, 0.0f);
-    alListener3f(AL_VELOCITY, 0.0f, 0.0f, 0.0f);
-    float orientation[] = { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f };
-    alListenerfv(AL_ORIENTATION, orientation);
-
-    m_Initialized = true;
-    std::cout << "Audio Engine initialized successfully!" << std::endl;
     
-    // Print OpenAL version and vendor info
-    std::cout << "OpenAL Vendor: " << alGetString(AL_VENDOR) << std::endl;
-    std::cout << "OpenAL Version: " << alGetString(AL_VERSION) << std::endl;
-    std::cout << "OpenAL Renderer: " << alGetString(AL_RENDERER) << std::endl;
+    mpStudioSystem->update();
+}
 
-    return true;
+Implementation* sgpImplementation = nullptr;
+
+void AudioEngine::Init() {
+    sgpImplementation = new Implementation;
+}
+
+void AudioEngine::Update() {
+	sgpImplementation->Update();
 }
 
 void AudioEngine::Shutdown() {
-    AudioAssetProcessor::ClearCache(); //crahsea en esta funcion
-    
-    for (auto& [sourceId, source] : m_ActiveSources) {
-        StopSound(sourceId);
-        DestroyAudioSource(sourceId);
-    }
-    m_ActiveSources.clear();
-    m_AudioAssets.clear();
-
-    if (m_Context) {
-        alcMakeContextCurrent(nullptr);
-        alcDestroyContext(m_Context);
-        m_Context = nullptr;
-    }
-    
-    if (m_Device) {
-        alcCloseDevice(m_Device);
-        m_Device = nullptr;
-    }
-
-    m_Initialized = false;
+	delete sgpImplementation;
+	sgpImplementation = nullptr;
 }
 
-std::shared_ptr<AudioAsset> AudioEngine::LoadAudioAsset(const std::string& filePath) {
-    // Check if asset is already loaded
-    std::string libraryPath = "Library/Audio/" + std::filesystem::path(filePath).filename().string();
-    auto asset = AudioAssetProcessor::GetCachedAsset(libraryPath);
-    if (asset) {
-        return asset;
-    }
+void AudioEngine::LoadSound(const std::string& strSoundName, bool b3d, bool bLooping, bool bStream) {
+    auto tFoundIt = sgpImplementation->mSounds.find(strSoundName);
+    if (tFoundIt != sgpImplementation->mSounds.end())
+        return;
 
-    // Process the audio file if needed
-    if (!std::filesystem::exists(libraryPath)) {
-        if (!AudioAssetProcessor::ProcessAudioFile(filePath, libraryPath)) {
-            return nullptr;
+    FMOD_MODE eMode = FMOD_DEFAULT;
+    eMode |= b3d ? FMOD_3D : FMOD_2D;
+    eMode |= bLooping ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
+    eMode |= bStream ? FMOD_CREATESTREAM : FMOD_CREATECOMPRESSEDSAMPLE;
+
+    FMOD::Sound* pSound = nullptr;
+    sgpImplementation->mpSystem->createSound(strSoundName.c_str(), eMode, nullptr, &pSound);
+    if (pSound) {
+        sgpImplementation->mSounds[strSoundName] = pSound;
+    }
+}
+
+void AudioEngine::UnLoadSound(const std::string& strSoundName) {
+    auto tFoundIt = sgpImplementation->mSounds.find(strSoundName);
+    if (tFoundIt == sgpImplementation->mSounds.end())
+        return;
+
+    tFoundIt->second->release();
+    sgpImplementation->mSounds.erase(tFoundIt);
+}
+
+int AudioEngine::PlaySound(const std::string& strSoundName, const glm::vec3& vPos, float fVolumedB)
+{
+    int nChannelId = sgpImplementation->mnNextChannelId++;
+    auto tFoundIt = sgpImplementation->mSounds.find(strSoundName);
+    if (tFoundIt == sgpImplementation->mSounds.end())
+    {
+        LoadSound(strSoundName);
+        tFoundIt = sgpImplementation->mSounds.find(strSoundName);
+        if (tFoundIt == sgpImplementation->mSounds.end())
+        {
+            return nChannelId;
         }
     }
+    FMOD::Channel* pChannel = nullptr;
+    sgpImplementation->mpSystem->playSound(tFoundIt->second, nullptr, true, &pChannel);
+    if (pChannel)
+    {
+        FMOD_MODE currMode;
+        tFoundIt->second->getMode(&currMode);
+        if (currMode & FMOD_3D) {
+            FMOD_VECTOR position = VectorToFmod(vPos);
+            pChannel->set3DAttributes(&position, nullptr);
+        }
 
-    // Load the processed audio
-    return AudioAssetProcessor::LoadProcessedAudio(libraryPath);
+        // Store the base volume
+        float baseVolume = dbToVolume(fVolumedB);
+        sgpImplementation->mChannelBaseVolumes[nChannelId] = baseVolume;
+
+        // Apply the master volume scaling
+        pChannel->setVolume(baseVolume * sgpImplementation->masterVolume);
+        pChannel->setPaused(false);
+        sgpImplementation->mChannels[nChannelId] = pChannel;
+    }
+    return nChannelId;
 }
 
-ALuint AudioEngine::PlaySound(std::shared_ptr<AudioAsset> asset, bool isLooping, bool isMusic) {
-    if (!asset || !asset->IsValid()) {
-        return 0;
-    }
 
-    ALuint sourceId = CreateAudioSource();
-    if (sourceId == 0) {
-        return 0;
-    }
+void AudioEngine::StopSound(int nChannelId) {
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return;
 
-    // Configure the source
-    alSourcei(sourceId, AL_BUFFER, asset->GetBuffer());
-    alSourcef(sourceId, AL_GAIN, m_MasterVolume);
-    alSourcei(sourceId, AL_LOOPING, isLooping ? AL_TRUE : AL_FALSE);
-    
-    // Store source information
-    AudioSource source{sourceId, asset, isLooping, isMusic};
-    m_ActiveSources[sourceId] = source;
+	tFoundIt->second->stop();
+	sgpImplementation->mChannels.erase(tFoundIt);
 
-    // Start playback
-    alSourcePlay(sourceId);
-    
-    return sourceId;
+    sgpImplementation->mChannelBaseVolumes.erase(nChannelId);
 }
 
-void AudioEngine::StopSound(ALuint sourceId) {
-    auto it = m_ActiveSources.find(sourceId);
-    if (it != m_ActiveSources.end()) {
-        alSourceStop(sourceId);
+void AudioEngine::PauseSound(int nChannelId) {
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return;
+
+	tFoundIt->second->setPaused(true);
+}
+
+void AudioEngine::ResumeSound(int nChannelId) {
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return;
+
+	tFoundIt->second->setPaused(false);
+}
+
+void AudioEngine::StopAllChannels() {
+	for (auto& channel : sgpImplementation->mChannels) {
+		channel.second->stop();
+	}
+	sgpImplementation->mChannels.clear();
+}
+
+void AudioEngine::PauseAllChannels() {
+	for (auto& channel : sgpImplementation->mChannels) {
+		channel.second->setPaused(true);
+	}
+}
+
+void AudioEngine::ResumeAllChannels() {
+	for (auto& channel : sgpImplementation->mChannels) {
+		channel.second->setPaused(false);
+	}
+}
+
+int AudioEngine::GetChannelId(const std::string& strSoundName) {
+	auto tFoundIt = sgpImplementation->mSounds.find(strSoundName);
+	if (tFoundIt == sgpImplementation->mSounds.end())
+		return -1;
+
+	for (auto& channel : sgpImplementation->mChannels) {
+		FMOD::Sound* pSound = nullptr;
+		channel.second->getCurrentSound(&pSound);
+		if (pSound == tFoundIt->second) {
+			return channel.first;
+		}
+	}
+	return -1;
+}
+
+void AudioEngine::SetChannel3dPosition(int nChannelId, const glm::vec3& vPosition)
+{
+    auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+    if (tFoundIt == sgpImplementation->mChannels.end())
+        return;
+
+    FMOD_VECTOR position = VectorToFmod(vPosition);
+    tFoundIt->second->set3DAttributes(&position, NULL);
+}
+
+void AudioEngine::SetChannelVolume(int nChannelId, float fVolumedB)
+{
+    auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+    if (tFoundIt == sgpImplementation->mChannels.end())
+        return;
+
+    tFoundIt->second->setVolume(dbToVolume(fVolumedB));
+}
+
+void AudioEngine::SetMasterVolume(float fVolumedB)
+{
+    sgpImplementation->masterVolume = fVolumedB; // Convert dB to linear scale
+    for (auto& channel : sgpImplementation->mChannels) {
+        int channelId = channel.first;
+        FMOD::Channel* pChannel = channel.second;
+
+        // Retrieve the base volume for the channel
+        float baseVolume = sgpImplementation->mChannelBaseVolumes[channelId];
+
+        // Apply the master volume scaling
+        pChannel->setVolume(baseVolume * sgpImplementation->masterVolume);
     }
 }
 
-void AudioEngine::PauseSound(ALuint sourceId) {
-    auto it = m_ActiveSources.find(sourceId);
-    if (it != m_ActiveSources.end()) {
-        alSourcePause(sourceId);
+
+bool AudioEngine::IsPlaying(int nChannelId) const
+{
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return false;
+
+	bool bIsPlaying = false;
+	tFoundIt->second->isPlaying(&bIsPlaying);
+	return bIsPlaying;
+}
+
+void AudioEngine::LoadBank(const std::string& strBankName, FMOD_STUDIO_LOAD_BANK_FLAGS flags) {
+    auto tFoundIt = sgpImplementation->mBanks.find(strBankName);
+    if (tFoundIt != sgpImplementation->mBanks.end())
+        return;
+    FMOD::Studio::Bank* pBank;
+    sgpImplementation->mpStudioSystem->loadBankFile(strBankName.c_str(), flags, &pBank);
+    if (pBank) {
+        sgpImplementation->mBanks[strBankName] = pBank;
     }
 }
 
-void AudioEngine::ResumeSound(ALuint sourceId) {
-    auto it = m_ActiveSources.find(sourceId);
-    if (it != m_ActiveSources.end()) {
-        ALint state;
-        alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
-        if (state == AL_PAUSED) {
-            alSourcePlay(sourceId);
+void AudioEngine::LoadEvent(const std::string& strEventName) {
+    auto tFoundit = sgpImplementation->mEvents.find(strEventName);
+    if (tFoundit != sgpImplementation->mEvents.end())
+        return;
+    FMOD::Studio::EventDescription* pEventDescription = NULL;
+    sgpImplementation->mpStudioSystem->getEvent(strEventName.c_str(), &pEventDescription);
+    if (pEventDescription) {
+        FMOD::Studio::EventInstance* pEventInstance = NULL;
+        pEventDescription->createInstance(&pEventInstance);
+        if (pEventInstance) {
+            sgpImplementation->mEvents[strEventName] = pEventInstance;
         }
     }
 }
 
-void AudioEngine::SetVolume(ALuint sourceId, float volume) {
-    auto it = m_ActiveSources.find(sourceId);
-    if (it != m_ActiveSources.end()) {
-        volume = std::max(0.0f, std::min(volume, 1.0f));
-        alSourcef(sourceId, AL_GAIN, volume * m_MasterVolume);
+void AudioEngine::PlayEvent(const std::string& strEventName) {
+    auto tFoundit = sgpImplementation->mEvents.find(strEventName);
+    if (tFoundit == sgpImplementation->mEvents.end()) {
+        LoadEvent(strEventName);
+        tFoundit = sgpImplementation->mEvents.find(strEventName);
+        if (tFoundit == sgpImplementation->mEvents.end())
+            return;
     }
+    tFoundit->second->start();
 }
 
-void AudioEngine::SetMasterVolume(float volume) {
-    m_MasterVolume = std::max(0.0f, std::min(volume, 1.0f));
-    
-    // Update all active sources
-    for (auto& [sourceId, source] : m_ActiveSources) {
-        ALfloat currentVolume;
-        alGetSourcef(sourceId, AL_GAIN, &currentVolume);
-        alSourcef(sourceId, AL_GAIN, (currentVolume / m_MasterVolume) * m_MasterVolume);
-    }
+void AudioEngine::StopEvent(const std::string& strEventName, bool bImmediate) {
+    auto tFoundIt = sgpImplementation->mEvents.find(strEventName);
+    if (tFoundIt == sgpImplementation->mEvents.end())
+        return;
+
+    FMOD_STUDIO_STOP_MODE eMode;
+    eMode = bImmediate ? FMOD_STUDIO_STOP_IMMEDIATE : FMOD_STUDIO_STOP_ALLOWFADEOUT;
+    tFoundIt->second->stop(eMode);
 }
 
-void AudioEngine::SetSourcePosition(ALuint sourceId, float x, float y, float z) {
-    auto it = m_ActiveSources.find(sourceId);
-    if (it != m_ActiveSources.end()) {
-        alSource3f(sourceId, AL_POSITION, x, y, z);
-    }
-}
+bool AudioEngine::IsEventPlaying(const std::string& strEventName) const {
+    auto tFoundIt = sgpImplementation->mEvents.find(strEventName);
+    if (tFoundIt == sgpImplementation->mEvents.end())
+        return false;
 
-void AudioEngine::SetListenerPosition(float x, float y, float z) {
-    alListener3f(AL_POSITION, x, y, z);
-}
-
-bool AudioEngine::IsPlaying(ALuint sourceId) const {
-    auto it = m_ActiveSources.find(sourceId);
-    if (it != m_ActiveSources.end()) {
-        ALint state;
-        alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
-        return state == AL_PLAYING;
+    FMOD_STUDIO_PLAYBACK_STATE* state = NULL;
+    if (tFoundIt->second->getPlaybackState(state) == FMOD_STUDIO_PLAYBACK_PLAYING) {
+        return true;
     }
     return false;
 }
 
-ALuint AudioEngine::CreateAudioSource() {
-    CleanupStoppedSources();
-
-    ALuint sourceId;
-    alGenSources(1, &sourceId);
-    
-    if (alGetError() != AL_NO_ERROR) {
-        return 0;
-    }
-    
-    return sourceId;
-}
-
-void AudioEngine::DestroyAudioSource(ALuint sourceId) {
-    alDeleteSources(1, &sourceId);
-}
-
-void AudioEngine::CleanupStoppedSources() {
-    for (auto it = m_ActiveSources.begin(); it != m_ActiveSources.end();) {
-        ALint state;
-        alGetSourcei(it->first, AL_SOURCE_STATE, &state);
-        
-        if (state == AL_STOPPED) {
-            DestroyAudioSource(it->first);
-            it = m_ActiveSources.erase(it);
-        } else {
-            ++it;
-        }
-    }
-}
-
-ALuint AudioEngine::TestPlayMusic(const std::string& filePath, bool autoLoop) {
-    if (!m_Initialized) {
-        std::cout << "Audio Engine not initialized!" << std::endl;
-        return 0;
-    }
-
-    std::cout << "Testing music playback: " << filePath << std::endl;
-    auto asset = LoadAudioAsset(filePath);
-    if (!asset) {
-        std::cout << "Failed to load music file!" << std::endl;
-        return 0;
-    }
-
-    ALuint sourceId = PlaySound(asset, autoLoop, true);
-    if (sourceId == 0) {
-        std::cout << "Failed to play music!" << std::endl;
-        return 0;
-    }
-
-    std::cout << "Music playing with source ID: " << sourceId << std::endl;
-    std::cout << "Duration: " << asset->GetDuration() << " seconds" << std::endl;
-    std::cout << "Channels: " << asset->GetChannels() << std::endl;
-    std::cout << "Sample Rate: " << asset->GetSampleRate() << " Hz" << std::endl;
-    
-    return sourceId;
-}
-
-ALuint AudioEngine::TestPlaySoundEffect(const std::string& filePath, float x, float y, float z) {
-    if (!m_Initialized) {
-        std::cout << "Audio Engine not initialized!" << std::endl;
-        return 0;
-    }
-
-    std::cout << "Testing sound effect: " << filePath << std::endl;
-    std::cout << "Position: (" << x << ", " << y << ", " << z << ")" << std::endl;
-    
-    auto asset = LoadAudioAsset(filePath);
-    if (!asset) {
-        std::cout << "Failed to load sound effect file!" << std::endl;
-        return 0;
-    }
-
-    ALuint sourceId = PlaySound(asset, false, false);
-    if (sourceId == 0) {
-        std::cout << "Failed to play sound effect!" << std::endl;
-        return 0;
-    }
-
-    SetSourcePosition(sourceId, x, y, z);
-    std::cout << "Sound effect playing with source ID: " << sourceId << std::endl;
-    
-    return sourceId;
-}
-
-void AudioEngine::TestSetListenerPosition(float x, float y, float z) {
-    if (!m_Initialized) {
-        std::cout << "Audio Engine not initialized!" << std::endl;
+void AudioEngine::GetEventParameter(const std::string& strEventName, const std::string& strParameterName, float* parameter) {
+    auto tFoundIt = sgpImplementation->mEvents.find(strEventName);
+    if (tFoundIt == sgpImplementation->mEvents.end())
         return;
-    }
 
-    std::cout << "Setting listener position to: (" << x << ", " << y << ", " << z << ")" << std::endl;
-    SetListenerPosition(x, y, z);
+	tFoundIt->second->getParameterByName(strParameterName.c_str(), parameter, NULL);
 }
 
-void AudioEngine::TestPlayAllSupportedFormats() {
-    if (!m_Initialized) {
-        std::cout << "Audio Engine not initialized!" << std::endl;
+void AudioEngine::SetEventParameter(const std::string& strEventName, const std::string& strParameterName, float fValue) {
+    auto tFoundIt = sgpImplementation->mEvents.find(strEventName);
+    if (tFoundIt == sgpImplementation->mEvents.end())
         return;
-    }
 
-    std::cout << "\n=== Testing Supported Audio Formats ===" << std::endl;
     
-    // Test WAV format
-    std::cout << "\nTesting WAV format:" << std::endl;
-    if (std::filesystem::exists("EngineAssets/Sounds/effect.wav")) {
-        TestPlaySoundEffect("EngineAssets/Sounds/effect.wav");
-    } else {
-        std::cout << "WAV test file not found (EngineAssets/Sounds/effect.wav)" << std::endl;
-        std::cout << "Please create the EngineAssets/Sounds directory and add test audio files." << std::endl;
-    }
-
-    // Add more format tests as needed
+	tFoundIt->second->setParameterByName(strParameterName.c_str(), fValue);
 }
 
-void AudioEngine::PrintAudioDeviceInfo() const {
-    if (!m_Initialized) {
-        std::cout << "Audio Engine not initialized!" << std::endl;
-        return;
-    }
-
-    std::cout << "\n=== Audio Device Information ===" << std::endl;
-    std::cout << "Default Device: " << alcGetString(m_Device, ALC_DEVICE_SPECIFIER) << std::endl;
-    
-    // Get and display audio device capabilities
-    ALCint major, minor;
-    alcGetIntegerv(m_Device, ALC_MAJOR_VERSION, 1, &major);
-    alcGetIntegerv(m_Device, ALC_MINOR_VERSION, 1, &minor);
-    std::cout << "OpenAL Version: " << major << "." << minor << std::endl;
-
-    // Print max sources information
-    ALCint maxMono, maxStereo;
-    alcGetIntegerv(m_Device, ALC_MONO_SOURCES, 1, &maxMono);
-    alcGetIntegerv(m_Device, ALC_STEREO_SOURCES, 1, &maxStereo);
-    std::cout << "Maximum Mono Sources: " << maxMono << std::endl;
-    std::cout << "Maximum Stereo Sources: " << maxStereo << std::endl;
+FMOD_VECTOR AudioEngine::VectorToFmod(const glm::vec3& vPosition) {
+    FMOD_VECTOR fVec;
+    fVec.x = vPosition.x;
+    fVec.y = vPosition.y;
+    fVec.z = vPosition.z;
+    return fVec;
 }
 
-void AudioEngine::PrintActiveSourcesInfo() const {
-    if (!m_Initialized) {
-        std::cout << "Audio Engine not initialized!" << std::endl;
-        return;
-    }
+float  AudioEngine::dbToVolume(float dB)
+{
+    return powf(10.0f, 0.05f * dB);
+}
 
-    std::cout << "\n=== Active Audio Sources ===" << std::endl;
-    std::cout << "Total active sources: " << m_ActiveSources.size() << std::endl;
-
-    for (const auto& [sourceId, source] : m_ActiveSources) {
-        ALint state;
-        alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
-        
-        float x, y, z;
-        alGetSource3f(sourceId, AL_POSITION, &x, &y, &z);
-        
-        float gain;
-        alGetSourcef(sourceId, AL_GAIN, &gain);
-
-        std::cout << "\nSource ID: " << sourceId << std::endl;
-        std::cout << "Type: " << (source.isMusic ? "Music" : "Sound Effect") << std::endl;
-        std::cout << "State: ";
-        switch (state) {
-            case AL_INITIAL: std::cout << "Initial"; break;
-            case AL_PLAYING: std::cout << "Playing"; break;
-            case AL_PAUSED: std::cout << "Paused"; break;
-            case AL_STOPPED: std::cout << "Stopped"; break;
-            default: std::cout << "Unknown";
-        }
-        std::cout << std::endl;
-        std::cout << "Position: (" << x << ", " << y << ", " << z << ")" << std::endl;
-        std::cout << "Volume: " << gain << std::endl;
-        std::cout << "Looping: " << (source.isLooping ? "Yes" : "No") << std::endl;
-    }
+float  AudioEngine::VolumeTodb(float volume)
+{
+    return 20.0f * log10f(volume);
 }

@@ -10,6 +10,7 @@
 #include "MyGameEngine/Image.h"
 #include "Log.h"
 #include "../MyScriptingEngine/MonoManager.h"
+#include "MyAudioEngine/AudioManager.h"
 
 void SetRedStyle();
 
@@ -61,7 +62,6 @@ bool UIMainMenuBar::Draw()
 			if (ImGui::MenuItem("Plane")) { Application->root->CreatePlane("Plane"); }
 			if (ImGui::MenuItem("Camera")) { Application->root->CreateCameraObject("Camera"); }
 			if (ImGui::MenuItem("Light")) { Application->root->CreateLightObject("Light"); }
-			if (ImGui::MenuItem("Audio Source")) { Application->root->CreateAudioObject("Audio Source"); }
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))
@@ -126,6 +126,7 @@ bool UIMainMenuBar::Draw()
 					pressing_play = false;
 					Application->play = true;
 					SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+					
 					SceneManagement->Awake();
 					SceneManagement->Start();
 					Application->scene_serializer->Serialize(std::string("EnigneAssets/" + Application->root->GetActiveScene()->GetName() + ".scene"), true);
@@ -141,6 +142,7 @@ bool UIMainMenuBar::Draw()
 					Application->play = false;
 					isPaused = false;
 					SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
+					AudioManager::StopAll();
 					Application->physicsModule->linkPhysicsToScene = false;
 					Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");
 				}
@@ -150,6 +152,7 @@ bool UIMainMenuBar::Draw()
 					Application->play = true;
 					isPaused = false;
 					SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+					AudioManager::ResumeAll();
 					Application->physicsModule->linkPhysicsToScene = true;
 				}
 			}
@@ -161,6 +164,7 @@ bool UIMainMenuBar::Draw()
 				Application->play = false;
 				isPaused = false;
 				SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
+				AudioManager::StopAll();
 				Application->physicsModule->linkPhysicsToScene = false;
 				Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");				
 			}
@@ -170,6 +174,7 @@ bool UIMainMenuBar::Draw()
 				Application->play = false;
 				isPaused = true;
 				SceneManagement->currentScene->sceneState = Scene::SceneState::PAUSE;
+				AudioManager::PauseAll();
 				Application->physicsModule->linkPhysicsToScene = false;
 			}
 		}

@@ -64,6 +64,7 @@
 #include "MyGameEngine/ShaderManager.h"
 #include "MyParticlesEngine/ParticleFX.h"
 #include "SDL2/SDL_timer.h"
+#include "MyAudioEngine/AudioManager.h"
 
 using namespace std;
 
@@ -865,7 +866,6 @@ int main(int argc, char** argv) {
 			Application = new App();
 			
 			MonoManager::GetInstance().Initialize();
-			SoundComponent::InitSharedAudioEngine();
 
 			ilInit();
 			iluInit();
@@ -883,6 +883,9 @@ int main(int argc, char** argv) {
 		case AWAKE:
 
 			Application->physicsModule->Awake();
+			Application->audioEngine->Init();
+			Application->LoadAllParticleTextures();
+			AudioManager::Initialize();
 			if (Application->Awake()) { state = START; }
 			else { printf("Failed on Awake"); state = FAIL; }
 			break;
@@ -921,6 +924,7 @@ int main(int argc, char** argv) {
 
 			MonoManager::GetInstance().Shutdown();
 			ShaderManager::GetInstance().Cleanup();
+			AudioManager::Shutdown();
 
 			if (Application->CleanUP()) {
 				state = EXIT;

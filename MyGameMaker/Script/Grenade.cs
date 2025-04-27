@@ -1,8 +1,5 @@
 ﻿using HawkEngine;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 
 public class Grenade : MonoBehaviour
@@ -16,25 +13,26 @@ public class Grenade : MonoBehaviour
     Rigidbody rigidbody;
     bool isExploded = false;
     GameObject explosion;
-    float deathtimer = 0.0f;
+    float deathtimer = 0.2f;
     public bool needsDestroy = false;
-    float deathTimerPrevention = 2.0f;
-    private Audio sound;
-    Collider collider;
-    public List<string> collisionNames = new List<string>();
-    private string granadeExplosion = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunAbility1GrenadeExplosion.wav";
+    float deathTimerPrevention = 0;
+    private const string granadeExplosion = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunAbility1GrenadeExplosion.wav";
 
     public override void Awake()
     {
+
     }
     public override void Start()
     {
-        sound = gameObject.GetComponent<Audio>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
-        
+        //sound = gameObject.GetComponent<AudioSource>();
+        //if (sound == null)
+        //{
+        //    Engineson.print("PlayerShooting: Audio component not found");
+        //}
+
+        //grenadeFX = new AudioClip(granadeExplosion, "GrenadeFX", false, false);
+        //sound.LoadAudioClip(grenadeFX);
+
     }
 
     public void Init(Vector3 pos, Vector3 dir)
@@ -55,68 +53,49 @@ public class Grenade : MonoBehaviour
     {
         if (isExploded)
         {
-            deathtimer += deltaTime;
-            if (deathtimer >= deathTimerPrevention)
+            deathtimer -= deltaTime;
+            if (deathtimer <= 0)
             {
-                
-                if (explosion != null && needsDestroy)
-                {
-                    Engineson.print("Grenade: Destroying grenade");
-                    Engineson.Destroy(explosion);
-                    needsDestroy = false;
-                }
-                deathtimer = 0;
+                if (explosion != null) ;
+                GetComponent<Collider>().SetPosition(new Vector3(0, -100, 0));
+                needsDestroy = false;
+            }
+        }
+        deathTimerPrevention += deltaTime;
+        //Engineson.print(deathTimerPrevention.ToString());
+
+        if (deathTimerPrevention > .1f)
+        {
+            if (explosion != null) { 
+                GetComponent<Collider>().SetPosition(new Vector3(0, -100, 0));
+                needsDestroy = false;
             }
         }
 
     }
+
     void Explode()
     {
         rigidbody.SetVelocity(new Vector3(0, 0, 0));
         explosion = Engineson.CreateGameObject("Explosion", null);
-        sound.LoadAudio(granadeExplosion);
-        sound.Play();
-        explosion.AddComponent<MeshRenderer>();
+        Audio.PlayOneShot(granadeExplosion);
         explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
+        var explosionFX = Engineson.CreateGameObject("ExplosionGranadeFX", null);
+        gameObject.AddChild(explosionFX);
+        explosionFX.AddComponent<ParticleFX>().ApplyPreset(4);
+        explosionFX.GetComponent<ParticleFX>().EmitBurst(40);
+        explosionFX.GetComponent<Transform>().SetPosition(
+            GetComponent<Transform>().GetPosition().X,
+            GetComponent<Transform>().GetPosition().Y,
+            GetComponent<Transform>().GetPosition().Z
+        );
         isExploded = true;
-        explosion.AddComponent<BoxCollider>();
-        needsDestroy = true;
-
-        for (int i = 0; i < collisionNames.Count; i++)
-        {
-            var enemy = GameObject.Find(collisionNames[i]);
-            if (enemy.tag == "Melee")
-            {
-                enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
-            }
-            if (enemy.tag == "Ranged")
-            {
-                enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
-            }
-            if (enemy.tag == "Stalker")
-            {
-                //enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
-            }
-            if (enemy.tag == "Boss")
-            {
-                enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
-            }
-            if (enemy.tag == "Destroyable")
-            {
-                enemy.GetComponent<DestroyEnviormentObject>().DestroyObject();
-            }
-        }
-
     }
+
     public override void OnCollisionEnter(GameObject other)
     {
-        if (isExploded == false)
-        {
-            Explode();
-            Engineson.print("Grenade: Exploded");
-        }
-                
+        Explode();
     }
 
 }

@@ -1,0 +1,137 @@
+<html>
+<head>
+<title>Platform Details | Open Harmony</title>
+<link rel="stylesheet" href="style/docs.css">
+<link rel="stylesheet" href="style/code_highlight.css">
+<script type="text/javascript" src="scripts/language-selector.js"></script></head>
+<body>
+<div class="docs-body">
+<div class="manual-toc">
+<p>FMOD Engine User Manual 2.03</p>
+<ul>
+<li><a href="welcome.html">Welcome to the FMOD Engine</a></li>
+<li><a href="studio-guide.html">Studio API Guide</a></li>
+<li><a href="core-guide.html">Core API Guide</a></li>
+<li class="manual-current-chapter manual-inactive-chapter"><a href="platforms.html">Platform Details</a><ul class="subchapters"><li><a href="platforms-win.html">Windows</a></li><li><a href="platforms-mac.html">Mac</a></li><li><a href="platforms-linux.html">Linux</a></li><li><a href="platforms-ios.html">iOS</a></li><li><a href="platforms-android.html">Android</a></li><li class="manual-current-chapter manual-active-chapter"><a href="platforms-openharmony.html">Open Harmony</a></li><li><a href="platforms-uwp.html">Universal Windows Platform</a></li><li><a href="platforms-html5.html">HTML5</a></li></ul></li>
+<li><a href="white-papers.html">White Papers</a></li>
+<li><a href="studio-api.html">Studio API Reference</a></li>
+<li><a href="core-api.html">Core API Reference</a></li>
+<li><a href="fsbank-api.html">FSBank API Reference</a></li>
+<li><a href="plugin-api.html">Plug-in API Reference</a></li>
+<li><a href="effects-reference.html">Effects Reference</a></li>
+<li><a href="troubleshooting.html">Troubleshooting</a></li>
+<li><a href="glossary.html">Glossary</a></li>
+</ul>
+</div>
+<div class="manual-content api">
+<h1>4. Platform Details | Open Harmony</h1>
+<div class="toc">
+<ul>
+<li><a href="#open-harmony-specific-starter-guide">Open Harmony Specific Starter Guide</a><ul>
+<li><a href="#sdk-version">SDK Version</a></li>
+<li><a href="#compatibility">Compatibility</a></li>
+<li><a href="#libraries">Libraries</a></li>
+<li><a href="#javascript">JavaScript</a></li>
+<li><a href="#thread-affinity">Thread Affinity</a></li>
+<li><a href="#thread-priority">Thread Priority</a></li>
+<li><a href="#resume-audio-on-return-from-background">Resume Audio on Return From Background</a></li>
+<li><a href="#latency">Latency</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="open-harmony-specific-starter-guide"><a href="#open-harmony-specific-starter-guide">Open Harmony Specific Starter Guide</a></h2>
+<h3 id="sdk-version"><a href="#sdk-version">SDK Version</a></h3>
+<p>FMOD is compiled using the following tools.</p>
+<ul>
+<li><strong>SDK</strong> - version 4.0.10.13 targeting API 10.</li>
+</ul>
+<h3 id="compatibility"><a href="#compatibility">Compatibility</a></h3>
+<p>FMOD supports devices of the below ABIs back to API 10.</p>
+<ul>
+<li><strong>armeabi-v7a</strong> - supported and optimized with NEON.</li>
+<li><strong>arm64-v8a</strong>   - supported and optimized with NEON.</li>
+<li><strong>x86_64</strong>      - supported and optimized with SSE3.</li>
+</ul>
+<h3 id="libraries"><a href="#libraries">Libraries</a></h3>
+<p><em>Substitute $ABI with your desired ABI from the 'Compatibility' list above.</em></p>
+<p>Core API library</p>
+<ul>
+<li><strong>/api/core/lib/$ABI/libfmod.so</strong> - Release binary for production code.</li>
+<li><strong>/api/core/lib/$ABI/libfmodL.so</strong> - Release binary with logging enabled for development.</li>
+</ul>
+<p>Studio API library (used in conjunction with the Core API library)</p>
+<ul>
+<li><strong>/api/studio/lib/$ABI/libfmodstudio.so</strong> - Release binary for production code.</li>
+<li><strong>/api/studio/lib/$ABI/libfmodstudioL.so</strong> - Release binary with logging enabled for development.</li>
+</ul>
+<h3 id="javascript"><a href="#javascript">JavaScript</a></h3>
+<p>FMOD is primarily a native C/C++ library implementation but does provide a limited JavaScript interface to provide necessary data to the engine.</p>
+<p>It is also highly recommended that you initialize the FMOD JavaScript interface, as this will allow loading <a href="glossary.html#asset">assets</a> from the App package. This should be done before <a class="apilink" href="core-api-system.html#system_create">System_Create</a> or <a class="apilink" href="studio-api-system.html#studio_system_create">Studio::System::create</a>, and should be closed after <a class="apilink" href="core-api-system.html#system_release">System::release</a> or <a class="apilink" href="studio-api-system.html#studio_system_release">Studio::System::release</a>.</p>
+<p>To access the JavaScript interface you must create <code>index.d.ts</code> in <code>src\main\cpp\types\libfmod</code> with the following:</p>
+<div class="highlight language-text"><pre><span></span>export const init: (ability: UIAbility) =&gt; void;
+export const close: () =&gt; void; 
+</pre></div>
+
+<p>Create an <code>oh-package.json5</code> in <code>src\main\cpp\types\libfmod</code> with the following:</p>
+<div class="highlight language-text"><pre><span></span>{
+  &quot;name&quot;: &quot;libfmod.so&quot;,
+  &quot;types&quot;: &quot;./index.d.ts&quot;,
+  &quot;version&quot;: &quot;&quot;,
+  &quot;description&quot;: &quot;FMOD Core Library.&quot;
+}
+</pre></div>
+
+<p>Reference the <code>.d.ts</code> in <code>oh-package.json5</code> for the target (not application), which goes in <code>devDependencies</code>:</p>
+<div class="highlight language-text"><pre><span></span>&quot;devDependencies&quot;: {
+  &quot;@types/libfmod.so&quot;: &quot;file:./src/main/cpp/types/libfmod&quot;
+},
+</pre></div>
+
+<p>To call FMOD JavaScript functions you need to edit your <code>Ability.ts</code> and add the following import:</p>
+<div class="highlight language-javascript"><pre><span></span><span class="kr">import</span> <span class="nx">fmod</span> <span class="nx">from</span> <span class="s1">&#39;libfmod.so&#39;</span><span class="p">;</span>
+</pre></div>
+
+<p>In your Ability <code>onCreate</code> function add:</p>
+<div class="highlight language-javascript"><pre><span></span><span class="nx">fmod</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</pre></div>
+
+<p>In your Ability <code>onDestroy</code> function add:</p>
+<div class="highlight language-javascript"><pre><span></span><span class="nx">fmod</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+</pre></div>
+
+<p>It is expected that the API for FMOD is called from your existing native code in C++. It is important when initializing FMOD to not call the init function too early otherwise the audio device will fail. Make sure you call FMOD after the WindowStage ACTIVE event occurs, for example, you can edit your <code>Ability.ts</code>, and edit <code>onWindowStageCreate</code> to include the following:</p>
+<div class="highlight language-javascript"><pre><span></span><span class="nx">windowStage</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;windowStageEvent&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">data</span> <span class="o">==</span> <span class="nb">window</span><span class="p">.</span><span class="nx">WindowStageEventType</span><span class="p">.</span><span class="nx">ACTIVE</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Call you JS entry point for FMOD creation here</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">data</span> <span class="o">==</span> <span class="nb">window</span><span class="p">.</span><span class="nx">WindowStageEventType</span><span class="p">.</span><span class="nx">INACTIVE</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Call you JS entry point for FMOD destruction here</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3 id="thread-affinity"><a href="#thread-affinity">Thread Affinity</a></h3>
+<p>All threads will default to <a class="apilink" href="core-api-common.html#fmod_thread_affinity_core_all">FMOD_THREAD_AFFINITY_CORE_ALL</a>, this is recommended due to the wide variety of devices available but can be customized with <a class="apilink" href="core-api-common.html#thread_setattributes">Thread_SetAttributes</a>.</p>
+<h3 id="thread-priority"><a href="#thread-priority">Thread Priority</a></h3>
+<p>The relationship between FMOD platform agnostic thread priority and the platform specific values is as follows:</p>
+<ul>
+<li><a class="apilink" href="core-api-common.html#fmod_thread_priority_low">FMOD_THREAD_PRIORITY_LOW</a>       ~ 5</li>
+<li><a class="apilink" href="core-api-common.html#fmod_thread_priority_medium">FMOD_THREAD_PRIORITY_MEDIUM</a>    ~ 0</li>
+<li><a class="apilink" href="core-api-common.html#fmod_thread_priority_high">FMOD_THREAD_PRIORITY_HIGH</a>      ~ -8</li>
+<li><a class="apilink" href="core-api-common.html#fmod_thread_priority_very_high">FMOD_THREAD_PRIORITY_VERY_HIGH</a> ~ -16</li>
+<li><a class="apilink" href="core-api-common.html#fmod_thread_priority_extreme">FMOD_THREAD_PRIORITY_EXTREME</a>   ~ -18</li>
+<li><a class="apilink" href="core-api-common.html#fmod_thread_priority_critical">FMOD_THREAD_PRIORITY_CRITICAL</a>  ~ -19</li>
+</ul>
+<h3 id="resume-audio-on-return-from-background"><a href="#resume-audio-on-return-from-background">Resume Audio on Return From Background</a></h3>
+<p>The system will pause FMOD when your app goes into the background, however it will not resume it when returning to the foreground. To handle this, call <a class="apilink" href="core-api-system.html#system_mixersuspend">System::mixerSuspend</a> from your <code>UIAbility</code> <code>onBackground</code> callback and call <a class="apilink" href="core-api-system.html#system_mixerresume">System::mixerResume</a> from your <code>UIAbility</code> <code>onForeground</code> callback.</p>
+<h3 id="latency"><a href="#latency">Latency</a></h3>
+<p>For SDK 10 devices, the hardware latency is fixed at ~90ms, for FMOD to operate in this high latency environment you must increase the FMOD buffer size to handle the latency. We recommend calling <a class="apilink" href="core-api-system.html#system_setdspbuffersize">System::setDSPBufferSize</a> with <code>2048</code> as the buffer length and <code>4</code> as the number of buffers.</p>
+<p>For SDK 11 and newer devices, the hardware latency is internally configured to match the FMOD buffer length. If you do not call <a class="apilink" href="core-api-system.html#system_setdspbuffersize">System::setDSPBufferSize</a>, the default of <code>1024</code> buffer length and <code>4</code> buffers will be used, which the hardware can use without stuttering. If you want to set the buffer length lower than the default <code>1024</code>, we recommend using FAST mode.</p>
+<p>FAST mode is available on all devices and can be selected by calling <a class="apilink" href="core-api-system.html#system_setdriver">System::setDriver</a> with <code>1</code> before <a class="apilink" href="core-api-system.html#system_init">System::init</a> (the default of <code>0</code> represents normal mode). With FAST mode activated you should be able to set the FMOD buffer length down to <code>512</code>, with <code>4</code> buffers and achieve glitch free playback. However, please note some development boards cannot handle FAST mode and will result in a crash, thankfully we have seen no such crash in any consumer devices.</p></div>
+
+<p class="manual-footer">FMOD Engine User Manual 2.03.07 (2025-04-02). &copy; 2025 Firelight Technologies Pty Ltd.</p>
+</body>
+</html>
+
+</div>

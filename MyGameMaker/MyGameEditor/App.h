@@ -5,21 +5,26 @@
 #include <vector>
 #include <list>
 #include <chrono>
+#include <atomic>
+#include <memory>
 
 #include "Log.h"
 #include "EditorCamera.h"
 #include "SceneSerializer.h"
 #include "Root.h"
-//#include "../MyGameEngine/Mesh.h"
 #include "../MyPhysicsEngine/PhysicsModule.h"
 #include "../MyAudioEngine/AudioEngine.h"
 #include "../MyParticlesEngine/ParticleFX.h"
 #include "../MyGameEngine/Image.h"
 
-#define FIXED_INTERVAL 0.02
+#define FIXED_TIME_STEP 0.016667f  
+#define MAX_FIXED_UPDATES 3 
+#define MIN_FRAME_TIME 0.0005
+#define MAX_FRAME_TIME 0.1
+
 #undef PROFILE
 
-class  Module;
+class Module;
 class Window;
 class Input;
 class HardwareInfo;
@@ -29,10 +34,7 @@ class Root;
 class Camera;
 class Gizmos;
 class UIMainMenuBar;
-
 class Mesh;
-
-using hrclock = std::chrono::high_resolution_clock;
 
 class App
 {
@@ -49,19 +51,18 @@ public:
 	void PrepareUpdate();
 	bool PreUpdate();
 	bool DoUpdate();
-	bool FixedUpdate();
 	bool PostUpdate();
 	void FinishUpdate();
 
-	std::vector<LogInfo> GetLogs();
 	void AddLog(LogType type, const char* entry);
+	const std::vector<LogInfo>& GetLogs() const;
 	void CleanLogs();
 
-	int GetFps() const;
+	int GetFps() const { return m_fps; }
+	double GetDt() const { return m_deltaTime; }
 	void SetFpsCap(int fps);
-	double GetDt() const;
+	void EnableFrameCap(bool enable) { m_capFrames = enable; }
 
-	// Add a new module to handle
 	void AddModule(Module* module, bool activate);
 
 	void LoadAllParticleTextures() {
@@ -107,39 +108,44 @@ public:
 	EditorCamera* camera = nullptr;
 	SceneSerializer* scene_serializer = nullptr;
 	Gizmos* gizmos = nullptr;
-
 	PhysicsModule* physicsModule = nullptr;
-	AudioEngine* audioEngine = nullptr;
 
-	Mesh ElMesh;
 	std::unordered_map<std::string, std::shared_ptr<Image>> loadedPartTextures;
 
 	bool play = false;
 	bool hasChangedScene = false;
 
 private:
+	using high_res_clock = std::chrono::high_resolution_clock;
+	using time_point = std::chrono::time_point<high_res_clock>;
 
-	double fixedCounter = FIXED_INTERVAL;
+	bool PerformFixedUpdate();
 
-	LogInfo logInfo;
-	std::vector<LogInfo> logs;
+	std::vector<LogInfo> m_logs;
+	static constexpr size_t MAX_LOGS = 1000;
 
-	std::list<Module*> modules;
+	std::vector<Module*> m_modules;
 
-	std::chrono::duration<double> targetFrameDuration;
-	std::chrono::steady_clock::time_point frameStart, frameEnd;
+	time_point m_frameStart;
+	time_point m_lastFrameTime;
+	double m_deltaTime = 0.016;
+	double m_fixedTimeAccumulator = 0.0;
 
-	bool capFrames = true; //false para tener el maximo de fps posible
-	int frameRate = 240; //Fake frameRate no borro por si acaso
-	glm::uint32 frameRateCap = 16.67; //forlmula para saber que numero poner aqui: 1000ms / desired fps ej: 1000ms / 60fps = 16,67
-	double dt = 0;
-	double dtCount = 0;
-	int frameCount = 0;
-	int fps = 0;
-	hrclock::time_point lastTime = hrclock::now();
+	bool m_capFrames = false;
+	int m_targetFrameRate = 60;
+	double m_targetFrameTime = 1.0 / 60.0;
+
+	std::atomic<int> m_fps;
+	std::atomic<int> m_frameCount;
+	double m_fpsUpdateTimer = 0.0;
+
+	double m_longestFrame = 0.0;
+	double m_shortestFrame = 1.0;
+	double m_averageFrameTime = 0.0;
+	int m_framesForAverage = 0;
+
 protected:
 	friend class UIMainMenuBar;
-	
 };
 
 extern App* Application;

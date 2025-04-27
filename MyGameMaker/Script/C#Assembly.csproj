@@ -102,6 +102,7 @@
     <Compile Include="EnemyControllerBoss.cs" />
     <Compile Include="EnemyControllerStalker.cs" />
     <Compile Include="EnemyControllerBossTail.cs" />
+    <Compile Include="EnemyControllerWarrior.cs" />
     <Compile Include="EnergyBall.cs" />
     <Compile Include="EnemyControllerMelee.cs" />
     <Compile Include="EnemyControllerRanged.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="IPowerUp.cs" />
     <Compile Include="LaserBeam.cs" />
     <Compile Include="LaserBeamObject.cs" />
+    <Compile Include="LictorAnimation.cs" />
     <Compile Include="LocationTitle.cs" />
     <Compile Include="LoseScreen.cs" />
     <Compile Include="Magnet.cs" />

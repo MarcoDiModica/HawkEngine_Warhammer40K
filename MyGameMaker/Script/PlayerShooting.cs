@@ -109,12 +109,12 @@ public class PlayerShooting : MonoBehaviour
         railgunShotSemiFX = GameObject.Find("RailgunShotSemiFX").GetComponent<ParticleFX>();
         railgunShotAutoFX = GameObject.Find("RailgunShotAutoFX").GetComponent<ParticleFX>();
 
-        boltgunMesh = GameObject.Find("Boltgun");
-        shotgunMesh = GameObject.Find("Shotgun");
-        railgunMesh = GameObject.Find("Railgun");
+        //boltgunMesh = GameObject.Find("Boltgun");
+        //shotgunMesh = GameObject.Find("Shotgun");
+        //railgunMesh = GameObject.Find("Railgun");
 
-        shotgunMesh.SetActive(false);
-        railgunMesh.SetActive(false);
+        //shotgunMesh.SetActive(false);
+        //railgunMesh.SetActive(false);
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
 

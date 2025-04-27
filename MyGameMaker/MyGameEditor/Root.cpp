@@ -910,13 +910,7 @@ void Root::SetActiveScene(const std::string& name)
 {
     SceneManagement->SetActiveScene(name);
 
-	if (FindGOByName("DirectionalLight") == NULL)
-	{
-		auto light = CreateLightObject("DirectionalLight");
-		light->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
-		light->AddComponent<LightComponent>();
-		light->GetComponent<LightComponent>()->SetLightType(LightType::DIRECTIONAL);
-	}
+	
 
 }
 

@@ -10,18 +10,18 @@ public class InteractionSystem : MonoBehaviour
 
     private PlayerInput playerInput;
     private PlayerMovement playerMovement;
-    private UIImage interactionImage;
     private bool isInteracting = false;
     private GameObject currentInteractable = null;
     private AreaTrigger currentAreaTrigger = null;
-    private bool interactionImageIsEnabled = false;
     private GameObject canvas;
     private Interaction interaction;
     private Transform cachedTransform;
 
-    public override void Awake()
-    {
-    }
+    private float interactionCooldown = 0.5f; 
+    private float interactionTimer = 0.0f; 
+
+    public override void Awake() { }
+
     public override void Start()
     {
         playerInput = gameObject.GetComponent<PlayerInput>();
@@ -37,35 +37,28 @@ public class InteractionSystem : MonoBehaviour
             return;
         }
 
-        var interactionMessage = GameObject.Find("InteractText");
-        if (interactionMessage != null)
-        {
-            interactionImage = interactionMessage.GetComponent<UIImage>();
-            interactionImage?.SetImageEnabled(false);
-        }
-        else
-        {
-            Engineson.print("ERROR: InteractionSystem requires a GameObject named InteractText.");
-        }
-
         cachedTransform = gameObject.GetComponent<Transform>();
         if (cachedTransform == null)
         {
             Engineson.print("ERROR: InteractionSystem requires Transform");
             return;
         }
+
         canvas = GameObject.Find("Canvas_Interaction");
         if (canvas == null)
         {
             Engineson.print("ERROR: InteractionSystem requires a GameObject named Canvas_Interaction.");
             return;
         }
-        interaction = canvas.GetComponent<Interaction>();   
+
+        interaction = canvas.GetComponent<Interaction>();
     }
 
     public override void Update(float deltaTime)
     {
         if (playerInput == null) return;
+
+        interactionTimer += deltaTime;
 
         CheckForInteractions();
     }
@@ -90,7 +83,6 @@ public class InteractionSystem : MonoBehaviour
         HandleAreaTriggers(position);
     }
 
-
     private void HandleInteraction(Item interactable)
     {
         if (playerInput.IsInteracting())
@@ -102,12 +94,17 @@ public class InteractionSystem : MonoBehaviour
                 currentInteractable = interactable.gameObject;
                 playerInput.BlockMovement();
                 interactable.Interact();
+                interaction?.SpawnDialogueText(true);
+                interactionTimer = 0.0f; 
             }
-            else
+            else if (interactionTimer > interactionCooldown)
             {
-                isInteracting = false;
-                playerInput.UnblockMovement();
-                interactable.Interact();
+                if(Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B))
+                {
+                    isInteracting = false;
+                    interaction?.SpawnDialogueText(false);
+                    playerInput.UnblockMovement();
+                }     
             }
         }
         else if (!isInteracting)
@@ -123,10 +120,9 @@ public class InteractionSystem : MonoBehaviour
         if (areaObjects.Length > 0)
         {
             var newAreaTrigger = areaObjects[0].GetComponent<AreaTrigger>();
-            if (currentAreaTrigger != newAreaTrigger)
+            if (newAreaTrigger != null)
             {
-                currentAreaTrigger?.SetTextVisibility(false);
-                newAreaTrigger?.SetTextVisibility(true);
+                interaction?.SpawnDialogueText(true);
                 currentAreaTrigger = newAreaTrigger;
             }
 
@@ -137,18 +133,13 @@ public class InteractionSystem : MonoBehaviour
         }
         else if (currentAreaTrigger != null)
         {
-            currentAreaTrigger.SetTextVisibility(false);
+            interaction?.SpawnDialogueText(false);
             currentAreaTrigger = null;
         }
     }
 
     private void ShowInteractionMessage(bool show)
     {
-        if (interactionImage != null && show != interactionImageIsEnabled)
-        {
-            interactionImage.SetImageEnabled(show);
-            interactionImageIsEnabled = show;
-        }
-        interaction.Spawn();
+        interaction?.SpawnInteractText(show);
     }
 }

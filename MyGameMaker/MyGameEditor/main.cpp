@@ -900,6 +900,8 @@ int main(int argc, char** argv) {
 		case LOOP:
 
 #ifndef _BUILD
+			lights.clear();
+			Application->root->GetActiveScene()->_lights.clear();
 			Application->gui->Render();
 			EditorRenderer(Application->gui);
 			RenderGameView();
@@ -913,6 +915,8 @@ int main(int argc, char** argv) {
 				ScriptHotReloader::GetInstance().Update();
 			}
 #else
+			lights.clear();
+			Application->root->GetActiveScene()->_lights.clear();
 			GameRelease();
 			Application->window->SwapBuffers();
 #endif // ENABLE_EDITOR

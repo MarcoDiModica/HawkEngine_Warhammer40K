@@ -24,19 +24,20 @@
 
 MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) {
 	name = "MeshRenderer";
-	/*mesh = Mesh::CreateCube();
-	material = std::make_shared<Material>();
+	mesh = Application->root->GetResourceManager()->Cube;
+	material = Application->root->GetResourceManager()->DefaultMaterial;
 
-	auto image = std::make_shared<Image>();
-	image->LoadTexture("default.png");
-	material->setImage(image);
-	material->SetColor(glm::dvec4(0.7f, 0.7f, 0.7f, 1.0f));
+	//auto image = std::make_shared<Image>();
+	//image->LoadTexture("default.png");
+	//material->setImage(image);
+	//material->SetColor(glm::dvec4(0.7f, 0.7f, 0.7f, 1.0f));
 
 	if (!owner->GetComponent<ShaderComponent>()) {
 		owner->AddComponent<ShaderComponent>();
 	}
 	owner->GetComponent<ShaderComponent>()->SetOwnerMaterial(material.get());
-	owner->GetComponent<ShaderComponent>()->SetShaderType(ShaderType::PBR);*/
+	owner->GetComponent<ShaderComponent>()->SetShaderType(ShaderType::PBR);
+	
 }
 
 void MeshRenderer::Awake() {

@@ -201,8 +201,8 @@ namespace HawkEngine
             Vector3 center = GridToWorld(x, y);
             float r = cellSize * 0.5f;
 
-            var hits = Physics.OverlapSphere(center, r, "Obstacle") ?? Array.Empty<GameObject>();
-            return !hits.Any(go => go != null && go.tag == "Obstacle");
+            var hits = Physics.OverlapSphere(center, r, "Collider") ?? Array.Empty<GameObject>();
+            return !hits.Any(go => go != null && go.tag == "Collider");
         }
 
         private static float Heuristic(int x1, int y1, int x2, int y2)

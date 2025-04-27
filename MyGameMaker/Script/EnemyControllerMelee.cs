@@ -268,7 +268,7 @@ public class EnemyControllerMelee : EnemyController
 
                     if (!isAvoidingObstacle)
                     {
-                        if (hitObject != null && hitObject.tag == "Obstacle")
+                        if (hitObject != null && hitObject.tag == "Collider")
                         {
                             isAvoidingObstacle = true;
                             avoidDirection = GetDodgeDirection(forward);
@@ -293,7 +293,7 @@ public class EnemyControllerMelee : EnemyController
                             bool forwardBlocked = false;
                             RayCast ray = new RayCast();
                             ray.PerformRaycast(myPos, forward, obstacleDetectDist);
-                            forwardBlocked = ray.hit.isHit && ray.hit.gameObject.tag == "Obstacle";
+                            forwardBlocked = ray.hit.isHit && ray.hit.gameObject.tag == "Collider";
 
                             if (!forwardBlocked)
                             {
@@ -304,7 +304,7 @@ public class EnemyControllerMelee : EnemyController
                             {
                                 RayCast checkDodge = new RayCast();
                                 checkDodge.PerformRaycast(myPos, avoidDirection, obstacleDetectDist);
-                                if (checkDodge.hit.isHit && checkDodge.hit.gameObject.tag == "Obstacle")
+                                if (checkDodge.hit.isHit && checkDodge.hit.gameObject.tag == "Collider")
                                 {
                                     avoidDirection = -avoidDirection;
                                     moveDirection = avoidDirection;

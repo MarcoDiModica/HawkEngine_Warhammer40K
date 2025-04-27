@@ -18,8 +18,6 @@ public class Hook : MonoBehaviour
 
     public override void Start() 
     { 
-    
-
         player = GameObject.Find("Player");
         if(player == null)
         {
@@ -50,7 +48,7 @@ public class Hook : MonoBehaviour
         for (int i = 0; i < collisionNames.Count; i++)
         {
             var enemy = GameObject.Find(collisionNames[i]);
-            if (enemy.tag == "Melee" && enemy.tag == "Ranged" && enemy.tag == "Stalker" && enemy.tag == "Boss")
+            if (enemy.tag == "Melee" && enemy.tag == "Ranged" && enemy.tag == "Stalker" && enemy.tag == "Boss" && enemy.tag == "Warrior")
             {
                 if (player != null)
                 {

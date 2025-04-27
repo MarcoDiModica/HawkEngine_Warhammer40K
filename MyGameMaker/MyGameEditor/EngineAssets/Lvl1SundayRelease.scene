@@ -43887,9 +43887,9 @@ GameObject80:
       Script0:
         name: MedicaeStimm
         fields:
-          floatSpeed: 0.559790373
+          floatSpeed: 1.63981235
           floatHeight: 0.5
-          rotationSpeed: 53.5262642
+          rotationSpeed: 87.300293
           lifeTime: 10
   Children: ~
 GameObject81:
@@ -43940,9 +43940,9 @@ GameObject81:
       Script0:
         name: ChapterStandard
         fields:
-          floatSpeed: 1.17190588
+          floatSpeed: 1.93923628
           floatHeight: 0.5
-          rotationSpeed: 39.1672516
+          rotationSpeed: 66.8471527
           lifeTime: 10
   Children: ~
 GameObject82:
@@ -43993,9 +43993,9 @@ GameObject82:
       Script0:
         name: BlackHeart
         fields:
-          floatSpeed: 1.223804
+          floatSpeed: 1.69175529
           floatHeight: 0.5
-          rotationSpeed: 73.9192276
+          rotationSpeed: 69.512085
           lifeTime: 10
   Children: ~
 GameObject83:
@@ -44046,9 +44046,9 @@ GameObject83:
       Script0:
         name: Magnet
         fields:
-          floatSpeed: 1.14689994
+          floatSpeed: 1.40984535
           floatHeight: 0.5
-          rotationSpeed: 38.0435181
+          rotationSpeed: 93.8365021
           lifeTime: 10
   Children: ~
 GameObject84:
@@ -44099,9 +44099,9 @@ GameObject84:
       Script0:
         name: AmmunitionBlessing
         fields:
-          floatSpeed: 0.502432644
+          floatSpeed: 0.589879215
           floatHeight: 0.5
-          rotationSpeed: 34.8212814
+          rotationSpeed: 59.7214584
           lifeTime: 10
   Children: ~
 GameObject85:
@@ -44324,9 +44324,9 @@ GameObject87:
       Script0:
         name: ShotgunShells
         fields:
-          floatSpeed: 1.44615722
+          floatSpeed: 1.81671858
           floatHeight: 0.5
-          rotationSpeed: 62.6081161
+          rotationSpeed: 34.4134369
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -44378,9 +44378,9 @@ GameObject88:
       Script0:
         name: BoltgunBullets
         fields:
-          floatSpeed: 0.503605247
+          floatSpeed: 1.61111307
           floatHeight: 0.5
-          rotationSpeed: 93.5673523
+          rotationSpeed: 52.6926308
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -46983,9 +46983,9 @@ GameObject91:
       Script0:
         name: PiercingBullets
         fields:
-          floatSpeed: 0.759782851
+          floatSpeed: 1.11806977
           floatHeight: 0.5
-          rotationSpeed: 44.7158813
+          rotationSpeed: 65.618721
   Children: ~
 GameObject92:
   name: Lictor

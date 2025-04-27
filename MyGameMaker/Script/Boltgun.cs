@@ -218,7 +218,6 @@ public class Boltgun : BaseWeapon
 
     public override void UseAbility2()
     {
-        
         Engineson.print("Boltgun ability 2 used");
         arcSnare.TriggerAbility();
     }
@@ -230,7 +229,7 @@ public class Boltgun : BaseWeapon
 
     public override void ResetCooldowns()
     {
-       arcSnare.ResetCooldowns();
+        arcSnare.ResetCooldowns();
         grenadeLauncher.ResetCooldowns();
     }
 

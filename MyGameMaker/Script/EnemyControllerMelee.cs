@@ -1,25 +1,23 @@
 using HawkEngine;
 using System;
+using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Numerics;
 
 public class EnemyControllerMelee : EnemyController
 {
-    // Hurtbox
-    private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
+    private float hurtboxActivationTime = 1.5f;
     private float hurtboxTimer = 0f;
-    private Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 3.0f); // Tama�o de la hurtbox
-    private Vector3 hurtboxOffset = new Vector3(4.0f, 0.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
+    private Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 3.0f);
+    private Vector3 hurtboxOffset = new Vector3(4.0f, 0.0f, 0.0f);
     private GameObject hurtboxObject;
 
-    // Perfect Dodge
     private bool dodgewindow = false;
     private float dodgeActivationTime = 0.5f;
     private float dodgeTimer = 0f;
     private HormagauntAnimation anim;
     private PlayerController pc;
 
-    // Audio
     bool isCombatMusicPlaying = false;
     private const string MUSIC_COMBAT = "Assets/Audio/PlaceHolder_CombatMusic.wav";
     private const string SFX_DEATH = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav";
@@ -27,14 +25,12 @@ public class EnemyControllerMelee : EnemyController
     private const string SFX_ATTACK = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav";
     private const string SFX_HIT = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav";
 
-    // Enemy Stats
     private float health = 100.0f;
     private float clawDamage = 10.0f;
     private float leapDamage = 15.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
 
-    // Leap Attack
     public float maxLeapRange = 20.0f;
     public float minLeapRange = 10.0f;
     private float leapTimer = 0f;
@@ -44,11 +40,37 @@ public class EnemyControllerMelee : EnemyController
     private float lastLeap = 0f;
     public float leapCooldown = 2.0f;
     private bool hasLeap = true;
+    private Vector3 leapDirection;
+
     private bool isLeaping = false;
 
-    public override void Awake() 
+    private float chaseReplanInterval = 0.5f;
+    private float chaseTimer = 0f;
+
+    private float pathUpdateDistance = 5.0f;
+    private Vector3 lastPathfindingPosition;
+    private int pathPointIndex = 0;
+    private float pathSmoothingFactor = 0.2f;
+    private List<Vector3> smoothedVelocity = new List<Vector3>();
+
+    private float obstacleDetectDist = 5.0f; 
+    private bool isAvoidingObstacle = false;
+    private Vector3 avoidDirection = Vector3.Zero;
+    private float avoidRotationSpeed = 5f;
+    private float avoidTimer = 0f;
+    private float avoidTimeLimit = 1.0f;
+    private static readonly Random _rng = new Random();
+
+
+    private Vector3 GetDodgeDirection(Vector3 forward)
     {
-        //music = gameObject.GetComponent<Audio>();
+        Vector3 left = Vector3.Normalize(new Vector3(-forward.Z, 0, forward.X));
+        Vector3 right = Vector3.Normalize(new Vector3(forward.Z, 0, -forward.X));
+        return (_rng.NextDouble() < 0.5) ? left : right;
+    }
+
+    public override void Awake()
+    {
     }
 
     public override void Start()
@@ -71,12 +93,6 @@ public class EnemyControllerMelee : EnemyController
             Engineson.print("ERROR: Hormagaunt Movement requires a Collider component!");
             return;
         }
-
-//         sound = gameObject.GetComponent<AudioSource>();
-//         if (sound == null)
-//         {
-//             Engineson.print("ERROR: Audio component not found");
-//         }
 
         enemyTransform = gameObject.GetComponent<Transform>();
         if (enemyTransform == null)
@@ -101,11 +117,22 @@ public class EnemyControllerMelee : EnemyController
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Melee";
-        isDead = false;
+
+        pathfinder = new Pathfinding();
+        pathfinder.UpdateGridOrigin(enemyTransform.position);
+        lastPathfindingPosition = enemyTransform.position;
+        chasePath = null;
+        pathInitialized = false;
     }
 
     public override void Update(float deltaTime)
     {
+        if (!pathInitialized && pathfinder != null && enemyTransform != null && playerTransform != null)
+        {
+            pathfinder.UpdateGridOrigin(enemyTransform.position);
+            pathInitialized = true;
+        }
+
         if (currentState != EnemyState.DEAD)
         {
             if (currentHealth <= 0)
@@ -120,21 +147,33 @@ public class EnemyControllerMelee : EnemyController
             {
                 distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
+                if (Vector3.Distance(enemyTransform.position, lastPathfindingPosition) > pathUpdateDistance)
+                {
+                    pathfinder.UpdateGridOrigin(enemyTransform.position);
+                    lastPathfindingPosition = enemyTransform.position;
+                }
+
                 if (distanceToPlayer < distToChase)
                 {
-                    // Attack
                     if (IsPlayerInHurtbox(playerTransform.position))
                     {
                         currentState = EnemyState.ATTACK;
                     }
 
-                    // Chase
                     if (distanceToPlayer > minDistToChase)
                     {
                         currentState = EnemyState.CHASE;
                     }
 
-                    // Rotation
+                    if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap && !isLeaping)
+                    {
+                        currentState = EnemyState.LEAP;
+                        leapTimer = 0f;
+                        isLeaping = true;
+                        anim.SetWholeLeapAnimation();
+                        leapDirection = Vector3.Normalize(playerTransform.position - enemyTransform.position);
+                    }
+
                     if (moveDirection != Vector3.Zero)
                     {
                         currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
@@ -168,8 +207,6 @@ public class EnemyControllerMelee : EnemyController
             }
         }
 
-        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
-
         switch (currentState)
         {
             case EnemyState.IDLE:
@@ -194,36 +231,116 @@ public class EnemyControllerMelee : EnemyController
                     isCombatMusicPlaying = true;
                 }
 
-                Vector3 currentVelocity = rb.GetVelocity();
-                moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
-                Vector3 desiredVelocity = moveDirection * speedMovement;
-
-                if (!isLeaping)
+                chaseTimer += deltaTime;
+                if (chaseTimer >= chaseReplanInterval && enemyTransform != null && playerTransform != null)
                 {
+                    chasePath = pathfinder.FindPath(enemyTransform.position, playerTransform.position);
+                    if (chasePath != null && chasePath.Count > 1)
+                    {
+                        pathPointIndex = 1;
+                        smoothedVelocity.Clear();
+                    }
+                    chaseTimer = 0f;
+                }
+
+                if (chasePath != null && pathPointIndex < chasePath.Count)
+                {
+                    Vector3 myPos = enemyTransform.position;
+                    Vector3 targetPosition = chasePath[pathPointIndex];
+                    Vector3 toTarget = targetPosition - myPos;
+                    float dist = toTarget.Length();
+
+                    if (dist < 0.5f)
+                    {
+                        pathPointIndex++;
+                        break;
+                    }
+
+                    Vector3 forward = Vector3.Normalize(toTarget);
+                    GameObject hitObject = null;
+
+                    {
+                        RayCast ray = new RayCast();
+                        ray.PerformRaycast(myPos, forward, obstacleDetectDist);
+                        if (ray.hit.isHit)
+                            hitObject = ray.hit.gameObject;
+                    }
+
+                    if (!isAvoidingObstacle)
+                    {
+                        if (hitObject != null && hitObject.tag == "Obstacle")
+                        {
+                            isAvoidingObstacle = true;
+                            avoidDirection = GetDodgeDirection(forward);
+                            avoidTimer = 0f;
+                        }
+                        else
+                        {
+                            moveDirection = forward;
+                        }
+                    }
+                    else
+                    {
+                        avoidTimer += deltaTime;
+
+                        if (avoidTimer >= avoidTimeLimit)
+                        {
+                            moveDirection = avoidDirection;
+                            isAvoidingObstacle = false;
+                        }
+                        else
+                        {
+                            bool forwardBlocked = false;
+                            RayCast ray = new RayCast();
+                            ray.PerformRaycast(myPos, forward, obstacleDetectDist);
+                            forwardBlocked = ray.hit.isHit && ray.hit.gameObject.tag == "Obstacle";
+
+                            if (!forwardBlocked)
+                            {
+                                isAvoidingObstacle = false;
+                                moveDirection = forward;
+                            }
+                            else
+                            {
+                                RayCast checkDodge = new RayCast();
+                                checkDodge.PerformRaycast(myPos, avoidDirection, obstacleDetectDist);
+                                if (checkDodge.hit.isHit && checkDodge.hit.gameObject.tag == "Obstacle")
+                                {
+                                    avoidDirection = -avoidDirection;
+                                    moveDirection = avoidDirection;
+                                }
+                            }
+                        }
+                    }
+                    float currentYAngle = enemyTransform.eulerAngles.Y;
+                    float targetYAngle = (float)(Math.Atan2(moveDirection.X, moveDirection.Z) * 180.0 / Math.PI);
+                    float deltaAngle = targetYAngle - currentYAngle;
+                    while (deltaAngle > 180f) deltaAngle -= 360f;
+                    while (deltaAngle < -180f) deltaAngle += 360f;
+                    float newY = currentYAngle + deltaAngle * Math.Min(1f, avoidRotationSpeed * deltaTime);
+                    collider.SetRotation(
+                        Quaternion.CreateFromYawPitchRoll(newY * ((float)Math.PI / 180f), 0, 0)
+                    );
+
+                    Vector3 desiredVel = moveDirection * speedMovement;
+                    Vector3 currVel = rb.GetVelocity();
+                    Vector3 smoothVel = SmoothVelocity(desiredVel, currVel, deltaTime);
+                    rb.SetVelocity(smoothVel);
+
                     anim.SetRunningAnimation();
-                    if (desiredVelocity.LengthSquared() > 0)
-                    {
-                        desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                    }
-
-                    Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                    rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
                 }
+                else if (chasePath == null || chasePath.Count == 0)
+                {
+                    Vector3 directDir = Vector3.Normalize(playerTransform.position - enemyTransform.position);
+                    moveDirection = directDir;
 
-                // Leap
-                if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && currentState != EnemyState.ATTACK && hasLeap && !isLeaping)
-                {
-                    leapTimer = 0.0f;
-                    Leap(deltaTime);
-                }
-                else if (!hasLeap)
-                {
-                    lastLeap += deltaTime;
-                    if (lastLeap >= leapCooldown)
-                    {
-                        Engineson.print("LEAP RESTORED");
-                        hasLeap = true;
-                    }
+                    Vector3 desiredVelocity = directDir * speedMovement;
+                    Vector3 currentVelocity = rb.GetVelocity();
+
+                    Vector3 smoothedVel = SmoothVelocity(desiredVelocity, currentVelocity, deltaTime);
+                    rb.SetVelocity(smoothedVel);
+
+                    anim.SetRunningAnimation();
                 }
                 break;
 
@@ -235,7 +352,6 @@ public class EnemyControllerMelee : EnemyController
                 }
                 if (hurtboxTimer >= hurtboxActivationTime)
                 {
-                    //CreateHurtbox();
                     anim.SetRandomAttackAnimation();
                     hurtboxTimer = 0f;
                     dodgeTimer = 0f;
@@ -245,7 +361,6 @@ public class EnemyControllerMelee : EnemyController
                 {
                     Attack();
 
-                    //DestroyHurtbox();
                     hurtboxTimer = 0f;
                     dodgeTimer = 0f;
                     dodgewindow = false;
@@ -273,37 +388,66 @@ public class EnemyControllerMelee : EnemyController
                 collider.SetActive(false);
                 break;
 
+            case EnemyState.LEAP:
+                hasLeap = false;
+                leapTimer += deltaTime;
+                rb.SetVelocity(leapDirection * 1.8f);
+                if (leapTimer >= leapDuration)
+                {
+                    isLeaping = false;
+                    hasLeap = true;
+                    currentState = EnemyState.CHASE;
+                    lastLeap = 0f;
+                }
+                break;
             default:
                 break;
         }
     }
 
+    private Vector3 SmoothVelocity(Vector3 desiredVelocity, Vector3 currentVelocity, float deltaTime)
+    {
+        if (smoothedVelocity == null)
+        {
+            smoothedVelocity = new List<Vector3>();
+        }
+
+        while (smoothedVelocity.Count < 3)
+        {
+            smoothedVelocity.Add(currentVelocity);
+        }
+
+        while (smoothedVelocity.Count > 3)
+        {
+            smoothedVelocity.RemoveAt(0);
+        }
+
+        Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, pathSmoothingFactor);
+
+        smoothedVelocity.RemoveAt(0);
+        smoothedVelocity.Add(newVelocity);
+
+        Vector3 avgVelocity = Vector3.Zero;
+        foreach (var vel in smoothedVelocity)
+        {
+            avgVelocity += vel;
+        }
+
+        return avgVelocity / smoothedVelocity.Count;
+    }
+
     public override void Attack()
     {
         Engineson.print("Melee attack executed!");
-        pc.playerData.TakeDamage(clawDamage);
-        Engineson.print("Player health: " + (pc.playerData.GetHealth()));
-
-        //sound?.Play(meleeAttackSound);
-    }
-
-    public void Leap()
-    {
-        if (!isLeaping)
+        if (pc.redThirstManager.redThirstBonus < clawDamage)
         {
-            if(pc.redThirstManager.redThirstBonus < clawDamage)
-            {
-                pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
-            }
-            else
-            {
-                pc.playerData.TakeDamage(0);
-            }
+            pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
         }
         else
         {
-            pc.playerData.TakeDamage(clawDamage);
+            pc.playerData.TakeDamage(0);
         }
+        Engineson.print("Player health: " + (pc.playerData.GetHealth()));
 
         Audio.PlayOneShot(SFX_ATTACK);
     }
@@ -320,42 +464,6 @@ public class EnemyControllerMelee : EnemyController
         }
     }
 
-    public void Leap(float deltaTime)
-    {
-        anticipationTimer += deltaTime;
-        if (anticipationTimer < anticipationDuration)
-        {
-            //anim.SetAnticipationAnimation();
-            rb.SetVelocity(Vector3.Zero);
-        }
-        else if (anticipationTimer >= anticipationDuration)
-        {
-            if (distanceToPlayer > distToChase)
-            {
-                return;
-            }
-            else
-            {
-                hasLeap = false;
-                anim.SetWholeLeapAnimation();
-                particles.EmitBurst(1);
-
-                leapTimer += deltaTime;
-                if (leapTimer < leapDuration)
-                {
-                    isLeaping = true;
-                    rb.SetVelocity(rb.GetVelocity() * 10f);
-                }
-                else if (leapTimer >= leapDuration)
-                {
-                    leapTimer = 0f;
-                    isLeaping = false;
-                    lastLeap = 0.0f;
-                }
-            }
-        }
-    }
-
     private bool IsPlayerInHurtbox(Vector3 playerPos)
     {
         Vector3 hurtboxCenter = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X) + (Vector3.UnitY * hurtboxOffset.Y);
@@ -366,7 +474,6 @@ public class EnemyControllerMelee : EnemyController
                (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
     }
 
-   
     override public void OnCollisionEnter(GameObject other)
     {
         if (other.tag == "Player" && isLeaping)
@@ -391,8 +498,6 @@ public class EnemyControllerMelee : EnemyController
         }
     }
 
-
-    //For testing
     private void CreateHurtbox()
     {
         hurtboxObject = Engineson.CreateGameObject("Hurtbox", null);
@@ -403,7 +508,6 @@ public class EnemyControllerMelee : EnemyController
         var hurtboxCollider = hurtboxObject.AddComponent<BoxCollider>();
         hurtboxCollider.SetTrigger(true);
         hurtboxObject.tag = "EnemyAttack";
-        //Attack();
     }
 
     private void DestroyHurtbox()

@@ -109,13 +109,13 @@ public class PlayerShooting : MonoBehaviour
         railgunShotSemiFX = GameObject.Find("RailgunShotSemiFX").GetComponent<ParticleFX>();
         railgunShotAutoFX = GameObject.Find("RailgunShotAutoFX").GetComponent<ParticleFX>();
 
-        boltgunMesh = GameObject.Find("Boltgun");
-        shotgunMesh = GameObject.Find("Shotgun");
-        railgunMesh = GameObject.Find("Railgun");
+        //boltgunMesh = GameObject.Find("Boltgun");
+        //shotgunMesh = GameObject.Find("Shotgun");
+        //railgunMesh = GameObject.Find("Railgun");
 
-        shotgunMesh.SetActive(false);
-        railgunMesh.SetActive(false);
-        boltgunMesh.SetActive(true);
+        //shotgunMesh.SetActive(false);
+        //railgunMesh.SetActive(false);
+        //boltgunMesh.SetActive(true);
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
 
@@ -447,25 +447,24 @@ public class PlayerShooting : MonoBehaviour
         switch (currentGun)
         {
             case GunType.BOLTGUN:
-                if(playerData.BoltgunUpgraded == true)
-                {
+                
                     if (boltgun.arcSnare.canThrow)
                     {
                         redThirstManager.OnAbilityUsed();
                     }
                     boltgun.UseAbility2();
-                }
+                
                
                 break;
             case GunType.SHOTGUN:
-                if(playerData.ShotgunUpgraded == true)
-                {
+               
+                
                     if (shotgun.barrage.canThrow)
                     {
                         redThirstManager.OnAbilityUsed();
                     }
                     shotgun.UseAbility2();
-                }
+                
                
                 break;
             case GunType.RAILGUN:

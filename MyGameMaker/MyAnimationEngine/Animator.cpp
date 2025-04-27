@@ -165,14 +165,14 @@ void Animator::BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayered
     currentTimeLayered = fmod(currentTimeLayered, pLayeredAnimation->GetDuration());
 	currentDuration += pLayeredAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierDown * m_PlaySpeed;
 	
-    if (isLooping) 
-    {
-        LOG(LogType::LOG_INFO, "isLooping true");
-    }
-    else 
-    {
-        LOG(LogType::LOG_INFO, "isLooping false");
-    }
+    //if (isLooping) 
+    //{
+    //    LOG(LogType::LOG_INFO, "isLooping true");
+    //}
+    //else 
+    //{
+    //    LOG(LogType::LOG_INFO, "isLooping false");
+    //}
 	std::string currentTime = std::to_string(currentTimeBase);
 
     if (!isLooping && currentDuration >= pLayeredAnimation->GetDuration())

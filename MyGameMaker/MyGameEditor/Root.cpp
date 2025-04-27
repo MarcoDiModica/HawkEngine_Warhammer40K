@@ -65,13 +65,12 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	
 	resourceManager->LoadResources(); // Esto no se mutea
 	resourceManager->CreateCube(); // Esto no se mutea
 
 	Application->scene_serializer->DeSerialize("Library/Scenes/BossFight_Alpha1_Release.scene");
 
-	
+
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
 	//auto canvasPauseMenu = FindGOByName("Canvas_PauseMenu");
@@ -408,6 +407,15 @@ bool Root::Start()
 	mawlocMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	ParentGameObject(*mawlocMesh, *mawloc);
 	mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
+	//auto mawlocTail = CreateGameObject("MawlocTail");
+	//mawlocTail->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 5, 15));
+	//mawlocTail->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
+	//mawlocTail->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//mawlocTail->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 0));
+	//auto mawlocTailMesh = CreateGameObjectWithPath("Assets/Meshes/MawlocTail.fbx");
+	//mawlocTailMesh->SetName("MawlocTailMesh");
+	//ParentGameObject(*mawlocTailMesh, *mawlocTail);
+	//mawlocTail->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBossTail");
 
 	auto mawlocTail = CreateGameObject("MawlocTail");
 	mawlocTail->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 5, 15));

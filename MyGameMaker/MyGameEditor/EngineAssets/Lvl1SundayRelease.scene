@@ -19522,7 +19522,7 @@ GameObject0:
             - -7994.11376953125
           localRotation:
             - -2.5044781914217818e-06
-            - -36.000396799353105
+            - -36.000396799353098
             - 179.99999499104371
           localScale:
             - 31.999998092651367
@@ -19556,7 +19556,7 @@ GameObject0:
             - -8825.88671875
           localRotation:
             - -2.5044781914217818e-06
-            - -36.000396799353105
+            - -36.000396799353098
             - 179.99999499104371
           localScale:
             - 31.999998092651367
@@ -19624,7 +19624,7 @@ GameObject0:
             - -5642.91455078125
           localRotation:
             - -2.5044786341299888e-06
-            - 32.169242441788334
+            - 32.169242441788342
             - -179.99999499104359
           localScale:
             - 31.999998092651367
@@ -28294,7 +28294,7 @@ GameObject0:
             - 4407.87109375
           localRotation:
             - -90
-            - -30.312856223474963
+            - -30.312856223474956
             - 0
           localScale:
             - 100
@@ -43246,7 +43246,7 @@ GameObject76:
             - -56.713325500488281
           localRotation:
             - 0
-            - -45.454913554103328
+            - -45.454913554103321
             - 0
           localScale:
             - 10.014464378356934
@@ -45356,9 +45356,9 @@ GameObject81:
       Script0:
         name: MedicaeStimm
         fields:
-          floatSpeed: 1.0666486
+          floatSpeed: 1.50282514
           floatHeight: 0.5
-          rotationSpeed: 64.4885406
+          rotationSpeed: 82.4730377
           lifeTime: 10
   Children: ~
 GameObject82:
@@ -45409,9 +45409,9 @@ GameObject82:
       Script0:
         name: ChapterStandard
         fields:
-          floatSpeed: 0.779650271
+          floatSpeed: 0.677431107
           floatHeight: 0.5
-          rotationSpeed: 44.2512093
+          rotationSpeed: 77.8522263
           lifeTime: 10
   Children: ~
 GameObject83:
@@ -45462,9 +45462,9 @@ GameObject83:
       Script0:
         name: BlackHeart
         fields:
-          floatSpeed: 1.54334807
+          floatSpeed: 1.73955166
           floatHeight: 0.5
-          rotationSpeed: 79.0754089
+          rotationSpeed: 73.1197128
           lifeTime: 10
   Children: ~
 GameObject84:
@@ -45515,9 +45515,9 @@ GameObject84:
       Script0:
         name: Magnet
         fields:
-          floatSpeed: 1.43031955
+          floatSpeed: 0.965175986
           floatHeight: 0.5
-          rotationSpeed: 48.4854774
+          rotationSpeed: 75.8535614
           lifeTime: 10
   Children: ~
 GameObject85:
@@ -45568,9 +45568,9 @@ GameObject85:
       Script0:
         name: AmmunitionBlessing
         fields:
-          floatSpeed: 1.07631969
+          floatSpeed: 1.23268807
           floatHeight: 0.5
-          rotationSpeed: 76.5048447
+          rotationSpeed: 81.6242371
           lifeTime: 10
   Children: ~
 GameObject86:
@@ -45793,9 +45793,9 @@ GameObject88:
       Script0:
         name: ShotgunShells
         fields:
-          floatSpeed: 1.11089361
+          floatSpeed: 0.534418762
           floatHeight: 0.5
-          rotationSpeed: 89.6270523
+          rotationSpeed: 64.386795
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -45847,9 +45847,9 @@ GameObject89:
       Script0:
         name: BoltgunBullets
         fields:
-          floatSpeed: 1.10841441
+          floatSpeed: 1.7116183
           floatHeight: 0.5
-          rotationSpeed: 92.6755753
+          rotationSpeed: 54.6683235
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -45983,8 +45983,6 @@ GameObject90:
         fields:
           isRunning: false
           canMove: true
-          HitAudio: Assets/Audio/SFX/Player/PlayerHit_ready.wav
-          DeathAudio: Assets/Audio/SFX/PlayerPlayerDeath_ready.wav
       Script5:
         name: PlayerPowerUp
         fields: ~
@@ -48454,14 +48452,14 @@ GameObject92:
       Script0:
         name: PiercingBullets
         fields:
-          floatSpeed: 1.61716104
+          floatSpeed: 1.06857097
           floatHeight: 0.5
-          rotationSpeed: 95.3023376
+          rotationSpeed: 99.8428268
   Children: ~
 GameObject93:
   name: Cube
   prefabPath: ""
-  uuid: 14171564815784552896
+  uuid: 5138162877933502304
   tag: Untagged
   active: false
   isStatic: false

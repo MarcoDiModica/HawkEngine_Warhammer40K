@@ -17,7 +17,7 @@ public class Arc : MonoBehaviour
     float deathTimerPrevention = 0;
 
     //private AudioSource sound;
-    //private string arcExplosion = "Assets/Audio/SFX/Weapons/Boltgun/ArcSnareExplosion.wav";
+    private string arcExplosion = "Assets/Audio/SFX/Weapons/Boltgun/ArcSnareExplosion.wav";
     //AudioClip arcFX;
 
     public override void Awake()
@@ -110,7 +110,7 @@ public class Arc : MonoBehaviour
         );
         Engineson.print("Explosion");
         
-        //sound.Play(arcFX);
+        Audio.PlayOneShot(arcExplosion);
         isExploded = true;
 
         for (int i = 0; i < collisionNames.Count; i++)

@@ -16,9 +16,7 @@ public class Grenade : MonoBehaviour
     float deathtimer = 0.2f;
     public bool needsDestroy = false;
     float deathTimerPrevention = 0;
-    //private AudioSource sound;
-    private string granadeExplosion = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunAbility1GrenadeExplosion.wav";
-    //private AudioClip grenadeFX;
+    private const string granadeExplosion = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunAbility1GrenadeExplosion.wav";
 
     public override void Awake()
     {
@@ -80,9 +78,7 @@ public class Grenade : MonoBehaviour
     {
         rigidbody.SetVelocity(new Vector3(0, 0, 0));
         explosion = Engineson.CreateGameObject("Explosion", null);
-        //sound.LoadAudio(granadeExplosion);
-        //sound.Play();
-        //explosion.AddComponent<MeshRenderer>();
+        Audio.PlayOneShot(granadeExplosion);
         explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
         var explosionFX = Engineson.CreateGameObject("ExplosionGranadeFX", null);

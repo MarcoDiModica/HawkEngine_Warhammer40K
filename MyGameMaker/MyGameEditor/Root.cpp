@@ -47,6 +47,7 @@ bool Root::Awake()
 	Application->root->CreateScene("DefaultScene");
 	Application->root->SetActiveScene("DefaultScene");
 	
+	
 	ShaderManager::GetInstance().Initialize();
 	MonoManager::GetInstance().EnableHotReloading();
 
@@ -67,7 +68,6 @@ bool Root::Start()
 {
 	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
 
-	
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
 	//auto canvasPauseMenu = FindGOByName("Canvas_PauseMenu");
@@ -872,6 +872,15 @@ void Root::RemoveScene(const std::string& name)
 void Root::SetActiveScene(const std::string& name)
 {
     SceneManagement->SetActiveScene(name);
+
+	if (FindGOByName("DirectionalLight") == NULL)
+	{
+		auto light = CreateLightObject("DirectionalLight");
+		light->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
+		light->AddComponent<LightComponent>();
+		light->GetComponent<LightComponent>()->SetLightType(LightType::DIRECTIONAL);
+	}
+
 }
 
 std::shared_ptr<Scene> Root::GetActiveScene() const

@@ -55,7 +55,7 @@ public class EnemyControllerBoss : EnemyController
         new Vector3(-41.0f, 10.0f, -32.0f),
         new Vector3(-41.0f, 10.0f, 29.0f)
     };
-    private float slamAttackDistance = 40.0f;
+    private float slamAttackDistance = 25.0f;
     private float slamAttackCooldown = 2.0f;
     private float slamAttackTimer = 0.0f;
     private bool isSlamActive = false;
@@ -98,7 +98,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: Player couldn't be found!");
         }
         collider = gameObject.GetComponent<BoxCollider>();
-        collider.SetSize(new Vector3(2.0f, 2.0f, 2.0f));
+        collider.SetSize(new Vector3(3.0f, 2.0f, 3.0f));
         if (collider == null)
         {
             Engineson.print("ERROR: PlayerMovement requires a Collider component!");
@@ -205,7 +205,7 @@ public class EnemyControllerBoss : EnemyController
                         {
                             if (playerTransform != null)
                             {
-                                if (distanceToPlayer <= 33.0f && slamAttackTimer <= 0.0f)
+                                if (distanceToPlayer <= 15.0f && slamAttackTimer <= 0.0f)
                                 {
                                     ClawStrike();
                                     slamAttackTimer = slamAttackCooldown;
@@ -215,12 +215,12 @@ public class EnemyControllerBoss : EnemyController
                                     SlamAttack();
                                     slamAttackTimer = slamAttackCooldown;
                                 }
-                                else if (distanceToPlayer > slamAttackDistance && distanceToPlayer < 50.0f && metalSlideObject == null)
+                                else if (distanceToPlayer > slamAttackDistance && distanceToPlayer < 35.0f && metalSlideObject == null)
                                 {
                                     MetalSlide();
                                     slamAttackTimer = slamAttackCooldown;
                                 }
-                                else if (distanceToPlayer > 50.0f)
+                                else if (distanceToPlayer >= 35.0f)
                                 {
                                     Engineson.print("ChangePositionToClosest");
                                     ChangePositionToClosest();
@@ -257,7 +257,7 @@ public class EnemyControllerBoss : EnemyController
                         {
                             if (playerTransform != null)
                             {
-                                if (distanceToPlayer <= 33.0f && slamAttackTimer <= 0.0f)
+                                if (distanceToPlayer <= 15.0f && slamAttackTimer <= 0.0f)
                                 {
                                     ClawStrike();
                                     slamAttackTimer = slamAttackCooldown;
@@ -495,7 +495,7 @@ public class EnemyControllerBoss : EnemyController
         float halfLength = slamHurtboxSize.Z / 2.0f;
         float offset = 5.0f;
 
-        Vector3 hurtboxPosition = bossPosition + forward * (halfLength + offset) + new Vector3(0, 32, 0);
+        Vector3 hurtboxPosition = bossPosition + forward * (halfLength + offset) + new Vector3(0, 2, 0);
 
         var hurtboxTransform = slamHurtboxObject.GetComponent<Transform>();
         hurtboxTransform.position = hurtboxPosition;
@@ -526,7 +526,7 @@ public class EnemyControllerBoss : EnemyController
             Vector3 size = new Vector3(width, height, length);
 
             Vector3 offset = forward * ((length + spacing) * i);
-            Vector3 position = origin + offset + new Vector3(0, 32, 0);
+            Vector3 position = origin + offset + new Vector3(0, 2, 0);
 
             GameObject clawSegment = Engineson.CreateGameObject("ClawHurtbox", null);
             clawSegment.AddComponent<MeshRenderer>();

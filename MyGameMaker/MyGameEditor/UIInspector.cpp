@@ -756,7 +756,7 @@ private:
 		ImGui::Text("Light Type");
 		ImGui::SameLine(labelWidth);
 		ImGui::PushItemWidth(-1);
-		if (ImGui::Combo("##Type", (int*)&lightType, "Directional\0Point\0")) {
+		if (ImGui::Combo("##Type", (int*)&lightType, "None\0Point\0Directional\0")) {
 			light->SetLightType(lightType);
 		}
 		ImGui::PopItemWidth();
@@ -861,6 +861,65 @@ private:
 
 			ImGui::EndGroup();
 		}
+		if (lightType == LightType::DIRECTIONAL)
+		{
+			ImGui::Separator();
+			ImGui::Text("Directional Light Properties");
+			ImGui::Spacing();
+
+			ImGui::BeginGroup();
+
+			// Dirección de la luz
+			glm::vec3 direction = light->GetDirection();
+			float directionArray[3] = { direction.x, direction.y, direction.z };
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Direction");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat3("##Direction", directionArray, 0.1f, -1.0f, 1.0f)) {
+				light->SetDirection(glm::vec3(directionArray[0], directionArray[1], directionArray[2]));
+			}
+			ImGui::PopItemWidth();
+
+			// Color difuso
+			glm::vec3 diffuse = light->GetDiffuse();
+			float diffuseArray[3] = { diffuse.x, diffuse.y, diffuse.z };
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Diffuse Color");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit3("##DiffuseColor", diffuseArray)) {
+				light->SetDiffuse(glm::vec3(diffuseArray[0], diffuseArray[1], diffuseArray[2]));
+			}
+			ImGui::PopItemWidth();
+
+			// Color especular
+			glm::vec3 specular = light->GetSpecular();
+			float specularArray[3] = { specular.x, specular.y, specular.z };
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Specular Color");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit3("##SpecularColor", specularArray)) {
+				light->SetSpecular(glm::vec3(specularArray[0], specularArray[1], specularArray[2]));
+			}
+			ImGui::PopItemWidth();
+
+			// Color ambiental
+			glm::vec3 ambient = light->GetAmbient();
+			float ambientArray[3] = { ambient.x, ambient.y, ambient.z };
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Ambient Color");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit3("##AmbientColor", ambientArray)) {
+				light->SetAmbient(glm::vec3(ambientArray[0], ambientArray[1], ambientArray[2]));
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::EndGroup();
+		}
+
 	}
     #pragma endregion
 

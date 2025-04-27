@@ -43,6 +43,10 @@ std::unique_ptr<Component> LightComponent::Clone(GameObject* owner) {
 
 void LightComponent::SetLightType(LightType type) {
 	this->type = type;
+	if (type == LightType::DIRECTIONAL) {
+		owner->SetName("DirectionalLight");
+	}
+	
 }
 
 LightType LightComponent::GetLightType() const {

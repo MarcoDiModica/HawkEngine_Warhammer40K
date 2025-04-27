@@ -6,27 +6,33 @@ public class Interaction : MonoBehaviour
 {
     private GameObject Box;
     private GameObject Text;
+    private GameObject interactText;
     private float timer = 0f;
 
-    public void Spawn()
+    public void SpawnDialogueText(bool condition)
     {
-        Box.SetActive(true);
-        Text.SetActive(true);
-        timer = 0f;
-    }
-
-    private void CheckForDespawn()
-    {
-        if (timer > 0.5f)
+        if(condition)
         {
-            Despawn();
+            Box.SetActive(true);
+            Text.SetActive(true);
+        }
+        else
+        {
+            Box.SetActive(false);
+            Text.SetActive(false);
         }
     }
-
-    public void Despawn()
+    
+    public void SpawnInteractText(bool condition)
     {
-        Box.SetActive(false);
-        Text.SetActive(false);
+        if(condition)
+        {
+            interactText.SetActive(true);
+        }
+        else
+        {
+            interactText.SetActive(false);
+        }
     }
 
     public override void Awake()
@@ -38,20 +44,21 @@ public class Interaction : MonoBehaviour
     {
         Box = GameObject.Find("Box");
         Text = GameObject.Find("Text");
+        interactText = GameObject.Find("InteractText");
     }
-
 
     public override void Update(float deltaTime)
     {
         timer += deltaTime;
-        if (Input.GetKeyDown(KeyCode.RETURN) || Input.GetControllerButtonDown(ControllerButton.A))
-        {
-            CheckForDespawn();
-        }
         if (Input.GetKeyDown(KeyCode.X))
         {
-            Spawn();
+            SpawnDialogueText(true);
         }
 
+    }
+
+    public bool isCanvasActive()
+    {
+        return Box != null && Text != null && Box.IsActive() && Text.IsActive();
     }
 }

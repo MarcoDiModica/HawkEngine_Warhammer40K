@@ -32,6 +32,7 @@ public class EnemyControllerMelee : EnemyController
     private float clawDamage = 10.0f;
     private float leapDamage = 15.0f;
     private float distanceToPlayer;
+    private bool hasDropped = false;
 
     // Leap Attack
     public float maxLeapRange = 20.0f;
@@ -264,6 +265,11 @@ public class EnemyControllerMelee : EnemyController
                 break;
 
             case EnemyState.DEAD:
+                if ((!hasDropped))
+                {
+                    GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
+                }
+                hasDropped = true;
                 collider.SetActive(false);
                 break;
 

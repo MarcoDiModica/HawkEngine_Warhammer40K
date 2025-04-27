@@ -1,0 +1,51 @@
+name: BiblePagePickUp
+prefabPath: Assets/Prefabs/BiblePagePickUp.prefab.yaml
+uuid: 16419861295490000241
+tag: BiblePage
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0.66877174377441406
+      - 2
+      - 0
+    localRotation:
+      - -38.836225788182205
+      - 0
+      - 0
+    localScale:
+      - 0.7420504093170166
+      - 0.74205023050308228
+      - 0.74205023050308228
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 15904891558962010760
+    material:
+      name: ""
+    color:
+      - 1
+      - 1
+      - 1
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  ScriptComponents:
+    Script0:
+      name: BiblePagePickUp
+      fields:
+        floatSpeed: 0.712726831
+        floatHeight: 0.5
+        rotationSpeed: 34.6349449
+Children: ~

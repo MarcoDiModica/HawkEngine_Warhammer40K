@@ -32,12 +32,17 @@ public class PlayerCamera : MonoBehaviour
     private double fovVelocity = 0;
     private float zoomSpeed = 5.0f;
 
+    private bool followPlayer = true;
+
+    private Vector3 originalRotation;
+
     private float timeSinceInput = 0f;
 
     public override void Awake()
     {
         currentFOV = originalFOV;
         targetFOV = originalFOV;
+        originalRotation = gameObject.GetComponent<Transform>().GetEulerAngles();
     }
 
     public override void Start()
@@ -51,14 +56,19 @@ public class PlayerCamera : MonoBehaviour
             Engineson.print("ERROR: PlayerCamera requires a GameObject named 'Player' in the scene!");
             return;
         }
-        
+
         cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
         cameraRef.SetCameraFieldOfView(originalFOV * (Math.PI / 180.0));
+       // originalRotation = cameraTransform.rotation;
     }
 
     public override void Update(float deltaTime)
     {
         Vector2 rightStickInput = Input.GetRightStick();
+        Vector2 leftStickInput = Input.GetLeftStick();
+
+        CameraDebugUpdate(deltaTime);
+
         Vector3 baseOffset = new Vector3(-23.8f, 41.6f, 23.8f);
 
         if (rightStickInput != Vector2.Zero)
@@ -115,6 +125,91 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
+    public void CameraDebugUpdate(float deltaTime)
+    {
+        Vector2 rightStickInput = Input.GetRightStick();
+        Vector2 leftStickInput = Input.GetLeftStick();
+
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            followPlayer = !followPlayer;
+            if (followPlayer)
+            {
+                cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
+                cameraRef.SetCameraFieldOfView(originalFOV * (Math.PI / 180.0));
+                cameraTransform.SetRotation(originalRotation.X, originalRotation.Y, originalRotation.Z);
+            }
+            else
+            {
+                cameraRef.SetFollowTarget(null, Vector3.Zero, 0, false, false, false, 0);
+            }
+        }
+
+
+        if (!followPlayer)
+        {
+
+            if (leftStickInput != Vector2.Zero)
+            {
+                Vector3 moveDirection = new Vector3(-leftStickInput.X, 0, -leftStickInput.Y);
+                Vector3 camForward = cameraTransform.forward;
+                Vector3 camRight = cameraTransform.right;
+
+                //Si quereis que la camara se mantenga con el angulo del juego descomentar esto
+                //camForward.Y = 0;
+                //camRight.Y = 0;
+
+                camForward = Vector3.Normalize(camForward);
+                camRight = Vector3.Normalize(camRight);
+
+                Vector3 movement = camForward * moveDirection.Z + camRight * moveDirection.X;
+                cameraTransform.position += movement * deltaTime * 50.0f;
+            }
+
+
+            if (rightStickInput != Vector2.Zero)
+            {
+                float rotationSpeed = 2.0f;
+
+
+                cameraTransform.RotateLocal(-rightStickInput.X * rotationSpeed * deltaTime, Vector3.UnitY);
+
+
+                cameraTransform.RotateLocal(rightStickInput.Y * rotationSpeed * deltaTime, cameraTransform.right);
+
+
+                cameraTransform.AlignToGlobalUp(Vector3.UnitY);
+            }
+
+            if (Input.GetKeyDown(KeyCode.P) || Input.GetControllerButtonDown(ControllerButton.B))
+            {
+                Vector3 rayOrigin = cameraTransform.position;
+                Vector3 rayDirection = cameraTransform.forward;
+                GameObject hitObject = null;
+
+                RayCast ray = new RayCast();
+                ray.PerformRaycast(rayOrigin, rayDirection, 400);
+
+                if (ray.hit.isHit)
+                {
+                    hitObject = ray.hit.gameObject;
+                }
+
+                if (hitObject != null)
+                {
+                    playerRef.GetComponent<Collider>().SetPosition(ray.hit.point + new Vector3(0, 2, 0));
+                    Engineson.print("Player spawned at: " + ray.hit.point);
+                }
+                else
+                {
+                    Engineson.print("Raycast did not hit the floor.");
+                }
+            }
+
+            return;
+        }
+    }
     public void StartDash(Vector3 dashDirection)
     {
         targetFOV = dashFOV;

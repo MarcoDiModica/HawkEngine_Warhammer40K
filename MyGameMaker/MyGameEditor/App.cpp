@@ -11,6 +11,7 @@
 #include "UISettings.h"
 #include "UIMainMenuBar.h"
 #include "External/Optick/include/optick.h"
+#include "MyAudioEngine/AudioManager.h"
 
 #define MAX_LOGS_CONSOLE 1000
 #define MAX_FIXED_UPDATES 5
@@ -38,10 +39,8 @@ App::App() {
 	camera = new EditorCamera(this);
 #endif // ENABLE_EDITOR	
 
-	
 	physicsModule = new PhysicsModule();
 	audioEngine = new AudioEngine();
-
 	//gizmos = new Gizmos(this);
 
 	scene_serializer = new SceneSerializer(this);
@@ -124,6 +123,8 @@ bool App::Update()
 		ret = PostUpdate();
 
 	FinishUpdate();
+
+	AudioManager::Update(dt);
 
 	//time_since_start = start_timer->ReadSec();
 
@@ -267,7 +268,18 @@ void App::FinishUpdate()
 #endif // !_BUILD	
 }
 
-bool App::CleanUP() { return true; }
+bool App::CleanUP() 
+{
+	for (const auto& module : modules)
+	{
+		if (module->active == false)
+			continue;
+
+		if (module->CleanUp() == false)
+			return false;
+	}
+	return true;
+}
 
 void App::AddLog(LogType type, const char* entry)
 {

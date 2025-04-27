@@ -358,8 +358,9 @@ std::vector<std::shared_ptr<Material>> createMaterialsFromFBX(const aiScene& sce
 		}
 
         aiColor4D color;
-        fbx_material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
-        materials[i]->color = glm::vec4(color.r, color.g, color.b, color.a);
+        //fbx_material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+        //materials[i]->color = glm::vec4(color.r, color.g, color.b, color.a);
+		materials[i]->color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 		bool hasTexture = false;
 

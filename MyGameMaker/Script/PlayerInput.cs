@@ -14,7 +14,7 @@ public class PlayerInput : MonoBehaviour
     private bool isRunningPressed = false;
     private bool isKeyboardMoving = false;
     private Transform cameraTransform;
-
+    private Vector3 directionAim = Vector3.Zero;
     private bool isMovementBlocked = false;
     public override void Awake()
     {
@@ -34,8 +34,9 @@ public class PlayerInput : MonoBehaviour
     {
         if (!isMovementBlocked)
         {
-            UpdateMovementDirection();
             UpdateLookDirection();
+            UpdateMovementDirection();
+
             isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
             isShootPressed = Input.GetKey(KeyCode.J) || Input.GetControllerAxis(0, 5) > 0.5f;
 
@@ -114,7 +115,7 @@ public class PlayerInput : MonoBehaviour
     {
         return isKeyboardMoving;
     }
-    private void UpdateLookDirection()
+    public void UpdateLookDirection()
     {
         Vector3 direction = Vector3.Zero;
 
@@ -127,12 +128,21 @@ public class PlayerInput : MonoBehaviour
             direction = new Vector3(directionToMouse.X, 0, directionToMouse.Z); // Mantener la dirección en el plano XZ
         }
 
-        // Si se está utilizando el right stick (dejo la lógica como la tenías)
-        if (Input.GetRightStick() != Vector2.Zero /*&& isShootPressed*/)
+        // Si se está utilizando el right stick
+        if (Input.GetRightStick() != Vector2.Zero )
         {
             Vector2 rightStickInput = Input.GetRightStick();
+
             direction = new Vector3(-rightStickInput.X, 0, -rightStickInput.Y); // Asumiendo que quieres invertir el eje Z y X
+
         }
+        //if (Input.GetRightStick() != Vector2.Zero && isShootPressed)
+        //{
+        //    direction = directionAim;
+        //}
+
+          
+        
 
         // Si alguna dirección se ha calculado, ajustarla respecto a la rotación de la cámara
         if (direction != Vector3.Zero)

@@ -15,7 +15,8 @@ public class InteractionSystem : MonoBehaviour
     private GameObject currentInteractable = null;
     private AreaTrigger currentAreaTrigger = null;
     private bool interactionImageIsEnabled = false;
-
+    private GameObject canvas;
+    private Interaction interaction;
     private Transform cachedTransform;
 
     public override void Awake()
@@ -53,6 +54,13 @@ public class InteractionSystem : MonoBehaviour
             Engineson.print("ERROR: InteractionSystem requires Transform");
             return;
         }
+        canvas = GameObject.Find("Canvas_Interaction");
+        if (canvas == null)
+        {
+            Engineson.print("ERROR: InteractionSystem requires a GameObject named Canvas_Interaction.");
+            return;
+        }
+        interaction = canvas.GetComponent<Interaction>();   
     }
 
     public override void Update(float deltaTime)
@@ -141,5 +149,6 @@ public class InteractionSystem : MonoBehaviour
             interactionImage.SetImageEnabled(show);
             interactionImageIsEnabled = show;
         }
+        interaction.Spawn();
     }
 }

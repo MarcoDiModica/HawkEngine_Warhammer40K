@@ -161,45 +161,52 @@ void PhysicsModule::SyncCollidersToGameObjects() {
         }
     }
 }
+
 std::vector<GameObject*> PhysicsModule::OverlapSphere(const glm::vec3& position, float radius, const std::string& tag) {
-      std::vector<GameObject*> overlappingObjects;
+	std::vector<GameObject*> overlappingObjects;
 
-    // Ghost Pair Callback
-    if (!dynamicsWorld->getBroadphase()->getOverlappingPairCache()->hasDeferredRemoval()) {
-        dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
-    }
+	if (!dynamicsWorld->getBroadphase()->getOverlappingPairCache()->hasDeferredRemoval()) {
+		dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+	}
 
-    //Ghost object
-    auto ghostObject = std::make_unique<btPairCachingGhostObject>();
-    btSphereShape* sphereShape = new btSphereShape(radius);
-    ghostObject->setCollisionShape(sphereShape);
-    ghostObject->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE); 
-    ghostObject->setWorldTransform(btTransform(btQuaternion::getIdentity(), btVector3(position.x, position.y, position.z)));
-    int collisionFilterGroup = btBroadphaseProxy::SensorTrigger;
-    int collisionFilterMask = btBroadphaseProxy::AllFilter;
-    dynamicsWorld->addCollisionObject(ghostObject.get(), collisionFilterGroup, collisionFilterMask);
+	std::unique_ptr<btSphereShape> sphereShape = std::make_unique<btSphereShape>(radius);
+	auto ghostObject = std::make_unique<btPairCachingGhostObject>();
 
+	try {
+		ghostObject->setCollisionShape(sphereShape.get());
+		ghostObject->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		ghostObject->setWorldTransform(btTransform(btQuaternion::getIdentity(),
+			btVector3(position.x, position.y, position.z)));
 
-    //Check collisions
-    int numOverlappingObjects = ghostObject->getNumOverlappingObjects();
-    for (int i = 0; i < numOverlappingObjects; i++) {
-        const btCollisionObject* collidingObject = ghostObject->getOverlappingObject(i);
-        for (const auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
-            if (rigidBody == collidingObject) {
-                if (tag == "Default" || gameObject->CompareTag(tag)) {
-                    overlappingObjects.push_back(gameObject);
-                }
-                break;
-            }
-        }
-    }
-    dynamicsWorld->removeCollisionObject(ghostObject.get());
-    delete sphereShape;
+		int collisionFilterGroup = btBroadphaseProxy::SensorTrigger;
+		int collisionFilterMask = btBroadphaseProxy::AllFilter;
 
-    return overlappingObjects;
+		dynamicsWorld->addCollisionObject(ghostObject.get(), collisionFilterGroup, collisionFilterMask);
+
+		int numOverlappingObjects = ghostObject->getNumOverlappingObjects();
+		for (int i = 0; i < numOverlappingObjects; i++) {
+			const btCollisionObject* collidingObject = ghostObject->getOverlappingObject(i);
+			for (const auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+				if (rigidBody == collidingObject) {
+					if (tag == "Default" || gameObject->CompareTag(tag)) {
+						overlappingObjects.push_back(gameObject);
+					}
+					break;
+				}
+			}
+		}
+
+		dynamicsWorld->removeCollisionObject(ghostObject.get());
+	}
+	catch (...) {
+		if (ghostObject && dynamicsWorld) {
+			dynamicsWorld->removeCollisionObject(ghostObject.get());
+		}
+		throw;
+	}
+
+	return overlappingObjects;
 }
-
-
 
 std::vector<btRigidBody*> GetAllRigidBodies(btDiscreteDynamicsWorld* dynamicsWorld) {
     std::vector<btRigidBody*> rigidBodies;

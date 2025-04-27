@@ -1,0 +1,54 @@
+name: BiblePagePickUp
+prefabPath: ""
+uuid: 9871456235427851257
+tag: BiblePage
+active: false
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 12.384589195251465
+      - 2
+      - 12.173688888549805
+    localRotation:
+      - -38.566015935017774
+      - -32.943466287252335
+      - 1.1369850035054399e-14
+    localScale:
+      - 0.51462657212302787
+      - 0.51462653863370611
+      - 0.51462652788457564
+  Shader:
+    name: Shader
+    enabled: true
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 12528275894127540237
+    material:
+      name: bible_DefaultMaterial_BaseColor
+    color:
+      - 1
+      - 1
+      - 1
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  ScriptComponents:
+    Script0:
+      name: BiblePagePickUp
+      fields:
+        floatSpeed: 1
+        floatHeight: 0.5
+        rotationSpeed: 50
+Children: ~

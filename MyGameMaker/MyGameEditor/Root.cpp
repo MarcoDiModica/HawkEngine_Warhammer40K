@@ -65,7 +65,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl2Alpha1Release.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
 
 	
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
@@ -284,7 +284,7 @@ bool Root::Start()
 	
 	//PLAYER BUENO CON TODOS LOS SCRIPTS PORFA NO LO BORREIS
 
-	auto player = CreateGameObject("Player");
+	/*auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
@@ -302,11 +302,11 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
 	player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
 	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
-	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
+	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");*/
 	
 	//player->AddComponent<SoundComponent>()->LoadSound("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true, false);
 	
-	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
+	/*auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
 	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
@@ -368,11 +368,11 @@ bool Root::Start()
 	auto walkingFX = CreateGameObject("WalkingFX");
 	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	ParentGameObject(*walkingFX, *player);
-	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
 	
 	//ARMAS NO TOCAR
 	
-	auto boltgun = CreateGameObject("Boltgun");
+	/*auto boltgun = CreateGameObject("Boltgun");
 	boltgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	auto boltgunMesh = CreateGameObjectWithPath("Assets/boltgun.fbx");
 	boltgunMesh->SetName("boltgunMesh");
@@ -397,7 +397,7 @@ bool Root::Start()
 	railgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
 	railgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	railgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	ParentGameObject(*railgunMesh, *railgun);
+	ParentGameObject(*railgunMesh, *railgun);*/
 
 		// DROP MANAGER
 	//auto dropManager = CreateGameObject("DropManager");
@@ -487,26 +487,26 @@ bool Root::Start()
 	//railgunPickUp->AddComponent<ScriptComponent>()->LoadScript("RailgunPickUp");
 	//railgunPickUp->SetTag("Weapon");
 	//
-	//auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/bible.fbx");
-	//biblePagePickUp->SetName("BiblePagePickUp");
-	//std::shared_ptr<Image> BiblePageBaseColor = std::make_shared<Image>();
-	//std::shared_ptr<Image> BiblePageRoughness = std::make_shared<Image>();
-	//std::shared_ptr<Image> BiblePageNormal = std::make_shared<Image>();
-	//std::shared_ptr<Image> BiblePageMetallic = std::make_shared<Image>();
-	//BiblePageBaseColor->LoadTexture("Assets/Textures/bible_DefaultMaterial_BaseColor.png");
-	//BiblePageRoughness->LoadTexture("Assets/Textures/bible_DefaultMaterial_Roughness.png");
-	//BiblePageNormal->LoadTexture("Assets/Textures/bible_DefaultMaterial_Normal.png");
-	//BiblePageMetallic->LoadTexture("Assets/Textures/bible_DefaultMaterial_Metallic.png");
-	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BiblePageBaseColor);
-	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(BiblePageRoughness);
-	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(BiblePageNormal);
-	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(BiblePageMetallic);
-	//biblePagePickUp->GetTransform()->SetPosition(glm::vec3(0, 2, 0));
-	//biblePagePickUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
-	//biblePagePickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//biblePagePickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//biblePagePickUp->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
-	//biblePagePickUp->SetTag("BiblePage");
+	auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/bible.fbx");
+	biblePagePickUp->SetName("BiblePagePickUp");
+	std::shared_ptr<Image> BiblePageBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> BiblePageRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> BiblePageNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> BiblePageMetallic = std::make_shared<Image>();
+	BiblePageBaseColor->LoadTexture("Assets/Textures/bible_DefaultMaterial_BaseColor.png");
+	BiblePageRoughness->LoadTexture("Assets/Textures/bible_DefaultMaterial_Roughness.png");
+	BiblePageNormal->LoadTexture("Assets/Textures/bible_DefaultMaterial_Normal.png");
+	BiblePageMetallic->LoadTexture("Assets/Textures/bible_DefaultMaterial_Metallic.png");
+	biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BiblePageBaseColor);
+	biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(BiblePageRoughness);
+	biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(BiblePageNormal);
+	biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(BiblePageMetallic);
+	biblePagePickUp->GetTransform()->SetPosition(glm::vec3(0, 2, 0));
+	biblePagePickUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	biblePagePickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	biblePagePickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	biblePagePickUp->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
+	biblePagePickUp->SetTag("BiblePage");
 
 
 #ifdef _BUILD

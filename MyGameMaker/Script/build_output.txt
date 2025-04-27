@@ -1,9 +1,11 @@
-  Determining projects to restore...
-  Nothing to do. None of the projects specified contain packages to restore.
-  C#Assembly -> C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine_Warhammer40K\MyGameMaker\Script\obj\Script.dll
+The command could not be loaded, possibly because:
+  * You intended to execute a .NET application:
+      The application 'build' does not exist.
+  * You intended to execute a .NET SDK command:
+      No .NET SDKs were found.
 
-Build succeeded.
-    0 Warning(s)
-    0 Error(s)
+Download a .NET SDK:
+https://aka.ms/dotnet/download
 
-Time Elapsed 00:00:00.39
+Learn about SDK resolution:
+https://aka.ms/dotnet/sdk-not-found

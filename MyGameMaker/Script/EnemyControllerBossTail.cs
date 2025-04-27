@@ -53,11 +53,11 @@ public class EnemyControllerBossTail : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Collider component!");
             return;
         }
-        sound = gameObject.GetComponent<Audio>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
+        //sound = gameObject.GetComponent<Audio>();
+        //if (sound == null)
+        //{
+        //    Engineson.print("PlayerShooting: Audio component not found");
+        //}
         enemyTransform = gameObject.GetComponent<Transform>();
         if (enemyTransform == null)
         {
@@ -129,7 +129,7 @@ public class EnemyControllerBossTail : EnemyController
         if (isDead)
         {
             collider.SetActive(false);
-            sound?.Stop();
+            //sound?.Stop();
         }
     }
 

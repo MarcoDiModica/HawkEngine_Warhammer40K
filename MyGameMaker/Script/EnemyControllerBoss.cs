@@ -155,8 +155,8 @@ public class EnemyControllerBoss : EnemyController
                         {
                             if (!isCombatMusicPlaying)
                             {
-                                sound?.LoadAudio(combatMusic);
-                                sound?.Play(true);
+                                //sound?.LoadAudio(combatMusic);
+                                //sound?.Play(true);
                                 isCombatMusicPlaying = true;
                             }
 

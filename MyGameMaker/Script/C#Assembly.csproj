@@ -138,6 +138,7 @@
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="BaseAbilities.cs" />
     <Compile Include="OptionMenu.cs" />
+    <Compile Include="Pathfinding.cs" />
     <Compile Include="PauseMenu.cs" />
     <Compile Include="ParticleFX.cs" />
     <Compile Include="PickUpManager.cs" />

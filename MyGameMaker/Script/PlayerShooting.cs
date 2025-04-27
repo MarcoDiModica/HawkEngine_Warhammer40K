@@ -447,25 +447,24 @@ public class PlayerShooting : MonoBehaviour
         switch (currentGun)
         {
             case GunType.BOLTGUN:
-                if(playerData.BoltgunUpgraded == true)
-                {
+                
                     if (boltgun.arcSnare.canThrow)
                     {
                         redThirstManager.OnAbilityUsed();
                     }
                     boltgun.UseAbility2();
-                }
+                
                
                 break;
             case GunType.SHOTGUN:
-                if(playerData.ShotgunUpgraded == true)
-                {
+               
+                
                     if (shotgun.barrage.canThrow)
                     {
                         redThirstManager.OnAbilityUsed();
                     }
                     shotgun.UseAbility2();
-                }
+                
                
                 break;
             case GunType.RAILGUN:

@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL_events.h>
+#include <string>
 #include "Module.h"
 
 
@@ -68,6 +69,8 @@ public:
 	void SwapBuffers() const;
 
 	void ToggleFullscreen();
+
+	void SetTitle(std::string title);
 
 	unsigned int GetDisplayRefreshRate();
 	

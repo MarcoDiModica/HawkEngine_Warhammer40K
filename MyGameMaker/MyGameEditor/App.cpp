@@ -1,5 +1,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <thread>
+#include <algorithm>
 
 #include "App.h"
 #include "MyWindow.h"
@@ -13,36 +15,26 @@
 #include "External/Optick/include/optick.h"
 #include "MyAudioEngine/AudioManager.h"
 
-#define MAX_LOGS_CONSOLE 1000
-#define MAX_FIXED_UPDATES 5
-
-
-float LOW_LIMIT = 0.00167f; 
-float HIGH_LIMIT = 0.062f; //Min 16Fps
-
-
 App::App() {
+	m_logs.reserve(MAX_LOGS);
 
-	window = new Window("HawkEngine" , 1280,720);
+	m_modules.reserve(10);
 
+	window = new Window("HawkEngine", 1280, 720);
 	input = new Input(this);
-
 	hardwareInfo = new HardwareInfo(this);
 
 #ifndef _BUILD
 	gui = new MyGUI(this);
-#endif // ENABLE_EDITOR	
+#endif
 
 	root = new Root(this);
 
 #ifndef _BUILD
 	camera = new EditorCamera(this);
-#endif // ENABLE_EDITOR	
+#endif
 
 	physicsModule = new PhysicsModule();
-	audioEngine = new AudioEngine();
-	//gizmos = new Gizmos(this);
-
 	scene_serializer = new SceneSerializer(this);
 
 	AddModule(window, true);
@@ -51,52 +43,58 @@ App::App() {
 
 #ifndef _BUILD
 	AddModule(gui, true);
-#endif // ENABLE_EDITOR	
-	
+#endif
+
 	AddModule(root, true);
 
 #ifndef _BUILD
 	AddModule(camera, true);
-#endif // ENABLE_EDITOR	
-	
-	//AddModule(gizmos, true);
+#endif
+
 	AddModule(scene_serializer, true);
-};
 
+	m_lastFrameTime = high_res_clock::now();
+	m_frameStart = m_lastFrameTime;
+}
 
-bool App::Awake() { 
+App::~App() {
+	for (auto it = m_modules.rbegin(); it != m_modules.rend(); ++it) {
+		delete* it;
+	}
+	m_modules.clear();
+}
 
-	targetFrameDuration = (std::chrono::duration<double>)1 / frameRate;
+bool App::Awake() {
+	SetFpsCap(m_targetFrameRate);
+
 #ifndef _BUILD
 	camera->GetTransform().GetPosition() = vec3(0, 1, 4);
 	camera->GetTransform().Rotate(glm::radians(180.0), vec3(0, 1, 0));
 #endif
 
-	for (const auto& module : modules) {
-		if (module->Awake()) continue;
-		else {
+	for (auto* module : m_modules) {
+		if (!module->Awake()) {
 			return false;
 		}
 	}
-	return true; 
+
+	physicsModule->Awake();
+
+	return true;
 }
 
-bool App::Start() { 
-	
-	dt = 0;
+bool App::Start() {
+	m_deltaTime = 0.016;
 
-	for (const auto& module : modules) {
-		
-		if( module->Start()) continue;
-
-		else { 
-			return false; 
+	for (auto* module : m_modules) {
+		if (!module->Start()) {
+			return false;
 		}
-
 	}
-	
-	
-	return true; 
+
+	physicsModule->Start();
+
+	return true;
 }
 
 bool App::Update()
@@ -108,229 +106,176 @@ bool App::Update()
 	bool ret = true;
 	PrepareUpdate();
 
-	/*if (input->GetWindowEvent(WE_QUIT) == true)
-		ret = false;*/
+	if (ret) ret = PreUpdate();
+	if (ret) ret = DoUpdate();
+	if (ret) ret = PostUpdate();
 
-	// Theese perform the lifecycle update calls for each module
-
-	if (ret == true)
-		ret = PreUpdate();
-
-	if (ret == true)
-		ret = DoUpdate();
-
-	if (ret == true)
-		ret = PostUpdate();
+	Application->window->SetTitle(
+		std::string("HawkEngine - FPS: ") + std::to_string(m_fps.load()) +
+		" - Frame Time: " + std::to_string(m_deltaTime * 1000.0) + "ms");
 
 	FinishUpdate();
-
-	AudioManager::Update(dt);
-
-	//time_since_start = start_timer->ReadSec();
-
-	//if (state == GameState::PLAY || state == GameState::PLAY_ONCE) {
-	//	game_time = game_timer->ReadSec(scale_time);
-	//}
 
 	return ret;
 }
 
+void App::PrepareUpdate() {
+	m_frameStart = high_res_clock::now();
 
-void App::PrepareUpdate()
-{
-	frameStart = std::chrono::steady_clock::now();
+	hasChangedScene = false;
 }
 
-bool App::PreUpdate()
-{
-
+bool App::PreUpdate() {
 #ifdef PROFILE
 	OPTICK_CATEGORY("PreUpdate", Optick::Category::GameLogic);
-#endif // PROFILE
+#endif
 
-	bool ret = true;
-
-	for (const auto& module : modules)
-	{
-		if (module->active == false)
-			continue;
-
-		if (module->PreUpdate() == false)
-			return false;
+	for (auto* module : m_modules) {
+		if (!module->active) continue;
+		if (!module->PreUpdate()) return false;
 	}
+
+	physicsModule->PreUpdate();
 
 	return true;
 }
 
-bool App::DoUpdate()
-{
+bool App::PerformFixedUpdate() {
+	for (auto* module : m_modules) {
+		if (!module->active) continue;
+		if (!module->FixedUpdate()) return false;
+	}
+	return true;
+}
 
+bool App::DoUpdate() {
 #ifdef PROFILE
 	OPTICK_CATEGORY("DoUpdate", Optick::Category::GameLogic);
-#endif // PROFILE
+#endif
 
-	fixedCounter += dt;
-	int numFixedUpdates = 0;
+	m_fixedTimeAccumulator += m_deltaTime;
 
-	while (fixedCounter > FIXED_INTERVAL) {
-		numFixedUpdates++;
-		fixedCounter -= FIXED_INTERVAL;
-		//Call fixedUpdate
-		for (const auto& module : modules)
-		{
-			if (module->active == false)
-				continue;
+	int fixedUpdatesThisFrame = 0;
 
-			if (module->FixedUpdate() == false)
-				return false;
-		}
+	while (m_fixedTimeAccumulator >= FIXED_TIME_STEP) {
+		if (!PerformFixedUpdate()) return false;
 
-		// Prevent spiral of death
-		if (numFixedUpdates > MAX_FIXED_UPDATES) {
+		m_fixedTimeAccumulator -= FIXED_TIME_STEP;
+		fixedUpdatesThisFrame++;
+
+		if (fixedUpdatesThisFrame >= MAX_FIXED_UPDATES) {
+			m_fixedTimeAccumulator = 0;
 			break;
 		}
 	}
-	//std::cout << std::endl << "There were " << numFixedUpdates << "fixed updates";
 
-	for (const auto& module : modules)
-	{
-		if (module->active == false)
-			continue;
+	for (auto* module : m_modules) {
+		if (!module->active) continue;
+		if (!module->Update(m_deltaTime)) return false;
 
-		if (module->Update(dt) == false)
-			return false;
+		if (hasChangedScene) break;
 	}
 
-	
-	
-
+	physicsModule->Update(m_deltaTime);
+	AudioManager::Update(m_deltaTime);
 
 	return true;
 }
 
-bool App::PostUpdate()
-{
+bool App::PostUpdate() {
 #ifdef PROFILE
 	OPTICK_CATEGORY("PostUpdate", Optick::Category::GameLogic);
-#endif // PROFILE
+#endif
 
-	for (const auto& module : modules)
-	{
-		if (module->active == false)
-			continue;
-
-		if (module->PostUpdate() == false)
-			return false;
+	for (auto* module : m_modules) {
+		if (!module->active) continue;
+		if (!module->PostUpdate()) return false;
 	}
+
+	physicsModule->PostUpdate();
 
 	return true;
 }
 
-void App::FinishUpdate()
-{
-	auto now = hrclock::now();
-    dt = std::chrono::duration<double>(now - lastTime).count();
+void App::FinishUpdate() {
+	m_fpsUpdateTimer += m_deltaTime;
+	m_frameCount++;
 
-	if (dt < LOW_LIMIT) 
-	{
-		dt = LOW_LIMIT;
+	if (m_fpsUpdateTimer >= 1.0) {
+		m_fps.store(m_frameCount);
+		m_frameCount = 0;
+		m_fpsUpdateTimer = 0.0;
+
+#ifndef _BUILD
+		if (gui && gui->UIsettingsPanel) {
+			gui->UIsettingsPanel->AddFpsMark(m_fps.load());
+		}
+#endif
 	}
-	else if (dt > HIGH_LIMIT)
-	{
-		dt = HIGH_LIMIT;
-	}
 
-	if (frameRateCap > 0 && dt < frameRateCap && capFrames)
-	{
-		glm::uint32 delay = (frameRateCap - dt);
+	if (m_capFrames && m_targetFrameRate > 0) {
+		double targetFrameTime = 1.0 / m_targetFrameRate;
+		double frameDuration = std::chrono::duration<double>(high_res_clock::now() - m_frameStart).count();
 
-		if (delay > 0)
-		{
-			SDL_Delay(delay);
+		if (frameDuration < targetFrameTime) {
+			Uint32 delayMS = static_cast<Uint32>((targetFrameTime - frameDuration) * 1000);
+			if (delayMS > 0) {
+				SDL_Delay(delayMS);
+			}
 		}
 	}
 
-	lastTime = now;
-
-
-	dtCount += dt;
-	frameCount++;
-
-	if (dtCount >= 1)
-	{
-		fps = frameCount;
-		frameCount = 0;
-		dtCount = 0;
-	}
-
-#ifndef _BUILD
-	Application->gui->UIsettingsPanel->AddFpsMark(fps);
-#endif // !_BUILD	
+	auto now = high_res_clock::now();
+	m_deltaTime = std::chrono::duration<double>(now - m_lastFrameTime).count();
+	m_deltaTime = std::clamp(m_deltaTime, MIN_FRAME_TIME, MAX_FRAME_TIME);
+	m_lastFrameTime = now;
 }
 
-bool App::CleanUP() 
-{
-	for (const auto& module : modules)
-	{
-		if (module->active == false)
-			continue;
-
-		if (module->CleanUp() == false)
+bool App::CleanUP() {
+	for (auto it = m_modules.rbegin(); it != m_modules.rend(); ++it) {
+		if (!(*it)->CleanUp()) {
 			return false;
+		}
 	}
 	return true;
 }
 
-void App::AddLog(LogType type, const char* entry)
-{
-	std::string toAdd = entry;
+void App::AddLog(LogType type, const char* entry) {
+	std::string message = entry;
 
-	for (auto it = logs.begin(); it != logs.end(); ++it)
-	{
-		if (it->type == type && it->message == toAdd)
-		{
+	for (auto it = m_logs.begin(); it != m_logs.end(); ++it) {
+		if (it->type == type && it->message == message) {
 			int newCount = it->repeatCount + 1;
-
-			logs.erase(it);
-
-			LogInfo info = { type, toAdd, newCount };
-			logs.push_back(info);
+			LogInfo updatedInfo = { type, message, newCount };
+			*it = updatedInfo;
 			return;
 		}
 	}
 
-	if (logs.size() > MAX_LOGS_CONSOLE)
-		logs.erase(logs.begin());
+	if (m_logs.size() >= MAX_LOGS) {
+		m_logs.erase(m_logs.begin());
+	}
 
-	LogInfo info = { type, toAdd, 1 };
-	logs.push_back(info);
+	m_logs.push_back({ type, message, 1 });
 }
 
-std::vector<LogInfo> App::GetLogs() 
-{ 
-	return logs; 
+const std::vector<LogInfo>& App::GetLogs() const {
+	return m_logs;
 }
 
-void App::CleanLogs() 
-{ 
-	logs.clear(); 
+void App::CleanLogs() {
+	m_logs.clear();
 }
 
-// Add a new module to handle
-void App::AddModule(Module* module, bool activate) { 
-
-	if (activate == true){ module->Init(); }
-
-	modules.push_back(module);
-
+void App::AddModule(Module* module, bool activate) {
+	if (activate) {
+		module->Init();
+	}
+	m_modules.push_back(module);
 }
-
-int App::GetFps() const { return frameRate;}
-
-double App::GetDt() const { return dt; }
 
 void App::SetFpsCap(int fps) {
-	this->frameRate = frameRate == 0 ? Application->window->GetDisplayRefreshRate() : frameRate;
-	targetFrameDuration = (std::chrono::duration<double>)1 / this->frameRate;
+	m_targetFrameRate = (fps > 0) ? fps : 60;
+	m_targetFrameTime = 1.0 / m_targetFrameRate;
 }
 

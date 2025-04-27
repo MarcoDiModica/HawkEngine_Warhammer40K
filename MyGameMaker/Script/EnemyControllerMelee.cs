@@ -71,7 +71,6 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Awake()
     {
-        music = gameObject.GetComponent<Audio>();
     }
 
     public override void Start()
@@ -94,12 +93,6 @@ public class EnemyControllerMelee : EnemyController
             Engineson.print("ERROR: Hormagaunt Movement requires a Collider component!");
             return;
         }
-
-//         sound = gameObject.GetComponent<AudioSource>();
-//         if (sound == null)
-//         {
-//             Engineson.print("ERROR: Audio component not found");
-//         }
 
         enemyTransform = gameObject.GetComponent<Transform>();
         if (enemyTransform == null)
@@ -338,7 +331,6 @@ public class EnemyControllerMelee : EnemyController
                     rb.SetVelocity(smoothVel);
 
                     anim.SetRunningAnimation();
-                    isRunning = true;
                 }
                 else if (chasePath == null || chasePath.Count == 0)
                 {
@@ -352,7 +344,6 @@ public class EnemyControllerMelee : EnemyController
                     rb.SetVelocity(smoothedVel);
 
                     anim.SetRunningAnimation();
-                    isRunning = true;
                 }
                 break;
 
@@ -451,29 +442,15 @@ public class EnemyControllerMelee : EnemyController
     public override void Attack()
     {
         Engineson.print("Melee attack executed!");
-        pc.playerData.TakeDamage(clawDamage);
-        Engineson.print("Player health: " + (pc.playerData.GetHealth()));
-
-        //sound?.Play(meleeAttackSound);
-    }
-
-    public void Leap()
-    {
-        if (!isLeaping)
+        if (pc.redThirstManager.redThirstBonus < clawDamage)
         {
-            if (pc.redThirstManager.redThirstBonus < clawDamage)
-            {
-                pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
-            }
-            else
-            {
-                pc.playerData.TakeDamage(0);
-            }
+            pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
         }
         else
         {
-            pc.playerData.TakeDamage(clawDamage);
+            pc.playerData.TakeDamage(0);
         }
+        Engineson.print("Player health: " + (pc.playerData.GetHealth()));
 
         Audio.PlayOneShot(SFX_ATTACK);
     }
@@ -487,42 +464,6 @@ public class EnemyControllerMelee : EnemyController
             particles.ApplyPreset(19);
             particles.EmitBurst(1);
             Audio.PlayOneShot(SFX_HIT);
-        }
-    }
-
-    public void Leap(float deltaTime)
-    {
-        anticipationTimer += deltaTime;
-        if (anticipationTimer < anticipationDuration)
-        {
-            //anim.SetAnticipationAnimation();
-            rb.SetVelocity(Vector3.Zero);
-        }
-        else if (anticipationTimer >= anticipationDuration)
-        {
-            if (distanceToPlayer > distToChase)
-            {
-                return;
-            }
-            else
-            {
-                hasLeap = false;
-                anim.SetWholeLeapAnimation();
-                particles.EmitBurst(1);
-
-                leapTimer += deltaTime;
-                if (leapTimer < leapDuration)
-                {
-                    isLeaping = true;
-                    rb.SetVelocity(rb.GetVelocity() * 10f);
-                }
-                else if (leapTimer >= leapDuration)
-                {
-                    leapTimer = 0f;
-                    isLeaping = false;
-                    lastLeap = 0.0f;
-                }
-            }
         }
     }
 

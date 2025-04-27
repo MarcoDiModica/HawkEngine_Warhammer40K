@@ -66,7 +66,14 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
+	resourceManager->LoadResources(); // Esto no se mutea
+	resourceManager->CreateCube(); // Esto no se mutea
+
+	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
+
+	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");
+
+
 
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
@@ -265,22 +272,43 @@ bool Root::Start()
 	//hormagaunt->SetTag("Enemy");
 
 	//auto mawloc = CreateGameObject("Mawloc");
-	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));
+	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
 	//mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
-	//mawloc->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//auto mawlocMesh = CreateCube("MawlocMesh");
+	//mawloc->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0,36,0));
+	//mawloc->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(5, 3, 5));
+	//auto mawlocMesh = CreateGameObjectWithPath("Assets/Meshes/Mawloc.fbx");
+	//mawlocMesh->SetName("MawlocMesh");
+	//mawlocMesh->GetTransform()->SetScale(glm::vec3(0.035, 0.014, 0.035));
+	//mawlocMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//ParentGameObject(*mawlocMesh, *mawloc);
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	//auto mawlocTail = CreateGameObject("MawlocTail");
-	//mawlocTail->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));
+	//mawlocTail->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 5, 15));
 	//mawlocTail->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
-	//mawlocTail->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//mawlocTail->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//auto mawlocTailMesh = CreateCube("MawlocTailMesh");
+	//mawlocTail->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 0));
+	//auto mawlocTailMesh = CreateGameObjectWithPath("Assets/Meshes/MawlocTail.fbx");
+	//mawlocTailMesh->SetName("MawlocTailMesh");
 	//ParentGameObject(*mawlocTailMesh, *mawlocTail);
 	//mawlocTail->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBossTail");
+
+	////Floor
+	//auto floor = CreateCube("Floor");
+	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	//floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
+	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	
+    //auto envObj = CreateGameObject("Environment1");
+    //envObj->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+    //envObj->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+    //auto encObjScript = envObj->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
+    //auto envObjCollider = envObj->AddComponent<BoxColliderComponent>(Application->physicsModule);
+    //envObjCollider->SetTrigger(true); 
+
+	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//
 	
 	//PLAYER BUENO CON TODOS LOS SCRIPTS PORFA NO LO BORREIS
 
@@ -372,6 +400,15 @@ bool Root::Start()
 	
 	//ARMAS NO TOCAR
 	
+	auto objMainCamera = CreateCameraObject("MainCamera");
+	objMainCamera->GetTransform()->SetPosition(glm::dvec3(-14, 20, 14.0f));
+	objMainCamera->GetTransform()->SetRotation(glm::dvec3(glm::radians(-130.0), glm::radians(45.0), glm::radians(180.0)));
+	auto camera = objMainCamera->AddComponent<CameraComponent>();
+	camera->priority = 1;
+	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+	mainCamera = objMainCamera;
+	UpdateCameraPriority();
+
 	/*auto boltgun = CreateGameObject("Boltgun");
 	boltgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	auto boltgunMesh = CreateGameObjectWithPath("Assets/boltgun.fbx");
@@ -556,8 +593,8 @@ bool Root::Update(double dt)
 		//AddInteraction();
 	}
 
-	LOG(LogType::LOG_INFO, "ResourceManager Meshes: %d", resourceManager->GetMeshCount());
-	LOG(LogType::LOG_INFO, "ResourceManager Materials: %d", resourceManager->GetMaterialCount());
+	//LOG(LogType::LOG_INFO, "ResourceManager Meshes: %d", resourceManager->GetMeshCount());
+	//LOG(LogType::LOG_INFO, "ResourceManager Materials: %d", resourceManager->GetMaterialCount());
 
 	//if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
 	//	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");

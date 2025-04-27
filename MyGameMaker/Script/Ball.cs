@@ -36,11 +36,7 @@ public class Ball : MonoBehaviour
         energyBallFX.AddComponent<ParticleFX>().ApplyPreset(12);
         //energyBallFX.GetComponent<ParticleFX>().EmitBurst(1);
         energyBallFX.GetComponent<ParticleFX>().Play();
-        //energyBallFX.GetComponent<Transform>().SetPosition(
-        //    GetComponent<Transform>().GetPosition().X,
-        //    GetComponent<Transform>().GetPosition().Y,
-        //    GetComponent<Transform>().GetPosition().Z
-        //);
+        
     }
     public override void Update(float deltaTime)
     {

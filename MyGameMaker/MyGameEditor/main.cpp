@@ -727,7 +727,6 @@ static void RenderEditor()
 	}
 	
 	objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
-	Application->physicsModule->Update(Application->GetDt());
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
@@ -834,17 +833,15 @@ static void GameRelease() {
 		}
 	}
 
-	Application->physicsModule->Update(Application->GetDt());
-
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
 
-	for (size_t i = 0; i < UI.size(); i++)
+	for (const auto & i : UI)
 	{
-		if (UI[i]->IsActive())
+		if (i->IsActive())
 		{
-			UI[i]->Update(static_cast<float>(Application->GetDt()));
+			i->Update(static_cast<float>(Application->GetDt()));
 		}
 	}
 
@@ -882,8 +879,6 @@ int main(int argc, char** argv) {
 
 		case AWAKE:
 
-			Application->physicsModule->Awake();
-			Application->audioEngine->Init();
 			Application->LoadAllParticleTextures();
 			AudioManager::Initialize();
 			if (Application->Awake()) { state = START; }
@@ -892,7 +887,6 @@ int main(int argc, char** argv) {
 
 		case START:
 
-			Application->physicsModule->Start();
 			if (Application->Start()) { state = LOOP; }
 			else { state = FAIL; printf("Failed on START"); }
 			break;

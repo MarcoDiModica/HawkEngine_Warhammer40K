@@ -7,6 +7,7 @@
 #include <mono/metadata/exception.h>
 
 #include "../MyGameEditor/Log.h"
+#include "mono/metadata/mono-gc.h"
 
 ScriptComponent::ScriptComponent(GameObject* owner) : Component(owner) {
 	updateInStop = false;

@@ -1,6 +1,6 @@
 name: Canvas_Interaction
-prefabPath: ""
-uuid: 9684721831398361971
+prefabPath: Assets\Prefabs\Canvas_Interaction.prefab.yaml
+uuid: 6416124135808051210
 tag: Untagged
 active: true
 isStatic: false
@@ -156,6 +156,63 @@ Children:
         sheet_size:
           - 1482
           - 392
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+    Children: ~
+  - name: InteractText
+    prefabPath: ""
+    uuid: 6428904762128253018
+    tag: Untagged
+    active: false
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.5
+          - 0.717999995
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.5
+          - 1
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\PressE.png
+        use_animation: false
+        sprite_size:
+          - 433
+          - 577
+        sheet_size:
+          - 433
+          - 577
         sprite_offset:
           - 0
           - 0

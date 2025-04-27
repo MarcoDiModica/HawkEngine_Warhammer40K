@@ -2,6 +2,8 @@ SceneMetadata:
   SceneName: WinScene
 GameObject0:
   name: MainCamera
+  prefabPath: ""
+  uuid: 2020641940501927770
   tag: Untagged
   active: true
   isStatic: false
@@ -14,7 +16,7 @@ GameObject0:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -30,13 +32,20 @@ GameObject0:
       near_plane: 0.10000000000000001
       far_plane: 500
       priority: 1
-    AudioListener: ~
     ScriptComponents:
       Script0:
         name: PlayerCamera
+        fields:
+          smoothness: 19
+          maxOffsetDistance: 3.5999999
+          offsetSmoothness: 5
+          returnDelay: 0.200000003
+          dashFOV: 35
   Children: ~
 GameObject1:
   name: Canvas_win_screen
+  prefabPath: Assets\Prefabs\Canvas_win_screen.prefab.yaml
+  uuid: 8351203443256412590
   tag: Untagged
   active: true
   isStatic: false
@@ -56,18 +65,6 @@ GameObject1:
         - 1
         - 1
         - 1
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -87,11 +84,17 @@ GameObject1:
         - 0
         - 1
         - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
     ScriptComponents:
       Script0:
         name: WinScreen
+        fields: ~
   Children:
     - name: win_screen
+      prefabPath: ""
+      uuid: 580163217924526292
       tag: Untagged
       active: true
       isStatic: false
@@ -134,8 +137,21 @@ GameObject1:
           name: UIImageComponent
           enabled: true
           texture_path: Library/Textures/UI/WIN_screen.png
+          use_animation: false
+          sprite_size:
+            - 2560
+            - 1440
+          sheet_size:
+            - 2560
+            - 1440
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
       Children: ~
     - name: Menu_Button
+      prefabPath: ""
+      uuid: 16942033288024270079
       tag: Untagged
       active: true
       isStatic: false
@@ -178,12 +194,25 @@ GameObject1:
           name: UIImageComponent
           enabled: true
           texture_path: Library/Textures/UI/WinMenu.png
+          use_animation: false
+          sprite_size:
+            - 445
+            - 87
+          sheet_size:
+            - 445
+            - 87
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
           state: 1
       Children: ~
     - name: Quit_Button
+      prefabPath: ""
+      uuid: 1152489699870358097
       tag: Untagged
       active: true
       isStatic: false
@@ -226,6 +255,17 @@ GameObject1:
           name: UIImageComponent
           enabled: true
           texture_path: Library/Textures/UI/WinQuit.png
+          use_animation: false
+          sprite_size:
+            - 455
+            - 90
+          sheet_size:
+            - 455
+            - 90
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true

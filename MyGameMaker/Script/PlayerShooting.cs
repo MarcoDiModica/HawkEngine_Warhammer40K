@@ -109,12 +109,13 @@ public class PlayerShooting : MonoBehaviour
         railgunShotSemiFX = GameObject.Find("RailgunShotSemiFX").GetComponent<ParticleFX>();
         railgunShotAutoFX = GameObject.Find("RailgunShotAutoFX").GetComponent<ParticleFX>();
 
-        //boltgunMesh = GameObject.Find("Boltgun");
-        //shotgunMesh = GameObject.Find("Shotgun");
-        //railgunMesh = GameObject.Find("Railgun");
+        boltgunMesh = GameObject.Find("Boltgun");
+        shotgunMesh = GameObject.Find("Shotgun");
+        railgunMesh = GameObject.Find("Railgun");
 
-        //shotgunMesh.SetActive(false);
-        //railgunMesh.SetActive(false);
+        shotgunMesh.SetActive(false);
+        railgunMesh.SetActive(false);
+        boltgunMesh.SetActive(true);
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
 
@@ -399,6 +400,7 @@ public class PlayerShooting : MonoBehaviour
                 shootTimer = 0;
                 boltgunMesh.SetActive(false);
                 shotgunMesh.SetActive(true);
+                railgunMesh.SetActive(false);
                 int audioo = Audio.PlayOneShot(shotgunEquiped);
                 break;
             case GunType.RAILGUN:

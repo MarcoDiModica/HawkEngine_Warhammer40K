@@ -665,11 +665,13 @@ bool Root::Start()
 
 
 #ifdef _BUILD
+	Application->physicsModule->ResetAllColliderTransforms();
 	Application->play = true;
 	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
 	Application->physicsModule->linkPhysicsToScene = true;
 	SceneManagement->Awake();
 	SceneManagement->Start();
+
 #endif // _BUILD
 
 

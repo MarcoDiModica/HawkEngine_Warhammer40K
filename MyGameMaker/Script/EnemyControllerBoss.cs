@@ -152,7 +152,7 @@ public class EnemyControllerBoss : EnemyController
                 switch (currentPhase)
                 {
                     case BossPhase.PHASE1:
-                        if (distanceToPlayer <= 200.0f)
+                        if (distanceToPlayer <= 1000.0f)
                         {
                             if (!isCombatMusicPlaying)
                             {

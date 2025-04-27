@@ -3,7 +3,7 @@ SceneMetadata:
 GameObject0:
   name: DirectionalLight
   prefabPath: ""
-  uuid: 8206051719339318300
+  uuid: 16006101295579003454
   tag: Untagged
   active: true
   isStatic: false

@@ -431,8 +431,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isFootstepPlaying)
         {
-            Audio.Stop(Runfootsteps);
-            Audio.Stop(Walkfootsteps);
+            Audio.Stop(audioRun);
+            Audio.Stop(audioWalk);
             isFootstepPlaying = false;
             hasStoppedFootsteps = true;
             currentFootstep = ""; 

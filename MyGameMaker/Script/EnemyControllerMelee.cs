@@ -58,7 +58,12 @@ public class EnemyControllerMelee : EnemyController
         {
             Engineson.print("ERROR: Player couldn't be found!");
         }
-
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
+        if (pc == null)
+        {
+            Engineson.print("ERROR: PlayerController component not found on Player!");
+            return;
+        }
         collider = gameObject.GetComponent<BoxCollider>();
         if (collider == null)
         {
@@ -88,6 +93,9 @@ public class EnemyControllerMelee : EnemyController
 
         particles = gameObject.AddComponent<ParticleFX>();
         particles.ApplyPreset(9);
+        Audio.MasterVolume = 0.8f;
+        Audio.MusicVolume = 0.6f;
+        Audio.SfxVolume = 1.0f;
 
         maxHealth = health;
         currentHealth = maxHealth;

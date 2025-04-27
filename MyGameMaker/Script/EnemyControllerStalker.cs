@@ -22,7 +22,7 @@ public class EnemyControllerStalker : EnemyController
     private bool dodgewindow = false;
     private float dodgeActivationTime = 0.5f;
     private float dodgeTimer = 0f;
-    //private LictorAnimation anim;
+    private LictorAnimation anim;
     PlayerController pc;
 
     // Audio
@@ -83,12 +83,12 @@ public class EnemyControllerStalker : EnemyController
             return;
         }
 
-        //anim = GameObject.Find("LictorMesh").GetComponent<LictorAnimation>();
-        //if (anim == null)
-        //{
-        //    Engineson.print("ERROR: LictorAnimation requires SkeletalANimation component");
-        //    return;
-        //}
+        anim = GameObject.Find("LictorMesh").GetComponent<LictorAnimation>();
+        if (anim == null)
+        {
+            Engineson.print("ERROR: LictorAnimation requires SkeletalANimation component");
+            return;
+        }
 
         //particles = gameObject.GetComponent<ParticleFX>();
         //particles.ApplyPreset(9);
@@ -107,7 +107,7 @@ public class EnemyControllerStalker : EnemyController
             if (currentHealth <= 0)
             {
                 currentState = EnemyState.DEAD;
-                //anim.SetDeathAnimation();
+                anim.SetDefeatAnimation();
                 Audio.PlayOneShot(SFX_DEATH);
                 return;
             }
@@ -158,7 +158,7 @@ public class EnemyControllerStalker : EnemyController
                     {
                         currentState = EnemyState.IDLE;
                         rb.SetVelocity(Vector3.Zero);
-                        //anim.SetStandardIdleAnimation();
+                        anim.SetIdleAnimation();
                     }
                 }
             }
@@ -194,7 +194,7 @@ public class EnemyControllerStalker : EnemyController
                 moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
                 Vector3 desiredVelocity = moveDirection * speedMovement;
 
-                //anim.SetRunningAnimation();
+                anim.SetWalkToPlayerAnimation();
                 if (desiredVelocity.LengthSquared() > 0)
                 {
                     desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
@@ -209,7 +209,7 @@ public class EnemyControllerStalker : EnemyController
                     Invisibility();
                 }
 
-                // Puonce
+                // Pounce
                 if (distanceToPlayer < pounceRange && hasPounce && !isPouncing)
                 {
                     lictorMesh.SetActive(true);
@@ -231,7 +231,7 @@ public class EnemyControllerStalker : EnemyController
                 if (hurtboxTimer >= hurtboxActivationTime)
                 {
                     //CreateHurtbox();
-                    //anim.SetRandomAttackAnimation();
+                    anim.SetPiercingAnimation();
                     hurtboxTimer = 0f;
                     dodgeTimer = 0f;
                     dodgewindow = true;
@@ -295,7 +295,7 @@ public class EnemyControllerStalker : EnemyController
         if (currentHealth > 0)
         {
             currentHealth -= damage;
-            //anim.SetHitAnimation();
+            anim.SetStunnedAnimation();
             //particles.ApplyPreset(19);
             //particles.EmitBurst(1);
             Audio.PlayOneShot(SFX_HIT);
@@ -312,7 +312,7 @@ public class EnemyControllerStalker : EnemyController
         anticipationTimer += deltaTime;
         if (anticipationTimer < anticipationDuration)
         {
-            //anim.Anticipation
+            anim.SetCrossSlashAnimation();
             rb.SetVelocity(Vector3.Zero);
         }
         else if (anticipationTimer >= anticipationDuration)
@@ -321,6 +321,7 @@ public class EnemyControllerStalker : EnemyController
             isPouncing = true;
 
             Engineson.print("Pouncing");
+            anim.SetLeapAnimation();
             rb.SetVelocity(rb.GetVelocity() * 120f);
         }
         else

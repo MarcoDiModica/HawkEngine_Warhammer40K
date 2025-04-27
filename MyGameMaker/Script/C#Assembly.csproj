@@ -121,6 +121,7 @@
     <Compile Include="IPowerUp.cs" />
     <Compile Include="LaserBeam.cs" />
     <Compile Include="LaserBeamObject.cs" />
+    <Compile Include="LictorAnimation.cs" />
     <Compile Include="LocationTitle.cs" />
     <Compile Include="LoseScreen.cs" />
     <Compile Include="Magnet.cs" />

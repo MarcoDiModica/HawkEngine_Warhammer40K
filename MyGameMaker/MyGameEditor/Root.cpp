@@ -66,6 +66,9 @@ bool Root::CleanUp()
 bool Root::Start()
 {
 	
+	resourceManager->LoadResources(); // Esto no se mutea
+	resourceManager->CreateCube(); // Esto no se mutea
+
 	Application->scene_serializer->DeSerialize("Library/Scenes/BossFight_Alpha1_Release.scene");
 
 	
@@ -281,20 +284,25 @@ bool Root::Start()
 	//tyranidWarrior->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerWarrior");
 
 	//auto mawloc = CreateGameObject("Mawloc");
-	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));
+	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
 	//mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
-	//mawloc->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//auto mawlocMesh = CreateCube("MawlocMesh");
+	//mawloc->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0,36,0));
+	//mawloc->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(5, 3, 5));
+	//auto mawlocMesh = CreateGameObjectWithPath("Assets/Meshes/Mawloc.fbx");
+	//mawlocMesh->SetName("MawlocMesh");
+	//mawlocMesh->GetTransform()->SetScale(glm::vec3(0.035, 0.014, 0.035));
+	//mawlocMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//ParentGameObject(*mawlocMesh, *mawloc);
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	//auto mawlocTail = CreateGameObject("MawlocTail");
-	//mawlocTail->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));
+	//mawlocTail->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 5, 15));
 	//mawlocTail->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
-	//mawlocTail->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//mawlocTail->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//auto mawlocTailMesh = CreateCube("MawlocTailMesh");
+	//mawlocTail->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 0));
+	//auto mawlocTailMesh = CreateGameObjectWithPath("Assets/Meshes/MawlocTail.fbx");
+	//mawlocTailMesh->SetName("MawlocTailMesh");
 	//ParentGameObject(*mawlocTailMesh, *mawlocTail);
 	//mawlocTail->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBossTail");
 	

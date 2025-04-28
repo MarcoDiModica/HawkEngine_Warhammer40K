@@ -43,8 +43,8 @@ bool Root::Awake()
 	//resourceManager->LoadResources();
     SceneManagement = new SceneManager();
 	resourceManager = new ResourceManager();
-	/*Application->root->CreateScene("DefaultScene");
-	Application->root->SetActiveScene("DefaultScene");*/
+	Application->root->CreateScene("DefaultScene");
+	Application->root->SetActiveScene("DefaultScene");
 	
 	
 	ShaderManager::GetInstance().Initialize();

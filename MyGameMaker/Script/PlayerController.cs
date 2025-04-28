@@ -121,6 +121,21 @@ public class PlayerController : MonoBehaviour
             playerData.TakeDamage(10);
         }
 
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            SceneManager.LoadScene("Lvl2Alpha1Release");
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            SceneManager.LoadScene("BossFight_Alpha1_Release");
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            SceneManager.LoadScene("Lvl1Alpha1Release");
+        }
+
         if (Input.GetKeyDown(KeyCode.N))
         {
             playerData.AddHealth(10);

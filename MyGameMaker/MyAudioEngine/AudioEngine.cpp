@@ -108,11 +108,9 @@ int AudioEngine::PlaySound(const std::string& strSoundName, const glm::vec3& vPo
             pChannel->set3DAttributes(&position, nullptr);
         }
 
-        // Store the base volume
         float baseVolume = dbToVolume(fVolumedB);
         sgpImplementation->mChannelBaseVolumes[nChannelId] = baseVolume;
 
-        // Apply the master volume scaling
         pChannel->setVolume(baseVolume * sgpImplementation->masterVolume);
         pChannel->setPaused(false);
         sgpImplementation->mChannels[nChannelId] = pChannel;
@@ -126,10 +124,11 @@ void AudioEngine::StopSound(int nChannelId) {
 	if (tFoundIt == sgpImplementation->mChannels.end())
 		return;
 
-	tFoundIt->second->stop();
-	sgpImplementation->mChannels.erase(tFoundIt);
-
-    sgpImplementation->mChannelBaseVolumes.erase(nChannelId);
+	if (tFoundIt->second) {
+		tFoundIt->second->stop();
+		sgpImplementation->mChannels.erase(tFoundIt);
+		sgpImplementation->mChannelBaseVolumes.erase(nChannelId);
+	}
 }
 
 void AudioEngine::PauseSound(int nChannelId) {

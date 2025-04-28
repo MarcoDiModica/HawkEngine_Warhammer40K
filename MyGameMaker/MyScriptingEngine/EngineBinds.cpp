@@ -10,8 +10,6 @@
 #include "../MyGameEngine/InputEngine.h"
 #include "../MyGameEngine/Scene.h"
 #include "../MyPhysicsEngine/BoxColliderComponent.h"
-#include "../MyAudioEngine/SoundComponent.h"
-#include "ScriptComponent.h"
 #include <mono/metadata/debug-helpers.h>
 #include <MyPhysicsEngine/RigidBodyComponent.h>
 #include "../MyGameEditor/App.h"

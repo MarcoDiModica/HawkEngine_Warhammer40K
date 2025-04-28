@@ -99,23 +99,26 @@ int AudioManager::PlayOneShot(const std::string& path) {
 void AudioManager::Stop(int audioId) {
 	if (!audioEngine || audioId < 0) return;
 
+	if (idToPath.find(audioId) == idToPath.end()) return;
+
+	std::string path = idToPath[audioId];
+
 	audioEngine->StopSound(audioId);
 
-	if (idToPath.find(audioId) != idToPath.end()) {
-		std::string path = idToPath[audioId];
-		activeAudio.erase(path);
-		idToPath.erase(audioId);
+	activeAudio.erase(path);
+	idToPath.erase(audioId);
 
-		auto it = std::find(musicChannels.begin(), musicChannels.end(), audioId);
-		if (it != musicChannels.end()) {
-			musicChannels.erase(it);
-		}
-
-		it = std::find(sfxChannels.begin(), sfxChannels.end(), audioId);
-		if (it != sfxChannels.end()) {
-			sfxChannels.erase(it);
-		}
+	auto musicIt = std::find(musicChannels.begin(), musicChannels.end(), audioId);
+	if (musicIt != musicChannels.end()) {
+		musicChannels.erase(musicIt);
 	}
+
+	auto sfxIt = std::find(sfxChannels.begin(), sfxChannels.end(), audioId);
+	if (sfxIt != sfxChannels.end()) {
+		sfxChannels.erase(sfxIt);
+	}
+
+	isMusicTrack.erase(audioId);
 }
 
 void AudioManager::Stop(const std::string& path) {

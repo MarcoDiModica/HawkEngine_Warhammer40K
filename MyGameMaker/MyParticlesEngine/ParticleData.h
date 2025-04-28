@@ -220,6 +220,10 @@ public:
 	}
 
 	void UpdateAndRender(float deltaTime) {
+		if (vao == 0 || instanceVBO == 0 || vbo == 0 || ebo == 0) {
+			return;
+		}
+
 		std::vector<InstanceData> instances;
 		instances.reserve(activeParticles);
 
@@ -311,7 +315,7 @@ public:
 			instances.push_back(instance);
 		}
 
-		if (!instances.empty()) {
+		if (!instances.empty() && glIsBuffer(instanceVBO) && glIsVertexArray(vao)) {
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glDepthMask(GL_FALSE);

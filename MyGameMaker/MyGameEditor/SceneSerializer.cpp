@@ -11,7 +11,6 @@
 #include "MyGameEngine/CameraComponent.h"
 #include "MyGameEngine/LightComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
-#include "MyAudioEngine/SoundComponent.h"
 //#include "MyAudioEngine/AudioListener.h"
 #include "MyPhysicsEngine/BoxColliderComponent.h"
 #include "MyPhysicsEngine/RigidBodyComponent.h"

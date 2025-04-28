@@ -60,7 +60,6 @@
 #include "UIGameView.h"
 #include "External/Optick/include/optick.h"
 
-#include "MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
 #include "MyParticlesEngine/ParticleFX.h"
 #include "SDL2/SDL_timer.h"

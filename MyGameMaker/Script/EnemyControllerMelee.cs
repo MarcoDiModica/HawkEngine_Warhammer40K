@@ -384,6 +384,12 @@ public class EnemyControllerMelee : EnemyController
                 {
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
                 }
+                if (isFootstepPlaying)
+                {
+                    Audio.Stop(SFX_FOOTSTEP);
+                    isFootstepPlaying = false;
+                }
+
                 hasDropped = true;
                 collider.SetActive(false);
                 break;

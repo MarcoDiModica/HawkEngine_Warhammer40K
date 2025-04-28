@@ -25,7 +25,6 @@
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
 #include "../MyGameEngine/LightComponent.h"
-#include "../MyAudioEngine/SoundComponent.h"
 //#include "../MyAudioEngine/AudioListener.h"
 #include "../MyGameEditor/Log.h"
 #include "../MyGameEngine/CameraComponent.h"

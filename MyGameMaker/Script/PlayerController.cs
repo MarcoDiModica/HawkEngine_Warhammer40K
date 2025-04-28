@@ -425,8 +425,12 @@ public class PlayerController : MonoBehaviour
 
         if (!isFootstepPlaying || currentFootstep != newFootstep)
         {
-            Audio.Stop(Runfootsteps);
-            Audio.Stop(Walkfootsteps);
+            if (audioRun > 0) Audio.Stop(audioRun);
+            if (audioWalk > 0) Audio.Stop(audioWalk);
+
+            audioRun = 0;
+            audioWalk = 0;
+
             if (isRunning)
             {
                 audioRun = Audio.Play(Runfootsteps, true);
@@ -436,9 +440,9 @@ public class PlayerController : MonoBehaviour
                 audioWalk = Audio.Play(Walkfootsteps, true);
             }
 
-            isFootstepPlaying = true;
-            hasStoppedFootsteps = false;
-            currentFootstep = newFootstep; 
+            isFootstepPlaying = (audioRun > 0 || audioWalk > 0);
+            hasStoppedFootsteps = !isFootstepPlaying;
+            currentFootstep = newFootstep;
         }
     }
 
@@ -446,11 +450,14 @@ public class PlayerController : MonoBehaviour
     {
         if (isFootstepPlaying)
         {
-            Audio.Stop(audioRun);
-            Audio.Stop(audioWalk);
+            if (audioRun > 0) Audio.Stop(audioRun);
+            if (audioWalk > 0) Audio.Stop(audioWalk);
+
+            audioRun = 0;
+            audioWalk = 0;
             isFootstepPlaying = false;
             hasStoppedFootsteps = true;
-            currentFootstep = ""; 
+            currentFootstep = "";
         }
     }
 

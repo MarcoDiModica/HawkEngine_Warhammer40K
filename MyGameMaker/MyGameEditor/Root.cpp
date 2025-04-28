@@ -25,7 +25,6 @@
 #include "../MyUIEngine/UISliderComponent.h"
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 #include "../MyAnimationEngine/BoneComponent.h"
-#include "../MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
@@ -44,8 +43,8 @@ bool Root::Awake()
 	//resourceManager->LoadResources();
     SceneManagement = new SceneManager();
 	resourceManager = new ResourceManager();
-	Application->root->CreateScene("DefaultScene");
-	Application->root->SetActiveScene("DefaultScene");
+	/*Application->root->CreateScene("DefaultScene");
+	Application->root->SetActiveScene("DefaultScene");*/
 	
 	
 	ShaderManager::GetInstance().Initialize();
@@ -70,7 +69,7 @@ bool Root::Start()
 	resourceManager->CreateCube(); // Esto no se mutea
 
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");
 

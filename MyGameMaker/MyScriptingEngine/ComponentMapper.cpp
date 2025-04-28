@@ -4,7 +4,6 @@
 #include "../MyPhysicsEngine/BoxColliderComponent.h"
 #include "../MyGameEditor/Log.h" //QUITAR
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
-#include "../MyAudioEngine/SoundComponent.h"
 #include "../MyGameEngine/CameraComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UIButtonComponent.h"

@@ -6534,9 +6534,9 @@ GameObject10:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 493.92901611328125
+        - 74.862197875976562
         - -1.9956614971160889
-        - -80.591567993164062
+        - -86.05712890625
       localRotation:
         - 0
         - -0

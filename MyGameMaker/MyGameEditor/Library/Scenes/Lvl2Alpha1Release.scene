@@ -32,9 +32,9 @@ GameObject0:
         - 0.20000000298023224
         - 0.20000000298023224
       diffuse:
-        - 0.5
-        - 0.5
-        - 0.5
+        - 0.13156899809837341
+        - 0.21913899481296539
+        - 0.30739301443099976
       specular:
         - -0.20000000298023224
         - -1
@@ -45,7 +45,7 @@ GameObject0:
       radius: 1
       intensity: 3
       direction:
-        - -1
+        - 1
         - -1
         - 0
   Children: ~
@@ -45713,4 +45713,1358 @@ GameObject63:
         - -1
         - -1
         - 0
+  Children: ~
+GameObject64:
+  name: VFX
+  prefabPath: ""
+  uuid: 17482224137140240764
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+  Children:
+    - name: vfx
+      prefabPath: ""
+      uuid: 15715716185919378881
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -268.01849365234375
+            - 6.2905387878417969
+            - -56.578411102294922
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 0
+          emissionRate: 1
+          particlesPerSecond: 1
+          minLifetime: 1
+          maxLifetime: 1
+          minSpeed: 0
+          maxSpeed: 0
+          startSize: 3
+          endSize: 3
+          minSize: 1
+          maxSize: 1
+          startColor:
+            - 1
+            - 0
+            - 1
+          endColor:
+            - 1
+            - 0
+            - 1
+          startAlpha: 1
+          endAlpha: 1
+          rotationSpeed: 0
+          gravity:
+            - 0
+            - 0.00100000005
+            - 0
+          shapeParam1: 0.100000001
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: true
+          isPaused: false
+          burstEmitted: false
+          spriteSize:
+            - 144
+            - 174
+          useAnimation: true
+          animSpeed: 0.0500000007
+          startRotation: 0
+          randomRotation: false
+          material:
+            billboardType: 0
+            particleType: 16
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/Spark.png
+          particleType: 16
+      Children: ~
+GameObject65:
+  name: vfx_copy
+  prefabPath: ""
+  uuid: 1082915476484729580
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -355.23565673828125
+        - 6.3240671157836914
+        - -4.1376180648803711
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 3
+      endSize: 3
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 0
+        - 1
+      endColor:
+        - 1
+        - 0
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject66:
+  name: vfx_copy
+  prefabPath: ""
+  uuid: 8481962096969699699
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -218.08995056152344
+        - 6.8307061195373535
+        - -56.578411102294922
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 3
+      endSize: 3
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 0
+        - 1
+      endColor:
+        - 1
+        - 0
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject67:
+  name: vfx_copy
+  prefabPath: ""
+  uuid: 9181209612381988136
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -245.3001708984375
+        - 6.8307061195373535
+        - -56.578411102294922
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 3
+      endSize: 3
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 0
+        - 1
+      endColor:
+        - 1
+        - 0
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject68:
+  name: Light_2
+  prefabPath: ""
+  uuid: 7834064376252787929
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -266.32818603515625
+        - 5.6825051307678223
+        - -56.848899841308594
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    LightComponent:
+      name: LightComponent
+      enabled: true
+      light_type: 1
+      ambient:
+        - 0.69649803638458252
+        - 0.44510114192962646
+        - 0.2628805935382843
+      diffuse:
+        - 0.5
+        - 0.5
+        - 0.5
+      specular:
+        - -0.20000000298023224
+        - -1
+        - -0.30000001192092896
+      constant: 0
+      linear: 0.0900000036
+      quadratic: 0.0320000015
+      radius: 11
+      intensity: 3
+      direction:
+        - -1
+        - -1
+        - 0
+  Children: ~
+GameObject69:
+  name: Light_2_copy
+  prefabPath: ""
+  uuid: 4412794396380688284
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -212.93545532226562
+        - 5.6825051307678223
+        - -56.848899841308594
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    LightComponent:
+      name: LightComponent
+      enabled: true
+      light_type: 1
+      ambient:
+        - 0.69649803638458252
+        - 0.44510114192962646
+        - 0.2628805935382843
+      diffuse:
+        - 0.5
+        - 0.5
+        - 0.5
+      specular:
+        - -0.20000000298023224
+        - -1
+        - -0.30000001192092896
+      constant: 0
+      linear: 0.0900000036
+      quadratic: 0.0320000015
+      radius: 11
+      intensity: 3
+      direction:
+        - -1
+        - -1
+        - 0
+  Children: ~
+GameObject70:
+  name: Light_2_copy
+  prefabPath: ""
+  uuid: 1811210315532068354
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -244.23954772949219
+        - 5.6825051307678223
+        - -56.848899841308594
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    LightComponent:
+      name: LightComponent
+      enabled: true
+      light_type: 1
+      ambient:
+        - 0.69649803638458252
+        - 0.44510114192962646
+        - 0.2628805935382843
+      diffuse:
+        - 0.5
+        - 0.5
+        - 0.5
+      specular:
+        - -0.20000000298023224
+        - -1
+        - -0.30000001192092896
+      constant: 0
+      linear: 0.0900000036
+      quadratic: 0.0320000015
+      radius: 11
+      intensity: 3
+      direction:
+        - -1
+        - -1
+        - 0
+  Children: ~
+GameObject71:
+  name: DrippingWater_copy
+  prefabPath: ""
+  uuid: 15396317857994153877
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -146.78489685058594
+        - 12.167819023132324
+        - -3.0494115352630615
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 0.200000003
+      particlesPerSecond: 0.200000003
+      minLifetime: 3.5
+      maxLifetime: 4
+      minSpeed: 1
+      maxSpeed: 1.5
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1.5
+      startColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      endColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - -10
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 641
+        - 361
+      useAnimation: false
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 15
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/dropplet.png
+      particleType: 15
+  Children: ~
+GameObject72:
+  name: DrippingWater_copy
+  prefabPath: ""
+  uuid: 4157789524913151193
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -155.04920959472656
+        - 12.167819023132324
+        - -3.0494115352630615
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 0.200000003
+      particlesPerSecond: 0.200000003
+      minLifetime: 3.5
+      maxLifetime: 4
+      minSpeed: 1
+      maxSpeed: 1.5
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1.5
+      startColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      endColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - -10
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 641
+        - 361
+      useAnimation: false
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 15
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/dropplet.png
+      particleType: 15
+  Children: ~
+GameObject73:
+  name: DrippingWater_copy
+  prefabPath: ""
+  uuid: 2288675423889539784
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -153.070556640625
+        - 12.167819023132324
+        - -3.0494115352630615
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 0.200000003
+      particlesPerSecond: 0.200000003
+      minLifetime: 3.5
+      maxLifetime: 4
+      minSpeed: 1
+      maxSpeed: 1.5
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1.5
+      startColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      endColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - -10
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 641
+        - 361
+      useAnimation: false
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 15
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/dropplet.png
+      particleType: 15
+  Children: ~
+GameObject74:
+  name: DrippingWater_copy
+  prefabPath: ""
+  uuid: 14914845954595559317
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -209.601318359375
+        - 12.167819023132324
+        - -57.250690460205078
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 0.200000003
+      particlesPerSecond: 0.200000003
+      minLifetime: 3.5
+      maxLifetime: 4
+      minSpeed: 1
+      maxSpeed: 1.5
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1.5
+      startColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      endColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - -10
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 641
+        - 361
+      useAnimation: false
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 15
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/dropplet.png
+      particleType: 15
+  Children: ~
+GameObject75:
+  name: DrippingWater_copy
+  prefabPath: ""
+  uuid: 5424412555139865331
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -229.09237670898438
+        - 12.167819023132324
+        - -57.250690460205078
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 0.200000003
+      particlesPerSecond: 0.200000003
+      minLifetime: 3.5
+      maxLifetime: 4
+      minSpeed: 1
+      maxSpeed: 1.5
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1.5
+      startColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      endColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - -10
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 641
+        - 361
+      useAnimation: false
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 15
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/dropplet.png
+      particleType: 15
+  Children: ~
+GameObject76:
+  name: DrippingWater_copy
+  prefabPath: ""
+  uuid: 1457674614906980583
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -246.29295349121094
+        - 12.167819023132324
+        - -57.250690460205078
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 0.200000003
+      particlesPerSecond: 0.200000003
+      minLifetime: 3.5
+      maxLifetime: 4
+      minSpeed: 1
+      maxSpeed: 1.5
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1.5
+      startColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      endColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - -10
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 641
+        - 361
+      useAnimation: false
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 15
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/dropplet.png
+      particleType: 15
+  Children: ~
+GameObject77:
+  name: DrippingWater_copy
+  prefabPath: ""
+  uuid: 7782030422572976136
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -248.73312377929688
+        - 12.167819023132324
+        - -57.250690460205078
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 0.200000003
+      particlesPerSecond: 0.200000003
+      minLifetime: 3.5
+      maxLifetime: 4
+      minSpeed: 1
+      maxSpeed: 1.5
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1.5
+      startColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      endColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - -10
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 641
+        - 361
+      useAnimation: false
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 15
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/dropplet.png
+      particleType: 15
+  Children: ~
+GameObject78:
+  name: DrippingWater_copy
+  prefabPath: ""
+  uuid: 773877316942434048
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -310.54190063476562
+        - 12.167819023132324
+        - -57.250690460205078
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 0.200000003
+      particlesPerSecond: 0.200000003
+      minLifetime: 3.5
+      maxLifetime: 4
+      minSpeed: 1
+      maxSpeed: 1.5
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1.5
+      startColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      endColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - -10
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 641
+        - 361
+      useAnimation: false
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 15
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/dropplet.png
+      particleType: 15
+  Children: ~
+GameObject79:
+  name: DrippingWater_copy
+  prefabPath: ""
+  uuid: 8526640026001779318
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -338.275146484375
+        - 12.167819023132324
+        - -3.9133563041687012
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 0.200000003
+      particlesPerSecond: 0.200000003
+      minLifetime: 3.5
+      maxLifetime: 4
+      minSpeed: 1
+      maxSpeed: 1.5
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1.5
+      startColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      endColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - -10
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 641
+        - 361
+      useAnimation: false
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 15
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/dropplet.png
+      particleType: 15
+  Children: ~
+GameObject80:
+  name: DrippingWater_copy
+  prefabPath: ""
+  uuid: 5719752770073416812
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -350.20144653320312
+        - 12.167819023132324
+        - -3.9133563041687012
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 0.200000003
+      particlesPerSecond: 0.200000003
+      minLifetime: 3.5
+      maxLifetime: 4
+      minSpeed: 1
+      maxSpeed: 1.5
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1.5
+      startColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      endColor:
+        - 0.290196091
+        - 0.254901975
+        - 0.164705887
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - -10
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 641
+        - 361
+      useAnimation: false
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 15
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/dropplet.png
+      particleType: 15
+  Children: ~
+GameObject81:
+  name: vfx_copy_copy
+  prefabPath: ""
+  uuid: 9983883051310672977
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -154.87420654296875
+        - 6.3240671157836914
+        - -2.8326964378356934
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 3
+      endSize: 3
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 0
+        - 1
+      endColor:
+        - 1
+        - 0
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject82:
+  name: vfx_copy_copy
+  prefabPath: ""
+  uuid: 3075667942578418646
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -333.203369140625
+        - 6.3240671157836914
+        - -2.8326964378356934
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 3
+      endSize: 3
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 0
+        - 1
+      endColor:
+        - 1
+        - 0
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
   Children: ~

@@ -186,16 +186,22 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 
 		LOG(LogType::LOG_INFO, "Scene deserialized successfully: %s", sceneName.c_str());
 		Application->root->UpdateCameraPriority();
+		Application->physicsModule->ResetAllColliderTransforms();
+
 		return true;
 	}
 	catch (const YAML::Exception& e) {
 		LOG(LogType::LOG_ERROR, "YAML Exception during deserialization: %s", e.what());
 		Application->root->UpdateCameraPriority();
+		Application->physicsModule->ResetAllColliderTransforms();
+
 		return false;
 	}
 	catch (const std::exception& e) {
 		LOG(LogType::LOG_ERROR, "Exception during deserialization: %s", e.what());
 		Application->root->UpdateCameraPriority();
+		Application->physicsModule->ResetAllColliderTransforms();
+
 		return false;
 	}
 

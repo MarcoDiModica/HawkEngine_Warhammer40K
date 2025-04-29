@@ -69,7 +69,7 @@ bool Root::Start()
 	//resourceManager->CreateCube(); // Esto no se mutea
 
 
-	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl2Alpha1Release");
+	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl2Alpha1Release.scene");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");
 
@@ -469,127 +469,127 @@ bool Root::Start()
 
 	//PLAYER BUENO CON TODOS LOS SCRIPTS PORFA NO LO BORREIS
 
-	//auto player = CreateGameObject("Player");
-	//player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
-	//player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
-	//player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
-	//player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
-	//player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
-	//player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
-	//player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
-	//player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
-	//player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
-	//player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
-	//player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
-	//player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
-	//
-	////player->AddComponent<SoundComponent>()->LoadSound("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true, false);
-	//
-	//auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
-	//playerMesh->SetName("playerMesh");
-	//playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	//playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	//playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//ParentGameObject(*playerMesh, *player);
-	//playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	//player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
-	//player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
-	//player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
-	//player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
-	//player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-	////player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
-	//
-	//auto riffleShotFX = CreateGameObject("RiffleShotFX");
-	//riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
-	//ParentGameObject(*riffleShotFX, *player);
-	//riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
-	//riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
-	//
-	//auto findPlayer = FindGOByName("Player");
-	//
-	//auto shotgunShotFX = CreateGameObject("ShotgunShotFX");
-	//shotgunShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
-	//ParentGameObject(*shotgunShotFX, *findPlayer);
-	//shotgunShotFX->AddComponent<ParticleFX>()->ApplyPreset(20);
-	//shotgunShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
-	//
-	//auto speedboostFX = CreateGameObject("SpeedBoostFX");
-	//speedboostFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
-	//ParentGameObject(*speedboostFX, *player);
-	//speedboostFX->AddComponent<ParticleFX>()->ApplyPreset(21);
-	//speedboostFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
-	//
-	//auto ammunitioBlessingFX = CreateGameObject("AmmunitionBlessingFX");
-	//ammunitioBlessingFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
-	//ParentGameObject(*ammunitioBlessingFX, *findPlayer);
-	//ammunitioBlessingFX->AddComponent<ParticleFX>()->ApplyPreset(22);
-	//ammunitioBlessingFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
+	auto player = CreateGameObject("Player");
+	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
+	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
+	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
+	player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
+	player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
+	player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
+	player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
+	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
+	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
+	
+	//player->AddComponent<SoundComponent>()->LoadSound("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true, false);
+	
+	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
+	playerMesh->SetName("playerMesh");
+	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*playerMesh, *player);
+	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
+	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
+	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
+	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
+	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
+	//player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
+	
+	auto riffleShotFX = CreateGameObject("RiffleShotFX");
+	riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	ParentGameObject(*riffleShotFX, *player);
+	riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
+	riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+	
+	auto findPlayer = FindGOByName("Player");
+	
+	auto shotgunShotFX = CreateGameObject("ShotgunShotFX");
+	shotgunShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	ParentGameObject(*shotgunShotFX, *findPlayer);
+	shotgunShotFX->AddComponent<ParticleFX>()->ApplyPreset(20);
+	shotgunShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+	
+	auto speedboostFX = CreateGameObject("SpeedBoostFX");
+	speedboostFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
+	ParentGameObject(*speedboostFX, *player);
+	speedboostFX->AddComponent<ParticleFX>()->ApplyPreset(21);
+	speedboostFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
+	
+	auto ammunitioBlessingFX = CreateGameObject("AmmunitionBlessingFX");
+	ammunitioBlessingFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
+	ParentGameObject(*ammunitioBlessingFX, *findPlayer);
+	ammunitioBlessingFX->AddComponent<ParticleFX>()->ApplyPreset(22);
+	ammunitioBlessingFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
 
-	//auto railgunShotAutoFX = CreateGameObject("RailgunShotAutoFX");
-	//railgunShotAutoFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
-	//ParentGameObject(*railgunShotAutoFX, *findPlayer);
-	//railgunShotAutoFX->AddComponent<ParticleFX>()->ApplyPreset(13);
-	//railgunShotAutoFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+	auto railgunShotAutoFX = CreateGameObject("RailgunShotAutoFX");
+	railgunShotAutoFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	ParentGameObject(*railgunShotAutoFX, *findPlayer);
+	railgunShotAutoFX->AddComponent<ParticleFX>()->ApplyPreset(13);
+	railgunShotAutoFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
 
-	//auto railgunShotSemiFX = CreateGameObject("RailgunShotSemiFX");
-	//railgunShotSemiFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
-	//ParentGameObject(*railgunShotSemiFX, *findPlayer);
-	//railgunShotSemiFX->AddComponent<ParticleFX>()->ApplyPreset(14);
-	//railgunShotSemiFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
-	//
-	//auto inactiveDashFX = CreateGameObject("InactiveDashFX");
-	//inactiveDashFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
-	//ParentGameObject(*inactiveDashFX, *player);
-	//inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
-	//inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
-	//
-	//auto walkingFX = CreateGameObject("WalkingFX");
-	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
-	//ParentGameObject(*walkingFX, *player);
-	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	auto railgunShotSemiFX = CreateGameObject("RailgunShotSemiFX");
+	railgunShotSemiFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	ParentGameObject(*railgunShotSemiFX, *findPlayer);
+	railgunShotSemiFX->AddComponent<ParticleFX>()->ApplyPreset(14);
+	railgunShotSemiFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+	
+	auto inactiveDashFX = CreateGameObject("InactiveDashFX");
+	inactiveDashFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
+	ParentGameObject(*inactiveDashFX, *player);
+	inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
+	
+	auto walkingFX = CreateGameObject("WalkingFX");
+	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
+	ParentGameObject(*walkingFX, *player);
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 //	
 //	//ARMAS NO TOCAR
 //	
-//	auto boltgun = CreateGameObject("Boltgun");
-//	boltgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	auto boltgunMesh = CreateGameObjectWithPath("Assets/boltgun.fbx");
-//	boltgunMesh->SetName("boltgunMesh");
-//	boltgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
-//	boltgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-//	boltgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	ParentGameObject(*boltgunMesh, *boltgun);
-//
-//	auto shotgun = CreateGameObject("Shotgun");
-//	shotgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	auto shotgunMesh = CreateGameObjectWithPath("Assets/shotgun.fbx");
-//	shotgunMesh->SetName("shotgunMesh");
-//	shotgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
-//	shotgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-//	shotgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	ParentGameObject(*shotgunMesh, *shotgun);
-//
-//	auto railgun = CreateGameObject("Railgun");
-//	railgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	auto railgunMesh = CreateGameObjectWithPath("Assets/railgun.fbx");
-//	railgunMesh->SetName("railgunMesh");
-//	railgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
-//	railgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-//	railgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	ParentGameObject(*railgunMesh, *railgun);
-
+	auto boltgun = CreateGameObject("Boltgun");
+	boltgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	auto boltgunMesh = CreateGameObjectWithPath("Assets/boltgun.fbx");
+	boltgunMesh->SetName("boltgunMesh");
+	boltgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
+	boltgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	boltgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*boltgunMesh, *boltgun);
+	
+	auto shotgun = CreateGameObject("Shotgun");
+	shotgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	auto shotgunMesh = CreateGameObjectWithPath("Assets/shotgun.fbx");
+	shotgunMesh->SetName("shotgunMesh");
+	shotgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
+	shotgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	shotgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*shotgunMesh, *shotgun);
+	
+	auto railgun = CreateGameObject("Railgun");
+	railgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	auto railgunMesh = CreateGameObjectWithPath("Assets/railgun.fbx");
+	railgunMesh->SetName("railgunMesh");
+	railgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
+	railgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	railgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*railgunMesh, *railgun);
+	//
 	//auto railgunShotAutoFX = CreateGameObject("RailgunShotAutoFX");
 	//railgunShotAutoFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
 	//ParentGameObject(*railgunShotAutoFX, *findPlayer);
 	//railgunShotAutoFX->AddComponent<ParticleFX>()->ApplyPreset(13);
 	//railgunShotAutoFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
-
+	//
 	//auto railgunShotSemiFX = CreateGameObject("RailgunShotSemiFX");
 	//railgunShotSemiFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
 	//ParentGameObject(*railgunShotSemiFX, *findPlayer);

@@ -194,14 +194,14 @@ bool Root::Start()
 	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Level1SundayDelivery.Scene");
 
-	auto objMainCamera = CreateCameraObject("MainCamera");
-	objMainCamera->GetTransform()->SetPosition(glm::dvec3(-14, 20, 14.0f));
-	objMainCamera->GetTransform()->SetRotation(glm::dvec3(glm::radians(-130.0), glm::radians(45.0), glm::radians(180.0)));
-	auto camera = objMainCamera->AddComponent<CameraComponent>();
-	camera->priority = 1;
-	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
-	mainCamera = objMainCamera;
-	UpdateCameraPriority();
+	//auto objMainCamera = CreateCameraObject("MainCamera");
+	//objMainCamera->GetTransform()->SetPosition(glm::dvec3(-14, 20, 14.0f));
+	//objMainCamera->GetTransform()->SetRotation(glm::dvec3(glm::radians(-130.0), glm::radians(45.0), glm::radians(180.0)));
+	//auto camera = objMainCamera->AddComponent<CameraComponent>();
+	//camera->priority = 1;
+	//objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+	//mainCamera = objMainCamera;
+	//UpdateCameraPriority();
 
 	//particle->ApplyPreset(Particle)
 

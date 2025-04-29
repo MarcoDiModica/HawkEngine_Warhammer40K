@@ -1,6 +1,6 @@
 name: Canvas_Interaction
 prefabPath: Assets\Prefabs\Canvas_Interaction.prefab.yaml
-uuid: 6416124135808051210
+uuid: 8171758255955888501
 tag: Untagged
 active: true
 isStatic: false
@@ -163,9 +163,9 @@ Children:
     Children: ~
   - name: InteractText
     prefabPath: ""
-    uuid: 6428904762128253018
+    uuid: 17748583486189563171
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
     Components:
       Transform_Component:
@@ -188,7 +188,7 @@ Children:
         enabled: true
         position:
           - 0.5
-          - 0.717999995
+          - 0.5
           - 0
         rotation:
           - 0

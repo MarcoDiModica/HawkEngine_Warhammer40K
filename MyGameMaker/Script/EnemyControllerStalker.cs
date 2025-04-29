@@ -108,7 +108,7 @@ public class EnemyControllerStalker : EnemyController
             if (currentHealth <= 0)
             {
                 currentState = EnemyState.DEAD;
-                //anim.SetDefeatAnimation();
+                anim.SetDefeatAnimation();
                 Audio.PlayOneShot(SFX_DEATH);
                 return;
             }

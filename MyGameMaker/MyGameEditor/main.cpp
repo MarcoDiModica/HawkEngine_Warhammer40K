@@ -711,7 +711,7 @@ static void RenderEditor()
 			if (object->HasComponent<UICanvasComponent>()) {
 				continue;
 			}
-			object->Update(FIXED_TIME_STEP);
+			object->Update(static_cast<float>(Application->GetDt()));
 			
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;

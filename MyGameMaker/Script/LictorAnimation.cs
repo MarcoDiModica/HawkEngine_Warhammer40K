@@ -19,7 +19,6 @@ public class LictorAnimation : MonoBehaviour
             Engineson.print("ERROR: LictorAnimation requires a SkeletalAnimation component!");
             return;
         }
-        animIndex = lictorAnimation.GetAnimationIndex();
     }
     public override void Update(float deltaTime)
     {

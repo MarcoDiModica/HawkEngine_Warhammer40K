@@ -127,6 +127,8 @@ public class EnemyControllerBoss : EnemyController
     {
         if (!isDead)
         {
+            if (!isDead)
+            {
                 float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
                 if (playerTransform != null)
@@ -294,6 +296,7 @@ public class EnemyControllerBoss : EnemyController
 
                 UpdateMetalSlide(deltaTime);
             }
+
             if (isDead)
             {
                 collider.SetActive(false);
@@ -303,6 +306,8 @@ public class EnemyControllerBoss : EnemyController
                 //    isCombatMusicPlaying = false;
                 //}
             }
+
+        }
     }
 
     override public void OnCollisionEnter(GameObject other)

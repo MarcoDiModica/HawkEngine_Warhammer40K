@@ -113,21 +113,9 @@ public class PlayerShooting : MonoBehaviour
         shotgunMesh = GameObject.Find("Shotgun");
         railgunMesh = GameObject.Find("Railgun");
 
-        if (shotgunMesh != null)
-        {
-            Engineson.print("Fallo por las putas meshes.");
-            shotgunMesh.SetActive(false);
-        }
-        if (railgunMesh != null)
-        {
-            Engineson.print("Fallo por las putas meshes.");
-            railgunMesh.SetActive(false);
-        }
-        if (boltgunMesh != null)
-        {
-            Engineson.print("Fallo por las putas meshes.");
-            boltgunMesh.SetActive(true);
-        }
+        shotgunMesh.SetActive(false);
+        railgunMesh.SetActive(false);
+        boltgunMesh.SetActive(true);
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
 
@@ -167,7 +155,7 @@ public class PlayerShooting : MonoBehaviour
 
         if (playerInput.IsChangingRailgunMode() && currentGun == GunType.RAILGUN)
         {
-            railgun?.ChangeMode();
+            railgun.ChangeMode();
         }
 
         if (playerInput?.IsShooting() == true)
@@ -240,19 +228,19 @@ public class PlayerShooting : MonoBehaviour
             switch (currentGun)
             {
                 case GunType.BOLTGUN:
-                    boltgun?.Shoot();
+                    boltgun.Shoot();
                     shotgunShotFX.Stop();
                     railgunShotAutoFX.Stop();
                     railgunShotSemiFX.Stop();
                     break;
                 case GunType.SHOTGUN:
-                    shotgun?.Shoot();
+                    shotgun.Shoot();
                     rifleShotFX.Stop();
                     railgunShotAutoFX.Stop();
                     railgunShotSemiFX.Stop();
                     break;
                 case GunType.RAILGUN:
-                    railgun?.Shoot();
+                    railgun.Shoot();
                     break;
             }
 
@@ -272,10 +260,10 @@ public class PlayerShooting : MonoBehaviour
         switch (currentGun)
         {
             case GunType.BOLTGUN:
-                boltgun?.Reload();
+                boltgun.Reload();
                 break;
             case GunType.SHOTGUN:
-                shotgun?.Reload();
+                shotgun.Reload();
                 break;
             case GunType.RAILGUN:
                 
@@ -341,25 +329,25 @@ public class PlayerShooting : MonoBehaviour
             case GunType.BOLTGUN:
                 shootCooldown = 1f / boltgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
-                shotgunMesh?.SetActive(false);
-                boltgunMesh?.SetActive(true);
-                railgunMesh?.SetActive(false);
+                shotgunMesh.SetActive(false);
+                boltgunMesh.SetActive(true);
+                railgunMesh.SetActive(false);
                 int audio = Audio.PlayOneShot(boltgunEquiped);
                 break;
             case GunType.SHOTGUN:
                 shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
-                shotgunMesh?.SetActive(true);
-                boltgunMesh?.SetActive(false);
-                railgunMesh?.SetActive(false);
+                shotgunMesh.SetActive(true);
+                boltgunMesh.SetActive(false);
+                railgunMesh.SetActive(false);
                 int audioo = Audio.PlayOneShot(shotgunEquiped);
                 break;
             case GunType.RAILGUN:
                 shootCooldown = 1f / railgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
-                shotgunMesh?.SetActive(false);
-                boltgunMesh?.SetActive(false);
-                railgunMesh?.SetActive(true);
+                shotgunMesh.SetActive(false);
+                boltgunMesh.SetActive(false);
+                railgunMesh.SetActive(true);
                 int audiooo = Audio.PlayOneShot(railgunEquiped);
                 break;
         }
@@ -437,7 +425,7 @@ public class PlayerShooting : MonoBehaviour
                 {
                     redThirstManager.OnAbilityUsed();
                 }
-                boltgun?.UseAbility1();
+                boltgun.UseAbility1();
 
                 break;
             case GunType.SHOTGUN:
@@ -446,10 +434,10 @@ public class PlayerShooting : MonoBehaviour
                     redThirstManager.OnAbilityUsed();
                     redThirstManager.AddRedThirstPoint(1);
                 }
-                shotgun?.UseAbility1();
+                shotgun.UseAbility1();
                 break;
             case GunType.RAILGUN:
-                railgun?.UseAbility1();
+                railgun.UseAbility1();
                 break;
         }
     }
@@ -464,7 +452,7 @@ public class PlayerShooting : MonoBehaviour
                     {
                         redThirstManager.OnAbilityUsed();
                     }
-                    boltgun?.UseAbility2();
+                    boltgun.UseAbility2();
                 
                
                 break;
@@ -475,7 +463,7 @@ public class PlayerShooting : MonoBehaviour
                     {
                         redThirstManager.OnAbilityUsed();
                     }
-                    shotgun?.UseAbility2();
+                    shotgun.UseAbility2();
                 
                
                 break;
@@ -484,7 +472,7 @@ public class PlayerShooting : MonoBehaviour
                 {
                     redThirstManager.OnAbilityUsed();
                 }
-                railgun?.UseAbility2();
+                railgun.UseAbility2();
                 break;
         }
      }

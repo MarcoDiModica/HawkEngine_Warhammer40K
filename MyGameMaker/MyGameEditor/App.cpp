@@ -145,6 +145,7 @@ bool App::PerformFixedUpdate() {
 		if (!module->active) continue;
 		if (!module->FixedUpdate()) return false;
 	}
+	physicsModule->Update(m_deltaTime);
 	return true;
 }
 
@@ -176,7 +177,6 @@ bool App::DoUpdate() {
 		if (hasChangedScene) break;
 	}
 
-	physicsModule->Update(m_deltaTime);
 	AudioManager::Update(m_deltaTime);
 
 	return true;

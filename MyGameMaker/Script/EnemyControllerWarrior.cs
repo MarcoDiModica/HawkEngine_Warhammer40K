@@ -248,6 +248,7 @@ public class EnemyControllerWarrior : EnemyController
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
                 }
                 hasDropped = true;
+                collider.SetActive(false);
                 break;
             default:
                 break;

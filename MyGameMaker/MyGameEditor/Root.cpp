@@ -69,7 +69,7 @@ bool Root::Start()
 	//resourceManager->CreateCube(); // Esto no se mutea
 
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl2Alpha1Release.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");
 

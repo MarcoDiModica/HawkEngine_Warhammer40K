@@ -191,16 +191,16 @@ GameObject4:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -126.74056243896484
-        - 233.0799560546875
-        - -3.1548423767089844
+        - 823.67877197265625
+        - 233.07994079589844
+        - -161.10749816894531
       localRotation:
-        - 92.203909618865353
-        - 6.3566040040217509
-        - -2.719320499174092
+        - 92.203909660089181
+        - 6.3566021853886028
+        - -2.7193205317596134
       localScale:
         - 0.99999982118606567
-        - 1
+        - 1.0000001192092896
         - 1
     CameraComponent:
       name: CameraComponent
@@ -3466,9 +3466,9 @@ GameObject8:
             - 272.2530517578125
             - -2896.18505859375
           localRotation:
-            - 90.000218891421454
-            - 81.353824920624092
-            - -179.99985645503051
+            - 90.000211846368103
+            - 81.353791798398746
+            - -179.99987206218444
           localScale:
             - 54.190948486328125
             - 54.182174682617188
@@ -3513,9 +3513,9 @@ GameObject8:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.999818388755415
-            - 81.207658114293253
-            - 179.9999142935668
+            - 89.999828670675939
+            - 81.207670108858252
+            - 179.99992628807178
           localScale:
             - 41.956031799316406
             - 53.921909332275391
@@ -3842,9 +3842,9 @@ GameObject8:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.999233953302692
-            - -89.929513332177322
-            - -179.99004051705566
+            - 89.999156755031279
+            - -89.930023918586784
+            - -179.98997014897461
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -3936,9 +3936,9 @@ GameObject8:
             - 251.15873718261719
             - 31.643280029296875
           localRotation:
-            - -89.999961946625547
-            - -69.579753576640812
-            - -2.9378261350301554e-05
+            - -89.99997331476726
+            - -69.579731798411544
+            - -2.1480164719884662e-05
           localScale:
             - 41.829475402832031
             - 54.090396881103516
@@ -4501,9 +4501,9 @@ GameObject8:
             - 72.816131591796875
             - 381.2847900390625
           localRotation:
-            - -90.000181498260375
-            - -82.523170442382707
-            - 1.8234699104566091e-06
+            - -90.000181498723933
+            - -82.523163076591089
+            - 1.8239280906533197e-06
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -4686,9 +4686,9 @@ GameObject8:
             - 10.265288352966309
             - 35.527149200439453
           localRotation:
-            - 179.99999134857688
-            - -76.519732943655455
-            - 9.3905650682760314e-06
+            - 179.9999913485791
+            - -76.519714800115565
+            - 9.3905639976852311e-06
           localScale:
             - 59.934871673583984
             - 59.934871673583984
@@ -5056,9 +5056,9 @@ GameObject8:
             - 22.606166839599609
             - 3579.35595703125
           localRotation:
-            - -5.9453740498823704e-06
+            - -5.9453714312953613e-06
             - 81.871306785017907
-            - -179.99999134858007
+            - -179.99999134857458
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -5167,9 +5167,9 @@ GameObject8:
             - 22.607597351074219
             - -2101.2529296875
           localRotation:
-            - -179.99999134857288
-            - 84.241575839430283
-            - 2.1271352770344651e-05
+            - -179.99999134858396
+            - 84.241616660938121
+            - 2.1271357299730072e-05
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -5352,9 +5352,9 @@ GameObject8:
             - 25.519546508789062
             - 4978.10498046875
           localRotation:
-            - -178.90000292803444
-            - -42.829352319615523
-            - 7.0989823302224353e-07
+            - -178.90000302365499
+            - -42.829352318130191
+            - 6.614268107939679e-07
           localScale:
             - 59.934867858886719
             - 59.934867858886719
@@ -5426,9 +5426,9 @@ GameObject8:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.100006097889374
-            - -81.281067029404227
-            - -179.9999918275162
+            - 1.1000070861634728
+            - -81.281067090984905
+            - -179.99999183196172
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -5648,9 +5648,9 @@ GameObject8:
             - 72.844886779785156
             - -433.8204345703125
           localRotation:
-            - -90.000326283058499
-            - 86.122344585301207
-            - -0.00022889711055917346
+            - -90.000326284036589
+            - 86.122351419361848
+            - -0.00022889808866106306
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -5722,9 +5722,9 @@ GameObject8:
             - 72.841934204101562
             - 4891.78173828125
           localRotation:
-            - 90.000001130064106
-            - -71.981834874280722
-            - 179.99999022555826
+            - 89.99999421455648
+            - -71.98181532541571
+            - 179.99998331006103
           localScale:
             - 59.934864044189453
             - 59.934864044189453
@@ -6092,9 +6092,9 @@ GameObject8:
             - 72.838882446289062
             - 742.7088623046875
           localRotation:
-            - -90.00006948186774
-            - -82.668038632501023
-            - -1.6070559165231286e-05
+            - -90.000056984542425
+            - -82.668045996639336
+            - -3.0278931708182398e-05
           localScale:
             - 59.934871673583984
             - 59.934871673583984
@@ -6388,9 +6388,9 @@ GameObject8:
             - 72.843742370605469
             - 3853.178466796875
           localRotation:
-            - 90.000020809606255
-            - -72.126743206251646
-            - 179.99998783304548
+            - 90.000025441449353
+            - -72.126743760011635
+            - 179.99998147267215
           localScale:
             - 59.934864044189453
             - 59.934864044189453
@@ -6758,9 +6758,9 @@ GameObject8:
             - 72.816177368164062
             - 17.716598510742188
           localRotation:
-            - -90.000181498260375
-            - -82.523170442382707
-            - 1.8234699104566091e-06
+            - -90.000181498723933
+            - -82.523163076591089
+            - 1.8239280906533197e-06
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -7054,9 +7054,9 @@ GameObject8:
             - 57.826042175292969
             - -2789.2763671875
           localRotation:
-            - 90.000016527795822
-            - 76.122108697441746
-            - 179.99999760618309
+            - 90.000029615299937
+            - 76.122116624509971
+            - 179.99999865266136
           localScale:
             - 31.964662551879883
             - 31.964662551879883
@@ -7202,9 +7202,9 @@ GameObject8:
             - 84.565017700195312
             - -2861.126708984375
           localRotation:
-            - -90.005946970655131
-            - -89.742131019316105
-            - 0.0031602464149952628
+            - -90.005569951708054
+            - -89.742665357861753
+            - 0.0027883501642068337
           localScale:
             - 43.324672698974609
             - 43.324672698974609
@@ -7276,9 +7276,9 @@ GameObject8:
             - 60.107398986816406
             - 545.6107177734375
           localRotation:
-            - -10.799292997073634
-            - 6.8373587975112775
-            - -1.3541883376762323
+            - -10.799293010066563
+            - 6.8373600943631034
+            - -1.3541882995265799
           localScale:
             - 24.36241340637207
             - 24.36241340637207
@@ -7313,9 +7313,9 @@ GameObject8:
             - 47.50750732421875
             - 561.61212158203125
           localRotation:
-            - 178.20561853230134
-            - 0.51393294924289956
-            - 3.0764749713408204
+            - 178.20561853439446
+            - 0.51393295597640076
+            - 3.0764753980351855
           localScale:
             - 24.362417221069336
             - 24.36241340637207
@@ -7424,9 +7424,9 @@ GameObject8:
             - 148.99980163574219
             - 222.72898864746094
           localRotation:
-            - -15.158006721752129
-            - -65.712729558661451
-            - -74.316805664969777
+            - -15.158007319902184
+            - -65.712721843277919
+            - -74.31680329619185
           localScale:
             - 24.540990829467773
             - 24.540992736816406
@@ -11104,7 +11104,7 @@ GameObject15:
             - 100.77371215820312
           localRotation:
             - 0
-            - 72.386719167356915
+            - 72.386732496616304
             - 0
           localScale:
             - 49.251850128173828
@@ -12200,9 +12200,9 @@ GameObject19:
       Script0:
         name: AmmunitionBlessing
         fields:
-          floatSpeed: 0.870048344
+          floatSpeed: 0.846934438
           floatHeight: 0.5
-          rotationSpeed: 51.2288322
+          rotationSpeed: 87.3914795
           lifeTime: 10
   Children: ~
 GameObject20:
@@ -12256,9 +12256,9 @@ GameObject20:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.6459285
+          floatSpeed: 0.982862532
           floatHeight: 0.5
-          rotationSpeed: 92.6556473
+          rotationSpeed: 50.6451149
   Children: ~
 GameObject21:
   name: heart_1_1_Instance_Instance
@@ -12336,9 +12336,9 @@ GameObject21:
       Script0:
         name: BlackHeart
         fields:
-          floatSpeed: 1.98425817
+          floatSpeed: 1.75789952
           floatHeight: 0.5
-          rotationSpeed: 79.5011444
+          rotationSpeed: 34.9124336
           lifeTime: 10
   Children: ~
 GameObject22:
@@ -12417,9 +12417,9 @@ GameObject22:
       Script0:
         name: BoltgunBullets
         fields:
-          floatSpeed: 1.90739143
+          floatSpeed: 0.567739069
           floatHeight: 0.5
-          rotationSpeed: 65.137764
+          rotationSpeed: 39.4348946
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -12499,9 +12499,9 @@ GameObject23:
       Script0:
         name: ShotgunShells
         fields:
-          floatSpeed: 1.12465441
+          floatSpeed: 1.17428148
           floatHeight: 0.5
-          rotationSpeed: 51.7469254
+          rotationSpeed: 42.7275238
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -12581,9 +12581,9 @@ GameObject24:
       Script0:
         name: ChapterStandard
         fields:
-          floatSpeed: 1.60268855
+          floatSpeed: 0.943885505
           floatHeight: 0.5
-          rotationSpeed: 49.4428787
+          rotationSpeed: 55.0757179
           lifeTime: 10
   Children: ~
 GameObject25:
@@ -12662,9 +12662,9 @@ GameObject25:
       Script0:
         name: MedicaeStimm
         fields:
-          floatSpeed: 0.700614929
+          floatSpeed: 1.18258095
           floatHeight: 0.5
-          rotationSpeed: 39.3954353
+          rotationSpeed: 31.1120491
           lifeTime: 10
   Children: ~
 GameObject26:
@@ -12743,9 +12743,9 @@ GameObject26:
       Script0:
         name: PiercingBullets
         fields:
-          floatSpeed: 1.34657812
+          floatSpeed: 1.74045539
           floatHeight: 0.5
-          rotationSpeed: 33.5253944
+          rotationSpeed: 62.9557266
   Children: ~
 GameObject27:
   name: magnet.001_1_1_Instance_Instance
@@ -12823,9 +12823,9 @@ GameObject27:
       Script0:
         name: Magnet
         fields:
-          floatSpeed: 0.512987435
+          floatSpeed: 1.69182956
           floatHeight: 0.5
-          rotationSpeed: 49.3690033
+          rotationSpeed: 57.5887337
           lifeTime: 10
   Children: ~
 GameObject28:
@@ -13529,17 +13529,17 @@ GameObject28:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 808.08905029296875
+            - 808.0906982421875
             - 1615.8037109375
-            - 1529.1826171875
+            - 1529.1820068359375
           localRotation:
-            - -90.000017933061088
-            - 18.485587952788485
-            - 8.0850870755209794
+            - -90.000027845274388
+            - 18.485587422435021
+            - 8.0850866827516956
           localScale:
             - 100
-            - 99.999992370605469
             - 100
+            - 100.00000762939453
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -14310,9 +14310,9 @@ GameObject28:
             - 451.7078857421875
             - 9679.166015625
           localRotation:
-            - 89.999983209705363
-            - 73.086970170615672
-            - 179.99999356760304
+            - 89.999974814588398
+            - 73.086972913931362
+            - 179.99999035143418
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -14461,43 +14461,6 @@ GameObject28:
             - -90.000011441638222
             - 57.521980912215554
             - -7.7061823542381289e-07
-          localScale:
-            - 100
-            - 100
-            - 100
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 132662602734768362
-          material:
-            name: Mountain2_Base_color
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: MarcoMountain4
-      prefabPath: ""
-      uuid: 1588361673359088064
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -4966.025390625
-            - 2398.265869140625
-            - -1226.420654296875
-          localRotation:
-            - -90.000009924250904
-            - -15.274877336563861
-            - 1.3307785814159687e-06
           localScale:
             - 100
             - 100
@@ -14897,100 +14860,6 @@ GameObject28:
             - 0
           isTrigger: false
       Children: ~
-    - name: Cone.006_copy_copy_copy_copy_copy_copy
-      prefabPath: ""
-      uuid: 10764020124957947958
-      tag: Collider
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -6817.9033203125
-            - 1107.3804931640625
-            - 15518.7666015625
-          localRotation:
-            - -90.000025662648483
-            - 36.243400395429539
-            - -7.7599953094073803e-07
-          localScale:
-            - 22.163785934448242
-            - 22.163787841796875
-            - 22.163793563842773
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13840198694271013347
-          material:
-            name: Abeto_Low_1001_BaseColor
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        BoxColliderComponent:
-          size:
-            - 1
-            - 1
-            - 1
-          offset:
-            - 0
-            - 0
-            - 0
-          isTrigger: false
-      Children: ~
-    - name: Cone.006_copy_copy_copy_copy_copy_copy_1
-      prefabPath: ""
-      uuid: 586786323196309088
-      tag: Collider
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -6835.9619140625
-            - 1107.3804931640625
-            - 14818.5107421875
-          localRotation:
-            - -90.000025662648483
-            - 36.243400395429539
-            - -7.7599953094073803e-07
-          localScale:
-            - 22.163785934448242
-            - 22.163787841796875
-            - 22.163793563842773
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13840198694271013347
-          material:
-            name: Abeto_Low_1001_BaseColor
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        BoxColliderComponent:
-          size:
-            - 1
-            - 1
-            - 1
-          offset:
-            - 0
-            - 0
-            - 0
-          isTrigger: false
-      Children: ~
     - name: Cone.006_copy_copy_copy_copy_copy_copy_2
       prefabPath: ""
       uuid: 14436881303382538028
@@ -15052,100 +14921,6 @@ GameObject28:
             - -4636.0771484375
             - 1107.3804931640625
             - 13039.541015625
-          localRotation:
-            - -90.000025662648483
-            - 36.243400395429539
-            - -7.7599953094073803e-07
-          localScale:
-            - 22.163785934448242
-            - 22.163787841796875
-            - 22.163793563842773
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13840198694271013347
-          material:
-            name: Abeto_Low_1001_BaseColor
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        BoxColliderComponent:
-          size:
-            - 1
-            - 1
-            - 1
-          offset:
-            - 0
-            - 0
-            - 0
-          isTrigger: false
-      Children: ~
-    - name: Cone.006_copy_copy_copy_copy_copy_copy_4
-      prefabPath: ""
-      uuid: 6912424694921096696
-      tag: Collider
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -3870.920166015625
-            - 1107.3804931640625
-            - 16263.4130859375
-          localRotation:
-            - -90.000025662648483
-            - 36.243400395429539
-            - -7.7599953094073803e-07
-          localScale:
-            - 22.163785934448242
-            - 22.163787841796875
-            - 22.163793563842773
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13840198694271013347
-          material:
-            name: Abeto_Low_1001_BaseColor
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        BoxColliderComponent:
-          size:
-            - 1
-            - 1
-            - 1
-          offset:
-            - 0
-            - 0
-            - 0
-          isTrigger: false
-      Children: ~
-    - name: Cone.006_copy_copy_copy_copy_copy_copy_5
-      prefabPath: ""
-      uuid: 17436911172913327901
-      tag: Collider
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -5290.068359375
-            - 1107.3804931640625
-            - 17198.306640625
           localRotation:
             - -90.000025662648483
             - 36.243400395429539
@@ -15718,53 +15493,6 @@ GameObject28:
             - 22.163785934448242
             - 22.163787841796875
             - 22.163793563842773
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13840198694271013347
-          material:
-            name: Abeto_Low_1001_BaseColor
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        BoxColliderComponent:
-          size:
-            - 1
-            - 1
-            - 1
-          offset:
-            - 0
-            - 0
-            - 0
-          isTrigger: false
-      Children: ~
-    - name: Cone.006_copy_copy_copy_copy_copy_copy_18
-      prefabPath: ""
-      uuid: 17123215390354766759
-      tag: Collider
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -4522.62841796875
-            - 1107.3804931640625
-            - 16727.232421875
-          localRotation:
-            - 90.000077249068681
-            - 82.929655638175618
-            - -179.99988340246887
-          localScale:
-            - 22.163785934448242
-            - 22.163785934448242
-            - 22.163791656494141
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -16856,6 +16584,117 @@ GameObject28:
           name: Shader
           enabled: true
       Children: ~
+    - name: MarcoMountain4
+      prefabPath: ""
+      uuid: 1588361673359088064
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -4966.025390625
+            - 2398.265869140625
+            - -1226.420654296875
+          localRotation:
+            - -90.000009924250904
+            - -15.274877336563861
+            - 1.3307785814159687e-06
+          localScale:
+            - 100
+            - 100
+            - 100
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 132662602734768362
+          material:
+            name: Mountain2_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: MarcoMountain4_copy
+      prefabPath: ""
+      uuid: 16121241705044135695
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -5327.07763671875
+            - 1037.3509521484375
+            - 15697.818359375
+          localRotation:
+            - -90.000011195518482
+            - -44.023690045830236
+            - 1.9212732899542094e-06
+          localScale:
+            - 25.817035675048828
+            - 33.019996643066406
+            - 21.932464599609375
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 132662602734768362
+          material:
+            name: Mountain2_Base_color
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cylinder.025_copy
+      prefabPath: ""
+      uuid: 17343623353999372801
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -6346.25048828125
+            - 636.24053955078125
+            - 15865.8935546875
+          localRotation:
+            - -88.591400163869835
+            - -15.199745470572456
+            - 174.81376044390043
+          localScale:
+            - 67.678825378417969
+            - 67.678810119628906
+            - 67.678871154785156
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 8941180747417512943
+          material:
+            name: Alas_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
 GameObject29:
   name: Colliders_Z3_Folder
   prefabPath: ""
@@ -17160,7 +16999,7 @@ GameObject29:
             - -160.05094909667969
           localRotation:
             - 0
-            - 63.749229862193133
+            - 63.749226666872545
             - 0
           localScale:
             - 24.358108520507812
@@ -17358,7 +17197,7 @@ GameObject29:
             - -72.031135559082031
           localRotation:
             - 0
-            - -69.383040276432098
+            - -69.383029236251048
             - 0
           localScale:
             - 12.133749961853027
@@ -18248,9 +18087,9 @@ GameObject29:
             - 3.0124197006225586
             - -194.1514892578125
           localRotation:
-            - 179.99999499104624
-            - 87.96954795149837
-            - 179.99999499104624
+            - 179.99999499104948
+            - 87.96957693443774
+            - 179.99999499104948
           localScale:
             - 12.215158462524414
             - 7.4319052696228027
@@ -18730,7 +18569,7 @@ GameObject29:
       Children: ~
     - name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
       prefabPath: ""
-      uuid: 8161909522528303620
+      uuid: 12766930563084990813
       tag: Collider
       active: true
       isStatic: false
@@ -18739,17 +18578,149 @@ GameObject29:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 822.12896728515625
-            - 1.2081092596054077
-            - -62.528598785400391
+            - 829.38720703125
+            - 1.2081156969070435
+            - -55.817245483398438
           localRotation:
             - 0
-            - -21.35139940134362
+            - 27.578277987989303
             - 0
           localScale:
-            - 3.3572938442230225
+            - 7.4016027450561523
             - 5.8383088111877441
-            - 3.9164674282073975
+            - 5.2143316268920898
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 3570899998928022430
+      tag: Collider
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 816.8477783203125
+            - 1.5306974649429321
+            - -60.820899963378906
+          localRotation:
+            - -176.28149980221059
+            - -38.76761644392878
+            - 178.72117519079066
+          localScale:
+            - 10.497458457946777
+            - 5.8383088111877441
+            - 5.2143325805664062
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 9946921070517457688
+      tag: Collider
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 826.5224609375
+            - 1.2081160545349121
+            - -53.863235473632812
+          localRotation:
+            - 0
+            - 36.841802110741121
+            - 0
+          localScale:
+            - 7.4016017913818359
+            - 5.8383088111877441
+            - 5.2143292427062988
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 8540239565070804591
+      tag: Collider
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 822.14141845703125
+            - 1.2081161737442017
+            - -52.801006317138672
+          localRotation:
+            - 0
+            - -10.845834899561257
+            - 0
+          localScale:
+            - 7.4016027450561523
+            - 5.8383088111877441
+            - 5.2143292427062988
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 2861681063998796968
+      tag: Collider
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 816.670166015625
+            - 1.2081162929534912
+            - -55.236618041992188
+          localRotation:
+            - 0
+            - -37.5623711301429
+            - 0
+          localScale:
+            - 7.4016027450561523
+            - 5.8383088111877441
+            - 5.2143282890319824
         BoxColliderComponent:
           size:
             - 1
@@ -29708,9 +29679,9 @@ GameObject118:
             - 63.749927520751953
             - 3084.63525390625
           localRotation:
-            - 90.00035474396671
-            - -86.704088144515921
-            - 179.99970162840853
+            - 90.000437845026013
+            - -86.704251521669761
+            - 179.99960656957066
           localScale:
             - 130.51902770996094
             - 130.51902770996094
@@ -29745,9 +29716,9 @@ GameObject118:
             - 166.51837158203125
             - -1541.12548828125
           localRotation:
-            - -4.3257031674663824e-06
+            - -4.3257050334416064e-06
             - 84.99989128595503
-            - 1.166280365956852e-12
+            - -2.6747704242821082e-13
           localScale:
             - 0.67896467447280884
             - 0.67896467447280884
@@ -30041,9 +30012,9 @@ GameObject118:
             - 164.68646240234375
             - 1182.335205078125
           localRotation:
-            - -90.000006841530947
-            - 83.400736609575972
-            - 6.8415309504562106e-06
+            - -89.999992863405609
+            - 83.400678691693273
+            - 2.2530040179191903e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -30078,9 +30049,9 @@ GameObject118:
             - 158.47599792480469
             - 1306.6678466796875
           localRotation:
-            - -90.000032066250384
-            - -76.296838579876479
-            - 2.5186932764085601e-05
+            - -90.000032066307597
+            - -76.296852338521205
+            - 2.5186989974818382e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -30966,9 +30937,9 @@ GameObject118:
             - 54.029090881347656
             - 4134.30322265625
           localRotation:
-            - 89.996474877205074
-            - 89.827447134255252
-            - 179.99564330074426
+            - 89.996961595974227
+            - 89.831245159474364
+            - 179.99611806670674
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31003,9 +30974,9 @@ GameObject118:
             - 54.029090881347656
             - 3885.197509765625
           localRotation:
-            - 89.996474877205074
-            - 89.827447134255252
-            - 179.99564330074426
+            - 89.996961595974227
+            - 89.831245159474364
+            - 179.99611806670674
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31040,9 +31011,9 @@ GameObject118:
             - 54.029090881347656
             - 3932.269775390625
           localRotation:
-            - 89.996474877205074
-            - 89.827447134255252
-            - 179.99564330074426
+            - 89.996961595974227
+            - 89.831245159474364
+            - 179.99611806670674
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31077,9 +31048,9 @@ GameObject118:
             - 54.029090881347656
             - 4074.6875
           localRotation:
-            - 89.996474877205074
-            - 89.827447134255252
-            - 179.99564330074426
+            - 89.996961595974227
+            - 89.831245159474364
+            - 179.99611806670674
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31114,9 +31085,9 @@ GameObject118:
             - 54.029090881347656
             - 4145.07568359375
           localRotation:
-            - 89.996474877205074
-            - 89.827447134255252
-            - 179.99564330074426
+            - 89.996961595974227
+            - 89.831245159474364
+            - 179.99611806670674
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31151,9 +31122,9 @@ GameObject118:
             - 54.029090881347656
             - 3895.9697265625
           localRotation:
-            - 89.996474877205074
-            - 89.827447134255252
-            - 179.99564330074426
+            - 89.996961595974227
+            - 89.831245159474364
+            - 179.99611806670674
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31188,9 +31159,9 @@ GameObject118:
             - 54.029090881347656
             - 3943.0419921875
           localRotation:
-            - 89.996474877205074
-            - 89.827447134255252
-            - 179.99564330074426
+            - 89.996961595974227
+            - 89.831245159474364
+            - 179.99611806670674
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31225,9 +31196,9 @@ GameObject118:
             - 54.029090881347656
             - 4085.4599609375
           localRotation:
-            - 89.996474877205074
-            - 89.827447134255252
-            - 179.99564330074426
+            - 89.996961595974227
+            - 89.831245159474364
+            - 179.99611806670674
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31262,9 +31233,9 @@ GameObject118:
             - 54.029090881347656
             - 934.56494140625
           localRotation:
-            - 89.996474877205074
-            - 89.827447134255252
-            - 179.99564330074426
+            - 89.996961595974227
+            - 89.831245159474364
+            - 179.99611806670674
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31299,9 +31270,9 @@ GameObject118:
             - 54.029090881347656
             - 685.4591064453125
           localRotation:
-            - 89.996474877205074
-            - 89.827447134255252
-            - 179.99564330074426
+            - 89.996961595974227
+            - 89.831245159474364
+            - 179.99611806670674
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31336,9 +31307,9 @@ GameObject118:
             - 54.029090881347656
             - 732.53131103515625
           localRotation:
-            - 89.996474877205074
-            - 89.827447134255252
-            - 179.99564330074426
+            - 89.996961595974227
+            - 89.831245159474364
+            - 179.99611806670674
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31373,9 +31344,9 @@ GameObject118:
             - 54.029090881347656
             - 874.94927978515625
           localRotation:
-            - 89.996474877205074
-            - 89.827447134255252
-            - 179.99564330074426
+            - 89.996961595974227
+            - 89.831245159474364
+            - 179.99611806670674
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -32224,9 +32195,9 @@ GameObject118:
             - 54.029090881347656
             - 2596.039306640625
           localRotation:
-            - 89.996474877205074
-            - 89.827447134255252
-            - 179.99564330074426
+            - 89.996961595974227
+            - 89.831245159474364
+            - 179.99611806670674
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -32261,9 +32232,9 @@ GameObject118:
             - 54.029090881347656
             - -3640.270263671875
           localRotation:
-            - -90.000009771516233
-            - 41.425536495295006
-            - 1.4685718556198884e-06
+            - -90.000010910579675
+            - 41.425534951456129
+            - -1.5438391430641762e-06
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -32298,9 +32269,9 @@ GameObject118:
             - 54.029090881347656
             - -3763.58349609375
           localRotation:
-            - -90.000009771516233
-            - 41.425536495295006
-            - 1.4685718556198884e-06
+            - -90.000010910579675
+            - 41.425534951456129
+            - -1.5438391430641762e-06
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -32335,9 +32306,9 @@ GameObject118:
             - 54.029090881347656
             - -3545.785888671875
           localRotation:
-            - -90.000009771516233
-            - 41.425536495295006
-            - 1.4685718556198884e-06
+            - -90.000010910579675
+            - 41.425534951456129
+            - -1.5438391430641762e-06
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -32446,9 +32417,9 @@ GameObject118:
             - 349.46719360351562
             - -4440.18994140625
           localRotation:
-            - 90.000084762597908
-            - -56.225779606514436
-            - 179.99998483277227
+            - 90.000095994298988
+            - -56.22578779398053
+            - 179.99998430804624
           localScale:
             - 100
             - 173.47891235351562
@@ -32742,9 +32713,9 @@ GameObject118:
             - 928.53460693359375
             - -9513.279296875
           localRotation:
-            - -89.999961537252744
-            - 88.364089008296347
-            - 8.1155780384649362e-05
+            - -89.999961541122701
+            - 88.364155684345647
+            - 8.1151909152223905e-05
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -32891,7 +32862,7 @@ GameObject118:
             - -5717.5537109375
           localRotation:
             - -90
-            - 4.6775884009649555
+            - 4.6775874931320072
             - 0
           localScale:
             - 100.00000762939453
@@ -33075,9 +33046,9 @@ GameObject118:
             - 967.7982177734375
             - -9459.259765625
           localRotation:
-            - 89.999983982547732
-            - 71.856692922976706
-            - 179.99999435760367
+            - 89.999988532928825
+            - 71.85669792820849
+            - -179.99999936283982
           localScale:
             - 100
             - 100
@@ -33186,9 +33157,9 @@ GameObject118:
             - 450
             - -4745.69189453125
           localRotation:
-            - 89.999963733263485
-            - -56.22576837477493
-            - -179.99998336272748
+            - 89.999946885696005
+            - -56.225776299865871
+            - -179.99998257562888
           localScale:
             - 100
             - 100
@@ -33260,9 +33231,9 @@ GameObject118:
             - 149.88563537597656
             - -4298.8779296875
           localRotation:
-            - 89.999963733263485
-            - -56.22576837477493
-            - -179.99998336272748
+            - 89.999946885696005
+            - -56.225776299865871
+            - -179.99998257562888
           localScale:
             - 100
             - 100
@@ -33297,9 +33268,9 @@ GameObject118:
             - 441.10702514648438
             - -5467.97314453125
           localRotation:
-            - 89.999963733263485
-            - -56.22576837477493
-            - -179.99998336272748
+            - 89.999946885696005
+            - -56.225776299865871
+            - -179.99998257562888
           localScale:
             - 100
             - 100
@@ -33334,9 +33305,9 @@ GameObject118:
             - 449.8997802734375
             - -4606.359375
           localRotation:
-            - 89.999963733263485
-            - -56.22576837477493
-            - -179.99998336272748
+            - 89.999946885696005
+            - -56.225776299865871
+            - -179.99998257562888
           localScale:
             - 100
             - 100
@@ -33482,9 +33453,9 @@ GameObject118:
             - 449.88565063476562
             - -5365.93505859375
           localRotation:
-            - 89.999963733263485
-            - -56.22576837477493
-            - -179.99998336272748
+            - 89.999946885696005
+            - -56.225776299865871
+            - -179.99998257562888
           localScale:
             - 100
             - 100
@@ -33889,9 +33860,9 @@ GameObject118:
             - 149
             - -4823.52001953125
           localRotation:
-            - 89.999963733263485
-            - -56.22576837477493
-            - -179.99998336272748
+            - 89.999946885696005
+            - -56.225776299865871
+            - -179.99998257562888
           localScale:
             - 100
             - 100
@@ -33926,9 +33897,9 @@ GameObject118:
             - 448.99996948242188
             - -4823.52001953125
           localRotation:
-            - 89.999963733263485
-            - -56.22576837477493
-            - -179.99998336272748
+            - 89.999946885696005
+            - -56.225776299865871
+            - -179.99998257562888
           localScale:
             - 100
             - 100
@@ -34851,9 +34822,9 @@ GameObject118:
             - 73.108222961425781
             - -1306.628173828125
           localRotation:
-            - 89.999827873847067
-            - 86.075352090721864
-            - 179.99977320027202
+            - 89.999796959788767
+            - 86.075288397018952
+            - 179.99975424605634
           localScale:
             - 62.525432586669922
             - 62.525432586669922
@@ -34888,9 +34859,9 @@ GameObject118:
             - 73.108879089355469
             - 1295.9609375
           localRotation:
-            - 89.999827873847067
-            - 86.075352090721864
-            - 179.99977320027202
+            - 89.999796959788767
+            - 86.075288397018952
+            - 179.99975424605634
           localScale:
             - 62.525432586669922
             - 62.525432586669922
@@ -34925,9 +34896,9 @@ GameObject118:
             - 73.108879089355469
             - 2850.8896484375
           localRotation:
-            - 89.999827873847067
-            - 86.075352090721864
-            - 179.99977320027202
+            - 89.999796959788767
+            - 86.075288397018952
+            - 179.99975424605634
           localScale:
             - 62.525432586669922
             - 62.525432586669922
@@ -34962,9 +34933,9 @@ GameObject118:
             - 73.108879089355469
             - 2943.7861328125
           localRotation:
-            - -89.999953169810851
-            - 71.878755125207633
-            - 3.991369789908679e-05
+            - -89.999934942084721
+            - 71.878755125203696
+            - 6.5057915286830632e-05
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -35517,9 +35488,9 @@ GameObject118:
             - 73.108879089355469
             - -2879.81689453125
           localRotation:
-            - -89.99984712867564
-            - -86.201779320381917
-            - -0.00015628829584171802
+            - -89.999850550095772
+            - -86.201621600601527
+            - -0.0001597008192771943
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -35554,9 +35525,9 @@ GameObject118:
             - 73.108879089355469
             - -4398.310546875
           localRotation:
-            - 89.999992567718536
-            - -68.537140474042872
-            - -179.9999890918335
+            - 89.999996043594734
+            - -68.537150901697771
+            - -179.99998561593969
           localScale:
             - 62.525432586669922
             - 62.525432586669922
@@ -35665,9 +35636,9 @@ GameObject118:
             - 73.108879089355469
             - -3666.4267578125
           localRotation:
-            - 89.99999664449409
-            - 66.695725202350346
-            - 179.99999490101703
+            - 90.00001019796666
+            - 66.695713392353156
+            - -179.99999328898764
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -35776,9 +35747,9 @@ GameObject118:
             - 149.93833923339844
             - -4523.322265625
           localRotation:
-            - 89.999963733263485
-            - -56.22576837477493
-            - -179.99998336272748
+            - 89.999946885696005
+            - -56.225776299865871
+            - -179.99998257562888
           localScale:
             - 100
             - 100
@@ -36849,9 +36820,9 @@ GameObject118:
             - 2.8933405876159668
             - -7796.02978515625
           localRotation:
-            - -90.000175265548975
-            - -86.711855568847042
-            - 0.00012230978396069464
+            - -90.000146363934974
+            - -86.711791065278476
+            - 9.1699917018067171e-05
           localScale:
             - 31.999998092651367
             - 31.999998092651367
@@ -36886,9 +36857,9 @@ GameObject118:
             - 2.8933405876159668
             - -7604.4423828125
           localRotation:
-            - -90.000020379951209
-            - 58.033589228468578
-            - -1.6827528574992027e-05
+            - -90.000010189972016
+            - 58.033598514843476
+            - -8.4137608326618707e-06
           localScale:
             - 32
             - 32
@@ -37367,9 +37338,9 @@ GameObject118:
             - 2.8933405876159668
             - -5565.61572265625
           localRotation:
-            - 89.999945418926742
-            - -57.672560147177556
-            - -179.99998097541453
+            - 89.999928217986294
+            - -57.672558946686543
+            - -179.99997977489596
           localScale:
             - 32
             - 32
@@ -37589,9 +37560,9 @@ GameObject118:
             - 553.5093994140625
             - -638.617919921875
           localRotation:
-            - -89.999849435560307
-            - -85.865858292962486
-            - -0.00013347784844986045
+            - -89.999846015308052
+            - -85.865853668611891
+            - -0.00013006346351479553
           localScale:
             - 50.343189239501953
             - 50.343189239501953
@@ -37626,9 +37597,9 @@ GameObject118:
             - 553.5093994140625
             - 2461.96533203125
           localRotation:
-            - -90.000145020168006
-            - 84.134466024150868
-            - -8.8597208085550817e-05
+            - -90.000160852034483
+            - 84.134511810756237
+            - -0.00010613886367984274
           localScale:
             - 50.343193054199219
             - 50.343193054199219
@@ -37700,9 +37671,9 @@ GameObject118:
             - 300
             - -5105.60791015625
           localRotation:
-            - 90.000052882179091
-            - -55.983747748870108
-            - 179.99998283073151
+            - 90.000058479460591
+            - -55.983739885262978
+            - 179.99998259038847
           localScale:
             - 100
             - 100
@@ -37737,9 +37708,9 @@ GameObject118:
             - 166.51837158203125
             - 1495.5716552734375
           localRotation:
-            - -4.3257031674663824e-06
+            - -4.3257050334416064e-06
             - 84.99989128595503
-            - 1.166280365956852e-12
+            - -2.6747704242821082e-13
           localScale:
             - 0.67896467447280884
             - 0.67896467447280884
@@ -37922,9 +37893,9 @@ GameObject118:
             - 76.988845825195312
             - -8396.859375
           localRotation:
-            - -90.000019458128818
-            - 75.000007149325
-            - 6.3760956913211521e-06
+            - -90.000028582572554
+            - 75.000003191735416
+            - 2.4184973290685455e-06
           localScale:
             - 43.357864379882812
             - 43.357864379882812
@@ -37996,9 +37967,9 @@ GameObject118:
             - 81.313865661621094
             - -6652.3642578125
           localRotation:
-            - 89.999975815196038
-            - 0.82628439499426121
-            - 179.99999503354229
+            - 89.999975815196024
+            - 0.82628462140285808
+            - 179.99999503354223
           localScale:
             - 43.357868194580078
             - 43.357868194580078
@@ -38699,9 +38670,9 @@ GameObject118:
             - 450.06610107421875
             - -9387.68359375
           localRotation:
-            - 90.000064796267409
-            - -62.893944580694736
-            - 179.9999773587389
+            - 90.000093420866079
+            - -62.893939050717925
+            - 179.99997683747989
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -38810,9 +38781,9 @@ GameObject118:
             - 750.06610107421875
             - -9387.68359375
           localRotation:
-            - 90.000064796267409
-            - -62.893944580694736
-            - 179.9999773587389
+            - 90.000093420866079
+            - -62.893939050717925
+            - 179.99997683747989
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -39106,9 +39077,9 @@ GameObject118:
             - 150
             - -4745.69189453125
           localRotation:
-            - 89.999963733263485
-            - -56.22576837477493
-            - -179.99998336272748
+            - 89.999946885696005
+            - -56.225776299865871
+            - -179.99998257562888
           localScale:
             - 100
             - 100
@@ -39402,9 +39373,9 @@ GameObject118:
             - 150
             - -9196.921875
           localRotation:
-            - 90.000038000246633
-            - 53.465204112373726
-            - -179.99998897226999
+            - 90.000050666994227
+            - 53.465200489515908
+            - -179.99998529636184
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -39735,9 +39706,9 @@ GameObject118:
             - 486.95062255859375
             - 2283.11376953125
           localRotation:
-            - 90.000075316786493
-            - -63.993058370311594
-            - 179.99996148544628
+            - 90.000071224967897
+            - -63.993053699678775
+            - 179.99994980487972
           localScale:
             - 100
             - 100
@@ -39772,9 +39743,9 @@ GameObject118:
             - 486.95062255859375
             - 4518.4365234375
           localRotation:
-            - 90.000075316786493
-            - -63.993058370311594
-            - 179.99996148544628
+            - 90.000071224967897
+            - -63.993053699678775
+            - 179.99994980487972
           localScale:
             - 100
             - 100
@@ -39846,9 +39817,9 @@ GameObject118:
             - 23.373174667358398
             - -3753.420654296875
           localRotation:
-            - -3.1944901525068081
-            - 24.860772843630983
-            - -17.321877758450029
+            - -3.1944906061227236
+            - 24.860772777260372
+            - -17.321877856601368
           localScale:
             - 100
             - 100
@@ -39920,9 +39891,9 @@ GameObject118:
             - 201.60006713867188
             - -701.08270263671875
           localRotation:
-            - -90.000009777344786
-            - 80.789757877741891
-            - -1.1490422395121572e-05
+            - -90.000019554685608
+            - 80.78974638732339
+            - -2.2980840868634173e-05
           localScale:
             - 56
             - 56
@@ -40919,9 +40890,9 @@ GameObject118:
             - 150
             - -4412.13720703125
           localRotation:
-            - 89.999963733263485
-            - -56.22576837477493
-            - -179.99998336272748
+            - 89.999946885696005
+            - -56.225776299865871
+            - -179.99998257562888
           localScale:
             - 100
             - 100
@@ -40956,9 +40927,9 @@ GameObject118:
             - 150
             - -4634.5068359375
           localRotation:
-            - 89.999963733263485
-            - -56.22576837477493
-            - -179.99998336272748
+            - 89.999946885696005
+            - -56.225776299865871
+            - -179.99998257562888
           localScale:
             - 100
             - 100
@@ -41067,9 +41038,9 @@ GameObject118:
             - 109.05261993408203
             - 3582.95361328125
           localRotation:
-            - -8.5567692838075917
-            - -57.209898526671914
-            - -138.90945200253455
+            - -8.5567687024641774
+            - -57.209904152680842
+            - -138.90945258387796
           localScale:
             - 1
             - 1
@@ -41104,9 +41075,9 @@ GameObject118:
             - 109.05261993408203
             - 3639.052978515625
           localRotation:
-            - 176.80452801321559
-            - 53.423389899352991
-            - -36.678436584738456
+            - 176.80452914749628
+            - 53.423387780980562
+            - -36.678429846850349
           localScale:
             - 1
             - 0.99999994039535522
@@ -41215,9 +41186,9 @@ GameObject118:
             - 109.05261993408203
             - 7118.212890625
           localRotation:
-            - -61.437840238116898
-            - -69.146516641265663
-            - -90.816264654665645
+            - -61.437842237648972
+            - -69.146518289620744
+            - -90.816253120101663
           localScale:
             - 0.57863551378250122
             - 0.578635573387146
@@ -41326,9 +41297,9 @@ GameObject118:
             - 123.31528472900391
             - 4541.62744140625
           localRotation:
-            - 178.33360241669106
-            - 52.153760355639683
-            - -35.460577179108597
+            - 178.3336032357864
+            - 52.153765872309769
+            - -35.460576839329157
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -41363,9 +41334,9 @@ GameObject118:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360241669106
-            - 52.153760355639683
-            - -35.460577179108597
+            - 178.3336032357864
+            - 52.153765872309769
+            - -35.460576839329157
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -41400,9 +41371,9 @@ GameObject118:
             - 123.31528472900391
             - 367.24996948242188
           localRotation:
-            - -144.46138367586929
-            - -19.726736474495357
-            - -22.218176049893476
+            - -144.46138269079012
+            - -19.726740231288439
+            - -22.218172025213658
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -41474,9 +41445,9 @@ GameObject118:
             - 123.31528472900391
             - -3082.318603515625
           localRotation:
-            - -153.95889737000886
-            - 4.3169349467157936
-            - -20.913366911667978
+            - -153.95889722586227
+            - 4.3169341282811633
+            - -20.913367095530475
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -41511,9 +41482,9 @@ GameObject118:
             - 123.31528472900391
             - -2039.8414306640625
           localRotation:
-            - -85.962229746360961
-            - -67.421796018005708
-            - -67.982490426892312
+            - -85.962234480932736
+            - -67.421817452947508
+            - -67.982496398910655
           localScale:
             - 1.1724410057067871
             - 1.1724408864974976
@@ -41548,9 +41519,9 @@ GameObject118:
             - 123.31528472900391
             - -1297.1328125
           localRotation:
-            - -85.962229746360961
-            - -67.421796018005708
-            - -67.982490426892312
+            - -85.962234480932736
+            - -67.421817452947508
+            - -67.982496398910655
           localScale:
             - 1.1724410057067871
             - 1.1724408864974976
@@ -41659,9 +41630,9 @@ GameObject118:
             - 123.31528472900391
             - 1498.4625244140625
           localRotation:
-            - -6.0193074394089763
-            - -55.536844601933147
-            - -141.02265675926216
+            - -6.0193081228025473
+            - -55.536834968689469
+            - -141.0226523280929
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -41696,9 +41667,9 @@ GameObject118:
             - 123.31528472900391
             - 2732.585693359375
           localRotation:
-            - 8.1792725219763032
-            - -41.244250083354842
-            - -151.7455639877376
+            - 8.1792755464740825
+            - -41.244252366162407
+            - -151.74556366509714
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -41733,9 +41704,9 @@ GameObject118:
             - 123.31528472900391
             - 4466.2626953125
           localRotation:
-            - -2.6537383713493132
-            - -52.984239910356663
-            - -143.7553714776586
+            - -2.6537433846251632
+            - -52.984235847924403
+            - -143.7553751234434
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -41770,9 +41741,9 @@ GameObject118:
             - 123.31528472900391
             - -5360.06103515625
           localRotation:
-            - 8.6420804921130472
-            - -40.589271659099488
-            - -152.04872377532715
+            - 8.6420751121093087
+            - -40.589260105381761
+            - -152.04872260834017
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -41881,9 +41852,9 @@ GameObject118:
             - 101.82011413574219
             - -4469.0009765625
           localRotation:
-            - 19.670662613062429
-            - -20.113316979323489
-            - -157.72451901381891
+            - 19.670661671868935
+            - -20.113320780822285
+            - -157.72451775168008
           localScale:
             - 1
             - 1
@@ -41918,9 +41889,9 @@ GameObject118:
             - 53.877681732177734
             - -6591.802734375
           localRotation:
-            - 90.000157712467669
-            - 82.477613097428105
-            - -179.99987137849413
+            - 90.000115920136864
+            - 82.477654167108952
+            - -179.99993370562149
           localScale:
             - 53.629287719726562
             - 53.629287719726562
@@ -42177,9 +42148,9 @@ GameObject118:
             - 48.267116546630859
             - 2933.29736328125
           localRotation:
-            - 90.000039076349566
-            - 52.332910103462332
-            - -179.99998618161314
+            - 90.000055129195971
+            - 52.332910164941133
+            - -179.99998636602908
           localScale:
             - 53.629283905029297
             - 53.629283905029297
@@ -42214,9 +42185,9 @@ GameObject118:
             - 48.267116546630859
             - 4037.668701171875
           localRotation:
-            - -90.000039757330242
-            - -80.144607713264193
-            - 3.9757330243001191e-05
+            - -90.000018164721112
+            - -80.144612166967306
+            - 2.1592484994074248e-05
           localScale:
             - 53.629287719726562
             - 53.629287719726562
@@ -42288,9 +42259,9 @@ GameObject118:
             - 48.267116546630859
             - 3986.6318359375
           localRotation:
-            - 89.999983899516948
-            - 70.642060421133962
-            - 179.99998563172173
+            - 89.999984647130788
+            - 70.642046052853715
+            - 179.99999504035986
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -42362,9 +42333,9 @@ GameObject118:
             - 48.267116546630859
             - 4048.44091796875
           localRotation:
-            - -90.000039757330242
-            - -80.144607713264193
-            - 3.9757330243001191e-05
+            - -90.000018164721112
+            - -80.144612166967306
+            - 2.1592484994074248e-05
           localScale:
             - 53.629287719726562
             - 53.629287719726562
@@ -42436,9 +42407,9 @@ GameObject118:
             - 48.267116546630859
             - 3997.404052734375
           localRotation:
-            - 89.999983899516948
-            - 70.642060421133962
-            - 179.99998563172173
+            - 89.999984647130788
+            - 70.642046052853715
+            - 179.99999504035986
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -42510,9 +42481,9 @@ GameObject118:
             - 48.267116546630859
             - 837.9302978515625
           localRotation:
-            - -90.000039757330242
-            - -80.144607713264193
-            - 3.9757330243001191e-05
+            - -90.000018164721112
+            - -80.144612166967306
+            - 2.1592484994074248e-05
           localScale:
             - 53.629287719726562
             - 53.629287719726562
@@ -42584,9 +42555,9 @@ GameObject118:
             - 48.267116546630859
             - 786.8934326171875
           localRotation:
-            - 89.999983899516948
-            - 70.642060421133962
-            - 179.99998563172173
+            - 89.999984647130788
+            - 70.642046052853715
+            - 179.99999504035986
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -42843,9 +42814,9 @@ GameObject118:
             - 48.267116546630859
             - -1068.7872314453125
           localRotation:
-            - 90.000023050849677
-            - -79.054944818130849
-            - 179.99998724134556
+            - 90.000023050888984
+            - -79.05493892093358
+            - 179.99998724130657
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -42917,9 +42888,9 @@ GameObject118:
             - 48.267116546630859
             - -792.76873779296875
           localRotation:
-            - -90.000063336579174
-            - 73.116630427507019
-            - -5.2979080341939965e-05
+            - -90.000090052260546
+            - 73.116623974682113
+            - -7.2789761961323339e-05
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -43139,9 +43110,9 @@ GameObject118:
             - 48.267116546630859
             - 1745.6357421875
           localRotation:
-            - 89.999948290153426
-            - 56.939020487129241
-            - 179.99998569463025
+            - 89.99991781782127
+            - 56.939015609036943
+            - 179.99998015861985
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -43176,9 +43147,9 @@ GameObject118:
             - 48.267116546630859
             - 1652.02197265625
           localRotation:
-            - 90.000013986823674
-            - -51.544320322736823
-            - 179.99999324688753
+            - 90.000013986824499
+            - -51.544327316148959
+            - 179.99999324688645
           localScale:
             - 53.629287719726562
             - 53.629287719726562
@@ -43472,9 +43443,9 @@ GameObject118:
             - 48.267116546630859
             - -4562.12548828125
           localRotation:
-            - -89.999978373929096
-            - -77.720483194377408
-            - -4.223485084841862e-05
+            - -89.999978373884304
+            - -77.720507746640166
+            - -4.2234895026064163e-05
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -43657,9 +43628,9 @@ GameObject118:
             - 48.267116546630859
             - -1413.0146484375
           localRotation:
-            - 90.000051112527103
-            - 66.469444936709394
-            - -179.99999249224322
+            - 90.000051112517212
+            - 66.469458196973463
+            - -179.99999249225044
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -43768,9 +43739,9 @@ GameObject118:
             - 48.267116546630859
             - 1095.0556640625
           localRotation:
-            - 90.000007192951131
-            - -53.451692681091934
-            - -179.99999280704887
+            - 90.000012613111224
+            - -53.451699950386711
+            - -179.99999283249653
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -43842,9 +43813,9 @@ GameObject118:
             - 48.267116546630859
             - 1453.26416015625
           localRotation:
-            - 90.000071023058041
-            - 58.786918125687677
-            - -179.99998216427812
+            - 90.000100187536532
+            - 58.786909491582762
+            - -179.99997959347141
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -44175,9 +44146,9 @@ GameObject118:
             - 48.267116546630859
             - 2472.785400390625
           localRotation:
-            - 89.999682980823493
-            - -87.168770895120758
-            - -179.9996949373039
+            - 89.999753812018625
+            - -87.168753814798023
+            - -179.99976235236178
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -44286,9 +44257,9 @@ GameObject118:
             - 48.267116546630859
             - 1154.2054443359375
           localRotation:
-            - 90.00009156994183
-            - 58.470938962129161
-            - -179.99998472429616
+            - 90.000100922459339
+            - 58.470942991804996
+            - -179.99998779176948
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -44693,9 +44664,9 @@ GameObject118:
             - 48.267116546630859
             - 4947.30126953125
           localRotation:
-            - 90.000068983288941
-            - 58.987872441273275
-            - -179.99998595013452
+            - 90.00009824155272
+            - 58.987863746572991
+            - -179.9999832725633
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -44804,9 +44775,9 @@ GameObject118:
             - 401.49282836914062
             - 3654.83349609375
           localRotation:
-            - 90.000001007436452
-            - 71.572324453880583
-            - -179.99999034322997
+            - 89.999994087961667
+            - 71.572310614956422
+            - -179.99998342377106
           localScale:
             - 155.38609313964844
             - 155.38609313964844
@@ -44841,9 +44812,9 @@ GameObject118:
             - 401.49282836914062
             - 2959.014892578125
           localRotation:
-            - 90.000001007436452
-            - 71.572324453880583
-            - -179.99999034322997
+            - 89.999994087961667
+            - 71.572310614956422
+            - -179.99998342377106
           localScale:
             - 155.38609313964844
             - 155.38609313964844
@@ -45137,9 +45108,9 @@ GameObject118:
             - 401.49282836914062
             - -3378.93896484375
           localRotation:
-            - 90.000015247838022
-            - -72.925328729546521
-            - -179.99999625435794
+            - 89.999997131191506
+            - -72.925332475187204
+            - -179.99997986439118
           localScale:
             - 155.38609313964844
             - 155.38609313964844
@@ -45174,9 +45145,9 @@ GameObject118:
             - 401.49282836914062
             - -3735.312255859375
           localRotation:
-            - 90.000015247838022
-            - -72.925328729546521
-            - -179.99999625435794
+            - 89.999997131191506
+            - -72.925332475187204
+            - -179.99997986439118
           localScale:
             - 155.38609313964844
             - 155.38609313964844
@@ -45211,9 +45182,9 @@ GameObject118:
             - 401.49282836914062
             - -4092.173828125
           localRotation:
-            - 90.000015247838022
-            - -72.925328729546521
-            - -179.99999625435794
+            - 89.999997131191506
+            - -72.925332475187204
+            - -179.99997986439118
           localScale:
             - 155.38609313964844
             - 155.38609313964844
@@ -45248,9 +45219,9 @@ GameObject118:
             - 401.49282836914062
             - -4447.55859375
           localRotation:
-            - 90.000015247838022
-            - -72.925328729546521
-            - -179.99999625435794
+            - 89.999997131191506
+            - -72.925332475187204
+            - -179.99997986439118
           localScale:
             - 155.38609313964844
             - 155.38609313964844
@@ -46950,9 +46921,9 @@ GameObject118:
             - 0
             - 3936.121826171875
           localRotation:
-            - -89.999998354878144
-            - -70.919608231534539
-            - -1.8960067826151859e-05
+            - -89.999998354885548
+            - -70.919601305553073
+            - -1.8960060415945722e-05
           localScale:
             - 100
             - 100
@@ -46988,7 +46959,7 @@ GameObject118:
             - 4214.556640625
           localRotation:
             - -90
-            - -89.954813368437641
+            - -89.946534017150455
             - 0
           localScale:
             - 100
@@ -47025,7 +46996,7 @@ GameObject118:
             - 1013.7897338867188
           localRotation:
             - -90
-            - -89.954813368437641
+            - -89.946534017150455
             - 0
           localScale:
             - 100
@@ -47172,9 +47143,9 @@ GameObject118:
             - 1.4901161193847656e-06
             - 2083.088623046875
           localRotation:
-            - -90.000006890763402
-            - -74.794653851869995
-            - -6.8907634043662875e-06
+            - -89.999992261704847
+            - -74.794658144789508
+            - -1.807443994359237e-05
           localScale:
             - 100
             - 100
@@ -47320,9 +47291,9 @@ GameObject118:
             - 0
             - -1286.1590576171875
           localRotation:
-            - -89.999993409045317
-            - -50.935735664848032
-            - -1.3838192231081409e-05
+            - -90.000003951759126
+            - -50.935735992990821
+            - -1.4166335315522918e-05
           localScale:
             - 100
             - 100
@@ -47357,9 +47328,9 @@ GameObject118:
             - 0
             - 897.19256591796875
           localRotation:
-            - -89.998649382367404
-            - -89.171006366082182
-            - -0.0012464545206253728
+            - -89.99876721177209
+            - -89.171137587874412
+            - -0.001126917528671244
           localScale:
             - 100
             - 100
@@ -47394,9 +47365,9 @@ GameObject118:
             - 58.736461639404297
             - -6378.72216796875
           localRotation:
-            - -1.3292255698426068e-05
-            - -88.516502608407976
-            - 87.304069416014102
+            - 0.00027081979188956385
+            - -88.516641539721292
+            - 87.30378879874678
           localScale:
             - 0.36166170239448547
             - 0.36166170239448547
@@ -47431,9 +47402,9 @@ GameObject118:
             - 0
             - -6580.556640625
           localRotation:
-            - -4.3257019857636221e-06
+            - -4.3256962108048816e-06
             - -88.516442511620042
-            - -3.7148161629547962e-12
+            - -9.0579322906386283e-12
           localScale:
             - 0.36166170239448547
             - 0.36166170239448547
@@ -48025,7 +47996,7 @@ GameObject119:
             - -153.50090026855469
           localRotation:
             - 0
-            - -89.331805595145397
+            - -89.332198109936598
             - 0
           localScale:
             - 32.727252960205078
@@ -48058,7 +48029,7 @@ GameObject119:
             - -136.5814208984375
           localRotation:
             - 0
-            - -89.33182974241889
+            - -89.331791106362331
             - 0
           localScale:
             - 2.8886909484863281
@@ -48091,7 +48062,7 @@ GameObject119:
             - -139.23141479492188
           localRotation:
             - 0
-            - -89.331805595145397
+            - -89.332198109936598
             - 0
           localScale:
             - 2.2269508838653564
@@ -48156,9 +48127,9 @@ GameObject119:
             - 5.0879578590393066
             - -227.70004272460938
           localRotation:
-            - 105.96069672075672
-            - -88.920421588373273
-            - -107.09554078994222
+            - 105.96058371707292
+            - -88.9204219233293
+            - -107.09543503073428
           localScale:
             - 2.2269513607025146
             - 22.707525253295898
@@ -48817,7 +48788,7 @@ GameObject119:
             - -209.1068115234375
           localRotation:
             - 0
-            - 89.958068537078447
+            - 89.959915148753723
             - 0
           localScale:
             - 3.5265586376190186
@@ -49014,9 +48985,9 @@ GameObject119:
             - 0.3479820191860199
             - -166.00828552246094
           localRotation:
-            - -0.0001772870646069937
-            - 88.727590225565862
-            - 91.617501575754261
+            - -0.00014175220283645679
+            - 88.727761394759
+            - 91.617526817509813
           localScale:
             - 1.9669058322906494
             - 4.4303240776062012
@@ -49509,9 +49480,9 @@ GameObject119:
             - 5.0879578590393066
             - -196.26585388183594
           localRotation:
-            - 105.96059862247115
-            - -88.920761897698668
-            - -107.09544993613251
+            - 105.9606081373371
+            - -88.921017755229357
+            - -107.0954545256848
           localScale:
             - 3.6338496208190918
             - 22.707525253295898
@@ -50203,7 +50174,7 @@ GameObject119:
             - -18.607112884521484
           localRotation:
             - 0
-            - -75.80575548600298
+            - -75.805750619037568
             - 0
           localScale:
             - 7.9203400611877441
@@ -50236,7 +50207,7 @@ GameObject119:
             - -29.748395919799805
           localRotation:
             - 0
-            - -75.805738374334837
+            - -75.80575548600298
             - 0
           localScale:
             - 32.363376617431641
@@ -50302,7 +50273,7 @@ GameObject119:
             - 35.394046783447266
           localRotation:
             - -179.99999499104351
-            - -89.897799317696709
+            - -89.897920182444224
             - -179.99999499104351
           localScale:
             - 29.873205184936523
@@ -50467,7 +50438,7 @@ GameObject119:
             - 144.80776977539062
           localRotation:
             - 0
-            - -88.494637970418964
+            - -88.494785580408447
             - 0
           localScale:
             - 30.431207656860352
@@ -50914,54 +50885,1140 @@ GameObject119:
           isTrigger: false
       Children: ~
 GameObject120:
-  name: BarrilDestruible
+  name: DestroyableObjects
   prefabPath: ""
-  uuid: 2504582916294449108
-  tag: Destroyable
-  active: false
+  uuid: 13058592131146498515
+  tag: Untagged
+  active: true
   isStatic: false
   Components:
     Transform_Component:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 6.3578462600708008
-        - -0.50010007619857788
-        - -4.5804557800292969
-      localRotation:
-        - -90.000014489018881
         - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
         - 0
       localScale:
-        - 3.9263112545013428
-        - 3.926311731338501
-        - 3.926311731338501
-    MeshRenderer:
-      name: MeshRenderer
+        - 1
+        - 1
+        - 1
+  Children:
+    - name: BarrilDestruible
+      prefabPath: ""
+      uuid: 2504582916294449108
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -22.487848281860352
+            - -0.50010150671005249
+            - 26.514747619628906
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 2.5999999
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
+      Children: ~
+    - name: BarrilDestruible_copy
+      prefabPath: ""
+      uuid: 10821429088410440247
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 99.566314697265625
+            - -0.50010383129119873
+            - 181.26480102539062
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy
+      prefabPath: ""
+      uuid: 5106548229737249429
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 119.76363372802734
+            - -0.50010114908218384
+            - 176.5953369140625
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy
+      prefabPath: ""
+      uuid: 6575049289869819346
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 23.769321441650391
+            - -0.50009894371032715
+            - -25.992515563964844
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy
+      prefabPath: ""
+      uuid: 12775973747000016740
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 110.09506225585938
+            - -0.50010019540786743
+            - -141.35604858398438
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 15931460460803116578
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 253.92878723144531
+            - -0.50010192394256592
+            - 105.35790252685547
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 6691142406926095132
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 201.10490417480469
+            - -0.50009596347808838
+            - -214.78224182128906
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 985178275889314690
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 214.38136291503906
+            - -0.50010037422180176
+            - -150.54925537109375
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 15068189706198787224
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 182.06674194335938
+            - -0.50010204315185547
+            - -121.03884124755859
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 706834077308547407
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 238.42103576660156
+            - -0.50010108947753906
+            - 115.16033935546875
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 7657285318965719964
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 192.81130981445312
+            - -0.50010043382644653
+            - 10.779894828796387
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 18416103976424362333
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 206.05986022949219
+            - -0.50010162591934204
+            - -15.509346961975098
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 7128833832283419749
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 126.31676483154297
+            - -0.50009644031524658
+            - -211.2471923828125
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 12280551509017448393
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 817.84112548828125
+            - -0.50012719631195068
+            - -84.030929565429688
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 9688430785604333531
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 905.43817138671875
+            - -0.50013053417205811
+            - -220.57205200195312
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 5003494691758538098
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 803.25054931640625
+            - -0.50012606382369995
+            - -51.229320526123047
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 15988438697627396861
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 910.87554931640625
+            - -0.50012940168380737
+            - -179.51081848144531
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 4110338310599102939
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 829.9573974609375
+            - -0.50012755393981934
+            - -86.000732421875
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 17784709524847250052
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 860.97900390625
+            - -0.50012719631195068
+            - -100.27244567871094
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: BarrilDestruible_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 1669451086036205526
+      tag: Destroyable
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 895.82989501953125
+            - -0.50012731552124023
+            - -114.57744598388672
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 1.5312613248825073
+            - 1.5312614440917969
+            - 1.5312614440917969
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17581623121843433545
+          material:
+            name: BarrilDestructible_DestrucBarrel_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+GameObject121:
+  name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
+  prefabPath: ""
+  uuid: 5901527255372476756
+  tag: Collider
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
       enabled: true
-      mesh:
-        name: 17581623121843433545
-      material:
-        name: BarrilDestructible_DestrucBarrel_BaseColor
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
+      localPosition:
+        - 803.8629150390625
+        - 1.2081153392791748
+        - -57.207954406738281
+      localRotation:
+        - 0
+        - -2.7301723322578688
+        - 0
+      localScale:
+        - 24.090707778930664
+        - 5.8383088111877441
+        - 5.2143278121948242
     BoxColliderComponent:
       size:
         - 1
         - 1
-        - 2.5999999
+        - 1
       offset:
         - 0
         - 0
         - 0
       isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields: ~
+  Children: ~
+GameObject122:
+  name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
+  prefabPath: ""
+  uuid: 4996192130555642039
+  tag: Collider
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 832.47601318359375
+        - 1.5306359529495239
+        - -59.532066345214844
+      localRotation:
+        - 6.1857308799984638
+        - 73.023187615214397
+        - 3.4166176615476247
+      localScale:
+        - 7.4016027450561523
+        - 5.8383092880249023
+        - 5.2143306732177734
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+  Children: ~
+GameObject123:
+  name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_1
+  prefabPath: ""
+  uuid: 7878754941102642490
+  tag: Collider
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 832.074462890625
+        - 1.530636191368103
+        - -64.117324829101562
+      localRotation:
+        - -178.7277728794173
+        - 58.780061847330039
+        - 178.0761047540266
+      localScale:
+        - 7.4016027450561523
+        - 5.8383092880249023
+        - 5.214332103729248
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+  Children: ~
+GameObject124:
+  name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_2
+  prefabPath: ""
+  uuid: 11221393403171746889
+  tag: Collider
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 827.925048828125
+        - 1.5306974649429321
+        - -66.435325622558594
+      localRotation:
+        - -177.29235434320489
+        - 11.894367027106941
+        - 178.98106374394436
+      localScale:
+        - 7.401604175567627
+        - 5.8383092880249023
+        - 6.0416507720947266
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+  Children: ~
+GameObject125:
+  name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_3
+  prefabPath: ""
+  uuid: 14675676612700447289
+  tag: Collider
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 823.20855712890625
+        - 1.5306974649429321
+        - -65.759933471679688
+      localRotation:
+        - -176.39901992839054
+        - -34.420906318394771
+        - 178.79128017424608
+      localScale:
+        - 7.9617094993591309
+        - 5.8383092880249023
+        - 5.2143325805664062
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
   Children: ~

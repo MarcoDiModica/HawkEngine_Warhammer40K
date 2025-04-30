@@ -68,7 +68,6 @@ bool Root::Start()
 	//resourceManager->LoadResources(); // Esto no se mutea
 	//resourceManager->CreateCube(); // Esto no se mutea
 
-
 	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");

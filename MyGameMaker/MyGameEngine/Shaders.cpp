@@ -471,36 +471,6 @@ bool PBRShader::Initialize() {
 	return LoadShaders("Assets/Shaders/pbr_vertex.glsl", "Assets/Shaders/pbr_fragment.glsl");
 }
 
-BindlessPBRShader::BindlessPBRShader() {
-}
-
-bool BindlessPBRShader::Initialize() {
-	std::ifstream vertexTest("Assets/Shaders/bindless_pbr_vertex.glsl");
-	std::ifstream fragTest("Assets/Shaders/bindless_pbr_fragment.glsl");
-
-	if (!vertexTest.is_open()) {
-		LOG(LogType::LOG_ERROR, "Bindless PBR vertex shader file not found: Assets/Shaders/bindless_pbr_vertex.glsl");
-		return false;
-	}
-
-	if (!fragTest.is_open()) {
-		LOG(LogType::LOG_ERROR, "Bindless PBR fragment shader file not found: Assets/Shaders/bindless_pbr_fragment.glsl");
-		return false;
-	}
-
-	LOG(LogType::LOG_INFO, "Loading Bindless PBR shader files...");
-
-	bool result = LoadShaders("Assets/Shaders/bindless_pbr_vertex.glsl", "Assets/Shaders/bindless_pbr_fragment.glsl");
-
-	if (!result) {
-		LOG(LogType::LOG_ERROR, "Failed to load bindless PBR shader files");
-		return false;
-	}
-
-	LOG(LogType::LOG_INFO, "Bindless PBR shader loaded successfully");
-	return true;
-}
-
 ForwardPlusComputeShader::ForwardPlusComputeShader() {
 }
 

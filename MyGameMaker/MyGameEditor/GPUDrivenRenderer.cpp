@@ -81,8 +81,6 @@ void GPUDrivenRenderer::BeginFrame() {
 
 	GLuint zero = 0;
 	glNamedBufferSubData(visibleCountBuffer, 0, sizeof(GLuint), &zero);
-
-	BindlessManager::GetInstance().ClearInstances();
 }
 
 void GPUDrivenRenderer::EndFrame() {
@@ -385,30 +383,12 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 
 	if (batch.commands.empty()) return;
 
-	// Obtener el shader unlit
 	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::UNLIT);
 	if (!shader) {
 		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader UNLIT");
 		return;
 	}
 
-	// Guardar estado actual de OpenGL
-	GLboolean depthTestEnabled;
-	glGetBooleanv(GL_DEPTH_TEST, &depthTestEnabled);
-
-	GLboolean blendEnabled;
-	glGetBooleanv(GL_BLEND, &blendEnabled);
-
-	GLint blendSrc, blendDst;
-	glGetIntegerv(GL_BLEND_SRC, &blendSrc);
-	glGetIntegerv(GL_BLEND_DST, &blendDst);
-
-	// Configurar estado de OpenGL para renderizado
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	// Vincular shader y establecer uniforms
 	shader->Bind();
 	shader->SetUniformMat4("view", viewMatrix);
 	shader->SetUniformMat4("projection", projMatrix);
@@ -466,21 +446,23 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 		if (i < batch.commands.size()) {
 			const DrawElementsCommand& cmd = batch.commands[i];
 
-			// Obtener y configurar instancias
 			for (uint32_t instanceIdx = 0; instanceIdx < cmd.instanceCount; instanceIdx++) {
 				GPUInstance* instanceData = BindlessManager::GetInstance().GetInstanceData(cmd.baseInstance + instanceIdx);
 				if (!instanceData) continue;
 
-				// Establecer matriz de modelo para esta instancia
 				shader->SetUniformMat4("model", instanceData->modelMatrix);
 
-				// Dibujar instancia
 				glDrawElements(
 					GL_TRIANGLES,
 					cmd.count,
 					GL_UNSIGNED_INT,
 					nullptr
 				);
+
+				//glDrawArrays
+				//glDrawArraysInstanced
+
+				//MultidrawElementsIndirect
 			}
 		}
 	}
@@ -489,13 +471,12 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	glBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	// Restaurar estado anterior
-	if (!depthTestEnabled) glDisable(GL_DEPTH_TEST);
-	if (!blendEnabled) glDisable(GL_BLEND); else glBlendFunc(blendSrc, blendDst);
-
-	// Desactivar shader
 	shader->UnBind();
 }
+
+//render unlit con better drawing
+//culling shader: frustrum y inicio de occlusion
+//primero luces y luego pbr
 
 bool GPUDrivenRenderer::CompileCullingShader() {
 	if (!GLEW_ARB_compute_shader) {

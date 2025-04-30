@@ -115,13 +115,6 @@ public:
     bool Initialize() override;
 };
 
-class BindlessPBRShader : public Shaders {
-public:
-    BindlessPBRShader();
-    ShaderType GetShaderType() const override { return ShaderType::BINDLESS_PBR; }
-    bool Initialize() override;
-};
-
 class ForwardPlusComputeShader : public Shaders {
 public:
     ForwardPlusComputeShader();

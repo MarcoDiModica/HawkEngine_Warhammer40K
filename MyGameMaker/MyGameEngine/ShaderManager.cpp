@@ -23,9 +23,6 @@ bool ShaderManager::Initialize() {
 	LOG(LogType::LOG_INFO, "Registering ParticleShader...");
 	success &= RegisterShader<ParticleShader>();
 
-	LOG(LogType::LOG_INFO, "Registering BindlessPBRShader...");
-	success &= RegisterShader<BindlessPBRShader>();
-
 	LOG(LogType::LOG_INFO, "Registering ForwardPlusComputeShader...");
 	success &= RegisterShader<ForwardPlusComputeShader>();
 

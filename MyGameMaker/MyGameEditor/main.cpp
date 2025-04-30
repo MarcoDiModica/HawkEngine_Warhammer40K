@@ -629,6 +629,7 @@ static void RenderEditor() {
 
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
+
 				RenderManager::GetInstance().EndFrame();
 
 				glUseProgram(lastProgram);
@@ -944,14 +945,13 @@ int main(int argc, char** argv) {
 #ifndef _BUILD
 			Render(Application->gui);
 
-			Application->window->SwapBuffers();
-
 			UndoRedoSystem();
 			ObjectToEditorCamera();
 #else
 			GameRelease();
-			Application->window->SwapBuffers();
 #endif // ENABLE_EDITOR
+
+			Application->window->SwapBuffers();
 
 			if (MonoManager::GetInstance().IsHotReloadingEnabled()) {
 				ScriptHotReloader::GetInstance().Update();

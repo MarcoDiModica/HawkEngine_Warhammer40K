@@ -12200,9 +12200,9 @@ GameObject19:
       Script0:
         name: AmmunitionBlessing
         fields:
-          floatSpeed: 0.846934438
+          floatSpeed: 1.58113146
           floatHeight: 0.5
-          rotationSpeed: 87.3914795
+          rotationSpeed: 51.5745735
           lifeTime: 10
   Children: ~
 GameObject20:
@@ -12256,9 +12256,9 @@ GameObject20:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.982862532
+          floatSpeed: 0.609503448
           floatHeight: 0.5
-          rotationSpeed: 50.6451149
+          rotationSpeed: 40.6361046
   Children: ~
 GameObject21:
   name: heart_1_1_Instance_Instance
@@ -12336,9 +12336,9 @@ GameObject21:
       Script0:
         name: BlackHeart
         fields:
-          floatSpeed: 1.75789952
+          floatSpeed: 1.86374497
           floatHeight: 0.5
-          rotationSpeed: 34.9124336
+          rotationSpeed: 82.3862534
           lifeTime: 10
   Children: ~
 GameObject22:
@@ -12417,9 +12417,9 @@ GameObject22:
       Script0:
         name: BoltgunBullets
         fields:
-          floatSpeed: 0.567739069
+          floatSpeed: 0.967592299
           floatHeight: 0.5
-          rotationSpeed: 39.4348946
+          rotationSpeed: 97.2113876
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -12499,9 +12499,9 @@ GameObject23:
       Script0:
         name: ShotgunShells
         fields:
-          floatSpeed: 1.17428148
+          floatSpeed: 1.84057271
           floatHeight: 0.5
-          rotationSpeed: 42.7275238
+          rotationSpeed: 88.0593109
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -12581,9 +12581,9 @@ GameObject24:
       Script0:
         name: ChapterStandard
         fields:
-          floatSpeed: 0.943885505
+          floatSpeed: 1.54878616
           floatHeight: 0.5
-          rotationSpeed: 55.0757179
+          rotationSpeed: 96.8985367
           lifeTime: 10
   Children: ~
 GameObject25:
@@ -12662,9 +12662,9 @@ GameObject25:
       Script0:
         name: MedicaeStimm
         fields:
-          floatSpeed: 1.18258095
+          floatSpeed: 1.59293664
           floatHeight: 0.5
-          rotationSpeed: 31.1120491
+          rotationSpeed: 81.036644
           lifeTime: 10
   Children: ~
 GameObject26:
@@ -12743,9 +12743,9 @@ GameObject26:
       Script0:
         name: PiercingBullets
         fields:
-          floatSpeed: 1.74045539
+          floatSpeed: 0.874741733
           floatHeight: 0.5
-          rotationSpeed: 62.9557266
+          rotationSpeed: 53.1370735
   Children: ~
 GameObject27:
   name: magnet.001_1_1_Instance_Instance
@@ -12823,9 +12823,9 @@ GameObject27:
       Script0:
         name: Magnet
         fields:
-          floatSpeed: 1.69182956
+          floatSpeed: 1.04495096
           floatHeight: 0.5
-          rotationSpeed: 57.5887337
+          rotationSpeed: 90.9268646
           lifeTime: 10
   Children: ~
 GameObject28:

@@ -131,6 +131,10 @@ public class PlayerShooting : MonoBehaviour
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
 
+        hasBoltgun = playerData.hasBoltgun;
+        hasShotgun = playerData.hasShotgun;
+        hasRailgun = playerData.hasRailgun;
+
         switch (currentGun)
         {
             case GunType.BOLTGUN:

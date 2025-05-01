@@ -9,7 +9,7 @@ public class ImageAsSlider : MonoBehaviour
 
     public override void Start()
     {
-        playerData = new PlayerData();
+        playerData = PlayerData.Instance;
 
         image = gameObject.GetComponent<UIImage>();
         if (image == null)

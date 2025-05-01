@@ -106,9 +106,6 @@ public:
 	const BoundingBox& getBoundingBox() const { return m_BoundingBox; }
 	void SetBoundingBox(const BoundingBox& bbox) { m_BoundingBox = bbox; }
 
-	uint32_t GetID() const { return m_ID; }
-	void SetID(uint32_t id) { m_ID = id; }
-
 	bool isAnimated = true;
 
 	size_t GetID() const { return id; }
@@ -124,6 +121,4 @@ private:
 	int m_BoneCounter = 0;
 
 	BoundingBox m_BoundingBox;
-
-	uint32_t m_ID = 0;
 };

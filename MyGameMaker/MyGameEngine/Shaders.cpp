@@ -352,7 +352,7 @@ void Shaders::SetUniform(const std::string& name, bool value) {
 	}
 }
 
-void Shaders::SetUnifromVec2(const std::string& name, const glm::vec2& value) {
+void Shaders::SetUniformVec2(const std::string& name, const glm::vec2& value) {
 	GLint location = GetUniformLocation(name);
 	if (location != -1) {
 		glUniform2fv(location, 1, glm::value_ptr(value));

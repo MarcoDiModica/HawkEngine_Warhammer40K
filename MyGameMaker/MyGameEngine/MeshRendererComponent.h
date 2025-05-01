@@ -43,26 +43,15 @@ public:
 	void SetColor(const glm::vec3& color);
 	glm::vec3 GetColor() const;
 
-	void Render() const;
-	void RenderMainCamera() const;
-
 	MonoObject* CsharpReference = nullptr;
 	MonoObject* GetSharp() override;
 
-    void PrepareForRendering() const;
-
 	void SetupLightProperties(Shaders* shader, const glm::vec3& viewPos) const;
-	void SetUpAnimationProperties(Shaders* shader) const;
-	void BindMeshForRendering() const;
-	void UnbindMeshAfterRendering() const;
-	void DrawMeshElements() const;
+	
 private:
     std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
     std::shared_ptr<Material> material = std::make_shared<Material>();
     glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
-
-	void RenderWithUnlitShader(Shaders* shader, const glm::mat4& view, const glm::mat4& projection) const;
-	void RenderWithPBRShader(Shaders* shader, const glm::mat4& view, const glm::mat4& projection) const;
 
 protected:
     friend class SceneSerializer;

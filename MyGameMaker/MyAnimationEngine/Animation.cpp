@@ -1,4 +1,5 @@
 #include "Animation.h"
+#include "Bone.h"
 
 Animation::Animation()
 {

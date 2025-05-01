@@ -321,53 +321,6 @@ void GameObject::Destroy()
 	}
 }
 
-void GameObject::Draw() const
-{
-    if (!active) { return; }
-#ifdef PROFILE
-    OPTICK_EVENT();
-#endif // PROFILE
-    switch (drawMode)
-    {
-    case DrawMode::AccumultedMatrix:
-        DrawAccumultedMatrix();
-        break;
-    case DrawMode::InstancedMatrix:
-        DrawInstancedMatrix();
-        break;
-    case DrawMode::PushPopMatrix:
-        DrawPushPopMatrix();
-        break;
-    }
-}
-
-void GameObject::DrawAccumultedMatrix() const
-{
-    //De momento nada ya lo hare en un futuro :)
-}
-
-void GameObject::DrawInstancedMatrix() const
-{
-    //De momento nada ya lo hare en un futuro :)
-}
-
-void GameObject::DrawPushPopMatrix() const
-{
-    glPushMatrix();
-    glMultMatrixd(GetTransform()->GetData());
-
-    if (HasComponent<MeshRenderer>())
-    {
-        auto meshRenderer = GetComponent<MeshRenderer>();
-        meshRenderer->Render();
-    }
-
-    //glMultMatrixd(&glm::dmat4(1.0)[0][0]);
-
-    glPopMatrix();
-    //glLoadIdentity();
-}
-
 void GameObject::OnEnable() {}
 
 void GameObject::OnDisable() {}

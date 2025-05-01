@@ -484,65 +484,6 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 	}
 }
 
-static void RenderOutline(GameObject* object) {
-	if (!object->isSelected || !object->HasComponent<MeshRenderer>()) return;
-
-	GLint lastProgram;
-	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
-	GLboolean depthTestEnabled;
-	glGetBooleanv(GL_DEPTH_TEST, &depthTestEnabled);
-	GLboolean blendEnabled;
-	glGetBooleanv(GL_BLEND, &blendEnabled);
-	GLint blendSrcFunc, blendDstFunc;
-	glGetIntegerv(GL_BLEND_SRC, &blendSrcFunc);
-	glGetIntegerv(GL_BLEND_DST, &blendDstFunc);
-	GLfloat lineWidth;
-	glGetFloatv(GL_LINE_WIDTH, &lineWidth);
-
-	glUseProgram(0);
-
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_STENCIL_TEST);
-	glStencilFunc(GL_ALWAYS, 1, 0xFF);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-	glStencilMask(0xFF);
-	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-
-	glm::mat4 modelMatrix = object->GetTransform()->GetMatrix();
-	glPushMatrix();
-	glMultMatrixf(glm::value_ptr(modelMatrix));
-	object->GetComponent<MeshRenderer>()->Render();
-	glPopMatrix();
-
-	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-	glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-	glStencilMask(0x00);
-
-	float outlineScale = 1.03f;
-	glm::mat4 outlineMatrix = glm::scale(modelMatrix, glm::vec3(outlineScale));
-
-	glColor4f(1.0f, 0.5f, 0.0f, 0.8f);
-
-	glPushMatrix();
-	glMultMatrixf(glm::value_ptr(outlineMatrix));
-	object->GetComponent<MeshRenderer>()->Render();
-	glPopMatrix();
-
-	glDisable(GL_STENCIL_TEST);
-	if (depthTestEnabled) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
-	if (blendEnabled) glEnable(GL_BLEND); else glDisable(GL_BLEND);
-	glBlendFunc(blendSrcFunc, blendDstFunc);
-	glStencilMask(0xFF);
-	glStencilFunc(GL_ALWAYS, 0, 0xFF);
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-
-	if (lastProgram > 0) {
-		glUseProgram(lastProgram);
-	}
-}
-
 static void RenderEditor() {
 	GLint lastProgram = 0;
 	GLint lastFBO = 0;

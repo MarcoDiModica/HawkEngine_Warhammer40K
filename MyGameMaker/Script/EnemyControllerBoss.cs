@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using HawkEngine;
 
 public class EnemyControllerBoss : EnemyController
@@ -339,6 +340,8 @@ public class EnemyControllerBoss : EnemyController
             }
             attackCount++;
             isBuried = false;
+            Task.Delay(500);
+            Roar();
         }
     }
 
@@ -455,6 +458,23 @@ public class EnemyControllerBoss : EnemyController
         return closestIndex;
     }
 
+    //Posibles roar clips
+    public void Roar()
+    {
+        //if (roarClips.Count == 0 || audioSource == null)
+        //    return;
+
+        //Random random = new Random();
+        //int index = random.Next(roarClips.Count);
+        //AudioClip selectedClip = roarClips[index];
+
+        //audioSource.PlayOneShot(selectedClip);
+    }
+
+    //public void SetRoarClips(List<AudioClip> clips)
+    //{
+    //    roarClips = clips;
+    //}
     private void Burrow()
     {
         if (isDead == false)

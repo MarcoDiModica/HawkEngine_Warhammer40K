@@ -1,0 +1,78 @@
+name: shotgun boolets_1_Instance
+prefabPath: Assets\Prefabs\ShotgunShellsPrefab.prefab.yaml
+uuid: 4173041297100968582
+tag: Ammunition
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 1.2294057607650757
+      - 3
+      - -14.578598976135254
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 0.0078000002540647984
+      - 0.0078000002540647984
+      - 0.0078000002540647984
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 1249804446031504670
+    material:
+      name: ShotgunShells
+    color:
+      - 1
+      - 1
+      - 1
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.87159532308578491
+      - 0.067828431725502014
+      - 0.067828431725502014
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - 1
+      - 1
+      - 1
+    constant: 1.26999998
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 8.89999962
+    intensity: 2.5
+    direction:
+      - -1
+      - -1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: ShotgunShells
+      fields:
+        floatSpeed: 1.9298687
+        floatHeight: 0.5
+        rotationSpeed: 36.534565
+        lifeTime: 30
+        isDetected: false
+Children: ~

@@ -11,6 +11,7 @@
 #include "../MyGameEditor/App.h"
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/Shaders.h"
+#include "../MyGameEngine/ResourceManager.h"
 #include "SceneSerializer.h"
 
 class Material;
@@ -56,7 +57,7 @@ public:
     std::shared_ptr<GameObject> CreateMeshObject(std::string name, std::shared_ptr<Mesh> mesh);
     std::shared_ptr<GameObject> CreateCameraObject(const std::string& name);
     std::shared_ptr<GameObject> CreateLightObject(const std::string& name);
-    std::shared_ptr<GameObject> CreateAudioObject(const std::string& name);
+    //std::shared_ptr<GameObject> CreateAudioObject(const std::string& name);
 
     void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png", std::shared_ptr<Material> mat = nullptr);
 
@@ -89,11 +90,14 @@ public:
 
     void SetMainCamera(std::shared_ptr<GameObject> camera);
 
+    ResourceManager* GetResourceManager() const { return resourceManager; }
+
 private:
     std::shared_ptr<GameObject> player;
     std::shared_ptr<GameObject> canvas;
     std::shared_ptr<GameObject> newGameButton;
     std::vector<std::shared_ptr<Scene>> scenes;
+    ResourceManager* resourceManager = new ResourceManager;
 	int prevCameraPriority = 0;
 };
 

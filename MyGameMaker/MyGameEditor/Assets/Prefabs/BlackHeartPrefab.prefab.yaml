@@ -1,0 +1,77 @@
+name: heart_1_1_Instance
+prefabPath: Assets\Prefabs\BlackHeartPrefab.prefab.yaml
+uuid: 5540422953138167897
+tag: PowerUp
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 1.5818749666213989
+      - 3
+      - -14.371868133544922
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 0.0020000000949949026
+      - 0.0020000000949949026
+      - 0.0020000000949949026
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 16779769848993743901
+    material:
+      name: powerups_DefaultMaterial_BaseColor
+    color:
+      - 1
+      - 1
+      - 1
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.75216209888458252
+      - 0.19349272549152374
+      - 0.82879376411437988
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - 1
+      - 1
+      - 1
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 6.5999999
+    intensity: 5.69999981
+    direction:
+      - -1
+      - -1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: BlackHeart
+      fields:
+        floatSpeed: 1.23809624
+        floatHeight: 0.5
+        rotationSpeed: 93.4034882
+        lifeTime: 10
+Children: ~

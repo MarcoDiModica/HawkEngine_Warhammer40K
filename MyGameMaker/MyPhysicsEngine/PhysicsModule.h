@@ -48,6 +48,7 @@ public:
         const glm::vec3& axisA, const glm::vec3& axisB, bool disable_collision = false);
     void SpawnPhysSphereWithForce(GameObject& launcher, GameObject& sphere, float radius, float mass, float forceMagnitude);
     void SetGlobalRestitution(float restitutionValue);
+	void ResetAllColliderTransforms();
 
     void SetColliderFriction(GameObject& go, float friction);
 

@@ -1,3 +1,5 @@
 Untagged
 Interactable
 Player
+Collider
+Destroyable

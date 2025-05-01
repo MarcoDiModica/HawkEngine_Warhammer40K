@@ -9,7 +9,7 @@ public class HormagauntAnimation : MonoBehaviour
 
     public override void Awake()
     {
-        
+
     }
     public override void Start()
     {
@@ -25,7 +25,7 @@ public class HormagauntAnimation : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        if (hormagauntesk.GetAnimationIndex() != 14 || hormagauntesk.GetAnimationIndex() != 19)
+        if (hormagauntesk.GetAnimationIndex() != 12 || hormagauntesk.GetAnimationIndex() != 17)
         {
             if (hormagauntesk.GetAnimationTime() >= hormagauntesk.GetAnimationLength() - 1.0f)
             {
@@ -37,9 +37,9 @@ public class HormagauntAnimation : MonoBehaviour
     public void SetStandardIdleAnimation()
     {
         hormagauntesk.SetAnimationPlayState(true);
-        if (hormagauntesk.GetAnimationIndex() != 14)
+        if (hormagauntesk.GetAnimationIndex() != 12)
         {
-            hormagauntesk.SetAnimation(14);
+            hormagauntesk.SetAnimation(12);
             hormagauntesk.SetAnimationSpeed(1.0f);
         }
     }
@@ -52,17 +52,17 @@ public class HormagauntAnimation : MonoBehaviour
         switch (attackIndex)
         {
             case 1:
-                hormagauntesk.SetAnimation(1);
+                hormagauntesk.SetAnimation(0);
                 //hormagauntesk.TransitionAnimations(15, 1, 0.1f);
                 hormagauntesk.SetAnimationSpeed(1.0f);
                 break;
             case 2:
-                hormagauntesk.SetAnimation(2);
+                hormagauntesk.SetAnimation(1);
                 //hormagauntesk.TransitionAnimations(15, 2, 0.1f);
                 hormagauntesk.SetAnimationSpeed(1.0f);
                 break;
             case 3:
-                hormagauntesk.SetAnimation(3);
+                hormagauntesk.SetAnimation(2);
                 //hormagauntesk.TransitionAnimations(15, 3, 0.1f);
                 hormagauntesk.SetAnimationSpeed(1.0f);
                 break;
@@ -71,10 +71,10 @@ public class HormagauntAnimation : MonoBehaviour
 
     public void SetDeathAnimation()
     {
-        if (hormagauntesk.GetAnimationIndex() != 8)
+        if (hormagauntesk.GetAnimationIndex() != 5)
         {
             hormagauntesk.SetAnimationPlayState(true);
-            hormagauntesk.SetAnimation(8);
+            hormagauntesk.SetAnimation(5);
             hormagauntesk.SetAnimationSpeed(0.9f);
         }
     }
@@ -82,9 +82,9 @@ public class HormagauntAnimation : MonoBehaviour
     public void SetRunningAnimation()
     {
         hormagauntesk.SetAnimationPlayState(true);
-        if (hormagauntesk.GetAnimationIndex() != 19)
+        if (hormagauntesk.GetAnimationIndex() != 15)
         {
-            hormagauntesk.SetAnimation(19);
+            hormagauntesk.SetAnimation(15);
             hormagauntesk.SetAnimationSpeed(1.0f);
         }
     }
@@ -92,9 +92,9 @@ public class HormagauntAnimation : MonoBehaviour
     public void SetStartLeapAnimation()
     {
         hormagauntesk.SetAnimationPlayState(true);
-        if (hormagauntesk.GetAnimationIndex() != 16)
+        if (hormagauntesk.GetAnimationIndex() != 12)
         {
-            hormagauntesk.SetAnimation(16);
+            hormagauntesk.SetAnimation(12);
             hormagauntesk.SetAnimationSpeed(1.0f);
         }
     }
@@ -102,9 +102,9 @@ public class HormagauntAnimation : MonoBehaviour
     public void SetFlyingLeapAnimation()
     {
         hormagauntesk.SetAnimationPlayState(true);
-        if (hormagauntesk.GetAnimationIndex() != 17)
+        if (hormagauntesk.GetAnimationIndex() != 13)
         {
-            hormagauntesk.SetAnimation(17);
+            hormagauntesk.SetAnimation(13);
             hormagauntesk.SetAnimationSpeed(1.0f);
         }
     }
@@ -112,9 +112,9 @@ public class HormagauntAnimation : MonoBehaviour
     public void SetLandingLeapAnimation()
     {
         hormagauntesk.SetAnimationPlayState(true);
-        if (hormagauntesk.GetAnimationIndex() != 18)
+        if (hormagauntesk.GetAnimationIndex() != 14)
         {
-            hormagauntesk.SetAnimation(18);
+            hormagauntesk.SetAnimation(14);
             hormagauntesk.SetAnimationSpeed(1.0f);
         }
     }
@@ -122,9 +122,9 @@ public class HormagauntAnimation : MonoBehaviour
     public void SetWholeLeapAnimation()
     {
         hormagauntesk.SetAnimationPlayState(true);
-        if (hormagauntesk.GetAnimationIndex() != 15)
+        if (hormagauntesk.GetAnimationIndex() != 11)
         {
-            hormagauntesk.SetAnimation(15);
+            hormagauntesk.SetAnimation(11);
             hormagauntesk.SetAnimationSpeed(1.5f);
         }
     }
@@ -136,17 +136,17 @@ public class HormagauntAnimation : MonoBehaviour
         switch (hitIndex)
         {
             case 1:
-                hormagauntesk.SetAnimation(11);
+                hormagauntesk.SetAnimation(7);
                 //hormagauntesk.TransitionAnimations(15, 1, 0.1f);
                 hormagauntesk.SetAnimationSpeed(1.0f);
                 break;
             case 2:
-                hormagauntesk.SetAnimation(12);
+                hormagauntesk.SetAnimation(8);
                 //hormagauntesk.TransitionAnimations(15, 2, 0.1f);
                 hormagauntesk.SetAnimationSpeed(1.0f);
                 break;
             case 3:
-                hormagauntesk.SetAnimation(13);
+                hormagauntesk.SetAnimation(9);
                 //hormagauntesk.TransitionAnimations(15, 3, 0.1f);
                 hormagauntesk.SetAnimationSpeed(1.0f);
                 break;

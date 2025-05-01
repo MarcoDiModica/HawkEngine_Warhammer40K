@@ -20,7 +20,7 @@ public class Scene1ToScene2 : MonoBehaviour
     public override void Update(float deltaTime)
     {
         if (changeScene) {
-            SceneManager.LoadScene("SpaceShip");
+            SceneManager.LoadScene("Lvl2Alpha1Release");
         }
     }
     public override void OnTriggerEnter(GameObject other)

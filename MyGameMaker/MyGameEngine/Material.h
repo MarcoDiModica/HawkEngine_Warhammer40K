@@ -3,6 +3,8 @@
 #include <memory>
 #include <vector>
 #include <chrono>
+#include <zlib.h>
+#include <fstream>
 #include "Image.h"
 #include "Shaders.h"
 #include "types.h"
@@ -37,7 +39,8 @@ public:
 	std::shared_ptr<Image> roughnessMapPtr = nullptr;             // Roughness map
 	std::shared_ptr<Image> aoMapPtr = nullptr;                    // Ambient occlusion map
 
-	unsigned int GetId() const { return gid; }
+	void SetID(size_t id) { matID = id; }
+	size_t GetId() const { return matID; }
 	unsigned int id() const { return imagePtr ? imagePtr->id() : 0; }
 
 	virtual void bind() const;
@@ -74,10 +77,16 @@ public:
 	void SetTonemapStrength(float strength) { tonemapStrength = strength; }
 	float GetTonemapStrength() const { return tonemapStrength; }
 
+	size_t matID;
+
+	void SetMatName(const std::string& name) { matName = name; }
+	std::string GetMatName() const { return matName; }
+
+	std::string matName = "";
+
 protected:
-	unsigned int gid;
 	static unsigned int next_id;
-	std::string image_path;
+	
 
 	void bindTexture(const std::shared_ptr<Image>& texture, GLenum textureUnit) const;
 
@@ -88,149 +97,68 @@ protected:
     YAML::Node encode() const {
         YAML::Node node;
 
-        std::string wrapModeStr;
-        switch (wrapMode) {
-        case Repeat:          wrapModeStr = "Repeat"; break;
-        case MirroredRepeat:  wrapModeStr = "MirroredRepeat"; break;
-        case Clamp:           wrapModeStr = "Clamp"; break;
-        default:              wrapModeStr = "Repeat"; break;
-        }
-        node["wrap_mode"] = wrapModeStr;
+        std::string name = matName;
+        node["name"] = name;
 
-        std::string filterStr;
-        switch (filter) {
-        case Nearest: filterStr = "Nearest"; break;
-        case Linear:  filterStr = "Linear"; break;
-        default:      filterStr = "Nearest"; break;
-        }
-        node["filter"] = filterStr;
-
-        node["color"] = std::vector<float>{ color.x, color.y, color.z, color.w };
-
-        node["metallic"] = metallic;
-        node["roughness"] = roughness;
-        node["ao"] = ao;
-        node["tonemap_strength"] = tonemapStrength;
-
-        std::string shaderTypeStr;
-        switch (shaderType) {
-        case ShaderType::PBR: shaderTypeStr = "PBR"; break;
-		case ShaderType::UNLIT: shaderTypeStr = "UNLIT"; break;
-        }
-        node["shader_type"] = shaderTypeStr;
-
-        std::string imageName = imagePtr ? imagePtr->image_name : "";
-        node["image"] = imageName;
-        if (imagePtr) imagePtr->SaveBinary(imagePtr->image_name);
-
-        std::string normalMapName = normalMapPtr ? normalMapPtr->image_name : "";
-        node["normal_map"] = normalMapName;
-        if (normalMapPtr) normalMapPtr->SaveBinary(normalMapPtr->image_name);
-
-        std::string metallicMapName = metallicMapPtr ? metallicMapPtr->image_name : "";
-        node["metallic_map"] = metallicMapName;
-        if (metallicMapPtr) metallicMapPtr->SaveBinary(metallicMapPtr->image_name);
-
-        std::string roughnessMapName = roughnessMapPtr ? roughnessMapPtr->image_name : "";
-        node["roughness_map"] = roughnessMapName;
-        if (roughnessMapPtr) roughnessMapPtr->SaveBinary(roughnessMapPtr->image_name);
-
-        std::string aoMapName = aoMapPtr ? aoMapPtr->image_name : "";
-        node["ao_map"] = aoMapName;
-        if (aoMapPtr) aoMapPtr->SaveBinary(aoMapPtr->image_name);
+		SaveBinary(name);
 
         return node;
     }
 
     bool decode(const YAML::Node& node) {
-        if (!node["wrap_mode"] || !node["filter"] || !node["color"] ||
-            !node["metallic"] || !node["roughness"] || !node["ao"] ||
-            !node["tonemap_strength"] || !node["shader_type"])
-        {
-            return false;
-        }
+		if (!node["name"])
+			return false;
 
-        //timer to see how long it takes to load the scene
-        auto start = std::chrono::high_resolution_clock::now();
+		std::string name = node["name"].as<std::string>();
 
-        std::string wrapModeStr = node["wrap_mode"].as<std::string>();
-        if (wrapModeStr == "Repeat")
-            wrapMode = Repeat;
-        else if (wrapModeStr == "MirroredRepeat")
-            wrapMode = MirroredRepeat;
-        else if (wrapModeStr == "Clamp")
-            wrapMode = Clamp;
-        else
-            wrapMode = Repeat;
+		std::string fullPath = "Library/Materials/" + name + ".mat";
 
-        std::string filterStr = node["filter"].as<std::string>();
-        if (filterStr == "Nearest")
-            filter = Nearest;
-        else if (filterStr == "Linear")
-            filter = Linear;
-        else
-            filter = Nearest;
+		std::ifstream fin(fullPath, std::ios::binary);
+		if (!fin.is_open()) {
+			return false;
+			throw std::runtime_error("Error opening material file: " + fullPath);
+		}
 
-        auto colorVec = node["color"].as<std::vector<float>>();
-        if (colorVec.size() == 4)
-            color = glm::vec4(colorVec[0], colorVec[1], colorVec[2], colorVec[3]);
-        else
-            return false;
+		matName = name;
 
-        metallic = node["metallic"].as<float>();
-        roughness = node["roughness"].as<float>();
-        ao = node["ao"].as<float>();
-        tonemapStrength = node["tonemap_strength"].as<float>();
+		fin.read(reinterpret_cast<char*>(&wrapMode), sizeof(wrapMode));
+		fin.read(reinterpret_cast<char*>(&filter), sizeof(filter));
+		fin.read(reinterpret_cast<char*>(&color), sizeof(color));
+		fin.read(reinterpret_cast<char*>(&shaderType), sizeof(shaderType));
 
-        std::string shaderTypeStr = node["shader_type"].as<std::string>();
-        if (shaderTypeStr == "PBR")
-            shaderType = ShaderType::PBR;
-        else
-            shaderType = ShaderType::UNLIT;
+		color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
-        if (node["image"]) {
-            std::string imagePath = node["image"].as<std::string>();
-            if (!imagePath.empty()) {
-                imagePtr = std::make_shared<Image>();
-                imagePtr = imagePtr->LoadBinary(imagePath);
-            }
-        }
+		while (fin.peek() != EOF) {
+			char type[4];
+			fin.read(type, 3);
+			type[3] = '\0';
 
-        if (node["normal_map"]) {
-            std::string normalMapPath = node["normal_map"].as<std::string>();
-            if (!normalMapPath.empty()) {
-                normalMapPtr = std::make_shared<Image>();
-                normalMapPtr = normalMapPtr->LoadBinary(normalMapPath);
-            }
-        }
+			uint32_t pathLen;
+			fin.read(reinterpret_cast<char*>(&pathLen), sizeof(pathLen));
 
-        if (node["metallic_map"]) {
-            std::string metallicMapPath = node["metallic_map"].as<std::string>();
-            if (!metallicMapPath.empty()) {
-                metallicMapPtr = std::make_shared<Image>();
-                metallicMapPtr = metallicMapPtr->LoadBinary(metallicMapPath);
-            }
-        }
+			std::string texturePath(pathLen, '\0');
+			fin.read(&texturePath[0], pathLen);
 
-        if (node["roughness_map"]) {
-            std::string roughnessMapPath = node["roughness_map"].as<std::string>();
-            if (!roughnessMapPath.empty()) {
-                roughnessMapPtr = std::make_shared<Image>();
-                roughnessMapPtr = roughnessMapPtr->LoadBinary(roughnessMapPath);
-            }
-        }
+			std::shared_ptr<Image> img = Image::LoadBinary(texturePath);
 
-        if (node["ao_map"]) {
-            std::string aoMapPath = node["ao_map"].as<std::string>();
-            if (!aoMapPath.empty()) {
-                aoMapPtr = std::make_shared<Image>();
-                aoMapPtr = aoMapPtr->LoadBinary(aoMapPath);
-            }
-        }
+			if (strcmp(type, "IMG") == 0) {
+				setImage(img);
+			}
+			else if (strcmp(type, "NML") == 0) {
+				setNormalMap(img);
+			}
+			else if (strcmp(type, "MTL") == 0) {
+				setMetallicMap(img);
+			}
+			else if (strcmp(type, "RGL") == 0) {
+				setRoughnessMap(img);
+			}
+			else if (strcmp(type, "AOM") == 0) {
+				setAoMap(img);
+			}
+		}
 
-        auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> elapsed = end - start;
-        LOG(LogType::LOG_INFO, "Material loaded in: %f seconds", elapsed.count());
+		LOG(LogType::LOG_INFO, "Material loaded successfully: %s", fullPath.c_str());
 
         return true;
     }

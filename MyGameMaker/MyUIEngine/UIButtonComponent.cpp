@@ -56,23 +56,23 @@ void UIButtonComponent::Update(float deltaTime)
     {
 
 		SetState(ButtonState::HOVERED);
-		imageComponent->SetColor(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+
 
 		if (Application->input->GetMouseButton(1) == KEY_STATE::KEY_REPEAT)
         {
 			SetState(ButtonState::PRESSED);
-            imageComponent->SetColor(glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
+
 		}
 		else if (Application->input->GetMouseButton(1) == KEY_STATE::KEY_UP)
 		{
 			SetState(ButtonState::CLICKED);
-			imageComponent->SetColor(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+
 		}
     }
     else
     {
         SetState(ButtonState::DEFAULT);
-		imageComponent->SetColor(glm::vec4(1.0f));
+
     }
 }
 

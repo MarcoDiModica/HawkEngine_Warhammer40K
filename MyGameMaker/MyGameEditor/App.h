@@ -13,11 +13,16 @@
 #include "SceneSerializer.h"
 #include "Root.h"
 #include "../MyPhysicsEngine/PhysicsModule.h"
+#include "../MyAudioEngine/AudioEngine.h"
+#include "../MyParticlesEngine/ParticleFX.h"
+#include "../MyGameEngine/Image.h"
 
 #define FIXED_TIME_STEP 0.016667f  
 #define MAX_FIXED_UPDATES 3 
 #define MIN_FRAME_TIME 0.0005
 #define MAX_FRAME_TIME 0.1
+
+#undef PROFILE
 
 class Module;
 class Window;
@@ -48,8 +53,8 @@ public:
 	bool PostUpdate();
 	void FinishUpdate();
 
-	const std::vector<LogInfo>& GetLogs() const;
 	void AddLog(LogType type, const char* entry);
+	const std::vector<LogInfo>& GetLogs() const;
 	void CleanLogs();
 
 	int GetFps() const { return m_fps; }
@@ -59,7 +64,41 @@ public:
 
 	void AddModule(Module* module, bool activate);
 
-	// TODO: HACERLOS UNIQUE PTR
+	void LoadAllParticleTextures() {
+		// Lista de texturas utilizadas en los presets
+		std::vector<std::string> texturePaths = {
+			"Assets/Textures/Smoke30Frames.png",
+			"Assets/Textures/fire_spritesheet.png",
+			"Assets/Textures/smoke_spritesheet.png",
+			"Assets/Textures/ixplosion.png",
+			"Assets/Textures/muzzle.png",
+			"Assets/Textures/ShotGun Muzzle Flash_Spritesheet_Yiwei.png",
+			"Assets/Textures/EnemyDash.png",
+			"Assets/Textures/Acid_Splash.png",
+			"Assets/Textures/acid_puddle.png",
+			"Assets/Textures/ElectricityBall.png",
+			"Assets/Textures/RailGunAuto.png",
+			"Assets/Textures/RailGunSemi.png",
+			"Assets/Textures/dropplet.png",
+			"Assets/Textures/Spark.png",
+			"Assets/Textures/thundaaar2.png",
+			"Assets/Textures/Medicae_Stim.png",
+			"Assets/Textures/Project3_Velocity_effect.png",
+			"Assets/Textures/Project3_AmmunitionBlessing_effect_Yiwei.png",
+			"Assets/Textures/BloodSplash_decals1_Yiwei.png"
+		};
+
+		for (const auto& path : texturePaths) {
+			auto image = std::make_shared<Image>();
+			if (image->LoadTexture(path)) {
+				loadedPartTextures[path] = image;
+			}
+			else {
+				std::cerr << "Failed to load texture: " << path << std::endl;
+			}
+		}
+	}
+
 	Window* window = nullptr;
 	Input* input = nullptr;
 	HardwareInfo* hardwareInfo = nullptr;
@@ -70,7 +109,7 @@ public:
 	Gizmos* gizmos = nullptr;
 	PhysicsModule* physicsModule = nullptr;
 
-	Mesh ElMesh;
+	std::unordered_map<std::string, std::shared_ptr<Image>> loadedPartTextures;
 
 	bool play = false;
 	bool hasChangedScene = false;

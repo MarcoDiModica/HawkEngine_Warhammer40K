@@ -1,0 +1,685 @@
+<html>
+<head>
+<title>Glossary</title>
+<link rel="stylesheet" href="style/docs.css">
+<link rel="stylesheet" href="style/code_highlight.css">
+<script type="text/javascript" src="scripts/language-selector.js"></script></head>
+<body>
+<div class="docs-body">
+<div class="manual-toc">
+<p>FMOD Engine User Manual 2.03</p>
+<ul>
+<li><a href="welcome.html">Welcome to the FMOD Engine</a></li>
+<li><a href="studio-guide.html">Studio API Guide</a></li>
+<li><a href="core-guide.html">Core API Guide</a></li>
+<li><a href="platforms.html">Platform Details</a></li>
+<li><a href="white-papers.html">White Papers</a></li>
+<li><a href="studio-api.html">Studio API Reference</a></li>
+<li><a href="core-api.html">Core API Reference</a></li>
+<li><a href="fsbank-api.html">FSBank API Reference</a></li>
+<li><a href="plugin-api.html">Plug-in API Reference</a></li>
+<li><a href="effects-reference.html">Effects Reference</a></li>
+<li><a href="troubleshooting.html">Troubleshooting</a></li>
+<li class="manual-current-chapter manual-active-chapter"><a href="glossary.html">Glossary</a><ul>
+<li><a href="#2d-vs-3d">2D vs 3D</a></li>
+<li><a href="#asset">Asset</a></li>
+<li><a href="#audio-channel">Audio channel</a></li>
+<li><a href="#automatic-parameter">Automatic Parameter</a></li>
+<li><a href="#bank-file">Bank File</a></li>
+<li><a href="#callback-behavior">Callback Behavior</a></li>
+<li><a href="#channel-group">Channel Group</a></li>
+<li><a href="#channel">Channel</a></li>
+<li><a href="#compressed-sample">Compressed Sample</a></li>
+<li><a href="#documentation-conventions">Documentation Conventions</a><ul>
+<li><a href="#parameter-tokens">Parameter Tokens</a></li>
+</ul>
+</li>
+<li><a href="#core-api-profiler-tool">Core API Profiler Tool</a></li>
+<li><a href="#core-api">Core API</a></li>
+<li><a href="#distance-units">Distance Units</a></li>
+<li><a href="#down-mixing">Down Mixing</a></li>
+<li><a href="#dsp-chain">DSP Chain</a></li>
+<li><a href="#dsp-clock">DSP Clock</a></li>
+<li><a href="#dsp-effect">DSP Effect</a></li>
+<li><a href="#dsp-engine">DSP Engine</a></li>
+<li><a href="#dsp-graph">DSP Graph</a></li>
+<li><a href="#dsp-sub-graph">DSP Sub-graph</a></li>
+<li><a href="#dsp">DSP</a></li>
+<li><a href="#effect">Effect</a></li>
+<li><a href="#fmod-engine">FMOD Engine</a></li>
+<li><a href="#fmod-studio">FMOD Studio</a></li>
+<li><a href="#fsb">FSB</a></li>
+<li><a href="#guid">GUID</a></li>
+<li><a href="#handedness">Handedness</a></li>
+<li><a href="#loading-mode">Loading Mode</a></li>
+<li><a href="#metadata">Metadata</a></li>
+<li><a href="#mixer">Mixer</a></li>
+<li><a href="#reading-sound-data">Reading Sound Data</a></li>
+<li><a href="#sample-data">Sample Data</a><ul>
+<li><a href="#endianness">Endianness</a></li>
+<li><a href="#sample-formats">Sample Formats</a></li>
+<li><a href="#samples-vs-bytes-vs-milliseconds">Samples vs Bytes vs Milliseconds</a></li>
+</ul>
+</li>
+<li><a href="#sample">Sample</a></li>
+<li><a href="#signal">Signal</a></li>
+<li><a href="#sound">Sound</a></li>
+<li><a href="#streaming-sample-data">Streaming Sample Data</a></li>
+<li><a href="#stream">Stream</a><ul>
+<li><a href="#streaming-issues">Streaming Issues</a></li>
+</ul>
+</li>
+<li><a href="#string-format">String Format</a></li>
+<li><a href="#studio-api">Studio API</a></li>
+<li><a href="#studio-guids-and-paths">Studio GUIDs and Paths</a></li>
+<li><a href="#studio-strings-bank">Studio Strings Bank</a></li>
+<li><a href="#studio-update-thread">Studio Update Thread</a></li>
+<li><a href="#sync-points">Sync Points</a></li>
+<li><a href="#up-mixing">Up Mixing</a></li>
+<li><a href="#user-data">User Data</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="manual-content api">
+<h1>12. Glossary</h1>
+<h2 id="2d-vs-3d"><a href="#2d-vs-3d">12.1 2D vs 3D</a></h2>
+<p>A 3D sound <strong>source</strong> is a <a class="apilink" href="core-api-channel.html">Channel</a> that has a position and a velocity in space. When a 3D <a class="apilink" href="core-api-channel.html">Channel</a> is playing, its volume, speaker placement and pitch will be affected automatically based on the relation to the <strong>listener</strong>.</p>
+<p>A <strong>listener</strong> is typically the location of the player or the game camera. It has a position and velocity like a sound <strong>source</strong>, but it also has an orientation.</p>
+<p>3D Sound behaviour:</p>
+<ul>
+<li><strong>Volume</strong> is affected by the relative distance of the <strong>listener</strong> and the <strong>source</strong>.</li>
+<li><strong>Pitch</strong> is affected by the relative velocity of the <strong>listener</strong> and the <strong>source</strong> (This causes the doppler effect).</li>
+<li><strong>Pan</strong> is affected by the relative orientation of the <strong>listener</strong> to the position of the <strong>source</strong>.</li>
+</ul>
+<p>2D Sound behaviour:</p>
+<ul>
+<li>3D <strong>listener</strong> and <strong>source</strong> positions, velocities and orientations are ignored and have no effect.</li>
+<li>2D specific funcionality such as <a class="apilink" href="core-api-channelcontrol.html#channelcontrol_setmixlevelsoutput">ChannelControl::setMixLevelsOutput</a>, <a class="apilink" href="core-api-channelcontrol.html#channelcontrol_setmixmatrix">ChannelControl::setMixMatrix</a> and <a class="apilink" href="core-api-channelcontrol.html#channelcontrol_setpan">ChannelControl::setPan</a> will allow manual panning of audio.</li>
+</ul>
+<p><strong>Note:</strong> You can blend between a 3D mix and a 2D mix with <a class="apilink" href="core-api-channelcontrol.html#channelcontrol_set3dlevel">ChannelControl::set3DLevel</a>.</p>
+<p>For a more detailed description of 3D sound behaviour, read the <a href="white-papers-3d-sounds.html">tutorial</a> on the topic.</p>
+<h2 id="asset"><a href="#asset">12.2 Asset</a></h2>
+<p>An audio asset is a prerecorded sound that could potentially be used in a game. Assets can be loose audio files, or can be built into <a href="glossary.html#bank-file">bank files</a> or <a href="glossary.html#fsb">FSBs</a>.</p>
+<h2 id="audio-channel"><a href="#audio-channel">12.3 Audio channel</a></h2>
+<p>An audio channel is a monoaural signal generally associated with a particular speaker. For example, a stereo <a href="glossary.html#signal">signal</a> contains two channels, left and right. This is unrelated to the FMOD <a href="glossary.html#channel">Channel</a> class.</p>
+<h2 id="automatic-parameter"><a href="#automatic-parameter">12.4 Automatic Parameter</a></h2>
+<p>An automatic parameter (also known in <a href="glossary.html#fmod-studio">FMOD Studio</a> as a <a href="https://fmod.com/docs/2.03/studio/glossary.html#built-in-parameter">built-in parameter</a>) is any <a href="studio-guide.html#setting-parameters">parameter</a> whose value is automatically set based on the event instance's <a href="studio-api-eventinstance.html#studio_eventinstance_set3dattributes">3D attributes</a> whenever the FMOD Studio system is updated.</p>
+<p>Types of automatic parameter include:</p>
+<ul>
+<li>FMOD_STUDIO_PARAMETER_AUTOMATIC_DISTANCE</li>
+<li>FMOD_STUDIO_PARAMETER_AUTOMATIC_EVENT_CONE_ANGLE</li>
+<li>FMOD_STUDIO_PARAMETER_AUTOMATIC_EVENT_ORIENTATION</li>
+<li>FMOD_STUDIO_PARAMETER_AUTOMATIC_DIRECTION</li>
+<li>FMOD_STUDIO_PARAMETER_AUTOMATIC_ELEVATION</li>
+<li>FMOD_STUDIO_PARAMETER_AUTOMATIC_LISTENER_ORIENTATION</li>
+<li>FMOD_STUDIO_PARAMETER_AUTOMATIC_SPEED</li>
+<li>FMOD_STUDIO_PARAMETER_AUTOMATIC_SPEED_ABSOLUTE</li>
+</ul>
+<p>For more information about these parameter types, see the <a href="studio-api-common.html#fmod_studio_parameter_type">FMOD_STUDIO_PARAMETER_TYPE</a> section of the <a href="studio-api.html">Studio API Reference</a> chapter.</p>
+<h2 id="bank-file"><a href="#bank-file">12.5 Bank File</a></h2>
+<p>A bank file, or "bank," is a collection of content created in an <a href="glossary.html#fmod-studio">FMOD Studio</a> project, formatted and compressed for use with the version of the <a href="glossary.html#fmod-engine">FMOD Engine</a> integrated into in your game.</p>
+<p>Bank files usually contain both <a href="glossary.html#metadata">metadata</a> and <a href="glossary.html#sample-data">sample data</a>. However, it is also possible to create split banks whose sample data and metadata are in separate bank files. Splitting banks in this fashion slightly increases overhead at run time, but can help keep patch size low if it is ever necessary to release a patched version of your game that includes changes to the audio metadata but not the sample data.</p>
+<p>Bank files are compatible with any version of the FMOD Engine with the same major and product version numbers as the version of FMOD Studio used to create them. For example, a bank built in FMOD Studio version 2.00.03 is compatible with FMOD Engine versions 2.00.03, 2.00.00, and 2.00.10, but not with versions 1.10.14, 1.00.03, and 2.01.03.</p>
+<p>At least one bank in any FMOD Studio project is a <span class="dead-link" href="glossary.html#master-bank">master bank</span class="dead-link">. A master bank contains data relevant to your entire FMOD Studio project, and so at least one master bank must be loaded into memory before <em>any</em> event in <em>any</em> bank may be used by your game. Most games have a single master bank that is kept loaded into memory at all times.</p>
+<p>Bank files (.bank) should not be confused with <a href="glossary.html#fsb">FMOD Sample Bank files (.fsb)</a>. They are two different formats.</p>
+<p>For more information about using bank files in the FMOD Engine, see the <a href="studio-guide.html#bank-layout">Bank Layout</a>, <a href="studio-guide.html#bank-loading">Bank Loading</a>, and <a href="studio-guide.html#bank-unload">Bank Unload</a> sections of the <a href="studio-guide.html">Studio API Guide</a> chapter, as well as the <a href="studio-api-bank.html">Studio::Bank</a> subchapter of the <a href="studio-api.html">Studio API Reference</a> chapter.</p>
+<h2 id="callback-behavior"><a href="#callback-behavior">12.6 Callback Behavior</a></h2>
+<p>Only one callback is stored for each <a class="apilink" href="core-api-system.html">System</a>/<a class="apilink" href="studio-api-system.html">Studio::System</a>/<a class="apilink" href="studio-api-eventinstance.html">Studio::EventInstance</a>/<a class="apilink" href="core-api-channelcontrol.html">ChannelControl</a>/<a class="apilink" href="core-api-dsp.html">DSP</a>. Therefore, any registered callback should handle all required callback types and indicate those types via the callback type mask.</p>
+<p>All calls to callbacks are issued per type. This means that if, for example, you use <a class="apilink" href="core-api-system.html#system_setcallback">System::setCallback</a> with <a class="apilink" href="core-api-system.html#fmod_system_callback_all">FMOD_SYSTEM_CALLBACK_ALL</a>, when the callback is called, only one type will be passed for the <code>type</code> argument. Multiple types will not be combined for a single call.</p>
+<p><strong>C/C++ behavior</strong>.  Casting your own function type to an FMOD callback could cause a crash or corruption. For callback declaration always use F_CALL between the return type and the function name, and use the correct C types for all callback parameters. </p>
+<h2 id="channel-group"><a href="#channel-group">12.7 Channel Group</a></h2>
+<p>A channel group allows attributes to be set on a group of <a href="glossary.html#channel">channels</a> collectively.  A <a href="glossary.html#channel-group">channel group</a> also allows you to operate on a the final mixed <a href="glossary.html#signal">signal</a> of the output of its <a href="glossary.html#channel">channels</a> and child <a href="glossary.html#channel-group">channel groups</a>. This is known as a 'sub mix'.</p>
+<p>A <a href="glossary.html#channel-group">channel group</a> can be created with <a class="apilink" href="core-api-system.html#system_createchannelgroup">System::createChannelGroup</a>, which returns a <a class="apilink" href="core-api-channelgroup.html">ChannelGroup</a> object.</p>
+<p>The sub mix buffer can be processed with <a href="glossary.html#effect">effects</a> (see <a class="apilink" href="core-api-channelcontrol.html#channelcontrol_adddsp">ChannelControl::addDSP</a>), saving CPU time compared to applying the same effect to multiple <a href="glossary.html#channel">channels</a> individually.</p>
+<p>The signal processing of a <a href="glossary.html#channel-group">channel group</a> persists even when a <a href="glossary.html#channel">channel</a> has stopped.</p>
+<p>A <a href="glossary.html#channel-group">channel group</a> can contain many children <a href="glossary.html#channel-group">channel groups</a>, but can only have one parent <a href="glossary.html#channel-group">channel group</a>. See <a class="apilink" href="core-api-channelgroup.html#channelgroup_addgroup">ChannelGroup::addGroup</a> and <a class="apilink" href="core-api-channelgroup.html#channelgroup_getparentgroup">ChannelGroup::getParentGroup</a>.</p>
+<h2 id="channel"><a href="#channel">12.8 Channel</a></h2>
+<p>A Channel is a playing instance of a <a class="apilink" href="core-api-sound.html">Sound</a>. This is unrelated to an <a href="glossary.html#audio-channel">audio channel</a>.</p>
+<p>After loading or creating a <a class="apilink" href="core-api-sound.html">Sound</a>, it is playable via the <a class="apilink" href="core-api-system.html#system_playsound">System::playSound</a> command which returns a Channel object for run-time manipulation of its properties.</p>
+<p>FMOD automatically selects a Channel for the sound to play on, you do not have to manage your own Channels.</p>
+<p>Set the maximum number of Channels playable with <a class="apilink" href="core-api-system.html#system_init">System::init</a>. For more information on Channels and how they can be real or virtual, go to the <a href="white-papers-virtual-voices.html">Virtual Voices</a> white paper.</p>
+<h2 id="compressed-sample"><a href="#compressed-sample">12.9 Compressed Sample</a></h2>
+<p>Parent topic : <a href="glossary.html#sound">Sound</a></p>
+<p>Compressed Samples are suited for small sounds that need to be played more than once at a time, for example sound effects. </p>
+<p>Only certain file formats are supported with this type of sound.  File formats such as .MP2, .MP3, and .FSB (using FADPCM, Vorbis, AT9 and XMA codecs).<br />
+This type of sound is stored in memory in its native compressed format, and decodes in real-time while playing.</p>
+<p>Use <a class="apilink" href="core-api-common.html#fmod_createcompressedsample">FMOD_CREATECOMPRESSEDSAMPLE</a> to create a <a class="apilink" href="core-api-sound.html">Sound</a> object in this mode.</p>
+<table>
+<thead>
+<tr>
+<th>Compressed Sample attributes</th>
+<th>Comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keeps sound compressed into memory.</td>
+<td>Can use less memory than a <a href="glossary.html#sample">sample</a>, large sounds can use more than a <a href="glossary.html#stream">stream</a>.</td>
+</tr>
+<tr>
+<td>Higher CPU overhead during playback.</td>
+<td>Uses more CPU than a <a href="glossary.html#sample">sample</a>, slightly less than a <a href="glossary.html#stream">stream</a>.</td>
+</tr>
+<tr>
+<td>Fast to load.</td>
+<td>Faster than a <a href="glossary.html#sample">sample</a>, possibly slower than a <a href="glossary.html#stream">stream</a> with very large sounds.</td>
+</tr>
+<tr>
+<td>Can play more than 1 at a time.</td>
+<td>Better polyphony than a <a href="glossary.html#stream">stream</a>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: Compressed samples have a context allocated for each instance of playback.  This requires a fixed start up memory overhead.  See <a class="apilink" href="core-api-system.html#fmod_advancedsettings">FMOD_ADVANCEDSETTINGS</a> to control codec maximums.</p>
+<h2 id="documentation-conventions"><a href="#documentation-conventions">12.10 Documentation Conventions</a></h2>
+<h3 id="parameter-tokens"><a href="#parameter-tokens">12.10.1 Parameter Tokens</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">Token</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><span><span class="token" title="Output">Out</span></span></td>
+<td>The API function will fill in information in this parameter.</td>
+</tr>
+<tr>
+<td align="center"><span><span class="token" title="Optional">Opt</span></span></td>
+<td>This parameter is optional, specify null or zero to ignore.</td>
+</tr>
+<tr>
+<td align="center"><span><span class="token" title="Read-only">R/O</span></span></td>
+<td>This token applies to members of various structures which FMOD passes to user callbacks. User callbacks must not modify the values of these members. Modifying the values of these members will cause undefined behavior.</td>
+</tr>
+<tr>
+<td align="center"><span><span class="token" title="C#only">C#</span></span></td>
+<td>This is only available in C#.</td>
+</tr>
+<tr>
+<td align="center"><span><span class="token" title="Javscript-only">JS</span></span></td>
+<td>This is only available in Javascript.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="core-api-profiler-tool"><a href="#core-api-profiler-tool">12.11 Core API Profiler Tool</a></h2>
+<p>The core API profiler tool, also known as the FMOD Profiler or <code>FMOD Profiler.exe</code>, is a tool for profiling your game's <a href="glossary.html#dsp-graph">DSP graph</a> and performance. It can be found in the /bin directory of the FMOD Engine distribution.</p>
+<p>To profile your game with the core API profiler tool, you must specify FMOD_INIT_PROFILE_ENABLE when initializing the Core API. For more information about initialization flags, see the <a href="core-api-system.html#fmod_init_profile_enable">FMOD_INITFLAGS</a> section of the <a href="core-api.html">Core API Reference</a> chapter.</p>
+<h2 id="core-api"><a href="#core-api">12.12 Core API</a></h2>
+<p>The Core API is a programmer API that allows the manipulation of low-level audio primitives, and is the backbone of the <a href="glossary.html#fmod-engine">FMOD Engine</a>.</p>
+<p>Unlike the <a href="glossary.html#studio-api">Studio API</a>, the Core API is a standalone solution that allows you to implement every part of your game's audio using only code, and does not require the use of <a href="glossary.html#fmod-studio">FMOD Studio</a> to design audio content. However, while it is more powerful than the Studio API, it includes fewer convenience functions, and so is best used in games that require more flexibility than the Studio API can provide.</p>
+<p>The Core API and Studio API together comprise the <a href="glossary.html#fmod-engine">FMOD Engine</a>.</p>
+<p>For more information about the Core API, see the <a href="core-guide.html">Core API Guide</a> and <a href="core-api.html">Core API Reference</a> chapters.</p>
+<h2 id="distance-units"><a href="#distance-units">12.13 Distance Units</a></h2>
+<p>The unit of measurement for distances for 3D calculations. By default 1 disance unit is equivalent to 1 meter. To use your game's distance units specify the scale of your game's distance units to meters using <a class="apilink" href="core-api-system.html#system_set3dsettings">System::set3DSettings</a>. </p>
+<h2 id="down-mixing"><a href="#down-mixing">12.14 Down Mixing</a></h2>
+<p>When the source <a href="glossary.html#signal">signal</a> channel count is higher than the destination, it will distribute its higher channel information into the lower speaker mode's channels.<br />
+This example is a table of the speakers in a stereo output with the input speakers of a 7.1 signal.  Values in table represent attenuation.  0dB = full volume, - = silence.</p>
+<table>
+<thead>
+<tr>
+<th>Output speaker</th>
+<th>Front left in</th>
+<th>Front right in</th>
+<th>Center in</th>
+<th>LFE in</th>
+<th>Surround left in</th>
+<th>Surround right in</th>
+<th>Back left in</th>
+<th>Back right in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Left</td>
+<td>0dB</td>
+<td>-</td>
+<td>-3dB</td>
+<td>-</td>
+<td>-3dB</td>
+<td>-</td>
+<td>-6dB</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Right</td>
+<td>-</td>
+<td>0dB</td>
+<td>-3dB</td>
+<td>-</td>
+<td>-</td>
+<td>-3dB</td>
+<td>-</td>
+<td>-6dB</td>
+</tr>
+</tbody>
+</table>
+<p><em>Example of a higher 7.1 speaker mode signal being down mixed to a stereo output.  When more than one input channel contributes to the output speaker, the inputs are summed/mixed together.</em></p>
+<h2 id="dsp-chain"><a href="#dsp-chain">12.15 DSP Chain</a></h2>
+<p>A DSP chain is a type of <a href="glossary.html#dsp-sub-graph">DSP sub-graph</a> in which multiple <a href="glossary.html#dsp">DSP units</a> are connected together in a linear fashion. Each <a class="apilink" href="core-api-channel.html">Channel</a> and <a class="apilink" href="core-api-channelgroup.html">ChannelGroup</a> contains a DSP chain.</p>
+<p>A DSP is capable of multiple inputs, but in a DSP chain each DSP is connected to the next with one input, all the way from the tail to the head. See <a class="apilink" href="core-api-channelcontrol.html#fmod_channelcontrol_dsp_index">FMOD_CHANNELCONTROL_DSP_INDEX</a> for special named offsets for 'head' and 'tail' and 'fader' units.</p>
+<p><img alt="DSP Chain" src="images/dsp-chain.png" /></p>
+<p>A typical <a class="apilink" href="core-api-channel.html">Channel</a> is represented above, with a node at the 'head' (of type <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_type_fader">FMOD_DSP_TYPE_FADER</a> to allow volume control and panning), which is fed by an <a href="effects-reference.html#echo">echo effect</a> (of type <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_type_echo">FMOD_DSP_TYPE_ECHO</a>) which is in turn fed by a PCM wavetable unit (of type that is internal to FMOD) at the 'tail'. The <a href="glossary.html#signal">signal</a> feeds from right to left to the DSP chain's head, before continuing to the next connected DSP (not pictured).</p>
+<h2 id="dsp-clock"><a href="#dsp-clock">12.16 DSP Clock</a></h2>
+<p>Each <a href="glossary.html#dsp">DSP unit</a> has an associated DSP clock. The speed of this clock affects any time-based behavior the DSP has, such that a DSP with a faster DSP clock will change the way it processes the <a href="glossary.html#signal">signal</a> more rapidly than one with a slower clock.</p>
+<p>By default, all DSP clocks run at the same speed, helping ensure that different <a href="glossary.html#channel">channels</a> and <a href="glossary.html#channel-group">channel groups</a> remain synchronized. However, if a channel or channel group is subject to pitch adjustment, the DSP clocks associated with that channel or channel group may run at a faster or slower rate in order to account for the time stretching inherent to pitch changes.</p>
+<p>DSP clocks are used for scheduling various time-based behaviors, including those of <a href="core-api-channelcontrol.html#channelcontrol_setdelay">ChannelControl::setDelay</a> in the <a href="glossary.html#core-api">Core API</a> and <a href="https://fmod.com/docs/2.03/studio/glossary.html#modulator">modulators</a> in <a href="glossary.html#fmod-studio">FMOD Studio</a>.</p>
+<h2 id="dsp-effect"><a href="#dsp-effect">12.17 DSP Effect</a></h2>
+<p>A DSP effect is an <a href="glossary.html#effect">effect</a> that makes use of a <a href="glossary.html#dsp">DSP unit</a>.</p>
+<h2 id="dsp-engine"><a href="#dsp-engine">12.18 DSP Engine</a></h2>
+<p>The DSP engine is the portion of the <a href="glossary.html#fmod-engine">FMOD Engine</a> that traverses, executes, and mixes the <a href="glossary.html#dsp-graph">DSP graph</a>.</p>
+<p>For more information about the DSP engine, see the <a href="white-papers-dsp-architecture.html#dsp-architecture-and-usage">DSP Architecture and Usage</a> white paper.</p>
+<h2 id="dsp-graph"><a href="#dsp-graph">12.19 DSP Graph</a></h2>
+<p>The DSP graph is made of <a href="glossary.html#dsp">DSP units</a> linked together into a network by <a href="core-api-dspconnection.html">DSPConnections</a>. <a href="glossary.html#signal">Audio signals</a> originate and flow through the DSP graph, being processed by the DSP units they pass through and combined into a submix whenever multiple DSPConnections target the same DSP unit, until they arrive at an output. The DSP graph allows audio to be dynamically processed and mixed, and so is the foundation of all dynamic game audio in FMOD.</p>
+<p>Normally, an FMOD project has one DSP graph. Sections of a DSP graph may be referred to as <a href="glossary.html#dsp-sub-graph">sub-graphs</a> for the purpose of easy discussion.</p>
+<p>An FMOD project's DSP graph may be viewed by using the <a href="glossary.html#core-api-profiler-tool">FMOD Profiler</a>, as long as you specify <a href="core-api-system.html#fmod_initflags">FMOD_INIT_PROFILE_ENABLE</a> when initializing the Core API.</p>
+<p>For more information about DSP graphs, see the <a href="white-papers-dsp-architecture.html#dsp-architecture-and-usage">DSP Architecture and Usage</a> white paper.</p>
+<h2 id="dsp-sub-graph"><a href="#dsp-sub-graph">12.20 DSP Sub-graph</a></h2>
+<p>A DSP sub-graph is an arbitrary subset of the <a href="glossary.html#dsp">DSP units</a> and <a href="core-api-dspconnection.html">DSPConnections</a> in a <a href="glossary.html#dsp-graph">DSP graph</a>. They are not represented in code; rather, they are a useful abstraction when discussing a project's DSP interactions, as they are easier to conceptualize of than the entire DSP graph.</p>
+<h2 id="dsp"><a href="#dsp">12.21 DSP</a></h2>
+<p>DSP stands for "Digital Signal Processing", and usually relates to processing raw PCM samples to alter the sound. A DSP unit (or just "a DSP") is a modular node in the <a href="glossary.html#dsp-graph">DSP graph</a> that's capable of a specific kind of digital signal processing. Many DSPs are used in <a href="glossary.html#effect">effects</a>, or to process audio in other situations.</p>
+<p>DSPs can be added to an FMOD <a class="apilink" href="core-api-channel.html">Channel</a>, or <a class="apilink" href="core-api-channelgroup.html">ChannelGroup</a> with the <a class="apilink" href="core-api-channelcontrol.html#channelcontrol_adddsp">ChannelControl::addDSP</a> function.</p>
+<p>FMOD provides a suite of DSPs that can alter sounds in interesting ways, such as better simulating real-world sound behavior or exaggerating sounds. Examples of such DSPs include the <a href="effects-reference.html#echo">echo</a>, <a href="effects-reference.html#sfx-reverb">SFX reverb</a>, <a href="effects-reference.html#it-low-pass">IT low pass</a>, <a href="effects-reference.html#flange">flange</a>, and <a href="effects-reference.html#chorus">chorus</a> DSPs.</p>
+<p>You can also write your own DSPs by using <a class="apilink" href="core-api-system.html#system_createdsp">System::createDSP</a>. For more information about writing DSPs, see the <a href="plugin-api-dsp.html">DSP</a> subchapter of the <a href="plugin-api.html">Plug-in API Reference</a> chapter.</p>
+<h2 id="effect"><a href="#effect">12.22 Effect</a></h2>
+<p>In the FMOD Engine, an effect is a modular unit that manipulates a <a href="glossary.html#signal">signal</a> in some way. Most effects are <a href="glossary.html#dsp-effect">DSP effects</a>, which is to say, they use digital signal processing units to alter the signal.</p>
+<p>The effects included in the FMOD Engine are detailed in the <a href="effects-reference.html">Effects Reference</a> chapter.<br />
+Many FMOD Engine effects also exist as <a href="https://fmod.com/docs/2.03/studio/glossary.html#effect">FMOD Studio effects</a>, though not all.</p>
+<h2 id="fmod-engine"><a href="#fmod-engine">12.23 FMOD Engine</a></h2>
+<p>The FMOD Engine is a runtime library for playing adaptive audio in games. It consists of two APIs: The <a href="glossary.html#studio-api">Studio API</a>, and the <a href="glossary.html#core-api">Core API</a>. Content created in <a href="glossary.html#fmod-studio">FMOD Studio</a> can be built as <a href="glossary.html#bank-file">.bank files</a>, which can then be loaded and played in the FMOD Engine using the Studio API. The Core API allows audio programmers to create audio content without using FMOD Studio, and to interact with the FMOD Engine's underlying mechanisms.</p>
+<p>For more information about the FMOD Engine, see the <a href="https://fmod.com/docs/2.03/api">FMOD Engine User Manual</a>. You're reading it right now.</p>
+<h2 id="fmod-studio"><a href="#fmod-studio">12.24 FMOD Studio</a></h2>
+<p>FMOD Studio is an application that allows sound designers and composers to create <a href="https://fmod.com/docs/2.03/studio/glossary.html#adaptive-audio">adaptive audio</a> content for games. Content created in FMOD Studio can be built as <a href="https://fmod.com/docs/2.03/studio/glossary.html#bank-file">.bank files</a>, which can then be loaded and played in the <a href="glossary.html#fmod-engine">FMOD Engine</a> using the <a href="glossary.html#studio-api">Studio API</a>.</p>
+<p>For more information about FMOD Studio, see the <a href="https://fmod.com/docs/2.03/studio">FMOD Studio User Manual</a>.</p>
+<h2 id="fsb"><a href="#fsb">12.25 FSB</a></h2>
+<p>.fsb files (also known as "FMOD Soundbanks" or "FSBs") are a proprietary file format that acts as a container for encoded and compressed sample data. They are built using <a href="fsbank-api.html">FSBank API</a> or the FMOD Soundbank Generator tool that comes packaged with the <a href="glossary.html#fmod-engine">FMOD Engine</a>, and their content can be loaded and played using the <a href="glossary.html#core-api">Core API</a>.</p>
+<p>.fsb files should not be confused with the .bank files built in FMOD Studio. Unlike FMOD Studio's .bank files, .fsb files cannot contain event or mixer metadata, but their sampledata can be loaded and played using the Core API without needing the <a href="glossary.html#studio-api">Studio API</a>. In most cases, if your game uses the Studio API, you should use .bank files; whereas if your game uses only the Core API, you should use .fsb files.</p>
+<p>The FMOD Engine is compatible with all .fsb files built using the FSBank API and the FMOD Soundbank Generator tool that comes packaged with the FMOD Engine. .fsb files that were instead built using older tools (such as FMOD Designer, FMOD Ex, or versions of the FMOD Soundbank Generator tool distributed with FMOD Ex) use older, deprecated codecs, and so are not compatible with the FMOD Engine.</p>
+<h2 id="guid"><a href="#guid">12.26 GUID</a></h2>
+<p>A GUID is a unique string used to identify a digital object, and stands for <strong>G</strong>lobally <strong>U</strong>nique <strong>Id</strong>entifier. In the <a href="glossary.html#fmod-engine">FMOD Engine</a>, GUIDs are commonly used to invoke and define relationships between the various elements of a project. For example, every <span class="dead-link" href="glossary.html#event">event</span class="dead-link">, <a href="glossary.html#asset">asset</a>, <span class="dead-link" href="glossary.html#bus">bus</span class="dead-link">, <span class="dead-link" href="glossary.html#parameter">parameter</span class="dead-link">, <span class="dead-link" href="glossary.html#snapshot">snapshot</span class="dead-link">, <a href="glossary.html#effect">effect</a>, <a href="glossary.html#bank-file">bank</a>, and <span class="dead-link" href="glossary.html#instrument">instrument</span class="dead-link"> in an FMOD Studio project has a GUID, and each such object's metadata includes the GUIDs of other objects that it references or is referenced by.</p>
+<p>Certain APIs allow you to specify which object to affect by GUID. For example, <a href="studio-api-system.html#studio_system_geteventbyid">Studio::System::getEventByID</a> gets the <a href="studio-api-eventdescription.html">eventDescription</a> of an event with a specified GUID.</p>
+<p>GUIDs are a form of <a href="glossary.html#metadata">metadata</a>. The GUID structure used by the FMOD Engine is defined by <a href="core-api-common.html#fmod_guid">FMOD_GUID</a>.</p>
+<h2 id="handedness"><a href="#handedness">12.27 Handedness</a></h2>
+<p>Handedness is an innate property of 3D cartesian coordinate systems. The handedness of the coordinate system specifies the relative direction of the Z axis along the line perpendicular to the X and Y axes, and the direction of positive rotations when an axis is directed towards the point of view.</p>
+<p>When the X axis is directed to the right, and the Y axis is directed upwards:</p>
+<ul>
+<li>A left-handed coordinate system's Z is directed <em>away</em> from the point of view, and rotations in the positive direction are <em>clockwise</em>.</li>
+<li>A right-handed coordinate system's Z axis is directed <em>towards</em> the point of view, and rotations in the positive direction are <em>counter-clockwise</em>.</li>
+</ul>
+<p>For 3D spatialization to behave intuitively, it is important that FMOD is configured to use the same orientation as your game's coordinate system. By default FMOD uses a left-handed coordinate system, but FMOD may also be configured to use a right-handed coordinate system by passing <a class="apilink" href="core-api-system.html#fmod_init_3d_righthanded">FMOD_INIT_3D_RIGHTHANDED</a> to <a class="apilink" href="core-api-system.html#system_init">System::init</a>.</p>
+<h2 id="loading-mode"><a href="#loading-mode">12.28 Loading Mode</a></h2>
+<p>The loading mode of an <a href="glossary.html#asset">asset</a> is the way in which that asset's <a href="glossary.html#sample-data">sample data</a> is loaded into memory so that it can be played. There are three possible loading modes:</p>
+<ul>
+<li><strong>Compressed.</strong> In this mode, the asset's sample data is loaded into memory in a compressed format in advance of its being played. This sample data is then decompressed in real time whenever an instance of the asset is played. This mode requires less memory than decompressed loading mode, but requires more CPU to play the loaded asset.</li>
+<li><strong>Decompressed.</strong> In this mode, the asset's sample data is loaded into memory in a decompressed format in advance of being played. This mode requires more memory than compressed loading mode, but does not require as much CPU to play the loaded asset.</li>
+<li><strong>Streaming.</strong> In this mode, each playing instance of the asset requires a separate stream. Each stream is a ring buffer; the asset associated with a stream is loaded piecemeal from disk into the buffer, and each piece is played as soon as it is loaded then immediately overwritten by the next piece. Because only a small part of the asset is loaded into memory at any given time, streaming assets require only a small amount of memory compared to the other loading modes. However, because each instance of a streaming asset requires a separate buffer that loads the asset independently, each contemporaneously playing instance of an asset with this loading mode requires constant file I/O.</li>
+</ul>
+<p>For more information about loading assets in the FMOD Engine, see the <a href="studio-guide.html#sample-data-loading">Sample Data Loading</a> section of the <a href="studio-guide.html">Studio API Guide</a> chapter. For more information about the streaming loading mode specifically, see the <a href="core-guide.html#streaming">Streaming</a> section of the <a href="core-guide.html">Core API Guide</a> chapter.</p>
+<h2 id="metadata"><a href="#metadata">12.29 Metadata</a></h2>
+<p>Metadata is data that describes other data. In FMOD Studio and the FMOD Engine, "metadata" usually means the data that describes how <a href="glossary.html#sample-data">sample data</a> is to be used in a game, i.e.: the data that defines an <a href="glossary.html#fmod-studio">FMOD Studio</a> project's <span class="dead-link" href="glossary.html#event">events</span class="dead-link">, <a href="glossary.html#mixer">mixer</a>, and other non-sample data content. This kind of metadata is packaged into <a href="glossary.html#bank-file">bank files</a> whenever a project is built in FMOD Studio.</p>
+<h2 id="mixer"><a href="#mixer">12.30 Mixer</a></h2>
+<p>See <a href="glossary.html#dsp-graph">DSP graph</a>.</p>
+<h2 id="reading-sound-data"><a href="#reading-sound-data">12.31 Reading Sound Data</a></h2>
+<p>The following shows how to read sound data to a buffer using <a class="apilink" href="core-api-sound.html#sound_readdata">Sound::readData</a>.</p>
+<p>
+<div class="language-selector">
+<div class="language-tab" data-language="language-c">C</div>
+<div class="language-tab" data-language="language-cpp">C++</div>
+<div class="language-tab" data-language="language-csharp">C#</div>
+<div class="language-tab" data-language="language-javascript">JS</div>
+</div>
+</p>
+<div class="highlight language-cpp"><pre><span></span><span class="n">FMOD</span><span class="o">::</span><span class="n">Sound</span> <span class="o">*</span><span class="n">sound</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">buffer</span><span class="p">;</span>
+
+<span class="n">system</span><span class="o">-&gt;</span><span class="n">createSound</span><span class="p">(</span><span class="s">&quot;drumloop.wav&quot;</span><span class="p">,</span> <span class="n">FMOD_DEFAULT</span> <span class="o">|</span> <span class="n">FMOD_OPENONLY</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sound</span><span class="p">);</span>
+<span class="n">sound</span><span class="o">-&gt;</span><span class="n">getLength</span><span class="p">(</span><span class="o">&amp;</span><span class="n">length</span><span class="p">,</span> <span class="n">FMOD_TIMEUNIT_RAWBYTES</span><span class="p">);</span>
+
+<span class="n">buffer</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">length</span><span class="p">];</span>
+<span class="n">sound</span><span class="o">-&gt;</span><span class="n">readData</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
+
+<span class="k">delete</span><span class="p">[]</span> <span class="n">buffer</span><span class="p">;</span>
+</pre></div>
+
+<div class="highlight language-c"><pre><span></span><span class="n">FMOD_SOUND</span> <span class="o">*</span><span class="n">sound</span><span class="p">;</span>
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">buffer</span><span class="p">;</span>
+
+<span class="n">FMOD_System_CreateSound</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="s">&quot;drumloop.wav&quot;</span><span class="p">,</span> <span class="n">FMOD_DEFAULT</span> <span class="o">|</span> <span class="n">FMOD_OPENONLY</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sound</span><span class="p">);</span>
+<span class="n">FMOD_Sound_GetLength</span><span class="p">(</span><span class="n">sound</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">length</span><span class="p">,</span> <span class="n">FMOD_TIMEUNIT_RAWBYTES</span><span class="p">);</span>
+
+<span class="n">buffer</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">length</span><span class="p">);</span>
+<span class="n">FMOD_Sound_ReadData</span><span class="p">(</span><span class="n">sound</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">buffer</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="n">free</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+</pre></div>
+
+<div class="highlight language-csharp"><pre><span></span><span class="n">FMOD</span><span class="p">.</span><span class="n">Sound</span> <span class="n">sound</span><span class="p">;</span>
+<span class="kt">uint</span> <span class="n">length</span><span class="p">;</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">buffer</span><span class="p">;</span>
+
+<span class="n">system</span><span class="p">.</span><span class="n">createSound</span><span class="p">(</span><span class="s">&quot;drumloop.wav&quot;</span><span class="p">,</span> <span class="n">FMOD</span><span class="p">.</span><span class="n">MODE</span><span class="p">.</span><span class="n">DEFAULT</span> <span class="p">|</span> <span class="n">FMOD</span><span class="p">.</span><span class="n">MODE</span><span class="p">.</span><span class="n">OPENONLY</span><span class="p">,</span> <span class="k">out</span> <span class="n">sound</span><span class="p">);</span>
+<span class="n">sound</span><span class="p">.</span><span class="n">getLength</span><span class="p">(</span><span class="k">out</span> <span class="n">length</span><span class="p">,</span> <span class="n">FMOD</span><span class="p">.</span><span class="n">TIMEUNIT</span><span class="p">.</span><span class="n">RAWBYTES</span><span class="p">);</span>
+
+<span class="n">buffer</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="p">[(</span><span class="kt">int</span><span class="p">)</span><span class="n">length</span><span class="p">];</span>
+<span class="n">sound</span><span class="p">.</span><span class="n">readData</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+</pre></div>
+
+<div class="highlight language-javascript"><pre><span></span><span class="kd">var</span> <span class="nx">sound</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="kd">var</span> <span class="nx">buffer</span> <span class="o">=</span> <span class="p">{};</span>
+
+<span class="nx">system</span><span class="p">.</span><span class="nx">createSound</span><span class="p">(</span><span class="s2">&quot;drumloop.wav&quot;</span><span class="p">,</span> <span class="nx">FMOD</span><span class="p">.</span><span class="nx">DEFAULT</span> <span class="o">|</span> <span class="nx">FMOD</span><span class="p">.</span><span class="nx">OPENONLY</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">sound</span><span class="p">);</span>
+<span class="nx">sound</span> <span class="o">=</span> <span class="nx">sound</span><span class="p">.</span><span class="nx">val</span><span class="p">;</span>
+
+<span class="nx">sound</span><span class="p">.</span><span class="nx">getLength</span><span class="p">(</span><span class="nx">length</span><span class="p">,</span> <span class="nx">FMOD</span><span class="p">.</span><span class="nx">TIMEUNIT_RAWBYTES</span><span class="p">);</span>
+<span class="nx">length</span> <span class="o">=</span> <span class="nx">length</span><span class="p">.</span><span class="nx">val</span><span class="p">;</span>
+
+<span class="nx">sound</span><span class="p">.</span><span class="nx">readData</span><span class="p">(</span><span class="nx">buffer</span><span class="p">,</span> <span class="nx">length</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+<span class="nx">buffer</span> <span class="o">=</span> <span class="nx">buffer</span><span class="p">.</span><span class="nx">val</span><span class="p">;</span>
+</pre></div>
+
+<p><strong>See Also:</strong> <a class="apilink" href="core-api-common.html#fmod_timeunit">FMOD_TIMEUNIT</a>, <a class="apilink" href="core-api-common.html#fmod_mode">FMOD_MODE</a>, <a class="apilink" href="core-api-sound.html#sound_getlength">Sound::getLength</a>, <a class="apilink" href="core-api-system.html#system_createsound">System::createSound</a></p>
+<h2 id="sample-data"><a href="#sample-data">12.32 Sample Data</a></h2>
+<p>Sample data is raw (PCM) or a compressed <a href="glossary.html#signal">audio signal</a>, stored as a <a href="glossary.html#sound">sound</a>.  Multi-channel PCM sample data (stereo and above) is interleaved, so a 5.1 signal for example has 6 values stored together per sample.</p>
+<h3 id="endianness"><a href="#endianness">12.32.1 Endianness</a></h3>
+<p>When accessing raw data in a sound, it will be in the native endianness of the platform.  See <a class="apilink" href="core-api-sound.html#sound_lock">Sound::lock</a>, <a class="apilink" href="core-api-sound.html#sound_unlock">Sound::unlock</a>.<br />
+When a sound file is loaded, FMOD will convert the endian to match the native endian of the platform.</p>
+<h3 id="sample-formats"><a href="#sample-formats">12.32.2 Sample Formats</a></h3>
+<p>Sample data can come in a variety of PCM bit depths (8,16,24,32) and types (integer, float), or as a compressed bitstream.   See <a class="apilink" href="core-api-sound.html#fmod_sound_format">FMOD_SOUND_FORMAT</a>.</p>
+<h3 id="samples-vs-bytes-vs-milliseconds"><a href="#samples-vs-bytes-vs-milliseconds">12.32.3 Samples vs Bytes vs Milliseconds</a></h3>
+<p>Within FMOD functions you will see references to PCM samples, bytes and milliseconds.</p>
+<p>To understand what the difference is a diagram has been provided to show how raw PCM sample data is stored in FMOD buffers.</p>
+<p><img alt="Samples vs Bytes vs Milliseconds" src="images/samples-bytes-milliseconds.png" /></p>
+<p>In this diagram you will see that a stereo sound has its left/right data interleaved one after the other.<br />
+A left/right pair (a sound with 2 <strong>channels</strong>) is called a <strong>sample</strong>.<br />
+Because this is made up of 16bit data, 1 <strong>sample</strong> = 4 <strong>bytes</strong>.<br />
+If the sample rate, or playback rate is 44.1khz, or 44100 samples per second, then <strong>1 sample is 1/44100th of a second</strong>, or <strong>1/44th of a millisecond</strong>. Therefore 44100 samples = 1 second or 1000ms worth of data.<br />
+To convert between the different terminologies, the following formulas can be used:</p>
+<ul>
+<li><strong>ms</strong> = samples * 1000 / samplerate.</li>
+<li><strong>samples</strong> = ms * samplerate / 1000.</li>
+<li><strong>samplerate</strong> = samples * 1000 / ms.</li>
+<li><strong>bytes</strong> = samples * bits * channels / 8.</li>
+<li><strong>samples</strong> = bytes * 8 / bits / channels.</li>
+</ul>
+<p>Some functions like <a class="apilink" href="core-api-sound.html#sound_getlength">Sound::getLength</a> provide the length in milliseconds, bytes and samples to avoid needing to do these calculations.</p>
+<h2 id="sample"><a href="#sample">12.33 Sample</a></h2>
+<p>Parent topic : <a href="glossary.html#sound">Sound</a></p>
+<p>Samples (also referred to as 'decompress into memory' type sounds), are suited for small sounds that need to be played more than once at a time, for example sound effects.</p>
+<p>Use <a class="apilink" href="core-api-common.html#fmod_createsample">FMOD_CREATESAMPLE</a> to create a <a class="apilink" href="core-api-sound.html">Sound</a> object in this mode.</p>
+<table>
+<thead>
+<tr>
+<th>Sample attributes</th>
+<th>Comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Decompresses whole sound into memory.</td>
+<td>Can use more memory than a <a href="glossary.html#compressed-sample">compressed sample</a> or <a href="glossary.html#stream">stream</a>.</td>
+</tr>
+<tr>
+<td>Low CPU overhead during playback.</td>
+<td>Uses less CPU than a <a href="glossary.html#compressed-sample">compressed sample</a> or <a href="glossary.html#stream">stream</a>.</td>
+</tr>
+<tr>
+<td>Slower to load.</td>
+<td>Can take longer to load on large sounds than a <a href="glossary.html#compressed-sample">compressed sample</a> or <a href="glossary.html#stream">stream</a>.</td>
+</tr>
+<tr>
+<td>Can play more than 1 at a time.</td>
+<td>Better polyphony than a <a href="glossary.html#stream">stream</a>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mobile Developers</strong>:  A common use for this format is to store files compressed on disk (for faster download speed), then decompress into memory at load time, for lower cpu overhead at run-time.</p>
+<h2 id="signal"><a href="#signal">12.34 Signal</a></h2>
+<p>The signal is an abstraction of the <a href="glossary.html#sample-data">audio sample data</a> flowing through an FMOD project. Understanding how signals flow through a project is necessary to understand how the <a href="glossary.html#dsp-graph">DSP graph</a> and mixing work.</p>
+<p>In most cases, signals originate from <a href="glossary.html#channel">channels</a>, which route their output signals into <a href="glossary.html#channel-group">channel groups</a>. Each channel group creates a submix of all the signals flowing into it. Channels and channel groups may feature <a href="glossary.html#dsp">DSPs</a> that process the signal before passing it to the next DSP in the graph associated with that channel group; when there are no DSPs left in the channel group, the signal is routed from that channel group to that channel group's routing destination. All signals should eventually flow to the master channel group or an audio port supplied by an <a href="core-api-system.html#fmod_outputtype">FMOD_OUTPUTTYPE</a> plug-in.</p>
+<h2 id="sound"><a href="#sound">12.35 Sound</a></h2>
+<p>A sound is an instance of <a href="glossary.html#sample-data">sample data</a> which can be loaded from media, or created from memory.</p>
+<p>When a sound is loaded, it is either decompressed as a static sample into memory as PCM (sample), loaded into memory in its native format and decompressed at runtime (compressed sample), or streamed and decoded in realtime (in chunks) from an external media such as a disk or internet (stream).</p>
+<p>For more detail see:</p>
+<ul>
+<li><a href="glossary.html#sample">Sample</a></li>
+<li><a href="glossary.html#stream">Stream</a></li>
+<li><a href="glossary.html#compressed-sample">Compressed Sample</a></li>
+</ul>
+<p>A sound can be created with <a class="apilink" href="core-api-system.html#system_createsound">System::createSound</a> or <a class="apilink" href="core-api-system.html#system_createstream">System::createStream</a> which returns a <a class="apilink" href="core-api-sound.html">Sound</a> object.   A <a class="apilink" href="core-api-sound.html">Sound</a> object can be played with <a class="apilink" href="core-api-system.html#system_playsound">System::playSound</a>.</p>
+<h2 id="streaming-sample-data"><a href="#streaming-sample-data">12.36 Streaming Sample Data</a></h2>
+<p>Streaming sample data is <a href="glossary.html#sample-data">sample data</a> formatted for the <a href="glossary.html#stream">streaming</a> loading mode. The distinction between streaming sample data and non-streaming sample data is only extant when using the Studio API to play content from bank files, as the <a href="glossary.html#loading-mode">loading mode</a> of <a href="glossary.html#asset">assets</a> in a bank file is encoded into that bank file along with those assets. When using the Core API, the loading mode of a sound is specified at run time.</p>
+<p>When using the Core API, the <a href="glossary.html#loading-mode">loading mode</a> of a sound is specified at run time.</p>
+<p>For more information about streaming, see the <a href="core-guide.html#streaming">Streaming</a> section of the <a href="core-guide.html">Core API Guide</a> chapter.</p>
+<h2 id="stream"><a href="#stream">12.37 Stream</a></h2>
+<p>Parent topic : <a href="glossary.html#sound">Sound</a></p>
+<p>A stream is good for a sound that is too large to fit into memory.  A stream reads from disk or other media like the internet as it plays.</p>
+<p>Typically suited to larger sounds like music, long ambiences, or voice.</p>
+<p>Use <a class="apilink" href="core-api-common.html#fmod_createstream">FMOD_CREATESTREAM</a> to create a <a class="apilink" href="core-api-sound.html">Sound</a> object in this mode.</p>
+<table>
+<thead>
+<tr>
+<th>'Stream' attributes</th>
+<th>Comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Uses a small buffer in memory.</td>
+<td>Uses less memory than a <a href="glossary.html#sample">sample</a> or <a href="glossary.html#compressed-sample">compressed sample</a> on large sounds.</td>
+</tr>
+<tr>
+<td>Higher CPU overhead during playback.</td>
+<td>Uses more CPU than <a href="glossary.html#sample">sample</a>, slightly more than a <a href="glossary.html#compressed-sample">compressed sample</a> due to simultaneous reading from medium.</td>
+</tr>
+<tr>
+<td>Fast to load.</td>
+<td>Faster than a <a href="glossary.html#sample">sample</a> on large sounds, possibly faster than a <a href="glossary.html#compressed-sample">compressed sample</a> with very large sounds.</td>
+</tr>
+<tr>
+<td>Can only be played once at a time.</td>
+<td>Worse polyphony than a <a href="glossary.html#sample">sample</a> or <a href="glossary.html#compressed-sample">compressed sample</a>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: A very small sound may use more memory than a <a href="glossary.html#sample">sample</a> or <a href="glossary.html#compressed-sample">compressed sample</a> when created as a stream, due to the stream file/decode buffer overhead being bigger than the size of the sound.</p>
+<h3 id="streaming-issues"><a href="#streaming-issues">12.37.1 Streaming Issues</a></h3>
+<p><strong>Bandwidth</strong></p>
+<p>Streaming audio from a medium should be kept to a limited number of instances, to avoid starvation of data leading to skipping / stuttering audio.</p>
+<p>Increasing stream memory buffer sizes can help to mitigate this problem.  See <a class="apilink" href="core-api-system.html#system_setstreambuffersize">System::setStreamBufferSize</a> and <a class="apilink" href="core-api-system.html#fmod_advancedsettings_defaultdecodebuffersize">FMOD_ADVANCEDSETTINGS::defaultDecodeBufferSize</a>.</p>
+<p><strong>Speed of commands using streams</strong></p>
+<p><a class="apilink" href="core-api-system.html#system_createstream">System::createStream</a>, <a class="apilink" href="core-api-channel.html#channel_setposition">Channel::setPosition</a> and <a class="apilink" href="core-api-sound.html#sound_getsubsound">Sound::getSubSound</a> when using a stream can take longer than an in memory sample, as they have to initialize internal buffers and flush them from disk.</p>
+<p>Use <a class="apilink" href="core-api-common.html#fmod_nonblocking">FMOD_NONBLOCKING</a> command to remove the cost from the main thread and put the overhead into a background thread.</p>
+<p><strong>Setting loop counts or points of a playing stream </strong></p>
+<p>Issues with looping streaming sounds may arise when changing the loop count or loop points of a playing stream.</p>
+<p>Sounds created with <a class="apilink" href="core-api-system.html#system_createstream">System::createStream</a> or <a class="apilink" href="core-api-common.html#fmod_createstream">FMOD_CREATESTREAM</a> may have executed loop logic and buffered sample data before API calls to change their looping properties. If issues occur after changing loop properties you may need to call <a class="apilink" href="core-api-channel.html#channel_setposition">Channel::setPosition</a> to force a flush of the stream buffer.</p>
+<p>Note this will usually only happen if you have sounds or loop regions which are smaller than the stream <em>decode</em> buffer. See <a class="apilink" href="core-api-system.html#fmod_createsoundexinfo">FMOD_CREATESOUNDEXINFO</a>.</p>
+<h2 id="string-format"><a href="#string-format">12.38 String Format</a></h2>
+<p>All FMOD Public APIs and structures use UTF-8 strings.</p>
+<p>As C# uses UTF-16 strings by default, the FMOD C# api function parameters will automatically convert between UTF-16 and UTF-8 strings in any api using the C# "string" type or FMOD's "StringWrapper" type. However, any API that uses strings via an IntPtr will not automatically convert from UTF-16, and will instead expect a UTF-8 string to be used.</p>
+<h2 id="studio-api"><a href="#studio-api">12.39 Studio API</a></h2>
+<p>The Studio API is a programmer API that allows your game to interact with data-driven projects created in <a href="glossary.html#fmod-studio">FMOD Studio</a> at run time. The Studio API and <a href="glossary.html#core-api">Core API</a> together comprise the <a href="glossary.html#fmod-engine">FMOD Engine</a>.</p>
+<p>The Studio API is built on top of the Core API, and extends its functionality. <a href="glossary.html#fmod-studio">FMOD Studio</a> and the Studio API are flexible and powerful enough to suit the audio needs of the vast majority of games. However, if a specific game requires more flexibility than the Studio API provides, we recommend using the Core API instead.</p>
+<p>For more information about the Studio API, see the <a href="studio-guide.html">Studio API Guide</a> and <a href="studio-api.html">Studio API Reference</a> chapters.</p>
+<h2 id="studio-guids-and-paths"><a href="#studio-guids-and-paths">12.40 Studio GUIDs and Paths</a></h2>
+<p>Many functions in the Studio API allow you to identify an object within an <a href="glossary.html#fmod-studio">FMOD Studio</a> project by the object's globally unique identifier, or <a href="glossary.html#guid">GUID</a>. These API functions will accept the GUID in binary format (mostly useful when an object's GUID has been looked up programmatically by name), or as a string formatted as 32 digits separated by hyphens and enclosed in braces: <code>{00000000-0000-0000-0000-000000000000}</code>.</p>
+<p>Many functions in the Studio API allow you to identify an object within an FMOD Studio project by the object's path. Objects can only be identified by path if the project's <a href="#studio-strings-bank">strings bank</a> is loaded.</p>
+<p>See the <a href="https://fmod.com/docs/2.03/studio">FMOD Studio User Manual</a> for more information.</p>
+<h2 id="studio-strings-bank"><a href="#studio-strings-bank">12.41 Studio Strings Bank</a></h2>
+<p>When building a <span class="dead-link" href="glossary.html#master-bank">master bank</span class="dead-link">, <a href="glossary.html#fmod-studio">FMOD Studio</a> also writes out a strings bank for the project. The strings bank contains a string table which the <a href="glossary.html#studio-api">Studio API</a> can use to resolve <a href="glossary.html#guid">GUIDs</a> from paths. Studio API functions which accept paths require the project's strings bank to be loaded in order to function correctly.</p>
+<h2 id="studio-update-thread"><a href="#studio-update-thread">12.42 Studio Update Thread</a></h2>
+<p>A thread created by the <a href="studio-api-system.html">Studio System</a> to perform asynchronous processing of API commands and manage scheduling and playback logic for events. This thread is triggered from the core mixer thread at the period specified in the <a class="apilink" href="studio-api-system.html#fmod_studio_advancedsettings">FMOD_STUDIO_ADVANCEDSETTINGS</a>. If the studio system is initialized with <a class="apilink" href="studio-api-system.html#fmod_studio_init_synchronous_update">FMOD_STUDIO_INIT_SYNCHRONOUS_UPDATE</a> then no studio update thread is created.</p>
+<h2 id="sync-points"><a href="#sync-points">12.43 Sync Points</a></h2>
+<p>A sync point can be used to trigger a callback during playback. See <a class="apilink" href="core-api-channelcontrol.html#fmod_channelcontrol_callback_syncpoint">FMOD_CHANNELCONTROL_CALLBACK_SYNCPOINT</a>.<br />
+These points can be user generated via the API or can come from a .wav file with embedded markers.</p>
+<p>Markers can be added to a wave file in a sound editor usually by clicking on a waveform or timeline and inserting a 'marker' or 'region'.</p>
+<p>Any RIFF based format will support sync points.</p>
+<p>Sync points can be manipulated with:</p>
+<ul>
+<li><a class="apilink" href="core-api-sound.html#sound_addsyncpoint">Sound::addSyncPoint</a></li>
+<li><a class="apilink" href="core-api-sound.html#sound_deletesyncpoint">Sound::deleteSyncPoint</a></li>
+<li><a class="apilink" href="core-api-sound.html#sound_getnumsyncpoints">Sound::getNumSyncPoints</a></li>
+<li><a class="apilink" href="core-api-sound.html#sound_getsyncpoint">Sound::getSyncPoint</a></li>
+<li><a class="apilink" href="core-api-sound.html#sound_getsyncpointinfo">Sound::getSyncPointInfo</a></li>
+</ul>
+<h2 id="up-mixing"><a href="#up-mixing">12.44 Up Mixing</a></h2>
+<p>When the source <a href="glossary.html#signal">signal</a> channel count is lower than the destination, it will distribute its lower channel information into the higher speaker mode's channels.<br />
+This example is a table of the different source signal speaker modes, mapping to a 7.1 output.  Values in table represent attenuation.  0dB = full volume, - = silence.</p>
+<pre><code>Key: M = Mono, L = Left, R = Right, FL = Front Left, FR = Front Right, C = Center, LFE = Low Frequency Emitter, SL = Surround Left, SR = Surround Right, BL = Back Left, BR = Back Right
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Output Speaker</th>
+<th>Mono source</th>
+<th>Stereo source</th>
+<th>Quad source</th>
+<th>5.0 source</th>
+<th>5.1 source</th>
+<th>7.1 source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Front left</td>
+<td>M = -3dB</td>
+<td>L  = 0dB</td>
+<td>FL  = 0dB</td>
+<td>FL  = 0dB</td>
+<td>FL  = 0dB</td>
+<td>FL  = 0dB</td>
+</tr>
+<tr>
+<td>Front right</td>
+<td>M = -3dB</td>
+<td>R  = 0dB</td>
+<td>FR  = 0dB</td>
+<td>FR  = 0dB</td>
+<td>FR  = 0dB</td>
+<td>FR  = 0dB</td>
+</tr>
+<tr>
+<td>Center</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>C   = 0dB</td>
+<td>C   = 0dB</td>
+<td>C   = 0dB</td>
+</tr>
+<tr>
+<td>LFE</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>LFE = 0dB</td>
+<td>LFE = 0dB</td>
+</tr>
+<tr>
+<td>Surround left</td>
+<td>-</td>
+<td>-</td>
+<td>SL  = 0dB</td>
+<td>SL  = 0dB</td>
+<td>SL  = 0dB</td>
+<td>SL  = 0dB</td>
+</tr>
+<tr>
+<td>Surround right</td>
+<td>-</td>
+<td>-</td>
+<td>SR  = 0dB</td>
+<td>SR  = 0dB</td>
+<td>SR  = 0dB</td>
+<td>SR  = 0dB</td>
+</tr>
+<tr>
+<td>Back left</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>BL  = 0dB</td>
+</tr>
+<tr>
+<td>Back right</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>BR  = 0dB</td>
+</tr>
+</tbody>
+</table>
+<p><em>Example of lower and equal speaker modes up mixing to a target speaker mode = 7.1</em></p>
+<h2 id="user-data"><a href="#user-data">12.45 User Data</a></h2>
+<p>User data is arbitrary data that can be attached to various FMOD objects. User data is stored without a type, in the form of a <code>void *</code> in C/C++, <code>IntPtr</code> in C# or an object in javascript. User data can then be retrieved and cast back to the original type. The following shows how to set and get user data on a <a class="apilink" href="core-api-sound.html">Sound</a>, but can be likewise applied to any object with a <code>getUserData</code> or <code>setUserData</code> method.</p>
+<p>
+<div class="language-selector">
+<div class="language-tab" data-language="language-c">C</div>
+<div class="language-tab" data-language="language-cpp">C++</div>
+<div class="language-tab" data-language="language-csharp">C#</div>
+<div class="language-tab" data-language="language-javascript">JS</div>
+</div>
+</p>
+<div class="highlight language-cpp"><pre><span></span><span class="p">{</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">userData</span> <span class="o">=</span> <span class="s">&quot;Hello User Data!&quot;</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">pointer</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">userData</span><span class="p">;</span>
+    <span class="n">sound</span><span class="o">-&gt;</span><span class="n">setUserData</span><span class="p">(</span><span class="n">pointer</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">{</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">pointer</span><span class="p">;</span>
+    <span class="n">sound</span><span class="o">-&gt;</span><span class="n">getUserData</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pointer</span><span class="p">);</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">userData</span> <span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">pointer</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<div class="highlight language-c"><pre><span></span><span class="p">{</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">userData</span> <span class="o">=</span> <span class="s">&quot;Hello User Data!&quot;</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">pointer</span> <span class="o">=</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">userData</span><span class="p">;</span>
+    <span class="n">FMOD_Sound_SetUserData</span><span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">pointer</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">{</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">pointer</span><span class="p">;</span>
+    <span class="n">FMOD_Sound_GetUserData</span><span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pointer</span><span class="p">);</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">userData</span> <span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">pointer</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<div class="highlight language-csharp"><pre><span></span><span class="p">{</span>
+    <span class="kt">string</span> <span class="n">userData</span> <span class="p">=</span> <span class="s">&quot;Hello User Data!&quot;</span><span class="p">;</span>
+    <span class="n">GCHandle</span> <span class="n">handle</span> <span class="p">=</span> <span class="n">GCHandle</span><span class="p">.</span><span class="n">Alloc</span><span class="p">(</span><span class="n">userData</span><span class="p">);</span>
+    <span class="n">IntPtr</span> <span class="n">pointer</span> <span class="p">=</span> <span class="n">GCHandle</span><span class="p">.</span><span class="n">ToIntPtr</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
+    <span class="n">sound</span><span class="p">.</span><span class="n">setUserData</span><span class="p">(</span><span class="n">pointer</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">{</span>
+    <span class="n">IntPtr</span> <span class="n">pointer</span><span class="p">;</span>
+    <span class="n">sound</span><span class="p">.</span><span class="n">getUserData</span><span class="p">(</span><span class="k">out</span> <span class="n">pointer</span><span class="p">);</span>
+    <span class="n">GCHandle</span> <span class="n">handle</span> <span class="p">=</span> <span class="n">GCHandle</span><span class="p">.</span><span class="n">FromIntPtr</span><span class="p">(</span><span class="n">pointer</span><span class="p">);</span>
+    <span class="kt">string</span> <span class="n">userData</span> <span class="p">=</span> <span class="n">handle</span><span class="p">.</span><span class="n">Target</span> <span class="k">as</span> <span class="kt">string</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<div class="highlight language-javascript"><pre><span></span><span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">userData</span> <span class="o">=</span> <span class="s2">&quot;Hello User Data!&quot;</span><span class="p">;</span>
+    <span class="nx">sound</span><span class="p">.</span><span class="nx">setUserData</span><span class="p">(</span><span class="nx">userData</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">outval</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="nx">sound</span><span class="p">.</span><span class="nx">getUserData</span><span class="p">(</span><span class="nx">outval</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">userData</span> <span class="o">=</span> <span class="nx">outval</span><span class="p">.</span><span class="nx">val</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div></div>
+
+<p class="manual-footer">FMOD Engine User Manual 2.03.07 (2025-04-02). &copy; 2025 Firelight Technologies Pty Ltd.</p>
+</body>
+</html>
+
+</div>

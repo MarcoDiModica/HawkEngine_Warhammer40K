@@ -16,7 +16,7 @@ public class GrenadeLauncher : BaseAbilities
     GameObject grenade;
     Rigidbody rigidbody;
     BoxCollider collider;
-    bool canThrow = true;
+    public bool canThrow = true;
     public bool needsDestroy = false;
 
     private float explosionCooldown = 1.0f;
@@ -25,9 +25,11 @@ public class GrenadeLauncher : BaseAbilities
     private float abilityCooldown = 3.0f; // Cooldown de la habilidad
     private float abilityTimer = 0.0f;    // Contador del cooldown
 
-    private Audio sound;
+   // private AudioSource sound;
     private string granadeLaunch = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunAbility1GrenadeShot.wav";
     private string granadeExplosion = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunAbility1GrenadeExplosion.wav";
+  //  private AudioClip launchFX;
+   // private AudioClip explosionFX;
 
     public override void Awake()
     {
@@ -36,11 +38,16 @@ public class GrenadeLauncher : BaseAbilities
 
     public override void Start()
     {
-        sound = gameObject.GetComponent<Audio>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
+        //sound = gameObject.GetComponent<AudioSource>();
+        //if (sound == null)
+        //{
+        //    Engineson.print("PlayerShooting: Audio component not found");
+        //}
+
+        //launchFX = new AudioClip(granadeLaunch, "GrenadeLaunchFX", false, false);
+        //explosionFX = new AudioClip(granadeExplosion, "GrenadeExplosionFX", false, false);
+        //sound.LoadAudioClip(launchFX);
+        //sound.LoadAudioClip(explosionFX);
     }
 
     public override void Update(float deltaTime)
@@ -98,8 +105,7 @@ public class GrenadeLauncher : BaseAbilities
         }
 
         Engineson.print("Lanzando granada...");
-        sound?.LoadAudio(granadeLaunch);
-        sound?.Play();
+       // sound?.Play(launchFX);
         grenade = Engineson.CreateGameObject("Grenade", null);
 
         if (grenade == null)
@@ -110,7 +116,6 @@ public class GrenadeLauncher : BaseAbilities
 
         grenade.AddScript("Grenade");
         grenade.GetComponent<Grenade>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-        grenade.AddComponent<Audio>();
         grenade.GetComponent<Grenade>().Start();
 
         canThrow = false; // Inicia el cooldown
@@ -123,8 +128,7 @@ public class GrenadeLauncher : BaseAbilities
 
         // Crear explosión (sin destruir nada)
         explosion = Engineson.CreateGameObject("Explosion", null);
-        sound?.LoadAudio(granadeExplosion);
-        sound?.Play();
+        //sound?.Play(explosionFX);
         if (explosion == null) return;
 
         explosion.AddComponent<MeshRenderer>();

@@ -11,8 +11,29 @@ namespace HawkEngine
         public extern void SetImage(string path);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-
         public extern void SetImageEnabled(bool enabled);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetImageHasAnimation(bool hasAnimation);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetImageAnimationSpeed(float speed);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetImageAnimationIndexLimit(int indexLimit);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetImageAnimation(int index);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetImageSpriteSize(float width, float height);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetImageAnimIndex(int index);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void PlayStopAnimation(bool play);
+
 
         //contructor
         private GameObject owner;

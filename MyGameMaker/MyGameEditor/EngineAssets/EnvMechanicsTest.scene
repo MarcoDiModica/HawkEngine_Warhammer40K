@@ -1,0 +1,653 @@
+SceneMetadata:
+  SceneName: EnvMechanicsTest
+GameObject0:
+  name: MainCamera
+  uuid: 6036748404115368936
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -2.29776617288735e-07
+        - 35.083019256591797
+        - -13.50105094909668
+      localRotation:
+        - 54.999999735770004
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975511965976
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500
+      priority: 1
+    AudioListener: ~
+    ScriptComponents:
+      Script0:
+        name: PlayerCamera
+  Children: ~
+GameObject1:
+  name: Player
+  uuid: 14438223553735042973
+  tag: Player
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -2.29776617288735e-07
+        - 0.0080995559692382812
+        - 4.9989495277404785
+      localRotation:
+        - -179.99999499104436
+        - 72.649402282503914
+        - -179.99999499104436
+      localScale:
+        - 1
+        - 1
+        - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/Player/PlayerFootstep_ready.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: true
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 10
+      particlesPerSecond: 10
+      minLifetime: 0.5
+      maxLifetime: 1
+      minSpeed: 20
+      maxSpeed: 0.00999999978
+      startSize: 1
+      endSize: 1
+      minSize: 10
+      maxSize: 5
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 0
+      rotationSpeed: 0
+      gravity:
+        - 3
+        - 0
+        - 0
+      shapeParam1: 0
+      shapeParam2: 0
+      shapeParam3: 0
+      isOneShot: true
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 512
+        - 512
+      useAnimation: false
+      animSpeed: 0
+      startRotation: 0
+      randomRotation: true
+      material:
+        billboardType: 0
+        particleType: 0
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/BloodSplash_decals1_Yiwei.png
+      particleType: 0
+    CapsuleColliderComponent:
+      size:
+        - 1.70000005
+        - 1.10000002
+        - 1
+      offset:
+        - 0
+        - 2.0999999
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -200
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: PlayerShooting
+      Script1:
+        name: PlayerMovement
+      Script2:
+        name: PlayerInput
+      Script3:
+        name: PlayerDash
+      Script4:
+        name: PlayerController
+      Script5:
+        name: PlayerPowerUp
+      Script6:
+        name: Boltgun
+      Script7:
+        name: Shotgun
+      Script8:
+        name: GrenadeLauncher
+      Script9:
+        name: Railgun
+      Script10:
+        name: ""
+      Script11:
+        name: EnergyBall
+      Script12:
+        name: ToggleMode
+      Script13:
+        name: Barrage
+      Script14:
+        name: HookShot
+      Script15:
+        name: ArcSnare
+      Script16:
+        name: RedThirstManager
+      Script17:
+        name: InteractionSystem
+  Children:
+    - name: playerMesh
+      uuid: 17478059333592771305
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -90
+            - 0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cylinder.001
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: dieno zachael jetpack 2_DefaultMaterial_BaseColor
+            normal_map: dieno zachael jetpack 2_DefaultMaterial_Normal
+            metallic_map: ""
+            roughness_map: dieno zachael jetpack 2_DefaultMaterial_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_playerMesh
+        ScriptComponents:
+          Script0:
+            name: PlayerAnimations
+      Children: ~
+    - name: RiffleShotFX
+      uuid: 14238862537817612002
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -0.80000001192092896
+            - 3
+            - 0.5
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 0
+          emissionRate: 1
+          particlesPerSecond: 1
+          minLifetime: 0.25
+          maxLifetime: 0.25
+          minSpeed: 0
+          maxSpeed: 0
+          startSize: 1
+          endSize: 1
+          minSize: 1
+          maxSize: 1
+          startColor:
+            - 1
+            - 1
+            - 1
+          endColor:
+            - 1
+            - 1
+            - 1
+          startAlpha: 1
+          endAlpha: 1
+          rotationSpeed: 0
+          gravity:
+            - 0
+            - 0.00100000005
+            - 0
+          shapeParam1: 0.200000003
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: true
+          isPaused: false
+          burstEmitted: false
+          spriteSize:
+            - 1920
+            - 1080
+          useAnimation: true
+          animSpeed: 0.0500000007
+          startRotation: 0
+          randomRotation: false
+          material:
+            billboardType: 0
+            particleType: 8
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/muzzle.png
+          particleType: 8
+      Children: ~
+    - name: InactiveDashFX
+      uuid: 7472054646895951794
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 3
+            - -1
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 2
+          emissionRate: 15
+          particlesPerSecond: 15
+          minLifetime: 2
+          maxLifetime: 4
+          minSpeed: 0.5
+          maxSpeed: 1.5
+          startSize: 0.5
+          endSize: 2
+          minSize: 0.5
+          maxSize: 0
+          startColor:
+            - 0.800000012
+            - 0.800000012
+            - 0.800000012
+          endColor:
+            - 0.200000003
+            - 0.200000003
+            - 0.200000003
+          startAlpha: 0.699999988
+          endAlpha: 0
+          rotationSpeed: 0.200000003
+          gravity:
+            - 0
+            - -0.100000001
+            - 0
+          shapeParam1: 0.200000003
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: true
+          isPaused: false
+          burstEmitted: false
+          spriteSize:
+            - 256
+            - 256
+          useAnimation: true
+          animSpeed: 0.5
+          startRotation: 0
+          randomRotation: true
+          material:
+            billboardType: 0
+            particleType: 1
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/Smoke30Frames.png
+          particleType: 1
+      Children: ~
+    - name: WalkingFX
+      uuid: 9985436116894740006
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - -1
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 2
+          emissionRate: 15
+          particlesPerSecond: 15
+          minLifetime: 2
+          maxLifetime: 4
+          minSpeed: 0.5
+          maxSpeed: 1.5
+          startSize: 0.5
+          endSize: 2
+          minSize: 0.5
+          maxSize: 0
+          startColor:
+            - 0.800000012
+            - 0.800000012
+            - 0.800000012
+          endColor:
+            - 0.200000003
+            - 0.200000003
+            - 0.200000003
+          startAlpha: 0.699999988
+          endAlpha: 0
+          rotationSpeed: 0.200000003
+          gravity:
+            - 0
+            - -0.100000001
+            - 0
+          shapeParam1: 0.200000003
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: true
+          isPaused: false
+          burstEmitted: false
+          spriteSize:
+            - 256
+            - 256
+          useAnimation: true
+          animSpeed: 0.5
+          startRotation: 0
+          randomRotation: true
+          material:
+            billboardType: 0
+            particleType: 1
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/Smoke30Frames.png
+          particleType: 1
+      Children: ~
+GameObject2:
+  name: Floor
+  uuid: 8193106882141375185
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - -1
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 50
+        - 1
+        - 50
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.5
+          - 0.5
+          - 0.5
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+  Children: ~
+GameObject3:
+  name: TyranidCorpse
+  uuid: 17506780188724273894
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0.81534671783447266
+        - -9.2433128356933594
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 3.5095996856689453
+        - 3.1960668563842773
+        - 3.5095996856689453
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.501960814
+          - 0.501960814
+          - 0.250980407
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: ""
+      Script1:
+        name: ""
+      Script2:
+        name: TyranidCorpse
+  Children: ~
+GameObject4:
+  name: TyranidTentacles1
+  uuid: 2292637422249724224
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 12.643946647644043
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.5799999237060547
+        - 2.5799999237060547
+        - 2.5799999237060547
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.5
+          - 0.5
+          - 0.5
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: TyranidTentacles
+  Children: ~

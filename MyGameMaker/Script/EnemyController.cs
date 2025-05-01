@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
 
+public enum EnemyState { IDLE, CHASE, ATTACK, STUNNED, DEAD, LEAP };
+
 public abstract class EnemyController : MonoBehaviour, IEnemyController
 {
     // Variables comunes
@@ -10,29 +12,36 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected Rigidbody rb;
     protected BoxCollider collider;
     protected Transform enemyTransform;
-    protected Audio sound;
+    //protected AudioSource sound;
     protected ParticleFX particles;
+    protected EnemyState currentState = EnemyState.IDLE;
 
     public float currentHealth;
     public float maxHealth;
     public bool isStunned = false;
     protected float stunDuration = 2.0f;
     protected float stunTimer = 0.0f;
-    protected bool isIdle = false;
     protected bool isDead = false;
     protected bool isAttacking = false;
-    protected bool isRunning = false;
+    protected bool isShooting = false;
     protected bool isFootstepPlaying = false;
     protected bool hasStoppedFootsteps = false;
 
-    public float distToChase = 50.0F;
-    public float minDistToChase = 5.0f;
-    public float speedMovement = 10.0f;
-    public float acceleration = 15.0f;
+    public float distToChase = 50.0f;
+    public float minDistToChase = 10.0f;
+    public float speedMovement = 25.0f;
+    public float acceleration = 40.0f;
     public float rotationSpeed = 300.0f;
     protected Vector3 moveDirection;
     protected float currentRotationAngle;
 
+    protected Pathfinding pathfinder;
+    protected List<Vector3> chasePath;
+    protected int chaseIndex;
+    protected bool pathInitialized;
+
+    protected const int gridWidth = 500, gridHeight = 500;
+    protected const float cellSize = 1f;
     public abstract void Start();
     public abstract void Update(float deltaTime);
     public abstract void Attack();

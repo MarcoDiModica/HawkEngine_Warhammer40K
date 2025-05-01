@@ -13,7 +13,8 @@ public class PlayerInput : MonoBehaviour
     private bool isInteractPressed = false;
     private bool isRunningPressed = false;
     private bool isKeyboardMoving = false;
-
+    private Transform cameraTransform;
+    private Vector3 directionAim = Vector3.Zero;
     private bool isMovementBlocked = false;
     public override void Awake()
     {
@@ -22,23 +23,30 @@ public class PlayerInput : MonoBehaviour
 
     public override void Start()
     {
+        GameObject cameraObject = GameObject.Find("MainCamera");
+        if (cameraObject != null)
+        {
+            cameraTransform = cameraObject.GetComponent<Transform>();
+        }
     }
 
     public override void Update(float deltaTime)
     {
         if (!isMovementBlocked)
         {
-            UpdateMovementDirection();
             UpdateLookDirection();
+            UpdateMovementDirection();
+
+            isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
+            isShootPressed = Input.GetKey(KeyCode.J) || Input.GetControllerAxis(0, 5) > 0.5f;
+
+            isInteractPressed = Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B);
+            isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
+            isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightShoulder);
+            isAbility2Pressed = Input.GetKeyDown(KeyCode.G) || Input.GetControllerButtonDown(ControllerButton.LeftShoulder);
         }
 
-        isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
-        isShootPressed = Input.GetKey(KeyCode.J) || Input.GetControllerAxis(0, 5) > 0.5f;
-
-        isInteractPressed = Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B);
-        isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
-        isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightShoulder);
-        isAbility2Pressed = Input.GetKeyDown(KeyCode.G) || Input.GetControllerButtonDown(ControllerButton.LeftShoulder);
+      
 
       
 
@@ -64,11 +72,9 @@ public class PlayerInput : MonoBehaviour
 
         bool shiftHeld = Input.GetKey(KeyCode.CAPSLOCK);
         bool isKeyboardMoving = isW || isS || isA || isD;
-
         isRunningPressed = !shiftHeld && isKeyboardMoving;
 
         float leftStickMagnitude = Input.GetLeftStick().Length();
-
         if (leftStickMagnitude > 0.75f)
         {
             isRunningPressed = true;
@@ -81,7 +87,24 @@ public class PlayerInput : MonoBehaviour
             Vector2 leftStickInput = Input.GetLeftStick();
             direction = new Vector3(-leftStickInput.X, 0, -leftStickInput.Y);
         }
-        currentMoveDirection = direction != Vector3.Zero ? Vector3.Normalize(direction) : direction;
+
+        if (cameraTransform != null && direction != Vector3.Zero)
+        {
+            Vector3 camForward = cameraTransform.forward;
+            Vector3 camRight = cameraTransform.right;
+
+            camForward.Y = 0;
+            camRight.Y = 0;
+            camForward = Vector3.Normalize(camForward);
+            camRight = Vector3.Normalize(camRight);
+
+            Vector3 moveDir = (camForward * direction.Z + camRight * direction.X);
+            currentMoveDirection = Vector3.Normalize(moveDir);
+        }
+        else
+        {
+            currentMoveDirection = direction != Vector3.Zero ? Vector3.Normalize(direction) : direction;
+        }
 
     }
     public bool IsRunningPressed()
@@ -92,25 +115,62 @@ public class PlayerInput : MonoBehaviour
     {
         return isKeyboardMoving;
     }
-    private void UpdateLookDirection()
+    public void UpdateLookDirection()
     {
         Vector3 direction = Vector3.Zero;
 
+        // Si el botón derecho del mouse está presionado
         if (Input.GetMouseButton(1))
         {
             Vector3 mousePosition = Input.GetMousePosition();
             Vector3 playerPosition = gameObject.GetComponent<Transform>().GetPosition();
             Vector3 directionToMouse = Vector3.Normalize(mousePosition - playerPosition);
-            direction = new Vector3(directionToMouse.X, 0, directionToMouse.Z);
+            direction = new Vector3(directionToMouse.X, 0, directionToMouse.Z); // Mantener la dirección en el plano XZ
         }
 
-        if (Input.GetRightStick() != Vector2.Zero)
+        // Si se está utilizando el right stick
+        if (Input.GetRightStick() != Vector2.Zero )
         {
             Vector2 rightStickInput = Input.GetRightStick();
-            direction = new Vector3(-rightStickInput.X, 0, -rightStickInput.Y);
+
+            direction = new Vector3(-rightStickInput.X, 0, -rightStickInput.Y); // Asumiendo que quieres invertir el eje Z y X
+
+        }
+        //if (Input.GetRightStick() != Vector2.Zero && isShootPressed)
+        //{
+        //    direction = directionAim;
+        //}
+
+          
+        
+
+        // Si alguna dirección se ha calculado, ajustarla respecto a la rotación de la cámara
+        if (direction != Vector3.Zero)
+        {
+
+            // Obtener los vectores forward y right de la cámara
+            Vector3 camForward = cameraTransform.forward;
+            Vector3 camRight = cameraTransform.right;
+
+            // Descartar la componente Y (porque no nos interesa la rotación en ese eje)
+            camForward.Y = 0;
+            camRight.Y = 0;
+
+            // Normalizar los vectores para asegurarnos de que son direcciones unitarias
+            camForward = Vector3.Normalize(camForward);
+            camRight = Vector3.Normalize(camRight);
+
+            // Ahora, ajustamos la dirección para que la cámara se alinee con el movimiento de la vista
+            // Calculamos la dirección de la vista usando los ejes locales de la cámara
+            Vector3 lookDir = (camForward * direction.Z + camRight * direction.X); // Aplicamos los ejes Z y X al forward y right de la cámara
+            currentLookDirection = Vector3.Normalize(lookDir); // Normalizamos la dirección de la vista
         }
 
-        currentLookDirection = direction != Vector3.Zero ? Vector3.Normalize(direction) : direction;
+        // Si no hay input, no cambiamos la dirección
+        else
+        {
+            currentLookDirection = direction != Vector3.Zero ? Vector3.Normalize(direction) : direction;
+        }
     }
 
     public Vector3 GetCurrentMoveDirection()

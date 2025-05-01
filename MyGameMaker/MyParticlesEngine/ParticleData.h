@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <GL/glew.h>
+#include "MyGameEngine/GameObject.h"
 
 struct ParticleData {
 	bool playOnAwake;
@@ -30,6 +31,8 @@ struct ParticleData {
 	float indexTimer;
 	int animIndex;
 	float animSpeed;
+	GameObject* parent;
+	bool isLocalSpace;
 
 	ParticleData()
 		: playOnAwake(false)
@@ -217,6 +220,10 @@ public:
 	}
 
 	void UpdateAndRender(float deltaTime) {
+		if (vao == 0 || instanceVBO == 0 || vbo == 0 || ebo == 0) {
+			return;
+		}
+
 		std::vector<InstanceData> instances;
 		instances.reserve(activeParticles);
 
@@ -227,6 +234,8 @@ public:
 
 			particleData[i].velocity += particleData[i].gravity * deltaTime;
 			particleData[i].age += deltaTime;
+
+
 			particleData[i].position += particleData[i].velocity * deltaTime;
 
 			
@@ -278,7 +287,16 @@ public:
 			InstanceData instance;
 			instance.playOnAwake = particleData[i].playOnAwake;
 			instance.duration = particleData[i].duration;
-			instance.position = particleData[i].position;
+
+			if (particleData[i].isLocalSpace) 
+			{
+				instance.position = particleData[i].position + (glm::vec3)particleData[i].parent->GetTransform()->GetPosition();
+			}
+			else 
+			{
+				instance.position = particleData[i].position;
+			}
+
 			instance.color = particleData[i].color;
 			instance.endColor = particleData[i].endColor;
 			instance.size = particleData[i].size;
@@ -297,7 +315,7 @@ public:
 			instances.push_back(instance);
 		}
 
-		if (!instances.empty()) {
+		if (!instances.empty() && glIsBuffer(instanceVBO) && glIsVertexArray(vao)) {
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glDepthMask(GL_FALSE);

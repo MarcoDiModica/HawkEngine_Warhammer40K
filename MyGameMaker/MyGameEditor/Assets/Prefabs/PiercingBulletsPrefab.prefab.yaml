@@ -1,0 +1,76 @@
+name: bullet.001_Instance
+prefabPath: Assets\Prefabs\PiercingBulletsPrefab.prefab.yaml
+uuid: 2688052665829010466
+tag: PowerUp
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 3.9429113864898682
+      - 3
+      - -14.442834854125977
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 0.0020000000949949026
+      - 0.0020000000949949026
+      - 0.0020000000949949026
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 7850369178212967008
+    material:
+      name: powerups_DefaultMaterial_BaseColor
+    color:
+      - 1
+      - 1
+      - 1
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.86381322145462036
+      - 0.11091765761375427
+      - 0.11091765761375427
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - 1
+      - 1
+      - 1
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 7.5999999
+    intensity: 2.5
+    direction:
+      - -1
+      - -1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: PiercingBullets
+      fields:
+        floatSpeed: 1
+        floatHeight: 0.5
+        rotationSpeed: 50
+Children: ~

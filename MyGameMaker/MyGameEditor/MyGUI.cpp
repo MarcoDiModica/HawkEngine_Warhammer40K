@@ -197,6 +197,10 @@ bool MyGUI::PostUpdate()
 	return true;
 }
 bool MyGUI::CleanUp() {
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+
 	for (auto& element : elements)
 	{
 		if (element)
@@ -205,12 +209,7 @@ bool MyGUI::CleanUp() {
 			element = nullptr;
 		}
 	}
-
 	elements.clear();
-
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
 
 	return true;
 }

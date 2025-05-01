@@ -8,6 +8,8 @@
 #include <functional>
 #define NOMINMAX
 #include <Windows.h>
+#include <shellapi.h>
+
 
 #include <imgui.h>
 
@@ -15,6 +17,8 @@
 #include "App.h"
 #include "MyGUI.h"
 #include "MyGameEngine/types.h"
+#include <MyGameEngine/PrefabManager.h>
+#include "DragDropManager.h"
 
 const std::string FOLDER_ICON_PATH = "EngineAssets/folder.png";
 const std::string MATERIAL_ICON_PATH = "EngineAssets/material.png";
@@ -24,6 +28,10 @@ const std::string MESH_ICON_PATH = "EngineAssets/mesh.png";
 const std::string AUDIO_ICON_PATH = "EngineAssets/audio.png";
 const std::string DEFAULT_ICON_PATH = "EngineAssets/default.png";
 const std::string SCRIPT_ICON_PATH = "EngineAssets/cscript.png";
+
+static std::string newPrefabName = "";
+static bool showSaveAsPrefabPopup = false;
+static char nameBuffer[128];
 
 UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 {
@@ -95,7 +103,13 @@ bool UIProject::Draw()
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(5, 5));
     bool windowActive = ImGui::Begin("Library", &enabled, projectFlags);
+
+   
+
+
     ImGui::PopStyleVar();
+
+    
 
     if (!windowActive) {
         ImGui::End();
@@ -155,6 +169,7 @@ bool UIProject::Draw()
         ImGui::EndPopup();
     }
 
+   
     ImGui::End();
     return true;
 }
@@ -213,6 +228,21 @@ void UIProject::DrawContentArea()
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8, 8));
     DrawFolderContents(selectedDirectory);
 
+    if (ImGui::BeginDragDropTarget()) {
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+            GameObject* go = *(GameObject**)payload->Data;
+            if (go) {
+                DragDropManager::draggedObject->GetParent();
+                newPrefabName = go->GetName();
+                strncpy(nameBuffer, newPrefabName.c_str(), sizeof(nameBuffer));
+                nameBuffer[sizeof(nameBuffer) - 1] = '\0';
+                showSaveAsPrefabPopup = true;
+                ImGui::OpenPopup("##SaveAsPrefabPopup");
+            }
+        }
+        ImGui::EndDragDropTarget();
+    }
+
     if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
         if (!ImGui::IsAnyItemHovered()) {
             selectedFile.clear();
@@ -224,6 +254,41 @@ void UIProject::DrawContentArea()
         ShowContextMenu();
         ImGui::EndPopup();
     }
+
+    if (showSaveAsPrefabPopup &&
+        ImGui::BeginPopupModal("##SaveAsPrefabPopup", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+        ImGui::Text("Enter a name to save the prefab:");
+        ImGui::InputText("Prefab Name", nameBuffer, sizeof(nameBuffer));
+
+        if (ImGui::Button("Save")) {
+            std::string finalName(nameBuffer);
+            if (finalName.empty()) {
+                LOG(LogType::LOG_WARNING, "Please enter a valid prefab name.");
+            }
+            else {
+                std::string path = PrefabManager::GetUniquePrefabPath(finalName);
+                PrefabManager::EnsurePrefabDirectoryExists();
+                if (DragDropManager::draggedObject) {
+                    PrefabManager::SavePrefab(DragDropManager::draggedObject->shared_from_this(), path);
+                    LOG(LogType::LOG_INFO, "Prefab saved: %s", path.c_str());
+                }
+                DragDropManager::draggedObject = nullptr;
+                showSaveAsPrefabPopup = false;
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel")) {
+            DragDropManager::draggedObject = nullptr;
+            showSaveAsPrefabPopup = false;
+            ImGui::CloseCurrentPopup();
+        }
+
+        ImGui::EndPopup();
+    }
+
 
     ImGui::PopStyleVar();
 }
@@ -520,6 +585,10 @@ void UIProject::HandleItemInteractions(const std::filesystem::path& entry, const
         std::string fullPath = entry.string();
         ImGui::SetDragDropPayload("ASSET_PATH", fullPath.c_str(), fullPath.length() + 1);
 
+        if (entry.extension() == ".yaml" && entry.string().find(".prefab") != std::string::npos) {
+            ImGui::SetDragDropPayload("ASSET_PATH", fullPath.c_str(), fullPath.length() + 1);
+        }
+
         if (ImGui::IsMouseDragging(0)) {
             ImGui::BeginTooltip();
             ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())),
@@ -697,6 +766,16 @@ void UIProject::HandleFileSelection(const std::filesystem::path& filePath)
             }
         }
     }
+    else if (filePath.extension() == ".yaml" && filePath.string().find(".prefab") != std::string::npos) {
+        auto prefab = PrefabManager::LoadPrefab(filePath.string());
+        if (!prefab) {
+            LOG(LogType::LOG_ERROR, "Failed to load prefab: %s", filePath.string().c_str());
+            return;
+        }
+    }
+	else if (filePath.extension() == ".fbx") {
+		Application->root->CreateGameObjectWithPath(filePath.string());
+	}
 }
 
 void UIProject::HandleRename(const std::filesystem::path& entry, const char* newName)

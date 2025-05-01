@@ -60,7 +60,6 @@
 #include "UIGameView.h"
 #include "External/Optick/include/optick.h"
 
-#include "MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
 #include "MyParticlesEngine/ParticleFX.h"
 #include "SDL2/SDL_timer.h"
@@ -68,6 +67,7 @@
 #include "BindlessManager.h"
 #include "ForwardPlus.h"
 #include "GPUDrivenRenderer.h"
+#include "MyAudioEngine/AudioManager.h"
 
 using namespace std;
 
@@ -627,6 +627,10 @@ static void RenderEditor() {
 		if (object->IsActive()) {
 			object->Update(static_cast<float>(Application->GetDt()));
 
+			if (object->HasComponent<UICanvasComponent>()) {
+				continue;
+			}
+			
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
 
@@ -649,9 +653,10 @@ static void RenderEditor() {
 			RenderManager::GetInstance().SubmitGameObject(object);
 		}
 	}
+	
+	Application->physicsModule->DrawDebugDrawer();
 
 	objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
-
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
@@ -913,7 +918,6 @@ int main(int argc, char** argv) {
 			Application = new App();
 			
 			MonoManager::GetInstance().Initialize();
-			SoundComponent::InitSharedAudioEngine();
 
 			ilInit();
 			iluInit();
@@ -930,6 +934,8 @@ int main(int argc, char** argv) {
 
 		case AWAKE:
 
+			Application->LoadAllParticleTextures();
+			AudioManager::Initialize();
 			if (Application->Awake()) { state = START; }
 			else { printf("Failed on Awake"); state = FAIL; }
 			break;
@@ -964,6 +970,7 @@ int main(int argc, char** argv) {
 			MonoManager::GetInstance().Shutdown();
 			RenderManager::GetInstance().Shutdown();
 			ShaderManager::GetInstance().Cleanup();
+			AudioManager::Shutdown();
 
 			if (Application->CleanUP()) {
 				state = EXIT;

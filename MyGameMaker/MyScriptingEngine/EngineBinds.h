@@ -44,6 +44,8 @@ namespace EngineBinds {
 	void SetTag(MonoObject* ref, MonoString* tag);
     MonoObject* GetGameObjectByName(MonoString* name);	
     void GameObjectSetActive(MonoObject* ref, bool active);
+    MonoObject* InstantiatePrefab(MonoObject* prefabObj, MonoObject* parentTransformObj, bool worldPositionStays);
+	bool GameObjectIsActive(MonoObject* ref);
 
     // Input
     bool GetKey(int keyID);
@@ -78,8 +80,15 @@ namespace EngineBinds {
     void AlignToGlobalUp(MonoObject* transformRef, glm::vec3* worldUp);
     Vector3 GetForward(MonoObject* transformRef);
     void SetForward(MonoObject* transformRef, glm::vec3* forward);
+    Vector3 GetUp(MonoObject* transformRef);
+   // Quaternion GetRotationQuat(MonoObject* transformRef);
+    void SetUp(MonoObject* transformRef, glm::vec3* newUp);
+    Vector3 GetRight(MonoObject* transformRef);
+    void SetRight(MonoObject* transformRef, glm::vec3* newIn);
+    Vector3 GetLocalScale(MonoObject* transformRef);
+    void SetLocalScale(MonoObject* transformRef, Vector3 scale);
 
-	// Camera
+    // Camera
     void SetCameraFieldOfView(MonoObject* cameraRef, double fov);
     void SetCameraNearClipPlane(MonoObject* cameraRef, float nearClipPlane);
     void SetCameraFarClipPlane(MonoObject* cameraRef, float farClipPlane);
@@ -136,17 +145,40 @@ namespace EngineBinds {
 	MonoObject* Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance, glm::vec3& hitPoint, glm::vec3& normal, float& distance);
     
     //Audio
-    void Play(MonoObject* audioRef, bool loop = false);
-    void Stop(MonoObject* audioRef);
-    void Pause(MonoObject* audioRef);
-    void Resume(MonoObject* audioRef);
-    void SetVolume(MonoObject* audioRef, float volume);
-    float GetVolume(MonoObject* audioRef);
-	void LoadAudioClip(MonoObject* audioRef, MonoString* path);
+	static int AudioPlay(MonoString* path, bool loop);
+	static int AudioPlayOneShot(MonoString* path);
+	static void AudioStop(int audioId);
+	static void AudioStopPath(MonoString* path);
+	static void AudioPause(int audioId);
+	static void AudioPausePath(MonoString* path);
+	static void AudioResume(int audioId);
+	static void AudioResumePath(MonoString* path);
+	static int AudioPlayMusic(MonoString* path);
+	static void AudioStopMusic(MonoString* path);
+	static void AudioStopAllMusic();
+	static float AudioGetMasterVolume();
+	static void AudioSetMasterVolume(float volume);
+	static float AudioGetMusicVolume();
+	static void AudioSetMusicVolume(float volume);
+	static float AudioGetSfxVolume();
+	static void AudioSetSfxVolume(float volume);
+	static void AudioSetVolumeById(int audioId, float volume);
+	static void AudioSetVolumeByPath(MonoString* path, float volume);
+	static void AudioStopAll();
+	static void AudioPauseAll();
+	static void AudioResumeAll();
+	static void AudioSchedulePlay(MonoString* path, float delay, bool loop);
 
     //UIImage
     void SetTexture(MonoObject* uiImageRef, MonoString* path);
 	void SetImageEnabled(MonoObject* uiImageRef, bool enabled);
+	void SetImageHasAnimation(MonoObject* uiImageRef, bool hasAnimation);
+	void SetImageAnimationSpeed(MonoObject* uiImageRef, float speed);
+	void SetImageAnimationIndexLimit(MonoObject* uiImageRef, int indexLimit);
+	void SetImageAnimation(MonoObject* uiImageRef, int index);
+	void SetImageSpriteSize(MonoObject* uiImageRef, float width, float height);
+	void SetImageAnimIndex(MonoObject* uiImageRef, int index);
+	void PlayStopAnimation(MonoObject* uiImageRef, bool play);
 
 	//UIButton
     int GetState(MonoObject* uiButtonRef);
@@ -165,6 +197,9 @@ namespace EngineBinds {
 	void SetAnimationPlayState(MonoObject* skeletalAnimationRef, bool play);
 	bool GetAnimationPlayState(MonoObject* skeletalAnimationRef);
 	void TransitionAnimations(MonoObject* skeletalAnimationRef, int oldAnim, int newAnim, float timeToTransition);
+	void SetLoop(MonoObject* skeletalAnimationRef, bool isLoop);
+	void PlayAnimOnce(MonoObject* skeletalAnimationRef, int index, float timeToTransitionAnim);
+	bool IsAnimationFinished(MonoObject* skeletalAnimationRef);
 
 	//Tweening
     void DOMove(MonoObject* transformRef, glm::vec3* targetPosition, float duration, Modes mode);

@@ -5,7 +5,7 @@
 #include "App.h"
 #include "Input.h"
 #include "MyGameEngine/TransformComponent.h"
-#include "MyAudioEngine/AudioListener.h"
+//#include "MyAudioEngine/AudioListener.h"
 #include "MyGameEngine/GameObject.h"
 #include "MyWindow.h"
 #include "MyGUI.h"
@@ -13,8 +13,8 @@
 
 EditorCamera::EditorCamera(App* app) : Module(app), CameraBase(), transform(Transform_Component(nullptr))
 {
-	listenerObject = new GameObject("EditorCameraObject");
-	listenerObject->AddComponent<AudioListener>();
+	/*listenerObject = new GameObject("EditorCameraObject");
+	listenerObject->AddComponent<AudioListener>();*/
 
 	transform.SetPosition(glm::dvec3(0, 7, 15));
 

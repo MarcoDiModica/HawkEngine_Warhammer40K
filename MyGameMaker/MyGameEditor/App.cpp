@@ -14,6 +14,7 @@
 #include "UIMainMenuBar.h"
 #include "External/Optick/include/optick.h"
 #include "RenderStats.h"
+#include "MyAudioEngine/AudioManager.h"
 
 App::App() {
 	m_logs.reserve(MAX_LOGS);
@@ -112,6 +113,10 @@ bool App::Update() {
 	if (ret) ret = DoUpdate();
 	if (ret) ret = PostUpdate();
 
+	Application->window->SetTitle(
+		std::string("HawkEngine - FPS: ") + std::to_string(m_fps.load()) +
+		" - Frame Time: " + std::to_string(m_deltaTime * 1000.0) + "ms");
+
 	FinishUpdate();
 
 	return ret;
@@ -175,6 +180,7 @@ bool App::DoUpdate() {
 	}
 
 	physicsModule->Update(m_deltaTime);
+	AudioManager::Update(m_deltaTime);
 
 	return true;
 }

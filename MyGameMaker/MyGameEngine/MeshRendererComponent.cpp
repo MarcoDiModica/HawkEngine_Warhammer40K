@@ -24,19 +24,20 @@
 
 MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) {
 	name = "MeshRenderer";
-	mesh = Mesh::CreateCube();
-	material = std::make_shared<Material>();
+	mesh = Application->root->GetResourceManager()->Cube;
+	material = Application->root->GetResourceManager()->DefaultMaterial;
 
-	auto image = std::make_shared<Image>();
-	image->LoadTexture("default.png");
-	material->setImage(image);
-	material->SetColor(glm::dvec4(0.7f, 0.7f, 0.7f, 1.0f));
+	//auto image = std::make_shared<Image>();
+	//image->LoadTexture("default.png");
+	//material->setImage(image);
+	//material->SetColor(glm::dvec4(0.7f, 0.7f, 0.7f, 1.0f));
 
 	if (!owner->GetComponent<ShaderComponent>()) {
 		owner->AddComponent<ShaderComponent>();
 	}
 	owner->GetComponent<ShaderComponent>()->SetOwnerMaterial(material.get());
 	owner->GetComponent<ShaderComponent>()->SetShaderType(ShaderType::PBR);
+	
 }
 
 void MeshRenderer::Awake() {
@@ -154,14 +155,19 @@ void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPo
 
 	int numPointLights = static_cast<int>(Application->root->GetActiveScene()->_lights.size());
 	shader->SetUniform("numPointLights", numPointLights);
+	bool hasDirLight = false;
 
 	int i = 0;
 	for (const auto& light : Application->root->GetActiveScene()->_lights) {
 		if (!light) continue;
+		if (!light->GetComponent<Transform_Component>() || !light->GetComponent<LightComponent>()) continue;
+		if (light->GetComponent<LightComponent>()->GetLightType() == LightType::POINT)
+		{
+			std::string pointLightstr = "pointLights[" + std::to_string(i) + "]";
+			auto transformComponent = light->GetComponent<Transform_Component>();
+			auto lightComponent = light->GetComponent<LightComponent>();
 
-		std::string pointLightstr = "pointLights[" + std::to_string(i) + "]";
-		auto transformComponent = light->GetComponent<Transform_Component>();
-		auto lightComponent = light->GetComponent<LightComponent>();
+			if (!transformComponent || !lightComponent) continue;
 
 		if (!transformComponent || !lightComponent) continue;
 
@@ -176,6 +182,19 @@ void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPo
 		shader->SetUniform(pointLightstr + ".intensity", lightComponent->GetIntensity());
 		i++;
 	}
+	if (hasDirLight == false) 
+	{
+		shader->SetUniform("dirLight.ambient", vec3(0, 0, 0));
+		shader->SetUniform("dirLight.diffuse", vec3(0, 0, 0));
+		shader->SetUniform("dirLight.specular", vec3(0, 0, 0));
+		shader->SetUniform("dirLight.direction", vec3(0,0,0));
+		shader->SetUniform("dirLight.intensity", 0);
+	}
+	//shader->SetUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+	//shader->SetUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+	//shader->SetUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+	//shader->SetUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+	//shader->SetUniform("dirLight.intensity", 3.0f);
 
 	glBindVertexArray(mesh->model->GetModelData().vA);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model->GetModelData().iBID);

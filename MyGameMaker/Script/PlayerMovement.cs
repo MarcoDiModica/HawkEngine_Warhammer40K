@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     public override void Awake()
     {
-        
+        playerCamera = GameObject.Find("MainCamera");
     }
 
     public override void Start()
@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
             currentRotationAngle = transform.eulerAngles.Y;
         }
         playerInput = gameObject.GetComponent<PlayerInput>();
-        playerCamera = GameObject.Find("MainCamera");
+
         cameraTransform = playerCamera.GetComponent<Transform>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
@@ -55,13 +55,17 @@ public class PlayerMovement : MonoBehaviour
         if (playerDash == null || !playerDash.IsDashing)
         {
             UpdateMovement(moveDirection, deltaTime);
-            
-            if (rotationDirection != Vector3.Zero)
+
+            Vector3 lookDirection = playerInput.GetCurrentLookDirection();
+
+            if (playerInput.IsShooting() && lookDirection != Vector3.Zero)
             {
-                UpdateRotation(rotationDirection, deltaTime);
+                // Si estás disparando y moviendo el stick derecho, rota hacia donde apuntas
+                UpdateRotation(lookDirection, deltaTime);
             }
             else
             {
+                // Si no, rota hacia la dirección de movimiento
                 UpdateRotation(moveDirection, deltaTime);
             }
         }

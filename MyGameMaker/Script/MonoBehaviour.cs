@@ -1,6 +1,7 @@
 ﻿using HawkEngine;
 using System;
 using System.Runtime.CompilerServices;
+using System.Collections;
 
 public  class MonoBehaviour
 {
@@ -23,7 +24,14 @@ public  class MonoBehaviour
 
     public virtual void Update(float deltaTime)
     {
-        
+        CoroutineManager.Update(deltaTime);
+    }
+
+
+    protected Coroutine StartCoroutine(IEnumerator routine)
+    {
+        CoroutineManager.Start(routine);
+        return null; 
     }
 
 
@@ -54,4 +62,7 @@ public  class MonoBehaviour
     }
     public virtual void OnTriggerExit(GameObject other) {
     }
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern GameObject Instantiate(Prefab prefab, Transform parent = null, bool worldPositionStays = true);
 }

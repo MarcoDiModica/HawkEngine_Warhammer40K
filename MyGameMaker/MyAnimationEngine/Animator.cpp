@@ -64,6 +64,13 @@ Animator& Animator::operator=(Animator&& other) noexcept
 void Animator::UpdateAnimation(float dt)
 {
     m_DeltaTime = dt;
+   /* if (isLooping == false && m_CurrentTime >= m_CurrentAnimation->GetDuration())
+    {
+		m_CurrentTime = m_CurrentAnimation->GetDuration();
+		m_CurrentAnimation = nullptr;
+		return;
+    }*/
+	
     if (m_CurrentAnimation)
     {
         m_CurrentTime += m_CurrentAnimation->GetTicksPerSecond() * dt * m_PlaySpeed;
@@ -98,14 +105,18 @@ void Animator::CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 pare
     {
         int index = boneInfoMap[nodeName].id;
         glm::mat4 offset = boneInfoMap[nodeName].offset;
-		for (int i = 0; i < m_BonesGameObjects.size(); i++)
-		{
-			if (m_BonesGameObjects[i]->GetName() == nodeName)
-			{
-				m_BonesGameObjects[i]->GetTransform()->SetLocalMatrix(globalTransformation * offset);
-				break;
-			}
-		}
+        
+        glm::mat4 finalTransformation = (glm::mat4)ownerMatrix * globalTransformation;
+
+        for (int i = 0; i < m_BonesGameObjects.size(); i++)
+        {
+            if (m_BonesGameObjects[i]->GetName() == nodeName)
+            {
+                m_BonesGameObjects[i]->GetTransform()->SetLocalMatrix(finalTransformation);
+                break;
+            }
+        }
+
 
         m_FinalBoneMatrices[index] = globalTransformation * offset;
     }
@@ -114,9 +125,8 @@ void Animator::CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 pare
         CalculateBoneTransform(&node->children[i], globalTransformation);
 }
 
-void Animator::TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAnimation, float transitionDuration, float deltaTime)
+void Animator::TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAnimation,float transitionDuration, float deltaTime)
 {
-   
     transitionTime += deltaTime;
 
     float blendFactor = transitionTime / transitionDuration;
@@ -129,6 +139,13 @@ void Animator::TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAn
     BlendTwoAnimations(pOldAnimation, pNewAnimation, blendFactor, deltaTime);
 }
 
+void Animator::PlayAnimationOnce(Animation* pAnimation)
+{
+	m_CurrentAnimation = pAnimation;
+	m_CurrentTime = 0.0f;
+	isLooping = false;
+}
+
 void Animator::BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayeredAnimation, float blendFactor, float deltaTime)
 {
     float a = 1.0f;
@@ -139,13 +156,32 @@ void Animator::BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayered
     b = 1.0f;
     const float animSpeedMultiplierDown = (1.0f - blendFactor) * a + b * blendFactor; 
 
-    static float currentTimeBase = 0.0f;
+
     currentTimeBase += pBaseAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierUp * m_PlaySpeed;
     currentTimeBase = fmod(currentTimeBase, pBaseAnimation->GetDuration());
-
-    static float currentTimeLayered = 0.0f;
+	//m_CurrentTime += deltaTime * animSpeedMultiplierUp * m_PlaySpeed;
+   
     currentTimeLayered += pLayeredAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierDown * m_PlaySpeed;
     currentTimeLayered = fmod(currentTimeLayered, pLayeredAnimation->GetDuration());
+	currentDuration += pLayeredAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierDown * m_PlaySpeed;
+	
+    //if (isLooping) 
+    //{
+    //    LOG(LogType::LOG_INFO, "isLooping true");
+    //}
+    //else 
+    //{
+    //    LOG(LogType::LOG_INFO, "isLooping false");
+    //}
+	std::string currentTime = std::to_string(currentTimeBase);
+
+    if (!isLooping && currentDuration >= pLayeredAnimation->GetDuration())
+    {
+		LOG(LogType::LOG_INFO, "Animation finished");
+		animationFinished = true;
+        return;
+    }
+    
 
     CalculateBlendedBoneTransform(pBaseAnimation, &pBaseAnimation->GetRootNode(), pLayeredAnimation, &pLayeredAnimation->GetRootNode(), currentTimeBase, currentTimeLayered, glm::mat4(1.0f), blendFactor);
 }
@@ -188,6 +224,17 @@ void Animator::CalculateBlendedBoneTransform(
     {
         const int index = boneInfoMap.at(nodeName).id;
         const glm::mat4& offset = boneInfoMap.at(nodeName).offset;
+
+        glm::mat4 finalTransformation = (glm::mat4)ownerMatrix * globalTransformation;
+
+        for (int i = 0; i < m_BonesGameObjects.size(); i++)
+        {
+            if (m_BonesGameObjects[i]->GetName() == nodeName)
+            {
+                m_BonesGameObjects[i]->GetTransform()->SetLocalMatrix(finalTransformation);
+                break;
+            }
+        }
 
         m_FinalBoneMatrices[index] = globalTransformation * offset;
     }

@@ -68,7 +68,7 @@ bool Root::Start()
 	//resourceManager->LoadResources(); // Esto no se mutea
 	//resourceManager->CreateCube(); // Esto no se mutea
 
-	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
 
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
@@ -517,26 +517,26 @@ bool Root::Start()
 	//railgunPickUp->AddComponent<ScriptComponent>()->LoadScript("RailgunPickUp");
 	//railgunPickUp->SetTag("Weapon");
 	//
-	//auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/bible.fbx");
-	//biblePagePickUp->SetName("BiblePagePickUp");
-	//std::shared_ptr<Image> BiblePageBaseColor = std::make_shared<Image>();
-	//std::shared_ptr<Image> BiblePageRoughness = std::make_shared<Image>();
-	//std::shared_ptr<Image> BiblePageNormal = std::make_shared<Image>();
-	//std::shared_ptr<Image> BiblePageMetallic = std::make_shared<Image>();
-	//BiblePageBaseColor->LoadTexture("Assets/Textures/bible_DefaultMaterial_BaseColor.png");
-	//BiblePageRoughness->LoadTexture("Assets/Textures/bible_DefaultMaterial_Roughness.png");
-	//BiblePageNormal->LoadTexture("Assets/Textures/bible_DefaultMaterial_Normal.png");
-	//BiblePageMetallic->LoadTexture("Assets/Textures/bible_DefaultMaterial_Metallic.png");
-	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BiblePageBaseColor);
-	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(BiblePageRoughness);
-	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(BiblePageNormal);
-	//biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(BiblePageMetallic);
-	//biblePagePickUp->GetTransform()->SetPosition(glm::vec3(0, 2, 0));
-	//biblePagePickUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
-	//biblePagePickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//biblePagePickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//biblePagePickUp->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
-	//biblePagePickUp->SetTag("BiblePage");
+	auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/bible.fbx");
+	biblePagePickUp->SetName("BiblePagePickUp");
+	std::shared_ptr<Image> BiblePageBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> BiblePageRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> BiblePageNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> BiblePageMetallic = std::make_shared<Image>();
+	BiblePageBaseColor->LoadTexture("Assets/Textures/bible_DefaultMaterial_BaseColor.png");
+	BiblePageRoughness->LoadTexture("Assets/Textures/bible_DefaultMaterial_Roughness.png");
+	BiblePageNormal->LoadTexture("Assets/Textures/bible_DefaultMaterial_Normal.png");
+	BiblePageMetallic->LoadTexture("Assets/Textures/bible_DefaultMaterial_Metallic.png");
+	biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BiblePageBaseColor);
+	biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(BiblePageRoughness);
+	biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(BiblePageNormal);
+	biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(BiblePageMetallic);
+	biblePagePickUp->GetTransform()->SetPosition(glm::vec3(0, 2, 0));
+	biblePagePickUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	biblePagePickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	biblePagePickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	biblePagePickUp->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
+	biblePagePickUp->SetTag("BiblePage");
 
 
 #ifdef _BUILD

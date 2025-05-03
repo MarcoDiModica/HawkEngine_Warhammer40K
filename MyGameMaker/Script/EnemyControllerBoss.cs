@@ -26,18 +26,18 @@ public class EnemyControllerBoss : EnemyController
 
     private List<string> roarClips = new List<string>
     {
-        "Assets/Audio/Boss/Mawloc_Growl_1",
-        "Assets/Audio/Boss/Mawloc_Growl_2",
-        "Assets/Audio/Boss/Mawloc_Growl_3",
+        "Assets/Audio/Mawloc_Growl_1.wav",
+        "Assets/Audio/Mawloc_Growl_2.wav",
+        "Assets/Audio/Mawloc_Growl_3.wav",
 
     };
 
-    private const string BurrowClip = "Assets/Audio/Boss/Mawloc_Underground_move";
-    private const string UnburrowClip = "Assets/Audio/Boss/Mawloc_Underground_Attack";
-    private const string SlamClip = "Assets/Audio/Boss/Mawloc_Slam_Atack";
-    private const string ClawClip = "Assets/Audio/Boss/Mawloc_Claw_Attack";
-    private const string AcidClip = "Assets/Audio/Boss/Mawloc_Acid_Attack";
-    private const string DeathClip = "Assets/Audio/Boss/Mawloc_Death";
+    private const string BurrowClip = "Assets/Audio/Mawloc_Underground_move.wav";
+    private const string UnburrowClip = "Assets/Audio/Mawloc_Underground_Attack.wav";
+    private const string SlamClip = "Assets/Audio/Mawloc_Slam_Atack.wav";
+    private const string ClawClip = "Assets/Audio/Mawloc_Claw_Attack.wav";
+    private const string AcidClip = "Assets/Audio/Mawloc_Acid_Attack.wav";
+    private const string DeathClip = "Assets/Audio/Mawloc_Death.wav";
 
     //stats
     bool isCombatMusicPlaying = false;

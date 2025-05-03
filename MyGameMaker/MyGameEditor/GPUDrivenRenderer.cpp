@@ -393,7 +393,8 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	shader->SetUniformMat4("view", viewMatrix);
 	shader->SetUniformMat4("projection", projMatrix);
 
-	// Renderizado convencional para cada objeto
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
+
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
 		uint32_t meshIndex = batch.meshIndices[i];
 		uint32_t materialIndex = batch.materialIndices[i];
@@ -403,35 +404,30 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 
 		if (!meshData || !materialData) continue;
 
-		// Configurar material
 		shader->SetUniformVec4("albedoColor", materialData->albedoColor);
 
-		// Configurar textura si existe
 		if (materialData->flags & (1 << 0)) {
 			shader->SetUniform("u_HasTexture", 1);
 
-			// Usar textura bindless si está disponible
 			if (GLEW_ARB_bindless_texture) {
 				GLuint64 textureHandle = materialData->albedoTexture;
 				if (textureHandle != 0) {
 					if (!glIsTextureHandleResidentARB(textureHandle)) {
 						glMakeTextureHandleResidentARB(textureHandle);
 					}
-
-					GLint loc = glGetUniformLocation(shader->GetProgram(), "albedoTextureHandle");
+					GLint loc = glGetUniformLocation(shader->GetProgram(), "albedoTexture");
 					if (loc != -1) {
 						glUniformHandleui64ARB(loc, textureHandle);
 					}
 				}
 			}
 			else {
-				// Fallback a texturas tradicionales
 				GLuint textureID = 0;
 				if (BindlessManager::GetInstance().GetTextureIDFromHandle(
 					materialData->albedoTexture, textureID)) {
 					glActiveTexture(GL_TEXTURE0);
 					glBindTexture(GL_TEXTURE_2D, textureID);
-					shader->SetUniform("texture1", 0);
+					shader->SetUniform("albedoTexture", 0);
 				}
 			}
 		}
@@ -439,44 +435,30 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 			shader->SetUniform("u_HasTexture", 0);
 		}
 
-		// Vincular VAO del mesh
 		glBindVertexArray(meshData->vertexArray);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
 
 		if (i < batch.commands.size()) {
 			const DrawElementsCommand& cmd = batch.commands[i];
 
-			for (uint32_t instanceIdx = 0; instanceIdx < cmd.instanceCount; instanceIdx++) {
-				GPUInstance* instanceData = BindlessManager::GetInstance().GetInstanceData(cmd.baseInstance + instanceIdx);
-				if (!instanceData) continue;
+			shader->SetUniform("instanceOffset", (int)cmd.baseInstance);
 
-				shader->SetUniformMat4("model", instanceData->modelMatrix);
-
-				glDrawElements(
-					GL_TRIANGLES,
-					cmd.count,
-					GL_UNSIGNED_INT,
-					nullptr
-				);
-
-				//glDrawArrays
-				//glDrawArraysInstanced
-
-				//MultidrawElementsIndirect
-			}
+			glDrawElementsInstanced(
+				GL_TRIANGLES,
+				cmd.count,
+				GL_UNSIGNED_INT,
+				nullptr,
+				cmd.instanceCount
+			);
 		}
 	}
 
-	// Limpiar estado
 	glBindVertexArray(0);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	shader->UnBind();
 }
-
-//render unlit con better drawing
-//culling shader: frustrum y inicio de occlusion
-//primero luces y luego pbr
 
 bool GPUDrivenRenderer::CompileCullingShader() {
 	if (!GLEW_ARB_compute_shader) {

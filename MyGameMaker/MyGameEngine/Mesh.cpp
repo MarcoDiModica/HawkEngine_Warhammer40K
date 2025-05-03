@@ -1028,50 +1028,39 @@ void Mesh::loadToOpenGL()
 
 	std::vector<vec3> positions;
 
-	for (auto & i : model->GetModelData().vertexData)
+	for (auto& i : model->GetModelData().vertexData)
 	{
 		positions.push_back(i.position);
 	}
 
-	//buffer de positions
 	(glGenBuffers(1, &model->GetModelData().vBPosID));
 	(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBPosID));
 	(glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(vec3), positions.data(), GL_DYNAMIC_DRAW));
 
-	//position layout
 	(glEnableVertexAttribArray(0));
 	(glVertexAttribPointer(0, 3, GL_DOUBLE, GL_FALSE, sizeof(vec3), (const void*)0));
 
-	//buffer de coordenades de textura
 	if (model->GetModelData().vertex_texCoords.size() > 0)
 	{
 		(glGenBuffers(1, &model->GetModelData().vBTCoordsID));
 		(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBTCoordsID));
 		(glBufferData(GL_ARRAY_BUFFER, model->GetModelData().vertex_texCoords.size() * sizeof(vec2), model->GetModelData().vertex_texCoords.data(), GL_STATIC_DRAW));
 
-		//tex coord layout
 		(glEnableVertexAttribArray(1));
 		(glVertexAttribPointer(1, 2, GL_DOUBLE, GL_FALSE, sizeof(vec2), (const void*)0));
 	}
 
-	//buffer de normals
 	if (model->GetModelData().vertex_normals.size() > 0)
 	{
 		(glGenBuffers(1, &model->GetModelData().vBNormalsID));
 		(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBNormalsID));
 		(glBufferData(GL_ARRAY_BUFFER, model->GetModelData().vertex_normals.size() * sizeof(vec3), model->GetModelData().vertex_normals.data(), GL_STATIC_DRAW));
 
-		//normal layout
 		(glEnableVertexAttribArray(2));
 		(glVertexAttribPointer(2, 3, GL_DOUBLE, GL_FALSE, sizeof(vec3), (const void*)0));
-
-		//load normals lines for debugging
-		//loadNormalsToOpenGL();
-		//loadFaceNormalsToOpenGL();
 	}
 
 	if (model->GetModelData().vertexData.size() > 0 && model->GetModelData().vertexData[0].m_BoneIDs[0] != -1) {
-		// Create arrays to store IDs and weights
 		std::vector<glm::ivec4> boneIDs;
 		std::vector<glm::vec4> weights;
 
@@ -1088,26 +1077,42 @@ void Mesh::loadToOpenGL()
 			weights.push_back(vertexWeights);
 		}
 
-		// Create buffer for bone IDs
 		GLuint boneIDBuffer;
 		glGenBuffers(1, &boneIDBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, boneIDBuffer);
 		glBufferData(GL_ARRAY_BUFFER, boneIDs.size() * sizeof(glm::ivec4), boneIDs.data(), GL_STATIC_DRAW);
 
-		// Configure attribute for bone IDs
 		glEnableVertexAttribArray(3);
 		glVertexAttribIPointer(3, 4, GL_INT, sizeof(glm::ivec4), (const void*)0);
 
-		// Create buffer for weights
 		GLuint weightBuffer;
 		glGenBuffers(1, &weightBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, weightBuffer);
 		glBufferData(GL_ARRAY_BUFFER, weights.size() * sizeof(glm::vec4), weights.data(), GL_STATIC_DRAW);
 
-		// Configure attribute for weights
 		glEnableVertexAttribArray(4);
 		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (const void*)0);
 	}
+
+	if (model->GetModelData().vertex_tangents.size() > 0) {
+		glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBTangentsID);
+		glEnableVertexAttribArray(5);
+		glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+	}
+
+	if (model->GetModelData().vertex_bitangents.size() > 0) {
+		glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBBitangentsID);
+		glEnableVertexAttribArray(6);
+		glVertexAttribPointer(6, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+	}
+
+	(glCreateBuffers(1, &model->GetModelData().iBID));
+	(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->GetModelData().iBID));
+	(glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->GetModelData().indexData.size() * sizeof(unsigned int), model->GetModelData().indexData.data(), GL_STATIC_DRAW));
+
+	(glBindBuffer(GL_ARRAY_BUFFER, 0));
+	(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+	(glBindVertexArray(0));
 
 	uint32_t hash = 0;
 	for (const auto& v : model->GetModelData().vertexData) {
@@ -1116,14 +1121,4 @@ void Mesh::loadToOpenGL()
 		hash = hash * 31 + std::hash<float>{}(v.position.z);
 	}
 	model->SetID(hash);
-
-
-	//buffer de index
-	(glCreateBuffers(1, &model->GetModelData().iBID));
-	(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->GetModelData().iBID));
-	(glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->GetModelData().indexData.size() * sizeof(unsigned int), model->GetModelData().indexData.data(), GL_STATIC_DRAW));
-
-	(glBindBuffer(GL_ARRAY_BUFFER, 0));
-	(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-	(glBindVertexArray(0));
 }

@@ -21,41 +21,41 @@ struct BindlessHandle {
 
 struct GPUMaterial {
 	glm::vec4 albedoColor;
-	glm::vec4 pbrParams;    // x: metallic, y: roughness, z: ao, w: emissive
+	glm::vec4 pbrParams;
 	GLuint64 albedoTexture;
 	GLuint64 normalTexture;
 	GLuint64 metallicTexture;
 	GLuint64 roughnessTexture;
 	GLuint64 aoTexture;
 	GLuint64 emissiveTexture;
-	uint32_t flags;         
-	uint32_t shaderType;    // PBR, UNLIT, etc.
-	float padding[2];      
+	uint32_t flags;
+	uint32_t shaderType;
+	float padding[2];
 };
 
 struct GPUMesh {
-	GLuint vertexArray;        // VAO de la malla
-	GLuint indexBuffer;        // Índices de la malla
-	GLuint positionBuffer;     // Buffer de posiciones
-	GLuint texCoordBuffer;     // Buffer de coordenadas de textura
-	GLuint normalBuffer;       // Buffer de normales
-	GLuint tangentBuffer;      // Buffer de tangentes
-	GLuint bitangentBuffer;    // Buffer de bitangentes
-	GLuint colorBuffer;        // Buffer de colores
-	uint32_t indexCount;       // Número de índices
-	uint32_t vertexCount;      // Número de vértices
-	uint32_t meshId;           // ID único de la malla
-	uint32_t attributeFlags;   // Flags para indicar qué atributos están disponibles
+	GLuint vertexArray;
+	GLuint indexBuffer;
+	GLuint positionBuffer;
+	GLuint texCoordBuffer;
+	GLuint normalBuffer;
+	GLuint tangentBuffer;
+	GLuint bitangentBuffer;
+	GLuint colorBuffer;
+	uint32_t indexCount;
+	uint32_t vertexCount;
+	uint32_t meshId;
+	uint32_t attributeFlags;
 };
 
 struct GPUInstance {
 	glm::mat4 modelMatrix;
-	glm::mat4 prevModelMatrix; // Para motion blur
-	glm::vec4 objectData;      // Datos adicionales del objeto
-	uint32_t meshIndex;        // Índice a los datos de malla
-	uint32_t materialIndex;    // Índice a los datos de material
-	uint32_t objectId;         // ID único del objeto
-	uint32_t flags;            // Flags de configuración
+	glm::mat4 prevModelMatrix;
+	glm::vec4 objectData;
+	uint32_t meshIndex;
+	uint32_t materialIndex;
+	uint32_t objectId;
+	uint32_t flags;
 };
 
 class BindlessManager {

@@ -1,52 +1,25 @@
-#version 430 core
-#extension GL_ARB_bindless_texture : enable
+#version 460 core
+#extension GL_ARB_bindless_texture : require
 
-// Input from vertex shader
-in vec2 TexCoords;
-in vec3 FragPos;
+in vec2 TexCoord;
 in vec3 Normal;
+in vec3 FragPos;
 
-// Output color
-out vec4 FragColor;
-
-// Material properties
 uniform vec4 albedoColor;
+uniform sampler2D albedoTexture;
 uniform int u_HasTexture;
 
-// Soporte para texturas tradicionales
-uniform sampler2D texture1;
+layout(location = 0) out vec4 FragColor;
 
-// Soporte para texturas bindless
-uniform sampler2D albedoTextureHandle;
-
-void main()
-{
-    // Color base del material
-    vec4 finalColor = albedoColor;
+void main() {
+    vec4 baseColor = albedoColor;
     
-    // Sample texture if available
-    if (u_HasTexture > 0) {
-        // Intentar usar texture bindless handle si es soportado
-        #if defined(GL_ARB_bindless_texture)
-            // Usar el handle de textura bindless
-            vec4 texColor = texture(albedoTextureHandle, TexCoords);
-        #else
-            // Usar el método tradicional
-            vec4 texColor = texture(texture1, TexCoords);
-        #endif
-        
-        // Descartar fragmentos con alpha muy bajo
-        if (texColor.a < 0.1)
-            discard;
-            
-        // Combinar textura con color del material
-        finalColor = texColor * albedoColor;
+    if (u_HasTexture == 1) {
+        baseColor *= texture(albedoTexture, TexCoord); 
     }
     
-    // // Asegurar que el color es visible
-    // if (finalColor.r < 0.01 && finalColor.g < 0.01 && finalColor.b < 0.01) {
-    //     finalColor = vec4(1.0, 1.0, 1.0, finalColor.a);
-    // }
+    vec3 lightDir = normalize(vec3(1.0, 1.0, 1.0));
+    float diff = max(dot(Normal, lightDir), 0.2);
     
-    FragColor = finalColor;
+    FragColor = vec4(baseColor.rgb * diff, baseColor.a);
 }

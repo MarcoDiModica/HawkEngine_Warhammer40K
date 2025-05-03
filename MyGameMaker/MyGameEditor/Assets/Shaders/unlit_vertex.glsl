@@ -1,34 +1,45 @@
-#version 430 core
-#extension GL_ARB_bindless_texture : enable
+#version 460 core
+#extension GL_ARB_bindless_texture : require
+#extension GL_ARB_shader_storage_buffer_object : require
 
-// Input vertex attributes
-layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec2 aTexCoords;
-layout (location = 2) in vec3 aNormal;
+layout(location = 0) in vec3 position;
+layout(location = 1) in vec2 texCoord;
+layout(location = 2) in vec3 normal;
+layout(location = 3) in ivec4 boneIDs;
+layout(location = 4) in vec4 boneWeights;
 
-// Output to fragment shader
-out vec2 TexCoords;
-out vec3 FragPos;
+struct InstanceData {
+    mat4 modelMatrix;
+    mat4 prevModelMatrix;
+    vec4 objectData;
+    uint meshIndex;
+    uint materialIndex;
+    uint objectId;
+    uint flags;
+};
+
+layout(std430, binding = 0) readonly buffer InstanceBuffer {
+    InstanceData instances[]; 
+};
+
+uniform mat4 view;
+uniform mat4 projection;
+uniform int instanceOffset;
+
+out vec2 TexCoord;
 out vec3 Normal;
+out vec3 FragPos;
 
-// Uniforms
-uniform mat4 model;        // Model matrix para la instancia actual
-uniform mat4 view;         // View matrix
-uniform mat4 projection;   // Projection matrix
-
-void main()
-{
-    // Calcular posición en espacio mundo
-    vec4 worldPos = model * vec4(aPos, 1.0);
-    FragPos = worldPos.xyz;
+void main() {
+    InstanceData data = instances[gl_InstanceID + instanceOffset];
+    mat4 model = data.modelMatrix;
     
-    // Pasar coordenadas de textura al fragment shader
-    TexCoords = aTexCoords;
+    gl_Position = projection * view * model * vec4(position, 1.0);
     
-    // Transformar normal a espacio mundo
-    // La matriz inverse transpose asegura que las normales se escalen correctamente
-    Normal = mat3(transpose(inverse(model))) * aNormal;
+    TexCoord = texCoord;
     
-    // Calcular posición final en espacio clip
-    gl_Position = projection * view * worldPos;
+    mat3 normalMatrix = transpose(inverse(mat3(model)));
+    Normal = normalMatrix * normal;
+    
+    FragPos = vec3(model * vec4(position, 1.0));
 }

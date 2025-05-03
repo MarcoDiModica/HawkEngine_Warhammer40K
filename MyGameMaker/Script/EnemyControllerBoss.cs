@@ -26,11 +26,18 @@ public class EnemyControllerBoss : EnemyController
 
     private List<string> roarClips = new List<string>
     {
-        "Assets/Audio/PlaceHolder_Roar1.wav",
-        "Assets/Audio/PlaceHolder_Roar2.wav",
-        "Assets/Audio/PlaceHolder_Roar3.wav",
-        "Assets/Audio/PlaceHolder_Roar4.wav"
+        "Assets/Audio/Boss/Mawloc_Growl_1",
+        "Assets/Audio/Boss/Mawloc_Growl_2",
+        "Assets/Audio/Boss/Mawloc_Growl_3",
+
     };
+
+    private const string BurrowClip = "Assets/Audio/Boss/Mawloc_Underground_move";
+    private const string UnburrowClip = "Assets/Audio/Boss/Mawloc_Underground_Attack";
+    private const string SlamClip = "Assets/Audio/Boss/Mawloc_Slam_Atack";
+    private const string ClawClip = "Assets/Audio/Boss/Mawloc_Claw_Attack";
+    private const string AcidClip = "Assets/Audio/Boss/Mawloc_Acid_Attack";
+    private const string DeathClip = "Assets/Audio/Boss/Mawloc_Death";
 
     //stats
     bool isCombatMusicPlaying = false;
@@ -175,7 +182,7 @@ public class EnemyControllerBoss : EnemyController
                             if (isBuried && timer >= unburrowingAttackCooldown)
                             {
                                 UnburrowingAttack();
-                                Roar();
+                                
 
                             timer = 0.0f;
                             }
@@ -346,11 +353,12 @@ public class EnemyControllerBoss : EnemyController
         if (isDead == false)
         {
             if (playerTransform != null)
-            {
+            {      
                 Engineson.print("Unburrowing Attack");
                 enemyTransform.position = playerTransform.position;
                 collider.SetPosition(playerTransform.position);
             }
+            Audio.PlayOneShot(UnburrowClip);
             attackCount++;
             isBuried = false;
         }
@@ -366,6 +374,8 @@ public class EnemyControllerBoss : EnemyController
                 collider.SetPosition(enemyTransform.position);
                 Engineson.print("Unburrowing Attack Phase 2");
             }
+            Audio.PlayOneShot(UnburrowClip);
+            Engineson.print("PlaySound Attack Phase 2");
             isBuried = false;
         }
     }
@@ -374,6 +384,7 @@ public class EnemyControllerBoss : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(UnburrowClip);
             enemyTransform.position = fixedPositions[2];
             collider.SetPosition(enemyTransform.position);
         }
@@ -384,6 +395,7 @@ public class EnemyControllerBoss : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(SlamClip);
             CreateSlamHurtbox();
             hurtboxDuration = 0.0f;
             isSlamActive = true;
@@ -395,6 +407,7 @@ public class EnemyControllerBoss : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(ClawClip);
             CreateClawHurtbox();
             slamAttackTimer = 0.0f;
         }
@@ -492,6 +505,8 @@ public class EnemyControllerBoss : EnemyController
         if (isDead == false)
         {
             Engineson.print("Burrowed");
+            Engineson.print("PlaySound Burrowed");
+            Audio.PlayOneShot(BurrowClip);
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
             collider.SetPosition(enemyTransform.position);
             isBuried = true;
@@ -503,6 +518,7 @@ public class EnemyControllerBoss : EnemyController
         tailController.Die();
         Engineson.Destroy(GetGameObject());
         isDead = true;
+        Audio.PlayOneShot(DeathClip);
         SceneManager.LoadScene("WinScene");
     }
 

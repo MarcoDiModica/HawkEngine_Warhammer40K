@@ -12200,9 +12200,9 @@ GameObject19:
       Script0:
         name: AmmunitionBlessing
         fields:
-          floatSpeed: 1.58113146
+          floatSpeed: 0.510725379
           floatHeight: 0.5
-          rotationSpeed: 51.5745735
+          rotationSpeed: 72.8934631
           lifeTime: 10
   Children: ~
 GameObject20:
@@ -12256,9 +12256,9 @@ GameObject20:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.609503448
+          floatSpeed: 1.04185188
           floatHeight: 0.5
-          rotationSpeed: 40.6361046
+          rotationSpeed: 45.5134048
   Children: ~
 GameObject21:
   name: heart_1_1_Instance_Instance
@@ -12336,9 +12336,9 @@ GameObject21:
       Script0:
         name: BlackHeart
         fields:
-          floatSpeed: 1.86374497
+          floatSpeed: 0.701309741
           floatHeight: 0.5
-          rotationSpeed: 82.3862534
+          rotationSpeed: 48.6398315
           lifeTime: 10
   Children: ~
 GameObject22:
@@ -12417,9 +12417,9 @@ GameObject22:
       Script0:
         name: BoltgunBullets
         fields:
-          floatSpeed: 0.967592299
+          floatSpeed: 0.815774381
           floatHeight: 0.5
-          rotationSpeed: 97.2113876
+          rotationSpeed: 79.7360916
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -12499,9 +12499,9 @@ GameObject23:
       Script0:
         name: ShotgunShells
         fields:
-          floatSpeed: 1.84057271
+          floatSpeed: 1.31381953
           floatHeight: 0.5
-          rotationSpeed: 88.0593109
+          rotationSpeed: 54.706398
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -12581,9 +12581,9 @@ GameObject24:
       Script0:
         name: ChapterStandard
         fields:
-          floatSpeed: 1.54878616
+          floatSpeed: 0.525024652
           floatHeight: 0.5
-          rotationSpeed: 96.8985367
+          rotationSpeed: 88.9223175
           lifeTime: 10
   Children: ~
 GameObject25:
@@ -12662,9 +12662,9 @@ GameObject25:
       Script0:
         name: MedicaeStimm
         fields:
-          floatSpeed: 1.59293664
+          floatSpeed: 0.851806819
           floatHeight: 0.5
-          rotationSpeed: 81.036644
+          rotationSpeed: 52.3791389
           lifeTime: 10
   Children: ~
 GameObject26:
@@ -12743,9 +12743,9 @@ GameObject26:
       Script0:
         name: PiercingBullets
         fields:
-          floatSpeed: 0.874741733
+          floatSpeed: 1.31637597
           floatHeight: 0.5
-          rotationSpeed: 53.1370735
+          rotationSpeed: 73.3394928
   Children: ~
 GameObject27:
   name: magnet.001_1_1_Instance_Instance
@@ -12823,9 +12823,9 @@ GameObject27:
       Script0:
         name: Magnet
         fields:
-          floatSpeed: 1.04495096
+          floatSpeed: 1.20829427
           floatHeight: 0.5
-          rotationSpeed: 90.9268646
+          rotationSpeed: 70.6596375
           lifeTime: 10
   Children: ~
 GameObject28:
@@ -12905,7 +12905,7 @@ GameObject28:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -12942,7 +12942,7 @@ GameObject28:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -12979,7 +12979,7 @@ GameObject28:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -17956,7 +17956,7 @@ GameObject29:
             - -148.216064453125
           localRotation:
             - 179.99999499104374
-            - 25.858725770479122
+            - 25.858725770479126
             - 179.99999499104374
           localScale:
             - 10.84910774230957
@@ -18550,7 +18550,7 @@ GameObject29:
             - -57.019905090332031
           localRotation:
             - 0
-            - -21.351410654346925
+            - -21.351410654346921
             - 0
           localScale:
             - 6.2044053077697754
@@ -36414,7 +36414,7 @@ GameObject118:
             - -7994.11376953125
           localRotation:
             - -2.5044781914217818e-06
-            - -36.000396799353098
+            - -36.000396799353105
             - 179.99999499104371
           localScale:
             - 31.999998092651367
@@ -36451,7 +36451,7 @@ GameObject118:
             - -8825.88671875
           localRotation:
             - -2.5044781914217818e-06
-            - -36.000396799353098
+            - -36.000396799353105
             - 179.99999499104371
           localScale:
             - 31.999998092651367
@@ -36525,7 +36525,7 @@ GameObject118:
             - -5642.91455078125
           localRotation:
             - -2.5044786341299888e-06
-            - 32.169242441788342
+            - 32.169242441788334
             - -179.99999499104359
           localScale:
             - 31.999998092651367
@@ -41668,7 +41668,7 @@ GameObject118:
             - 2732.585693359375
           localRotation:
             - 8.1792755464740825
-            - -41.244252366162407
+            - -41.244252366162414
             - -151.74556366509714
           localScale:
             - 1.1724408864974976
@@ -46848,7 +46848,7 @@ GameObject118:
             - -2660.950927734375
           localRotation:
             - -90.000010136177096
-            - 31.526515331488447
+            - 31.526515331488444
             - -3.5202831198592853e-07
           localScale:
             - 100

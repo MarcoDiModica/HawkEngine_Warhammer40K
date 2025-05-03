@@ -39,22 +39,30 @@ bool Window::Awake()
 void Window::Open(const char* title, unsigned short width, unsigned short height) {
     if (IsOpen()) return;
 
+    // Enable multisampling
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 16);
 
+    // Enable anisotropic filtering
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 16.0f);
 
+    // Set color buffer sizes
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
 
+    // Enable double buffering and depth/stencil buffers
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
+    // Request OpenGL 4.6 core profile
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+    // Create the SDL window
     _window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         width, height,
         SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED);
@@ -64,19 +72,23 @@ void Window::Open(const char* title, unsigned short width, unsigned short height
 
     if (!_window) throw exception(SDL_GetError());
 
+    // Create the OpenGL context
     _ctx = SDL_GL_CreateContext(_window);
     if (!_ctx) throw exception(SDL_GetError());
     if (SDL_GL_MakeCurrent(_window, _ctx) != 0) throw exception(SDL_GetError());
-    SDL_GL_SetSwapInterval(-1); //vsync
 
-	SDL_Surface* icon = SDL_LoadBMP("Assets/Icons/casco.bmp");
-	if (icon) {
-		SDL_SetWindowIcon(_window, icon);
-		SDL_FreeSurface(icon);
-	}
-	else {
-		LOG(LogType::LOG_ERROR, "Failed to load icon: %s", SDL_GetError());
-	}
+    // Enable VSync
+    SDL_GL_SetSwapInterval(-1);
+    recreateContextWithAttributes();
+    // Set window icon
+    SDL_Surface* icon = SDL_LoadBMP("Assets/Icons/casco.bmp");
+    if (icon) {
+        SDL_SetWindowIcon(_window, icon);
+        SDL_FreeSurface(icon);
+    }
+    else {
+        LOG(LogType::LOG_ERROR, "Failed to load icon: %s", SDL_GetError());
+    }
 }
 
 void Window::Close() {

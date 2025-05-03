@@ -25,6 +25,10 @@ bool BindlessManager::Initialize() {
 	materials.reserve(MAX_MATERIALS);
 	instances.reserve(MAX_INSTANCES);
 
+	m_globalVertexBuffer = CreateStorageBuffer(MAX_MESHES * 1000 * sizeof(GLuint), GL_DYNAMIC_STORAGE_BIT); // Example size
+	m_globalIndexBuffer = CreateStorageBuffer(MAX_MESHES * 1000 * sizeof(uint32_t), GL_DYNAMIC_STORAGE_BIT); // Example size
+	
+
 	for (int i = 0; i < 2; i++) {
 		meshBuffers[i] = CreateStorageBuffer(MAX_MESHES * sizeof(GPUMesh),
 			GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
@@ -55,6 +59,9 @@ void BindlessManager::Shutdown() {
 		ReleaseTextureHandle(pair.second);
 	}
 	textureHandles.clear();
+
+	if (m_globalVertexBuffer) glDeleteBuffers(1, &m_globalVertexBuffer);
+	if (m_globalIndexBuffer) glDeleteBuffers(1, &m_globalIndexBuffer);
 
 	for (int i = 0; i < 2; i++) {
 		if (meshBuffers[i]) glDeleteBuffers(1, &meshBuffers[i]);
@@ -89,6 +96,10 @@ void BindlessManager::Shutdown() {
 	meshBuffers[0] = meshBuffers[1] = 0;
 	materialBuffers[0] = materialBuffers[1] = 0;
 	instanceBuffers[0] = instanceBuffers[1] = 0;
+
+	m_globalVertexBuffer = 0;
+	m_globalIndexBuffer = 0;
+
 	fences[0] = fences[1] = nullptr;
 
 	meshes.clear();
@@ -96,6 +107,9 @@ void BindlessManager::Shutdown() {
 	instances.clear();
 	meshIndices.clear();
 	materialIndices.clear();
+	m_totalVertices = 0;
+	m_totalIndices = 0;
+
 	materialHashes.clear();
 }
 
@@ -161,6 +175,24 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 	gpuMesh.indexCount = modelData.indexData.size();
 	gpuMesh.vertexCount = modelData.vertexData.size();
 	gpuMesh.meshId = modelID;
+
+	gpuMesh.indexCount = modelData.indexData.size();
+	gpuMesh.vertexCount = modelData.vertexData.size();
+	gpuMesh.meshId = modelID;
+	
+	gpuMesh.indexOffset = m_totalIndices; 
+	gpuMesh.baseVertexOffset = m_totalVertices; 
+	
+	size_t indexDataByteOffset = (size_t)m_totalIndices * sizeof(uint32_t);
+	glNamedBufferSubData(m_globalIndexBuffer, indexDataByteOffset, modelData.indexData.size() * sizeof(uint32_t), modelData.indexData.data());
+	
+			// Append Vertex Data (Assuming a single interleaved vertex buffer layout 'VertexData')
+	size_t vertexDataByteOffset = (size_t)m_totalVertices * sizeof(GLuint); 
+	glNamedBufferSubData(m_globalVertexBuffer, vertexDataByteOffset, modelData.vertexData.size() * sizeof(GLuint), modelData.vertexData.data());
+	
+	// --- Update total counts ---
+	m_totalIndices += gpuMesh.indexCount;
+	m_totalVertices += gpuMesh.vertexCount;
 
 	// Set attribute flags based on which buffers are available
 	gpuMesh.attributeFlags = 0;

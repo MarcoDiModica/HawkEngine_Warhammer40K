@@ -23,6 +23,39 @@ bool GPUDrivenRenderer::Initialize() {
 
 	glCreateVertexArrays(1, &defaultVAO);
 
+	glBindVertexArray(defaultVAO);
+
+	GLuint globalIndexBuffer = BindlessManager::GetInstance().GetIndexBuffer();
+	if (globalIndexBuffer != 0 && glIsBuffer(globalIndexBuffer)) {
+		glVertexArrayElementBuffer(defaultVAO, globalIndexBuffer);
+	}
+	else {
+		LOG(LogType::LOG_ERROR, "GPUDrivenRenderer::Initialize: BindlessManager did not provide a valid global index buffer! Indexed drawing will fail.");
+	}
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, 0); 
+
+	glEnableVertexAttribArray(1);
+	glVertexAttribFormat(1, 2, GL_FLOAT, GL_FALSE, 0);
+
+	glEnableVertexAttribArray(2);
+	glVertexAttribFormat(2, 3, GL_FLOAT, GL_FALSE, 0);
+
+	glEnableVertexAttribArray(3);
+	glVertexAttribFormat(3, 1, GL_UNSIGNED_INT, GL_FALSE, 0);
+
+	GLuint mainIndexBuffer = BindlessManager::GetInstance().GetIndexBuffer();
+	if (mainIndexBuffer != 0 && glIsBuffer(mainIndexBuffer)) {
+		glVertexArrayElementBuffer(defaultVAO, mainIndexBuffer);
+	}
+	else {
+		LOG(LogType::LOG_ERROR, "GPUDrivenRenderer::Initialize: BindlessManager did not provide a valid main index buffer! Indexed drawing will fail.");
+	}
+
+	glBindVertexArray(0);
+
+
 	glCreateBuffers(1, &drawCommandBuffer);
 	glNamedBufferStorage(drawCommandBuffer,
 		MAX_DRAW_COMMANDS * sizeof(DrawElementsCommand),
@@ -114,6 +147,8 @@ void GPUDrivenRenderer::AddInstanceGroup(
 	cullItem.materialIndex = materialIndex;
 	cullItem.instanceOffset = currentInstanceOffset;
 	cullItem.instanceCount = static_cast<uint32_t>(instances.size());
+	currentInstanceOffset += static_cast<uint32_t>(instances.size());
+
 
 	for (const auto& instance : instances) {
 		BindlessManager::GetInstance().AddInstance(instance);
@@ -189,8 +224,8 @@ void GPUDrivenRenderer::ForceIncludeAllObjects() {
 		DrawElementsCommand command;
 		command.count = meshData->indexCount;
 		command.instanceCount = cullItem.instanceCount;
-		command.firstIndex = 0;
-		command.baseVertex = 0;
+		command.firstIndex = meshData->indexOffset;
+		command.baseVertex = meshData->baseVertexOffset;
 		command.baseInstance = cullItem.instanceOffset;
 
 		drawCommands.push_back(command);
@@ -350,6 +385,24 @@ void GPUDrivenRenderer::BatchCommandsByShaderType() {
 	}
 }
 
+void CheckOpenGLError(const char* functionName) {
+	GLenum errorCode;
+	while ((errorCode = glGetError()) != GL_NO_ERROR) {
+		const char* error;
+		switch (errorCode) {
+		case GL_INVALID_ENUM: error = "GL_INVALID_ENUM"; break;
+		case GL_INVALID_VALUE: error = "GL_INVALID_VALUE"; break;
+		case GL_INVALID_OPERATION: error = "GL_INVALID_OPERATION"; break;
+		case GL_STACK_OVERFLOW: error = "GL_STACK_OVERFLOW"; break;
+		case GL_STACK_UNDERFLOW: error = "GL_STACK_UNDERFLOW"; break;
+		case GL_OUT_OF_MEMORY: error = "GL_OUT_OF_MEMORY"; break;
+		case GL_INVALID_FRAMEBUFFER_OPERATION: error = "GL_INVALID_FRAMEBUFFER_OPERATION"; break;
+		default: error = "UNKNOWN_ERROR"; break;
+		}
+		LOG(LogType::LOG_ERROR, "OpenGL Error [%s]: %s", functionName, error);
+	}
+}
+
 void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
 	if (shaderBatches.empty()) {
 		LOG(LogType::LOG_INFO, "No hay objetos para renderizar");
@@ -390,93 +443,55 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	}
 
 	shader->Bind();
+	CheckOpenGLError("RenderUnlitBatch::shader->Bind()");
+
 	shader->SetUniformMat4("view", viewMatrix);
 	shader->SetUniformMat4("projection", projMatrix);
 
-	// Renderizado convencional para cada objeto
-	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
-		uint32_t meshIndex = batch.meshIndices[i];
-		uint32_t materialIndex = batch.materialIndices[i];
+	shader->SetUniform("useBindlessMode", 1); // Example if needed
+	CheckOpenGLError("RenderUnlitBatch::SetUniforms()");
 
-		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
-		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetMeshBuffer());      // Binding 0 for GPUMesh metadata SSBO
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, BindlessManager::GetInstance().GetMaterialBuffer());    // Binding 1 for GPUMaterial SSBO (Fragment shader needs this)
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, BindlessManager::GetInstance().GetInstanceBuffer());   // Binding 2 for GPUInstance SSBO
 
-		if (!meshData || !materialData) continue;
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4, BindlessManager::GetInstance().GetGlobalVertexBuffer());
 
-		// Configurar material
-		shader->SetUniformVec4("albedoColor", materialData->albedoColor);
+	CheckOpenGLError("RenderUnlitBatch::glBindBufferBase()");
 
-		// Configurar textura si existe
-		if (materialData->flags & (1 << 0)) {
-			shader->SetUniform("u_HasTexture", 1);
+	glBindVertexArray(defaultVAO);
+	CheckOpenGLError("RenderUnlitBatch::glBindVertexArray()");
 
-			// Usar textura bindless si está disponible
-			if (GLEW_ARB_bindless_texture) {
-				GLuint64 textureHandle = materialData->albedoTexture;
-				if (textureHandle != 0) {
-					if (!glIsTextureHandleResidentARB(textureHandle)) {
-						glMakeTextureHandleResidentARB(textureHandle);
-					}
-
-					GLint loc = glGetUniformLocation(shader->GetProgram(), "albedoTextureHandle");
-					if (loc != -1) {
-						glUniformHandleui64ARB(loc, textureHandle);
-					}
-				}
-			}
-			else {
-				// Fallback a texturas tradicionales
-				GLuint textureID = 0;
-				if (BindlessManager::GetInstance().GetTextureIDFromHandle(
-					materialData->albedoTexture, textureID)) {
-					glActiveTexture(GL_TEXTURE0);
-					glBindTexture(GL_TEXTURE_2D, textureID);
-					shader->SetUniform("texture1", 0);
-				}
-			}
-		}
-		else {
-			shader->SetUniform("u_HasTexture", 0);
-		}
-
-		// Vincular VAO del mesh
-		glBindVertexArray(meshData->vertexArray);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
-
-		if (i < batch.commands.size()) {
-			const DrawElementsCommand& cmd = batch.commands[i];
-
-			for (uint32_t instanceIdx = 0; instanceIdx < cmd.instanceCount; instanceIdx++) {
-				GPUInstance* instanceData = BindlessManager::GetInstance().GetInstanceData(cmd.baseInstance + instanceIdx);
-				if (!instanceData) continue;
-
-				shader->SetUniformMat4("model", instanceData->modelMatrix);
-
-				glDrawElements(
-					GL_TRIANGLES,
-					cmd.count,
-					GL_UNSIGNED_INT,
-					nullptr
-				);
-
-				//glDrawArrays
-				//glDrawArraysInstanced
-
-				//MultidrawElementsIndirect
-			}
-		}
+	if (!batch.commands.empty()) {
+		glNamedBufferSubData(drawCommandBuffer, 0,
+			batch.commands.size() * sizeof(DrawElementsCommand),
+			batch.commands.data());
 	}
+	CheckOpenGLError("RenderUnlitBatch::glNamedBufferSubData()");
 
-	// Limpiar estado
+	glMultiDrawElementsIndirect(
+		GL_TRIANGLES,                   
+		GL_UNSIGNED_INT,                
+		(GLvoid*)0,                     
+		static_cast<GLsizei>(batch.commands.size()),
+		sizeof(DrawElementsCommand)      
+	);
+
+	CheckOpenGLError("RenderUnlitBatch::glMultiDrawElementsIndirect()");
+
+	// Clean up state (optional, depending on surrounding code)
 	glBindVertexArray(0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, 0);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, 0);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4, 0);
+
+	CheckOpenGLError("RenderUnlitBatch::Unbind SSBOs()");
 
 	shader->UnBind();
+	CheckOpenGLError("RenderUnlitBatch::shader->UnBind()");
 }
-
-//render unlit con better drawing
-//culling shader: frustrum y inicio de occlusion
-//primero luces y luego pbr
 
 bool GPUDrivenRenderer::CompileCullingShader() {
 	if (!GLEW_ARB_compute_shader) {

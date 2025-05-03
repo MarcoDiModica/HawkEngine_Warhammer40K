@@ -279,10 +279,10 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 	}
 }
 
-void RenderManager::CreateInstanceGroups() {
-	BindlessManager::GetInstance().UpdateBuffers();
-
-	for (const auto& group : instanceGroups) {
+void RenderManager::CreateInstanceGroups() 
+{
+	for (const auto& group : instanceGroups) 
+	{
 		const MeshMaterialKey& key = group.first;
 		const auto& instances = group.second;
 
@@ -301,6 +301,7 @@ void RenderManager::CreateInstanceGroups() {
 			);
 		}
 	}
+	BindlessManager::GetInstance().UpdateBuffers();
 }
 
 void RenderManager::BeginGPUQuery() {

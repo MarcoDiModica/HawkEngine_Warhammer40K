@@ -46,6 +46,13 @@ struct GPUMesh {
 	uint32_t vertexCount;      // Número de vértices
 	uint32_t meshId;           // ID único de la malla
 	uint32_t attributeFlags;   // Flags para indicar qué atributos están disponibles
+	uint32_t indexOffset; // Corresponds to 'firstIndex'
+
+	uint32_t baseVertexOffset;
+
+	// uint32_t vertexByteOffset;
+	// uint32_t indexByteOffset; 
+
 };
 
 struct GPUInstance {
@@ -90,6 +97,11 @@ public:
 	uint32_t GetMeshCount() const { return (uint32_t)meshes.size(); }
 	uint32_t GetMaterialCount() const { return (uint32_t)materials.size(); }
 	uint32_t GetInstanceCount() const { return (uint32_t)instances.size(); }
+
+	GLuint GetIndexBuffer() const { return m_globalIndexBuffer; }
+	GLuint GetGlobalVertexBuffer() const { return m_globalVertexBuffer; } 
+
+
 
 	bool HasMaterialChanged(const Material* material);
 
@@ -143,6 +155,12 @@ private:
 	std::unordered_map<GLuint, BindlessHandle> textureHandles;
 
 	std::unordered_map<const Material*, uint64_t> materialHashes;
+
+	GLuint m_globalIndexBuffer = 0;
+	GLuint m_globalVertexBuffer = 0; 
+
+	uint32_t m_totalIndices = 0; 
+	uint32_t m_totalVertices = 0;
 
 	static constexpr size_t MAX_MESHES = 1024;
 	static constexpr size_t MAX_MATERIALS = 1024;

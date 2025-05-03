@@ -1,5 +1,5 @@
 #ifndef _DEBUG
-#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+#pragma comment(linker, "/SUBSYSTEM:console /ENTRY:mainCRTStartup")
 #else
 #pragma comment(linker, "/SUBSYSTEM:console /ENTRY:mainCRTStartup")
 #endif
@@ -105,30 +105,53 @@ SceneManager* SceneManagement = nullptr;
 InputEngine* InputManagement = nullptr;
 
 static void init_openGL() {
-	glewInit();
-	if (!GLEW_VERSION_3_0) throw exception("OpenGL 3.0 API is not available.");
+	// Ensure GLEW loads modern extensions
+	glewExperimental = GL_TRUE;
 
+	// Initialize GLEW after creating a valid OpenGL context
+	if (glewInit() != GLEW_OK) {
+		throw std::runtime_error("Failed to initialize GLEW.");
+	}
+
+	if (glewIsSupported("GL_ARB_multi_draw_indirect")) {
+		std::cout << "GL_ARB_multi_draw_indirect is supported!" << std::endl;
+	}
+	else {
+		std::cerr << "GL_ARB_multi_draw_indirect is NOT supported!" << std::endl;
+	}
+
+	// Check OpenGL version and extensions
+	const GLubyte* version = glGetString(GL_VERSION);
+	const GLubyte* renderer = glGetString(GL_RENDERER);
+	const GLubyte* vendor = glGetString(GL_VENDOR);
+	const GLubyte* shadingLanguageVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
+
+	std::cout << "OpenGL Version: " << version << std::endl;
+	std::cout << "Renderer: " << renderer << std::endl;
+	std::cout << "Vendor: " << vendor << std::endl;
+	std::cout << "Shading Language Version: " << shadingLanguageVersion << std::endl;
+
+	// Check for GL_ARB_multi_draw_indirect support
+	if (glewIsSupported("GL_ARB_multi_draw_indirect")) {
+		std::cout << "GL_ARB_multi_draw_indirect is supported!" << std::endl;
+	}
+	else {
+		std::cout << "GL_ARB_multi_draw_indirect is NOT supported!" << std::endl;
+	}
+
+	// Enable modern OpenGL features
 	glEnable(GL_MULTISAMPLE);
-
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
-	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	// Set clear color
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glScaled(1.0, (double)WINDOW_SIZE.x / WINDOW_SIZE.y, 1.0);
-
-	glMatrixMode(GL_MODELVIEW);
-
+	// Initialize shader and render managers
 	ShaderManager::GetInstance().Initialize();
-
 	RenderManager::GetInstance().Initialize();
 }
 

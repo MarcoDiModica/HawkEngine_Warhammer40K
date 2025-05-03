@@ -135,6 +135,11 @@ public class PlayerShooting : MonoBehaviour
         hasShotgun = playerData.hasShotgun;
         hasRailgun = playerData.hasRailgun;
 
+        if (hasRailgun)
+        {
+            railgun.railgunMode = Railgun.RailgunMode.SEMIAUTOMATIC;
+        }
+
         switch (currentGun)
         {
             case GunType.BOLTGUN:

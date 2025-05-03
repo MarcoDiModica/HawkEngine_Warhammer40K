@@ -68,7 +68,7 @@ bool Root::Start()
 	//resourceManager->LoadResources(); // Esto no se mutea
 	//resourceManager->CreateCube(); // Esto no se mutea
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
@@ -301,7 +301,7 @@ bool Root::Start()
 	//mawlocTailMesh->GetTransform()->SetScale(glm::vec3(0.04, 0.02, 0.04));
 	//mawlocTailMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//ParentGameObject(*mawlocTailMesh, *mawlocTail);
-	//mawlocTail->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBossTail");*/
+	//mawlocTail->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBossTail");
 	
 	//auto objMainCamera = CreateCameraObject("MainCamera");
 	//objMainCamera->GetTransform()->SetPosition(glm::dvec3(-14, 20, 14.0f));
@@ -311,9 +311,9 @@ bool Root::Start()
 	//objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
 	//mainCamera = objMainCamera;
 	//UpdateCameraPriority();
-
-	//PLAYER BUENO CON TODOS LOS SCRIPTS PORFA NO LO BORREIS
-
+	//
+	////PLAYER BUENO CON TODOS LOS SCRIPTS PORFA NO LO BORREIS
+	//
 	//auto player = CreateGameObject("Player");
 	//player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
@@ -399,32 +399,9 @@ bool Root::Start()
 	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	//ParentGameObject(*walkingFX, *player);
 	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
-
-	//auto railgunShotAutoFX = CreateGameObject("RailgunShotAutoFX");
-	//railgunShotAutoFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
-	//ParentGameObject(*railgunShotAutoFX, *findPlayer);
-	//railgunShotAutoFX->AddComponent<ParticleFX>()->ApplyPreset(13);
-	//railgunShotAutoFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
 	//
-	//auto railgunShotSemiFX = CreateGameObject("RailgunShotSemiFX");
-	//railgunShotSemiFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
-	//ParentGameObject(*railgunShotSemiFX, *findPlayer);
-	//railgunShotSemiFX->AddComponent<ParticleFX>()->ApplyPreset(14);
-	//railgunShotSemiFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+	////ARMAS NO TOCAR
 	//
-	//auto inactiveDashFX = CreateGameObject("InactiveDashFX");
-	//inactiveDashFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
-	//ParentGameObject(*inactiveDashFX, *player);
-	//inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
-	//inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
-	//
-	//auto walkingFX = CreateGameObject("WalkingFX");
-	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
-	//ParentGameObject(*walkingFX, *player);
-	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
-	
-	//ARMAS NO TOCAR
-
 	//auto boltgun = CreateGameObject("Boltgun");
 	//boltgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//auto boltgunMesh = CreateGameObjectWithPath("Assets/boltgun.fbx");
@@ -433,7 +410,7 @@ bool Root::Start()
 	//boltgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	//boltgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//ParentGameObject(*boltgunMesh, *boltgun);
-
+	//
 	//auto shotgun = CreateGameObject("Shotgun");
 	//shotgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//auto shotgunMesh = CreateGameObjectWithPath("Assets/shotgun.fbx");
@@ -442,7 +419,7 @@ bool Root::Start()
 	//shotgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	//shotgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//ParentGameObject(*shotgunMesh, *shotgun);
-
+	//
 	//auto railgun = CreateGameObject("Railgun");
 	//railgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//auto railgunMesh = CreateGameObjectWithPath("Assets/railgun.fbx");

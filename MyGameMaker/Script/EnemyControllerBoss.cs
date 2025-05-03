@@ -17,11 +17,21 @@ public class EnemyControllerBoss : EnemyController
 
     private List<GameObject> clawHurtboxObjects = new List<GameObject>();
 
+    private Random rng = new Random();
+
     //audio
-//     private AudioSource music;
-//     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
-//     private AudioClip musicClip;
-   
+    //     private AudioSource music;
+    //     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+    //     private AudioClip musicClip;
+
+    private List<string> roarClips = new List<string>
+    {
+        "Assets/Audio/PlaceHolder_Roar1.wav",
+        "Assets/Audio/PlaceHolder_Roar2.wav",
+        "Assets/Audio/PlaceHolder_Roar3.wav",
+        "Assets/Audio/PlaceHolder_Roar4.wav"
+    };
+
     //stats
     bool isCombatMusicPlaying = false;
     private float health = 1500.0f;
@@ -165,7 +175,9 @@ public class EnemyControllerBoss : EnemyController
                             if (isBuried && timer >= unburrowingAttackCooldown)
                             {
                                 UnburrowingAttack();
-                                timer = 0.0f;
+                                Roar();
+
+                            timer = 0.0f;
                             }
                             else if (!isBuried && timer >= postUnburrowingAttackDelay)
                             {
@@ -175,6 +187,7 @@ public class EnemyControllerBoss : EnemyController
                                     {
                                         Burrow();
                                         timer = 0.0f;
+                                        
                                     }
                                 }
                                 else
@@ -340,8 +353,6 @@ public class EnemyControllerBoss : EnemyController
             }
             attackCount++;
             isBuried = false;
-            Task.Delay(500);
-            Roar();
         }
     }
 
@@ -458,23 +469,24 @@ public class EnemyControllerBoss : EnemyController
         return closestIndex;
     }
 
-    //Posibles roar clips
     public void Roar()
     {
-        //if (roarClips.Count == 0 || audioSource == null)
-        //    return;
+        string selectedRoar = roarClips[rng.Next(roarClips.Count)];
 
-        //Random random = new Random();
-        //int index = random.Next(roarClips.Count);
-        //AudioClip selectedClip = roarClips[index];
-
-        //audioSource.PlayOneShot(selectedClip);
+        if (currentPhase == BossPhase.PHASE1)
+        {
+            Audio.SchedulePlay(selectedRoar, 0.25f);
+        }
+        else if (currentPhase == BossPhase.PHASE2)
+        {
+            Audio.SchedulePlay(selectedRoar, 0.5f);
+        }
+        else
+        {
+            Audio.PlayOneShot(selectedRoar);
+        }
     }
-
-    //public void SetRoarClips(List<AudioClip> clips)
-    //{
-    //    roarClips = clips;
-    //}
+   
     private void Burrow()
     {
         if (isDead == false)

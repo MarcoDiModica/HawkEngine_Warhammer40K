@@ -1013,10 +1013,6 @@ std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 	mesh->nameM = filename;
 	mesh->filePath = filename;
 
-	uint32_t modelID;
-	fin.read(reinterpret_cast<char*>(&modelID), sizeof(modelID));
-	mesh->model->SetID(modelID);
-
 	LOG(LogType::LOG_INFO, "Mesh loaded successfully: %s", fullPath.c_str());
 	return mesh;
 }

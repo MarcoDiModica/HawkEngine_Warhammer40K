@@ -135,14 +135,13 @@ void GPUDrivenRenderer::PrepareDrawCommands(const glm::mat4& viewMatrix, const g
 	glNamedBufferSubData(cullDataBuffer, 0,
 		cullData.size() * sizeof(CullData), cullData.data());
 
-	if (!enableCulling) {
-		// Si el culling está desactivado, incluir todos los objetos sin culling
+	if (!enableCulling) { //3r
 		ForceIncludeAllObjects();
 	}
-	else if (!useGPUCulling) {
+	else if (!useGPUCulling) { //2nd
 		CPUFrustumCulling();
 	}
-	else {
+	else { //1r
 		glUseProgram(cullingShader);
 		SetCullingUniforms(viewMatrix, projMatrix, cameraPos);
 
@@ -172,10 +171,6 @@ void GPUDrivenRenderer::PrepareDrawCommands(const glm::mat4& viewMatrix, const g
 	}
 
 	BatchCommandsByShaderType();
-
-	LOG(LogType::LOG_INFO, "Total de instancias visibles: %d", visibleInstanceCount);
-	LOG(LogType::LOG_INFO, "Total de comandos de dibujo: %d", (int)drawCommands.size());
-	LOG(LogType::LOG_INFO, "Total de batches por shader: %d", (int)shaderBatches.size());
 }
 
 void GPUDrivenRenderer::ForceIncludeAllObjects() {

@@ -20,7 +20,6 @@
 enum class ManipulationOperation { IDLE, TRANSLATE, ROTATE, SCALE };
 enum class TransformSpace { LOCAL, WORLD };
 
-// Framebuffer cache to avoid recreation
 class FramebufferCache {
 private:
 	struct FramebufferResource {
@@ -150,7 +149,6 @@ public:
 			mainResource.multisampleFBO = 0;
 		}
 
-		// Delete main resources
 		if (mainResource.rbo != 0) {
 			glDeleteRenderbuffers(1, &mainResource.rbo);
 			mainResource.rbo = 0;
@@ -190,7 +188,6 @@ public:
 	}
 };
 
-// Initialize static members
 FramebufferCache::FramebufferResource FramebufferCache::mainResource;
 bool FramebufferCache::initialized = false;
 
@@ -220,10 +217,8 @@ void UISceneWindow::Init()
 		msaaSamples = std::min(msaaSamples, maxSamples);
 	}
 
-	// Initialize framebuffer cache
 	FramebufferCache::Initialize(Application->window->width(), Application->window->height(), msaaSamples);
 
-	// Store framebuffer references in the GUI
 	Application->gui->fbo = FramebufferCache::GetMainFBO();
 	Application->gui->fboTexture = FramebufferCache::GetMainTexture();
 	Application->gui->multisampleFBO = FramebufferCache::GetMSAAFBO();

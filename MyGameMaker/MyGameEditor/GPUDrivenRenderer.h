@@ -93,10 +93,10 @@ private:
 	uint32_t currentInstanceOffset = 0;
 	int visibleInstanceCount = 0;
 
-	bool useGPUCulling = true;
+	bool useGPUCulling = false;
 	bool useOcclusionCulling = false;
 	bool useFrustumCulling = true;
-	bool enableCulling = false;
+	bool enableCulling = true;
 
 	static constexpr int MAX_DRAW_COMMANDS = 10000;
 };

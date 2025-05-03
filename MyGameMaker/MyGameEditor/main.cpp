@@ -749,9 +749,71 @@ static void GameRelease() {
 	glGetIntegerv(GL_BLEND_DST_ALPHA, &lastBlendDstAlpha);
 	glGetFloatv(GL_COLOR_CLEAR_VALUE, lastClearColor);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glViewport(0, 0, Application->window->width(), Application->window->height());
+	static const int msaaSamples = 4; 
+	static GLuint msaaFBO = 0;
+	static GLuint msaaColorRBO = 0;
+	static GLuint msaaDepthRBO = 0;
+	static int lastWidth = 0;
+	static int lastHeight = 0;
 
+	int currentWidth = Application->window->width();
+	int currentHeight = Application->window->height();
+	bool resizeNeeded = (lastWidth != currentWidth || lastHeight != currentHeight);
+
+	if (msaaFBO == 0 || resizeNeeded) {
+		if (msaaFBO != 0) {
+			glDeleteFramebuffers(1, &msaaFBO);
+			glDeleteRenderbuffers(1, &msaaColorRBO);
+			glDeleteRenderbuffers(1, &msaaDepthRBO);
+			msaaFBO = 0;
+			msaaColorRBO = 0;
+			msaaDepthRBO = 0;
+		}
+
+		GLint maxSamples = 0;
+		glGetIntegerv(GL_MAX_SAMPLES, &maxSamples);
+		int actualSamples = std::min(msaaSamples, maxSamples);
+
+		if (actualSamples > 0) {
+			glGenFramebuffers(1, &msaaFBO);
+			glBindFramebuffer(GL_FRAMEBUFFER, msaaFBO);
+
+			glGenRenderbuffers(1, &msaaColorRBO);
+			glBindRenderbuffer(GL_RENDERBUFFER, msaaColorRBO);
+			glRenderbufferStorageMultisample(GL_RENDERBUFFER, actualSamples, GL_RGBA8, currentWidth, currentHeight);
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, msaaColorRBO);
+
+			glGenRenderbuffers(1, &msaaDepthRBO);
+			glBindRenderbuffer(GL_RENDERBUFFER, msaaDepthRBO);
+			glRenderbufferStorageMultisample(GL_RENDERBUFFER, actualSamples, GL_DEPTH24_STENCIL8, currentWidth, currentHeight);
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, msaaDepthRBO);
+
+			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+				glDeleteFramebuffers(1, &msaaFBO);
+				glDeleteRenderbuffers(1, &msaaColorRBO);
+				glDeleteRenderbuffers(1, &msaaDepthRBO);
+				msaaFBO = 0;
+				msaaColorRBO = 0;
+				msaaDepthRBO = 0;
+
+				LOG(LogType::LOG_ERROR, "MSAA framebuffer is not complete, disabling MSAA");
+			}
+		}
+
+		lastWidth = currentWidth;
+		lastHeight = currentHeight;
+	}
+
+	bool useMSAA = (msaaFBO != 0);
+
+	if (useMSAA) {
+		glBindFramebuffer(GL_FRAMEBUFFER, msaaFBO);
+	}
+	else {
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	glViewport(0, 0, currentWidth, currentHeight);
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -763,6 +825,7 @@ static void GameRelease() {
 	RenderManager::GetInstance().BeginFrame();
 
 	std::vector<std::shared_ptr<GameObject>> UI;
+	std::map<Material*, std::vector<GameObject*>> materialBatches;
 	auto activeScene = Application->root->GetActiveScene();
 
 	if (activeScene) {
@@ -806,6 +869,14 @@ static void GameRelease() {
 
 	RenderManager::GetInstance().EndFrame();
 
+	if (useMSAA) {
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, msaaFBO);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+		glBlitFramebuffer(0, 0, currentWidth, currentHeight,
+			0, 0, currentWidth, currentHeight,
+			GL_COLOR_BUFFER_BIT, GL_NEAREST);
+	}
+
 	for (const auto& i : UI) {
 		if (i->IsActive()) {
 			i->Update(static_cast<float>(Application->GetDt()));
@@ -815,11 +886,9 @@ static void GameRelease() {
 	glUseProgram(lastProgram);
 	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
 	glViewport(lastViewport[0], lastViewport[1], lastViewport[2], lastViewport[3]);
-
 	if (lastDepthTest) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
 	if (lastCullFace) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
 	if (lastBlend) glEnable(GL_BLEND); else glDisable(GL_BLEND);
-
 	glBlendFuncSeparate(lastBlendSrcRGB, lastBlendDstRGB, lastBlendSrcAlpha, lastBlendDstAlpha);
 	glClearColor(lastClearColor[0], lastClearColor[1], lastClearColor[2], lastClearColor[3]);
 }

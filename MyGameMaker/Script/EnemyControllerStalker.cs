@@ -29,10 +29,11 @@ public class EnemyControllerStalker : EnemyController
     // Audio
     bool isCombatMusicPlaying = false;
     private const string MUSIC_COMBAT = "Assets/Audio/PlaceHolder_CombatMusic.wav";
-    private const string SFX_DEATH = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav";
+    private const string SFX_DEATH = "Assets/Audio/Lictor/Death_2.wav";
     private const string SFX_FOOTSTEP = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav";
-    private const string SFX_ATTACK = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav";
-    private const string SFX_HIT = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav";
+    private const string SFX_ATTACK = "Assets/Audio/Lictor/Meele_Atk_SFX.wav";
+    private const string SFX_HIT = "Assets/Audio/Lictor/Hit_3.wav";
+    private const string SFX_POUNCE = "Assets/Audio/Lictor/Jump_FULL.wav";
 
     // Invisibility
     private float invisibilityRange = 50.0f;
@@ -261,6 +262,7 @@ public class EnemyControllerStalker : EnemyController
                 break;
 
             case EnemyState.DEAD:
+                Audio.PlayOneShot(SFX_DEATH);
                 if ((!hasDropped))
                 {
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
@@ -325,7 +327,7 @@ public class EnemyControllerStalker : EnemyController
         {
             hasPounce = false;
             isPouncing = true;
-
+            Audio.PlayOneShot(SFX_POUNCE);
             Engineson.print("Pouncing");
             anim.SetLeapAnimation();
             rb.SetVelocity(rb.GetVelocity() * 120f);

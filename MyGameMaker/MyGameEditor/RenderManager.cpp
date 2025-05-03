@@ -280,19 +280,12 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 }
 
 void RenderManager::CreateInstanceGroups() {
-	BindlessManager::GetInstance().UpdateBuffers();
-
 	for (const auto& group : instanceGroups) {
 		const MeshMaterialKey& key = group.first;
 		const auto& instances = group.second;
 
 		if (!instances.empty()) {
-			// Calcular bounding sphere aproximada para el grupo
-			// Simplificado: usamos una esfera con centro en 0,0,0 y radio suficiente
-			// En una implementación real calcularías esto basado en las posiciones de los objetos
 			glm::vec4 boundingSphere(0.0f, 0.0f, 0.0f, 1000.0f);
-
-			// Ahora pasamos tanto meshIndex como materialIndex
 			GPUDrivenRenderer::GetInstance().AddInstanceGroup(
 				key.meshIndex,
 				key.materialIndex,
@@ -301,6 +294,8 @@ void RenderManager::CreateInstanceGroups() {
 			);
 		}
 	}
+
+	BindlessManager::GetInstance().UpdateBuffers();
 }
 
 void RenderManager::BeginGPUQuery() {

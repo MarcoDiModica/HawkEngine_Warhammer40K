@@ -443,6 +443,9 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 
 			shader->SetUniform("instanceOffset", (int)cmd.baseInstance);
 
+			LOG(LogType::LOG_INFO, "Drawing: count=%u, instanceCount=%u, baseInstance=%u",
+				cmd.count, cmd.instanceCount, cmd.baseInstance);
+
 			glDrawElementsInstanced(
 				GL_TRIANGLES,
 				cmd.count,
@@ -450,6 +453,11 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 				nullptr,
 				cmd.instanceCount
 			);
+
+			GLenum err = glGetError();
+			if (err != GL_NO_ERROR) {
+				LOG(LogType::LOG_ERROR, "GL Error after draw: 0x%X", err);
+			}
 		}
 	}
 

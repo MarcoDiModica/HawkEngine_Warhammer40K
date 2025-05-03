@@ -46,7 +46,6 @@ bool BindlessManager::Initialize() {
 	updateBufferIndex = 0;
 	renderBufferIndex = 1;
 
-	LOG(LogType::LOG_INFO, "BindlessManager inicializado con sistema de doble buffer");
 	return true;
 }
 
@@ -174,10 +173,6 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 	uint32_t index = static_cast<uint32_t>(meshes.size());
 	meshes.push_back(gpuMesh);
 	meshIndices[mesh] = index;
-
-	LOG(LogType::LOG_INFO, "Malla '%s' registrada: Idx=%u, ID=%u, VAO=%u, PosBuffer=%u, IBO=%u, Attrs=0x%X",
-		model->GetMeshName().c_str(), index, modelID, gpuMesh.vertexArray,
-		gpuMesh.positionBuffer, gpuMesh.indexBuffer, gpuMesh.attributeFlags);
 
 	return index;
 }
@@ -376,11 +371,6 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 
 	materialHashes[material] = CalculateMaterialHash(material);
 
-	LOG(LogType::LOG_INFO, "Material registrado: Idx=%u, Color=(%f,%f,%f,%f), ShaderType=%u, Flags=%u",
-		index, gpuMaterial.albedoColor.r, gpuMaterial.albedoColor.g,
-		gpuMaterial.albedoColor.b, gpuMaterial.albedoColor.a,
-		gpuMaterial.shaderType, gpuMaterial.flags);
-
 	return index;
 }
 
@@ -402,9 +392,6 @@ bool BindlessManager::UpdateMaterial(const Material* material) {
 	SetupGPUMaterial(materials[materialIndex], material);
 
 	materialHashes[material] = CalculateMaterialHash(material);
-
-	LOG(LogType::LOG_INFO, "Material actualizado: Idx=%u, ShaderType=%u, Flags=%u",
-		materialIndex, materials[materialIndex].shaderType, materials[materialIndex].flags);
 
 	return true;
 }
@@ -519,9 +506,6 @@ BindlessHandle BindlessManager::CreateTextureHandle(GLuint textureId) {
 	handle.isResident = true;
 	textureHandles[textureId] = handle;
 
-	LOG(LogType::LOG_INFO, "Handle bindless creado exitosamente para textura %u (Handle: %llu)",
-		textureId, handle.handle);
-
 	return handle;
 }
 
@@ -547,9 +531,6 @@ void BindlessManager::UpdateBuffers() {
 	GLuint currentMeshBuffer = meshBuffers[updateBufferIndex];
 	GLuint currentMaterialBuffer = materialBuffers[updateBufferIndex];
 	GLuint currentInstanceBuffer = instanceBuffers[updateBufferIndex];
-
-	LOG(LogType::LOG_INFO, "UpdateBuffers: Actualizando conjunto de buffers %d (mesh=%u, material=%u, instance=%u)",
-		updateBufferIndex, currentMeshBuffer, currentMaterialBuffer, currentInstanceBuffer);
 
 	if (!meshes.empty()) {
 		size_t requiredSize = meshes.size() * sizeof(GPUMesh);
@@ -607,9 +588,6 @@ void BindlessManager::EndFrame() {
 		glDeleteSync(fences[renderBufferIndex]);
 	}
 	fences[renderBufferIndex] = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
-
-	LOG(LogType::LOG_INFO, "EndFrame: Buffers intercambiados - Render: %d, Update: %d",
-		renderBufferIndex, updateBufferIndex);
 }
 
 void BindlessManager::ClearInstances() {

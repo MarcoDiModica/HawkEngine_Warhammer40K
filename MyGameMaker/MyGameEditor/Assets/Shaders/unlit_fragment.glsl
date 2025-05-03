@@ -18,8 +18,5 @@ void main() {
         baseColor *= texture(albedoTexture, TexCoord); 
     }
     
-    vec3 lightDir = normalize(vec3(1.0, 1.0, 1.0));
-    float diff = max(dot(Normal, lightDir), 0.2);
-    
-    FragColor = vec4(baseColor.rgb * diff, baseColor.a);
+    FragColor = vec4(baseColor.rgb, baseColor.a);
 }

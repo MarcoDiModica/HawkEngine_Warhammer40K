@@ -323,16 +323,6 @@ void GPUDrivenRenderer::BatchCommandsByShaderType() {
 		ShaderBatch& batch = shaderBatches[shaderType];
 		batch.shaderType = shaderType;
 
-		//log drawCommands
-		if (i < drawCommands.size()) {
-			LOG(LogType::LOG_INFO, "Comando de dibujo %zu: %u instancias", i, drawCommands[i].instanceCount);
-		}
-		//log cullItem
-		LOG(LogType::LOG_INFO, "CullItem %zu: Malla %u, Material %u, Offset %u, Count %u",
-			i, cullItem.meshIndex, cullItem.materialIndex,
-			cullItem.instanceOffset, cullItem.instanceCount);
-
-
 		if (i < drawCommands.size()) {
 			batch.commands.push_back(drawCommands[i]);
 			batch.meshIndices.push_back(cullItem.meshIndex);
@@ -442,9 +432,6 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 			const DrawElementsCommand& cmd = batch.commands[i];
 
 			shader->SetUniform("instanceOffset", (int)cmd.baseInstance);
-
-			LOG(LogType::LOG_INFO, "Drawing: count=%u, instanceCount=%u, baseInstance=%u",
-				cmd.count, cmd.instanceCount, cmd.baseInstance);
 
 			glDrawElementsInstanced(
 				GL_TRIANGLES,

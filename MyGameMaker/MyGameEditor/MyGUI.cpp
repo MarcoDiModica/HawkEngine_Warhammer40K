@@ -26,6 +26,106 @@
 #include "RenderStats.h"
 #include "RenderManager.h"
 
+// Cache for ImGui colors and styles to minimize state changes
+struct ImGuiStyleCache {
+	ImVec4 colors[ImGuiCol_COUNT];
+	ImGuiStyle style;
+	bool initialized = false;
+
+	void Initialize() {
+		if (initialized) {
+			return;
+		}
+
+		ImGuiStyle& currentStyle = ImGui::GetStyle();
+
+		// Cache all style values
+		style = currentStyle;
+
+		// Cache all colors
+		memcpy(colors, currentStyle.Colors, sizeof(ImVec4) * ImGuiCol_COUNT);
+
+		initialized = true;
+	}
+
+	void ApplyStyle() {
+		if (!initialized) {
+			Initialize();
+			return;
+		}
+
+		ImGuiStyle& currentStyle = ImGui::GetStyle();
+
+		// Apply cached style values
+		currentStyle.WindowRounding = style.WindowRounding;
+		currentStyle.FrameRounding = style.FrameRounding;
+		currentStyle.ScrollbarRounding = style.ScrollbarRounding;
+		currentStyle.FramePadding = style.FramePadding;
+		currentStyle.ItemSpacing = style.ItemSpacing;
+		currentStyle.ScrollbarSize = style.ScrollbarSize;
+		currentStyle.WindowPadding = style.WindowPadding;
+		currentStyle.GrabRounding = style.GrabRounding;
+		currentStyle.GrabMinSize = style.GrabMinSize;
+
+		// Apply cached colors
+		memcpy(currentStyle.Colors, colors, sizeof(ImVec4) * ImGuiCol_COUNT);
+	}
+};
+
+// UI state tracking
+struct UIState {
+	bool showHierarchy = true;
+	bool showInspector = true;
+	bool showConsole = true;
+	bool showSettings = false;
+	bool showMainMenuBar = true;
+	bool showSceneWindow = true;
+	bool showProject = true;
+	bool showTextEditor = false;
+	bool showGameView = true;
+	bool layoutChanged = false;
+
+	// Compare with current state and determine if changed
+	bool HasChanged(const MyGUI* gui) const {
+		return showHierarchy != gui->showHierarchy ||
+			showInspector != gui->showInspector ||
+			showConsole != gui->showConsole ||
+			showSettings != gui->showSettings ||
+			showMainMenuBar != gui->showMainMenuBar ||
+			showSceneWindow != gui->showSceneWindow ||
+			showProject != gui->showProject ||
+			showTextEditor != gui->showTextEditor ||
+			showGameView != gui->showGameView;
+	}
+
+	// Update state from current GUI
+	void UpdateFrom(const MyGUI* gui) {
+		showHierarchy = gui->showHierarchy;
+		showInspector = gui->showInspector;
+		showConsole = gui->showConsole;
+		showSettings = gui->showSettings;
+		showMainMenuBar = gui->showMainMenuBar;
+		showSceneWindow = gui->showSceneWindow;
+		showProject = gui->showProject;
+		showTextEditor = gui->showTextEditor;
+		showGameView = gui->showGameView;
+		layoutChanged = true;
+	}
+};
+
+// Font cache
+struct FontCache {
+	ImFont* mainFont = nullptr;
+	ImFont* headerFont = nullptr;
+	ImFont* smallFont = nullptr;
+	bool initialized = false;
+};
+
+// Static caches
+static ImGuiStyleCache styleCache;
+static UIState uiState;
+static FontCache fontCache;
+
 MyGUI::MyGUI(App* app) : Module(app) {
 	ImGui::CreateContext();
 	SetColorScheme();
@@ -94,15 +194,8 @@ bool MyGUI::Awake() {
 	elements.push_back(UIGameViewPanel);
 	ret = isInitialized(UIGameViewPanel);
 
-	ImGuiStyle& style = ImGui::GetStyle();
-	style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);
-	style.WindowRounding = 5.0f;
-	style.FramePadding = ImVec2(5, 5);
-
-	//UIAudioTestPanel = new UIAudioTest(UIType::DEFAULT, "AudioTest");
-	//elements.push_back(UIAudioTestPanel);
-	//ret = isInitialized(UIAudioTestPanel);
-
+	// Cache initial UI state
+	uiState.UpdateFrom(this);
 
 	return ret;
 }
@@ -127,46 +220,40 @@ bool MyGUI::Start() {
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-	ImFont* mainFont = io.Fonts->AddFontFromFileTTF("EngineAssets/Rubik-Regular.ttf", 14.0f);
-	if (mainFont == nullptr) {
-		LOG(LogType::LOG_WARNING, "Failed to load main font, using default font");
-		mainFont = io.Fonts->AddFontFromFileTTF("EngineAssets/Rubik-Light.ttf", 14.0f);
-	}
+	// Initialize font cache
+	if (!fontCache.initialized) {
+		fontCache.mainFont = io.Fonts->AddFontFromFileTTF("EngineAssets/Rubik-Regular.ttf", 14.0f);
+		if (fontCache.mainFont == nullptr) {
+			LOG(LogType::LOG_WARNING, "Failed to load main font, using default font");
+			fontCache.mainFont = io.Fonts->AddFontFromFileTTF("EngineAssets/Rubik-Light.ttf", 14.0f);
+		}
 
-	ImFont* headerFont = io.Fonts->AddFontFromFileTTF("EngineAssets/Rubik-Bold.ttf", 15.0f);
-	if (headerFont == nullptr) {
-		LOG(LogType::LOG_WARNING, "Failed to load header font, using main font for headers");
-	}
+		fontCache.headerFont = io.Fonts->AddFontFromFileTTF("EngineAssets/Rubik-Bold.ttf", 15.0f);
+		if (fontCache.headerFont == nullptr) {
+			LOG(LogType::LOG_WARNING, "Failed to load header font, using main font for headers");
+		}
 
-	ImFont* smallFont = io.Fonts->AddFontFromFileTTF("EngineAssets/Rubik-Light.ttf", 10.0f);
-	if (smallFont == nullptr) {
-		LOG(LogType::LOG_WARNING, "Failed to load small font, using main font for small text");
-	}
+		fontCache.smallFont = io.Fonts->AddFontFromFileTTF("EngineAssets/Rubik-Light.ttf", 10.0f);
+		if (fontCache.smallFont == nullptr) {
+			LOG(LogType::LOG_WARNING, "Failed to load small font, using main font for small text");
+		}
 
-	if (mainFont != nullptr) {
-		io.FontDefault = mainFont;
-	}
+		if (fontCache.mainFont != nullptr) {
+			io.FontDefault = fontCache.mainFont;
+		}
 
-	io.Fonts->Build();
+		io.Fonts->Build();
+		fontCache.initialized = true;
+	}
 
 	if (!&io) {
 		LOG(LogType::LOG_ERROR, "-ImGui IO not created");
 	}
 
-	ImGuiStyle& style = ImGui::GetStyle();
-	style.PopupRounding = 6.0f;
-	style.WindowBorderSize = 1.0f;
-	style.FrameBorderSize = 0.0f;
-	style.PopupBorderSize = 1.0f;
-
-	style.ItemSpacing = ImVec2(8, 6);
-	style.ItemInnerSpacing = ImVec2(6, 6);
-
-	style.GrabRounding = 4.0f;
-	style.GrabMinSize = 10.0f;
+	// Initialize style cache
+	styleCache.Initialize();
 
 	Application->gui->UIconsolePanel->SetState(true);
 	Application->gui->UIProjectPanel->SetState(true);
@@ -189,6 +276,11 @@ bool MyGUI::PreUpdate()
 
 bool MyGUI::Update(double dt)
 {
+	// Check if UI state has changed
+	if (uiState.HasChanged(this)) {
+		uiState.UpdateFrom(this);
+	}
+
 	return true;
 }
 
@@ -196,6 +288,7 @@ bool MyGUI::PostUpdate()
 {
 	return true;
 }
+
 bool MyGUI::CleanUp() {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
@@ -214,18 +307,21 @@ bool MyGUI::CleanUp() {
 	return true;
 }
 
+// Template function for drawing UI elements conditionally
+template<typename T>
+void DrawElementIfVisible(T* element, bool isVisible) {
+	if (isVisible && element) {
+		element->Draw();
+	}
+}
+
 void MyGUI::Render() {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	// Docking
-	ImGuiViewport* viewport = ImGui::GetMainViewport();
-	ImGui::SetNextWindowPos(viewport->WorkPos);
-	ImGui::SetNextWindowSize(viewport->WorkSize);
-	ImGui::SetNextWindowViewport(viewport->ID);
-
-	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking |
+	// Configure dockspace once
+	static ImGuiWindowFlags dockspaceFlags = ImGuiWindowFlags_NoDocking |
 		ImGuiWindowFlags_NoTitleBar |
 		ImGuiWindowFlags_NoCollapse |
 		ImGuiWindowFlags_NoResize |
@@ -236,57 +332,40 @@ void MyGUI::Render() {
 		ImGuiDockNodeFlags_AutoHideTabBar |
 		ImGuiWindowFlags_NoNavFocus;
 
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->WorkPos);
+	ImGui::SetNextWindowSize(viewport->WorkSize);
+	ImGui::SetNextWindowViewport(viewport->ID);
+
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 
-	ImGui::Begin("DockSpace", nullptr, windowFlags);
+	ImGui::Begin("DockSpace", nullptr, dockspaceFlags);
 	ImGui::PopStyleVar(3);
 
 	ImGuiID dockspaceID = ImGui::GetID("MyDockSpace");
 	ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
 	ImGui::End();
 
-	if (showHierarchy) {
-		UIHierarchyPanel->Draw();
-	}
-
-	if (showConsole) {
-		UIconsolePanel->Draw();
-	}
-
-	if (showSettings) {
-		UIsettingsPanel->Draw();
-	}
-
-	if (showMainMenuBar) {
-		UIMainMenuBarPanel->Draw();
-	}
-
-	if (showInspector) {
-		UIinspectorPanel->Draw(); // Ojo que minimizar peta el engine por el inspector
-	}
-
-	if (showSceneWindow) {
-		UISceneWindowPanel->Draw();
-	}
-
-	if (showProject) {
-		UIProjectPanel->Draw();
-	}
-
-	if (showTextEditor) {
-		UITextEditorPanel->Draw(); // Quitar
-	}
-
-	if (showGameView) {
-		UIGameViewPanel->Draw();
-	}
+	// Draw UI elements conditionally using template function
+	DrawElementIfVisible(UIHierarchyPanel, showHierarchy);
+	DrawElementIfVisible(UIconsolePanel, showConsole);
+	DrawElementIfVisible(UIsettingsPanel, showSettings);
+	DrawElementIfVisible(UIMainMenuBarPanel, showMainMenuBar);
+	DrawElementIfVisible(UIinspectorPanel, showInspector);
+	DrawElementIfVisible(UISceneWindowPanel, showSceneWindow);
+	DrawElementIfVisible(UIProjectPanel, showProject);
+	DrawElementIfVisible(UITextEditorPanel, showTextEditor);
+	DrawElementIfVisible(UIGameViewPanel, showGameView);
 
 	RenderDebugPanel::GetInstance().Render();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+	// Reset layout change flag
+	uiState.layoutChanged = false;
 }
 
 void MyGUI::processEvent(const SDL_Event& event) {
@@ -295,6 +374,13 @@ void MyGUI::processEvent(const SDL_Event& event) {
 
 void MyGUI::SetColorScheme()
 {
+	// Apply the cached style if available
+	if (styleCache.initialized) {
+		styleCache.ApplyStyle();
+		return;
+	}
+
+	// Otherwise, set up the style for the first time
 	ImGuiStyle& style = ImGui::GetStyle();
 
 	// Example style customizations
@@ -303,7 +389,7 @@ void MyGUI::SetColorScheme()
 	style.ScrollbarRounding = 4.0f;
 	style.FramePadding = ImVec2(10, 5);
 	style.ItemSpacing = ImVec2(5, 5);
-	style.ScrollbarSize = 15.0f;                                            // Size of scrollbar
+	style.ScrollbarSize = 15.0f;
 
 	// Set colors
 	ImVec4* colors = ImGui::GetStyle().Colors;
@@ -312,88 +398,87 @@ void MyGUI::SetColorScheme()
 	colors[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// Backgrounds
-	colors[ImGuiCol_WindowBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);             // Background color for main windows
-	colors[ImGuiCol_ChildBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);              // Background color for child windows/panels
-	colors[ImGuiCol_PopupBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);              // Background color for pop-up windows
+	colors[ImGuiCol_WindowBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);
+	colors[ImGuiCol_ChildBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);
+	colors[ImGuiCol_PopupBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);
 
 	// Headers
-	colors[ImGuiCol_Header] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);               // Background color for headers (hovered or active)
-	colors[ImGuiCol_HeaderHovered] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);        // Color when header is hovered
-	colors[ImGuiCol_HeaderActive] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);         // Color when header is active
-	colors[ImGuiCol_MenuBarBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);			// Background color for menu bars
+	colors[ImGuiCol_Header] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);
+	colors[ImGuiCol_HeaderHovered] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
+	colors[ImGuiCol_HeaderActive] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);
+	colors[ImGuiCol_MenuBarBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);
 
 	// Borders and separators
-	colors[ImGuiCol_Border] = ImVec4(0.05f, 0.05f, 0.05f, 0.7f);            // Border color
-	colors[ImGuiCol_BorderShadow] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);			// Border shadow color
+	colors[ImGuiCol_Border] = ImVec4(0.05f, 0.05f, 0.05f, 0.7f);
+	colors[ImGuiCol_BorderShadow] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);
 
 	// Buttons
-	colors[ImGuiCol_Button] = ImVec4(0.4f, 0.4f, 0.4f, 1.0f);               // Button color
-	colors[ImGuiCol_ButtonHovered] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);		// Button color when hovered
-	colors[ImGuiCol_ButtonActive] = ImVec4(0.5f, 0.5f, 0.5f, 1.0f);         // Button color when active
+	colors[ImGuiCol_Button] = ImVec4(0.4f, 0.4f, 0.4f, 1.0f);
+	colors[ImGuiCol_ButtonHovered] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);
+	colors[ImGuiCol_ButtonActive] = ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
 
 	// Frame background (used for inputs, sliders, etc.)
-	colors[ImGuiCol_FrameBg] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);              // Background color for frames
-	colors[ImGuiCol_FrameBgHovered] = ImVec4(0.3f, 0.3f, 0.35f, 1.0f);      // Frame color when hovered
-	colors[ImGuiCol_FrameBgActive] = ImVec4(0.4f, 0.4f, 0.5f, 1.0f);        // Frame color when active
+	colors[ImGuiCol_FrameBg] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
+	colors[ImGuiCol_FrameBgHovered] = ImVec4(0.3f, 0.3f, 0.35f, 1.0f);
+	colors[ImGuiCol_FrameBgActive] = ImVec4(0.4f, 0.4f, 0.5f, 1.0f);
 
 	// Tabs
-	colors[ImGuiCol_Tab] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);					// Background color for tabs
-	colors[ImGuiCol_TabHovered] = ImVec4(0.25f, 0.25f, 0.25f, 1.0f);        // Tab color when hovered
-	colors[ImGuiCol_TabActive] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);            // Tab color when active
-	colors[ImGuiCol_TabUnfocused] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);      // Tab color when unfocused
-	colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);   // Active tab color when unfocused
+	colors[ImGuiCol_Tab] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);
+	colors[ImGuiCol_TabHovered] = ImVec4(0.25f, 0.25f, 0.25f, 1.0f);
+	colors[ImGuiCol_TabActive] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
+	colors[ImGuiCol_TabUnfocused] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);
+	colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);
 
 	// Titles
-	colors[ImGuiCol_TitleBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);				// Background color for title bar
-	colors[ImGuiCol_TitleBgActive] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);		// Title bar color when active
-	colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.0f, 0.0f, 0.0f, 0.5f);     // Title bar color when collapsed
+	colors[ImGuiCol_TitleBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);
+	colors[ImGuiCol_TitleBgActive] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
+	colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.0f, 0.0f, 0.0f, 0.5f);
 
 	// Scrollbars
-	colors[ImGuiCol_ScrollbarBg] = ImVec4(0.05f, 0.05f, 0.1f, 0.5f);        // Background color for scrollbars
-	colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);        // Scrollbar grab color
-	colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.4f, 0.4f, 0.4f, 1.0f); // Scrollbar grab color when hovered
-	colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.5f, 0.5f, 0.5f, 1.0f);  // Scrollbar grab color when active
+	colors[ImGuiCol_ScrollbarBg] = ImVec4(0.05f, 0.05f, 0.1f, 0.5f);
+	colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);
+	colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.4f, 0.4f, 0.4f, 1.0f);
+	colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
 
 	// Slider
-	colors[ImGuiCol_SliderGrab] = ImVec4(0.4f, 0.4f, 0.4f, 1.0f);           // Color for sliders
-	colors[ImGuiCol_SliderGrabActive] = ImVec4(0.6f, 0.6f, 0.6f, 1.0f);     // Color when slider is active
+	colors[ImGuiCol_SliderGrab] = ImVec4(0.4f, 0.4f, 0.4f, 1.0f);
+	colors[ImGuiCol_SliderGrabActive] = ImVec4(0.6f, 0.6f, 0.6f, 1.0f);
 
 	// Checkmark
-	colors[ImGuiCol_CheckMark] = ImVec4(0.1f, 0.9f, 0.4f, 1.0f);            // Color for checkmark
+	colors[ImGuiCol_CheckMark] = ImVec4(0.1f, 0.9f, 0.4f, 1.0f);
 
 	// Separators
-	colors[ImGuiCol_Separator] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);         // Separator color
-	colors[ImGuiCol_SeparatorHovered] = ImVec4(0.5f, 0.5f, 0.6f, 1.0f);     // Separator color when hovered
-	colors[ImGuiCol_SeparatorActive] = ImVec4(0.6f, 0.6f, 0.7f, 1.0f);      // Separator color when active
+	colors[ImGuiCol_Separator] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
+	colors[ImGuiCol_SeparatorHovered] = ImVec4(0.5f, 0.5f, 0.6f, 1.0f);
+	colors[ImGuiCol_SeparatorActive] = ImVec4(0.6f, 0.6f, 0.7f, 1.0f);
 
 	// Resize grip (used for resizable windows)
-	colors[ImGuiCol_ResizeGrip] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);        // Resize grip color
-	colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.5f, 0.5f, 0.6f, 1.0f);    // Resize grip color when hovered
-	colors[ImGuiCol_ResizeGripActive] = ImVec4(0.6f, 0.6f, 0.7f, 1.0f);     // Resize grip color when active
+	colors[ImGuiCol_ResizeGrip] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
+	colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.5f, 0.5f, 0.6f, 1.0f);
+	colors[ImGuiCol_ResizeGripActive] = ImVec4(0.6f, 0.6f, 0.7f, 1.0f);
 
 	// Plot lines and histogram
-	colors[ImGuiCol_PlotLines] = ImVec4(1.0f, 0.5f, 0.0f, 1.0f);            // Color for plot lines
-	colors[ImGuiCol_PlotLinesHovered] = ImVec4(1.0f, 0.6f, 0.1f, 1.0f);     // Plot lines when hovered
-	colors[ImGuiCol_PlotHistogram] = ImVec4(0.61f, 0.76f, 0.51f, 0.75f);     // Color for histogram plots
-	colors[ImGuiCol_PlotHistogramHovered] = ImVec4(1.0f, 0.8f, 0.3f, 1.0f); // Histogram color when hovered
+	colors[ImGuiCol_PlotLines] = ImVec4(1.0f, 0.5f, 0.0f, 1.0f);
+	colors[ImGuiCol_PlotLinesHovered] = ImVec4(1.0f, 0.6f, 0.1f, 1.0f);
+	colors[ImGuiCol_PlotHistogram] = ImVec4(0.61f, 0.76f, 0.51f, 0.75f);
+	colors[ImGuiCol_PlotHistogramHovered] = ImVec4(1.0f, 0.8f, 0.3f, 1.0f);
 
 	// Modal window darkening
-	colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.1f, 0.1f, 0.1f, 0.5f);     // Dim background for modal windows
+	colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.1f, 0.1f, 0.1f, 0.5f);
 
 	// Table
-	colors[ImGuiCol_TableHeaderBg] = ImVec4(0.2f, 0.2f, 0.3f, 1.0f);        // Background for table headers
-	colors[ImGuiCol_TableBorderStrong] = ImVec4(0.4f, 0.4f, 0.5f, 1.0f);    // Strong border for tables
-	colors[ImGuiCol_TableBorderLight] = ImVec4(0.3f, 0.3f, 0.4f, 1.0f);     // Light border for tables
-	colors[ImGuiCol_TableRowBg] = ImVec4(0.1f, 0.1f, 0.15f, 1.0f);          // Row background for tables
-	colors[ImGuiCol_TableRowBgAlt] = ImVec4(0.15f, 0.15f, 0.2f, 1.0f);      // Alternate row background for tables
+	colors[ImGuiCol_TableHeaderBg] = ImVec4(0.2f, 0.2f, 0.3f, 1.0f);
+	colors[ImGuiCol_TableBorderStrong] = ImVec4(0.4f, 0.4f, 0.5f, 1.0f);
+	colors[ImGuiCol_TableBorderLight] = ImVec4(0.3f, 0.3f, 0.4f, 1.0f);
+	colors[ImGuiCol_TableRowBg] = ImVec4(0.1f, 0.1f, 0.15f, 1.0f);
+	colors[ImGuiCol_TableRowBgAlt] = ImVec4(0.15f, 0.15f, 0.2f, 1.0f);
 
 	// Set the main docking background color
-	colors[ImGuiCol_DockingEmptyBg] = ImVec4(1.0f, 0.0f, 0.0f, 0.0f);       // Transparent background
+	colors[ImGuiCol_DockingEmptyBg] = ImVec4(1.0f, 0.0f, 0.0f, 0.0f);
 
 	// Change the color of the docking preview area
-	colors[ImGuiCol_DockingPreview] = ImVec4(0.3f, 0.3f, 0.3f, 0.5f);       // Highlight color during docking
+	colors[ImGuiCol_DockingPreview] = ImVec4(0.3f, 0.3f, 0.3f, 0.5f);
+
+	// Save to cache
+	styleCache.Initialize();
 }
-
-
-
-

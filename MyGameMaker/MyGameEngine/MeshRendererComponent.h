@@ -114,6 +114,7 @@ protected:
                 } 
                 SetMaterial(Application->root->GetResourceManager()->AddMaterial(loadedMaterial));
             }
+
         }
 
         if (node["color"] && node["color"].IsSequence() && node["color"].size() == 3) {

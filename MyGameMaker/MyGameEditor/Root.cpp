@@ -63,7 +63,11 @@ bool Root::CleanUp()
 bool Root::Start()
 {
 
-	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
+	//resourceManager->LoadResources();
+
+	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
+
+	//auto env = CreateGameObjectWithPath("Assets/FBX/Level2_Zone1.fbx");
 
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
 	//auto scenezone23 = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2area2&3.fbx");
@@ -225,10 +229,10 @@ bool Root::Start()
 
 	//auto player2mesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
 
-	//environment = CreateGameObjectWithPath("Assets/Meshes/Level2 Zone1.fbx");
-
-	auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-	playerMesh1->GetComponent<MeshRenderer>()->GetMaterial()->SetShaderType(ShaderType::UNLIT);
+// 	environment = CreateGameObjectWithPath("Assets/Meshes/Level2 Zone1.fbx");
+// 
+// 	auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+// 	playerMesh1->GetComponent<MeshRenderer>()->GetMaterial()->SetShaderType(ShaderType::UNLIT);
 
 	//auto playerMesh3 = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
 	//playerMesh1->GetComponent<MeshRenderer>()->GetMaterial()->SetShaderType(ShaderType::UNLIT);
@@ -312,14 +316,14 @@ bool Root::Start()
 	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));*/
 
-	auto objMainCamera = CreateCameraObject("MainCamera");
-	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
-	objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
-	auto camera = objMainCamera->AddComponent<CameraComponent>();
-	camera->priority = 1;
-	//objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
-	mainCamera = objMainCamera;
-	UpdateCameraPriority();
+ 	auto objMainCamera = CreateCameraObject("MainCamera");
+ 	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+ 	objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
+ 	auto camera = objMainCamera->AddComponent<CameraComponent>();
+ 	camera->priority = 1;
+ 	//objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+ 	mainCamera = objMainCamera;
+ 	UpdateCameraPriority();
 
 	//particle->ApplyPreset(Particle)
 
@@ -936,8 +940,8 @@ bool Root::Update(double dt)
 		//AddInteraction();
 	}
 
-	//LOG(LogType::LOG_INFO, "ResourceManager Meshes: %d", resourceManager->GetMeshCount());
-	//LOG(LogType::LOG_INFO, "ResourceManager Materials: %d", resourceManager->GetMaterialCount());
+	LOG(LogType::LOG_INFO, "ResourceManager Meshes: %d", resourceManager->GetMeshCount());
+	LOG(LogType::LOG_INFO, "ResourceManager Materials: %d", resourceManager->GetMaterialCount());
 
 	//if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
 	//	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");

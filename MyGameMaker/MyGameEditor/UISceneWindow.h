@@ -27,6 +27,7 @@ public:
     glm::vec3 GetMousePickDir(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y);
     bool CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, const BoundingBox& bBox, glm::vec3& collisionPoint);
 
+    void UpdateFramebufferResolution();
     bool IsMouseOverWindow() const;
 
 	int msaaSamples = 16;

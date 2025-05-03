@@ -1113,12 +1113,4 @@ void Mesh::loadToOpenGL()
 	(glBindBuffer(GL_ARRAY_BUFFER, 0));
 	(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 	(glBindVertexArray(0));
-
-	uint32_t hash = 0;
-	for (const auto& v : model->GetModelData().vertexData) {
-		hash = hash * 31 + std::hash<float>{}(v.position.x);
-		hash = hash * 31 + std::hash<float>{}(v.position.y);
-		hash = hash * 31 + std::hash<float>{}(v.position.z);
-	}
-	model->SetID(hash);
 }

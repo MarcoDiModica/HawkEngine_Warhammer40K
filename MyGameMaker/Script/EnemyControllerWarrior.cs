@@ -44,6 +44,8 @@ public class EnemyControllerWarrior : EnemyController
     private string DeathSound = "Assets/Audio/TyranidWarrior/TyranidWAR_Death.wav";
     private string GrowlSound = "Assets/Audio/TyranidWarrior/Tyranid_WAR_Grwol_1.wav";
     private string HitSound = "Assets/Audio/TyranidWarrior/Tyranid_WAR_Hit_1.wav";
+
+    private bool hasPlayedDeathSound = false;
     public override void Awake()
     {
         //music = gameObject.GetComponent<Audio>();
@@ -185,7 +187,7 @@ public class EnemyControllerWarrior : EnemyController
                     //sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
                     //sound?.Play(true);
                     Audio.PlayOneShot(GrowlSound);
-                    Audio.PlayOneShot(WalkSound);
+                    Audio.SchedulePlay(WalkSound,0.5f);
                     isFootstepPlaying = true;
                     hasStoppedFootsteps = false;
                 }
@@ -251,7 +253,11 @@ public class EnemyControllerWarrior : EnemyController
             case EnemyState.STUNNED:
                 break;
             case EnemyState.DEAD:
-                Audio.PlayOneShot(DeathSound);
+                if (!hasPlayedDeathSound) 
+                {
+                    Audio.PlayOneShot(DeathSound);
+                    hasPlayedDeathSound = true; 
+                }
                 if ((!hasDropped))
                 {
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);

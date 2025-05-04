@@ -34,6 +34,7 @@ public class EnemyControllerStalker : EnemyController
     private const string SFX_ATTACK = "Assets/Audio/Lictor/Meele_Atk_SFX.wav";
     private const string SFX_HIT = "Assets/Audio/Lictor/Hit_3.wav";
     private const string SFX_POUNCE = "Assets/Audio/Lictor/Jump_FULL.wav";
+    private bool hasPlayedDeathSound = false;
 
     // Invisibility
     private float invisibilityRange = 50.0f;
@@ -262,7 +263,11 @@ public class EnemyControllerStalker : EnemyController
                 break;
 
             case EnemyState.DEAD:
-                Audio.PlayOneShot(SFX_DEATH);
+                if (!hasPlayedDeathSound)
+                {
+                    Audio.PlayOneShot(SFX_DEATH);
+                    hasPlayedDeathSound = true;
+                }
                 if ((!hasDropped))
                 {
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);

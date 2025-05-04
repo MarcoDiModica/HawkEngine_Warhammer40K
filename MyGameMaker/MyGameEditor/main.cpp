@@ -708,9 +708,9 @@ static void RenderEditor()
 			objects.push_back(child);
 		}
 		if (object->IsActive()) {
-			if (object->HasComponent<UICanvasComponent>()) {
+			/*if (object->HasComponent<UICanvasComponent>()) {
 				continue;
-			}
+			}*/
 			object->Update(FIXED_TIME_STEP);
 			
 			if (Application->hasChangedScene) {

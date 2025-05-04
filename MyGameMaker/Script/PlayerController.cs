@@ -195,6 +195,8 @@ public class PlayerController : MonoBehaviour
            
             if (moveDirection == Vector3.Zero)
             {
+                StopFootsteps();
+                walkingFX.Stop();
                 if (isWalking)
                 {
                     SetWalkingToIdle();
@@ -207,8 +209,7 @@ public class PlayerController : MonoBehaviour
                 {
                     SetIdleState();
                 }
-                StopFootsteps();
-                walkingFX.Stop();
+                
             }
             else
             {

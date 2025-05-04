@@ -61,9 +61,9 @@ GameObject1:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -139.61945343017584
-        - 41.766324996948228
-        - -98.852806091308608
+        - -44.084976196289062
+        - 29.386693954467773
+        - -63.079090118408203
       localRotation:
         - -130.00000393764998
         - 45.000002600858409
@@ -6373,12 +6373,12 @@ GameObject8:
       enabled: true
       localPosition:
         - -172.3270263671875
-        - 1.4092240333557129
+        - 1.8251421451568604
         - 55.746349334716797
       localRotation:
-        - 141.43398320401673
-        - -5.9329515315083921
-        - 179.99999881225011
+        - -38.566017684300654
+        - -32.943468960091067
+        - 1.4077421204378209e-06
       localScale:
         - 0.51462656259536743
         - 0.51462656259536743
@@ -30029,7 +30029,7 @@ GameObject13:
       prefabPath: ""
       uuid: 2912458698215687270
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -30473,7 +30473,7 @@ GameObject13:
       prefabPath: ""
       uuid: 5330133450799676122
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -30510,7 +30510,7 @@ GameObject13:
       prefabPath: ""
       uuid: 10493216406491168325
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -30547,7 +30547,7 @@ GameObject13:
       prefabPath: ""
       uuid: 5471054738921308243
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -30584,7 +30584,7 @@ GameObject13:
       prefabPath: ""
       uuid: 12935779692713316791
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -30732,7 +30732,7 @@ GameObject13:
       prefabPath: ""
       uuid: 11042636607749182421
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -30769,7 +30769,7 @@ GameObject13:
       prefabPath: ""
       uuid: 8645679617075087459
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -30806,7 +30806,7 @@ GameObject13:
       prefabPath: ""
       uuid: 304820650525861987
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31102,7 +31102,7 @@ GameObject13:
       prefabPath: ""
       uuid: 10292277830913420615
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31139,7 +31139,7 @@ GameObject13:
       prefabPath: ""
       uuid: 4492737147213170124
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31287,7 +31287,7 @@ GameObject13:
       prefabPath: ""
       uuid: 1948725952809466507
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31324,7 +31324,7 @@ GameObject13:
       prefabPath: ""
       uuid: 9408493452538375654
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31361,7 +31361,7 @@ GameObject13:
       prefabPath: ""
       uuid: 15013459292038585155
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31509,7 +31509,7 @@ GameObject13:
       prefabPath: ""
       uuid: 248920894542998776
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31546,7 +31546,7 @@ GameObject13:
       prefabPath: ""
       uuid: 4011030160909031457
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31583,7 +31583,7 @@ GameObject13:
       prefabPath: ""
       uuid: 1633704004197855849
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31657,7 +31657,7 @@ GameObject13:
       prefabPath: ""
       uuid: 8741203950237006163
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31694,7 +31694,7 @@ GameObject13:
       prefabPath: ""
       uuid: 12828727392963246699
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31731,7 +31731,7 @@ GameObject13:
       prefabPath: ""
       uuid: 17232113670595140969
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31768,7 +31768,7 @@ GameObject13:
       prefabPath: ""
       uuid: 4626651898975512726
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31805,7 +31805,7 @@ GameObject13:
       prefabPath: ""
       uuid: 15064614663827313516
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31842,7 +31842,7 @@ GameObject13:
       prefabPath: ""
       uuid: 16747612561639023438
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31879,7 +31879,7 @@ GameObject13:
       prefabPath: ""
       uuid: 9121443049389004364
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -32101,7 +32101,7 @@ GameObject13:
       prefabPath: ""
       uuid: 10399600178279905550
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -32323,7 +32323,7 @@ GameObject13:
       prefabPath: ""
       uuid: 16505943135549675545
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -32360,7 +32360,7 @@ GameObject13:
       prefabPath: ""
       uuid: 8858533109569106196
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -32397,7 +32397,7 @@ GameObject13:
       prefabPath: ""
       uuid: 14358697818695292496
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -32434,7 +32434,7 @@ GameObject13:
       prefabPath: ""
       uuid: 5679578953382759279
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -32471,7 +32471,7 @@ GameObject13:
       prefabPath: ""
       uuid: 13507697153227291457
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -32656,7 +32656,7 @@ GameObject13:
       prefabPath: ""
       uuid: 466281749894270857
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -32693,7 +32693,7 @@ GameObject13:
       prefabPath: ""
       uuid: 6593652970386661073
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -32730,7 +32730,7 @@ GameObject13:
       prefabPath: ""
       uuid: 1867173822134040729
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -32767,7 +32767,7 @@ GameObject13:
       prefabPath: ""
       uuid: 13129669328380963113
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -32804,7 +32804,7 @@ GameObject13:
       prefabPath: ""
       uuid: 16353526082258677577
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -33026,7 +33026,7 @@ GameObject13:
       prefabPath: ""
       uuid: 2183392723368852994
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -33063,7 +33063,7 @@ GameObject13:
       prefabPath: ""
       uuid: 4211125571896252386
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -33248,7 +33248,7 @@ GameObject13:
       prefabPath: ""
       uuid: 17192330557718834410
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -33285,7 +33285,7 @@ GameObject13:
       prefabPath: ""
       uuid: 17708364737158703158
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -33322,7 +33322,7 @@ GameObject13:
       prefabPath: ""
       uuid: 16586853769888699242
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -33359,7 +33359,7 @@ GameObject13:
       prefabPath: ""
       uuid: 11690281995986168954
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -33396,7 +33396,7 @@ GameObject13:
       prefabPath: ""
       uuid: 587500310657957518
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -33618,7 +33618,7 @@ GameObject13:
       prefabPath: ""
       uuid: 9982071943862252806
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -33655,7 +33655,7 @@ GameObject13:
       prefabPath: ""
       uuid: 6810965066307685272
       tag: Interactable
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -33701,13 +33701,13 @@ GameObject13:
           Script0:
             name: Item
             fields:
-              isTextVisible: true
+              isTextVisible: false
       Children: ~
     - name: Cylinder.064
       prefabPath: ""
       uuid: 17148555866041071837
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -34040,7 +34040,7 @@ GameObject13:
       prefabPath: ""
       uuid: 14849438229439154143
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -37172,7 +37172,7 @@ GameObject16:
       prefabPath: ""
       uuid: 16919559949700871963
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -37209,7 +37209,7 @@ GameObject16:
       prefabPath: ""
       uuid: 10840828224676976941
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -37357,7 +37357,7 @@ GameObject16:
       prefabPath: ""
       uuid: 2621421983330141138
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -39511,12 +39511,12 @@ GameObject17:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -115.8194580078125
-        - 0.16633415222167969
-        - -122.65280151367188
+        - -117.42130279541016
+        - 0
+        - -125.97224426269531
       localRotation:
         - 0
-        - 44.935481521602163
+        - -0
         - 0
       localScale:
         - 1.1799999475479126
@@ -39607,7 +39607,7 @@ GameObject17:
       Script1:
         name: PlayerMovement
         fields:
-          moveSpeed: 5
+          moveSpeed: 10
           walkSpeed: 5
           runSpeed: 30
           rotationSpeed: 30
@@ -39638,7 +39638,7 @@ GameObject17:
       Script7:
         name: Shotgun
         fields:
-          timeSinceLastShot: 13.2503414
+          timeSinceLastShot: 0
       Script8:
         name: GrenadeLauncher
         fields:
@@ -39813,17 +39813,17 @@ GameObject17:
               name: Transform_Component
               enabled: true
               localPosition:
-                - 3.3795979272888137e-06
-                - 0.20000087832576699
-                - 2.2791803597689446
+                - 1.4210854715202004e-14
+                - 0.224000411262125
+                - 2.2520004367417519
               localRotation:
-                - 99.462310445495461
-                - -1.5703090197676499e-14
-                - -4.5877180225185376e-07
+                - 102.81312837640255
+                - -0.27010421737114598
+                - 0.51305700223874895
               localScale:
-                - 0.99999998365218623
-                - 1.0000000590256179
-                - 1.0000000192527403
+                - 0.99999998339550966
+                - 1.0000000969859955
+                - 1.0000000488261609
           Children:
             - name: HIP.L
               prefabPath: ""
@@ -39836,17 +39836,17 @@ GameObject17:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -1.7763568394002508e-14
-                    - 1.9930054051542359e-07
-                    - -3.3216764450116905e-08
+                    - 9.524967481411295e-10
+                    - 1.9701612075095909e-07
+                    - -4.4808444954469451e-08
                   localRotation:
-                    - 179.99999128050831
-                    - -80.537694192907196
-                    - 90.000049820899562
+                    - -179.99995904975358
+                    - -80.537702173142733
+                    - 90.000000329132135
                   localScale:
-                    - 0.99999992627865275
-                    - 1.0000000001611418
-                    - 0.99999987525326428
+                    - 0.99999984491929883
+                    - 0.99999990172481268
+                    - 0.99999992003469784
               Children:
                 - name: THIGH.L
                   prefabPath: ""
@@ -39859,17 +39859,17 @@ GameObject17:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 4.5739932374999631e-07
-                        - 0.29999661804993943
-                        - 3.9449425592863468e-07
+                        - 3.0337738365915357e-06
+                        - 0.29999929714318796
+                        - 4.6034848466547373e-07
                       localRotation:
-                        - -78.017217827593242
-                        - -13.367044922088674
-                        - 0.87547596207071743
+                        - -78.15104266638096
+                        - -15.877640301125998
+                        - 0.029304213511886196
                       localScale:
-                        - 0.99999994411670257
-                        - 1.0000001705070365
-                        - 1.0000002003097281
+                        - 0.9999996581913585
+                        - 1.0000000255222745
+                        - 1.0000005373083618
                   Children:
                     - name: TIBIA.L
                       prefabPath: ""
@@ -39882,17 +39882,17 @@ GameObject17:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -1.1503710481974849e-06
-                            - 1.0392309444333065
-                            - 1.7138792856030705e-06
+                            - -2.8300240728640347e-07
+                            - 1.039230226328506
+                            - -1.7742187878866389e-06
                           localRotation:
-                            - -5.6763277489106398
-                            - 2.225758204373494
-                            - 33.858807564885446
+                            - -5.5709775019249896
+                            - 2.6664249061169385
+                            - 36.915091902093579
                           localScale:
-                            - 0.99999994332497932
-                            - 1.0000000593871088
-                            - 1.0000000409918883
+                            - 1.0000002216801396
+                            - 0.99999937928906646
+                            - 0.99999957990757304
                       Children:
                         - name: FOOT.L
                           prefabPath: ""
@@ -39905,17 +39905,17 @@ GameObject17:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 2.3428127065017179e-06
-                                - 1.1680741109230866
-                                - -7.7691156796788619e-07
+                                - -4.0775191223474394e-06
+                                - 1.1680777257835189
+                                - 2.6562968855614599e-06
                               localRotation:
-                                - -4.2304315883854802
-                                - -2.8667845793514561
-                                - -103.17616571003747
+                                - -3.8093044265326008
+                                - -2.9687781289837347
+                                - -105.75400219812414
                               localScale:
-                                - 1.0000001067690643
-                                - 0.99999987958318848
-                                - 0.99999997528232065
+                                - 1.0000002728207533
+                                - 1.0000001386676052
+                                - 1.0000002311181435
                           Children:
                             - name: TOE.L
                               prefabPath: ""
@@ -39928,17 +39928,17 @@ GameObject17:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - -2.761033890408271e-07
-                                    - 0.39319059684316926
-                                    - 3.9894510184268483e-07
+                                    - 7.4095575897104027e-07
+                                    - 0.39319799103071773
+                                    - 2.7435323630697894e-06
                                   localRotation:
-                                    - 0.23691884255205706
-                                    - 0.01284817098441874
-                                    - -6.1778496916640933
+                                    - 0.28259261501527216
+                                    - 0.017274059616223927
+                                    - -7.3750868770072842
                                   localScale:
-                                    - 0.99999996423472648
-                                    - 0.99999996990647633
-                                    - 0.99999999874036583
+                                    - 0.99999986442472466
+                                    - 0.99999987444078531
+                                    - 0.99999997952323316
                               Children: ~
             - name: SPINE
               prefabPath: ""
@@ -39951,17 +39951,17 @@ GameObject17:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -1.6889982994428012e-06
-                    - 0.60827648253935263
-                    - 4.6549607191082037e-07
+                    - -2.4515482408560274e-06
+                    - 0.60827634678939901
+                    - -8.7905858947578963e-07
                   localRotation:
-                    - -0.07126841304326402
-                    - 2.1991854295288535e-23
-                    - 1.5902773417467027e-15
+                    - -3.9215687992850201
+                    - -9.3199930496875137e-08
+                    - -1.9868049945921299e-09
                   localScale:
-                    - 0.99999999999999989
-                    - 0.99999993784556163
-                    - 0.99999997077078473
+                    - 0.99999999998400491
+                    - 1.00000016152839
+                    - 1.0000002182140069
               Children:
                 - name: SHOULDER.L
                   prefabPath: ""
@@ -39974,17 +39974,17 @@ GameObject17:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -2.7727801286125957e-06
-                        - 0.90553845786790543
-                        - -1.9383597305022707e-07
+                        - 2.8468644899248834e-06
+                        - 0.90553870359243593
+                        - 2.7859949085495832e-06
                       localRotation:
-                        - -6.7212062107810286
-                        - -12.132283406423964
-                        - -110.0101001105832
+                        - -5.4996157349101269
+                        - -15.388341822007479
+                        - -110.08965754568399
                       localScale:
-                        - 0.99999979044581366
-                        - 0.99999979111396853
-                        - 0.99999998937171397
+                        - 0.99999975899131799
+                        - 1.0000002877014076
+                        - 0.99999990545804929
                   Children:
                     - name: ARM.L
                       prefabPath: ""
@@ -39997,17 +39997,17 @@ GameObject17:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 1.068517239133371e-06
-                            - 0.73520474375971301
-                            - 9.2799439244117831e-07
+                            - 4.2738555805499345e-07
+                            - 0.73520421862420449
+                            - -5.2421809471070446e-07
                           localRotation:
-                            - -13.569150261062962
-                            - 28.089474719230047
-                            - -48.844485594843661
+                            - -13.569158053837413
+                            - 28.089479423642757
+                            - -48.844510583409992
                           localScale:
-                            - 0.99999982951576682
-                            - 0.99999986670059759
-                            - 0.99999996749441966
+                            - 0.99999954064482255
+                            - 0.99999967892765818
+                            - 0.99999953689916776
                       Children:
                         - name: FOREARM.L
                           prefabPath: ""
@@ -40020,17 +40020,17 @@ GameObject17:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -3.2164998415851187e-06
-                                - 0.80925360447222516
-                                - -1.8119888522960537e-07
+                                - -1.6363737103120002e-06
+                                - 0.80925278719056237
+                                - 1.2176653001461091e-06
                               localRotation:
-                                - 79.402189505858715
-                                - 7.6827546511942302
-                                - 20.984667255391088
+                                - 79.555956681117337
+                                - 7.2776868586343957
+                                - 19.754213664007644
                               localScale:
-                                - 1.0000000763804906
-                                - 1.0000003320725852
-                                - 1.000000336731361
+                                - 1.0000001827949276
+                                - 1.0000004472904338
+                                - 1.0000002835119357
                           Children:
                             - name: HAND.L
                               prefabPath: ""
@@ -40043,17 +40043,17 @@ GameObject17:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 3.4249737268510216e-08
-                                    - 0.69208650226183011
-                                    - -1.0971579982310686e-06
+                                    - -1.0100629452836076e-06
+                                    - 0.69208639663268923
+                                    - -1.9688639127934952e-06
                                   localRotation:
-                                    - 168.19346802383413
-                                    - -35.044840179992804
-                                    - -165.98610011838747
+                                    - 168.4401187495302
+                                    - -36.794866321428785
+                                    - -167.75804129683974
                                   localScale:
-                                    - 1.0000002777267369
-                                    - 0.99999999491518954
-                                    - 1.0000003056412834
+                                    - 1.0000003336432606
+                                    - 0.99999962946190224
+                                    - 1.000000088042148
                               Children:
                                 - name: INDEX1.L
                                   prefabPath: ""
@@ -40066,17 +40066,17 @@ GameObject17:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.0084811035739136287
-                                        - 0.32837635580526126
-                                        - 0.058275757892310764
+                                        - 0.0084808182881985772
+                                        - 0.32837612769968416
+                                        - 0.058273959271488707
                                       localRotation:
-                                        - 6.8973002398325169
-                                        - 11.500652567436589
-                                        - -35.657243800357698
+                                        - 6.8973016581064837
+                                        - 11.500653577507061
+                                        - -35.657236662659528
                                       localScale:
-                                        - 0.99999986608796476
-                                        - 1.0000000807153189
-                                        - 0.99999995630347682
+                                        - 0.99999987124857892
+                                        - 0.9999998201434841
+                                        - 0.99999993236096252
                                   Children:
                                     - name: INDEX2.L
                                       prefabPath: ""
@@ -40089,17 +40089,17 @@ GameObject17:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 4.1407297146633937e-08
-                                            - 0.1352819357773285
-                                            - -5.4597985954529804e-06
+                                            - -1.6116244694330817e-07
+                                            - 0.13528207420127103
+                                            - -2.6860290489594263e-06
                                           localRotation:
-                                            - 0.59058926198322437
-                                            - -31.485130791219369
-                                            - -15.749569105018116
+                                            - 0.59058839171529109
+                                            - -31.48511898553695
+                                            - -15.749566689697257
                                           localScale:
-                                            - 0.99999995027496869
-                                            - 1.0000000669946294
-                                            - 1.0000000455817242
+                                            - 1.0000001009233606
+                                            - 0.99999967015144897
+                                            - 0.99999980920423104
                                       Children:
                                         - name: INDEX3.L
                                           prefabPath: ""
@@ -40112,17 +40112,17 @@ GameObject17:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 1.1316468189193074e-06
-                                                - 0.1403109619494245
-                                                - 2.9393460678761585e-06
+                                                - 1.5721874828678042e-06
+                                                - 0.14030920633051383
+                                                - 1.4363839113684664e-06
                                               localRotation:
-                                                - 3.0021481937366734
-                                                - 6.9385021872824781
-                                                - 2.6219534627722707
+                                                - 3.0021495921336609
+                                                - 6.9385033667415446
+                                                - 2.6219517822848175
                                               localScale:
-                                                - 0.9999999798760516
-                                                - 1.0000000599777643
-                                                - 0.99999998722576888
+                                                - 1.0000000147368688
+                                                - 0.99999997949279607
+                                                - 0.9999999608574679
                                           Children: ~
                                 - name: MIDDLE1.L
                                   prefabPath: ""
@@ -40135,17 +40135,17 @@ GameObject17:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.034889054589271495
-                                        - 0.36481787085992323
-                                        - -0.017061397927136568
+                                        - 0.034889121923036726
+                                        - 0.36481824232863858
+                                        - -0.017060582281800407
                                       localRotation:
-                                        - -8.5895966295690176
-                                        - -2.5416056723226492
-                                        - -26.291290039039751
+                                        - -8.5895932491594422
+                                        - -2.5416055262345654
+                                        - -26.291285606738057
                                       localScale:
-                                        - 0.99999994615259069
-                                        - 1.0000001284760247
-                                        - 1.0000000298353056
+                                        - 0.99999979386158155
+                                        - 0.99999985630228283
+                                        - 0.99999994424874772
                                   Children:
                                     - name: MIDDLE2.L
                                       prefabPath: ""
@@ -40158,17 +40158,17 @@ GameObject17:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 7.6842446983249602e-07
-                                            - 0.14865829543580844
-                                            - 2.7888292848388119e-06
+                                            - -1.1722892523380324e-07
+                                            - 0.14865722594116448
+                                            - -1.5774146362446118e-06
                                           localRotation:
-                                            - 0.66839091693287356
-                                            - 4.5332431953997467
-                                            - -39.806950378377024
+                                            - 0.66838894154894835
+                                            - 4.5332422121199381
+                                            - -39.806947969130441
                                           localScale:
-                                            - 0.99999988873665568
-                                            - 1.0000000795436981
-                                            - 0.9999999736059545
+                                            - 1.0000000543697938
+                                            - 1.0000001383951223
+                                            - 1.0000002157012731
                                       Children:
                                         - name: MIDDLE3.L
                                           prefabPath: ""
@@ -40181,17 +40181,17 @@ GameObject17:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 2.0972758250081829e-06
-                                                - 0.11445315793379508
-                                                - 1.9986968524676743e-07
+                                                - 4.7567751693122773e-07
+                                                - 0.11445538746565376
+                                                - 1.6488497038835703e-06
                                               localRotation:
-                                                - 6.1958734692826187
-                                                - -5.3819501881549785
-                                                - -46.925575161775427
+                                                - 6.1958772840673166
+                                                - -5.3819506448280281
+                                                - -46.925576930759213
                                               localScale:
-                                                - 0.99999999259068428
-                                                - 1.0000000344971822
-                                                - 1.00000000504197
+                                                - 1.0000001083291115
+                                                - 0.99999993981702218
+                                                - 1.0000000145728969
                                           Children: ~
                                 - name: RING1.L
                                   prefabPath: ""
@@ -40204,17 +40204,17 @@ GameObject17:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.049478220444711951
-                                        - 0.33854746991869433
-                                        - -0.097661407146595991
+                                        - 0.049476965295369268
+                                        - 0.3385445635062041
+                                        - -0.097660987697892665
                                       localRotation:
-                                        - -20.830467538387939
-                                        - -9.1092593661768149
-                                        - -19.256626371436131
+                                        - -20.830467720228945
+                                        - -9.1092558101209864
+                                        - -19.256622866345811
                                       localScale:
-                                        - 0.99999989695911595
-                                        - 1.0000000616632541
-                                        - 1.0000000569205567
+                                        - 0.99999968096188818
+                                        - 0.9999999110337402
+                                        - 0.99999976213691666
                                   Children:
                                     - name: RING2.L
                                       prefabPath: ""
@@ -40227,17 +40227,17 @@ GameObject17:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -7.0701925025673518e-07
-                                            - 0.13784254339910262
-                                            - -2.2924433693560786e-06
+                                            - -1.9109980087250733e-07
+                                            - 0.13784096359671594
+                                            - -9.7163263035326963e-07
                                           localRotation:
-                                            - -1.1652114034701648
-                                            - 6.5606691323738264
-                                            - -17.755875689065807
+                                            - -1.1652114792674628
+                                            - 6.5606749405315519
+                                            - -17.755878862242245
                                           localScale:
-                                            - 0.99999981028468687
-                                            - 0.99999997402897978
-                                            - 1.0000000403398834
+                                            - 0.99999953591702129
+                                            - 0.99999981615291789
+                                            - 0.99999984659753782
                                       Children:
                                         - name: RING3.L
                                           prefabPath: ""
@@ -40250,17 +40250,17 @@ GameObject17:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -6.8837607614113949e-08
-                                                - 0.10049848034087461
-                                                - -5.1397109501749583e-07
+                                                - -1.9123524355180166e-06
+                                                - 0.1005027322999652
+                                                - -1.9266473145762575e-06
                                               localRotation:
-                                                - 0.42800767390082461
-                                                - 0.62468825156562979
-                                                - -54.245437748576542
+                                                - 0.42800691075683317
+                                                - 0.62469062905089301
+                                                - -54.24544060508169
                                               localScale:
-                                                - 0.9999999366654323
-                                                - 1.0000001718251903
-                                                - 0.9999999757060507
+                                                - 1.0000001444449691
+                                                - 1.0000001845502764
+                                                - 1.0000001096870814
                                           Children: ~
                                 - name: PINKY1.L
                                   prefabPath: ""
@@ -40273,17 +40273,17 @@ GameObject17:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.06865577959935365
-                                        - 0.30465053498878092
-                                        - -0.17371124006893979
+                                        - 0.068655551578224561
+                                        - 0.30464818207117617
+                                        - -0.17370731813181806
                                       localRotation:
-                                        - -34.476390109801152
-                                        - -16.908078311610129
-                                        - -14.991632913916551
+                                        - -34.47638726192276
+                                        - -16.908077326048499
+                                        - -14.991636509313263
                                       localScale:
-                                        - 0.99999985184658857
-                                        - 1.0000000872658805
-                                        - 1.000000024686539
+                                        - 0.99999986992377099
+                                        - 1.0000000600516012
+                                        - 0.99999981736054167
                                   Children:
                                     - name: PINKY2.L
                                       prefabPath: ""
@@ -40296,17 +40296,17 @@ GameObject17:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 2.3589753830322024e-06
-                                            - 0.092192302054471043
-                                            - 3.4088290590261749e-06
+                                            - -2.2292743580010215e-06
+                                            - 0.092200562722084115
+                                            - -2.8869331742953368e-06
                                           localRotation:
-                                            - -3.2520186426263802
-                                            - -0.48837061570794715
-                                            - -17.077744102117279
+                                            - -3.2520165103468486
+                                            - -0.48837359934122915
+                                            - -17.077748362242666
                                           localScale:
-                                            - 1.0000000068513022
-                                            - 0.99999996183904194
-                                            - 0.99999998101871379
+                                            - 0.99999984606821513
+                                            - 0.99999996680811498
+                                            - 0.99999992392065129
                                       Children:
                                         - name: PINKY3.L
                                           prefabPath: ""
@@ -40319,17 +40319,17 @@ GameObject17:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -1.2481211477677336e-06
-                                                - 0.076159788832129052
-                                                - 6.4064039406730457e-08
+                                                - 1.6901291957083231e-06
+                                                - 0.076156553314149278
+                                                - 2.0216675409301388e-06
                                               localRotation:
-                                                - -2.8262849116773903
-                                                - -0.36686748654349849
-                                                - -14.788923799872991
+                                                - -2.8262890618764112
+                                                - -0.36687256349271458
+                                                - -14.788927881976738
                                               localScale:
-                                                - 0.99999985931190383
-                                                - 1.0000001198743194
-                                                - 1.0000000079796683
+                                                - 0.99999986839131916
+                                                - 0.99999990103720038
+                                                - 0.99999998769464704
                                           Children: ~
                                 - name: THUMB1.L
                                   prefabPath: ""
@@ -40342,17 +40342,17 @@ GameObject17:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.024535496892632125
-                                        - 0.23642958343438636
-                                        - 0.12960725568699871
+                                        - 0.024534674978824
+                                        - 0.23643004235206888
+                                        - 0.12960224338966952
                                       localRotation:
-                                        - 18.723516759529058
-                                        - 26.238309237780907
-                                        - -36.985895487311197
+                                        - 18.723510094703428
+                                        - 26.238315804219265
+                                        - -36.98588729966535
                                       localScale:
-                                        - 1.0000000001802059
-                                        - 1.0000000853868711
-                                        - 1.0000000237162225
+                                        - 0.99999962907976314
+                                        - 0.99999995542088993
+                                        - 0.99999999128985084
                                   Children:
                                     - name: THUMB2.L
                                       prefabPath: ""
@@ -40365,17 +40365,17 @@ GameObject17:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 4.3958713291658574e-07
-                                            - 0.1489968435218714
-                                            - -3.1916175728952116e-06
+                                            - -1.2032712959353375e-07
+                                            - 0.14899822734064117
+                                            - -5.8489643350867482e-07
                                           localRotation:
-                                            - 34.183171077371611
-                                            - -0.66938281051566961
-                                            - -9.5659029753069813
+                                            - 34.183165711446584
+                                            - -0.66938530085067105
+                                            - -9.5659029371810682
                                           localScale:
-                                            - 1.0000000341810358
-                                            - 1.0000000007962806
-                                            - 1.0000000916176051
+                                            - 1.0000000378634613
+                                            - 1.0000001646057586
+                                            - 0.99999989844388404
                                       Children: ~
                 - name: HEAD
                   prefabPath: ""
@@ -40388,17 +40388,17 @@ GameObject17:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -2.7727801286125957e-06
-                        - 0.90553845786790543
-                        - -1.9383597305022707e-07
+                        - 2.8468644899248834e-06
+                        - 0.90553870359243593
+                        - 2.7859949085495832e-06
                       localRotation:
-                        - 9.3589854793446516
-                        - 1.3051058154047122e-05
-                        - 3.6606862005307846e-06
+                        - 14.263126736046587
+                        - 1.3158702891455479e-05
+                        - 3.3646695914978793e-06
                       localScale:
-                        - 0.99999999975870424
-                        - 1.0000000131490836
-                        - 0.99999997201636859
+                        - 1.0000000023914932
+                        - 0.99999951104143125
+                        - 0.99999974467952335
                   Children: ~
                 - name: SHOULDER.R
                   prefabPath: ""
@@ -40411,17 +40411,17 @@ GameObject17:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -2.7727801286125957e-06
-                        - 0.90553845786790543
-                        - -1.9383597305022707e-07
+                        - 2.8468644899248834e-06
+                        - 0.90553870359243593
+                        - 2.7859949085495832e-06
                       localRotation:
-                        - -6.9080982314378145
-                        - 2.4676980676833895
-                        - 106.19257508471827
+                        - -5.9323143812367256
+                        - 5.8214754342011714
+                        - 106.23664353386349
                       localScale:
-                        - 0.99999967635701581
-                        - 0.99999973356606475
-                        - 1.0000000079400477
+                        - 0.99999973290941635
+                        - 0.99999998019393355
+                        - 0.99999983271421566
                   Children:
                     - name: ARM.R
                       prefabPath: ""
@@ -40434,17 +40434,17 @@ GameObject17:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -8.0639765620560411e-07
-                            - 0.73520435916673321
-                            - 3.5347380844541476e-07
+                            - 4.9091380205368296e-07
+                            - 0.73521010887714056
+                            - -3.6116440185196552e-06
                           localRotation:
-                            - 69.523223643110896
-                            - -17.738066465217095
-                            - 20.881151025147339
+                            - 69.523205164632614
+                            - -17.738068270957889
+                            - 20.88116311489037
                           localScale:
-                            - 1.000000009749205
-                            - 0.99999988158516928
-                            - 0.99999983066389164
+                            - 0.999999573453075
+                            - 0.99999980903748287
+                            - 0.99999972920057068
                       Children:
                         - name: FOREARM.R
                           prefabPath: ""
@@ -40457,17 +40457,17 @@ GameObject17:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -7.540085817936415e-07
-                                - 0.8092528554873013
-                                - 8.1596206769063429e-07
+                                - -2.872052604629971e-07
+                                - 0.80925425568084108
+                                - 2.17917330758155e-06
                               localRotation:
-                                - 77.665879098085043
-                                - -51.130216206430028
-                                - -5.438146546889131
+                                - 77.665862324425376
+                                - -51.130221097197023
+                                - -5.4381354928998551
                               localScale:
-                                - 1.0000000582365907
-                                - 1.0000000138967933
-                                - 0.99999988145183782
+                                - 1.0000000061383287
+                                - 0.99999996517157164
+                                - 1.00000007547731
                           Children:
                             - name: HAND.R
                               prefabPath: ""
@@ -40480,17 +40480,17 @@ GameObject17:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 1.6649474616770021e-06
-                                    - 0.69208667505585453
-                                    - -3.7294335584192595e-06
+                                    - 1.0827365315435602e-06
+                                    - 0.69209057151938691
+                                    - 1.4302211326366889e-06
                                   localRotation:
-                                    - 24.331622224701086
-                                    - 54.686405098132035
-                                    - 1.284510689834959
+                                    - 24.331609385689827
+                                    - 54.686407124858036
+                                    - 1.2844964435800863
                                   localScale:
-                                    - 0.99999995286338716
-                                    - 1.0000000263641493
-                                    - 1.0000000441350652
+                                    - 1.0000001150540039
+                                    - 0.99999977273805807
+                                    - 1.0000001580231712
                               Children:
                                 - name: INDEX1.R
                                   prefabPath: ""
@@ -40503,17 +40503,17 @@ GameObject17:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.0084874543696571454
-                                        - 0.32837770033240338
-                                        - 0.058275122135778908
+                                        - -0.0084786190293613135
+                                        - 0.32837293139498064
+                                        - 0.05827381054107051
                                       localRotation:
-                                        - 10.409324111256081
-                                        - -8.4636448047883253
-                                        - 15.604443825744548
+                                        - 10.40932801366205
+                                        - -8.4636458756215607
+                                        - 15.604447267693747
                                       localScale:
-                                        - 0.9999999613423346
-                                        - 0.99999995445901413
-                                        - 0.99999995474965231
+                                        - 0.99999981643256752
+                                        - 0.99999990831774677
+                                        - 1.0000000286829418
                                   Children:
                                     - name: INDEX2.R
                                       prefabPath: ""
@@ -40526,17 +40526,17 @@ GameObject17:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 1.6511105798144854e-06
-                                            - 0.13528253601938012
-                                            - -5.7830828836813453e-07
+                                            - -1.402969118657893e-06
+                                            - 0.13528564892664008
+                                            - 1.9684064511693578e-07
                                           localRotation:
-                                            - -13.102778906500935
-                                            - 3.6254063971294967
-                                            - 20.706261708989977
+                                            - -13.102786762635796
+                                            - 3.6254085129648081
+                                            - 20.706266741913186
                                           localScale:
-                                            - 0.99999995303827494
-                                            - 0.99999992135646787
-                                            - 1.0000000378851879
+                                            - 0.99999993287479982
+                                            - 0.99999950847695718
+                                            - 0.99999993404603316
                                       Children:
                                         - name: INDEX3.R
                                           prefabPath: ""
@@ -40549,17 +40549,17 @@ GameObject17:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -1.267171469976347e-06
-                                                - 0.14030821424432105
-                                                - -1.017875348452435e-07
+                                                - -1.7561490324169426e-06
+                                                - 0.14030879515303241
+                                                - 5.1495477748630947e-07
                                               localRotation:
-                                                - 10.556118902113651
-                                                - 7.4190263394109035
-                                                - 30.174653054999208
+                                                - 10.556113024099352
+                                                - 7.4190272861523807
+                                                - 30.174660100428728
                                               localScale:
-                                                - 1.0000000816667338
-                                                - 1.0000000032627296
-                                                - 0.99999998145899316
+                                                - 0.99999992454297015
+                                                - 1.0000001256003355
+                                                - 1.0000000279817431
                                           Children: ~
                                 - name: MIDDLE1.R
                                   prefabPath: ""
@@ -40572,17 +40572,17 @@ GameObject17:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.04499710305660188
-                                        - 0.38370620160623053
-                                        - -0.025200472575939162
+                                        - -0.04499622320155084
+                                        - 0.38370269507954907
+                                        - -0.025200600405224097
                                       localRotation:
-                                        - 16.025992544325661
-                                        - 2.6633222097040585
-                                        - 78.095406816346525
+                                        - 16.02599543936412
+                                        - 2.6633177854163015
+                                        - 78.095437163922952
                                       localScale:
-                                        - 0.99999981889447975
-                                        - 0.99999989170530468
-                                        - 0.99999984177395285
+                                        - 0.99999989603800765
+                                        - 0.99999987238313448
+                                        - 1.0000000010796941
                                   Children:
                                     - name: MIDDLE2.R
                                       prefabPath: ""
@@ -40595,17 +40595,17 @@ GameObject17:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -1.9548084324583219e-06
-                                            - 0.14866590841303665
-                                            - -1.0526515872300026e-06
+                                            - 2.2434541335769609e-06
+                                            - 0.14865859860108799
+                                            - 7.7186070868151546e-08
                                           localRotation:
-                                            - 10.655604365988424
-                                            - -4.4731480763570142
-                                            - 35.654723076020744
+                                            - 10.655599932563751
+                                            - -4.4731455779857656
+                                            - 35.654713012400173
                                           localScale:
-                                            - 0.99999997122070505
-                                            - 1.0000001181827354
-                                            - 0.99999994453636742
+                                            - 0.99999988130795614
+                                            - 1.0000000005020304
+                                            - 1.0000002534867978
                                       Children:
                                         - name: MIDDLE3.R
                                           prefabPath: ""
@@ -40618,17 +40618,17 @@ GameObject17:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -1.3826345224288163e-06
-                                                - 0.11445261807469366
-                                                - 1.2524781567435641e-06
+                                                - 5.1994207694860961e-07
+                                                - 0.11445477064727072
+                                                - 3.5189885849717939e-07
                                               localRotation:
-                                                - -3.6386332597502027
-                                                - 2.3268191736822486
-                                                - 75.570766992835388
+                                                - -3.6386314140712921
+                                                - 2.3268202586910851
+                                                - 75.570745707099618
                                               localScale:
-                                                - 1.0000001584167808
-                                                - 1.0000001008306949
-                                                - 1.0000000147838581
+                                                - 1.0000003108724635
+                                                - 1.0000002754278858
+                                                - 1.0000001452160541
                                           Children: ~
                                 - name: RING1.R
                                   prefabPath: ""
@@ -40641,17 +40641,17 @@ GameObject17:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.052381941525510463
-                                        - 0.33865281737300995
-                                        - -0.097633793307533537
+                                        - -0.052374005738016656
+                                        - 0.33864737127309757
+                                        - -0.09763535129225788
                                       localRotation:
-                                        - 16.001036106792391
-                                        - 18.603699937922038
-                                        - 86.774594907581189
+                                        - 16.001049463796278
+                                        - 18.603700222078714
+                                        - 86.774640903990033
                                       localScale:
-                                        - 0.99999979085759716
-                                        - 0.99999982249799135
-                                        - 0.99999993574063895
+                                        - 0.99999985901437261
+                                        - 0.99999970843802266
+                                        - 0.99999975068033942
                                   Children:
                                     - name: RING2.R
                                       prefabPath: ""
@@ -40664,17 +40664,17 @@ GameObject17:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -1.3563298324470452e-06
-                                            - 0.13784041120112533
-                                            - -7.797163732448098e-07
+                                            - 3.2830001401862319e-06
+                                            - 0.1378465570907963
+                                            - 6.9737678387582491e-07
                                           localRotation:
-                                            - 5.3755825429239419
-                                            - -5.1066343885879801
-                                            - 47.755245292230867
+                                            - 5.3755840266811683
+                                            - -5.1066322952339469
+                                            - 47.755254587875733
                                           localScale:
-                                            - 1.0000000351379756
-                                            - 1.0000000383073118
-                                            - 1.0000000717780817
+                                            - 1.0000000837460026
+                                            - 0.9999996333422968
+                                            - 0.99999983529779157
                                       Children:
                                         - name: RING3.R
                                           prefabPath: ""
@@ -40687,17 +40687,17 @@ GameObject17:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -1.5116513196744563e-06
-                                                - 0.10049747866793268
-                                                - 9.0596668655962276e-07
+                                                - -4.6405023823581359e-07
+                                                - 0.10049790338301534
+                                                - -2.0231233577305829e-08
                                               localRotation:
-                                                - 0.30419047740695038
-                                                - -0.69346618809921301
-                                                - 64.978104653511053
+                                                - 0.30419013923046645
+                                                - -0.69346685477701298
+                                                - 64.978094890270441
                                               localScale:
-                                                - 1.0000000977852805
-                                                - 0.99999999107205306
-                                                - 0.99999999188574806
+                                                - 1.0000003040350978
+                                                - 1.000000296926473
+                                                - 0.99999998895781839
                                           Children: ~
                                 - name: PINKY1.R
                                   prefabPath: ""
@@ -40710,17 +40710,17 @@ GameObject17:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.073669086307688772
-                                        - 0.29853863491609195
-                                        - -0.16958667838763833
+                                        - -0.073665958632503262
+                                        - 0.29853532801870136
+                                        - -0.16958730958164561
                                       localRotation:
-                                        - 8.2355580213181732
-                                        - 29.269790353981417
-                                        - 70.386313151999445
+                                        - 8.2355504021056305
+                                        - 29.269787644459811
+                                        - 70.386307989153693
                                       localScale:
-                                        - 0.99999991412722666
-                                        - 0.99999989122858046
-                                        - 0.99999993345343252
+                                        - 0.99999987374348021
+                                        - 1.0000000387329286
+                                        - 0.9999998849126539
                                   Children:
                                     - name: PINKY2.R
                                       prefabPath: ""
@@ -40733,17 +40733,17 @@ GameObject17:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -2.1674826342632514e-06
-                                            - 0.092198363068632716
-                                            - -1.6241023672591837e-06
+                                            - 2.5495231739114388e-06
+                                            - 0.092196176247853145
+                                            - 9.9318241808532548e-07
                                           localRotation:
-                                            - 7.0835550748242184
-                                            - 2.0428286159249494
-                                            - 46.920625685236232
+                                            - 7.0835499140933651
+                                            - 2.0428305146547467
+                                            - 46.920611861363724
                                           localScale:
-                                            - 1.000000026465133
-                                            - 0.99999999498462411
-                                            - 1.0000000070712471
+                                            - 1.0000000729944378
+                                            - 0.9999999213199654
+                                            - 0.99999979057100652
                                       Children:
                                         - name: PINKY3.R
                                           prefabPath: ""
@@ -40756,17 +40756,17 @@ GameObject17:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 3.7379741470999765e-06
-                                                - 0.076157887354597179
-                                                - 1.9032388749451459e-06
+                                                - 1.3195425339063149e-06
+                                                - 0.076159370609545363
+                                                - 6.1774125015290338e-07
                                               localRotation:
-                                                - -0.73546386391141538
-                                                - 2.7535303489499783
-                                                - 82.438141815495896
+                                                - -0.73546554832484856
+                                                - 2.7535346636001052
+                                                - 82.438148430409001
                                               localScale:
-                                                - 0.9999997157450633
-                                                - 0.99999985240642686
-                                                - 0.99999999217960045
+                                                - 0.99999988459605016
+                                                - 1.0000000745687452
+                                                - 0.99999984629945327
                                           Children: ~
                                 - name: THUMB1.R
                                   prefabPath: ""
@@ -40779,17 +40779,17 @@ GameObject17:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.024543374612903793
-                                        - 0.23642983663044251
-                                        - 0.12960723582008174
+                                        - -0.024535035208501203
+                                        - 0.23642815932554131
+                                        - 0.12960621174151402
                                       localRotation:
-                                        - 26.977975445689371
-                                        - -26.238309392031624
-                                        - 36.985890326131951
+                                        - 26.977965733389212
+                                        - -26.238308055284371
+                                        - 36.985888056000299
                                       localScale:
-                                        - 0.99999994087056465
-                                        - 0.99999988722479327
-                                        - 0.99999997645874972
+                                        - 0.99999957922303684
+                                        - 1.0000001065949573
+                                        - 0.99999991657888632
                                   Children:
                                     - name: THUMB2.R
                                       prefabPath: ""
@@ -40802,17 +40802,17 @@ GameObject17:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 1.4227170197500527e-07
-                                            - 0.14899609740518827
-                                            - 3.5051503743943613e-07
+                                            - -4.1487808744022914e-07
+                                            - 0.14899733418489447
+                                            - -2.2268963562055433e-08
                                           localRotation:
-                                            - -1.6071678740116422
-                                            - 0.66937831647519197
-                                            - 9.5659067392930908
+                                            - -1.6071662065452563
+                                            - 0.66937906212951204
+                                            - 9.5659045092983934
                                           localScale:
-                                            - 0.99999997598272228
-                                            - 0.99999998566070625
-                                            - 1.0000000009821981
+                                            - 0.99999998813335178
+                                            - 0.99999992414509054
+                                            - 1.0000002698772836
                                       Children: ~
                                 - name: Boltgun
                                   prefabPath: ""
@@ -40841,7 +40841,7 @@ GameObject17:
                                       prefabPath: ""
                                       uuid: 18375005225387442905
                                       tag: Untagged
-                                      active: true
+                                      active: false
                                       isStatic: false
                                       Components:
                                         Transform_Component:
@@ -40924,7 +40924,7 @@ GameObject17:
                                           prefabPath: ""
                                           uuid: 17506353446281492373
                                           tag: Untagged
-                                          active: true
+                                          active: false
                                           isStatic: false
                                           Components:
                                             Transform_Component:
@@ -40961,7 +40961,7 @@ GameObject17:
                                           prefabPath: ""
                                           uuid: 8387636759093065230
                                           tag: Untagged
-                                          active: true
+                                          active: false
                                           isStatic: false
                                           Components:
                                             Transform_Component:
@@ -41021,7 +41021,7 @@ GameObject17:
                                       prefabPath: ""
                                       uuid: 201113478219039547
                                       tag: Untagged
-                                      active: true
+                                      active: false
                                       isStatic: false
                                       Components:
                                         Transform_Component:
@@ -41110,7 +41110,7 @@ GameObject17:
                                       shapeParam3: 20
                                       isOneShot: false
                                       isPlaying: true
-                                      isPaused: true
+                                      isPaused: false
                                       burstEmitted: false
                                       spriteSize:
                                         - 1920
@@ -41183,7 +41183,7 @@ GameObject17:
                                       shapeParam3: 20
                                       isOneShot: false
                                       isPlaying: true
-                                      isPaused: true
+                                      isPaused: false
                                       burstEmitted: false
                                       spriteSize:
                                         - 1024
@@ -41256,7 +41256,7 @@ GameObject17:
                                       shapeParam3: 20
                                       isOneShot: false
                                       isPlaying: true
-                                      isPaused: true
+                                      isPaused: false
                                       burstEmitted: false
                                       spriteSize:
                                         - 434
@@ -41329,7 +41329,7 @@ GameObject17:
                                       shapeParam3: 20
                                       isOneShot: false
                                       isPlaying: true
-                                      isPaused: true
+                                      isPaused: false
                                       burstEmitted: false
                                       spriteSize:
                                         - 641
@@ -41357,17 +41357,17 @@ GameObject17:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -1.7763568394002508e-14
-                    - 1.9930054051542359e-07
-                    - -3.3216764450116905e-08
+                    - 9.524967481411295e-10
+                    - 1.9701612075095909e-07
+                    - -4.4808444954469451e-08
                   localRotation:
-                    - 179.99999133581542
-                    - 80.537694192907168
-                    - -90.000049764829598
+                    - -179.99995838379527
+                    - 80.537702173142804
+                    - -89.999999670867837
                   localScale:
-                    - 0.99999992595688747
-                    - 0.99999999983937649
-                    - 0.99999987525326417
+                    - 0.99999984491929883
+                    - 0.99999989622374763
+                    - 0.99999991480078632
               Children:
                 - name: THIGH.R
                   prefabPath: ""
@@ -41380,17 +41380,17 @@ GameObject17:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 5.3282570888768543e-07
-                        - 0.30000576186406752
-                        - 3.9448769761918362e-07
+                        - -3.3614392549452532e-06
+                        - 0.29999935192599025
+                        - 4.9401466517551285e-07
                       localRotation:
-                        - -78.017182064650612
-                        - 13.367066850788191
-                        - -0.87547256692815312
+                        - -77.559405841881897
+                        - 19.701451710733568
+                        - -0.91633083569160401
                       localScale:
-                        - 0.99999997216167347
-                        - 0.99999988652783534
-                        - 0.99999985543366743
+                        - 0.9999992015309811
+                        - 0.99999979771243952
+                        - 0.99999971762354123
                   Children:
                     - name: TIBIA.R
                       prefabPath: ""
@@ -41403,17 +41403,17 @@ GameObject17:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -3.0105389328127785e-06
-                            - 1.0392312053618156
-                            - -4.3034797663210611e-06
+                            - 3.2630528323807084e-07
+                            - 1.0392315441167099
+                            - 1.3820835818023625e-06
                           localRotation:
-                            - -5.6763200912259801
-                            - -2.2257950623855653
-                            - -33.858860483253167
+                            - -5.5318317045242891
+                            - -2.8298975337486891
+                            - -38.016156858938913
                           localScale:
-                            - 1.0000000105736855
-                            - 1.0000000713409523
-                            - 1.0000000303074295
+                            - 1.0000005585825158
+                            - 0.99999935456437272
+                            - 1.0000003354808653
                       Children:
                         - name: FOOT.R
                           prefabPath: ""
@@ -41426,17 +41426,17 @@ GameObject17:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -2.3277850971226144e-06
-                                - 1.1680747551743949
-                                - 2.2596162523313978e-06
+                                - 4.079402884826778e-06
+                                - 1.1680773011816685
+                                - 1.0768886085088527e-06
                               localRotation:
-                                - -4.2304164454639732
-                                - 2.866764251400113
-                                - 103.17619520473659
+                                - -3.9975980894956171
+                                - 2.8422682396970496
+                                - 104.37281542599045
                               localScale:
-                                - 0.99999989443192794
-                                - 1.000000034275079
-                                - 1.0000000134235016
+                                - 0.99999999888357427
+                                - 1.000000036767088
+                                - 1.0000000378973755
                           Children:
                             - name: TOE.R
                               prefabPath: ""
@@ -41449,17 +41449,17 @@ GameObject17:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 2.3249524616630882e-07
-                                    - 0.39319051550370437
-                                    - -1.0655316007301964e-07
+                                    - -2.0771693698407034e-08
+                                    - 0.3931921167725676
+                                    - -2.1230954843076688e-06
                                   localRotation:
-                                    - 0.23684897063879812
-                                    - -0.012724401304286658
-                                    - 6.1779026046102308
+                                    - 0.23687274297745159
+                                    - -0.012724559251309825
+                                    - 6.1778850800466314
                                   localScale:
-                                    - 0.99999995211312531
-                                    - 1.0000000176025445
-                                    - 0.99999996353455356
+                                    - 0.99999980289279977
+                                    - 0.99999986559173537
+                                    - 1.0000002154748822
                               Children: ~
         - name: KNEE.L
           prefabPath: ""
@@ -41472,17 +41472,17 @@ GameObject17:
               name: Transform_Component
               enabled: true
               localPosition:
-                - 0.50000015233362627
-                - -1.459996841130476
-                - 1.500000353878453
+                - 0.48428553778092009
+                - -1.4360008209596771
+                - 1.5000003530571044
               localRotation:
-                - -1.917306048545885e-06
-                - -89.690065000599645
-                - -179.99997807673373
+                - 4.3422428676863842e-11
+                - -89.690064989409365
+                - -179.99997768824625
               localScale:
-                - 1.0000000163223801
-                - 1.0000000174785861
-                - 1.0000000047417228
+                - 1.0000000163234364
+                - 1.0000000342286188
+                - 0.99999998145016289
           Children: ~
         - name: FOOT.R.002
           prefabPath: ""
@@ -41495,17 +41495,17 @@ GameObject17:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.60000051352000183
-                - 0.37999611676539763
-                - 0.20000020599113733
+                - -0.60000018184467763
+                - 0.38000207469758607
+                - 0.20000020599093346
               localRotation:
-                - -73.329021677803283
-                - 82.37181000472988
-                - 106.81154649266992
+                - -73.329009325899861
+                - 82.3718070232934
+                - 106.81155447632769
               localScale:
-                - 1.0000009329611499
-                - 1.0000018967569824
-                - 1.0000008373233418
+                - 1.0000001245155059
+                - 1.0000003589016337
+                - 1.0000019141380059
           Children: ~
         - name: TOE.R.001
           prefabPath: ""
@@ -41518,17 +41518,17 @@ GameObject17:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.59999744457181292
-                - -0.51999832238504962
-                - 0.14000017614852195
+                - -0.60000018184467763
+                - -0.52000146372340339
+                - 0.14000018877673318
               localRotation:
-                - 152.94737184569325
-                - -87.529560418106811
-                - -152.96894580253274
+                - 152.9473651868006
+                - -87.529560779787658
+                - -152.96893840850163
               localScale:
-                - 1.0000000134585705
-                - 1.0000000352145881
-                - 0.99999991694691104
+                - 1.0000000131862228
+                - 1.0000000636129351
+                - 1.0000000909917746
           Children: ~
         - name: PIVOTHEEL.L
           prefabPath: ""
@@ -41541,17 +41541,17 @@ GameObject17:
               name: Transform_Component
               enabled: true
               localPosition:
-                - 0.60000045584365547
-                - 0.42800326986528608
-                - 0.0680001769981433
+                - 0.60000018184470605
+                - 0.53999953791227995
+                - 0.068000185792777931
               localRotation:
-                - -27.052732148995805
-                - -87.529560042452502
-                - -152.9689319294076
+                - -29.686033835704844
+                - -87.462835343081267
+                - -150.33822507072213
               localScale:
-                - 1.0000000137414407
-                - 1.000000038377735
-                - 0.99999991989945547
+                - 0.9999998709920761
+                - 1.0000001421722204
+                - 0.99999999690478691
           Children:
             - name: PIVOTTOE.L
               prefabPath: ""
@@ -41564,17 +41564,17 @@ GameObject17:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - 0.090504086218981428
-                    - 0.94640987482060268
-                    - 0.0034766871051381543
+                    - 0.090503964245755686
+                    - 0.94640742595306904
+                    - 0.0034789471252167914
                   localRotation:
-                    - 8.5855922816518936e-07
-                    - 4.4008262674543488
-                    - -179.99997780918062
+                    - 1.3097810400741223e-08
+                    - 4.4008258425726074
+                    - -179.99997786863557
                   localScale:
-                    - 0.99999998931913703
-                    - 1.0000000076435926
-                    - 0.99999999609678625
+                    - 0.99999985796431601
+                    - 0.99999990751265577
+                    - 1.0000000724417326
               Children:
                 - name: FOOT.L.001
                   prefabPath: ""
@@ -41587,17 +41587,17 @@ GameObject17:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -3.0110734794419614e-08
-                        - 0.51009867253085872
-                        - 9.544813046602485e-07
+                        - 1.2376811842074176e-07
+                        - 0.51010238294118437
+                        - -7.701914910285268e-07
                       localRotation:
-                        - -0.23691367267766467
-                        - 0.012771816532627218
-                        - 6.1778773842207437
+                        - -0.28259397706506578
+                        - 0.018200155211384225
+                        - 7.3750781266244632
                       localScale:
-                        - 0.99999989865641725
-                        - 1.0000000139532588
-                        - 0.99999997802523222
+                        - 0.99999966346195623
+                        - 1.0000002833195991
+                        - 1.0000000063821923
                   Children:
                     - name: IKLEG.L
                       prefabPath: ""
@@ -41610,17 +41610,17 @@ GameObject17:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -1.8214798558346956e-07
-                            - 0.3931904290164141
-                            - -8.921418599427966e-07
+                            - -2.9783352317735995e-07
+                            - 0.39318924829703411
+                            - -3.4513196283114671e-06
                           localRotation:
-                            - 9.7005008861194936e-07
-                            - 4.4007424015999348
-                            - -179.9999767542044
+                            - 4.2742731828695231e-08
+                            - 4.40074164216895
+                            - -179.99997875765837
                           localScale:
-                            - 0.99999982734460369
-                            - 0.99999990646484516
-                            - 0.99999999228392877
+                            - 1.000000371668671
+                            - 1.0000000606836039
+                            - 0.99999986159552101
                       Children: ~
         - name: KNEE.R
           prefabPath: ""
@@ -41633,17 +41633,17 @@ GameObject17:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.49999921740177961
-                - -1.4600027972869329
-                - 1.500000353878657
+                - -0.49999691874279506
+                - -1.4360008209596771
+                - 1.5000003530571044
               localRotation:
-                - 5.8290581784154294e-06
-                - 89.690064996206303
-                - -179.99997416492437
+                - -8.2424528319747649e-11
+                - 89.690064989409365
+                - -179.99997768828524
               localScale:
-                - 1.0000000163227947
-                - 1.0000000174785861
-                - 1.000000004741723
+                - 1.0000000163234364
+                - 1.0000000342286188
+                - 0.999999981450163
           Children: ~
         - name: PIVOTHEEL.R
           prefabPath: ""
@@ -41656,17 +41656,17 @@ GameObject17:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.59999970735876273
-                - 0.42800069330692742
-                - 0.068000176998231507
+                - -0.60000018184467763
+                - 0.41999820431809098
+                - 0.068000183586196888
               localRotation:
-                - -27.052726601670056
-                - 87.529560440061857
-                - 152.96893632901873
+                - -27.052762457885873
+                - 87.529560160700882
+                - 152.96892158729273
               localScale:
-                - 1.0000001145608484
-                - 1.0000001776821295
-                - 1.0000000382200016
+                - 0.99999991253358889
+                - 1.0000001664150435
+                - 0.9999999801072339
           Children:
             - name: PIVOTTOE.R
               prefabPath: ""
@@ -41679,17 +41679,17 @@ GameObject17:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -0.090503980092516034
-                    - 0.94640516747702463
-                    - 0.0034767048993282756
+                    - -0.090503901554697563
+                    - 0.94640376196683462
+                    - 0.0034793143248066372
                   localRotation:
-                    - 8.7688187319018295e-07
-                    - -4.4008262863443113
-                    - 179.99997733302936
+                    - -1.0215608481515304e-08
+                    - -4.4008258800072184
+                    - 179.99997781516873
                   localScale:
-                    - 0.99999988865333744
-                    - 1.0000000076435902
-                    - 0.99999996731932461
+                    - 0.9999997872815225
+                    - 0.99999990657628246
+                    - 0.99999999993892208
               Children:
                 - name: FOOT.R.001
                   prefabPath: ""
@@ -41702,17 +41702,17 @@ GameObject17:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 1.5949491993794143e-07
-                        - 0.51009402534677417
-                        - 2.003670005912284e-06
+                        - -1.2965953422039433e-08
+                        - 0.51009719996716285
+                        - -9.7688959499464545e-07
                       localRotation:
-                        - -0.23691329043627996
-                        - -0.012771815207860988
-                        - -6.177876313404858
+                        - -0.23691522557671602
+                        - -0.012772452920903217
+                        - -6.1778778455553569
                       localScale:
-                        - 0.99999999863978428
-                        - 1.0000000176729731
-                        - 0.99999999208988732
+                        - 0.99999969670242672
+                        - 1.0000002966579586
+                        - 0.99999998344557395
                   Children:
                     - name: IKLEG.R
                       prefabPath: ""
@@ -41725,17 +41725,17 @@ GameObject17:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 2.1534935612521622e-07
-                            - 0.39319037341550711
-                            - -3.5979054580081993e-07
+                            - 2.6419328591487101e-07
+                            - 0.39318983029990306
+                            - -7.5073820937632263e-07
                           localRotation:
-                            - 8.1495118885153916e-07
-                            - -4.4007430034103328
-                            - 179.99997689623282
+                            - 1.8023147271244054e-07
+                            - -4.400741670391044
+                            - 179.99997806889127
                           localScale:
-                            - 0.99999982710244983
-                            - 0.99999983400367931
-                            - 0.99999999264012318
+                            - 1.0000003318243633
+                            - 1.0000001515919059
+                            - 0.99999987838952964
                       Children: ~
     - name: SpeedBoostFX
       prefabPath: ""
@@ -41939,7 +41939,7 @@ GameObject17:
           shapeParam3: 20
           isOneShot: false
           isPlaying: true
-          isPaused: true
+          isPaused: false
           burstEmitted: false
           spriteSize:
             - 256
@@ -42012,7 +42012,7 @@ GameObject17:
           shapeParam3: 20
           isOneShot: false
           isPlaying: true
-          isPaused: true
+          isPaused: false
           burstEmitted: false
           spriteSize:
             - 256
@@ -45453,9 +45453,9 @@ GameObject79:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -139.61945343017584
-        - 41.766324996948228
-        - -98.852806091308608
+        - -14
+        - 20
+        - 14
       localRotation:
         - -130.00000393764998
         - 45.000002600858409

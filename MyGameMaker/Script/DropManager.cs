@@ -169,23 +169,29 @@ public class DropManager : MonoBehaviour
 
     public void SpawnPrefabFromDestroyableObject(Vector3 position)
     {
-        //6,25 Shotgun Shells 
-        //6,25 Boltgun Bullets
-        //82,5 nothing
+        // 12.5% Shotgun Shells
+        // 12.5% Boltgun Bullets
+        // 75% Nothing
+
         Random randomGeneral = new Random();
         float randomValueGeneral = randomGeneral.Next(0, 100);
-        if (randomValueGeneral <= 6.25f)
+
+        if (randomValueGeneral < 12.5f) 
         {
-            SpawnShotgunShells(position);
-           
-        }
-        else if (randomValueGeneral <= 12.5f)
-        {
-            SpawnBoltgunBullets(position);
+            if (randomValueGeneral < 6.25f) 
+            {
+                // 12.5% chance
+                SpawnShotgunShells(position);
+            }
+            else 
+            {
+                // 12.5% chance
+                SpawnBoltgunBullets(position);
+            }
         }
         else
         {
-            //nothing
+            // 75% chance
         }
     }
 

@@ -14,7 +14,7 @@ public class DestroyEnviormentObject : MonoBehaviour
         //gameObject.GetComponent<Collider>().SetTrigger(true);
         if(dropManager != null)
         {
-            dropManager.SpawnShotgunShells(gameObject.transform.position);
+            dropManager.SpawnPrefabFromDestroyableObject(gameObject.transform.position);
         }
         else
         {

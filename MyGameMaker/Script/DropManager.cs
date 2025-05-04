@@ -10,8 +10,8 @@ public class DropManager : MonoBehaviour
     public Prefab BlackHeartPrefab;
     public Prefab AmmunitionBlessingPrefab;
     public Prefab ChapterStandardPrefab;
-    public Prefab ShotgunShellsPrefab;
-    public Prefab BoltgunBulletsPrefab;
+    public Prefab ShotgunShellsPrefab; 
+    public Prefab BoltgunBulletsPrefab; 
     public Prefab MedicaeStimmPrefab;
     public Prefab PiercingBulletsPrefab;
     public override void Awake()
@@ -164,6 +164,28 @@ public class DropManager : MonoBehaviour
                 var boltgunBullets = Instantiate(BoltgunBulletsPrefab);
                 boltgunBullets.transform.position = new Vector3(enemy.gameObject.transform.position.X - 3, enemy.gameObject.transform.position.Y, enemy.gameObject.transform.position.Z - 3);
             }
+        }
+    }
+
+    public void SpawnPrefabFromDestroyableObject(Vector3 position)
+    {
+        //6,25 Shotgun Shells 
+        //6,25 Boltgun Bullets
+        //82,5 nothing
+        Random randomGeneral = new Random();
+        float randomValueGeneral = randomGeneral.Next(0, 100);
+        if (randomValueGeneral <= 6.25f)
+        {
+            SpawnShotgunShells(position);
+           
+        }
+        else if (randomValueGeneral <= 12.5f)
+        {
+            SpawnBoltgunBullets(position);
+        }
+        else
+        {
+            //nothing
         }
     }
 

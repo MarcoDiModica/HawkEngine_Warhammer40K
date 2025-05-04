@@ -23,6 +23,9 @@ public class Shotgun : BaseWeapon
     private List<Vector3> bulletStartPositions = new List<Vector3>();
     private List<float> bulletLifetimes = new List<float>();
     private float hitRayLength = 1f;
+
+    private bool isReloading = false;
+    private float reloadTimer = 0.0f;
     public override void Awake()
     {
 
@@ -50,6 +53,16 @@ public class Shotgun : BaseWeapon
     public override void Update(float deltaTime)
     {
         timeSinceLastShot += deltaTime;
+
+        if (isReloading)
+        {
+            reloadTimer += deltaTime;
+            if (reloadTimer >= reloadTime)
+            {
+                isReloading = false;
+                reloadTimer = 0.0f;
+            }
+        }
 
         for (int i = bulletsObjects.Count - 1; i >= 0; i--)
         {
@@ -134,7 +147,7 @@ public class Shotgun : BaseWeapon
 
     public override void Shoot()
     {
-        if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence)
+        if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence && !isReloading)
         {
 
             timeSinceLastShot = 0f;
@@ -201,21 +214,21 @@ public class Shotgun : BaseWeapon
 
     public override void Reload()
     {
-        if (currentTotalAmmo > 0)
+        if (currentTotalAmmo > 0 && currentMagazineAmmo != magazineSize)
         {
+            isReloading = true;
             int audioo = Audio.PlayOneShot(shotgunReload);
-
-            if (currentTotalAmmo >= magazineSize)
+            if (currentMagazineAmmo + currentTotalAmmo >= magazineSize)
             {
+                currentTotalAmmo -= magazineSize - currentMagazineAmmo;
                 currentMagazineAmmo = magazineSize;
-                currentTotalAmmo = currentTotalAmmo - magazineSize;
             }
             else
             {
-                currentMagazineAmmo = currentTotalAmmo;
+                currentMagazineAmmo += currentTotalAmmo;
                 currentTotalAmmo = 0;
             }
-            currentTotalAmmo -= magazineSize - currentMagazineAmmo;
+
             Engineson.print("Shotgun reloaded");
             Engineson.print($"Current ammo: {currentTotalAmmo}");
         }

@@ -173,7 +173,7 @@ public class EnemyControllerWarrior : EnemyController
                 isFootstepPlaying = false;
                 if (!hasStoppedFootsteps)
                 {
-                    Audio.PlayOneShot(GrowlSound);
+                    
                     //sound?.Stop();
                     hasStoppedFootsteps = true;
                 }
@@ -184,6 +184,7 @@ public class EnemyControllerWarrior : EnemyController
                 {
                     //sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
                     //sound?.Play(true);
+                    Audio.PlayOneShot(GrowlSound);
                     Audio.PlayOneShot(WalkSound);
                     isFootstepPlaying = true;
                     hasStoppedFootsteps = false;

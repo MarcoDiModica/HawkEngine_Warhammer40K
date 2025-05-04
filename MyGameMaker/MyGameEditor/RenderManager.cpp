@@ -285,7 +285,22 @@ void RenderManager::CreateInstanceGroups() {
 		const auto& instances = group.second;
 
 		if (!instances.empty()) {
-			glm::vec4 boundingSphere(0.0f, 0.0f, 0.0f, 1000.0f);
+			glm::vec3 center(0.0f);
+			for (const auto& instance : instances) {
+				glm::vec3 position = glm::vec3(instance.modelMatrix[3]);
+				center += position;
+			}
+			center /= static_cast<float>(instances.size()); 
+
+			float radius = 0.0f;
+			for (const auto& instance : instances) {
+				glm::vec3 position = glm::vec3(instance.modelMatrix[3]);
+				float distance = glm::distance(center, position);
+				radius = std::max(radius, distance);
+			}
+
+			glm::vec4 boundingSphere(center, radius);
+
 			GPUDrivenRenderer::GetInstance().AddInstanceGroup(
 				key.meshIndex,
 				key.materialIndex,

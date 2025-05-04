@@ -1,0 +1,9 @@
+  Determinando los proyectos que se van a restaurar...
+  No hay nada que hacer. Ninguno de los proyectos especificados contiene paquetes para restaurar.
+  C#Assembly -> C:\Users\Usuario\Documents\GitHub\HawkEngine_Warhammer40K\MyGameMaker\Script\obj\Script.dll
+
+Compilación correcta.
+    0 Advertencia(s)
+    0 Errores
+
+Tiempo transcurrido 00:00:00.28

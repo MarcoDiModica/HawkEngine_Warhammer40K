@@ -52,6 +52,8 @@ public:
 	void ForceIncludeAllObjects();
 	void SetCullingUniforms(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
 	
+	bool IsSphereInsideFrustum(const glm::vec4 frustumPlanes[6], const glm::vec4& boundingSphere);
+
 	void RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
 
 	void SetUseGPUCulling(bool enabled) { useGPUCulling = enabled; }
@@ -68,7 +70,7 @@ private:
 	GPUDrivenRenderer& operator=(const GPUDrivenRenderer&) = delete;
 
 	void SetFrustumPlanes(const glm::mat4& view, const glm::mat4& proj);
-	void CPUFrustumCulling();
+	void CPUFrustumCulling(const glm::mat4& viewMatrix, const glm::mat4& projMatrix);
 	bool CompileCullingShader();
 
 	void DebugMeshInfo(uint32_t meshIndex);

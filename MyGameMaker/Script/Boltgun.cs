@@ -165,13 +165,14 @@ public class Boltgun : BaseWeapon
                 currentMagazineAmmo--;
 
             int audio = Audio.PlayOneShot(boltgunShot);
-            Vector3 localOffset = new Vector3(0.0f, 2.5f, 0.5f); // Y = altura, Z = hacia adelante, X = lateral si se desea
+            Vector3 localOffset = new Vector3(-0.9f, 2.5f, 0.5f); // Y = altura, Z = hacia adelante, X = lateral si se desea
 
             Vector3 bulletStart = transform.position +
                                   (transform.right * localOffset.X) +
                                   (transform.up * localOffset.Y) +
                                   (transform.forward * localOffset.Z);
             bulletStart.Y += 0.5f;
+            
             Vector3 direction = Vector3.Normalize(transform.forward);
 
             // Calcular rotaci�n desde la direcci�n (LookAt-like)

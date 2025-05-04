@@ -178,7 +178,7 @@ public class Shotgun : BaseWeapon
                 Vector3 direction = Vector3.Normalize(Vector3.Transform(baseDirection, rotationMatrix));
 
                 // Posici�n inicial del proyectil
-                Vector3 localOffset = new Vector3(0.0f, 2.5f, 0.5f);
+                Vector3 localOffset = new Vector3(-0.9f, 2.5f, 2f);
                 Vector3 bulletStart = transform.position +
                                       (transform.right * localOffset.X) +
                                       (transform.up * localOffset.Y) +

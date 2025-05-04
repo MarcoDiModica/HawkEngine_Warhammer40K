@@ -166,5 +166,55 @@ public class DropManager : MonoBehaviour
             }
         }
     }
+
+
+    public void SpawnMagnet(Vector3 position)
+    {
+        var magnet = Instantiate(MagnetPrefab);
+        magnet.transform.position = position;
+    }
+
+    public void SpawnBlackHeart(Vector3 position)
+    {
+        var blackHeart = Instantiate(BlackHeartPrefab);
+        blackHeart.transform.position = position;
+    }
+
+    public void SpawnAmmunitionBlessing(Vector3 position)
+    {
+        var ammunitionBlessing = Instantiate(AmmunitionBlessingPrefab);
+        ammunitionBlessing.transform.position = position;
+    }
+
+    public void SpawnChapterStandard(Vector3 position)
+    {
+        var chapterStandard = Instantiate(ChapterStandardPrefab);
+        chapterStandard.transform.position = position;
+    }
+
+    public void SpawnShotgunShells(Vector3 position)
+    {
+        var shotgunShells = Instantiate(ShotgunShellsPrefab);
+        shotgunShells.transform.position = position;
+    }
+
+    public void SpawnBoltgunBullets(Vector3 position)
+    {
+        var boltgunBullets = Instantiate(BoltgunBulletsPrefab);
+        boltgunBullets.transform.position = position;
+    }
+
+    public void SpawnMedicaeStimm(Vector3 position)
+    {
+        var medicaeStimm = Instantiate(MedicaeStimmPrefab);
+        medicaeStimm.transform.position = position;
+    }
+
+    public void SpawnPiercingBullets(Vector3 position)
+    {
+        var piercingBullets = Instantiate(PiercingBulletsPrefab);
+        piercingBullets.transform.position = position;
+    }
+
 }
           

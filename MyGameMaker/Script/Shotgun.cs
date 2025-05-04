@@ -102,22 +102,22 @@ public class Shotgun : BaseWeapon
                         switch (tag)
                         {
                             case "Melee":
-                                hitObject.GetComponent<EnemyControllerMelee>()?.TakeDamage(finalDamage);
+                                hitObject?.GetComponent<EnemyControllerMelee>()?.TakeDamage(finalDamage);
                                 break;
                             case "Ranged":
-                                hitObject.GetComponent<EnemyControllerRanged>()?.TakeDamage(finalDamage);
+                                hitObject?.GetComponent<EnemyControllerRanged>()?.TakeDamage(finalDamage);
                                 break;
                             case "Stalker":
-                                hitObject.GetComponent<EnemyControllerStalker>()?.TakeDamage(finalDamage);
+                                hitObject?.GetComponent<EnemyControllerStalker>()?.TakeDamage(finalDamage);
                                 break;
                             case "Boss":
-                                hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
+                                hitObject?.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
                                 break;
                             case "Warrior":
-                                hitObject.GetComponent<EnemyControllerWarrior>()?.TakeDamage(finalDamage);
+                                hitObject?.GetComponent<EnemyControllerWarrior>()?.TakeDamage(finalDamage);
                                 break;
                             case "Destroyable":
-                                hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
+                                hitObject?.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
                                 break;
                         }
                     }

@@ -103,12 +103,13 @@ public class EnemyControllerStalker : EnemyController
 
     public override void Update(float deltaTime)
     {
+        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
         if (currentState != EnemyState.DEAD)
         {
             if (currentHealth <= 0)
             {
                 currentState = EnemyState.DEAD;
-                anim.SetDefeatAnimation();
+                anim?.SetDefeatAnimation();
                 Audio.PlayOneShot(SFX_DEATH);
                 return;
             }
@@ -159,7 +160,7 @@ public class EnemyControllerStalker : EnemyController
                     {
                         currentState = EnemyState.IDLE;
                         rb.SetVelocity(Vector3.Zero);
-                        anim.SetIdleAnimation();
+                        anim?.SetIdleAnimation();
                     }
                 }
             }
@@ -195,7 +196,7 @@ public class EnemyControllerStalker : EnemyController
                 moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
                 Vector3 desiredVelocity = moveDirection * speedMovement;
 
-                anim.SetWalkToPlayerAnimation();
+                anim?.SetWalkToPlayerAnimation();
                 if (desiredVelocity.LengthSquared() > 0)
                 {
                     desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
@@ -232,7 +233,7 @@ public class EnemyControllerStalker : EnemyController
                 if (hurtboxTimer >= hurtboxActivationTime)
                 {
                     //CreateHurtbox();
-                    anim.SetPiercingAnimation();
+                    anim?.SetPiercingAnimation();
                     hurtboxTimer = 0f;
                     dodgeTimer = 0f;
                     dodgewindow = true;
@@ -267,6 +268,10 @@ public class EnemyControllerStalker : EnemyController
                 }
                 hasDropped = true;
                 collider.SetActive(false);
+                if (anim.IsAnimationFinished())
+                {
+                    Engineson.Destroy(gameObject);
+                }
                 break;
 
             default:
@@ -301,7 +306,7 @@ public class EnemyControllerStalker : EnemyController
         if (currentHealth > 0)
         {
             currentHealth -= damage;
-            anim.SetStunnedAnimation();
+            anim?.SetStunnedAnimation();
             //particles.ApplyPreset(19);
             //particles.EmitBurst(1);
             Audio.PlayOneShot(SFX_HIT);
@@ -318,7 +323,7 @@ public class EnemyControllerStalker : EnemyController
         anticipationTimer += deltaTime;
         if (anticipationTimer < anticipationDuration)
         {
-            anim.SetCrossSlashAnimation();
+            anim?.SetCrossSlashAnimation();
             rb.SetVelocity(Vector3.Zero);
         }
         else if (anticipationTimer >= anticipationDuration)
@@ -327,7 +332,7 @@ public class EnemyControllerStalker : EnemyController
             isPouncing = true;
 
             Engineson.print("Pouncing");
-            anim.SetLeapAnimation();
+            anim?.SetLeapAnimation();
             rb.SetVelocity(rb.GetVelocity() * 120f);
         }
         else

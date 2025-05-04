@@ -68,10 +68,10 @@ bool Root::Start()
 	resourceManager->LoadResources(); // Esto no se mutea
 	resourceManager->CreateCube(); // Esto no se mutea
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");
-
+	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl2Alpha1Release.scene");
 	
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
@@ -392,13 +392,14 @@ bool Root::Start()
 	//tyranidWarrior->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	//tyranidWarrior->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.1, 0));
 	//tyranidWarrior->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(1.6, 3.7, 1.8));
-	//auto tyranidWarriorMesh = CreateGameObjectWithPath("Assets/Meshes/TyranidWarriorCollapsed.fbx");
+	//auto tyranidWarriorMesh = CreateGameObjectWithPath("Assets/Meshes/TWarriorv3.fbx");
 	//tyranidWarriorMesh->SetName("TyranidWarriorMesh");
+	//tyranidWarriorMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//tyranidWarriorMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//tyranidWarriorMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	//tyranidWarriorMesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
+	//tyranidWarriorMesh->AddComponent<ScriptComponent>()->LoadScript("WarriorAnimation");
 	//ParentGameObject(*tyranidWarriorMesh, *tyranidWarrior);
 	//tyranidWarrior->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerWarrior");
-
 
 	////Hormagaunt
 	//auto hormagaunt = CreateGameObject("Hormagaunt");

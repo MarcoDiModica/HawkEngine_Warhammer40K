@@ -31,7 +31,7 @@ public class EnemyControllerWarrior : EnemyController
     private bool dodgewindow = false;
     private float dodgeActivationTime = 0.5f;
     private float dodgeTimer = 0f;
-    //private TyranidWarriorAnimation animation
+    private WarriorAnimation anim;
     private PlayerController pc;
 
     // Audio
@@ -74,12 +74,12 @@ public class EnemyControllerWarrior : EnemyController
             return;
         }
 
-        //anim = GameObject.Find("TyranidWarriorMesh").GetComponent<TyranidWarriorAnimation>();
-        //if (anim == null)
-        //{
-        //    Engineson.print("ERROR: TyranidWarriorAnimation requires SkeletalANimation component");
-        //    return;
-        //}
+        anim = GameObject.Find("TyranidWarriorMesh").GetComponent<WarriorAnimation>();
+        if (anim == null)
+        {
+            Engineson.print("ERROR: WarriorAnimation requires SkeletalANimation component");
+            return;
+        }
 
         //particles = gameObject.GetComponent<ParticleFX>();
         //particles.ApplyPreset(9);
@@ -96,6 +96,7 @@ public class EnemyControllerWarrior : EnemyController
             if (currentHealth <= 0)
             {
                 currentState = EnemyState.DEAD;
+                anim?.SetDeathAnimation();
                 //anim.SetDeathAnimation();
                 //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
                 //sound?.Play();
@@ -154,7 +155,7 @@ public class EnemyControllerWarrior : EnemyController
                     {
                         currentState = EnemyState.IDLE;
                         rb.SetVelocity(Vector3.Zero);
-                        //anim.SetStandardIdleAnimation();
+                        anim?.SetIdleAnimation();
                     }
                 }
             }
@@ -192,7 +193,7 @@ public class EnemyControllerWarrior : EnemyController
                 moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
                 Vector3 desiredVelocity = moveDirection * speedMovement;
 
-                //anim.SetRunningAnimation();
+                anim?.SetRunAnimation();
                 if (desiredVelocity.LengthSquared() > 0)
                 {
                     desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
@@ -213,7 +214,7 @@ public class EnemyControllerWarrior : EnemyController
                     if (hurtboxTimer >= hurtboxActivationTime)
                     {
                         //CreateHurtbox();
-                        //anim.SetRandomAttackAnimation();
+                        anim?.SetMeleeAnimation();
                         hurtboxTimer = 0f;
                         dodgeTimer = 0f;
                         dodgewindow = true;
@@ -235,6 +236,7 @@ public class EnemyControllerWarrior : EnemyController
                     if (shootTimer >= shootCooldown)
                     {
                         Attack();
+                        anim?.SetShootAnimation();
                         //sound?.Play();
                         shootTimer = 0;
                     }
@@ -325,6 +327,7 @@ public class EnemyControllerWarrior : EnemyController
         if (currentHealth > 0)
         {
             currentHealth -= damage;
+            anim?.SetHurtAnimation();
         }
     }
 

@@ -23,7 +23,11 @@ public class LictorAnimation : MonoBehaviour
     }
     public override void Update(float deltaTime)
     {
-
+        if (lictorAnimation == null)
+        {
+            Engineson.print("Warning: LictorAnimation lost reference to SkeletalAnimation during Update.");
+            return;
+        }
     }
 
     public void SetCrossSlashAnimation()
@@ -104,5 +108,10 @@ public class LictorAnimation : MonoBehaviour
             lictorAnimation.TransitionAnimations(animIndex,8, 0.2f);
             animIndex = 8;
         }
+    }
+
+    public bool IsAnimationFinished()
+    {
+        return lictorAnimation.IsAnimationFinished();
     }
 }

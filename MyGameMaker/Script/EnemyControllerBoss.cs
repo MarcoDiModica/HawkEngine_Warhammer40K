@@ -430,6 +430,7 @@ public class EnemyControllerBoss : EnemyController
             var transform = metalSlideObject.GetComponent<Transform>();
             transform.position = spawnPosition;
             transform.SetScale(3, 3, 3);
+            Audio.PlayOneShot(AcidClip);
         }
     }
 

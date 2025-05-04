@@ -38,7 +38,12 @@ public class EnemyControllerWarrior : EnemyController
     bool isCombatMusicPlaying = false;
     //private Audio music;
     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
-
+    private string WalkSound = "Assets/Audio/TyranidWarrior/Tyranid_WAR_Walk.wav";
+    private string MeleeAttackSound = "Assets/Audio/TyranidWarrior/Tyranid_WAR_Melee_Atack_1.wav";
+    private string RangedAttackSound = "Assets/Audio/TyranidWarrior/Tyranid_WAR_Ranged_Atack_1.wav";
+    private string DeathSound = "Assets/Audio/TyranidWarrior/TyranidWAR_Death.wav";
+    private string GrowlSound = "Assets/Audio/TyranidWarrior/Tyranid_WAR_Grwol_1.wav";
+    private string HitSound = "Assets/Audio/TyranidWarrior/Tyranid_WAR_Hit_1.wav";
     public override void Awake()
     {
         //music = gameObject.GetComponent<Audio>();
@@ -168,6 +173,7 @@ public class EnemyControllerWarrior : EnemyController
                 isFootstepPlaying = false;
                 if (!hasStoppedFootsteps)
                 {
+                    Audio.PlayOneShot(GrowlSound);
                     //sound?.Stop();
                     hasStoppedFootsteps = true;
                 }
@@ -178,6 +184,7 @@ public class EnemyControllerWarrior : EnemyController
                 {
                     //sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
                     //sound?.Play(true);
+                    Audio.PlayOneShot(WalkSound);
                     isFootstepPlaying = true;
                     hasStoppedFootsteps = false;
                 }
@@ -243,6 +250,7 @@ public class EnemyControllerWarrior : EnemyController
             case EnemyState.STUNNED:
                 break;
             case EnemyState.DEAD:
+                Audio.PlayOneShot(DeathSound);
                 if ((!hasDropped))
                 {
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
@@ -262,6 +270,7 @@ public class EnemyControllerWarrior : EnemyController
     {
         if (isAttacking)
         {
+            Audio.PlayOneShot(MeleeAttackSound);
             //Engineson.print("Melee attack executed!");
             if (pc.redThirstManager.IsInBlackRage())
             {
@@ -286,6 +295,7 @@ public class EnemyControllerWarrior : EnemyController
         {
             try
             {
+                Audio.PlayOneShot(RangedAttackSound);
                 GameObject projectile = Engineson.CreateGameObject("Projectile", null);
                 Engineson.print("Projectile created!" + enemyTransform.forward);
                 // TODO: add custom mesh to the projectile
@@ -324,6 +334,7 @@ public class EnemyControllerWarrior : EnemyController
     {
         if (currentHealth > 0)
         {
+            Audio.PlayOneShot(HitSound);
             currentHealth -= damage;
         }
     }

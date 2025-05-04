@@ -17,6 +17,8 @@ public:
 
     void Init();
     void UpdateFramebuffer();
+    void BeginRender();
+    void EndRender();
     bool Draw();
 
 	vec2 GetWinSize() { return winSize; }
@@ -37,9 +39,10 @@ private:
     glm::dvec2 viewportPos;
     glm::dvec2 viewportSize;
     
-
-
-
-
+	GLuint msaaFbo = 0;
+	GLuint msaaColorRbo = 0;
+	GLuint msaaDepthRbo = 0;
+	int msaaSamples = 16;
+	bool useMSAA = true;
 };
 #endif // !__UI_GAME_VIEW_H__

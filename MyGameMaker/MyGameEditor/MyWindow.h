@@ -16,8 +16,8 @@ class Window : public Module {
 	SDL_Window* _window = nullptr;
 	void* _ctx = nullptr;
 
-	unsigned short _width = 1280;
-	unsigned short _height = 720;
+	unsigned short _width = 1920;
+	unsigned short _height = 1080;
 
 	bool isFullscreen = false;
 

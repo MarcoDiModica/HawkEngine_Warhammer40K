@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         playerMesh.GetComponent<SkeletalAnimation>().SetAnimationSpeed(2f);
         //sound = gameObject.GetComponent<AudioSource>();
         //gameObject.GetComponent<Transform>().SetPosition(0, 0, 0);
-        playerData = new PlayerData();
+        playerData = PlayerData.Instance;
         // Add the blood splash effect directly to the player object
         bloodSplashEffect = gameObject.AddComponent<ParticleFX>();
         bloodSplashEffect.ApplyPreset(19); // BLOOD_SPLASH preset (index 19)
@@ -195,6 +195,8 @@ public class PlayerController : MonoBehaviour
            
             if (moveDirection == Vector3.Zero)
             {
+                StopFootsteps();
+                walkingFX.Stop();
                 if (isWalking)
                 {
                     SetWalkingToIdle();
@@ -207,8 +209,7 @@ public class PlayerController : MonoBehaviour
                 {
                     SetIdleState();
                 }
-                StopFootsteps();
-                walkingFX.Stop();
+                
             }
             else
             {

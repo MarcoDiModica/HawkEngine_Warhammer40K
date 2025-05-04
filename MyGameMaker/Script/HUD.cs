@@ -202,11 +202,17 @@ public class HUD : MonoBehaviour
             Engineson.print("ERROR: GunAbilities not found");
         }
 
-        railgunScript = playerShootingScript.railgun;
-
-        if (railgunScript == null)
+        if (playerShootingScript.hasRailgun)
         {
-            Engineson.print("ERROR: Railgun not found");
+            railgunScript = playerShootingScript.railgun;
+            if (railgunScript == null)
+            {
+                Engineson.print("ERROR: railgun unlocked but not instantiated!");
+            }
+            else
+            {
+                railgunScript.railgunMode = Railgun.RailgunMode.SEMIAUTOMATIC;
+            }
         }
 
         redThirstManager = Player.GetComponent<RedThirstManager>();
@@ -289,6 +295,11 @@ public class HUD : MonoBehaviour
         transform_hpTempBarAnim.DOMoveXUI(CalculateHPTempBarAnimPos(), 0f, Modes.LINEAR);
         transform_redThirstBar.SetScaleUI(new Vector3(0.037f, CalculateRedThirstBarHeight(), 1.0f));
         transform_redThirstBarAnim.DOMoveYUI(CalculateRedThirstBarAnimPos(), 0f, Modes.LINEAR);
+
+        if (playerShootingScript.hasRailgun && railgunScript == null)
+        {
+            railgunScript = playerShootingScript.railgun;
+        }
 
         if (redThirstManager.biblePages >= 1)
         {
@@ -447,6 +458,11 @@ public class HUD : MonoBehaviour
                 shotgunAbility1.SetActive(false);
                 shotgunAbility2.SetActive(false);
                 railgunAbility1.SetActive(true);
+                if (railgunScript == null)
+                {
+                    Engineson.print("ERROR: Hud.Update – railgunScript is null!");
+                    break;
+                }
                 switch (railgunScript.railgunMode)
                 {
                     case Railgun.RailgunMode.SEMIAUTOMATIC:

@@ -4,3 +4,5 @@ Player
 Collider
 Destroyable
 Checkpoint
+Enemy
+Melee

@@ -15,11 +15,14 @@ public class Checkpoint : MonoBehaviour
     private GameObject player;
     private Vector3 spawnPoint;
     private bool isCheckpointActive = false;
+    public List<GameObject> enemies = new List<GameObject>();
 
     [Serializable]
     public class CheckpointData
     {
         public float playerCurrentHealth { get; set; }
+
+        public float playerCurrentTemporalHealth { get; set; }
 
         public int boltgunCurrentAmmo { get; set; }
         public int shotgunCurrentAmmo { get; set; }
@@ -41,7 +44,7 @@ public class Checkpoint : MonoBehaviour
         public float playerSpawnY { get; set; }
         public float playerSpawnZ { get; set; }
 
-        //public List<Vector3> enemiesPositions = new List<Vector3>();
+        public List<bool> areEnemiesDead { get; set; } = new List<bool>();
     }
 
     
@@ -55,6 +58,33 @@ public class Checkpoint : MonoBehaviour
         playerData = PlayerData.Instance;
         spawnPoint = GetComponent<Transform>().position;
         spawnPoint.Y = player.GetComponent<Transform>().position.Y;
+
+        Engineson.print(GameObject.FindGameObjectsWithTag("Melee").Length.ToString());
+
+        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Melee").Length; i++)
+        {
+            enemies.Add(GameObject.FindGameObjectsWithTag("Melee")[i]);
+            Engineson.print(enemies[i].name);
+        }
+
+        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Ranged").Length; i++)
+        {
+            enemies.Add(GameObject.FindGameObjectsWithTag("Ranged")[i]);
+            Engineson.print(enemies[i].name);
+        }
+
+        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Warrior").Length; i++)
+        {
+            enemies.Add(GameObject.FindGameObjectsWithTag("Warrior")[i]);
+            Engineson.print(enemies[i].name);
+        }
+
+        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Stalker").Length; i++)
+        {
+            enemies.Add(GameObject.FindGameObjectsWithTag("Stalker")[i]);
+            Engineson.print(enemies[i].name);
+        }
+
     }
 
     
@@ -81,6 +111,7 @@ public class Checkpoint : MonoBehaviour
             playerSpawnY = spawnPoint.Y,
             playerSpawnZ = spawnPoint.Z,
             playerCurrentHealth = playerData.GetHealth(),
+            playerCurrentTemporalHealth = playerData.GetHealthTemp(),
             boltgunCurrentAmmo = playerShooting.boltgun.currentTotalAmmo,
             shotgunCurrentAmmo = playerShooting.shotgun.currentTotalAmmo,
             hasBoltgun = playerData.hasBoltgun,
@@ -93,8 +124,70 @@ public class Checkpoint : MonoBehaviour
             hasAmmunitionBlessing = playerPowerUp.hasAmmunitionBlessing,
             hasMagnet = playerPowerUp.hasMagnet,
             hasPiercingBullets = playerPowerUp.hasPiercingBullets
+           
+
+
         };
         
+        for(int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i] != null)
+            {
+                if (enemies[i].tag == "Melee")
+                {
+                    if (enemies[i].GetComponent<EnemyControllerMelee>().isDead)
+                    {
+                        checkpointData.areEnemiesDead.Add(true);
+                    }
+                    else
+                    {
+                        checkpointData.areEnemiesDead.Add(false);
+                    }
+
+                }
+                else if (enemies[i].tag == "Ranged")
+                {
+                    if (enemies[i].GetComponent<EnemyControllerRanged>().isDead)
+                    {
+                        checkpointData.areEnemiesDead.Add(true);
+                    }
+                    else
+                    {
+                        checkpointData.areEnemiesDead.Add(false);
+                    }
+
+                }
+                else if (enemies[i].tag == "Stalker")
+                {
+                    if (enemies[i].GetComponent<EnemyControllerStalker>().isDead)
+                    {
+                        checkpointData.areEnemiesDead.Add(true);
+                    }
+                    else
+                    {
+                        checkpointData.areEnemiesDead.Add(false);
+                    }
+
+                }
+                else if (enemies[i].tag == "Warrior")
+                {
+                    if (enemies[i].GetComponent<EnemyControllerWarrior>().isDead)
+                    {
+                        checkpointData.areEnemiesDead.Add(true);
+                    }
+                    else
+                    {
+                        checkpointData.areEnemiesDead.Add(false);
+                    }
+
+                }
+                else
+                {
+                    checkpointData.areEnemiesDead.Add(false);
+                }
+            }
+            
+        }
 
         string json = JsonSerializer.Serialize<CheckpointData>(checkpointData);
         File.WriteAllText("Serialized/checkpointData.json", json);
@@ -107,6 +200,7 @@ public class Checkpoint : MonoBehaviour
         CheckpointData checkpointData = JsonSerializer.Deserialize<CheckpointData>(File.ReadAllText("Serialized/checkpointData.json"));
 
         playerData.SetHealth(checkpointData.playerCurrentHealth);
+        playerData.SetTempHealth(checkpointData.playerCurrentTemporalHealth);
         playerShooting.boltgun.currentTotalAmmo = checkpointData.boltgunCurrentAmmo;
         playerShooting.shotgun.currentTotalAmmo = checkpointData.shotgunCurrentAmmo;
         playerData.hasBoltgun = checkpointData.hasBoltgun;
@@ -121,6 +215,63 @@ public class Checkpoint : MonoBehaviour
         playerPowerUp.hasPiercingBullets = checkpointData.hasPiercingBullets;
         Vector3 spawnPos = new Vector3(checkpointData.playerSpawnX, checkpointData.playerSpawnY, checkpointData.playerSpawnZ);
         player.GetComponent<Collider>().SetPosition(spawnPos);
+
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i] != null)
+            {
+                if (checkpointData.areEnemiesDead[i] == true)
+                {
+                    if (enemies[i].tag == "Melee")
+                    {
+                        enemies[i].GetComponent<EnemyControllerMelee>().isDead = true;
+                    }
+                    else if (enemies[i].tag == "Ranged")
+                    {
+                        enemies[i].GetComponent<EnemyControllerRanged>().isDead = true;
+
+                    }
+                    else if (enemies[i].tag == "Stalker")
+                    {
+                        enemies[i].GetComponent<EnemyControllerStalker>().isDead = true;
+
+                    }
+                    else if (enemies[i].tag == "Warrior")
+                    {
+                        enemies[i].GetComponent<EnemyControllerWarrior>().isDead = true;
+
+                    }
+                }
+                else
+                {
+                    if (enemies[i].tag == "Melee")
+                    {
+                        enemies[i].GetComponent<EnemyControllerMelee>().isDead = false;
+                        enemies[i].GetComponent<EnemyControllerMelee>().ResetEnemyCheckPoint();
+                    }
+                    else if (enemies[i].tag == "Ranged")
+                    {
+                        enemies[i].GetComponent<EnemyControllerRanged>().isDead = false;
+                        enemies[i].GetComponent<EnemyControllerRanged>().ResetEnemyCheckPoint();
+
+                    }
+                    else if (enemies[i].tag == "Stalker")
+                    {
+                        enemies[i].GetComponent<EnemyControllerStalker>().isDead = false;
+                        enemies[i].GetComponent<EnemyControllerStalker>().ResetEnemyCheckPoint();
+
+                    }
+                    else if (enemies[i].tag == "Warrior")
+                    {
+                        enemies[i].GetComponent<EnemyControllerWarrior>().isDead = false;
+                        enemies[i].GetComponent<EnemyControllerWarrior>().ResetEnemyCheckPoint();
+
+                    }
+                }
+
+                
+            }
+        }
 
         Engineson.print(spawnPos.ToString());
     }

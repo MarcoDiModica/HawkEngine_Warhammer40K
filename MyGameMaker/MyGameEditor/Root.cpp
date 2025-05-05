@@ -928,6 +928,11 @@ std::shared_ptr<GameObject> Root::FindGOByName(std::string name) {
     return SceneManagement->FindGOByName(name);
 }
 
+std::vector<GameObject*> Root::FindGOsByTag(std::string tag) {
+
+	return SceneManagement->FindGOsByTag(tag);
+}
+
 void Root::CreateGameplayUI()
 {
     auto canvas = CreateGameObject("Canvas_HUD");

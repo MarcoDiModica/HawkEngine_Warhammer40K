@@ -340,6 +340,14 @@ std::shared_ptr<GameObject> SceneManager::FindGOByName(std::string name) const {
     return FindGOByNameRecursive(name, currentScene->_children);
 }
 
+std::vector<GameObject*> SceneManager::FindGOsByTag(std::string& tag) const 
+{
+    std::vector<GameObject*> result;
+    FindGOsByTagRecursive(tag, currentScene->_children, result);
+    return result;
+}
+
+
 std::shared_ptr<GameObject> SceneManager::FindGOByNameRecursive(const std::string& name, const std::vector<std::shared_ptr<GameObject>>& gameObjects) const {
     for (const auto& go : gameObjects) {
         if (go->GetName() == name) {
@@ -351,4 +359,13 @@ std::shared_ptr<GameObject> SceneManager::FindGOByNameRecursive(const std::strin
         }
     }
     return nullptr;
+}
+
+void SceneManager::FindGOsByTagRecursive(const std::string& tag, const std::vector<std::shared_ptr<GameObject>>& gameObjects, std::vector<GameObject*>& result) const {
+    for (const auto& go : gameObjects) {
+        if (go->CompareTag(tag)) {
+            result.push_back(go.get());
+        }
+        FindGOsByTagRecursive(tag, go->GetChildren(), result);
+    }
 }

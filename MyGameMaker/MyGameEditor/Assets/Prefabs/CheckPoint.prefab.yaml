@@ -1,0 +1,37 @@
+name: CheckPoint
+prefabPath: ""
+uuid: 13644356235238303426
+tag: Checkpoint
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 21.562578201293945
+      - 5.4871563911437988
+      - -7.5531115531921387
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  BoxColliderComponent:
+    size:
+      - 10
+      - 10
+      - 10
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  ScriptComponents:
+    Script0:
+      name: Checkpoint
+      fields: ~
+Children: ~

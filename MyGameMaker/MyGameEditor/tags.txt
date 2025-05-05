@@ -3,3 +3,4 @@ Interactable
 Player
 Collider
 Destroyable
+Checkpoint

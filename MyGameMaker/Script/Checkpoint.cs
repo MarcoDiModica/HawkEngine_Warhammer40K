@@ -65,9 +65,9 @@ public class Checkpoint : MonoBehaviour
 
     public override void Update(float deltatime)
     {
-        if (Input.GetKeyDown(KeyCode.F7))
+        if (playerData.GetHealth() <= 0)
         {
-           LoadCheckPointData();
+            LoadCheckPointData();
         }
     }
 

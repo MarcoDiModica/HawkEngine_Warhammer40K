@@ -89,6 +89,9 @@ public class PlayerController : MonoBehaviour
             walkingFX.Stop();
             return;
         }
+
+        
+
         if (playerData.isHit )
         {
             if (!playerDash.isInvulnerable && !playerData.GodMode)
@@ -110,7 +113,26 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    playerAnimations.SetHitIdleAnimation();
+                    if (isRunning)
+                    {
+                        playerAnimations.SetHitRunningAnimation();
+                    }
+                    else if (isShootingRunning)
+                    {
+                        playerAnimations.SetHitShootingRunningAnimation();
+                    }
+                    else if (isShootingStanding)
+                    {
+                        playerAnimations.SetHitShootingStandingAnimation();
+                    }
+                    else if (isWalking)
+                    {
+                        playerAnimations.SetHitWalkingAnimation();
+                    }
+                    else 
+                    {
+                        playerAnimations.SetHitAnimation();
+                    }
                 }
             }
             playerData.isHit = false; 
@@ -192,7 +214,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-           
+            Engineson.print(moveDirection.ToString());
             if (moveDirection == Vector3.Zero)
             {
                 if (isWalking)
@@ -238,38 +260,64 @@ public class PlayerController : MonoBehaviour
             isDashing = true;
             playerDash.InitiateDash(moveDirection, elapsedTime);
             playerAnimations.SetDashAnimation();
+            playerInput.BlockMovement();
             //dashDelayTimer = dashDelayDuration;
-            isRunning = false;
-            isWalking = false;
             StopFootsteps();
 
         }
         if (playerAnimations.esk.IsAnimationFinished() && isDashing == true)
         {
-            playerAnimations.SetStandardIdleAnimation();
+            playerInput.UnblockMovement();
+            TransitionFromDashState();
             isDashing = false;
         }
 
     }
 
+    private void TransitionFromDashState()
+    {
+        if (isRunning)
+        {
+            playerAnimations.SetDashToRunningAnimation();
+        }
+        else if (isShootingRunning)
+        {
+            playerAnimations.SetDashToShootingRunningAnimation();
+        }
+        else if (isShootingStanding)
+        {
+            playerAnimations.SetDashToShootingStandingAnimation();
+        }
+        else if (isWalking)
+        {
+            playerAnimations.SetDashToWalkingAnimation();
+        }
+        else
+        {
+            playerAnimations.SetDashToIdleAnimation();
+        }
+    }
 
     private void SetIdleState()
     {
-        if (!isIdle)
+        
+        if (isShootingStanding)
         {
-            if (isShootingStanding)
-            {
-                playerAnimations.SetShootingStandingToIdleAnimation();
-            }
-
-            playerAnimations.SetIdleRandomAnimation();
-            isIdle = true;
-            isRunning = false;
-            isWalking = false;
-            isShootingStanding = false;
-            isShootingRunning = false;
-            isMoving = false;
+            Engineson.print("Idle");
+            playerAnimations.SetShootingStandingToIdleAnimation();
         }
+        else if(playerAnimations.esk.IsAnimationFinished())
+        {
+            playerAnimations.SetStandardIdleAnimation();
+        }
+
+        isIdle = true;
+        isRunning = false;
+        isWalking = false;
+        isShootingStanding = false;
+        isShootingRunning = false;
+        isMoving = false;
+        
 
         if (!hasStoppedFootsteps)
         {

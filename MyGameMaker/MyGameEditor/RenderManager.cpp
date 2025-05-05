@@ -140,11 +140,83 @@ void RenderManager::RenderDebugQuad() {
 	glBindVertexArray(0);
 }
 
+bool IsBoundingBoxInsideFrustum(const glm::vec3& minBounds, const glm::vec3& maxBounds, const glm::vec4 frustumPlanes[6]) {
+	for (int i = 0; i < 6; ++i) {
+		const glm::vec4& plane = frustumPlanes[i];
+
+		// Check if all vertices of the bounding box are outside the current plane
+		glm::vec3 positiveVertex = glm::vec3(
+			(plane.x > 0) ? maxBounds.x : minBounds.x,
+			(plane.y > 0) ? maxBounds.y : minBounds.y,
+			(plane.z > 0) ? maxBounds.z : minBounds.z
+		);
+
+		if (glm::dot(glm::vec3(plane), positiveVertex) + plane.w < 0) {
+			// Bounding box is outside this plane
+			return false;
+		}
+	}
+
+	// Bounding box is inside or intersects the frustum
+	return true;
+}
+
 void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
 	if (queuedObjects.empty()) return;
 
 	for (auto* obj : queuedObjects) {
-		ProcessGameObject(obj);
+
+		glm::vec4 frustumPlanes[6];
+
+		glm::mat4 vp = projMatrix * viewMatrix;
+
+		// Left plane
+		frustumPlanes[0].x = vp[0][3] + vp[0][0];
+		frustumPlanes[0].y = vp[1][3] + vp[1][0];
+		frustumPlanes[0].z = vp[2][3] + vp[2][0];
+		frustumPlanes[0].w = vp[3][3] + vp[3][0];
+
+		// Right plane
+		frustumPlanes[1].x = vp[0][3] - vp[0][0];
+		frustumPlanes[1].y = vp[1][3] - vp[1][0];
+		frustumPlanes[1].z = vp[2][3] - vp[2][0];
+		frustumPlanes[1].w = vp[3][3] - vp[3][0];
+
+		// Bottom plane
+		frustumPlanes[2].x = vp[0][3] + vp[0][1];
+		frustumPlanes[2].y = vp[1][3] + vp[1][1];
+		frustumPlanes[2].z = vp[2][3] + vp[2][1];
+		frustumPlanes[2].w = vp[3][3] + vp[3][1];
+
+		// Top plane
+		frustumPlanes[3].x = vp[0][3] - vp[0][1];
+		frustumPlanes[3].y = vp[1][3] - vp[1][1];
+		frustumPlanes[3].z = vp[2][3] - vp[2][1];
+		frustumPlanes[3].w = vp[3][3] - vp[3][1];
+
+		// Near plane
+		frustumPlanes[4].x = vp[0][3] + vp[0][2];
+		frustumPlanes[4].y = vp[1][3] + vp[1][2];
+		frustumPlanes[4].z = vp[2][3] + vp[2][2];
+		frustumPlanes[4].w = vp[3][3] + vp[3][2];
+
+		// Far plane
+		frustumPlanes[5].x = vp[0][3] - vp[0][2];
+		frustumPlanes[5].y = vp[1][3] - vp[1][2];
+		frustumPlanes[5].z = vp[2][3] - vp[2][2];
+		frustumPlanes[5].w = vp[3][3] - vp[3][2];
+
+		// Normalize planes
+		for (auto& frustumPlane : frustumPlanes) {
+			float length = glm::length(glm::vec3(frustumPlane));
+			if (length > 1e-6) {
+				frustumPlane /= length;
+			}
+		}
+
+		if (IsBoundingBoxInsideFrustum(obj->boundingBox().min, obj->boundingBox().max, frustumPlanes)) {
+			ProcessGameObject(obj, viewMatrix, projMatrix);
+		}
 	}
 
 	if (useForwardPlus) {
@@ -248,7 +320,8 @@ bool RenderManager::InitializeShaders() {
 	return bindlessUnlitShader != 0; 
 }
 
-void RenderManager::ProcessGameObject(GameObject* gameObject) {
+
+void RenderManager::ProcessGameObject(GameObject* gameObject, const glm::mat4& viewMatrix, const glm::mat4& projMatrix) {
 	if (!gameObject || !gameObject->IsActive()) return;
 
 	if (gameObject->HasComponent<MeshRenderer>()) {
@@ -256,6 +329,7 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 
 		auto mesh = renderer->GetMesh();
 		auto material = renderer->GetMaterial();
+
 
 		if (mesh && material) {
 			uint32_t meshIndex = BindlessManager::GetInstance().RegisterMesh(mesh.get());
@@ -279,7 +353,9 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 	}
 }
 
-void RenderManager::CreateInstanceGroups() {
+void RenderManager::CreateInstanceGroups()
+{
+
 	for (const auto& group : instanceGroups) {
 		const MeshMaterialKey& key = group.first;
 		const auto& instances = group.second;

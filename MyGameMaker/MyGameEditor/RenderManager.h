@@ -63,7 +63,7 @@ private:
 	RenderManager(const RenderManager&) = delete;
 	RenderManager& operator=(const RenderManager&) = delete;
 	bool InitializeShaders();
-	void ProcessGameObject(GameObject* gameObject);
+	void ProcessGameObject(GameObject* gameObject, const glm::mat4& viewMatrix, const glm::mat4& projMatrix);
 	void CreateInstanceGroups();
 	void BeginGPUQuery();
 	void EndGPUQuery();

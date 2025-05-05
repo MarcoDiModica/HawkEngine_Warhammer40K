@@ -13,11 +13,11 @@ public class PlayerController : MonoBehaviour
     private ParticleFX bloodSplashEffect;
     private CapsuleCollider capsuleCollider;
     private bool isIdle = false;
+    public bool isShootInput = false;
     public bool isRunning = false;
     private bool isWalking = false;
     private bool isMoving = false;
     private bool isDashInput = false;
-    private bool isShootInput = false;
     private bool isRunningInput = false;
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
@@ -306,7 +306,7 @@ public class PlayerController : MonoBehaviour
             Engineson.print("Idle");
             playerAnimations.SetShootingStandingToIdleAnimation();
         }
-        else if(playerAnimations.esk.IsAnimationFinished())
+        else //revise
         {
             playerAnimations.SetStandardIdleAnimation();
         }

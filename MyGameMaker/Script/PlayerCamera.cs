@@ -38,6 +38,13 @@ public class PlayerCamera : MonoBehaviour
 
     private float timeSinceInput = 0f;
 
+    public Vector3 shakeOffset = Vector3.Zero;
+    public Vector2 shakeIntensity = new Vector2(1.0f, 1.0f);
+    private Random random = new Random();
+
+
+    private PlayerController playerController;
+
     public override void Awake()
     {
         currentFOV = originalFOV;
@@ -56,6 +63,13 @@ public class PlayerCamera : MonoBehaviour
             Engineson.print("ERROR: PlayerCamera requires a GameObject named 'Player' in the scene!");
             return;
         }
+
+        playerController = playerRef.GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            Engineson.print("ERROR: PlayerCamera requires a PlayerController component on the Player GameObject!");
+            return;
+        }   
 
         cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
         cameraRef.SetCameraFieldOfView(originalFOV * (Math.PI / 180.0));
@@ -99,7 +113,6 @@ public class PlayerCamera : MonoBehaviour
             }
         }
 
-        // Smooth return of dash offset
         if (isDashingCamera)
         {
             dashOffsetTimer += deltaTime;
@@ -114,8 +127,11 @@ public class PlayerCamera : MonoBehaviour
                 }
             }
         }
+        //añadir que solo haga el shake si tiene balas 
+        if (playerController.isShootInput)
+            shakeOffset = ApplyCameraShake(shakeIntensity.X, shakeIntensity.Y); 
 
-        currentOffset = SmoothDampVector3(currentOffset, targetOffset + dashOffset, ref offsetVelocity, 1f / offsetSmoothness, deltaTime);
+        currentOffset = SmoothDampVector3(currentOffset, targetOffset + dashOffset + shakeOffset, ref offsetVelocity, 1f / offsetSmoothness, deltaTime);
         cameraRef.SetOffset(currentOffset);
 
         if (targetFOV != currentFOV)
@@ -125,6 +141,13 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
+    private Vector3 ApplyCameraShake(float intensity, float shakeAmount)
+    {
+        float x = ((float)random.NextDouble() * 2 - 1) * shakeAmount;
+        float y = ((float)random.NextDouble() * 2 - 1) * shakeAmount;
+        float z = ((float)random.NextDouble() * 2 - 1) * shakeAmount;
+        return new Vector3(x, y, z) * intensity;
+    }
     public void CameraDebugUpdate(float deltaTime)
     {
         Vector2 rightStickInput = Input.GetRightStick();

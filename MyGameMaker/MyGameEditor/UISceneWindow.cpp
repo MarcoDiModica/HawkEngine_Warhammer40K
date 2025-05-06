@@ -32,13 +32,57 @@ private:
 		GLuint multisampleFBO = 0;
 		GLuint multisampleColorBuffer = 0;
 		GLuint multisampleDepthBuffer = 0;
-		int msaaSamples = 0;
+		int msaaSamples = 8;
 	};
 
 	static FramebufferResource mainResource;
 	static bool initialized;
 
 public:
+	static bool CheckMSAACompatibility(int requestedSamples) {
+		GLint maxSamples = 0;
+		glGetIntegerv(GL_MAX_SAMPLES, &maxSamples);
+
+		if (maxSamples <= 0) return false;
+
+		int msaaSamples = std::min(requestedSamples, maxSamples);
+
+		GLuint testFBO = 0, testColorRBO = 0, testDepthRBO = 0;
+
+		glGenFramebuffers(1, &testFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, testFBO);
+
+		glGenRenderbuffers(1, &testColorRBO);
+		glBindRenderbuffer(GL_RENDERBUFFER, testColorRBO);
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA8, 64, 64); // Small test size
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, testColorRBO);
+
+		glGenRenderbuffers(1, &testDepthRBO);
+		glBindRenderbuffer(GL_RENDERBUFFER, testDepthRBO);
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8, 64, 64);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, testDepthRBO);
+
+		bool isComplete = (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+
+		bool renderTest = false;
+		if (isComplete) {
+			glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			GLubyte pixel[4];
+			glReadPixels(32, 32, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, pixel);
+
+			renderTest = (pixel[0] > 0);
+		}
+
+		glDeleteRenderbuffers(1, &testColorRBO);
+		glDeleteRenderbuffers(1, &testDepthRBO);
+		glDeleteFramebuffers(1, &testFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		return isComplete && renderTest;
+	}
+
 	static void Initialize(int width, int height, int msaaSamples) {
 		if (initialized) {
 			Cleanup();
@@ -75,7 +119,9 @@ public:
 			std::cerr << "Error: Main framebuffer is not complete!" << std::endl;
 		}
 
-		if (msaaSamples > 0) {
+		bool msaaCompatible = CheckMSAACompatibility(msaaSamples);
+
+		if (msaaCompatible) {
 			glGenFramebuffers(1, &mainResource.multisampleFBO);
 			glBindFramebuffer(GL_FRAMEBUFFER, mainResource.multisampleFBO);
 

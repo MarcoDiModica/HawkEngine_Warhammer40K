@@ -380,6 +380,7 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
 
+	bindlessErrorDetected = false;
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
 		uint32_t meshIndex = batch.meshIndices[i];
 		uint32_t materialIndex = batch.materialIndices[i];
@@ -393,10 +394,24 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 
 		if (materialData->flags & (1 << 0)) {
 			shader->SetUniform("u_HasTexture", 1);
-			if (GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64 && !intelGPU) {
+			if (GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64 && !bindlessErrorDetected) {
 				GLuint64 textureHandle = materialData->albedoTexture;
 				if (textureHandle != 0) {
 					shader->SetUniform("albedoTexture", textureHandle);
+
+					GLenum error = glGetError();
+					if (error != GL_NO_ERROR) {
+						LOG(LogType::LOG_ERROR, "Error detectado al usar textura bindless: 0x%X", error);
+						bindlessErrorDetected = true;
+
+						GLuint textureID = 0;
+						if (BindlessManager::GetInstance().GetTextureIDFromHandle(
+							materialData->albedoTexture, textureID)) {
+							glActiveTexture(GL_TEXTURE0);
+							glBindTexture(GL_TEXTURE_2D, textureID);
+							shader->SetUniform("albedoTexture", 0);
+						}
+					}
 				}
 			}
 			else {

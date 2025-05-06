@@ -99,4 +99,5 @@ private:
 	bool enableCulling = true;
 
 	static constexpr int MAX_DRAW_COMMANDS = 10000;
+	bool bindlessErrorDetected;
 };

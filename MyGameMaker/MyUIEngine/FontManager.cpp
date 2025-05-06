@@ -38,7 +38,7 @@ FontManager::~FontManager() {
 
 void FontManager::Start() {
     const std::string defaultFontPath = "Assets/arial_narrow_7.ttf";
-    int defaultFontSize = 16;
+    int defaultFontSize = 4;
 
     if (!LoadFont(defaultFontPath, defaultFontSize)) {
         std::cerr << "ERROR: No se pudo cargar la fuente predeterminada en FontManager::Start" << std::endl;

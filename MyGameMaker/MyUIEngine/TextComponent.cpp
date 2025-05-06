@@ -60,23 +60,24 @@ void TextComponent::Render() const {
     float screenHeight = Application->window->height();
 
     glm::mat4 orthoProjection = glm::ortho(0.0f, screenWidth, 0.0f, screenHeight);
-
     glm::mat4 viewMatrix = glm::mat4(1.0f);
     glm::mat4 modelMatrix = glm::mat4(1.0f);
+    glm::vec2 renderPosition = m_position;
+
+    if (m_owner->HasComponent<UITransformComponent>()) {
+        UITransformComponent* rectTransform = m_owner->GetComponent<UITransformComponent>();
+        glm::vec2 uiPosition = rectTransform->GetPosition();  
+
+        renderPosition.x = uiPosition.x * screenWidth;
+        renderPosition.y = uiPosition.y * screenHeight;
+    }
 
     customShader->Bind();
     customShader->SetUniform("projection", orthoProjection);
     customShader->SetUniform("view", viewMatrix);
-    customShader->SetUniform("model", modelMatrix);
+    customShader->SetUniform("model", glm::mat4(1.0f));
     customShader->SetUniform("modColor", glm::vec4(m_color, 1.0f));
 
-    glm::vec2 renderPosition = m_position;
-    if (m_owner->HasComponent<UITransformComponent>()) {
-        UITransformComponent* rectTransform = m_owner->GetComponent<UITransformComponent>();
-        renderPosition = rectTransform->GetPosition();
-    }
-
-    // renderPosition ya es el correcto para RenderTextWithShader
     FontManager::GetInstance().RenderTextWithShader(customShader, m_text, renderPosition.x, renderPosition.y, m_fontSize);
 
     customShader->UnBind();

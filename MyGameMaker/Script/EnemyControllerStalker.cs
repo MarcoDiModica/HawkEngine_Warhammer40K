@@ -50,6 +50,9 @@ public class EnemyControllerStalker : EnemyController
     private bool isPouncing = false;
     private bool hasMissed = true;
 
+    // Death
+    private float deathTimer = 0f;
+    private float deathDuration = 3f;
     public override void Awake()
     {
 
@@ -271,6 +274,11 @@ public class EnemyControllerStalker : EnemyController
                 if ((!hasDropped))
                 {
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
+                }
+                if (anim.isAnimFinished)
+                {
+                    Engineson.Destroy(lictorMesh);
+                    Engineson.Destroy(gameObject);
                 }
                 hasDropped = true;
                 collider.SetActive(false);

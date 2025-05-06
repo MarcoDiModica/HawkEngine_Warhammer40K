@@ -33,10 +33,10 @@ namespace std {
 struct RenderStatistics {
 	int totalGameObjects = 0;
 	int visibleGameObjects = 0;
-	int totalBatches = 0;
 	int totalDrawCalls = 0;
 	int totalLights = 0;
 	int visibleLights = 0;
+	int instanceCount = 0;
 	float frameTimeMs = 0.0f;
 	float gpuTimeMs = 0.0f;
 };

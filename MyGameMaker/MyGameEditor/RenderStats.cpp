@@ -1,8 +1,9 @@
 #include "RenderStats.h"
-#include "imgui.h"
-#include <iostream>
+#include "App.h"
 #include <algorithm>
-#include <chrono>
+#include <numeric>
+
+extern App* Application;
 
 RenderDebugPanel& RenderDebugPanel::GetInstance() {
 	static RenderDebugPanel instance;
@@ -15,32 +16,48 @@ void RenderDebugPanel::Initialize() {
 	perfData.drawCallsHistory.resize(perfData.maxFrameHistory, 0.0f);
 	perfData.visibleObjectsHistory.resize(perfData.maxFrameHistory, 0.0f);
 	perfData.visibleLightsHistory.resize(perfData.maxFrameHistory, 0.0f);
+	perfData.instanceCountHistory.resize(perfData.maxFrameHistory, 0.0f);
 
 	settings.useForwardPlus = true;
-	//settings.useGPUCulling = GPUDrivenRenderer::GetInstance().SetUseGPUCulling(true);
+	settings.useGPUCulling = true;
 	settings.useFrustumCulling = true;
 }
 
 void RenderDebugPanel::Shutdown() {
 }
 
+void RenderDebugPanel::Reset() {
+	perfData.minFrameTime = FLT_MAX;
+	perfData.maxFrameTime = 0.0f;
+	perfData.avgFrameTime = 0.0f;
+	perfData.frameTimeAccum = 0.0f;
+
+	perfData.minGpuTime = FLT_MAX;
+	perfData.maxGpuTime = 0.0f;
+	perfData.avgGpuTime = 0.0f;
+	perfData.gpuTimeAccum = 0.0f;
+
+	perfData.frameCounter = 0;
+
+	std::fill(perfData.frameTimeHistory.begin(), perfData.frameTimeHistory.end(), 0.0f);
+	std::fill(perfData.gpuTimeHistory.begin(), perfData.gpuTimeHistory.end(), 0.0f);
+	std::fill(perfData.drawCallsHistory.begin(), perfData.drawCallsHistory.end(), 0.0f);
+	std::fill(perfData.visibleObjectsHistory.begin(), perfData.visibleObjectsHistory.end(), 0.0f);
+	std::fill(perfData.visibleLightsHistory.begin(), perfData.visibleLightsHistory.end(), 0.0f);
+	std::fill(perfData.instanceCountHistory.begin(), perfData.instanceCountHistory.end(), 0.0f);
+}
+
 void RenderDebugPanel::Render() {
 	if (!isVisible) return;
 
-	UpdateStatistics();
-
 	ImGuiWindowFlags flags = ImGuiWindowFlags_MenuBar;
-	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 
-	if (ImGui::Begin("Render System Debug", &isVisible, flags)) {
+	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
+	if (ImGui::Begin("Renderer Debug", &isVisible, flags)) {
 		if (ImGui::BeginMenuBar()) {
-			if (ImGui::BeginMenu("File")) {
-				if (ImGui::MenuItem("Clear Statistics")) {
-					std::fill(perfData.frameTimeHistory.begin(), perfData.frameTimeHistory.end(), 0.0f);
-					std::fill(perfData.gpuTimeHistory.begin(), perfData.gpuTimeHistory.end(), 0.0f);
-					std::fill(perfData.drawCallsHistory.begin(), perfData.drawCallsHistory.end(), 0.0f);
-					std::fill(perfData.visibleObjectsHistory.begin(), perfData.visibleObjectsHistory.end(), 0.0f);
-					std::fill(perfData.visibleLightsHistory.begin(), perfData.visibleLightsHistory.end(), 0.0f);
+			if (ImGui::BeginMenu("Options")) {
+				if (ImGui::MenuItem("Reset Statistics")) {
+					Reset();
 				}
 
 				ImGui::Separator();
@@ -52,22 +69,28 @@ void RenderDebugPanel::Render() {
 				ImGui::EndMenu();
 			}
 
-			const auto& stats = RenderManager::GetInstance().GetStatistics();
-			float frameTime = stats.frameTimeMs;
-			float fps = frameTime > 0 ? 1000.0f / frameTime : 0.0f;
+			float fps = Application ? Application->GetFps() : 0.0f;
 
-			/*char fpsText[32];
-			sprintf(fpsText, "%.1f FPS (%.2f ms)", fps, frameTime);
-
-			float textWidth = ImGui::CalcTextSize(fpsText).x;
-			ImGui::SameLine(ImGui::GetWindowWidth() - textWidth - 20);
-			ImGui::Text("%s", fpsText);*/
+			ImGui::SameLine(ImGui::GetWindowWidth() - 120);
+			ImGui::Text("%.1f FPS", fps);
 
 			ImGui::EndMenuBar();
 		}
 
 		if (ImGui::BeginTabBar("SettingsTabs")) {
-			if (ImGui::BeginTabItem("General")) {
+			if (ImGui::BeginTabItem("Statistics")) {
+				currentTab = 3;
+				RenderStatisticsPanel();
+				ImGui::EndTabItem();
+			}
+
+			if (ImGui::BeginTabItem("Performance")) {
+				currentTab = 2;
+				RenderPerformancePanel();
+				ImGui::EndTabItem();
+			}
+			
+			if (ImGui::BeginTabItem("Settings")) {
 				currentTab = 0;
 				RenderGeneralSettings();
 				ImGui::EndTabItem();
@@ -76,18 +99,6 @@ void RenderDebugPanel::Render() {
 			if (ImGui::BeginTabItem("Forward+")) {
 				currentTab = 1;
 				RenderForwardPlusSettings();
-				ImGui::EndTabItem();
-			}
-
-			if (ImGui::BeginTabItem("Performance")) {
-				currentTab = 2;
-				RenderPerformanceGraph();
-				ImGui::EndTabItem();
-			}
-
-			if (ImGui::BeginTabItem("Debug")) {
-				currentTab = 3;
-				RenderDebugSettings();
 				ImGui::EndTabItem();
 			}
 
@@ -100,19 +111,10 @@ void RenderDebugPanel::Render() {
 void RenderDebugPanel::RenderGeneralSettings() {
 	ImGui::BeginChild("GeneralSettings", ImVec2(0, 0), true);
 
-	// Título
 	ImGui::TextColored(ImVec4(0.3f, 0.5f, 0.8f, 1.0f), "Render System Settings");
 	ImGui::Separator();
 
 	const auto& stats = RenderManager::GetInstance().GetStatistics();
-
-	ImGui::Text("Total GameObjects: %d", stats.totalGameObjects);
-	ImGui::Text("Visible GameObjects: %d", stats.visibleGameObjects);
-	ImGui::Text("Total Draw Calls: %d", stats.totalDrawCalls);
-	ImGui::Text("Total Lights: %d", stats.totalLights);
-	ImGui::Text("Visible Lights: %d", stats.visibleLights);
-
-	ImGui::Separator();
 
 	if (ImGui::Checkbox("Use Forward+ Lighting", &settings.useForwardPlus)) {
 		RenderManager::GetInstance().SetUseForwardPlus(settings.useForwardPlus);
@@ -120,7 +122,7 @@ void RenderDebugPanel::RenderGeneralSettings() {
 
 	if (ImGui::IsItemHovered()) {
 		ImGui::BeginTooltip();
-		ImGui::Text("Forward+ permite cientos de luces\ncon culling de luces por tile.");
+		ImGui::Text("Forward+ allows hundreds of lights with\ntile-based light culling.");
 		ImGui::EndTooltip();
 	}
 
@@ -130,7 +132,7 @@ void RenderDebugPanel::RenderGeneralSettings() {
 
 	if (ImGui::IsItemHovered()) {
 		ImGui::BeginTooltip();
-		ImGui::Text("Delega culling de objetos a la GPU\npara mejor rendimiento con muchos objetos.");
+		ImGui::Text("Offloads object culling to the GPU for\nbetter performance with many objects.");
 		ImGui::EndTooltip();
 	}
 
@@ -144,7 +146,7 @@ void RenderDebugPanel::RenderGeneralSettings() {
 
 	if (ImGui::IsItemHovered()) {
 		ImGui::BeginTooltip();
-		ImGui::Text("Culling de oclusión basado en Hi-Z.\nRequiere GPU con todas las extensiones.");
+		ImGui::Text("Hi-Z based occlusion culling.\nRequires GPU with all required extensions.");
 		ImGui::EndTooltip();
 	}
 
@@ -158,8 +160,8 @@ void RenderDebugPanel::RenderForwardPlusSettings() {
 	ImGui::Separator();
 
 	if (!settings.useForwardPlus) {
-		ImGui::TextColored(ImVec4(0.9f, 0.2f, 0.2f, 1.0f), "Forward+ Lighting está desactivado.");
-		ImGui::Text("Actívalo en la pestaña 'General' para configurar.");
+		ImGui::TextColored(ImVec4(0.9f, 0.2f, 0.2f, 1.0f), "Forward+ Lighting is disabled.");
+		ImGui::Text("Enable it in the 'Settings' tab to configure.");
 		ImGui::EndChild();
 		return;
 	}
@@ -170,9 +172,6 @@ void RenderDebugPanel::RenderForwardPlusSettings() {
 		ForwardPlusLighting::GetInstance().GetTilesY(),
 		ForwardPlusLighting::GetInstance().GetTilesX() * ForwardPlusLighting::GetInstance().GetTilesY());
 	ImGui::Text("Max Lights per Tile: %d", settings.maxLightsPerTile);
-	ImGui::Text("Total Lights: %d", ForwardPlusLighting::GetInstance().GetTotalLights());
-	ImGui::Text("Visible Lights: %d", ForwardPlusLighting::GetInstance().GetVisibleLights());
-	ImGui::Text("Culled Lights: %d", ForwardPlusLighting::GetInstance().GetCulledLights());
 
 	ImGui::Separator();
 
@@ -191,111 +190,184 @@ void RenderDebugPanel::RenderForwardPlusSettings() {
 		ForwardPlusLighting::GetInstance().SetMaxLightsPerTile(maxLights);
 	}
 
-	ImGui::Separator();
-
-	ImGui::Checkbox("Show Tile Grid", &settings.showTileGrid);
-	ImGui::Checkbox("Show Light Volumes", &settings.showLightVolumes);
-
 	ImGui::EndChild();
 }
 
-void RenderDebugPanel::RenderPerformanceGraph() {
-	ImGui::BeginChild("PerformanceGraphs", ImVec2(0, 0), true);
+void RenderDebugPanel::RenderPerformancePanel() {
+	ImGui::BeginChild("PerformancePanel", ImVec2(0, 0), true);
 
 	ImGui::TextColored(ImVec4(0.2f, 0.7f, 0.4f, 1.0f), "Performance Monitoring");
 	ImGui::Separator();
 
 	ImVec2 graphSize(ImGui::GetContentRegionAvail().x, 80);
 
-	ImGui::Text("Frame Time (ms)");
-	
+	// Frame Time
+	{
+		ImGui::Text("Frame Time (ms)");
 
-	float avgFrameTime = 0.0f, minFrameTime = FLT_MAX, maxFrameTime = 0.0f;
-	for (float time : perfData.frameTimeHistory) {
-		avgFrameTime += time;
-		minFrameTime = std::min(minFrameTime, time);
-		maxFrameTime = std::max(maxFrameTime, time);
+		float fps = perfData.avgFrameTime > 0.0f ? 1000.0f / perfData.avgFrameTime : 0.0f;
+
+		ImGui::Text("Avg: %.2f ms (%.1f FPS)   Min: %.2f ms   Max: %.2f ms",
+			perfData.avgFrameTime, fps,
+			perfData.minFrameTime == FLT_MAX ? 0.0f : perfData.minFrameTime,
+			perfData.maxFrameTime);
+
+		DrawHistoryGraph("##FrameTimeGraph", perfData.frameTimeHistory, 0,
+			perfData.maxFrameTime * 1.2f + 0.1f, ImVec4(0.2f, 0.7f, 0.3f, 1.0f));
 	}
-	avgFrameTime /= perfData.frameTimeHistory.size();
-
-	ImGui::Text("Avg: %.2f ms (%.1f FPS)   Min: %.2f ms   Max: %.2f ms",
-		avgFrameTime, 1000.0f / avgFrameTime,
-		minFrameTime, maxFrameTime);
 
 	ImGui::Separator();
 
-	ImGui::Text("GPU Time (ms)");
+	// GPU Time
+	{
+		ImGui::Text("GPU Time (ms)");
 
-	float avgGPUTime = 0.0f, minGPUTime = FLT_MAX, maxGPUTime = 0.0f;
-	for (float time : perfData.gpuTimeHistory) {
-		avgGPUTime += time;
-		minGPUTime = std::min(minGPUTime, time);
-		maxGPUTime = std::max(maxGPUTime, time);
+		ImGui::Text("Avg: %.2f ms   Min: %.2f ms   Max: %.2f ms",
+			perfData.avgGpuTime,
+			perfData.minGpuTime == FLT_MAX ? 0.0f : perfData.minGpuTime,
+			perfData.maxGpuTime);
+
+		DrawHistoryGraph("##GPUTimeGraph", perfData.gpuTimeHistory, 0,
+			perfData.maxGpuTime * 1.2f + 0.1f, ImVec4(0.8f, 0.3f, 0.3f, 1.0f));
 	}
-	avgGPUTime /= perfData.gpuTimeHistory.size();
-
-	ImGui::Text("Avg: %.2f ms   Min: %.2f ms   Max: %.2f ms",
-		avgGPUTime, minGPUTime, maxGPUTime);
-
-	ImGui::Separator();
-
-	ImGui::Text("Draw Calls");
-	
-
-	ImGui::Separator();
-
-	ImGui::Text("Visible Objects");
-	
-
-	ImGui::Separator();
-
-	ImGui::Text("Visible Lights");
 
 	ImGui::EndChild();
 }
 
-void RenderDebugPanel::RenderDebugSettings() {
-	ImGui::BeginChild("DebugSettings", ImVec2(0, 0), true);
+void RenderDebugPanel::RenderStatisticsPanel() {
+	ImGui::BeginChild("StatisticsPanel", ImVec2(0, 0), true);
 
-	ImGui::TextColored(ImVec4(0.8f, 0.3f, 0.6f, 1.0f), "Debug Visualization");
+	ImGui::TextColored(ImVec4(0.4f, 0.4f, 0.8f, 1.0f), "Renderer Statistics");
 	ImGui::Separator();
 
-	ImGui::Checkbox("Show Bounding Spheres", &settings.showBoundingSpheres);
-	ImGui::Checkbox("Show Light Volumes", &settings.showLightVolumes);
-	ImGui::Checkbox("Show Tile Grid", &settings.showTileGrid);
-
-	ImGui::Separator();
-
-	static int debugViewMode = 0;
-	const char* debugModes[] = {
-		"Normal", "Wireframe", "Albedo", "Normals", "Metallic",
-		"Roughness", "AO", "Light Count", "Depth"
-	};
-
-	ImGui::Text("Debug View Mode:");
-	ImGui::Combo("##DebugViewMode", &debugViewMode, debugModes, IM_ARRAYSIZE(debugModes));
-
-	// Aquí se implementaría código para aplicar modo seleccionado
-	// ...
-
-	ImGui::EndChild();
-}
-
-void RenderDebugPanel::UpdateStatistics() {
 	const auto& stats = RenderManager::GetInstance().GetStatistics();
 
-	perfData.frameTimeHistory.pop_front();
-	perfData.frameTimeHistory.push_back(stats.frameTimeMs);
+	ImGui::Columns(2, "StatColumns", false);
 
-	perfData.gpuTimeHistory.pop_front();
-	perfData.gpuTimeHistory.push_back(stats.gpuTimeMs);
+	ImGui::Text("Total GameObjects:"); ImGui::NextColumn();
+	ImGui::Text("%d", stats.totalGameObjects); ImGui::NextColumn();
 
-	perfData.drawCallsHistory.pop_front();
+	ImGui::Text("Visible GameObjects:"); ImGui::NextColumn();
+	ImGui::Text("%d (%.1f%%)", stats.visibleGameObjects,
+		stats.totalGameObjects > 0 ? (100.0f * stats.visibleGameObjects / stats.totalGameObjects) : 0.0f);
+	ImGui::NextColumn();
+
+	ImGui::Text("Total Draw Calls:"); ImGui::NextColumn();
+	ImGui::Text("%d", stats.totalDrawCalls); ImGui::NextColumn();
+
+	ImGui::Text("Total Lights:"); ImGui::NextColumn();
+	ImGui::Text("%d", stats.totalLights); ImGui::NextColumn();
+
+	ImGui::Text("Visible Lights:"); ImGui::NextColumn();
+	ImGui::Text("%d (%.1f%%)", stats.visibleLights,
+		stats.totalLights > 0 ? (100.0f * stats.visibleLights / stats.totalLights) : 0.0f);
+	ImGui::NextColumn();
+
+	ImGui::Text("Instance Count:"); ImGui::NextColumn();
+	ImGui::Text("%d", BindlessManager::GetInstance().GetInstanceCount()); ImGui::NextColumn();
+
+	ImGui::Text("Frame Time:"); ImGui::NextColumn();
+	ImGui::Text("%.2f ms (%.1f FPS)", perfData.avgFrameTime,
+		perfData.avgFrameTime > 0 ? 1000.0f / perfData.avgFrameTime : 0.0f);
+	ImGui::NextColumn();
+
+	ImGui::Text("GPU Time:"); ImGui::NextColumn();
+	ImGui::Text("%.2f ms", perfData.avgGpuTime); ImGui::NextColumn();
+
+	ImGui::Columns(1);
+
+	ImGui::Separator();
+
+	ImGui::Text("Draw Calls History");
+	DrawHistoryGraph("##DrawCallsGraph", perfData.drawCallsHistory, 0, 0,
+		ImVec4(0.4f, 0.4f, 0.8f, 1.0f));
+
+	ImGui::Text("Visible Objects History");
+	DrawHistoryGraph("##VisibleObjectsGraph", perfData.visibleObjectsHistory, 0, 0,
+		ImVec4(0.4f, 0.8f, 0.4f, 1.0f));
+
+	ImGui::Text("Visible Lights History");
+	DrawHistoryGraph("##VisibleLightsGraph", perfData.visibleLightsHistory, 0, 0,
+		ImVec4(0.8f, 0.8f, 0.2f, 1.0f));
+
+	ImGui::EndChild();
+}
+
+void RenderDebugPanel::DrawHistoryGraph(const char* label, const std::vector<float>& data,
+	float minScale, float maxScale, ImVec4 color) {
+	if (data.empty()) return;
+
+	if (minScale == 0 && maxScale == 0) {
+		auto [minIt, maxIt] = std::minmax_element(data.begin(), data.end());
+		minScale = *minIt;
+		maxScale = *maxIt * 1.2f;
+
+		if (maxScale <= minScale + 0.001f) {
+			maxScale = minScale + 1.0f;
+		}
+	}
+
+	ImGui::PlotLines(label, data.data(), static_cast<int>(data.size()), 0, nullptr,
+		minScale, maxScale, ImVec2(ImGui::GetContentRegionAvail().x, 60));
+}
+
+void RenderDebugPanel::UpdateStatistics(float frameTimeMs, float gpuTimeMs) {
+	const auto& stats = RenderManager::GetInstance().GetStatistics();
+
+	perfData.minFrameTime = std::min(perfData.minFrameTime, frameTimeMs);
+	perfData.maxFrameTime = std::max(perfData.maxFrameTime, frameTimeMs);
+	perfData.frameTimeAccum += frameTimeMs;
+
+	perfData.minGpuTime = std::min(perfData.minGpuTime, gpuTimeMs);
+	perfData.maxGpuTime = std::max(perfData.maxGpuTime, gpuTimeMs);
+	perfData.gpuTimeAccum += gpuTimeMs;
+
+	perfData.frameCounter++;
+
+	if (perfData.frameCounter > 0) {
+		perfData.avgFrameTime = perfData.frameTimeAccum / perfData.frameCounter;
+		perfData.avgGpuTime = perfData.gpuTimeAccum / perfData.frameCounter;
+	}
+
+	if (perfData.frameCounter >= perfData.statsResetInterval) {
+		perfData.minFrameTime = FLT_MAX;
+		perfData.maxFrameTime = 0.0f;
+		perfData.frameTimeAccum = 0.0f;
+
+		perfData.minGpuTime = FLT_MAX;
+		perfData.maxGpuTime = 0.0f;
+		perfData.gpuTimeAccum = 0.0f;
+
+		perfData.frameCounter = 0;
+	}
+
+	if (!perfData.frameTimeHistory.empty()) {
+		perfData.frameTimeHistory.erase(perfData.frameTimeHistory.begin());
+	}
+	perfData.frameTimeHistory.push_back(frameTimeMs);
+
+	if (!perfData.gpuTimeHistory.empty()) {
+		perfData.gpuTimeHistory.erase(perfData.gpuTimeHistory.begin());
+	}
+	perfData.gpuTimeHistory.push_back(gpuTimeMs);
+
+	if (!perfData.drawCallsHistory.empty()) {
+		perfData.drawCallsHistory.erase(perfData.drawCallsHistory.begin());
+	}
 	perfData.drawCallsHistory.push_back(static_cast<float>(stats.totalDrawCalls));
 
-	perfData.visibleObjectsHistory.pop_front();
+	if (!perfData.visibleObjectsHistory.empty()) {
+		perfData.visibleObjectsHistory.erase(perfData.visibleObjectsHistory.begin());
+	}
 	perfData.visibleObjectsHistory.push_back(static_cast<float>(stats.visibleGameObjects));
 
-	perfData.visibleLightsHistory.pop_front();
+	if (!perfData.visibleLightsHistory.empty()) {
+		perfData.visibleLightsHistory.erase(perfData.visibleLightsHistory.begin());
+	}
 	perfData.visibleLightsHistory.push_back(static_cast<float>(stats.visibleLights));
+
+	if (!perfData.instanceCountHistory.empty()) {
+		perfData.instanceCountHistory.erase(perfData.instanceCountHistory.begin());
+	}
+	perfData.instanceCountHistory.push_back(static_cast<float>(BindlessManager::GetInstance().GetInstanceCount()));
 }

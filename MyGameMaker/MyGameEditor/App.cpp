@@ -85,6 +85,8 @@ bool App::Awake() {
 }
 
 bool App::Start() {
+	RenderDebugPanel::GetInstance().Initialize();
+
 	m_deltaTime = 0.016;
 
 	for (auto* module : m_modules) {
@@ -99,7 +101,7 @@ bool App::Start() {
 }
 
 bool App::Update() {
-	//RenderStats::GetInstance().Reset();
+	RenderDebugPanel::GetInstance().UpdateStatistics(m_deltaTime * 1000.0f, RenderManager::GetInstance().GetStatistics().gpuTimeMs);
 
 #ifdef PROFILE
 	OPTICK_FRAME("Main Loop")

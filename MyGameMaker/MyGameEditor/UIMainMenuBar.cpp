@@ -191,13 +191,6 @@ bool UIMainMenuBar::Draw()
 			confirmRemovePopupOpen = false;
 		}
 
-		float fpsWidth = ImGui::CalcTextSize("GAME FPS: 999.99").x * 2.0f;
-		float gui_fps = ImGui::GetIO().Framerate;
-		float game_fps = Application->GetFps();
-		ImGui::SetCursorPosX(menuBarWidth - fpsWidth - 10.0f);
-		ImGui::Text("GAME FPS: %.1f", game_fps);
-		ImGui::Text("GUI FPS: %.1f", gui_fps);
-
 		if (ImGui::BeginPopupModal("Confirm Script Removal", NULL, ImGuiWindowFlags_AlwaysAutoResize))
 		{
 			ImGui::Text("¿Removing script with name '%s'?", scriptToRemove.c_str());

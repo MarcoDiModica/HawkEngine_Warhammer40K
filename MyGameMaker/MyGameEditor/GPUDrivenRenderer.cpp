@@ -393,23 +393,13 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 
 		if (materialData->flags & (1 << 0)) {
 			shader->SetUniform("u_HasTexture", 1);
-
-			if (GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64) {
-				shader->SetUniform("useBindlessMode", 1);
+			if (GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64 && !intelGPU) {
 				GLuint64 textureHandle = materialData->albedoTexture;
 				if (textureHandle != 0) {
-					if (!glIsTextureHandleResidentARB(textureHandle)) {
-						glMakeTextureHandleResidentARB(textureHandle);
-					}
-					GLint loc = glGetUniformLocation(shader->GetProgram(), "albedoTexture");
-					if (loc != -1) {
-						glUniformHandleui64ARB(loc, textureHandle);
-					}
+					shader->SetUniform("albedoTexture", textureHandle);
 				}
 			}
 			else {
-				shader->SetUniform("useBindlessMode", 0);
-
 				GLuint textureID = 0;
 				if (BindlessManager::GetInstance().GetTextureIDFromHandle(
 					materialData->albedoTexture, textureID)) {

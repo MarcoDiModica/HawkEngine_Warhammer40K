@@ -42,7 +42,7 @@ private:
 	GLuint msaaFbo = 0;
 	GLuint msaaColorRbo = 0;
 	GLuint msaaDepthRbo = 0;
-	int msaaSamples = 16;
-	bool useMSAA = true;
+	int msaaSamples = 0;
+	bool useMSAA = false;
 };
 #endif // !__UI_GAME_VIEW_H__

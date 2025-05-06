@@ -51,25 +51,6 @@ bool RenderManager::Initialize() {
 		return false;
 	}
 
-	LOG(LogType::LOG_INFO, "===== OpenGL System Information =====");
-	LOG(LogType::LOG_INFO, "OpenGL Version: %s", glGetString(GL_VERSION));
-	LOG(LogType::LOG_INFO, "GLSL Version: %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
-	LOG(LogType::LOG_INFO, "Vendor: %s", glGetString(GL_VENDOR));
-	LOG(LogType::LOG_INFO, "Renderer: %s", glGetString(GL_RENDERER));
-
-	bool hasBindlessTexture = CheckExtension("GL_ARB_bindless_texture");
-	bool hasShaderStorageBuffer = CheckExtension("GL_ARB_shader_storage_buffer_object");
-	bool hasMultiDrawIndirect = CheckExtension("GL_ARB_multi_draw_indirect");
-	bool hasComputeShader = CheckExtension("GL_ARB_compute_shader");
-	bool hasGPUShaderInt64 = CheckExtension("GL_ARB_gpu_shader_int64");
-
-	LOG(LogType::LOG_INFO, "==== Required extensions status ====");
-	LOG(LogType::LOG_INFO, "GL_ARB_bindless_texture: %s", hasBindlessTexture ? "YES" : "NO");
-	LOG(LogType::LOG_INFO, "GL_ARB_shader_storage_buffer_object: %s", hasShaderStorageBuffer ? "YES" : "NO");
-	LOG(LogType::LOG_INFO, "GL_ARB_multi_draw_indirect: %s", hasMultiDrawIndirect ? "YES" : "NO");
-	LOG(LogType::LOG_INFO, "GL_ARB_compute_shader: %s", hasComputeShader ? "YES" : "NO");
-	LOG(LogType::LOG_INFO, "GL_ARB_gpu_shader_int64: %s", hasGPUShaderInt64 ? "YES" : "NO");
-
 	return true;
 }
 
@@ -186,14 +167,6 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 
 		glm::vec3 viewPos = glm::vec3(glm::inverse(viewMatrix)[3]);
 		glUniform3fv(glGetUniformLocation(bindlessPBRShader, "viewPos"), 1, glm::value_ptr(viewPos));
-
-		glUseProgram(0);
-	}
-
-	if (bindlessUnlitShader != 0) {
-		glUseProgram(bindlessUnlitShader);
-
-		glUniform1i(glGetUniformLocation(bindlessUnlitShader, "useBindlessMode"), 1);
 
 		glUseProgram(0);
 	}

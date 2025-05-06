@@ -394,7 +394,8 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 		if (materialData->flags & (1 << 0)) {
 			shader->SetUniform("u_HasTexture", 1);
 
-			if (GLEW_ARB_bindless_texture) {
+			if (GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64) {
+				shader->SetUniform("useBindlessMode", 1);
 				GLuint64 textureHandle = materialData->albedoTexture;
 				if (textureHandle != 0) {
 					if (!glIsTextureHandleResidentARB(textureHandle)) {
@@ -407,12 +408,17 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 				}
 			}
 			else {
+				shader->SetUniform("useBindlessMode", 0);
+
 				GLuint textureID = 0;
 				if (BindlessManager::GetInstance().GetTextureIDFromHandle(
 					materialData->albedoTexture, textureID)) {
 					glActiveTexture(GL_TEXTURE0);
 					glBindTexture(GL_TEXTURE_2D, textureID);
 					shader->SetUniform("albedoTexture", 0);
+				}
+				else {
+					LOG(LogType::LOG_ERROR, "Error al obtener ID de textura de handle: %u", materialData->albedoTexture);
 				}
 			}
 		}

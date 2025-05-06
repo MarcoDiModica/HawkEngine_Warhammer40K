@@ -1,5 +1,5 @@
 #version 460 core
-#extension GL_ARB_bindless_texture : require
+#extension GL_ARB_bindless_texture : enable
 
 in vec2 TexCoord;
 in vec3 Normal;
@@ -8,6 +8,7 @@ in vec3 FragPos;
 uniform vec4 albedoColor;
 uniform sampler2D albedoTexture;
 uniform int u_HasTexture;
+uniform bool useBindlessMode;
 
 layout(location = 0) out vec4 FragColor;
 

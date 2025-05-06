@@ -212,8 +212,6 @@ void Material::SaveBinary(const std::string& filename) const {
 	writeTexture("MTL", metallicMapPtr);
 	writeTexture("RGL", roughnessMapPtr);
 	writeTexture("AOM", aoMapPtr);
-
-	LOG(LogType::LOG_INFO, "Material saved to: %s", fullPath.c_str());
 }
 
 std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {

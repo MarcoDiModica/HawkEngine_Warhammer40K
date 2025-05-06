@@ -11,33 +11,23 @@ ShaderManager& ShaderManager::GetInstance() {
 }
 
 bool ShaderManager::Initialize() {
-	LOG(LogType::LOG_INFO, "Initializing ShaderManager...");
 	bool success = true;
 
-	LOG(LogType::LOG_INFO, "Registering UnlitShader...");
 	success &= RegisterShader<UnlitShader>();
 
-	LOG(LogType::LOG_INFO, "Registering PBRShader...");
 	success &= RegisterShader<PBRShader>();
 
-	LOG(LogType::LOG_INFO, "Registering ParticleShader...");
 	success &= RegisterShader<ParticleShader>();
 
-	LOG(LogType::LOG_INFO, "Registering ForwardPlusComputeShader...");
 	success &= RegisterShader<ForwardPlusComputeShader>();
 
-	LOG(LogType::LOG_INFO, "Registering CullingComputeShader...");
 	success &= RegisterShader<CullingComputeShader>();
 
-	LOG(LogType::LOG_INFO, "Registering Debug Shader...");
 	success &= RegisterCustomShader("debug", "Assets/Shaders/debug_vertex.glsl",
 		"Assets/Shaders/debug_fragment.glsl", ShaderType::DEBUG);
 
 	if (!success) {
 		LOG(LogType::LOG_ERROR, "ShaderManager: Failed to initialize one or more shaders");
-	}
-	else {
-		LOG(LogType::LOG_INFO, "ShaderManager initialized successfully");
 	}
 
 	return success;
@@ -232,10 +222,6 @@ std::string ShaderManager::GetNameForShaderType(ShaderType type) const {
 		return "pbr";
 	case ShaderType::PARTICLE:
 		return "particle";
-	case ShaderType::BINDLESS_PBR:
-		return "bindless_pbr";
-	case ShaderType::BINDLESS_UNLIT:
-		return "bindless_unlit";
 	case ShaderType::FORWARD_PLUS_COMPUTE:
 		return "forward_plus_compute";
 	case ShaderType::CULLING_COMPUTE:

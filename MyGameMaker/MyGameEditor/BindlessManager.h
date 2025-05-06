@@ -170,7 +170,6 @@ private:
 		if (fallbackTextureHandle.handle != 0) {
 			glMakeTextureHandleResidentARB(fallbackTextureHandle.handle);
 			fallbackTextureHandle.isResident = true;
-			LOG(LogType::LOG_INFO, "Textura de fallback fucsia creada correctamente");
 		}
 		else {
 			LOG(LogType::LOG_ERROR, "Error: No se pudo crear handle bindless para textura fallback");

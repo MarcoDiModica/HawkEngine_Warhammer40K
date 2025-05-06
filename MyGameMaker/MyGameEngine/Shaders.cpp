@@ -234,7 +234,6 @@ GLint Shaders::GetUniformLocation(const std::string& name) {
 
 	if (location == -1 && name[0] != '_') {
 		LOG(LogType::LOG_WARNING, "Warning: Uniform '%s' not found in shader.", name.c_str());
-		//log the name of the shader
 		std::string shaderName = vertexShaderPath.empty() ? fragmentShaderPath : vertexShaderPath;
 		LOG(LogType::LOG_WARNING, "Shader: %s", shaderName.c_str());
 	}

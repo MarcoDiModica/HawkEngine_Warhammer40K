@@ -41,8 +41,13 @@ public:
     bool isInitialized(UIElement* element);
 
     void processEvent(const SDL_Event& event) override;
+    
     void SetColorScheme();
+    void SetModernDarkBlueStyle();
+    void SetLightProfessionalStyle();
+    void SetUnityStyle();
 
+    void UpdateFontScale();
 public:
 
     UIHierarchy* UIHierarchyPanel = nullptr;

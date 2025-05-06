@@ -48,7 +48,7 @@ public:
 	void Shutdown();
 	void BeginFrame();
 	void EndFrame();
-	void SubmitGameObject(GameObject* gameObject);
+	void SubmitGameObject(GameObject* gameObject,glm::vec4 frustumPlanes[6]);
 	void RenderDebugQuad();
 	void RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
 	void RenderFromCamera(CameraComponent* camera);

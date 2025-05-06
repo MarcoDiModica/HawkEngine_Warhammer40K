@@ -114,6 +114,7 @@ public:
 	bool play = false;
 	bool hasChangedScene = false;
 
+	glm::vec4 frustumPlanes[6];
 private:
 	using high_res_clock = std::chrono::high_resolution_clock;
 	using time_point = std::chrono::time_point<high_res_clock>;

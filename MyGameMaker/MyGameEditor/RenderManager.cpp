@@ -115,31 +115,6 @@ void RenderManager::EndFrame() {
 	GPUDrivenRenderer::GetInstance().EndFrame();
 }
 
-void RenderManager::SubmitGameObject(GameObject* gameObject) {
-	if (!gameObject || !gameObject->IsActive()) return;
-
-	stats.totalGameObjects++;
-
-	queuedObjects.push_back(gameObject);
-
-	for (const auto& child : gameObject->GetChildren()) {
-		if (child && child->IsActive()) {
-			SubmitGameObject(child.get());
-		}
-	}
-}
-
-void RenderManager::RenderDebugQuad() {
-	// Usar el shader debug
-	GLuint debugShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::DEBUG);
-	glUseProgram(debugShader);
-
-	// Renderizar un quad simple
-	glBindVertexArray(defaultVAO);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glBindVertexArray(0);
-}
-
 bool IsBoundingBoxInsideFrustum(const glm::vec3& minBounds, const glm::vec3& maxBounds, const glm::vec4 frustumPlanes[6]) {
 	for (int i = 0; i < 6; ++i) {
 		const glm::vec4& plane = frustumPlanes[i];
@@ -161,62 +136,40 @@ bool IsBoundingBoxInsideFrustum(const glm::vec3& minBounds, const glm::vec3& max
 	return true;
 }
 
+void RenderManager::SubmitGameObject(GameObject* gameObject, glm::vec4 frustumPlanes[6]) {
+	if (!gameObject || !gameObject->IsActive()) return;
+
+	stats.totalGameObjects++;
+	
+	if (IsBoundingBoxInsideFrustum(gameObject->boundingBox().min, gameObject->boundingBox().max, frustumPlanes)) {
+		queuedObjects.push_back(gameObject);
+	}
+	for (const auto& child : gameObject->GetChildren()) {
+		if (child && child->IsActive()) {
+			SubmitGameObject(child.get(), frustumPlanes);
+		}
+	}
+}
+
+void RenderManager::RenderDebugQuad() {
+	// Usar el shader debug
+	GLuint debugShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::DEBUG);
+	glUseProgram(debugShader);
+
+	// Renderizar un quad simple
+	glBindVertexArray(defaultVAO);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glBindVertexArray(0);
+}
+
+
+
 void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
 	if (queuedObjects.empty()) return;
 
-	for (auto* obj : queuedObjects) {
-
-		glm::vec4 frustumPlanes[6];
-
-		glm::mat4 vp = projMatrix * viewMatrix;
-
-		// Left plane
-		frustumPlanes[0].x = vp[0][3] + vp[0][0];
-		frustumPlanes[0].y = vp[1][3] + vp[1][0];
-		frustumPlanes[0].z = vp[2][3] + vp[2][0];
-		frustumPlanes[0].w = vp[3][3] + vp[3][0];
-
-		// Right plane
-		frustumPlanes[1].x = vp[0][3] - vp[0][0];
-		frustumPlanes[1].y = vp[1][3] - vp[1][0];
-		frustumPlanes[1].z = vp[2][3] - vp[2][0];
-		frustumPlanes[1].w = vp[3][3] - vp[3][0];
-
-		// Bottom plane
-		frustumPlanes[2].x = vp[0][3] + vp[0][1];
-		frustumPlanes[2].y = vp[1][3] + vp[1][1];
-		frustumPlanes[2].z = vp[2][3] + vp[2][1];
-		frustumPlanes[2].w = vp[3][3] + vp[3][1];
-
-		// Top plane
-		frustumPlanes[3].x = vp[0][3] - vp[0][1];
-		frustumPlanes[3].y = vp[1][3] - vp[1][1];
-		frustumPlanes[3].z = vp[2][3] - vp[2][1];
-		frustumPlanes[3].w = vp[3][3] - vp[3][1];
-
-		// Near plane
-		frustumPlanes[4].x = vp[0][3] + vp[0][2];
-		frustumPlanes[4].y = vp[1][3] + vp[1][2];
-		frustumPlanes[4].z = vp[2][3] + vp[2][2];
-		frustumPlanes[4].w = vp[3][3] + vp[3][2];
-
-		// Far plane
-		frustumPlanes[5].x = vp[0][3] - vp[0][2];
-		frustumPlanes[5].y = vp[1][3] - vp[1][2];
-		frustumPlanes[5].z = vp[2][3] - vp[2][2];
-		frustumPlanes[5].w = vp[3][3] - vp[3][2];
-
-		// Normalize planes
-		for (auto& frustumPlane : frustumPlanes) {
-			float length = glm::length(glm::vec3(frustumPlane));
-			if (length > 1e-6) {
-				frustumPlane /= length;
-			}
-		}
-
-		if (IsBoundingBoxInsideFrustum(obj->boundingBox().min, obj->boundingBox().max, frustumPlanes)) {
-			ProcessGameObject(obj, viewMatrix, projMatrix);
-		}
+	for (auto* obj : queuedObjects) 
+	{		
+		ProcessGameObject(obj, viewMatrix, projMatrix);
 	}
 
 	if (useForwardPlus) {

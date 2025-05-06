@@ -591,7 +591,7 @@ static void RenderEditor() {
 				return;
 			}
 
-			RenderManager::GetInstance().SubmitGameObject(object);
+			RenderManager::GetInstance().SubmitGameObject(object, Application->frustumPlanes);
 		}
 	}
 	
@@ -683,10 +683,12 @@ static void RenderGameView() {
 	RenderManager::GetInstance().BeginFrame();
 
 	auto activeScene = Application->root->GetActiveScene();
+
 	if (activeScene) {
 		for (auto& object : activeScene->children()) {
-			if (object && object->IsActive()) {
-				RenderManager::GetInstance().SubmitGameObject(object.get());
+			if (object && object->IsActive()) 
+			{
+				RenderManager::GetInstance().SubmitGameObject(object.get(), Application->frustumPlanes);
 			}
 		}
 	}
@@ -856,7 +858,7 @@ static void GameRelease() {
 					break;
 				}
 
-				RenderManager::GetInstance().SubmitGameObject(object.get());
+				RenderManager::GetInstance().SubmitGameObject(object.get(), Application->frustumPlanes);
 			}
 		}
 	}
@@ -893,12 +895,60 @@ static void GameRelease() {
 	glClearColor(lastClearColor[0], lastClearColor[1], lastClearColor[2], lastClearColor[3]);
 }
 
-static void Render(MyGUI* gui) {
+
+
+static void Render(MyGUI* gui) 
+{
 	if (Application->window->IsOpen()) {
 
 #ifdef PROFILE
 		OPTICK_CATEGORY("RenderEditor", Optick::Category::GameLogic);
 #endif // PROFILE
+
+	
+
+		glm::mat4 vp = Application->camera->projection() * Application->camera->view();
+
+		// Left plane
+		Application->frustumPlanes[0].x = vp[0][3] + vp[0][0];
+		Application->frustumPlanes[0].y = vp[1][3] + vp[1][0];
+		Application->frustumPlanes[0].z = vp[2][3] + vp[2][0];
+		Application->frustumPlanes[0].w = vp[3][3] + vp[3][0];
+// Right plane
+		Application->frustumPlanes[1].x = vp[0][3] - vp[0][0];
+		Application->frustumPlanes[1].y = vp[1][3] - vp[1][0];
+		Application->frustumPlanes[1].z = vp[2][3] - vp[2][0];
+		Application->frustumPlanes[1].w = vp[3][3] - vp[3][0];
+// Bottom plane
+		Application->frustumPlanes[2].x = vp[0][3] + vp[0][1];
+		Application->frustumPlanes[2].y = vp[1][3] + vp[1][1];
+		Application->frustumPlanes[2].z = vp[2][3] + vp[2][1];
+		Application->frustumPlanes[2].w = vp[3][3] + vp[3][1];
+// Top plane
+		Application->frustumPlanes[3].x = vp[0][3] - vp[0][1];
+		Application->frustumPlanes[3].y = vp[1][3] - vp[1][1];
+		Application->frustumPlanes[3].z = vp[2][3] - vp[2][1];
+		Application->frustumPlanes[3].w = vp[3][3] - vp[3][1];
+	// Near plane
+		Application->frustumPlanes[4].x = vp[0][3] + vp[0][2];
+		Application->frustumPlanes[4].y = vp[1][3] + vp[1][2];
+		Application->frustumPlanes[4].z = vp[2][3] + vp[2][2];
+		Application->frustumPlanes[4].w = vp[3][3] + vp[3][2];
+		
+		// Far plane
+		Application->frustumPlanes[5].x = vp[0][3] - vp[0][2];
+		Application->frustumPlanes[5].y = vp[1][3] - vp[1][2];
+		Application->frustumPlanes[5].z = vp[2][3] - vp[2][2];
+		Application->frustumPlanes[5].w = vp[3][3] - vp[3][2];
+
+		// Normalize planes
+		for (auto& frustumPlane : Application->frustumPlanes) {
+			float length = glm::length(glm::vec3(frustumPlane));
+			if (length > 1e-6) {
+				frustumPlane /= length;
+			}
+		}
+
 
 		//estos 2 consumen casi lo mismo
 		RenderEditor();

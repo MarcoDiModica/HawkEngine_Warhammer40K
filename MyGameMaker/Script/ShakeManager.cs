@@ -2,29 +2,16 @@
 using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
-
 public class ShakeManager : MonoBehaviour
 {
+    public Vector3 currentShakeOffset = Vector3.Zero;
 
-    private PlayerCamera mainCamera;
     private class ActiveShake
     {
-        public Camera camera;
-        public Vector3 originalOffset;
         public float intensity;
         public float duration;
         public float elapsedTime;
         public float nextUpdateTime;
-
-        public ActiveShake(Camera camera, Vector3 originalOffset, float intensity, float duration)
-        {
-            this.camera = camera;
-            this.originalOffset = originalOffset;
-            this.intensity = intensity;
-            this.duration = duration;
-            this.elapsedTime = 0f;
-            this.nextUpdateTime = 0f;
-        }
     }
 
     private List<ActiveShake> activeShakes = new List<ActiveShake>();
@@ -32,26 +19,24 @@ public class ShakeManager : MonoBehaviour
 
     private void Awake()
     {
-        mainCamera = GameObject.Find("MainCamera").GetComponent<PlayerCamera>();
         random = new Random();
-        activeShakes = new List<ActiveShake>();
     }
 
-    //Default shake function that will use Main Camera
     public void ApplyShake(float intensity, float duration)
     {
-        activeShakes.Add(new ActiveShake(mainCamera.cameraRef, mainCamera.currentOffset, intensity, duration));
-    }  
-    
-    //Function to apply shake to any other camera 
-    public void ApplyShake(float intensity, float duration, Camera camera, Vector3 originalOffset)
-    {
-        Vector3 offset = originalOffset;
-        activeShakes.Add(new ActiveShake(camera, offset, intensity, duration));
+        activeShakes.Add(new ActiveShake
+        {
+            intensity = intensity,
+            duration = duration,
+            elapsedTime = 0f,
+            nextUpdateTime = 0f
+        });
     }
 
     public override void Update(float deltaTime)
     {
+        currentShakeOffset = Vector3.Zero;
+
         for (int i = activeShakes.Count - 1; i >= 0; i--)
         {
             var shake = activeShakes[i];
@@ -59,7 +44,6 @@ public class ShakeManager : MonoBehaviour
 
             if (shake.elapsedTime >= shake.duration)
             {
-                shake.camera.SetOffset(shake.originalOffset);
                 activeShakes.RemoveAt(i);
                 continue;
             }
@@ -70,15 +54,14 @@ public class ShakeManager : MonoBehaviour
                 float decay = 1.0f - t;
                 float currentIntensity = shake.intensity * decay;
 
-                Vector3 shakeOffset = RandomShakeOffset(currentIntensity);
-                shake.camera.SetOffset(shake.originalOffset + shakeOffset);
+                currentShakeOffset += GenerateRandomOffset(currentIntensity);
 
                 shake.nextUpdateTime += 0.1f;
             }
         }
     }
 
-    private Vector3 RandomShakeOffset(float amount)
+    private Vector3 GenerateRandomOffset(float amount)
     {
         float x = ((float)random.NextDouble() * 2f - 1f) * amount;
         float y = ((float)random.NextDouble() * 2f - 1f) * amount;
@@ -86,3 +69,4 @@ public class ShakeManager : MonoBehaviour
         return new Vector3(x, y, z);
     }
 }
+

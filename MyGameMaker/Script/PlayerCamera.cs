@@ -39,6 +39,7 @@ public class PlayerCamera : MonoBehaviour
 
 
     private PlayerController playerController;
+    private ShakeManager shakeManager;
 
     public override void Awake()
     {
@@ -65,6 +66,13 @@ public class PlayerCamera : MonoBehaviour
             Engineson.print("ERROR: PlayerCamera requires a PlayerController component on the Player GameObject!");
             return;
         }
+
+        shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
+        if (shakeManager == null)
+        {
+            Engineson.print("ERROR: ShakeManager not found");
+        }
+
 
         cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
         cameraRef.SetCameraFieldOfView(originalFOV * (Math.PI / 180.0));
@@ -123,7 +131,12 @@ public class PlayerCamera : MonoBehaviour
                 }
             }
         }
-    currentOffset = SmoothDampVector3(currentOffset, targetOffset + dashOffset, ref offsetVelocity, 1f / offsetSmoothness, deltaTime);
+        Vector3 totalOffset = targetOffset + dashOffset;
+
+        if (shakeManager != null)
+            totalOffset += shakeManager.currentShakeOffset;
+
+        currentOffset = SmoothDampVector3(currentOffset, totalOffset, ref offsetVelocity, 1f / offsetSmoothness, deltaTime);
         cameraRef.SetOffset(currentOffset);
 
         if (targetFOV != currentFOV)

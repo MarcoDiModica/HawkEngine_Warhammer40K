@@ -15,7 +15,7 @@ public class PlayerCamera : MonoBehaviour
     public float returnDelay = 0.2f;
 
     public Vector3 currentOffset = new Vector3(0, 20, -10.5f);
-    private Vector3 targetOffset = new Vector3(0, 20, 0);
+    public Vector3 targetOffset = new Vector3(0, 20, 0);
     private Vector3 offsetVelocity = Vector3.Zero;
 
     private Vector3 dashOffset = Vector3.Zero;

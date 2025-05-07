@@ -40,15 +40,13 @@ public class ShakeManager : MonoBehaviour
     //Default shake function that will use Main Camera
     public void ApplyShake(float intensity, float duration)
     {
-        mainCamera.cameraRef.SetOffset(mainCamera.currentOffset);
         activeShakes.Add(new ActiveShake(mainCamera.cameraRef, mainCamera.currentOffset, intensity, duration));
     }  
     
     //Function to apply shake to any other camera 
     public void ApplyShake(float intensity, float duration, Camera camera, Vector3 originalOffset)
     {
-        Vector3 offset = originalOffset ;
-        camera.SetOffset(offset);
+        Vector3 offset = originalOffset;
         activeShakes.Add(new ActiveShake(camera, offset, intensity, duration));
     }
 

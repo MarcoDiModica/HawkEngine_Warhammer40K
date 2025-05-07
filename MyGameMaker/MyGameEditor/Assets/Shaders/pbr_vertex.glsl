@@ -1,90 +1,69 @@
-#version 450 core
+#version 460 core
+#extension GL_ARB_bindless_texture : enable
+#extension GL_ARB_shader_storage_buffer_object : enable
 
-layout(location = 0) in vec3 aPos;
-layout(location = 1) in vec2 aTexCoord;
-layout(location = 2) in vec3 aNormal;
-layout(location = 3) in ivec4 boneIds; 
-layout(location = 4) in vec4 weights;
-layout(location = 5) in vec3 aTangent;
-layout(location = 6) in vec3 aBitangent;
+layout(location = 0) in vec3 position;
+layout(location = 1) in vec2 texCoord;
+layout(location = 2) in vec3 normal;
+layout(location = 3) in vec3 tangent;
+layout(location = 4) in vec3 bitangent;
 
-layout(location = 7) in vec4 instanceMatrix0;
-layout(location = 8) in vec4 instanceMatrix1;
-layout(location = 9) in vec4 instanceMatrix2;
-layout(location = 10) in vec4 instanceMatrix3;
-layout(location = 11) in vec4 instanceColor;
+struct InstanceData {
+    mat4 modelMatrix;
+    mat4 prevModelMatrix;
+    vec4 objectData;
+    uint meshIndex;
+    uint materialIndex;
+    uint objectId;
+    uint flags;
+};
 
-layout(location = 12) in vec3 instanceNormalMatrix0;
-layout(location = 13) in vec3 instanceNormalMatrix1;
-layout(location = 14) in vec3 instanceNormalMatrix2;
+layout(std430, binding = 0) readonly buffer InstanceBuffer {
+    InstanceData instances[]; 
+};
 
-out vec2 TexCoord;
-out vec3 FragPos;
-out vec3 Normal;
-out mat3 TBN;
-out vec4 vInstanceColor;
-
-uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
-uniform int isAnimated = 0;
-uniform int isInstanced = 0;
-uniform mat3 normalMatrix;
+uniform int instanceOffset;
+uniform float heightScale;
+uniform int u_HasHeightMap;
+uniform sampler2D heightMap;
 
-const int MAX_BONES = 200;
-const int MAX_BONE_INFLUENCE = 4;
-uniform mat4 finalBonesMatrices[MAX_BONES];
+out VS_OUT {
+    vec3 FragPos;
+    vec2 TexCoord;
+    vec3 Normal;
+    vec3 Tangent;
+    vec3 Bitangent;
+    mat3 TBN;
+    vec3 CameraPos;
+} vs_out;
 
-void main()
-{
-    TexCoord = aTexCoord;
-    vInstanceColor = isInstanced == 1 ? instanceColor : vec4(1.0);
-
-    vec4 tPos = vec4(aPos, 1.0);
-    vec3 tNormal = aNormal;
-
-    if (isAnimated == 1)
-    {
-        mat4 BoneTransform = weights[0] * finalBonesMatrices[boneIds[0]];
-        BoneTransform += weights[1] * finalBonesMatrices[boneIds[1]];
-        BoneTransform += weights[2] * finalBonesMatrices[boneIds[2]];
-        BoneTransform += weights[3] * finalBonesMatrices[boneIds[3]];
-        
-        tPos = BoneTransform * tPos;
-        tNormal = mat3(BoneTransform) * tNormal;
-    }
-
-    mat4 modelMatrix = isInstanced == 1 ? 
-        mat4(instanceMatrix0, instanceMatrix1, instanceMatrix2, instanceMatrix3) : 
-        model;
-
-    FragPos = vec3(modelMatrix * tPos);
+void main() {
+    InstanceData data = instances[gl_InstanceID + instanceOffset];
+    mat4 model = data.modelMatrix;
+    mat3 normalMatrix = transpose(inverse(mat3(model)));
     
-    mat3 normalMat;
-    if (isInstanced == 1) {
-        normalMat = mat3(
-            instanceNormalMatrix0,
-            instanceNormalMatrix1,
-            instanceNormalMatrix2
-        );
-    } else {
-        normalMat = normalMatrix;
+    vs_out.TexCoord = texCoord;
+    
+    vs_out.Normal = normalize(normalMatrix * normal);
+    vs_out.Tangent = normalize(normalMatrix * tangent);
+    vs_out.Bitangent = normalize(normalMatrix * bitangent);
+    vs_out.TBN = mat3(vs_out.Tangent, vs_out.Bitangent, vs_out.Normal);
+    
+    mat3 viewRotation = mat3(view);
+    vec3 viewTranslation = vec3(view[3]);
+    vs_out.CameraPos = -transpose(viewRotation) * viewTranslation;
+    
+    vec3 positionOffset = position;
+    
+    if (u_HasHeightMap == 1 && heightScale > 0.0) {
+        float height = texture(heightMap, texCoord).r;
+        vec3 normal = normalize(normal);
+        positionOffset += normal * (height * heightScale);
     }
     
-    vec3 N = normalize(normalMat * tNormal);
-    Normal = N;
+    vs_out.FragPos = vec3(model * vec4(positionOffset, 1.0));
     
-    vec3 T;
-    if (length(aTangent) > 0.0) {
-        T = normalize(normalMat * aTangent);
-        T = normalize(T - dot(T, N) * N);
-    } else {
-        vec3 tempVec = abs(N.y) < 0.999 ? vec3(0.0, 1.0, 0.0) : vec3(1.0, 0.0, 0.0);
-        T = normalize(cross(tempVec, N));
-    }
-    
-    vec3 B = normalize(cross(N, T));
-    
-    TBN = mat3(T, B, N);
-    gl_Position = projection * view * modelMatrix * tPos;
+    gl_Position = projection * view * model * vec4(positionOffset, 1.0);
 }

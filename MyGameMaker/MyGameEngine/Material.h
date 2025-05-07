@@ -28,6 +28,9 @@ public:
 	float metallic = 0.0f;
 	float roughness = 0.5f;
 	float ao = 1.0f;
+	glm::vec3 emissiveColor = vec3(0.0f, 0.0f, 0.0f);
+	float emissiveIntensity = 0.0f;
+	float heightScale = 0.0f;
 
 	float tonemapStrength = 1.0f;
 
@@ -38,6 +41,8 @@ public:
 	std::shared_ptr<Image> metallicMapPtr = nullptr;              // Metallic map
 	std::shared_ptr<Image> roughnessMapPtr = nullptr;             // Roughness map
 	std::shared_ptr<Image> aoMapPtr = nullptr;                    // Ambient occlusion map
+	std::shared_ptr<Image> heightMapPtr = nullptr;                // Height map
+	std::shared_ptr<Image> emissiveMapPtr = nullptr;              // Emissive map
 
 	void SetID(size_t id) { matID = id; }
 	size_t GetId() const { return matID; }
@@ -52,6 +57,8 @@ public:
 	void setMetallicMap(const std::shared_ptr<Image>& img_ptr) { metallicMapPtr = img_ptr; }
 	void setRoughnessMap(const std::shared_ptr<Image>& img_ptr) { roughnessMapPtr = img_ptr; }
 	void setAoMap(const std::shared_ptr<Image>& img_ptr) { aoMapPtr = img_ptr; }
+	void setHeightMap(const std::shared_ptr<Image>& img_ptr) { heightMapPtr = img_ptr; }
+	void setEmissiveMap(const std::shared_ptr<Image>& img_ptr) { emissiveMapPtr = img_ptr; }
 
     //getters
     const std::shared_ptr<Image>& getImage() const { return imagePtr; }
@@ -59,6 +66,8 @@ public:
     const std::shared_ptr<Image>& getMetallicMap() const { return metallicMapPtr; }
     const std::shared_ptr<Image>& getRoughnessMap() const { return roughnessMapPtr; }
     const std::shared_ptr<Image>& getAoMap() const { return aoMapPtr; }
+	const std::shared_ptr<Image>& getHeightMap() const { return heightMapPtr; }
+	const std::shared_ptr<Image>& getEmissiveMap() const { return emissiveMapPtr; }
 
 	auto& image() { return *imagePtr; }
 	std::shared_ptr<Image> getImg() { return imagePtr; }
@@ -76,6 +85,14 @@ public:
 
 	void SetTonemapStrength(float strength) { tonemapStrength = strength; }
 	float GetTonemapStrength() const { return tonemapStrength; }
+
+	void SetEmissiveColor(const vec3& color) { emissiveColor = color; }
+	void SetEmissiveIntensity(float intensity) { emissiveIntensity = intensity; }
+	void SetHeightScale(float scale) { heightScale = scale; }
+
+	vec3 GetEmissiveColor() const { return emissiveColor; }
+	float GetEmissiveIntensity() const { return emissiveIntensity; }
+	float GetHeightScale() const { return heightScale; }
 
 	size_t matID;
 

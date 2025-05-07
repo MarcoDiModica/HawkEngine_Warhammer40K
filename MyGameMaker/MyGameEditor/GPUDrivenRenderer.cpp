@@ -349,8 +349,7 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 			RenderUnlitBatch(batch, viewMatrix, projMatrix);
 			break;
 		case ShaderType::PBR:
-			// Implementar renderizado PBR
-			LOG(LogType::LOG_INFO, "Renderizado PBR no implementado aún");
+			RenderPBRBatch(batch, viewMatrix, projMatrix, cameraPos);
 			break;
 		default:
 			LOG(LogType::LOG_WARNING, "Tipo de shader desconocido: %d", (int)shaderType);
@@ -459,6 +458,187 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	shader->UnBind();
+}
+
+void GPUDrivenRenderer::RenderPBRBatch(
+	const ShaderBatch& batch,
+	const glm::mat4& viewMatrix,
+	const glm::mat4& projMatrix,
+	const glm::vec3& cameraPos) {
+
+	if (batch.commands.empty()) return;
+
+	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::PBR);
+	if (!shader) {
+		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader PBR");
+		return;
+	}
+
+	shader->Bind();
+	shader->SetUniformMat4("view", viewMatrix);
+	shader->SetUniformMat4("projection", projMatrix);
+	shader->SetUniformVec3("u_cameraPosition", cameraPos);
+
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
+
+	bindlessErrorDetected = false;
+	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
+		uint32_t meshIndex = batch.meshIndices[i];
+		uint32_t materialIndex = batch.materialIndices[i];
+
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
+
+		if (!meshData || !materialData) continue;
+
+		shader->SetUniformVec4("albedoColor", materialData->albedoColor);
+		shader->SetUniform("metallicFactor", materialData->pbrParams.x);
+		shader->SetUniform("roughnessFactor", materialData->pbrParams.y);
+		shader->SetUniform("aoFactor", materialData->pbrParams.z);
+		shader->SetUniform("tonemapStrength", materialData->pbrParams.w);
+
+		shader->SetUniformVec3("emissiveColor", glm::vec3(materialData->emissiveParams));
+		shader->SetUniform("emissiveIntensity", materialData->emissiveParams.w);
+
+		shader->SetUniform("heightScale", materialData->heightScale);
+
+		if (GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64 && !bindlessErrorDetected) {
+			HandleTextureBindings(shader, "albedoMap", "u_HasAlbedoMap", materialData->albedoTexture);
+			HandleTextureBindings(shader, "normalMap", "u_HasNormalMap", materialData->normalTexture);
+			HandleTextureBindings(shader, "metallicMap", "u_HasMetallicMap", materialData->metallicTexture);
+			HandleTextureBindings(shader, "roughnessMap", "u_HasRoughnessMap", materialData->roughnessTexture);
+			HandleTextureBindings(shader, "aoMap", "u_HasAoMap", materialData->aoTexture);
+			HandleTextureBindings(shader, "emissiveMap", "u_HasEmissiveMap", materialData->emissiveTexture);
+			HandleTextureBindings(shader, "heightMap", "u_HasHeightMap", materialData->heightTexture);
+		}
+		else {
+			BindRegularTextures(shader, materialData);
+		}
+
+		glBindVertexArray(meshData->vertexArray);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+		if (i < batch.commands.size()) {
+			const DrawElementsCommand& cmd = batch.commands[i];
+			shader->SetUniform("instanceOffset", (int)cmd.baseInstance);
+
+			glDrawElementsInstanced(
+				GL_TRIANGLES,
+				cmd.count,
+				GL_UNSIGNED_INT,
+				nullptr,
+				cmd.instanceCount
+			);
+
+			GLenum err = glGetError();
+			if (err != GL_NO_ERROR) {
+				LOG(LogType::LOG_ERROR, "GL Error after PBR draw: 0x%X", err);
+			}
+		}
+	}
+
+	glBindVertexArray(0);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	shader->UnBind();
+}
+
+void GPUDrivenRenderer::HandleTextureBindings(Shaders* shader, const char* textureName, const char* hasTextureName, GLuint64 textureHandle) {
+	if (textureHandle != 0) {
+		shader->SetUniform(hasTextureName, 1);
+		shader->SetUniform(textureName, textureHandle);
+
+		GLenum error = glGetError();
+		if (error != GL_NO_ERROR) {
+			LOG(LogType::LOG_ERROR, "Error al usar textura bindless %s: 0x%X", textureName, error);
+			bindlessErrorDetected = true;
+		}
+	}
+	else {
+		shader->SetUniform(hasTextureName, 0);
+	}
+}
+
+void GPUDrivenRenderer::BindRegularTextures(Shaders* shader, GPUMaterial* materialData) {
+	GLuint textureID = 0;
+
+	// Albedo texture
+	if (BindlessManager::GetInstance().GetTextureIDFromHandle(materialData->albedoTexture, textureID)) {
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		shader->SetUniform("u_HasAlbedoMap", 1);
+		shader->SetUniform("albedoMap", 0);
+	}
+	else {
+		shader->SetUniform("u_HasAlbedoMap", 0);
+	}
+
+	// Normal map
+	if (BindlessManager::GetInstance().GetTextureIDFromHandle(materialData->normalTexture, textureID)) {
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		shader->SetUniform("u_HasNormalMap", 1);
+		shader->SetUniform("normalMap", 1);
+	}
+	else {
+		shader->SetUniform("u_HasNormalMap", 0);
+	}
+
+	// Metallic map
+	if (BindlessManager::GetInstance().GetTextureIDFromHandle(materialData->metallicTexture, textureID)) {
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		shader->SetUniform("u_HasMetallicMap", 1);
+		shader->SetUniform("metallicMap", 2);
+	}
+	else {
+		shader->SetUniform("u_HasMetallicMap", 0);
+	}
+
+	// Roughness map
+	if (BindlessManager::GetInstance().GetTextureIDFromHandle(materialData->roughnessTexture, textureID)) {
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		shader->SetUniform("u_HasRoughnessMap", 1);
+		shader->SetUniform("roughnessMap", 3);
+	}
+	else {
+		shader->SetUniform("u_HasRoughnessMap", 0);
+	}
+
+	// AO map
+	if (BindlessManager::GetInstance().GetTextureIDFromHandle(materialData->aoTexture, textureID)) {
+		glActiveTexture(GL_TEXTURE4);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		shader->SetUniform("u_HasAoMap", 1);
+		shader->SetUniform("aoMap", 4);
+	}
+	else {
+		shader->SetUniform("u_HasAoMap", 0);
+	}
+
+	// Emissive map
+	if (BindlessManager::GetInstance().GetTextureIDFromHandle(materialData->emissiveTexture, textureID)) {
+		glActiveTexture(GL_TEXTURE5);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		shader->SetUniform("u_HasEmissiveMap", 1);
+		shader->SetUniform("emissiveMap", 5);
+	}
+	else {
+		shader->SetUniform("u_HasEmissiveMap", 0);
+	}
+
+	// Height map
+	if (BindlessManager::GetInstance().GetTextureIDFromHandle(materialData->heightTexture, textureID)) {
+		glActiveTexture(GL_TEXTURE6);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		shader->SetUniform("u_HasHeightMap", 1);
+		shader->SetUniform("heightMap", 6);
+	}
+	else {
+		shader->SetUniform("u_HasHeightMap", 0);
+	}
 }
 
 bool GPUDrivenRenderer::CompileCullingShader() {

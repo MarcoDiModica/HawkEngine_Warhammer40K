@@ -80,10 +80,16 @@ void Material::bind() const {
 
 	// AO map (unit 4)
 	bindTexture(aoMapPtr, GL_TEXTURE4);
+
+	// Height map (unit 5)
+	bindTexture(heightMapPtr, GL_TEXTURE5);
+
+	// Emissive map (unit 6)
+	bindTexture(emissiveMapPtr, GL_TEXTURE6);
 }
 
 void Material::unbind() const {
-	for (GLenum i = 0; i < 5; i++) {
+	for (GLenum i = 0; i < 7; i++) {
 		glActiveTexture(GL_TEXTURE0 + i);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
@@ -110,6 +116,9 @@ void Material::ApplyShader(const glm::mat4& model, const glm::mat4& view, const 
 		shader->SetUniform("metallicFactor", metallic);
 		shader->SetUniform("roughnessFactor", roughness);
 		shader->SetUniform("aoFactor", ao);
+		shader->SetUniformVec3("emissiveColor", emissiveColor);
+		shader->SetUniform("emissiveIntensity", emissiveIntensity);
+		shader->SetUniform("heightScale", heightScale);
 
 		if (imagePtr && imagePtr->id() != 0) {
 			glActiveTexture(GL_TEXTURE0);
@@ -161,6 +170,26 @@ void Material::ApplyShader(const glm::mat4& model, const glm::mat4& view, const 
 			shader->SetUniform("u_HasAoMap", 0);
 		}
 
+		if (emissiveMapPtr && emissiveMapPtr->id() != 0) {
+			glActiveTexture(GL_TEXTURE5);
+			glBindTexture(GL_TEXTURE_2D, emissiveMapPtr->id());
+			shader->SetUniform("u_HasEmissiveMap", 1);
+			shader->SetUniform("emissiveMap", 5);
+		}
+		else {
+			shader->SetUniform("u_HasEmissiveMap", 0);
+		}
+
+		if (heightMapPtr && heightMapPtr->id() != 0) {
+			glActiveTexture(GL_TEXTURE6);
+			glBindTexture(GL_TEXTURE_2D, heightMapPtr->id());
+			shader->SetUniform("u_HasHeightMap", 1);
+			shader->SetUniform("heightMap", 6);
+		}
+		else {
+			shader->SetUniform("u_HasHeightMap", 0);
+		}
+
 		shader->SetUniform("tonemapStrength", tonemapStrength);
 	}
 	else if (shaderType == ShaderType::UNLIT) {
@@ -196,6 +225,13 @@ void Material::SaveBinary(const std::string& filename) const {
 	fout.write(reinterpret_cast<const char*>(&filter), sizeof(filter));
 	fout.write(reinterpret_cast<const char*>(&color), sizeof(color));
 	fout.write(reinterpret_cast<const char*>(&shaderType), sizeof(shaderType));
+	fout.write(reinterpret_cast<const char*>(&metallic), sizeof(metallic));
+	fout.write(reinterpret_cast<const char*>(&roughness), sizeof(roughness));
+	fout.write(reinterpret_cast<const char*>(&ao), sizeof(ao));
+	fout.write(reinterpret_cast<const char*>(&emissiveColor), sizeof(emissiveColor));
+	fout.write(reinterpret_cast<const char*>(&emissiveIntensity), sizeof(emissiveIntensity));
+	fout.write(reinterpret_cast<const char*>(&heightScale), sizeof(heightScale));
+	fout.write(reinterpret_cast<const char*>(&tonemapStrength), sizeof(tonemapStrength));
 
 	auto writeTexture = [&](const std::string& tag, const std::shared_ptr<Image>& img) {
 		if (img && !img->image_name.empty()) {
@@ -212,6 +248,8 @@ void Material::SaveBinary(const std::string& filename) const {
 	writeTexture("MTL", metallicMapPtr);
 	writeTexture("RGL", roughnessMapPtr);
 	writeTexture("AOM", aoMapPtr);
+	writeTexture("HGT", heightMapPtr);
+	writeTexture("EMI", emissiveMapPtr);
 }
 
 std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
@@ -238,6 +276,13 @@ std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
 	fin.read(reinterpret_cast<char*>(&mat->filter), sizeof(mat->filter));
 	fin.read(reinterpret_cast<char*>(&mat->color), sizeof(mat->color));
 	fin.read(reinterpret_cast<char*>(&mat->shaderType), sizeof(mat->shaderType));
+	fin.read(reinterpret_cast<char*>(&mat->metallic), sizeof(mat->metallic));
+	fin.read(reinterpret_cast<char*>(&mat->roughness), sizeof(mat->roughness));
+	fin.read(reinterpret_cast<char*>(&mat->ao), sizeof(mat->ao));
+	fin.read(reinterpret_cast<char*>(&mat->emissiveColor), sizeof(mat->emissiveColor));
+	fin.read(reinterpret_cast<char*>(&mat->emissiveIntensity), sizeof(mat->emissiveIntensity));
+	fin.read(reinterpret_cast<char*>(&mat->heightScale), sizeof(mat->heightScale));
+	fin.read(reinterpret_cast<char*>(&mat->tonemapStrength), sizeof(mat->tonemapStrength));
 
 	while (fin.peek() != EOF) {
 		char type[4];
@@ -266,6 +311,16 @@ std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
 		}
 		else if (strcmp(type, "AOM") == 0) {
 			mat->setAoMap(img);
+		}
+		else if (strcmp(type, "HGT") == 0) {
+			mat->setHeightMap(img);
+		}
+		else if (strcmp(type, "EMI") == 0) {
+			mat->setEmissiveMap(img);
+		}
+		else {
+			LOG(LogType::LOG_ERROR, "Unknown texture type: %s", type);
+			continue;
 		}
 	}
 

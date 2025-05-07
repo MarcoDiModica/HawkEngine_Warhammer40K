@@ -21,16 +21,19 @@ struct BindlessHandle {
 
 struct GPUMaterial {
 	glm::vec4 albedoColor;
-	glm::vec4 pbrParams;
+	glm::vec4 pbrParams;       // x: metallic, y: roughness, z: ao, w: tonemapStrength
+	glm::vec4 emissiveParams;  // rgb: emissive color, w: emissive intensity
 	GLuint64 albedoTexture;
 	GLuint64 normalTexture;
 	GLuint64 metallicTexture;
 	GLuint64 roughnessTexture;
 	GLuint64 aoTexture;
 	GLuint64 emissiveTexture;
+	GLuint64 heightTexture;    // New height map texture
 	uint32_t flags;
 	uint32_t shaderType;
-	float padding[2];
+	float heightScale;         // Scale factor for height map displacement
+	float padding;             // Keep structure aligned
 };
 
 struct GPUMesh {

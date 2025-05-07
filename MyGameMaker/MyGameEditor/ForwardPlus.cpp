@@ -21,21 +21,18 @@ bool ForwardPlusLighting::Initialize(int windowWidth, int windowHeight) {
 
 	RecalculateTiles();
 
-	// Crear buffer para luces puntuales
 	glCreateBuffers(1, &pointLightBuffer);
 	glNamedBufferStorage(pointLightBuffer,
 		MAX_POINT_LIGHTS * sizeof(GPUPointLight),
 		nullptr,
 		GL_DYNAMIC_STORAGE_BIT);
 
-	// Crear buffer para luz direccional
 	glCreateBuffers(1, &directionalLightBuffer);
 	glNamedBufferStorage(directionalLightBuffer,
 		sizeof(GPUDirectionalLight),
 		nullptr,
 		GL_DYNAMIC_STORAGE_BIT);
 
-	// Crear buffers para tile grid y light indices
 	int numTiles = tilesX * tilesY;
 	glCreateBuffers(1, &lightGridBuffer);
 	glNamedBufferStorage(lightGridBuffer,
@@ -49,7 +46,6 @@ bool ForwardPlusLighting::Initialize(int windowWidth, int windowHeight) {
 		nullptr,
 		GL_DYNAMIC_STORAGE_BIT);
 
-	// Inicializar luz direccional por defecto
 	directionalLight.direction = glm::vec4(0.0f, -1.0f, 0.0f, 1.0f);
 	directionalLight.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	directionalLight.castShadow = 0;
@@ -57,43 +53,36 @@ bool ForwardPlusLighting::Initialize(int windowWidth, int windowHeight) {
 	directionalLight.useCascades = 0;
 	directionalLight.numCascades = 0;
 
-	// Compilar el shader de culling si es posible
 	if (GLEW_ARB_compute_shader) {
 		if (!CompileLightCullingShader()) {
 			LOG(LogType::LOG_ERROR, "Error: No se pudo compilar el shader de culling de luces");
 		}
 	}
 
-	// Inicializar buffers de clústeres cuando usemos clustered forward
 	if (useClusteredLighting) {
-		// Por implementar: crear estructuras para clustering 3D
+		//aqui no hay nada quizas si forward no va bien
 	}
 
-	// Bindear buffers al shader bindless_pbr
-	GLuint bindlessPBRShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::BINDLESS_PBR);
-	if (bindlessPBRShader != 0) {
-		glUseProgram(bindlessPBRShader);
+	GLuint pbrShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::PBR);
+	if (pbrShader != 0) {
+		glUseProgram(pbrShader);
 
-		// Configurar binding points
 		GLuint pointLightBindingPoint = 3;
 		GLuint dirLightBindingPoint = 4;
 		GLuint lightGridBindingPoint = 5;
 		GLuint lightIndicesBindingPoint = 6;
 
-		// Asignar buffers a binding points específicos
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, pointLightBindingPoint, pointLightBuffer);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, dirLightBindingPoint, directionalLightBuffer);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, lightGridBindingPoint, lightGridBuffer);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, lightIndicesBindingPoint, lightIndicesBuffer);
 
-		// Configurar uniforms
-		glUniform1i(glGetUniformLocation(bindlessPBRShader, "tileSize"), tileSize);
-		glUniform2i(glGetUniformLocation(bindlessPBRShader, "screenSize"), screenWidth, screenHeight);
-		glUniform1i(glGetUniformLocation(bindlessPBRShader, "useForwardPlus"), 1);
+		glUniform1i(glGetUniformLocation(pbrShader, "tileSize"), tileSize);
+		glUniform2i(glGetUniformLocation(pbrShader, "screenSize"), screenWidth, screenHeight);
+		glUniform1i(glGetUniformLocation(pbrShader, "useForwardPlus"), 1);
 
 		glUseProgram(0);
 	}
-
 	return true;
 }
 

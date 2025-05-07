@@ -74,11 +74,11 @@ private:
 	int screenWidth = 0;
 	int screenHeight = 0;
 
-	int tileSize = 16; //modificable
+	int tileSize = 16; 
 	int tilesX = 0;
 	int tilesY = 0;
-	int maxLightsPerTile = 64; //modificable
-	bool useClusteredLighting = false; //modificable
+	int maxLightsPerTile = 64;
+	bool useClusteredLighting = false;
 
 	GLuint lightCullingShader = 0;
 
@@ -92,5 +92,5 @@ private:
 
 	int visibleLightCount = 0;
 
-	static constexpr int MAX_POINT_LIGHTS = 1024; //modificable
+	static constexpr int MAX_POINT_LIGHTS = 1024; 
 };

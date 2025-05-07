@@ -74,10 +74,18 @@ private:
 	void DebugMeshInfo(uint32_t meshIndex);
 	void BatchCommandsByShaderType();
 
-	// Por ahora solo implementamos renderizado de materiales UNLIT
 	void RenderUnlitBatch(const ShaderBatch& batch,
 		const glm::mat4& viewMatrix,
 		const glm::mat4& projMatrix);
+
+	void RenderPBRBatch(
+		const ShaderBatch& batch,
+		const glm::mat4& viewMatrix,
+		const glm::mat4& projMatrix,
+		const glm::vec3& cameraPos);
+
+	void HandleTextureBindings(Shaders* shader, const char* textureName, const char* hasTextureName, GLuint64 textureHandle);
+	void BindRegularTextures(Shaders* shader, GPUMaterial* materialData);
 
 	GLuint cullingShader = 0;
 	GLuint drawCommandBuffer = 0;

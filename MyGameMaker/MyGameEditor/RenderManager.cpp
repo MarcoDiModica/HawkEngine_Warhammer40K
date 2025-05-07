@@ -169,6 +169,7 @@ bool RenderManager::InitializeShaders() {
 	pbrShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::PBR);
 	if (pbrShader == 0) {
 		LOG(LogType::LOG_WARNING, "Warning: Shader PBR no encontrado en ShaderManager");
+		return false;
 	}
 
 	unlitShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::UNLIT);
@@ -177,7 +178,7 @@ bool RenderManager::InitializeShaders() {
 		return false;
 	}
 
-	return unlitShader != 0;
+	return unlitShader != 0 && pbrShader != 0;
 }
 
 void RenderManager::ProcessGameObject(GameObject* gameObject) {

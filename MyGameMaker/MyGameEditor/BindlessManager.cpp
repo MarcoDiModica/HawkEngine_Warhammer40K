@@ -191,6 +191,11 @@ uint64_t CalculateMaterialHash(const Material* material) {
 	hash ^= std::hash<float>{}(material->roughness) << 6;
 	hash ^= std::hash<float>{}(material->ao) << 7;
 	hash ^= std::hash<float>{}(material->tonemapStrength) << 8;
+	hash ^= std::hash<float>{}(material->emissiveColor.r) << 14;
+	hash ^= std::hash<float>{}(material->emissiveColor.g) << 15;
+	hash ^= std::hash<float>{}(material->emissiveColor.b) << 16;
+	hash ^= std::hash<float>{}(material->emissiveIntensity) << 17;
+	hash ^= std::hash<float>{}(material->heightScale) << 18;
 
 	if (material->getImage())
 		hash ^= std::hash<unsigned int>{}(material->getImage()->id()) << 9;
@@ -202,6 +207,10 @@ uint64_t CalculateMaterialHash(const Material* material) {
 		hash ^= std::hash<unsigned int>{}(material->getRoughnessMap()->id()) << 12;
 	if (material->getAoMap())
 		hash ^= std::hash<unsigned int>{}(material->getAoMap()->id()) << 13;
+	if (material->getEmissiveMap())
+		hash ^= std::hash<unsigned int>{}(material->getEmissiveMap()->id()) << 19;
+	if (material->getHeightMap())
+		hash ^= std::hash<unsigned int>{}(material->getHeightMap()->id()) << 20;
 
 	return hash;
 }
@@ -222,8 +231,18 @@ void BindlessManager::SetupGPUMaterial(GPUMaterial& gpuMaterial, const Material*
 		material->metallic,
 		material->roughness,
 		material->ao,
-		material->tonemapStrength // Usar tonemapStrength como emisiive de momento
+		material->tonemapStrength
 	);
+
+	gpuMaterial.emissiveParams = glm::vec4(
+		material->emissiveColor.r,
+		material->emissiveColor.g,
+		material->emissiveColor.b,
+		material->emissiveIntensity
+	);
+
+	gpuMaterial.heightScale = material->heightScale;
+	gpuMaterial.padding = 0.0f;
 
 	gpuMaterial.shaderType = static_cast<uint32_t>(material->GetShaderType());
 
@@ -233,6 +252,7 @@ void BindlessManager::SetupGPUMaterial(GPUMaterial& gpuMaterial, const Material*
 	gpuMaterial.roughnessTexture = fallbackTextureHandle.handle;
 	gpuMaterial.aoTexture = fallbackTextureHandle.handle;
 	gpuMaterial.emissiveTexture = fallbackTextureHandle.handle;
+	gpuMaterial.heightTexture = fallbackTextureHandle.handle;
 
 	gpuMaterial.flags = 0;
 
@@ -323,6 +343,42 @@ void BindlessManager::SetupGPUMaterial(GPUMaterial& gpuMaterial, const Material*
 		}
 		else {
 			fallbackReasons.push_back("AO: No presente");
+			hasFallbackTextures = true;
+		}
+
+		// Emissive map
+		auto emissiveMap = material->getEmissiveMap();
+		if (emissiveMap && emissiveMap->id() != 0) {
+			BindlessHandle handle = CreateTextureHandle(emissiveMap->id());
+			if (handle.isResident) {
+				gpuMaterial.emissiveTexture = handle.handle;
+				gpuMaterial.flags |= (1 << 5);
+			}
+			else {
+				fallbackReasons.push_back("Emissive: Handle no residente");
+				hasFallbackTextures = true;
+			}
+		}
+		else {
+			fallbackReasons.push_back("Emissive: No presente");
+			hasFallbackTextures = true;
+		}
+
+		// Height map
+		auto heightMap = material->getHeightMap();
+		if (heightMap && heightMap->id() != 0) {
+			BindlessHandle handle = CreateTextureHandle(heightMap->id());
+			if (handle.isResident) {
+				gpuMaterial.heightTexture = handle.handle;
+				gpuMaterial.flags |= (1 << 6);
+			}
+			else {
+				fallbackReasons.push_back("Height: Handle no residente");
+				hasFallbackTextures = true;
+			}
+		}
+		else {
+			fallbackReasons.push_back("Height: No presente");
 			hasFallbackTextures = true;
 		}
 	}

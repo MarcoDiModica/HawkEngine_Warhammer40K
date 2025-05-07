@@ -23,6 +23,10 @@ public class Shotgun : BaseWeapon
     private List<Vector3> bulletStartPositions = new List<Vector3>();
     private List<float> bulletLifetimes = new List<float>();
     private float hitRayLength = 1f;
+
+    private ShakeManager shakeManager;
+    public float shakeIntensity = 2.0f;
+    public float shakeDuration = 0.25f;
     public override void Awake()
     {
 
@@ -45,6 +49,12 @@ public class Shotgun : BaseWeapon
         barrage = gameObject.GetComponent<Barrage>();
         hookShot = gameObject.GetComponent<HookShot>();
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
+        shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
+        if (shakeManager == null)
+        {
+            Engineson.print("ERROR: ShakeManager not found");
+        }
+
     }
 
     public override void Update(float deltaTime)
@@ -136,6 +146,7 @@ public class Shotgun : BaseWeapon
     {
         if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence)
         {
+            shakeManager.ApplyShake(shakeIntensity, shakeDuration);
 
             timeSinceLastShot = 0f;
 

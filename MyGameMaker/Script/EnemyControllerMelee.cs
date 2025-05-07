@@ -130,6 +130,7 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Update(float deltaTime)
     {
+        Engineson.print("Enemy update");
         if (!pathInitialized && pathfinder != null && enemyTransform != null && playerTransform != null)
         {
             pathfinder.UpdateGridOrigin(enemyTransform.position);
@@ -213,15 +214,17 @@ public class EnemyControllerMelee : EnemyController
         switch (currentState)
         {
             case EnemyState.IDLE:
+
                 isFootstepPlaying = false;
                 if (!hasStoppedFootsteps)
                 {
                     Audio.Stop(SFX_FOOTSTEP);
-                    hasStoppedFootsteps = true;
+                    hasStoppedFootsteps = true; 
                 }
                 break;
 
             case EnemyState.CHASE:
+
                 if (!isFootstepPlaying)
                 {
                     Audio.Play(SFX_FOOTSTEP, true);
@@ -345,9 +348,11 @@ public class EnemyControllerMelee : EnemyController
 
                     anim.SetRunningAnimation();
                 }
+
                 break;
 
             case EnemyState.ATTACK:
+                
                 hurtboxTimer += deltaTime;
                 if (dodgewindow)
                 {
@@ -369,9 +374,12 @@ public class EnemyControllerMelee : EnemyController
                     dodgewindow = false;
                     isAttacking = false;
                 }
+
+               
                 break;
 
             case EnemyState.STUNNED:
+                
                 rb.SetVelocity(Vector3.Zero);
 
                 stunTimer += deltaTime;
@@ -380,9 +388,11 @@ public class EnemyControllerMelee : EnemyController
                     currentState = EnemyState.IDLE;
                     stunTimer = 0.0f;
                 }
+                
                 break;
 
             case EnemyState.DEAD:
+                
                 if ((!hasDropped))
                 {
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
@@ -390,6 +400,7 @@ public class EnemyControllerMelee : EnemyController
                 if (isFootstepPlaying)
                 {
                     Audio.Stop(SFX_FOOTSTEP);
+                    Audio.Stop(MUSIC_COMBAT);
                     isFootstepPlaying = false;
                 }
                 if (anim.isAnimFinished)
@@ -402,9 +413,11 @@ public class EnemyControllerMelee : EnemyController
                 }
                 hasDropped = true;
                 collider.SetActive(false);
+                
                 break;
 
             case EnemyState.LEAP:
+                
                 hasLeap = false;
                 leapTimer += deltaTime;
                 rb.SetVelocity(leapDirection * 1.8f);
@@ -415,10 +428,12 @@ public class EnemyControllerMelee : EnemyController
                     currentState = EnemyState.CHASE;
                     lastLeap = 0f;
                 }
+                
                 break;
             default:
                 break;
         }
+        Engineson.print("Enemy end update");
     }
 
     private Vector3 SmoothVelocity(Vector3 desiredVelocity, Vector3 currentVelocity, float deltaTime)

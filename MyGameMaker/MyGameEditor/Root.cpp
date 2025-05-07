@@ -65,10 +65,10 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	resourceManager->LoadResources(); // Esto no se mutea
-	resourceManager->CreateCube(); // Esto no se mutea
+	//resourceManager->LoadResources(); // Esto no se mutea
+	//resourceManager->CreateCube(); // Esto no se mutea
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
 
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
@@ -247,21 +247,23 @@ bool Root::Start()
 	//ParentGameObject(*lictorMesh, *lictor);
 	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
 
-	////Hormagaunt
-	//auto hormagaunt = CreateGameObject("Hormagaunt");
-	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
-	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	//hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//hormagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
-	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagauntMesh->SetName("HormagauntMesh");
-	//hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	//hormagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0)); 
-	//hormagauntMesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
-	//hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
-	//ParentGameObject(*hormagauntMesh, *hormagaunt);
-	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
-	//hormagaunt->SetTag("Enemy");
+	//Hormagaunt
+	//for (int i = 0; i < 20; i++) {
+	//	auto hormagaunt = CreateGameObject("Hormagaunt");
+	//	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
+	//	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//	hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//	hormagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
+	//	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	//	hormagauntMesh->SetName("HormagauntMesh");
+	//	hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//	hormagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//	hormagauntMesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
+	//	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	//	ParentGameObject(*hormagauntMesh, *hormagaunt);
+	//	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	//	hormagaunt->SetTag("Enemy");
+	//}
 
 	////Tyranid Warrior
 	//auto tyranidWarrior = CreateGameObject("Tyranid_Warrior");

@@ -101,7 +101,7 @@ public class EnemyControllerMelee : EnemyController
             return;
         }
 
-        anim = GameObject.Find("HormagauntMesh").GetComponent<HormagauntAnimation>();
+        anim = gameObject.GetChild("HormagauntMesh").GetComponent<HormagauntAnimation>();
         if (anim == null)
         {
             Engineson.print("ERROR: HormagauntAnimation requires a SkeletalAnimation component!");

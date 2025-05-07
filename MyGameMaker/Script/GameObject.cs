@@ -47,6 +47,10 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void AddChild(GameObject child);
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern GameObject FindChild(string name);
+
+        public GameObject GetChild(string name) => FindChild(name);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern GameObject Find(string name);

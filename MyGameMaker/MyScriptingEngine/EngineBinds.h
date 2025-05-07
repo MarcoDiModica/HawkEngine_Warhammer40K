@@ -43,6 +43,7 @@ namespace EngineBinds {
 	MonoString* GetTag(MonoObject* ref);
 	void SetTag(MonoObject* ref, MonoString* tag);
     MonoObject* GetGameObjectByName(MonoString* name);	
+    MonoObject* GameObjectFindChild(MonoObject* parent, MonoString* name);
     void GameObjectSetActive(MonoObject* ref, bool active);
     MonoObject* InstantiatePrefab(MonoObject* prefabObj, MonoObject* parentTransformObj, bool worldPositionStays);
 	bool GameObjectIsActive(MonoObject* ref);

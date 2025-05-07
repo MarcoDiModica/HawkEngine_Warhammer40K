@@ -49,6 +49,7 @@ public class EnemyControllerWarrior : EnemyController
     public override void Awake()
     {
         //music = gameObject.GetComponent<Audio>();
+        startPosition = gameObject.GetComponent<Transform>().position;
     }
 
     public override void Start()
@@ -273,6 +274,22 @@ public class EnemyControllerWarrior : EnemyController
         CleanupProjectiles();
     }
 
+    public override void ResetEnemyCheckPoint()
+    {
+        if (!isDead)
+        {
+            currentHealth = maxHealth;
+            gameObject.GetComponent<Collider>().SetPosition(startPosition);
+            rb.SetVelocity(Vector3.Zero);
+            currentState = EnemyState.IDLE;
+            isAttacking = false;
+            isShooting = false;
+            hasPlayedDeathSound = false;
+            hasDropped = false;
+        }
+        
+        //anim.SetStandardIdleAnimation();
+    }
     public override void Attack()
     {
         if (isAttacking)

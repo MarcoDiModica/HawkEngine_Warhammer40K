@@ -52,7 +52,7 @@ public class EnemyControllerStalker : EnemyController
 
     public override void Awake()
     {
-
+        startPosition = gameObject.GetComponent<Transform>().position;
     }
 
     public override void Start()
@@ -281,6 +281,27 @@ public class EnemyControllerStalker : EnemyController
         }
     }
 
+    public override void ResetEnemyCheckPoint()
+    {
+        if (!isDead)
+        {
+            currentHealth = maxHealth;
+            currentState = EnemyState.IDLE;
+            rb.SetVelocity(Vector3.Zero);
+            anim.SetIdleAnimation();
+            isStunned = false;
+            hasPlayedDeathSound = false;
+            hasDropped = false;
+            dodgewindow = false;
+            hasPounce = true;
+            isPouncing = false;
+            lictorMesh.SetActive(true);
+            
+
+            gameObject.GetComponent<Collider>().SetPosition(startPosition);
+        }
+        
+    }
     public override void Attack()
     {
         //Engineson.print("Melee attack executed!");

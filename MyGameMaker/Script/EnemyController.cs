@@ -21,7 +21,7 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     public bool isStunned = false;
     protected float stunDuration = 2.0f;
     protected float stunTimer = 0.0f;
-    protected bool isDead = false;
+    public bool isDead = false;
     protected bool isAttacking = false;
     protected bool isShooting = false;
     protected bool isFootstepPlaying = false;
@@ -35,6 +35,8 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected Vector3 moveDirection;
     protected float currentRotationAngle;
 
+    public Vector3 startPosition;
+
     protected Pathfinding pathfinder;
     protected List<Vector3> chasePath;
     protected int chaseIndex;
@@ -44,6 +46,7 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected const float cellSize = 1f;
     public abstract void Start();
     public abstract void Update(float deltaTime);
+    public abstract void ResetEnemyCheckPoint();
     public abstract void Attack();
     public abstract void TakeDamage(float damage);
     public float Lerp(float start, float end, float t)

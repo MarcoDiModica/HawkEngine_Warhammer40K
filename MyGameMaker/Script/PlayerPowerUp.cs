@@ -6,10 +6,10 @@ public class PlayerPowerUp : MonoBehaviour
 {
     private PlayerController playerController;
 
-    private bool hasMedicaeStimm = false;
-    private bool hasAmmunitionBlessing = false;
-    private bool hasMagnet = false;
-    private bool hasPiercingBullets = false;
+    public bool hasMedicaeStimm = false;
+    public bool hasAmmunitionBlessing = false;
+    public bool hasMagnet = false;
+    public bool hasPiercingBullets = false;
     private float medicaeStimmDuration = 5.0f;
     private float medicaeStimmTimer = 0.0f;
     private float ammunitionBlessingDuration = 5.0f;

@@ -28,8 +28,8 @@ public class Boltgun : BaseWeapon
     private float hitRayLength = 1f;
 
     private ShakeManager shakeManager;
-    public float shakeIntensity = 0.1f;
-    public float shakeDuration = 0.1f;
+    public float shakeIntensity = 0.15f;
+    public float shakeDuration = 0.2f;
 
     public override void Awake()
     {

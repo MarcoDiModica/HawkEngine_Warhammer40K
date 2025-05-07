@@ -61,6 +61,9 @@ public class EnemyControllerMelee : EnemyController
     private float avoidTimeLimit = 1.0f;
     private static readonly Random _rng = new Random();
 
+    private float deathTimer = 0f;
+    private float deathCooldown = 2f;
+
 
     private Vector3 GetDodgeDirection(Vector3 forward)
     {
@@ -389,7 +392,14 @@ public class EnemyControllerMelee : EnemyController
                     Audio.Stop(SFX_FOOTSTEP);
                     isFootstepPlaying = false;
                 }
-
+                if (anim.isAnimFinished)
+                {
+                    deathTimer += deltaTime;
+                    if (deathTimer >= deathCooldown)
+                    {
+                        Engineson.Destroy(gameObject);
+                    }
+                }
                 hasDropped = true;
                 collider.SetActive(false);
                 break;

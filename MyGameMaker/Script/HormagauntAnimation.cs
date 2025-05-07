@@ -6,6 +6,7 @@ public class HormagauntAnimation : MonoBehaviour
 {
     private SkeletalAnimation hormagauntesk;
     int animIndex = 0;
+    public bool isAnimFinished = false;
 
     public override void Awake()
     {
@@ -27,9 +28,10 @@ public class HormagauntAnimation : MonoBehaviour
     {
         if (hormagauntesk.GetAnimationIndex() != 12)
         {
-            if (hormagauntesk.GetAnimationTime() >= hormagauntesk.GetAnimationLength() - 1.0f)
+            if (hormagauntesk.GetAnimationTime() >= hormagauntesk.GetAnimationLength() - 1.0f && !isAnimFinished)
             {
                 hormagauntesk.SetAnimationPlayState(false);
+                isAnimFinished = true;
             }
         }
     }
@@ -41,6 +43,7 @@ public class HormagauntAnimation : MonoBehaviour
         {
             hormagauntesk.SetAnimation(12);
             hormagauntesk.SetAnimationSpeed(1.0f);
+            isAnimFinished = false;
         }
     }
 
@@ -49,6 +52,7 @@ public class HormagauntAnimation : MonoBehaviour
         hormagauntesk.SetAnimationPlayState(true);
         Random rand = new Random();
         int attackIndex = rand.Next(1, 4);
+        isAnimFinished = false;
         switch (attackIndex)
         {
             case 1:
@@ -76,6 +80,7 @@ public class HormagauntAnimation : MonoBehaviour
             hormagauntesk.SetAnimationPlayState(true);
             hormagauntesk.SetAnimation(5);
             hormagauntesk.SetAnimationSpeed(0.9f);
+            isAnimFinished = false;
         }
     }
 
@@ -86,6 +91,7 @@ public class HormagauntAnimation : MonoBehaviour
         {
             hormagauntesk.SetAnimation(15);
             hormagauntesk.SetAnimationSpeed(1.0f);
+            isAnimFinished = false;
         }
     }
 
@@ -96,6 +102,7 @@ public class HormagauntAnimation : MonoBehaviour
         {
             hormagauntesk.SetAnimation(12);
             hormagauntesk.SetAnimationSpeed(1.0f);
+            isAnimFinished = false;
         }
     }
 
@@ -106,6 +113,7 @@ public class HormagauntAnimation : MonoBehaviour
         {
             hormagauntesk.SetAnimation(13);
             hormagauntesk.SetAnimationSpeed(1.0f);
+            isAnimFinished = false;
         }
     }
 
@@ -116,6 +124,7 @@ public class HormagauntAnimation : MonoBehaviour
         {
             hormagauntesk.SetAnimation(14);
             hormagauntesk.SetAnimationSpeed(1.0f);
+            isAnimFinished = false;
         }
     }
 
@@ -126,6 +135,7 @@ public class HormagauntAnimation : MonoBehaviour
         {
             hormagauntesk.SetAnimation(11);
             hormagauntesk.SetAnimationSpeed(1.5f);
+            isAnimFinished = false;
         }
     }
     public void SetHitAnimation()
@@ -133,6 +143,7 @@ public class HormagauntAnimation : MonoBehaviour
         hormagauntesk.SetAnimationPlayState(true);
         Random rand = new Random();
         int hitIndex = rand.Next(1, 4);
+        isAnimFinished = false;
         switch (hitIndex)
         {
             case 1:

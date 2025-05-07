@@ -89,7 +89,7 @@ public class EnemyControllerStalker : EnemyController
             return;
         }
 
-        anim = GameObject.Find("LictorMesh").GetComponent<LictorAnimation>();
+        anim = gameObject.GetChild("LictorMesh").GetComponent<LictorAnimation>();
         if (anim == null)
         {
             Engineson.print("ERROR: LictorAnimation requires SkeletalANimation component");

@@ -81,7 +81,7 @@ public class EnemyControllerWarrior : EnemyController
             return;
         }
 
-        //anim = GameObject.Find("TyranidWarriorMesh").GetComponent<TyranidWarriorAnimation>();
+        //anim = gameObject.GetChild("TyranidWarriorMesh").GetComponent<TyranidWarriorAnimation>();
         //if (anim == null)
         //{
         //    Engineson.print("ERROR: TyranidWarriorAnimation requires SkeletalANimation component");

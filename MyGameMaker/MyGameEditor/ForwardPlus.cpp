@@ -167,6 +167,14 @@ void ForwardPlusLighting::CollectLights(const std::vector<GameObject*>& gameObje
 	}
 
 	// Si no hay luz direccional, dejamos la luz por defecto
+	if (!foundDirectional) {
+		directionalLight.direction = glm::vec4(0.0f, -1.0f, 0.0f, 1.0f);
+		directionalLight.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+		directionalLight.castShadow = 0;
+		directionalLight.shadowMapIndex = 0;
+		directionalLight.useCascades = 0;
+		directionalLight.numCascades = 0;
+	}
 }
 
 void ForwardPlusLighting::UpdateLights() {

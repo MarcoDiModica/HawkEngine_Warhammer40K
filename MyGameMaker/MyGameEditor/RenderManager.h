@@ -9,7 +9,6 @@
 #include "GPUDrivenRenderer.h"
 #include "ForwardPlus.h"
 
-// Clave compuesta para agrupar instancias por malla y material
 struct MeshMaterialKey {
 	uint32_t meshIndex;
 	uint32_t materialIndex;
@@ -19,7 +18,6 @@ struct MeshMaterialKey {
 	}
 };
 
-// Función hash para la clave compuesta
 namespace std {
 	template<>
 	struct hash<MeshMaterialKey> {
@@ -44,39 +42,50 @@ struct RenderStatistics {
 class RenderManager {
 public:
 	static RenderManager& GetInstance();
+	
 	bool Initialize();
 	void Shutdown();
+	
 	void BeginFrame();
 	void EndFrame();
+	
 	void SubmitGameObject(GameObject* gameObject);
-	void RenderDebugQuad();
+	
 	void RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
 	void RenderFromCamera(CameraComponent* camera);
+	
 	void SetWindowSize(int width, int height);
 	void SetUseForwardPlus(bool enable) { useForwardPlus = enable; }
 	void SetUseGPUCulling(bool enable);
 	void SetUseOcclusionCulling(bool enable);
+	
 	const RenderStatistics& GetStatistics() const { return stats; }
+
 private:
 	RenderManager() = default;
 	~RenderManager() = default;
 	RenderManager(const RenderManager&) = delete;
 	RenderManager& operator=(const RenderManager&) = delete;
+	
 	bool InitializeShaders();
+	
 	void ProcessGameObject(GameObject* gameObject);
+	
 	void CreateInstanceGroups();
+	
 	void BeginGPUQuery();
 	void EndGPUQuery();
+	
 	float GetGPUTimeMs();
 
-	GLuint bindlessPBRShader = 0;
-	GLuint bindlessUnlitShader = 0; // Añadido para UNLIT
+	GLuint pbrShader = 0;
+	GLuint unlitShader = 0;
 	GLuint defaultVAO = 0;
-	int windowWidth = 1280;
-	int windowHeight = 720;
+	int windowWidth = 1920;
+	int windowHeight = 1080;
+
 	std::vector<GameObject*> queuedObjects;
 
-	// Modificado para usar la clave compuesta mesh+material
 	std::unordered_map<MeshMaterialKey, std::vector<GPUInstance>> instanceGroups;
 
 	bool useForwardPlus = true;

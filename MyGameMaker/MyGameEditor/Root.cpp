@@ -1131,7 +1131,7 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 
 		auto shaderComponent = go->AddComponent<ShaderComponent>();
 		shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-		shaderComponent->SetShaderType(ShaderType::UNLIT); //cambiar luego
+		shaderComponent->SetShaderType(ShaderType::PBR);
 
 		std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 		const auto& vertices = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData;

@@ -47,7 +47,7 @@ bool RenderManager::Initialize() {
 	}
 
 	if (!InitializeShaders()) {
-		LOG(LogType::LOG_ERROR, "Error: No se pudieron inicializar shaders bindless");
+		LOG(LogType::LOG_ERROR, "Error: No se pudieron inicializar shaders");
 		return false;
 	}
 
@@ -66,8 +66,8 @@ void RenderManager::Shutdown() {
 
 	defaultVAO = 0;
 	timeQueries[0] = timeQueries[1] = timeQueries[2] = 0;
-	bindlessPBRShader = 0;
-	bindlessUnlitShader = 0;
+	pbrShader = 0;
+	unlitShader = 0;
 
 	queuedObjects.clear();
 	instanceGroups.clear();
@@ -110,17 +110,6 @@ void RenderManager::SubmitGameObject(GameObject* gameObject) {
 	}
 }
 
-void RenderManager::RenderDebugQuad() {
-	// Usar el shader debug
-	GLuint debugShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::DEBUG);
-	glUseProgram(debugShader);
-
-	// Renderizar un quad simple
-	glBindVertexArray(defaultVAO);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glBindVertexArray(0);
-}
-
 void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
 	if (queuedObjects.empty()) return;
 
@@ -140,36 +129,6 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 	CreateInstanceGroups();
 
 	GPUDrivenRenderer::GetInstance().PrepareDrawCommands(viewMatrix, projMatrix, cameraPos);
-
-	// Configuración para el shader PBR
-	if (bindlessPBRShader != 0) {
-		glUseProgram(bindlessPBRShader);
-
-		// Activar modo bindless
-		glUniform1i(glGetUniformLocation(bindlessPBRShader, "useBindlessMode"), 1);
-
-		// Configurar forward plus si es necesario
-		if (useForwardPlus) {
-			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3,
-				ForwardPlusLighting::GetInstance().GetPointLightBuffer());
-			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4,
-				ForwardPlusLighting::GetInstance().GetDirectionalLightBuffer());
-			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 5,
-				ForwardPlusLighting::GetInstance().GetLightGridBuffer());
-			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 6,
-				ForwardPlusLighting::GetInstance().GetLightIndicesBuffer());
-
-			glUniform1i(glGetUniformLocation(bindlessPBRShader, "useForwardPlus"), useForwardPlus ? 1 : 0);
-			glUniform2i(glGetUniformLocation(bindlessPBRShader, "screenSize"), windowWidth, windowHeight);
-			glUniform1i(glGetUniformLocation(bindlessPBRShader, "tileSize"),
-				ForwardPlusLighting::GetInstance().GetTileSize());
-		}
-
-		glm::vec3 viewPos = glm::vec3(glm::inverse(viewMatrix)[3]);
-		glUniform3fv(glGetUniformLocation(bindlessPBRShader, "viewPos"), 1, glm::value_ptr(viewPos));
-
-		glUseProgram(0);
-	}
 
 	GPUDrivenRenderer::GetInstance().RenderAll(viewMatrix, projMatrix, cameraPos);
 
@@ -207,18 +166,18 @@ void RenderManager::SetUseOcclusionCulling(bool enable) {
 }
 
 bool RenderManager::InitializeShaders() {
-	bindlessPBRShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::BINDLESS_PBR);
-	if (bindlessPBRShader == 0) {
-		LOG(LogType::LOG_WARNING, "Warning: Shader bindless PBR no encontrado en ShaderManager");
+	pbrShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::PBR);
+	if (pbrShader == 0) {
+		LOG(LogType::LOG_WARNING, "Warning: Shader PBR no encontrado en ShaderManager");
 	}
 
-	bindlessUnlitShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::UNLIT);
-	if (bindlessUnlitShader == 0) {
-		LOG(LogType::LOG_ERROR, "Error: Shader UNLIT no encontrado en ShaderManager");
+	unlitShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::UNLIT);
+	if (unlitShader == 0) {
+		LOG(LogType::LOG_ERROR, "Error: UNLIT no encontrado en ShaderManager");
 		return false;
 	}
 
-	return bindlessUnlitShader != 0; 
+	return unlitShader != 0;
 }
 
 void RenderManager::ProcessGameObject(GameObject* gameObject) {

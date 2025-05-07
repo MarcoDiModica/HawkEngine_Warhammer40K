@@ -26,7 +26,7 @@ public class PlayerCamera : MonoBehaviour
     private bool isDashingCamera = false;
 
     public double originalFOV = 45.0;
-    public float dashFOV = 35.0f;
+    private float dashFOV = 40.0f;
     private double currentFOV;
     private double targetFOV;
     private double fovVelocity = 0;
@@ -255,7 +255,7 @@ public class PlayerCamera : MonoBehaviour
         float rightComponent = Vector3.Dot(flattenedDash, camRight);
 
         Vector3 offsetDir = camForward * forwardComponent + camRight * rightComponent;
-        dashOffset = Vector3.Normalize(offsetDir) * 4.0f; // Puedes ajustar la intensidad
+        dashOffset = Vector3.Normalize(offsetDir) * 1.0f; // Puedes ajustar la intensidad
 
         dashOffsetTimer = 0f;
         isDashingCamera = true;

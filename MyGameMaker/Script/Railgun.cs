@@ -32,7 +32,7 @@ public class Railgun : BaseWeapon
     private float maxLifetime = 1.5f;
 
     private ShakeManager shakeManager;
-    public float shakeIntensity = 0.5f;
+    public float shakeIntensity = 0.4f;
     public float shakeDuration = 0.25f;
     public enum RailgunMode
     {

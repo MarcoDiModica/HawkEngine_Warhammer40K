@@ -25,7 +25,7 @@ public class Shotgun : BaseWeapon
     private float hitRayLength = 1f;
 
     private ShakeManager shakeManager;
-    public float shakeIntensity = 2.0f;
+    public float shakeIntensity = 0.40f;
     public float shakeDuration = 0.25f;
     public override void Awake()
     {

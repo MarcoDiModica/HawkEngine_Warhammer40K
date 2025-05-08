@@ -477,11 +477,11 @@ void GPUDrivenRenderer::RenderPBRBatch(
 	shader->Bind();
 	shader->SetUniformMat4("view", viewMatrix);
 	shader->SetUniformMat4("projection", projMatrix);
-	shader->SetUniformVec3("u_cameraPosition", cameraPos);
+	shader->SetUniformVec3("cameraPos", cameraPos);
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
 
-	bindlessErrorDetected = false;
+	bindlessErrorDetected = true;
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
 		uint32_t meshIndex = batch.meshIndices[i];
 		uint32_t materialIndex = batch.materialIndices[i];

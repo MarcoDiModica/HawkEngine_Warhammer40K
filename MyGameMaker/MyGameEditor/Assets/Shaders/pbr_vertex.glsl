@@ -24,10 +24,12 @@ layout(std430, binding = 0) readonly buffer InstanceBuffer {
 
 uniform mat4 view;
 uniform mat4 projection;
+uniform vec3 cameraPos;
 uniform int instanceOffset;
 uniform float heightScale;
 uniform int u_HasHeightMap;
 uniform sampler2D heightMap;
+
 
 out VS_OUT {
     vec3 FragPos;
@@ -50,10 +52,8 @@ void main() {
     vs_out.Tangent = normalize(normalMatrix * tangent);
     vs_out.Bitangent = normalize(normalMatrix * bitangent);
     vs_out.TBN = mat3(vs_out.Tangent, vs_out.Bitangent, vs_out.Normal);
-    
-    mat3 viewRotation = mat3(view);
-    vec3 viewTranslation = vec3(view[3]);
-    vs_out.CameraPos = -transpose(viewRotation) * viewTranslation;
+
+    vs_out.CameraPos = cameraPos;
     
     vec3 positionOffset = position;
     

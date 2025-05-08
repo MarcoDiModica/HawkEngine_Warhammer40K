@@ -65,8 +65,8 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	//resourceManager->LoadResources(); // Esto no se mutea
-	//resourceManager->CreateCube(); // Esto no se mutea
+	resourceManager->LoadResources(); // Esto no se mutea
+	resourceManager->CreateCube(); // Esto no se mutea
 
 	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
 
@@ -926,6 +926,11 @@ bool Root::ParentGameObjectPreserve(GameObject& child, GameObject& father) {
 std::shared_ptr<GameObject> Root::FindGOByName(std::string name) {
     
     return SceneManagement->FindGOByName(name);
+}
+
+std::vector<GameObject*> Root::FindGOsByTag(std::string tag) {
+
+	return SceneManagement->FindGOsByTag(tag);
 }
 
 void Root::CreateGameplayUI()

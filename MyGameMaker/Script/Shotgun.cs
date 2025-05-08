@@ -27,6 +27,8 @@ public class Shotgun : BaseWeapon
     private ShakeManager shakeManager;
     public float shakeIntensity = 0.40f;
     public float shakeDuration = 0.25f;
+    private bool isReloading = false;
+    private float reloadTimer = 0.0f;
     public override void Awake()
     {
 
@@ -60,6 +62,16 @@ public class Shotgun : BaseWeapon
     public override void Update(float deltaTime)
     {
         timeSinceLastShot += deltaTime;
+
+        if (isReloading)
+        {
+            reloadTimer += deltaTime;
+            if (reloadTimer >= reloadTime)
+            {
+                isReloading = false;
+                reloadTimer = 0.0f;
+            }
+        }
 
         for (int i = bulletsObjects.Count - 1; i >= 0; i--)
         {
@@ -144,7 +156,7 @@ public class Shotgun : BaseWeapon
 
     public override void Shoot()
     {
-        if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence)
+        if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence && !isReloading)
         {
             shakeManager.ApplyShake(shakeIntensity, shakeDuration);
 
@@ -176,7 +188,7 @@ public class Shotgun : BaseWeapon
                 Vector3 direction = Vector3.Normalize(Vector3.Transform(baseDirection, rotationMatrix));
 
                 // Posici�n inicial del proyectil
-                Vector3 localOffset = new Vector3(0.0f, 2.5f, 0.5f);
+                Vector3 localOffset = new Vector3(-0.9f, 2.5f, 2f);
                 Vector3 bulletStart = transform.position +
                                       (transform.right * localOffset.X) +
                                       (transform.up * localOffset.Y) +
@@ -212,21 +224,21 @@ public class Shotgun : BaseWeapon
 
     public override void Reload()
     {
-        if (currentTotalAmmo > 0)
+        if (currentTotalAmmo > 0 && currentMagazineAmmo != magazineSize)
         {
+            isReloading = true;
             int audioo = Audio.PlayOneShot(shotgunReload);
-
-            if (currentTotalAmmo >= magazineSize)
+            if (currentMagazineAmmo + currentTotalAmmo >= magazineSize)
             {
+                currentTotalAmmo -= magazineSize - currentMagazineAmmo;
                 currentMagazineAmmo = magazineSize;
-                currentTotalAmmo = currentTotalAmmo - magazineSize;
             }
             else
             {
-                currentMagazineAmmo = currentTotalAmmo;
+                currentMagazineAmmo += currentTotalAmmo;
                 currentTotalAmmo = 0;
             }
-            currentTotalAmmo -= magazineSize - currentMagazineAmmo;
+
             Engineson.print("Shotgun reloaded");
             Engineson.print($"Current ammo: {currentTotalAmmo}");
         }

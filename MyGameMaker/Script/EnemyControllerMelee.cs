@@ -71,6 +71,7 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Awake()
     {
+
     }
 
     public override void Start()
@@ -117,6 +118,8 @@ public class EnemyControllerMelee : EnemyController
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Melee";
+
+        startPosition = enemyTransform.position;
 
         pathfinder = new Pathfinding();
         pathfinder.UpdateGridOrigin(enemyTransform.position);
@@ -440,6 +443,27 @@ public class EnemyControllerMelee : EnemyController
         }
 
         return avgVelocity / smoothedVelocity.Count;
+    }
+
+    public override void ResetEnemyCheckPoint()
+    {
+        if (!isDead)
+        {
+            currentHealth = maxHealth;
+            currentState = EnemyState.IDLE;
+            isStunned = false;
+            isAttacking = false;
+            isShooting = false;
+            isFootstepPlaying = false;
+            hasStoppedFootsteps = false;
+            hasDropped = false;
+            hasLeap = true;
+            leapTimer = 0f;
+            leapDirection = Vector3.Zero;
+            collider.SetActive(true);
+            gameObject.GetComponent<Collider>().SetPosition(startPosition);
+        }
+        
     }
 
     public override void Attack()

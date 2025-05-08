@@ -69,6 +69,8 @@ public:
 
     std::shared_ptr<GameObject> FindGOByName(std::string name);
 
+    std::vector<GameObject*> FindGOsByTag(std::string tag);
+
     std::shared_ptr<Scene> currentScene = nullptr;
 
     std::shared_ptr<GameObject> mainCamera = nullptr;

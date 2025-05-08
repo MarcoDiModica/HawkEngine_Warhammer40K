@@ -98,18 +98,18 @@ public class PlayerAnimations : MonoBehaviour
     public void SetRunningToShootRunningAnimation()
     {
         esk.TransitionAnimations(6, 8, 0.1f);
-        esk.SetAnimationSpeed(1f);
+        esk.SetAnimationSpeed(3f);
     }
     public void SetWalkAnimation()  
     {
         esk.TransitionAnimations(5, 9, 0.1f);
-        esk.SetAnimationSpeed(1.5f);
+        esk.SetAnimationSpeed(2.0f);
 
     }
     public void SetRunAnimation()
     {
         esk.TransitionAnimations(9, 6, 0.1f);
-        esk.SetAnimationSpeed(1.2f);
+        esk.SetAnimationSpeed(2.0f);
     }
 
 

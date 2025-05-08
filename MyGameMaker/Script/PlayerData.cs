@@ -2,6 +2,9 @@
 
 public class PlayerData
 {
+
+    private static PlayerData instance = null;
+
     float health;
     float healthTemp;
     float maxHealth = 100;
@@ -15,6 +18,9 @@ public class PlayerData
     public bool GodMode = false;
     public float blackRageSpeed = 0f;
     public float stimmSpeed = 0f;
+    public bool hasBoltgun = true;
+    public bool hasShotgun = false;
+    public bool hasRailgun = false;
     public bool BoltgunUpgraded = false;
     public bool ShotgunUpgraded = false;
     public bool RailgunUpgraded = false;
@@ -22,10 +28,22 @@ public class PlayerData
 
 
 
-    public PlayerData()
+    private PlayerData()
     {
-        health = 100;
-        healthTemp = 50;
+        health = maxHealth;
+        healthTemp = maxHealthTemp;
+    }
+
+    public static PlayerData Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new PlayerData();
+            }
+            return instance;
+        }
     }
 
     public void TakeDamage(float damage)
@@ -63,6 +81,21 @@ public class PlayerData
         }
         this.health = health;
         Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
+    }
+
+    public void SetTempHealth(float health)
+    {
+        if (health > maxHealthTemp)
+        {
+            healthTemp = maxHealthTemp;
+            return;
+        }
+        else if (health < 0)
+        {
+            healthTemp = 0;
+            return;
+        }
+        healthTemp = health;
     }
 
     public void AddHealth(float health)

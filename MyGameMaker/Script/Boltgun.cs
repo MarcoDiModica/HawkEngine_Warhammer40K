@@ -31,6 +31,8 @@ public class Boltgun : BaseWeapon
     public float shakeIntensity = 0.15f;
     public float shakeDuration = 0.2f;
 
+    private bool isReloading = false;
+    private float reloadTimer = 0.0f;
     public override void Awake()
     {
         
@@ -65,6 +67,16 @@ public class Boltgun : BaseWeapon
     {
 
         timeSinceLastShot += deltaTime;
+
+        if (isReloading)
+        {
+            reloadTimer += deltaTime;
+            if (reloadTimer >= reloadTime)
+            {
+                isReloading = false;
+                reloadTimer = 0.0f;
+            }
+        }
 
         for (int i = bulletsObjects.Count - 1; i >= 0; i--)
         {
@@ -153,7 +165,7 @@ public class Boltgun : BaseWeapon
     public override void Shoot()
     {
 
-        if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence)
+        if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence && !isReloading)
         {
             shakeManager.ApplyShake(shakeIntensity, shakeDuration);
             timeSinceLastShot = 0f;
@@ -162,13 +174,14 @@ public class Boltgun : BaseWeapon
                 currentMagazineAmmo--;
 
             int audio = Audio.PlayOneShot(boltgunShot);
-            Vector3 localOffset = new Vector3(0.0f, 2.5f, 0.5f); // Y = altura, Z = hacia adelante, X = lateral si se desea
+            Vector3 localOffset = new Vector3(-0.9f, 2.5f, 0.5f); // Y = altura, Z = hacia adelante, X = lateral si se desea
 
             Vector3 bulletStart = transform.position +
                                   (transform.right * localOffset.X) +
                                   (transform.up * localOffset.Y) +
                                   (transform.forward * localOffset.Z);
             bulletStart.Y += 0.5f;
+            
             Vector3 direction = Vector3.Normalize(transform.forward);
 
             // Calcular rotaci�n desde la direcci�n (LookAt-like)
@@ -200,20 +213,21 @@ public class Boltgun : BaseWeapon
 
     public override void Reload()
     {
-        if (currentTotalAmmo > 0)
+        if (currentTotalAmmo > 0 && currentMagazineAmmo != magazineSize)
         {
-           int audioo = Audio.PlayOneShot(boltgunReload);
-            if (currentTotalAmmo >= magazineSize)
+            isReloading = true;
+            int audioo = Audio.PlayOneShot(boltgunReload);
+            if (currentMagazineAmmo + currentTotalAmmo >= magazineSize)
             {
+                currentTotalAmmo -= magazineSize - currentMagazineAmmo;
                 currentMagazineAmmo = magazineSize;
-                currentTotalAmmo = currentTotalAmmo - magazineSize;
             }
-            else 
+            else
             {
-                currentMagazineAmmo = currentTotalAmmo;
+                currentMagazineAmmo += currentTotalAmmo;
                 currentTotalAmmo = 0;
             }
-             currentTotalAmmo -= magazineSize - currentMagazineAmmo;
+
             Engineson.print("Boltgun reloaded");
             Engineson.print($"Current ammo: {currentTotalAmmo}");
         }

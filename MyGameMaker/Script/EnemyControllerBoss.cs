@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using HawkEngine;
 
 public class EnemyControllerBoss : EnemyController
@@ -16,11 +17,28 @@ public class EnemyControllerBoss : EnemyController
 
     private List<GameObject> clawHurtboxObjects = new List<GameObject>();
 
+    private Random rng = new Random();
+
     //audio
-//     private AudioSource music;
-//     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
-//     private AudioClip musicClip;
-   
+    //     private AudioSource music;
+    //     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+    //     private AudioClip musicClip;
+
+    private List<string> roarClips = new List<string>
+    {
+        "Assets/Audio/Mawloc_Growl_1.wav",
+        "Assets/Audio/Mawloc_Growl_2.wav",
+        "Assets/Audio/Mawloc_Growl_3.wav",
+
+    };
+
+    private const string BurrowClip = "Assets/Audio/Mawloc_Underground_move.wav";
+    private const string UnburrowClip = "Assets/Audio/Mawloc_Underground_Attack.wav";
+    private const string SlamClip = "Assets/Audio/Mawloc_Slam_Atack.wav";
+    private const string ClawClip = "Assets/Audio/Mawloc_Claw_Attack.wav";
+    private const string AcidClip = "Assets/Audio/Mawloc_Acid_Attack.wav";
+    private const string DeathClip = "Assets/Audio/Mawloc_Death.wav";
+
     //stats
     bool isCombatMusicPlaying = false;
     private float health = 1500.0f;
@@ -164,7 +182,9 @@ public class EnemyControllerBoss : EnemyController
                             if (isBuried && timer >= unburrowingAttackCooldown)
                             {
                                 UnburrowingAttack();
-                                timer = 0.0f;
+                                
+
+                            timer = 0.0f;
                             }
                             else if (!isBuried && timer >= postUnburrowingAttackDelay)
                             {
@@ -174,6 +194,7 @@ public class EnemyControllerBoss : EnemyController
                                     {
                                         Burrow();
                                         timer = 0.0f;
+                                        
                                     }
                                 }
                                 else
@@ -305,6 +326,10 @@ public class EnemyControllerBoss : EnemyController
             }
     }
 
+    public override void ResetEnemyCheckPoint()
+    {
+        
+    }
     override public void OnCollisionEnter(GameObject other)
     {
 
@@ -332,11 +357,12 @@ public class EnemyControllerBoss : EnemyController
         if (isDead == false)
         {
             if (playerTransform != null)
-            {
+            {      
                 Engineson.print("Unburrowing Attack");
                 enemyTransform.position = playerTransform.position;
                 collider.SetPosition(playerTransform.position);
             }
+            Audio.PlayOneShot(UnburrowClip);
             attackCount++;
             isBuried = false;
         }
@@ -352,6 +378,8 @@ public class EnemyControllerBoss : EnemyController
                 collider.SetPosition(enemyTransform.position);
                 Engineson.print("Unburrowing Attack Phase 2");
             }
+            Audio.PlayOneShot(UnburrowClip);
+            Engineson.print("PlaySound Attack Phase 2");
             isBuried = false;
         }
     }
@@ -360,6 +388,7 @@ public class EnemyControllerBoss : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(UnburrowClip);
             enemyTransform.position = fixedPositions[2];
             collider.SetPosition(enemyTransform.position);
         }
@@ -370,6 +399,7 @@ public class EnemyControllerBoss : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(SlamClip);
             CreateSlamHurtbox();
             hurtboxDuration = 0.0f;
             isSlamActive = true;
@@ -381,6 +411,7 @@ public class EnemyControllerBoss : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(ClawClip);
             CreateClawHurtbox();
             slamAttackTimer = 0.0f;
         }
@@ -403,6 +434,7 @@ public class EnemyControllerBoss : EnemyController
             var transform = metalSlideObject.GetComponent<Transform>();
             transform.position = spawnPosition;
             transform.SetScale(3, 3, 3);
+            Audio.PlayOneShot(AcidClip);
         }
     }
 
@@ -455,11 +487,31 @@ public class EnemyControllerBoss : EnemyController
         return closestIndex;
     }
 
+    public void Roar()
+    {
+        string selectedRoar = roarClips[rng.Next(roarClips.Count)];
+
+        if (currentPhase == BossPhase.PHASE1)
+        {
+            Audio.SchedulePlay(selectedRoar, 0.25f);
+        }
+        else if (currentPhase == BossPhase.PHASE2)
+        {
+            Audio.SchedulePlay(selectedRoar, 0.5f);
+        }
+        else
+        {
+            Audio.PlayOneShot(selectedRoar);
+        }
+    }
+   
     private void Burrow()
     {
         if (isDead == false)
         {
             Engineson.print("Burrowed");
+            Engineson.print("PlaySound Burrowed");
+            Audio.PlayOneShot(BurrowClip);
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
             collider.SetPosition(enemyTransform.position);
             isBuried = true;
@@ -471,6 +523,7 @@ public class EnemyControllerBoss : EnemyController
         tailController.Die();
         Engineson.Destroy(GetGameObject());
         isDead = true;
+        Audio.PlayOneShot(DeathClip);
         SceneManager.LoadScene("WinScene");
     }
 

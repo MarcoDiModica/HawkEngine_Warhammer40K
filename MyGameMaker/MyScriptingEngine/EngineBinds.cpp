@@ -301,6 +301,47 @@ MonoObject* EngineBinds::GetGameObjectByName(MonoString* name)
     return go ? go->GetSharp() : nullptr;
 }
 
+MonoArray* EngineBinds::GetGameObjectsByTag(MonoString* tag) {
+    // Convert MonoString* to std::string
+    char* tagStr = mono_string_to_utf8(tag);
+    std::string tagCpp(tagStr);
+    mono_free(tagStr);
+
+    // Find all GameObjects with the specified tag
+    std::vector<GameObject*> matchingGameObjects = SceneManagement->FindGOsByTag(tagCpp);
+
+    // Retrieve the MonoClass for GameObject
+    MonoClass* gameObjectClass = mono_class_from_name(
+        MonoManager::GetInstance().GetImage(),
+        "HawkEngine",
+        "GameObject"
+    );
+
+    if (!gameObjectClass) {
+        //Logger::LogError("Failed to find MonoClass for GameObject. Check namespace and class name.");
+        return nullptr;
+    }
+
+    // Create a MonoArray to hold the results
+    MonoArray* resultArray = mono_array_new(
+        mono_domain_get(),
+        gameObjectClass,
+        matchingGameObjects.size()
+    );
+
+    // Populate the MonoArray with GameObjects
+    for (size_t i = 0; i < matchingGameObjects.size(); ++i) {
+        MonoObject* sharpObject = CreateGameObjectSharp(
+            mono_string_new(mono_domain_get(), matchingGameObjects[i]->GetName().c_str()),
+            matchingGameObjects[i]
+        );
+        mono_array_set(resultArray, MonoObject*, i, sharpObject);
+    }
+
+    return resultArray;
+}
+
+
 // Input
 bool EngineBinds::GetKey(int keyID) {
     return InputManagement->GetKey(keyID) == KEY_REPEAT;
@@ -1530,6 +1571,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
+	mono_add_internal_call("HawkEngine.GameObject::FindGameObjectsWithTag", (const void*)GetGameObjectsByTag);
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
     mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)GameObjectSetActive);
     mono_add_internal_call("HawkEngine.GameObject::IsActive", (const void*)GameObjectIsActive);

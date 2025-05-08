@@ -140,9 +140,6 @@ GameObject2:
           offsetSmoothness: 5
           returnDelay: 0.200000003
           dashFOV: 35
-          shakeIntensity: 0.5
-          shakeDuration: 0.100000001
-          shakeRate: 0.100000001
   Children: ~
 GameObject3:
   name: CollisionNextLevel
@@ -194,16 +191,16 @@ GameObject4:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 823.67877197265625
-        - 233.07994079589844
-        - -161.10749816894531
+        - 38.076583862304688
+        - 81.781547546386719
+        - -27.911773681640625
       localRotation:
-        - 92.203909649989924
-        - 6.3566018885129898
-        - -2.719320840311414
+        - 92.203909687571723
+        - 6.3566009729665067
+        - -2.7193205534832949
       localScale:
         - 0.99999982118606567
-        - 1.0000001192092896
+        - 1.0000002384185791
         - 1
     CameraComponent:
       name: CameraComponent
@@ -527,7 +524,6 @@ GameObject7:
       Script4:
         name: PlayerController
         fields:
-          isShootInput: false
           isRunning: false
           canMove: true
       Script5:
@@ -535,15 +531,11 @@ GameObject7:
         fields: ~
       Script6:
         name: Boltgun
-        fields:
-          shakeIntensity: 0.100000001
-          shakeDuration: 0.100000001
+        fields: ~
       Script7:
         name: Shotgun
         fields:
           timeSinceLastShot: 0
-          shakeIntensity: 2
-          shakeDuration: 0.25
       Script8:
         name: GrenadeLauncher
         fields:
@@ -557,8 +549,6 @@ GameObject7:
           isCooling: false
           isRecharged: true
           isReloading: false
-          shakeIntensity: 0.5
-          shakeDuration: 0.25
       Script10:
         name: LaserBeam
         fields:
@@ -707,8 +697,7 @@ GameObject7:
         ScriptComponents:
           Script0:
             name: PlayerAnimations
-            fields:
-              animIndex: 0
+            fields: ~
       Children:
         - name: ROOT
           prefabPath: ""
@@ -12211,9 +12200,9 @@ GameObject19:
       Script0:
         name: AmmunitionBlessing
         fields:
-          floatSpeed: 1.2356838
+          floatSpeed: 0.851133943
           floatHeight: 0.5
-          rotationSpeed: 93.0884018
+          rotationSpeed: 47.1131477
           lifeTime: 10
   Children: ~
 GameObject20:
@@ -12267,9 +12256,9 @@ GameObject20:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.39666951
+          floatSpeed: 0.603026688
           floatHeight: 0.5
-          rotationSpeed: 61.8735809
+          rotationSpeed: 42.7190742
   Children: ~
 GameObject21:
   name: heart_1_1_Instance_Instance
@@ -12347,9 +12336,9 @@ GameObject21:
       Script0:
         name: BlackHeart
         fields:
-          floatSpeed: 1.3833226
+          floatSpeed: 1.65453303
           floatHeight: 0.5
-          rotationSpeed: 45.4719429
+          rotationSpeed: 37.597271
           lifeTime: 10
   Children: ~
 GameObject22:
@@ -12428,9 +12417,9 @@ GameObject22:
       Script0:
         name: BoltgunBullets
         fields:
-          floatSpeed: 0.539972246
+          floatSpeed: 1.40743172
           floatHeight: 0.5
-          rotationSpeed: 88.9193954
+          rotationSpeed: 48.198925
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -12510,9 +12499,9 @@ GameObject23:
       Script0:
         name: ShotgunShells
         fields:
-          floatSpeed: 0.928083599
+          floatSpeed: 1.58883202
           floatHeight: 0.5
-          rotationSpeed: 91.2585144
+          rotationSpeed: 92.4645538
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -12592,9 +12581,9 @@ GameObject24:
       Script0:
         name: ChapterStandard
         fields:
-          floatSpeed: 1.26926351
+          floatSpeed: 0.805488527
           floatHeight: 0.5
-          rotationSpeed: 43.3392944
+          rotationSpeed: 43.8159447
           lifeTime: 10
   Children: ~
 GameObject25:
@@ -12673,9 +12662,9 @@ GameObject25:
       Script0:
         name: MedicaeStimm
         fields:
-          floatSpeed: 1.63749564
+          floatSpeed: 0.821211219
           floatHeight: 0.5
-          rotationSpeed: 45.239254
+          rotationSpeed: 33.3035965
           lifeTime: 10
   Children: ~
 GameObject26:
@@ -12754,9 +12743,9 @@ GameObject26:
       Script0:
         name: PiercingBullets
         fields:
-          floatSpeed: 1.78205407
+          floatSpeed: 1.0523169
           floatHeight: 0.5
-          rotationSpeed: 95.5007935
+          rotationSpeed: 71.0453339
   Children: ~
 GameObject27:
   name: magnet.001_1_1_Instance_Instance
@@ -12834,9 +12823,9 @@ GameObject27:
       Script0:
         name: Magnet
         fields:
-          floatSpeed: 0.77590853
+          floatSpeed: 1.18463397
           floatHeight: 0.5
-          rotationSpeed: 68.3802795
+          rotationSpeed: 35.2061234
           lifeTime: 10
   Children: ~
 GameObject28:
@@ -18748,7 +18737,7 @@ GameObject30:
   prefabPath: Assets\Prefabs\Canvas_HUD.prefab.yaml
   uuid: 13571654134453421469
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -21534,7 +21523,7 @@ GameObject31:
   prefabPath: Assets\Prefabs\Canvas_TitleSM.prefab.yaml
   uuid: 15444793993539794259
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -50981,17 +50970,17 @@ GameObject120:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 99.566314697265625
+            - 93.334243774414062
             - -0.50010383129119873
-            - 181.26480102539062
+            - 177.94050598144531
           localRotation:
             - -90.000014489018881
             - 0
             - 0
           localScale:
             - 1.5312613248825073
-            - 1.5312614440917969
-            - 1.5312614440917969
+            - 1.5312615633010864
+            - 1.5312615633010864
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -51010,12 +50999,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy
       prefabPath: ""
@@ -51030,15 +51023,15 @@ GameObject120:
           localPosition:
             - 119.76363372802734
             - -0.50010114908218384
-            - 176.5953369140625
+            - 184.16181945800781
           localRotation:
             - -90.000014489018881
             - 0
             - 0
           localScale:
             - 1.5312613248825073
-            - 1.5312614440917969
-            - 1.5312614440917969
+            - 1.5312615633010864
+            - 1.5312615633010864
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -51057,12 +51050,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy
       prefabPath: ""
@@ -51104,12 +51101,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy
       prefabPath: ""
@@ -51151,12 +51152,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy
       prefabPath: ""
@@ -51198,12 +51203,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy
       prefabPath: ""
@@ -51245,12 +51254,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy
       prefabPath: ""
@@ -51292,12 +51305,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy
       prefabPath: ""
@@ -51339,12 +51356,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy_copy
       prefabPath: ""
@@ -51386,12 +51407,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy_copy
       prefabPath: ""
@@ -51433,12 +51458,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy_copy
       prefabPath: ""
@@ -51480,12 +51509,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy_copy
       prefabPath: ""
@@ -51527,12 +51560,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy_copy_copy
       prefabPath: ""
@@ -51574,12 +51611,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy_copy_copy_copy
       prefabPath: ""
@@ -51621,12 +51662,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy_copy_copy_copy
       prefabPath: ""
@@ -51668,12 +51713,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy_copy_copy_copy_copy
       prefabPath: ""
@@ -51715,12 +51764,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy_copy_copy_copy_copy
       prefabPath: ""
@@ -51762,12 +51815,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy_copy_copy_copy_copy_copy
       prefabPath: ""
@@ -51809,12 +51866,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
     - name: BarrilDestruible_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
       prefabPath: ""
@@ -51856,12 +51917,16 @@ GameObject120:
           size:
             - 1
             - 1
-            - 1
+            - 2.5
           offset:
             - 0
-            - 0
+            - 1.5
             - 0
           isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
+            fields: ~
       Children: ~
 GameObject121:
   name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
@@ -52032,32 +52097,4 @@ GameObject125:
         - 0
         - 0
       isTrigger: false
-  Children: ~
-GameObject126:
-  name: ShakeManager
-  prefabPath: ""
-  uuid: 9614505548351605332
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    ScriptComponents:
-      Script0:
-        name: ShakeManager
-        fields: ~
   Children: ~

@@ -51,7 +51,7 @@ public:
 	
 	void SubmitGameObject(GameObject* gameObject);
 	
-	void RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
+	void RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos, CameraBase::Plane* frustrumPlanes);
 	void RenderFromCamera(CameraComponent* camera);
 	
 	void SetWindowSize(int width, int height);

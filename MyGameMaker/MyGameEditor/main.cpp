@@ -181,19 +181,6 @@ static void drawFloorGrid(int size, double step) {
 	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
-static void configureCamera() {
-	glm::dmat4 projectionMatrix = Application->camera->projection();
-	glm::dmat4 viewMatrix = Application->camera->view();
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixd(glm::value_ptr(projectionMatrix));
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixd(glm::value_ptr(viewMatrix));
-
-	Application->camera->frustum.Update(projectionMatrix * viewMatrix);
-}
-
 #pragma region UNDO_REDO
 
 const int MAX_UNDO_STATES = 100; 
@@ -514,7 +501,12 @@ static void RenderEditor() {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	configureCamera();
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixd(glm::value_ptr(Application->camera->projection()));
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixd(glm::value_ptr(Application->camera->view()));
+
 	drawFloorGrid(256, 4);
 
 	auto activeScene = Application->root->GetActiveScene();
@@ -588,7 +580,11 @@ static void RenderEditor() {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
 
-	RenderManager::GetInstance().RenderScene(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition());
+	RenderManager::GetInstance().RenderScene(
+		Application->camera->view(), 
+		Application->camera->projection(), 
+		Application->camera->GetTransform().GetPosition(), 
+		Application->camera->GetPlanes());
 
 	RenderManager::GetInstance().EndFrame();
 

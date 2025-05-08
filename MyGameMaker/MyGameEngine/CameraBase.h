@@ -88,4 +88,6 @@ public:
 	FrustumIntersection TestFrustumAABB(const BoundingBox& bbox) const;
 
 	bool IsInsideFrustrum(const BoundingBox& bbox) const;
+
+	Plane* GetPlanes() { return frustum.planes; }
 };

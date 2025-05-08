@@ -1281,6 +1281,11 @@ std::shared_ptr<GameObject> Root::FindGOByName(std::string name) {
     return SceneManagement->FindGOByName(name);
 }
 
+std::shared_ptr<GameObject> Root::FindGOByID(const uint64_t& id) const
+{
+	return SceneManagement->FindGOByID(id);
+}
+
 void Root::CreateGameplayUI()
 {
     auto canvas = CreateGameObject("Canvas_HUD");

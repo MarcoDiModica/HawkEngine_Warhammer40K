@@ -352,3 +352,22 @@ std::shared_ptr<GameObject> SceneManager::FindGOByNameRecursive(const std::strin
     }
     return nullptr;
 }
+
+std::shared_ptr<GameObject> SceneManager::FindGOByID(const uint64_t& id) const
+{
+    return FindGOByIDRecursive(id, currentScene->_children);
+}
+
+std::shared_ptr<GameObject> SceneManager::FindGOByIDRecursive(const uint64_t& id, const std::vector<std::shared_ptr<GameObject>>& gameObjects) const
+{
+    for (const auto& go : gameObjects) {
+		if (go->GetID().GetValue() == id) {
+			return go;
+		}
+		auto found = FindGOByIDRecursive(id, go->GetChildren());
+		if (found) {
+			return found;
+		}
+	}
+	return nullptr;
+}

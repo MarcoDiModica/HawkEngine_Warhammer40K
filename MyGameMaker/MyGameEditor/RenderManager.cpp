@@ -110,7 +110,7 @@ void RenderManager::SubmitGameObject(GameObject* gameObject) {
 	}
 }
 
-void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
+void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos, CameraBase::Plane* frustrumPlanes) {
 	if (queuedObjects.empty()) return;
 
 	for (auto* obj : queuedObjects) {
@@ -128,7 +128,7 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 
 	CreateInstanceGroups();
 
-	GPUDrivenRenderer::GetInstance().PrepareDrawCommands(viewMatrix, projMatrix, cameraPos);
+	GPUDrivenRenderer::GetInstance().PrepareDrawCommands(viewMatrix, projMatrix, cameraPos, frustrumPlanes);
 
 	GPUDrivenRenderer::GetInstance().RenderAll(viewMatrix, projMatrix, cameraPos);
 
@@ -144,8 +144,9 @@ void RenderManager::RenderFromCamera(CameraComponent* camera) {
 	glm::mat4 viewMatrix = camera->view();
 	glm::mat4 projMatrix = camera->projection();
 	glm::vec3 cameraPos = camera->owner->GetTransform()->GetPosition();
+	CameraBase::Plane* frstrumPlanes = camera->GetPlanes();
 
-	RenderScene(viewMatrix, projMatrix, cameraPos);
+	RenderScene(viewMatrix, projMatrix, cameraPos, frstrumPlanes);
 }
 
 void RenderManager::SetWindowSize(int width, int height) {
@@ -218,11 +219,23 @@ void RenderManager::CreateInstanceGroups() {
 		const auto& instances = group.second;
 
 		if (!instances.empty()) {
-			glm::vec4 boundingSphere(0.0f, 0.0f, 0.0f, 1000.0f);
+
+			uint64_t id = instances[0].objectId;
+			std::shared_ptr<GameObject> go = Application->root->FindGOByID(id);
+
+			glm::vec3 min = glm::vec3(0.0f);
+			glm::vec3 max = glm::vec3(0.0f);
+
+			if (go) {
+				min = go->boundingBox().min;
+				max = go->boundingBox().max;
+			}
+			
 			GPUDrivenRenderer::GetInstance().AddInstanceGroup(
 				key.meshIndex,
 				key.materialIndex,
-				boundingSphere,
+				min,
+				max,
 				instances
 			);
 		}

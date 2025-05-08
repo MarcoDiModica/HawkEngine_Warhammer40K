@@ -56,6 +56,10 @@ public:
 
 	std::shared_ptr<GameObject> FindGOByNameRecursive(const std::string& name, const std::vector<std::shared_ptr<GameObject>>& gameObjects) const;
 
+    std::shared_ptr<GameObject> FindGOByID(const uint64_t& id) const;
+
+    std::shared_ptr<GameObject> FindGOByIDRecursive(const uint64_t& id, const std::vector<std::shared_ptr<GameObject>>& gameObjects) const;
+
     //Tag Management
     const std::vector<std::string>& GetTags() const { return tags; }
     void AddTag(const std::string& tag);

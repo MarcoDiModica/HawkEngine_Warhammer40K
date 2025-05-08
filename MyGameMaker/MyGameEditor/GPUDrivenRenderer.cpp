@@ -90,7 +90,8 @@ void GPUDrivenRenderer::EndFrame() {
 void GPUDrivenRenderer::AddInstanceGroup(
 	uint32_t meshIndex,
 	uint32_t materialIndex,
-	const glm::vec4& boundingSphere,
+	const glm::vec3& min,
+	const glm::vec3& max,
 	const std::vector<GPUInstance>& instances) {
 
 	if (instances.empty() || meshIndex >= BindlessManager::GetInstance().GetMeshCount()) {
@@ -108,7 +109,8 @@ void GPUDrivenRenderer::AddInstanceGroup(
 	}
 
 	CullData cullItem;
-	cullItem.boundingSphere = boundingSphere;
+	cullItem.bboxMin = min;
+	cullItem.bboxMax = max;
 	cullItem.drawID = static_cast<uint32_t>(cullData.size());
 	cullItem.meshIndex = meshIndex;
 	cullItem.materialIndex = materialIndex;
@@ -123,7 +125,7 @@ void GPUDrivenRenderer::AddInstanceGroup(
 	cullData.push_back(cullItem);
 }
 
-void GPUDrivenRenderer::PrepareDrawCommands(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
+void GPUDrivenRenderer::PrepareDrawCommands(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos, CameraBase::Plane* frustrumPlanes) {
 	if (cullData.empty()) {
 		LOG(LogType::LOG_INFO, "No hay datos de culling para procesar");
 		return;
@@ -139,7 +141,7 @@ void GPUDrivenRenderer::PrepareDrawCommands(const glm::mat4& viewMatrix, const g
 		ForceIncludeAllObjects();
 	}
 	else if (!useGPUCulling) { //2nd
-		CPUFrustumCulling();
+		CPUFrustumCulling(frustrumPlanes);
 	}
 	else { //1r
 		glUseProgram(cullingShader);
@@ -220,27 +222,79 @@ void GPUDrivenRenderer::SetCullingUniforms(const glm::mat4& viewMatrix, const gl
 		1000.0f);
 
 	if (useFrustumCulling) {
-		SetFrustumPlanes(viewMatrix, projMatrix);
+		//send planes
 	}
 }
 
-void GPUDrivenRenderer::CPUFrustumCulling() {
+CameraBase::FrustumIntersection GPUDrivenRenderer::TestFrustumAABB(glm::vec3 bboxMin, glm::vec3 bboxMax, CameraBase::Plane* frustumPlanes)
+{
+	CameraBase::FrustumIntersection result = CameraBase::FrustumIntersection::INSIDE;
+
+	for (int i = 0; i < 6; i++)
+	{
+		const CameraBase::Plane& plane = frustumPlanes[i];
+
+		glm::vec3 p(bboxMin);
+		if (plane.normal.x >= 0) p.x = bboxMax.x;
+		if (plane.normal.y >= 0) p.y = bboxMax.y;
+		if (plane.normal.z >= 0) p.z = bboxMax.z;
+
+		glm::vec3 n(bboxMax);
+		if (plane.normal.x >= 0) n.x = bboxMin.x;
+		if (plane.normal.y >= 0) n.y = bboxMin.y;
+		if (plane.normal.z >= 0) n.z = bboxMin.z;
+
+		if (plane.distanceToPoint(p) < 0)
+			return CameraBase::FrustumIntersection::OUTSIDE;
+
+		if (plane.distanceToPoint(n) < 0)
+			result = CameraBase::FrustumIntersection::INTERSECT;
+	}
+
+	return result;
+}
+
+void GPUDrivenRenderer::CPUFrustumCulling(CameraBase::Plane* frustumPlanes) {
 	drawCommands.clear();
 	visibleInstanceCount = 0;
+
+	if (!useFrustumCulling || !frustumPlanes) {
+		ForceIncludeAllObjects();
+		return;
+	}
 
 	for (const auto& cullItem : cullData) {
 		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(cullItem.meshIndex);
 		if (!meshData) continue;
 
-		DrawElementsCommand command;
-		command.count = meshData->indexCount;
-		command.instanceCount = cullItem.instanceCount;
-		command.firstIndex = 0;
-		command.baseVertex = 0;
-		command.baseInstance = cullItem.instanceOffset;
+		uint32_t visibleCount = 0;
+		bool anyInstanceVisible = false;
 
-		drawCommands.push_back(command);
-		visibleInstanceCount += cullItem.instanceCount;
+		for (uint32_t i = 0; i < cullItem.instanceCount; ++i) {
+			const GPUInstance* instance = BindlessManager::GetInstance().GetInstanceData(
+				cullItem.instanceOffset + i);
+
+			if (!instance) continue;
+
+			CameraBase::FrustumIntersection result = TestFrustumAABB(cullItem.bboxMin, cullItem.bboxMax, frustumPlanes);
+
+			if (result != CameraBase::FrustumIntersection::OUTSIDE) {
+				visibleCount++;
+				anyInstanceVisible = true;
+			}
+		}
+
+		if (anyInstanceVisible) {
+			DrawElementsCommand command;
+			command.count = meshData->indexCount;
+			command.instanceCount = visibleCount;
+			command.firstIndex = 0;
+			command.baseVertex = 0;
+			command.baseInstance = cullItem.instanceOffset;
+
+			drawCommands.push_back(command);
+			visibleInstanceCount += visibleCount;
+		}
 	}
 
 	if (!drawCommands.empty()) {
@@ -248,57 +302,9 @@ void GPUDrivenRenderer::CPUFrustumCulling() {
 			drawCommands.size() * sizeof(DrawElementsCommand),
 			drawCommands.data());
 	}
-}
 
-void GPUDrivenRenderer::SetFrustumPlanes(const glm::mat4& view, const glm::mat4& proj) {
-	glm::mat4 vp = proj * view;
-
-	glm::vec4 frustumPlanes[6];
-
-	// Left plane
-	frustumPlanes[0].x = vp[0][3] + vp[0][0];
-	frustumPlanes[0].y = vp[1][3] + vp[1][0];
-	frustumPlanes[0].z = vp[2][3] + vp[2][0];
-	frustumPlanes[0].w = vp[3][3] + vp[3][0];
-
-	// Right plane
-	frustumPlanes[1].x = vp[0][3] - vp[0][0];
-	frustumPlanes[1].y = vp[1][3] - vp[1][0];
-	frustumPlanes[1].z = vp[2][3] - vp[2][0];
-	frustumPlanes[1].w = vp[3][3] - vp[3][0];
-
-	// Bottom plane
-	frustumPlanes[2].x = vp[0][3] + vp[0][1];
-	frustumPlanes[2].y = vp[1][3] + vp[1][1];
-	frustumPlanes[2].z = vp[2][3] + vp[2][1];
-	frustumPlanes[2].w = vp[3][3] + vp[3][1];
-
-	// Top plane
-	frustumPlanes[3].x = vp[0][3] - vp[0][1];
-	frustumPlanes[3].y = vp[1][3] - vp[1][1];
-	frustumPlanes[3].z = vp[2][3] - vp[2][1];
-	frustumPlanes[3].w = vp[3][3] - vp[3][1];
-
-	// Near plane
-	frustumPlanes[4].x = vp[0][3] + vp[0][2];
-	frustumPlanes[4].y = vp[1][3] + vp[1][2];
-	frustumPlanes[4].z = vp[2][3] + vp[2][2];
-	frustumPlanes[4].w = vp[3][3] + vp[3][2];
-
-	// Far plane
-	frustumPlanes[5].x = vp[0][3] - vp[0][2];
-	frustumPlanes[5].y = vp[1][3] - vp[1][2];
-	frustumPlanes[5].z = vp[2][3] - vp[2][2];
-	frustumPlanes[5].w = vp[3][3] - vp[3][2];
-
-	// Normalizar planos
-	for (auto & frustumPlane : frustumPlanes) {
-		float length = glm::length(glm::vec3(frustumPlane));
-		frustumPlane /= length;
-	}
-
-	glUniform4fv(glGetUniformLocation(cullingShader, "u_frustum.planes"),
-		6, glm::value_ptr(frustumPlanes[0]));
+	LOG(LogType::LOG_INFO, "Frustum Culling en CPU: %d instancias visibles de %d objetos",
+		visibleInstanceCount, cullData.size());
 }
 
 void GPUDrivenRenderer::BatchCommandsByShaderType() {

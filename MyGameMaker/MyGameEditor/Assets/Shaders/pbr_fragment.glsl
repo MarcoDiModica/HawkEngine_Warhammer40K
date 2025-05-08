@@ -226,11 +226,12 @@ void main() {
         }
     }
     
-    lighting += emission;
-    
-    lighting = lighting / (lighting + vec3(1.0 - tonemapStrength));
-    
-    vec3 color = pow(lighting, vec3(1.0/2.2));
-    
-    FragColor = vec4(color, albedo.a);
+  lighting += emission;
+
+// Ensure albedo.rgb is factored into the final color
+lighting = albedo.rgb * lighting / (lighting + vec3(1.0 - tonemapStrength));
+
+vec3 color = pow(lighting, vec3(1.0 / 2.2));
+
+FragColor = vec4(color, albedo.a);
 }

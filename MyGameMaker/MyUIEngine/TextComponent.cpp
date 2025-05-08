@@ -78,8 +78,8 @@ void TextComponent::Render() const {
     customShader->SetUniform("model", glm::mat4(1.0f));
     customShader->SetUniform("modColor", glm::vec4(m_color, 1.0f));
 
-    FontManager::GetInstance().RenderTextWithShader(customShader, m_text, renderPosition.x, renderPosition.y, m_fontSize);
-
+    const float scaleFactor = m_fontSize / 10.0f;  
+    FontManager::GetInstance().RenderTextWithShader(customShader, m_text, renderPosition.x, renderPosition.y, scaleFactor);
     customShader->UnBind();
 
     std::cout << "Renderizando texto: " << m_text

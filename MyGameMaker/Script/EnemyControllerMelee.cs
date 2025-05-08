@@ -126,6 +126,7 @@ public class EnemyControllerMelee : EnemyController
         lastPathfindingPosition = enemyTransform.position;
         chasePath = null;
         pathInitialized = false;
+        currentState = EnemyState.IDLE;
     }
 
     public override void Update(float deltaTime)
@@ -164,11 +165,6 @@ public class EnemyControllerMelee : EnemyController
                         currentState = EnemyState.ATTACK;
                     }
 
-                    if (distanceToPlayer > minDistToChase)
-                    {
-                        currentState = EnemyState.CHASE;
-                    }
-
                     if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap && !isLeaping)
                     {
                         currentState = EnemyState.LEAP;
@@ -177,6 +173,13 @@ public class EnemyControllerMelee : EnemyController
                         anim.SetWholeLeapAnimation();
                         leapDirection = Vector3.Normalize(playerTransform.position - enemyTransform.position);
                     }
+
+                    if (distanceToPlayer > minDistToChase)
+                    {
+                        currentState = EnemyState.CHASE;
+                    }
+
+
 
                     if (moveDirection != Vector3.Zero)
                     {
@@ -225,129 +228,131 @@ public class EnemyControllerMelee : EnemyController
 
             case EnemyState.CHASE:
 
-                if (!isFootstepPlaying)
-                {
-                    Audio.Play(SFX_FOOTSTEP, true);
-                    isFootstepPlaying = true;
-                    hasStoppedFootsteps = false;
-                }
-                if (isCombatMusicPlaying == false)
-                {
-                    Audio.Play(MUSIC_COMBAT, true);
-                    isCombatMusicPlaying = true;
-                }
+                //if (!isFootstepPlaying)
+                //{
+                //    Audio.Play(SFX_FOOTSTEP, true);
+                //    isFootstepPlaying = true;
+                //    hasStoppedFootsteps = false;
+                //}
+                //if (isCombatMusicPlaying == false)
+                //{
+                //    Audio.Play(MUSIC_COMBAT, true);
+                //    isCombatMusicPlaying = true;
+                //}
 
-                chaseTimer += deltaTime;
-                if (chaseTimer >= chaseReplanInterval && enemyTransform != null && playerTransform != null)
-                {
-                    chasePath = pathfinder.FindPath(enemyTransform.position, playerTransform.position);
-                    if (chasePath != null && chasePath.Count > 1)
-                    {
-                        pathPointIndex = 1;
-                        smoothedVelocity.Clear();
-                    }
-                    chaseTimer = 0f;
-                }
+                //chaseTimer += deltaTime;
+                //if (chaseTimer >= chaseReplanInterval && enemyTransform != null && playerTransform != null)
+                //{
+                //    chasePath = pathfinder.FindPath(enemyTransform.position, playerTransform.position);
+                //    if (chasePath != null && chasePath.Count > 1)
+                //    {
+                //        pathPointIndex = 1;
+                //        smoothedVelocity.Clear();
+                //    }
+                //    chaseTimer = 0f;
+                //}
 
-                if (chasePath != null && pathPointIndex < chasePath.Count)
-                {
-                    Vector3 myPos = enemyTransform.position;
-                    Vector3 targetPosition = chasePath[pathPointIndex];
-                    Vector3 toTarget = targetPosition - myPos;
-                    float dist = toTarget.Length();
+                //if (chasePath != null && pathPointIndex < chasePath.Count)
+                //{
+                //    Vector3 myPos = enemyTransform.position;
+                //    Vector3 targetPosition = chasePath[pathPointIndex];
+                //    Vector3 toTarget = targetPosition - myPos;
+                //    float dist = toTarget.Length();
 
-                    if (dist < 0.5f)
-                    {
-                        pathPointIndex++;
-                        break;
-                    }
+                //    if (dist < 0.5f)
+                //    {
+                //        pathPointIndex++;
+                //        break;
+                //    }
 
-                    Vector3 forward = Vector3.Normalize(toTarget);
-                    GameObject hitObject = null;
+                //    Vector3 forward = Vector3.Normalize(toTarget);
+                //    GameObject hitObject = null;
 
-                    {
-                        RayCast ray = new RayCast();
-                        ray.PerformRaycast(myPos, forward, obstacleDetectDist);
-                        if (ray.hit.isHit)
-                            hitObject = ray.hit.gameObject;
-                    }
+                //    {
+                //        RayCast ray = new RayCast();
+                //        ray.PerformRaycast(myPos, forward, obstacleDetectDist);
+                //        if (ray.hit.isHit)
+                //            hitObject = ray.hit.gameObject;
+                //    }
 
-                    if (!isAvoidingObstacle)
-                    {
-                        if (hitObject != null && hitObject.tag == "Collider")
-                        {
-                            isAvoidingObstacle = true;
-                            avoidDirection = GetDodgeDirection(forward);
-                            avoidTimer = 0f;
-                        }
-                        else
-                        {
-                            moveDirection = forward;
-                        }
-                    }
-                    else
-                    {
-                        avoidTimer += deltaTime;
+                //    if (!isAvoidingObstacle)
+                //    {
+                //        if (hitObject != null && hitObject.tag == "Collider")
+                //        {
+                //            isAvoidingObstacle = true;
+                //            avoidDirection = GetDodgeDirection(forward);
+                //            avoidTimer = 0f;
+                //        }
+                //        else
+                //        {
+                //            moveDirection = forward;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        avoidTimer += deltaTime;
 
-                        if (avoidTimer >= avoidTimeLimit)
-                        {
-                            moveDirection = avoidDirection;
-                            isAvoidingObstacle = false;
-                        }
-                        else
-                        {
-                            bool forwardBlocked = false;
-                            RayCast ray = new RayCast();
-                            ray.PerformRaycast(myPos, forward, obstacleDetectDist);
-                            forwardBlocked = ray.hit.isHit && ray.hit.gameObject.tag == "Collider";
+                //        if (avoidTimer >= avoidTimeLimit)
+                //        {
+                //            moveDirection = avoidDirection;
+                //            isAvoidingObstacle = false;
+                //        }
+                //        else
+                //        {
+                //            bool forwardBlocked = false;
+                //            RayCast ray = new RayCast();
+                //            ray.PerformRaycast(myPos, forward, obstacleDetectDist);
+                //            forwardBlocked = ray.hit.isHit && ray.hit.gameObject.tag == "Collider";
 
-                            if (!forwardBlocked)
-                            {
-                                isAvoidingObstacle = false;
-                                moveDirection = forward;
-                            }
-                            else
-                            {
-                                RayCast checkDodge = new RayCast();
-                                checkDodge.PerformRaycast(myPos, avoidDirection, obstacleDetectDist);
-                                if (checkDodge.hit.isHit && checkDodge.hit.gameObject.tag == "Collider")
-                                {
-                                    avoidDirection = -avoidDirection;
-                                    moveDirection = avoidDirection;
-                                }
-                            }
-                        }
-                    }
-                    float currentYAngle = enemyTransform.eulerAngles.Y;
-                    float targetYAngle = (float)(Math.Atan2(moveDirection.X, moveDirection.Z) * 180.0 / Math.PI);
-                    float deltaAngle = targetYAngle - currentYAngle;
-                    while (deltaAngle > 180f) deltaAngle -= 360f;
-                    while (deltaAngle < -180f) deltaAngle += 360f;
-                    float newY = currentYAngle + deltaAngle * Math.Min(1f, avoidRotationSpeed * deltaTime);
-                    collider.SetRotation(
-                        Quaternion.CreateFromYawPitchRoll(newY * ((float)Math.PI / 180f), 0, 0)
-                    );
+                //            if (!forwardBlocked)
+                //            {
+                //                isAvoidingObstacle = false;
+                //                moveDirection = forward;
+                //            }
+                //            else
+                //            {
+                //                RayCast checkDodge = new RayCast();
+                //                checkDodge.PerformRaycast(myPos, avoidDirection, obstacleDetectDist);
+                //                if (checkDodge.hit.isHit && checkDodge.hit.gameObject.tag == "Collider")
+                //                {
+                //                    avoidDirection = -avoidDirection;
+                //                    moveDirection = avoidDirection;
+                //                }
+                //            }
+                //        }
+                //    }
+                //    float currentYAngle = enemyTransform.eulerAngles.Y;
+                //    float targetYAngle = (float)(Math.Atan2(moveDirection.X, moveDirection.Z) * 180.0 / Math.PI);
+                //    float deltaAngle = targetYAngle - currentYAngle;
+                //    while (deltaAngle > 180f) deltaAngle -= 360f;
+                //    while (deltaAngle < -180f) deltaAngle += 360f;
+                //    float newY = currentYAngle + deltaAngle * Math.Min(1f, avoidRotationSpeed * deltaTime);
+                //    collider.SetRotation(
+                //        Quaternion.CreateFromYawPitchRoll(newY * ((float)Math.PI / 180f), 0, 0)
+                //    );
 
-                    Vector3 desiredVel = moveDirection * speedMovement;
-                    Vector3 currVel = rb.GetVelocity();
-                    Vector3 smoothVel = SmoothVelocity(desiredVel, currVel, deltaTime);
-                    rb.SetVelocity(smoothVel);
+                //    Vector3 desiredVel = moveDirection * speedMovement;
+                //    Vector3 currVel = rb.GetVelocity();
+                //    Vector3 smoothVel = SmoothVelocity(desiredVel, currVel, deltaTime);
+                //    rb.SetVelocity(smoothVel);
 
-                    anim.SetRunningAnimation();
-                }
-                else if (chasePath == null || chasePath.Count == 0)
-                {
-                    Vector3 directDir = Vector3.Normalize(playerTransform.position - enemyTransform.position);
-                    moveDirection = directDir;
+                //    anim.SetRunningAnimation();
+                //}
+                //else if (chasePath == null || chasePath.Count == 0)
+                // {
+                //Vector3 directDir = Vector3.Normalize(playerTransform.position - enemyTransform.position);
+                //moveDirection = directDir;
 
-                    Vector3 desiredVelocity = directDir * speedMovement;
-                    Vector3 currentVelocity = rb.GetVelocity();
+                //Vector3 desiredVelocity = directDir * speedMovement;
+                //Vector3 currentVelocity = rb.GetVelocity();
 
-                    Vector3 smoothedVel = SmoothVelocity(desiredVelocity, currentVelocity, deltaTime);
-                    rb.SetVelocity(smoothedVel);
+                //Vector3 smoothedVel = SmoothVelocity(desiredVelocity, currentVelocity, deltaTime);
+                //rb.SetVelocity(smoothedVel);
+                moveDirection = Vector3.Normalize(playerTransform.position - enemyTransform.position);
+                rb.SetVelocity(moveDirection * speedMovement);
 
-                    anim.SetRunningAnimation();
-                }
+                anim.SetRunningAnimation();
+                //  }
 
                 break;
 
@@ -425,7 +430,7 @@ public class EnemyControllerMelee : EnemyController
                 {
                     isLeaping = false;
                     hasLeap = true;
-                    currentState = EnemyState.CHASE;
+                    //currentState = EnemyState.CHASE;
                     lastLeap = 0f;
                 }
                 

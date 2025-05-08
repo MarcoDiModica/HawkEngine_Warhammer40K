@@ -191,17 +191,17 @@ GameObject4:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 32.853252410888672
+        - 148.95301818847656
         - 77.917045593261719
-        - -74.598472595214844
+        - 49.855709075927734
       localRotation:
-        - 92.203909638729371
-        - 6.3565934763173333
-        - -2.7193246298277254
+        - 92.203911574086675
+        - 6.3565934374547597
+        - -2.7193246364493433
       localScale:
-        - 0.99999982118606567
-        - 1.0000004768371582
-        - 1
+        - 0.99999982746458593
+        - 1.0000005327077581
+        - 1.0000000327922391
     CameraComponent:
       name: CameraComponent
       enabled: true
@@ -12149,9 +12149,9 @@ GameObject18:
       Script0:
         name: AmmunitionBlessing
         fields:
-          floatSpeed: 1.42784119
+          floatSpeed: 0.749262094
           floatHeight: 0.5
-          rotationSpeed: 58.7038307
+          rotationSpeed: 67.7344513
           lifeTime: 10
   Children: ~
 GameObject19:
@@ -12205,9 +12205,9 @@ GameObject19:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.762647986
+          floatSpeed: 0.85726887
           floatHeight: 0.5
-          rotationSpeed: 31.4459515
+          rotationSpeed: 83.1636658
   Children: ~
 GameObject20:
   name: heart_1_1_Instance_Instance
@@ -12285,9 +12285,9 @@ GameObject20:
       Script0:
         name: BlackHeart
         fields:
-          floatSpeed: 0.806920648
+          floatSpeed: 0.74340111
           floatHeight: 0.5
-          rotationSpeed: 41.5267868
+          rotationSpeed: 70.650116
           lifeTime: 10
   Children: ~
 GameObject21:
@@ -12366,9 +12366,9 @@ GameObject21:
       Script0:
         name: ChapterStandard
         fields:
-          floatSpeed: 1.54190767
+          floatSpeed: 0.507175386
           floatHeight: 0.5
-          rotationSpeed: 55.9311523
+          rotationSpeed: 60.18153
           lifeTime: 10
   Children: ~
 GameObject22:
@@ -12447,9 +12447,9 @@ GameObject22:
       Script0:
         name: MedicaeStimm
         fields:
-          floatSpeed: 1.61663544
+          floatSpeed: 1.13650334
           floatHeight: 0.5
-          rotationSpeed: 37.9951172
+          rotationSpeed: 91.4687653
           lifeTime: 10
   Children: ~
 GameObject23:
@@ -12528,9 +12528,9 @@ GameObject23:
       Script0:
         name: PiercingBullets
         fields:
-          floatSpeed: 1.63863516
+          floatSpeed: 1.43364167
           floatHeight: 0.5
-          rotationSpeed: 60.7120056
+          rotationSpeed: 89.6766739
   Children: ~
 GameObject24:
   name: magnet.001_1_1_Instance_Instance
@@ -12608,9 +12608,9 @@ GameObject24:
       Script0:
         name: Magnet
         fields:
-          floatSpeed: 1.8817426
+          floatSpeed: 1.52063775
           floatHeight: 0.5
-          rotationSpeed: 32.6918221
+          rotationSpeed: 61.2731018
           lifeTime: 10
   Children: ~
 GameObject25:
@@ -49585,15 +49585,15 @@ GameObject115:
           localPosition:
             - 194.01020812988281
             - 10.687814712524414
-            - 28.054262161254883
+            - 29.977437019348137
           localRotation:
             - 0
-            - -89.053467258499964
+            - -89.05346510475276
             - 0
           localScale:
-            - 25.939743041992188
+            - 29.270616653075177
             - 23.547868728637695
-            - 30.699338912963867
+            - 30.699339439554965
         BoxColliderComponent:
           size:
             - 1
@@ -51575,9 +51575,9 @@ GameObject122:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.712914467
+          floatSpeed: 0.764861584
           floatHeight: 0.5
-          rotationSpeed: 82.7278671
+          rotationSpeed: 76.0336533
   Children: ~
 GameObject123:
   name: BiblePagePickUp_Instance3
@@ -51630,9 +51630,9 @@ GameObject123:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.81760621
+          floatSpeed: 1.82368112
           floatHeight: 0.5
-          rotationSpeed: 35.0567207
+          rotationSpeed: 36.1599388
   Children: ~
 GameObject124:
   name: BiblePagePickUp_Instance4
@@ -51685,9 +51685,9 @@ GameObject124:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.03528118
+          floatSpeed: 0.763760209
           floatHeight: 0.5
-          rotationSpeed: 39.0144691
+          rotationSpeed: 97.8331833
   Children: ~
 GameObject125:
   name: Canvas_Interaction
@@ -51947,4 +51947,38 @@ GameObject126:
       Script0:
         name: Checkpoint
         fields: ~
+  Children: ~
+GameObject127:
+  name: Empty_inside_copy_copy_copy_2_copy
+  prefabPath: ""
+  uuid: 7024052267149991707
+  tag: Collider
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 174.32778930664062
+        - 10.687814712524414
+        - 48.670654296875
+      localRotation:
+        - 180
+        - -86.932297789352447
+        - 180
+      localScale:
+        - 7.9203383519185122
+        - 23.547868728637695
+        - 12.847644850410294
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
   Children: ~

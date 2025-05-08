@@ -183,23 +183,23 @@ public class EnemyControllerMelee : EnemyController
 
                     if (moveDirection != Vector3.Zero)
                     {
-                        currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-                        float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-                        float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
+                        //currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                        //float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                        //float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
 
-                        while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-                        while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+                        //while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                        //while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
 
-                        currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+                        //currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
 
-                        Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-                        Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                            eulerRotation.Y * ((float)Math.PI / 180.0f),
-                            eulerRotation.X * ((float)Math.PI / 180.0f),
-                            eulerRotation.Z * ((float)Math.PI / 180.0f)
-                        );
+                        //Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                        //Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                        //    eulerRotation.Y * ((float)Math.PI / 180.0f),
+                        //    eulerRotation.X * ((float)Math.PI / 180.0f),
+                        //    eulerRotation.Z * ((float)Math.PI / 180.0f)
+                        //);
 
-                        collider.SetRotation(newRotation);
+                        //collider.SetRotation(newRotation);
                     }
                 }
                 else
@@ -228,17 +228,17 @@ public class EnemyControllerMelee : EnemyController
 
             case EnemyState.CHASE:
 
-                //if (!isFootstepPlaying)
-                //{
-                //    Audio.Play(SFX_FOOTSTEP, true);
-                //    isFootstepPlaying = true;
-                //    hasStoppedFootsteps = false;
-                //}
-                //if (isCombatMusicPlaying == false)
-                //{
-                //    Audio.Play(MUSIC_COMBAT, true);
-                //    isCombatMusicPlaying = true;
-                //}
+                if (!isFootstepPlaying)
+                {
+                    Audio.Play(SFX_FOOTSTEP, true);
+                    isFootstepPlaying = true;
+                    hasStoppedFootsteps = false;
+                }
+                if (isCombatMusicPlaying == false)
+                {
+                    Audio.Play(MUSIC_COMBAT, true);
+                    isCombatMusicPlaying = true;
+                }
 
                 //chaseTimer += deltaTime;
                 //if (chaseTimer >= chaseReplanInterval && enemyTransform != null && playerTransform != null)
@@ -324,8 +324,8 @@ public class EnemyControllerMelee : EnemyController
                 //    float currentYAngle = enemyTransform.eulerAngles.Y;
                 //    float targetYAngle = (float)(Math.Atan2(moveDirection.X, moveDirection.Z) * 180.0 / Math.PI);
                 //    float deltaAngle = targetYAngle - currentYAngle;
-                //    while (deltaAngle > 180f) deltaAngle -= 360f;
-                //    while (deltaAngle < -180f) deltaAngle += 360f;
+                //    //while (deltaAngle > 180f) deltaAngle -= 360f;
+                //    //while (deltaAngle < -180f) deltaAngle += 360f;
                 //    float newY = currentYAngle + deltaAngle * Math.Min(1f, avoidRotationSpeed * deltaTime);
                 //    collider.SetRotation(
                 //        Quaternion.CreateFromYawPitchRoll(newY * ((float)Math.PI / 180f), 0, 0)
@@ -339,17 +339,34 @@ public class EnemyControllerMelee : EnemyController
                 //    anim.SetRunningAnimation();
                 //}
                 //else if (chasePath == null || chasePath.Count == 0)
-                // {
-                //Vector3 directDir = Vector3.Normalize(playerTransform.position - enemyTransform.position);
-                //moveDirection = directDir;
+                //{
+                Vector3 directDir = Vector3.Normalize(playerTransform.position - enemyTransform.position);
+                moveDirection = directDir;
 
-                //Vector3 desiredVelocity = directDir * speedMovement;
-                //Vector3 currentVelocity = rb.GetVelocity();
+                Vector3 desiredVelocity = directDir * speedMovement;
+                Vector3 currentVelocity = rb.GetVelocity();
 
-                //Vector3 smoothedVel = SmoothVelocity(desiredVelocity, currentVelocity, deltaTime);
-                //rb.SetVelocity(smoothedVel);
-                moveDirection = Vector3.Normalize(playerTransform.position - enemyTransform.position);
-                rb.SetVelocity(moveDirection * speedMovement);
+                Vector3 smoothedVel = SmoothVelocity(desiredVelocity, currentVelocity, deltaTime);
+                rb.SetVelocity(smoothedVel);
+                //}
+
+                currentRotationAngle = enemyTransform.eulerAngles.Y;
+                float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
+
+                //while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                //while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+
+                currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+
+                Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                    eulerRotation.Y * ((float)Math.PI / 180.0f),
+                    eulerRotation.X * ((float)Math.PI / 180.0f),
+                    eulerRotation.Z * ((float)Math.PI / 180.0f)
+                );
+
+                collider.SetRotation(newRotation);
 
                 anim.SetRunningAnimation();
                 //  }
@@ -380,7 +397,24 @@ public class EnemyControllerMelee : EnemyController
                     isAttacking = false;
                 }
 
-               
+                Vector3 directAttackDir = Vector3.Normalize(playerTransform.position - enemyTransform.position);
+                moveDirection = directAttackDir;
+
+                currentRotationAngle = enemyTransform.eulerAngles.Y;
+                float targetAttackAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                float targetAttackAngleDegrees = targetAttackAngle * (180.0f / (float)Math.PI);
+
+                currentRotationAngle = Lerp(currentRotationAngle, targetAttackAngleDegrees, rotationSpeed * deltaTime);
+
+                Vector3 eulerRotationAttack = new Vector3(0, currentRotationAngle, 0);
+                Quaternion newAttackRotation = Quaternion.CreateFromYawPitchRoll(
+                    eulerRotationAttack.Y * ((float)Math.PI / 180.0f),
+                    eulerRotationAttack.X * ((float)Math.PI / 180.0f),
+                    eulerRotationAttack.Z * ((float)Math.PI / 180.0f)
+                );
+
+                collider.SetRotation(newAttackRotation);
+
                 break;
 
             case EnemyState.STUNNED:

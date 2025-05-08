@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
     public PlayerData playerData;
 
     public GameObject aimLaser;
+    public GameObject aimLaserEnd;
     private Transform transform;
 
     public override void Awake()
@@ -205,21 +206,23 @@ public class PlayerController : MonoBehaviour
 
             if (rayAim.hit.isHit)
             {
-                aimLaser.transform.localScale = new Vector3(aimLaser.transform.localScale.X, rayAim.hit.distance / 2, aimLaser.transform.localScale.Z);
-                
-                aimLaser.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * (rayAim.hit.distance / 2));
+                //aimLaser.transform.localScale = new Vector3(aimLaser.transform.localScale.X, rayAim.hit.distance / 2, aimLaser.transform.localScale.Z);
+                aimLaserEnd.SetActive(true);
+                aimLaser.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * 2);
+                aimLaserEnd.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * (rayAim.hit.distance));
             }
             else
             {
-                aimLaser.transform.localScale = new Vector3(aimLaser.transform.localScale.X, maxDistance / 2, aimLaser.transform.localScale.Z);
+                //aimLaser.transform.localScale = new Vector3(aimLaser.transform.localScale.X, maxDistance / 2, aimLaser.transform.localScale.Z);
                 
-                aimLaser.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * maxDistance / 2);
+                aimLaser.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * 2);
             }
 
         }
         else
         {
             aimLaser.SetActive(false);
+            aimLaserEnd.SetActive(false);
         }
 
         //if (dashDelayTimer > 0f)

@@ -90,7 +90,11 @@ public class Checkpoint : MonoBehaviour
     
     public override void Start()
     {
-    
+        if(SceneManager.isLoadedFromCheckpoint == true)
+        {
+            LoadCheckPointData();
+            SceneManager.isLoadedFromCheckpoint = false;
+        }
     }
 
     public override void Update(float deltatime)

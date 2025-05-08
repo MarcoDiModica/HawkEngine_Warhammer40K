@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
     
     public PlayerData playerData;
 
+    private float dashEndTimer = 0.25f;
+
     public override void Awake()
     {
         playerInput = gameObject.GetComponent<PlayerInput>();
@@ -116,26 +118,26 @@ public class PlayerController : MonoBehaviour
                 {
                     //shake
                     shakeManager.ApplyShake(1,0.3f);
-                    if (isRunning)
-                    {
-                        playerAnimations.SetHitRunningAnimation();
-                    }
-                    else if (isShootingRunning)
-                    {
-                        playerAnimations.SetHitShootingRunningAnimation();
-                    }
-                    else if (isShootingStanding)
-                    {
-                        playerAnimations.SetHitShootingStandingAnimation();
-                    }
-                    else if (isWalking)
-                    {
-                        playerAnimations.SetHitWalkingAnimation();
-                    }
-                    else 
-                    {
-                        playerAnimations.SetHitAnimation();
-                    }
+                    //if (isRunning)
+                    //{
+                    //    playerAnimations.SetHitRunningAnimation();
+                    //}
+                    //else if (isShootingRunning)
+                    //{
+                    //    playerAnimations.SetHitShootingRunningAnimation();
+                    //}
+                    //else if (isShootingStanding)
+                    //{
+                    //    playerAnimations.SetHitShootingStandingAnimation();
+                    //}
+                    //else if (isWalking)
+                    //{
+                    //    playerAnimations.SetHitWalkingAnimation();
+                    //}
+                    //else 
+                    //{
+                    //    playerAnimations.SetHitAnimation();
+                    //}
                 }
             }
             playerData.isHit = false; 
@@ -210,7 +212,7 @@ public class PlayerController : MonoBehaviour
         //{
         //    return;
         //}
-        if (isShootInput)
+        if (isShootInput && !isDashing)
         {
             SetShootingState();
             isIdle = false;
@@ -268,12 +270,26 @@ public class PlayerController : MonoBehaviour
             StopFootsteps();
 
         }
-        if (playerAnimations.esk.IsAnimationFinished() && isDashing == true)
+
+         
+        if (isDashing)
         {
-            playerInput.UnblockMovement();
-            TransitionFromDashState();
-            isDashing = false;
+            dashEndTimer -= deltaTime;
+            if (dashEndTimer <= 0f)
+            {
+                playerInput.UnblockMovement();
+                TransitionFromDashState();
+                isDashing = false;
+                dashEndTimer = 0.25f; 
+            }
         }
+    
+        //if (playerAnimations.esk.IsAnimationFinished() && isDashing == true)
+        //{
+        //    playerInput.UnblockMovement();
+        //    TransitionFromDashState();
+        //    isDashing = false;
+        //}
 
     }
 
@@ -303,23 +319,26 @@ public class PlayerController : MonoBehaviour
 
     private void SetIdleState()
     {
-        
-        if (isShootingStanding)
+        if (!isIdle)
         {
-            Engineson.print("Idle");
-            playerAnimations.SetShootingStandingToIdleAnimation();
-        }
-        else //revise
-        {
-            playerAnimations.SetStandardIdleAnimation();
-        }
+            if (isShootingStanding)
+            {
+                Engineson.print("Idle");
+                playerAnimations.SetShootingStandingToIdleAnimation();
+            }
+            else 
+            {
+                playerAnimations.SetStandardIdleAnimation();
+            }
 
-        isIdle = true;
-        isRunning = false;
-        isWalking = false;
-        isShootingStanding = false;
-        isShootingRunning = false;
-        isMoving = false;
+            isIdle = true;
+            isRunning = false;
+            isWalking = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isMoving = false;
+        }
+      
         
 
         if (!hasStoppedFootsteps)

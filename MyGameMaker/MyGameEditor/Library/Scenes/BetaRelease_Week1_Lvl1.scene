@@ -206,7 +206,7 @@ GameObject4:
       name: CameraComponent
       enabled: true
       projection_type: perspective
-      fov: 1.0471975803375244
+      fov: 1.0524334907531738
       size: 0
       near_plane: 0.10000000000000001
       far_plane: 500
@@ -3287,9 +3287,9 @@ GameObject6:
             - 272.2530517578125
             - -2896.18505859375
           localRotation:
-            - 90.000211846368103
-            - 81.353791798398746
-            - -179.99987206218444
+            - 90.000218891421454
+            - 81.353824920624092
+            - -179.99985645503051
           localScale:
             - 54.190948486328125
             - 54.182174682617188
@@ -3334,9 +3334,9 @@ GameObject6:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.999832095561914
-            - 81.207680384356735
-            - 179.9999228626142
+            - 89.999818387974486
+            - 81.207661526539511
+            - 179.99991429278873
           localScale:
             - 41.956031799316406
             - 53.921909332275391
@@ -3663,9 +3663,9 @@ GameObject6:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.975807914110277
-            - -89.909576297387616
-            - -179.96668619350265
+            - 89.974924736429429
+            - -89.903462806795844
+            - -179.9658132605658
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -3757,9 +3757,9 @@ GameObject6:
             - 251.15873718261719
             - 31.643280029296875
           localRotation:
-            - -89.999957997640095
-            - -69.579745380514922
-            - -3.5062269539352932e-05
+            - -89.999961946625547
+            - -69.579753576640812
+            - -2.9378261350301554e-05
           localScale:
             - 41.829475402832031
             - 54.090396881103516
@@ -4322,9 +4322,9 @@ GameObject6:
             - 72.816131591796875
             - 381.2847900390625
           localRotation:
-            - -90.000181498723933
-            - -82.523163076591089
-            - 1.8239280906533197e-06
+            - -90.000193737143292
+            - -82.523212292504823
+            - 1.5773549266366961e-05
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -4507,9 +4507,9 @@ GameObject6:
             - 10.265288352966309
             - 35.527149200439453
           localRotation:
-            - 179.9999913485791
-            - -76.519714800115565
-            - 9.3905639976852311e-06
+            - 179.99999134857725
+            - -76.519719663397623
+            - 9.3905652812670298e-06
           localScale:
             - 59.934871673583984
             - 59.934871673583984
@@ -4877,9 +4877,9 @@ GameObject6:
             - 22.606166839599609
             - 3579.35595703125
           localRotation:
-            - -5.9453714312953613e-06
+            - -5.9453752042693541e-06
             - 81.871306785017907
-            - -179.99999134857458
+            - -179.99999134857893
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -4988,9 +4988,9 @@ GameObject6:
             - 22.607597351074219
             - -2101.2529296875
           localRotation:
-            - -179.9999913485772
-            - 84.241636004164036
-            - 2.1271356554776735e-05
+            - -179.9999913485768
+            - 84.241609689708582
+            - 2.1271352877904838e-05
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -5173,9 +5173,9 @@ GameObject6:
             - 25.519546508789062
             - 4978.10498046875
           localRotation:
-            - -178.90000302359556
-            - -42.829352298999623
-            - -8.0013693016201241e-07
+            - -178.90000299703101
+            - -42.829352298349406
+            - -8.6787063181135705e-07
           localScale:
             - 59.934867858886719
             - 59.934867858886719
@@ -5247,9 +5247,9 @@ GameObject6:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.1000220994727414
-            - -81.281068038526755
-            - -179.99999170944662
+            - 1.1000227828075944
+            - -81.281068093142494
+            - -179.99999152247156
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -5543,9 +5543,9 @@ GameObject6:
             - 72.841934204101562
             - 4891.78173828125
           localRotation:
-            - 89.99999421455648
-            - -71.98181532541571
-            - 179.99998331006103
+            - 89.999993084498001
+            - -71.981830817716698
+            - 179.99999308449799
           localScale:
             - 59.934864044189453
             - 59.934864044189453
@@ -5913,9 +5913,9 @@ GameObject6:
             - 72.838882446289062
             - 742.7088623046875
           localRotation:
-            - -90.000069481541559
-            - -82.668047556250855
-            - -1.607088024267079e-05
+            - -90.00006948186774
+            - -82.668038632501023
+            - -1.6070559165231286e-05
           localScale:
             - 59.934871673583984
             - 59.934871673583984
@@ -6209,9 +6209,9 @@ GameObject6:
             - 72.843742370605469
             - 3853.178466796875
           localRotation:
-            - 90.000025441449353
-            - -72.126743760011635
-            - 179.99998147267215
+            - 90.000020809606255
+            - -72.126743206251646
+            - 179.99998783304548
           localScale:
             - 59.934864044189453
             - 59.934864044189453
@@ -6579,9 +6579,9 @@ GameObject6:
             - 72.816177368164062
             - 17.716598510742188
           localRotation:
-            - -90.000181498723933
-            - -82.523163076591089
-            - 1.8239280906533197e-06
+            - -90.000193737143292
+            - -82.523212292504823
+            - 1.5773549266366961e-05
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -6875,9 +6875,9 @@ GameObject6:
             - 57.826042175292969
             - -2789.2763671875
           localRotation:
-            - 90.000029615299937
-            - 76.122116624509971
-            - 179.99999865266136
+            - 90.000016527795822
+            - 76.122108697441746
+            - 179.99999760618309
           localScale:
             - 31.964662551879883
             - 31.964662551879883
@@ -7023,9 +7023,9 @@ GameObject6:
             - 84.565017700195312
             - -2861.126708984375
           localRotation:
-            - -90.000216889008996
-            - -89.746282524031059
-            - -0.0025339764422285843
+            - -89.999444197498448
+            - -89.746964238078064
+            - -0.003303252767919331
           localScale:
             - 43.324672698974609
             - 43.324672698974609
@@ -7097,9 +7097,9 @@ GameObject6:
             - 60.107398986816406
             - 545.6107177734375
           localRotation:
-            - -10.799293229275888
-            - 6.8373803866574061
-            - -1.3541879688591159
+            - -10.799293249730484
+            - 6.8373821107829684
+            - -1.3541879713949969
           localScale:
             - 24.36241340637207
             - 24.36241340637207
@@ -7134,9 +7134,9 @@ GameObject6:
             - 47.50750732421875
             - 561.61212158203125
           localRotation:
-            - 178.20561857482863
-            - 0.51393303730983364
-            - 3.0764839327513132
+            - 178.20561857692178
+            - 0.51393304404333484
+            - 3.076484359445677
           localScale:
             - 24.362417221069336
             - 24.36241340637207
@@ -7245,9 +7245,9 @@ GameObject6:
             - 148.99980163574219
             - 222.72898864746094
           localRotation:
-            - -15.158007319902184
-            - -65.712721843277919
-            - -74.31680329619185
+            - -15.158003019171982
+            - -65.712734709883506
+            - -74.316807628942172
           localScale:
             - 24.540990829467773
             - 24.540992736816406
@@ -10925,7 +10925,7 @@ GameObject13:
             - 100.77371215820312
           localRotation:
             - 0
-            - 72.386732496616304
+            - 72.3867276093237
             - 0
           localScale:
             - 49.251850128173828
@@ -11946,61 +11946,6 @@ GameObject16:
           PiercingBulletsPrefab: Assets\Prefabs\PiercingBulletsPrefab.prefab.yaml
   Children: ~
 GameObject17:
-  name: BiblePagePickUp_Instance
-  prefabPath: Assets\Prefabs\BiblePagePickUp.prefab.yaml
-  uuid: 11581665041810850543
-  tag: BiblePage
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 161.68499755859375
-        - 0.60818320512771606
-        - -218.51683044433594
-      localRotation:
-        - -38.566017684300654
-        - -32.943468960091067
-        - 1.4077421204378209e-06
-      localScale:
-        - 0.51462656259536743
-        - 0.51462656259536743
-        - 0.51462650299072266
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 12528275894127540237
-      material:
-        name: bible_DefaultMaterial_BaseColor
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: BiblePagePickUp
-        fields:
-          floatSpeed: 1.29395139
-          floatHeight: 0.5
-          rotationSpeed: 41.0505371
-  Children: ~
-GameObject18:
   name: Level1_Zone3
   prefabPath: ""
   uuid: 8913523153880078044
@@ -13482,9 +13427,9 @@ GameObject18:
             - 451.7078857421875
             - 9679.166015625
           localRotation:
-            - 89.999974814588398
-            - 73.086972913931362
-            - 179.99999035143418
+            - 89.999995057496349
+            - 73.086982798943836
+            - 179.99999333118021
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -15867,7 +15812,7 @@ GameObject18:
           name: Shader
           enabled: true
       Children: ~
-GameObject19:
+GameObject18:
   name: Colliders_Z3_Folder
   prefabPath: ""
   uuid: 3845258391188589706
@@ -16171,7 +16116,7 @@ GameObject19:
             - -160.05094909667969
           localRotation:
             - 0
-            - 63.749226666872545
+            - 63.749234821424913
             - 0
           localScale:
             - 24.358108520507812
@@ -16369,7 +16314,7 @@ GameObject19:
             - -72.031135559082031
           localRotation:
             - 0
-            - -69.383029236251048
+            - -69.383034145159527
             - 0
           localScale:
             - 12.133749961853027
@@ -17259,9 +17204,9 @@ GameObject19:
             - 3.0124197006225586
             - -194.1514892578125
           localRotation:
-            - 179.99999499103757
-            - 87.969443060134608
-            - 179.99999499103757
+            - 179.99999499104624
+            - 87.96954795149837
+            - 179.99999499104624
           localScale:
             - 12.215158462524414
             - 7.4319052696228027
@@ -17904,7 +17849,7 @@ GameObject19:
             - 0
           isTrigger: false
       Children: ~
-GameObject20:
+GameObject19:
   name: Canvas_HUD
   prefabPath: Assets\Prefabs\Canvas_HUD.prefab.yaml
   uuid: 13571654134453421469
@@ -20690,7 +20635,7 @@ GameObject20:
             - 0
           anim_speed: 0
       Children: ~
-GameObject21:
+GameObject20:
   name: Canvas_TitleSM
   prefabPath: Assets\Prefabs\Canvas_TitleSM.prefab.yaml
   uuid: 15444793993539794259
@@ -20797,7 +20742,7 @@ GameObject21:
             - 0
           anim_speed: 0
       Children: ~
-GameObject22:
+GameObject21:
   name: Canvas_PauseMenu
   prefabPath: Assets\Prefabs\Canvas_PauseMenu.prefab.yaml
   uuid: 15860094252941017456
@@ -21148,7 +21093,7 @@ GameObject22:
           enabled: true
           state: 1
       Children: ~
-GameObject23:
+GameObject22:
   name: Canvas_OptionsMenu
   prefabPath: Assets\Prefabs\Canvas_OptionsMenu.prefab.yaml
   uuid: 2164386902305167382
@@ -22945,7 +22890,7 @@ GameObject23:
             - 0
           anim_speed: 0
       Children: ~
-GameObject24:
+GameObject23:
   name: VFX
   prefabPath: ""
   uuid: 13214248698569763708
@@ -23019,7 +22964,7 @@ GameObject24:
         texturePath: Assets/Textures/smoke_spritesheet.png
       particleType: 6
   Children: ~
-GameObject25:
+GameObject24:
   name: EmptyGameObject
   prefabPath: ""
   uuid: 4535933245113344015
@@ -23068,7 +23013,7 @@ GameObject25:
         - -1
         - 0
   Children: ~
-GameObject26:
+GameObject25:
   name: EmptyGameObject_copy
   prefabPath: ""
   uuid: 5167368033627463531
@@ -23142,7 +23087,7 @@ GameObject26:
         texturePath: Assets/Textures/smoke_spritesheet.png
       particleType: 6
   Children: ~
-GameObject27:
+GameObject26:
   name: EmptyGameObject_copy_copy
   prefabPath: ""
   uuid: 16304248140540734381
@@ -23216,7 +23161,7 @@ GameObject27:
         texturePath: Assets/Textures/smoke_spritesheet.png
       particleType: 6
   Children: ~
-GameObject28:
+GameObject27:
   name: EmptyGameObject_copy_copy_1
   prefabPath: ""
   uuid: 1991212571908900130
@@ -23290,7 +23235,7 @@ GameObject28:
         texturePath: Assets/Textures/smoke_spritesheet.png
       particleType: 6
   Children: ~
-GameObject29:
+GameObject28:
   name: EmptyGameObject_copy_copy_2
   prefabPath: ""
   uuid: 17310386965729547034
@@ -23364,7 +23309,7 @@ GameObject29:
         texturePath: Assets/Textures/smoke_spritesheet.png
       particleType: 6
   Children: ~
-GameObject30:
+GameObject29:
   name: EmptyGameObject_copy_copy_3
   prefabPath: ""
   uuid: 3760344142476686429
@@ -23438,7 +23383,7 @@ GameObject30:
         texturePath: Assets/Textures/smoke_spritesheet.png
       particleType: 6
   Children: ~
-GameObject31:
+GameObject30:
   name: EmptyGameObject_copy_copy_4
   prefabPath: ""
   uuid: 8639679437274844255
@@ -23512,7 +23457,7 @@ GameObject31:
         texturePath: Assets/Textures/smoke_spritesheet.png
       particleType: 6
   Children: ~
-GameObject32:
+GameObject31:
   name: EmptyGameObject_copy_copy_copy
   prefabPath: ""
   uuid: 5936880510501151197
@@ -23586,7 +23531,7 @@ GameObject32:
         texturePath: Assets/Textures/smoke_spritesheet.png
       particleType: 6
   Children: ~
-GameObject33:
+GameObject32:
   name: EmptyGameObject_copy_1
   prefabPath: ""
   uuid: 7721403859744035730
@@ -23660,7 +23605,7 @@ GameObject33:
         texturePath: Assets/Textures/Spark.png
       particleType: 16
   Children: ~
-GameObject34:
+GameObject33:
   name: HormagauntPlaceholder
   prefabPath: ""
   uuid: 11647376471362997250
@@ -23698,7 +23643,7 @@ GameObject34:
       name: Shader
       enabled: true
   Children: ~
-GameObject35:
+GameObject34:
   name: TermagantPlaceholder
   prefabPath: ""
   uuid: 10121321163612241154
@@ -23736,7 +23681,7 @@ GameObject35:
       name: Shader
       enabled: true
   Children: ~
-GameObject36:
+GameObject35:
   name: TyranidWarriorPlaceholder
   prefabPath: ""
   uuid: 14468692422547342438
@@ -23774,7 +23719,7 @@ GameObject36:
       name: Shader
       enabled: true
   Children: ~
-GameObject37:
+GameObject36:
   name: LictorPlaceholder
   prefabPath: ""
   uuid: 4408837296008222813
@@ -23812,7 +23757,7 @@ GameObject37:
       name: Shader
       enabled: true
   Children: ~
-GameObject38:
+GameObject37:
   name: HormagauntPlaceholder_copy
   prefabPath: ""
   uuid: 5224840182980542739
@@ -23850,7 +23795,7 @@ GameObject38:
       name: Shader
       enabled: true
   Children: ~
-GameObject39:
+GameObject38:
   name: HormagauntPlaceholder_copy_1
   prefabPath: ""
   uuid: 17286585113535503956
@@ -23888,7 +23833,7 @@ GameObject39:
       name: Shader
       enabled: true
   Children: ~
-GameObject40:
+GameObject39:
   name: HormagauntPlaceholder_copy_2
   prefabPath: ""
   uuid: 17242037128602063276
@@ -23926,7 +23871,7 @@ GameObject40:
       name: Shader
       enabled: true
   Children: ~
-GameObject41:
+GameObject40:
   name: HormagauntPlaceholder_copy_3
   prefabPath: ""
   uuid: 17540689716290743112
@@ -23964,7 +23909,7 @@ GameObject41:
       name: Shader
       enabled: true
   Children: ~
-GameObject42:
+GameObject41:
   name: HormagauntPlaceholder_copy_4
   prefabPath: ""
   uuid: 2948751947496147079
@@ -24002,7 +23947,7 @@ GameObject42:
       name: Shader
       enabled: true
   Children: ~
-GameObject43:
+GameObject42:
   name: HormagauntPlaceholder_copy_5
   prefabPath: ""
   uuid: 13205262464550521350
@@ -24040,7 +23985,7 @@ GameObject43:
       name: Shader
       enabled: true
   Children: ~
-GameObject44:
+GameObject43:
   name: HormagauntPlaceholder_copy_6
   prefabPath: ""
   uuid: 10219600414269276096
@@ -24078,7 +24023,7 @@ GameObject44:
       name: Shader
       enabled: true
   Children: ~
-GameObject45:
+GameObject44:
   name: HormagauntPlaceholder_copy_7
   prefabPath: ""
   uuid: 10017857612506837354
@@ -24116,7 +24061,7 @@ GameObject45:
       name: Shader
       enabled: true
   Children: ~
-GameObject46:
+GameObject45:
   name: HormagauntPlaceholder_copy_8
   prefabPath: ""
   uuid: 7427606919261247150
@@ -24154,7 +24099,7 @@ GameObject46:
       name: Shader
       enabled: true
   Children: ~
-GameObject47:
+GameObject46:
   name: HormagauntPlaceholder_copy_9
   prefabPath: ""
   uuid: 16056094752022512813
@@ -24192,7 +24137,7 @@ GameObject47:
       name: Shader
       enabled: true
   Children: ~
-GameObject48:
+GameObject47:
   name: HormagauntPlaceholder_copy_10
   prefabPath: ""
   uuid: 5257777272774764402
@@ -24230,7 +24175,7 @@ GameObject48:
       name: Shader
       enabled: true
   Children: ~
-GameObject49:
+GameObject48:
   name: HormagauntPlaceholder_copy_11
   prefabPath: ""
   uuid: 17884553826733807589
@@ -24268,7 +24213,7 @@ GameObject49:
       name: Shader
       enabled: true
   Children: ~
-GameObject50:
+GameObject49:
   name: HormagauntPlaceholder_copy_copy
   prefabPath: ""
   uuid: 136550759817684696
@@ -24306,7 +24251,7 @@ GameObject50:
       name: Shader
       enabled: true
   Children: ~
-GameObject51:
+GameObject50:
   name: HormagauntPlaceholder_copy_copy_1
   prefabPath: ""
   uuid: 6129116598617872678
@@ -24344,7 +24289,7 @@ GameObject51:
       name: Shader
       enabled: true
   Children: ~
-GameObject52:
+GameObject51:
   name: HormagauntPlaceholder_copy_copy_2
   prefabPath: ""
   uuid: 2119726941741755005
@@ -24382,7 +24327,7 @@ GameObject52:
       name: Shader
       enabled: true
   Children: ~
-GameObject53:
+GameObject52:
   name: HormagauntPlaceholder_copy_copy_3
   prefabPath: ""
   uuid: 5334084108283415202
@@ -24420,7 +24365,7 @@ GameObject53:
       name: Shader
       enabled: true
   Children: ~
-GameObject54:
+GameObject53:
   name: HormagauntPlaceholder_copy_copy_4
   prefabPath: ""
   uuid: 4582362207637527686
@@ -24458,7 +24403,7 @@ GameObject54:
       name: Shader
       enabled: true
   Children: ~
-GameObject55:
+GameObject54:
   name: HormagauntPlaceholder_copy_copy_5
   prefabPath: ""
   uuid: 11717222921955110329
@@ -24496,7 +24441,7 @@ GameObject55:
       name: Shader
       enabled: true
   Children: ~
-GameObject56:
+GameObject55:
   name: HormagauntPlaceholder_copy_copy_6
   prefabPath: ""
   uuid: 1108908806536657182
@@ -24534,7 +24479,7 @@ GameObject56:
       name: Shader
       enabled: true
   Children: ~
-GameObject57:
+GameObject56:
   name: HormagauntPlaceholder_copy_copy_7
   prefabPath: ""
   uuid: 17279499979451826794
@@ -24572,7 +24517,7 @@ GameObject57:
       name: Shader
       enabled: true
   Children: ~
-GameObject58:
+GameObject57:
   name: HormagauntPlaceholder_copy_copy_8
   prefabPath: ""
   uuid: 5282352255251705580
@@ -24610,7 +24555,7 @@ GameObject58:
       name: Shader
       enabled: true
   Children: ~
-GameObject59:
+GameObject58:
   name: HormagauntPlaceholder_copy_copy_9
   prefabPath: ""
   uuid: 11796685157504104156
@@ -24648,7 +24593,7 @@ GameObject59:
       name: Shader
       enabled: true
   Children: ~
-GameObject60:
+GameObject59:
   name: HormagauntPlaceholder_copy_copy_10
   prefabPath: ""
   uuid: 8214176960692583866
@@ -24686,7 +24631,7 @@ GameObject60:
       name: Shader
       enabled: true
   Children: ~
-GameObject61:
+GameObject60:
   name: HormagauntPlaceholder_copy_copy_11
   prefabPath: ""
   uuid: 1933769002250478221
@@ -24724,7 +24669,7 @@ GameObject61:
       name: Shader
       enabled: true
   Children: ~
-GameObject62:
+GameObject61:
   name: HormagauntPlaceholder_copy_copy_12
   prefabPath: ""
   uuid: 1204940209765381509
@@ -24762,7 +24707,7 @@ GameObject62:
       name: Shader
       enabled: true
   Children: ~
-GameObject63:
+GameObject62:
   name: HormagauntPlaceholder_copy_copy_13
   prefabPath: ""
   uuid: 871643957504231292
@@ -24800,7 +24745,7 @@ GameObject63:
       name: Shader
       enabled: true
   Children: ~
-GameObject64:
+GameObject63:
   name: HormagauntPlaceholder_copy_copy_14
   prefabPath: ""
   uuid: 2798559705409959625
@@ -24838,7 +24783,7 @@ GameObject64:
       name: Shader
       enabled: true
   Children: ~
-GameObject65:
+GameObject64:
   name: HormagauntPlaceholder_copy_copy_15
   prefabPath: ""
   uuid: 265558157892002293
@@ -24876,7 +24821,7 @@ GameObject65:
       name: Shader
       enabled: true
   Children: ~
-GameObject66:
+GameObject65:
   name: HormagauntPlaceholder_copy_copy_16
   prefabPath: ""
   uuid: 13581908822791023306
@@ -24914,7 +24859,7 @@ GameObject66:
       name: Shader
       enabled: true
   Children: ~
-GameObject67:
+GameObject66:
   name: HormagauntPlaceholder_copy_copy_17
   prefabPath: ""
   uuid: 2016973699587369698
@@ -24952,7 +24897,7 @@ GameObject67:
       name: Shader
       enabled: true
   Children: ~
-GameObject68:
+GameObject67:
   name: HormagauntPlaceholder_copy_copy_18
   prefabPath: ""
   uuid: 1309824500389311778
@@ -24990,7 +24935,7 @@ GameObject68:
       name: Shader
       enabled: true
   Children: ~
-GameObject69:
+GameObject68:
   name: HormagauntPlaceholder_copy_copy_19
   prefabPath: ""
   uuid: 16386252550075515124
@@ -25028,7 +24973,7 @@ GameObject69:
       name: Shader
       enabled: true
   Children: ~
-GameObject70:
+GameObject69:
   name: HormagauntPlaceholder_copy_copy_20
   prefabPath: ""
   uuid: 15231930752227285663
@@ -25066,7 +25011,7 @@ GameObject70:
       name: Shader
       enabled: true
   Children: ~
-GameObject71:
+GameObject70:
   name: HormagauntPlaceholder_copy_copy_21
   prefabPath: ""
   uuid: 9778633048878225188
@@ -25104,7 +25049,7 @@ GameObject71:
       name: Shader
       enabled: true
   Children: ~
-GameObject72:
+GameObject71:
   name: HormagauntPlaceholder_copy_copy_22
   prefabPath: ""
   uuid: 211646013299459190
@@ -25142,7 +25087,7 @@ GameObject72:
       name: Shader
       enabled: true
   Children: ~
-GameObject73:
+GameObject72:
   name: HormagauntPlaceholder_copy_copy_23
   prefabPath: ""
   uuid: 8760297354190497175
@@ -25180,7 +25125,7 @@ GameObject73:
       name: Shader
       enabled: true
   Children: ~
-GameObject74:
+GameObject73:
   name: HormagauntPlaceholder_copy_copy_24
   prefabPath: ""
   uuid: 13523479863078887706
@@ -25218,7 +25163,7 @@ GameObject74:
       name: Shader
       enabled: true
   Children: ~
-GameObject75:
+GameObject74:
   name: HormagauntPlaceholder_copy_copy_25
   prefabPath: ""
   uuid: 16476632326663051820
@@ -25256,7 +25201,7 @@ GameObject75:
       name: Shader
       enabled: true
   Children: ~
-GameObject76:
+GameObject75:
   name: HormagauntPlaceholder_copy_copy_26
   prefabPath: ""
   uuid: 3003404820417577352
@@ -25294,7 +25239,7 @@ GameObject76:
       name: Shader
       enabled: true
   Children: ~
-GameObject77:
+GameObject76:
   name: HormagauntPlaceholder_copy_copy_27
   prefabPath: ""
   uuid: 11354767434560424108
@@ -25332,7 +25277,7 @@ GameObject77:
       name: Shader
       enabled: true
   Children: ~
-GameObject78:
+GameObject77:
   name: HormagauntPlaceholder_copy_copy_28
   prefabPath: ""
   uuid: 15667561536691869389
@@ -25370,7 +25315,7 @@ GameObject78:
       name: Shader
       enabled: true
   Children: ~
-GameObject79:
+GameObject78:
   name: HormagauntPlaceholder_copy_copy_29
   prefabPath: ""
   uuid: 1239525475521637052
@@ -25408,7 +25353,7 @@ GameObject79:
       name: Shader
       enabled: true
   Children: ~
-GameObject80:
+GameObject79:
   name: HormagauntPlaceholder_copy_copy_30
   prefabPath: ""
   uuid: 17278040288886392417
@@ -25446,7 +25391,7 @@ GameObject80:
       name: Shader
       enabled: true
   Children: ~
-GameObject81:
+GameObject80:
   name: TermagantPlaceholder_copy
   prefabPath: ""
   uuid: 3800071099220249447
@@ -25484,7 +25429,7 @@ GameObject81:
       name: Shader
       enabled: true
   Children: ~
-GameObject82:
+GameObject81:
   name: TermagantPlaceholder_copy_1
   prefabPath: ""
   uuid: 11748786893397282984
@@ -25522,7 +25467,7 @@ GameObject82:
       name: Shader
       enabled: true
   Children: ~
-GameObject83:
+GameObject82:
   name: TermagantPlaceholder_copy_2
   prefabPath: ""
   uuid: 7336085147968101830
@@ -25560,7 +25505,7 @@ GameObject83:
       name: Shader
       enabled: true
   Children: ~
-GameObject84:
+GameObject83:
   name: TermagantPlaceholder_copy_3
   prefabPath: ""
   uuid: 9477948802419580349
@@ -25598,7 +25543,7 @@ GameObject84:
       name: Shader
       enabled: true
   Children: ~
-GameObject85:
+GameObject84:
   name: TermagantPlaceholder_copy_4
   prefabPath: ""
   uuid: 4346145048318314277
@@ -25636,7 +25581,7 @@ GameObject85:
       name: Shader
       enabled: true
   Children: ~
-GameObject86:
+GameObject85:
   name: TermagantPlaceholder_copy_5
   prefabPath: ""
   uuid: 2739809895472493402
@@ -25674,7 +25619,7 @@ GameObject86:
       name: Shader
       enabled: true
   Children: ~
-GameObject87:
+GameObject86:
   name: TermagantPlaceholder_copy_6
   prefabPath: ""
   uuid: 1789027098764136896
@@ -25712,7 +25657,7 @@ GameObject87:
       name: Shader
       enabled: true
   Children: ~
-GameObject88:
+GameObject87:
   name: TermagantPlaceholder_copy_7
   prefabPath: ""
   uuid: 10198894894476343609
@@ -25750,7 +25695,7 @@ GameObject88:
       name: Shader
       enabled: true
   Children: ~
-GameObject89:
+GameObject88:
   name: TermagantPlaceholder_copy_copy
   prefabPath: ""
   uuid: 8142274324300616330
@@ -25788,7 +25733,7 @@ GameObject89:
       name: Shader
       enabled: true
   Children: ~
-GameObject90:
+GameObject89:
   name: TermagantPlaceholder_copy_copy_1
   prefabPath: ""
   uuid: 16933398871190538095
@@ -25826,7 +25771,7 @@ GameObject90:
       name: Shader
       enabled: true
   Children: ~
-GameObject91:
+GameObject90:
   name: TermagantPlaceholder_copy_copy_2
   prefabPath: ""
   uuid: 16900320195833819462
@@ -25864,7 +25809,7 @@ GameObject91:
       name: Shader
       enabled: true
   Children: ~
-GameObject92:
+GameObject91:
   name: HormagauntPlaceholder_copy_copy_31
   prefabPath: ""
   uuid: 9731106424778082893
@@ -25902,7 +25847,7 @@ GameObject92:
       name: Shader
       enabled: true
   Children: ~
-GameObject93:
+GameObject92:
   name: HormagauntPlaceholder_copy_copy_32
   prefabPath: ""
   uuid: 9749314643525645289
@@ -25940,7 +25885,7 @@ GameObject93:
       name: Shader
       enabled: true
   Children: ~
-GameObject94:
+GameObject93:
   name: TermagantPlaceholder_copy_copy_copy
   prefabPath: ""
   uuid: 16199073331025472157
@@ -25978,7 +25923,7 @@ GameObject94:
       name: Shader
       enabled: true
   Children: ~
-GameObject95:
+GameObject94:
   name: TyranidWarriorPlaceholder_copy
   prefabPath: ""
   uuid: 14867739711000687483
@@ -26016,7 +25961,7 @@ GameObject95:
       name: Shader
       enabled: true
   Children: ~
-GameObject96:
+GameObject95:
   name: TyranidWarriorPlaceholder_copy_copy
   prefabPath: ""
   uuid: 13056601393439358318
@@ -26054,7 +25999,7 @@ GameObject96:
       name: Shader
       enabled: true
   Children: ~
-GameObject97:
+GameObject96:
   name: TyranidWarriorPlaceholder_copy_copy_1
   prefabPath: ""
   uuid: 11515298971025365341
@@ -26092,7 +26037,7 @@ GameObject97:
       name: Shader
       enabled: true
   Children: ~
-GameObject98:
+GameObject97:
   name: TyranidWarriorPlaceholder_copy_copy_2
   prefabPath: ""
   uuid: 10740843859914569924
@@ -26130,7 +26075,7 @@ GameObject98:
       name: Shader
       enabled: true
   Children: ~
-GameObject99:
+GameObject98:
   name: TyranidWarriorPlaceholder_copy_copy_3
   prefabPath: ""
   uuid: 4801133761748770327
@@ -26168,7 +26113,7 @@ GameObject99:
       name: Shader
       enabled: true
   Children: ~
-GameObject100:
+GameObject99:
   name: TyranidWarriorPlaceholder_copy_copy_4
   prefabPath: ""
   uuid: 10700039659074241945
@@ -26206,7 +26151,7 @@ GameObject100:
       name: Shader
       enabled: true
   Children: ~
-GameObject101:
+GameObject100:
   name: TyranidWarriorPlaceholder_copy_copy_5
   prefabPath: ""
   uuid: 10286741658942329907
@@ -26244,7 +26189,7 @@ GameObject101:
       name: Shader
       enabled: true
   Children: ~
-GameObject102:
+GameObject101:
   name: TyranidWarriorPlaceholder_copy_copy_6
   prefabPath: ""
   uuid: 4747287266370945027
@@ -26282,7 +26227,7 @@ GameObject102:
       name: Shader
       enabled: true
   Children: ~
-GameObject103:
+GameObject102:
   name: LictorPlaceholder_copy
   prefabPath: ""
   uuid: 1482089280283509708
@@ -26320,7 +26265,7 @@ GameObject103:
       name: Shader
       enabled: true
   Children: ~
-GameObject104:
+GameObject103:
   name: LictorPlaceholder_copy_1
   prefabPath: ""
   uuid: 9125271790276659025
@@ -26358,7 +26303,7 @@ GameObject104:
       name: Shader
       enabled: true
   Children: ~
-GameObject105:
+GameObject104:
   name: Hormagaunt
   prefabPath: ""
   uuid: 17572353148165087720
@@ -28019,7 +27964,7 @@ GameObject105:
                                     - 1.0000001192092896
                                     - 1
                               Children: ~
-GameObject106:
+GameObject105:
   name: Tyranid_Warrior
   prefabPath: ""
   uuid: 16454255613290548110
@@ -28110,7 +28055,7 @@ GameObject106:
           name: Shader
           enabled: true
       Children: ~
-GameObject107:
+GameObject106:
   name: Level1_Zone1_1
   prefabPath: ""
   uuid: 10871396497807652549
@@ -28630,9 +28575,9 @@ GameObject107:
             - 63.749927520751953
             - 3084.63525390625
           localRotation:
-            - 90.000402282745739
-            - -86.705085959509901
-            - 179.99963017406864
+            - 90.000376858186073
+            - -86.704943457099944
+            - 179.9996641398983
           localScale:
             - 130.51902770996094
             - 130.51902770996094
@@ -28963,9 +28908,9 @@ GameObject107:
             - 164.68646240234375
             - 1182.335205078125
           localRotation:
-            - -90.000034797714122
-            - 83.400656161786358
-            - -2.4535416775231011e-05
+            - -90.000006841530947
+            - 83.400736609575972
+            - 6.8415309504562106e-06
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -29000,9 +28945,9 @@ GameObject107:
             - 158.47599792480469
             - 1306.6678466796875
           localRotation:
-            - -90.000032066307597
-            - -76.296852338521205
-            - 2.5186989974818382e-05
+            - -90.000032066250384
+            - -76.296838579876479
+            - 2.5186932764085601e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -29888,9 +29833,9 @@ GameObject107:
             - 54.029090881347656
             - 4134.30322265625
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -29925,9 +29870,9 @@ GameObject107:
             - 54.029090881347656
             - 3885.197509765625
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -29962,9 +29907,9 @@ GameObject107:
             - 54.029090881347656
             - 3932.269775390625
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -29999,9 +29944,9 @@ GameObject107:
             - 54.029090881347656
             - 4074.6875
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -30036,9 +29981,9 @@ GameObject107:
             - 54.029090881347656
             - 4145.07568359375
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -30073,9 +30018,9 @@ GameObject107:
             - 54.029090881347656
             - 3895.9697265625
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -30110,9 +30055,9 @@ GameObject107:
             - 54.029090881347656
             - 3943.0419921875
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -30147,9 +30092,9 @@ GameObject107:
             - 54.029090881347656
             - 4085.4599609375
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -30184,9 +30129,9 @@ GameObject107:
             - 54.029090881347656
             - 934.56494140625
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -30221,9 +30166,9 @@ GameObject107:
             - 54.029090881347656
             - 685.4591064453125
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -30258,9 +30203,9 @@ GameObject107:
             - 54.029090881347656
             - 732.53131103515625
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -30295,9 +30240,9 @@ GameObject107:
             - 54.029090881347656
             - 874.94927978515625
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31146,9 +31091,9 @@ GameObject107:
             - 54.029090881347656
             - 2596.039306640625
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31183,9 +31128,9 @@ GameObject107:
             - 54.029090881347656
             - -3640.270263671875
           localRotation:
-            - -90.000010910579675
-            - 41.425534951456129
-            - -1.5438391430641762e-06
+            - -90.000010910578467
+            - 41.425539507705125
+            - -1.5438385469118765e-06
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31220,9 +31165,9 @@ GameObject107:
             - 54.029090881347656
             - -3763.58349609375
           localRotation:
-            - -90.000010910579675
-            - 41.425534951456129
-            - -1.5438391430641762e-06
+            - -90.000010910578467
+            - 41.425539507705125
+            - -1.5438385469118765e-06
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31257,9 +31202,9 @@ GameObject107:
             - 54.029090881347656
             - -3545.785888671875
           localRotation:
-            - -90.000010910579675
-            - 41.425534951456129
-            - -1.5438391430641762e-06
+            - -90.000010910578467
+            - 41.425539507705125
+            - -1.5438385469118765e-06
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -31664,9 +31609,9 @@ GameObject107:
             - 928.53460693359375
             - -9513.279296875
           localRotation:
-            - -89.999961541122701
-            - 88.364155684345647
-            - 8.1151909152223905e-05
+            - -89.999961539749947
+            - 88.36405485492925
+            - 8.1153283168475281e-05
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -34587,9 +34532,9 @@ GameObject107:
             - 73.108879089355469
             - -3666.4267578125
           localRotation:
-            - 89.999996775941923
-            - 66.695713392354193
-            - 179.99998631507907
+            - 89.99999664449409
+            - 66.695725202350346
+            - 179.99999490101703
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -35808,9 +35753,9 @@ GameObject107:
             - 2.8933405876159668
             - -7604.4423828125
           localRotation:
-            - -90.000010189972016
-            - 58.033598514843476
-            - -8.4137608326618707e-06
+            - -90.000018167429246
+            - 58.033594089808844
+            - -1.2838795530764207e-05
           localScale:
             - 32
             - 32
@@ -36526,9 +36471,9 @@ GameObject107:
             - 553.5093994140625
             - -638.617919921875
           localRotation:
-            - -89.999784376161074
-            - -85.866496162348412
-            - -0.00021049786270455929
+            - -89.999807188295037
+            - -85.866595873211239
+            - -0.00018597707010756188
           localScale:
             - 50.343189239501953
             - 50.343189239501953
@@ -36859,9 +36804,9 @@ GameObject107:
             - 76.988845825195312
             - -8396.859375
           localRotation:
-            - -90.00001377825329
-            - 74.999999747170392
-            - 1.3778253281906654e-05
+            - -90.000019458128818
+            - 75.000007149325
+            - 6.3760956913211521e-06
           localScale:
             - 43.357864379882812
             - 43.357864379882812
@@ -36933,9 +36878,9 @@ GameObject107:
             - 81.313865661621094
             - -6652.3642578125
           localRotation:
-            - 89.9999758149238
-            - 0.82628745151031358
-            - 179.9999949958069
+            - 89.999975815195882
+            - 0.82628764018415246
+            - 179.99999503354161
           localScale:
             - 43.357868194580078
             - 43.357868194580078
@@ -38783,9 +38728,9 @@ GameObject107:
             - 23.373174667358398
             - -3753.420654296875
           localRotation:
-            - -3.1945054878420769
-            - 24.860779831943038
-            - -17.321879593858757
+            - -3.1945064560738534
+            - 24.860781550251527
+            - -17.321879852706939
           localScale:
             - 100
             - 100
@@ -38857,9 +38802,9 @@ GameObject107:
             - 201.60006713867188
             - -701.08270263671875
           localRotation:
-            - -90.000019554685608
-            - 80.78974638732339
-            - -2.2980840868634173e-05
+            - -89.99999657384474
+            - 80.78974981347659
+            - -3.4261552652453462e-06
           localScale:
             - 56
             - 56
@@ -40004,9 +39949,9 @@ GameObject107:
             - 109.05261993408203
             - 3582.95361328125
           localRotation:
-            - -8.5567687024641774
-            - -57.209904152680842
-            - -138.90945258387796
+            - -8.5567713767149858
+            - -57.209904822524862
+            - -138.90944749320749
           localScale:
             - 1
             - 1
@@ -40263,9 +40208,9 @@ GameObject107:
             - 123.31528472900391
             - 4541.62744140625
           localRotation:
-            - 178.3336032357864
-            - 52.153765872309769
-            - -35.460576839329157
+            - 178.33360241669106
+            - 52.153760355639683
+            - -35.460577179108597
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -40300,9 +40245,9 @@ GameObject107:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.3336032357864
-            - 52.153765872309769
-            - -35.460576839329157
+            - 178.33360241669106
+            - 52.153760355639683
+            - -35.460577179108597
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -41151,9 +41096,9 @@ GameObject107:
             - 48.267116546630859
             - 4037.668701171875
           localRotation:
-            - -90.000018164721112
-            - -80.144612166967306
-            - 2.1592484994074248e-05
+            - -90.00001816476238
+            - -80.14458269299702
+            - 2.1592526477633668e-05
           localScale:
             - 53.629287719726562
             - 53.629287719726562
@@ -41225,9 +41170,9 @@ GameObject107:
             - 48.267116546630859
             - 3986.6318359375
           localRotation:
-            - 89.999993818793399
-            - 70.642036644222884
-            - -179.99998366254323
+            - 89.999983899516948
+            - 70.642060421133962
+            - 179.99998563172173
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -41299,9 +41244,9 @@ GameObject107:
             - 48.267116546630859
             - 4048.44091796875
           localRotation:
-            - -90.000018164721112
-            - -80.144612166967306
-            - 2.1592484994074248e-05
+            - -90.00001816476238
+            - -80.14458269299702
+            - 2.1592526477633668e-05
           localScale:
             - 53.629287719726562
             - 53.629287719726562
@@ -41373,9 +41318,9 @@ GameObject107:
             - 48.267116546630859
             - 3997.404052734375
           localRotation:
-            - 89.999993818793399
-            - 70.642036644222884
-            - -179.99998366254323
+            - 89.999983899516948
+            - 70.642060421133962
+            - 179.99998563172173
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -41447,9 +41392,9 @@ GameObject107:
             - 48.267116546630859
             - 837.9302978515625
           localRotation:
-            - -90.000018164721112
-            - -80.144612166967306
-            - 2.1592484994074248e-05
+            - -90.00001816476238
+            - -80.14458269299702
+            - 2.1592526477633668e-05
           localScale:
             - 53.629287719726562
             - 53.629287719726562
@@ -41521,9 +41466,9 @@ GameObject107:
             - 48.267116546630859
             - 786.8934326171875
           localRotation:
-            - 89.999993818793399
-            - 70.642036644222884
-            - -179.99998366254323
+            - 89.999983899516948
+            - 70.642060421133962
+            - 179.99998563172173
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -41780,9 +41725,9 @@ GameObject107:
             - 48.267116546630859
             - -1068.7872314453125
           localRotation:
-            - 90.000031145546899
-            - -79.054954628184802
-            - 179.99997743128236
+            - 90.000023050849677
+            - -79.054944818130849
+            - 179.99998724134556
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -42113,9 +42058,9 @@ GameObject107:
             - 48.267116546630859
             - 1652.02197265625
           localRotation:
-            - 90.000013986824499
-            - -51.544327316148959
-            - 179.99999324688645
+            - 90.000008681691043
+            - -51.544320442886168
+            - 179.9999931267368
           localScale:
             - 53.629287719726562
             - 53.629287719726562
@@ -42409,9 +42354,9 @@ GameObject107:
             - 48.267116546630859
             - -4562.12548828125
           localRotation:
-            - -89.999982063132364
-            - -77.72042181387647
-            - -2.9958656845800607e-05
+            - -89.999982063105676
+            - -77.720428683464192
+            - -2.9958683537514405e-05
           localScale:
             - 53.629291534423828
             - 53.629291534423828
@@ -42594,9 +42539,9 @@ GameObject107:
             - 48.267116546630859
             - -1413.0146484375
           localRotation:
-            - 90.000037852256185
-            - 66.469444936717551
-            - 179.99998727072264
+            - 90.000047624140635
+            - 66.469451566834678
+            - -179.99998900386532
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -42705,9 +42650,9 @@ GameObject107:
             - 48.267116546630859
             - 1095.0556640625
           localRotation:
-            - 90.000012613111224
-            - -53.451699950386711
-            - -179.99999283249653
+            - 90.000007192950903
+            - -53.451699924938005
+            - -179.9999928070491
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -43741,9 +43686,9 @@ GameObject107:
             - 401.49282836914062
             - 3654.83349609375
           localRotation:
-            - 89.999994087961667
-            - 71.572310614956422
-            - -179.99998342377106
+            - 89.999993080533244
+            - 71.572327191183433
+            - -179.99999308053324
           localScale:
             - 155.38609313964844
             - 155.38609313964844
@@ -43778,9 +43723,9 @@ GameObject107:
             - 401.49282836914062
             - 2959.014892578125
           localRotation:
-            - 89.999994087961667
-            - 71.572310614956422
-            - -179.99998342377106
+            - 89.999993080533244
+            - 71.572327191183433
+            - -179.99999308053324
           localScale:
             - 155.38609313964844
             - 155.38609313964844
@@ -44074,9 +44019,9 @@ GameObject107:
             - 401.49282836914062
             - -3378.93896484375
           localRotation:
-            - 90.000040271195118
-            - -72.925312339592381
-            - 179.99999426240663
+            - 90.000040271176644
+            - -72.925305432869806
+            - 179.9999942624251
           localScale:
             - 155.38609313964844
             - 155.38609313964844
@@ -44111,9 +44056,9 @@ GameObject107:
             - 401.49282836914062
             - -3735.312255859375
           localRotation:
-            - 90.000040271195118
-            - -72.925312339592381
-            - 179.99999426240663
+            - 90.000040271176644
+            - -72.925305432869806
+            - 179.9999942624251
           localScale:
             - 155.38609313964844
             - 155.38609313964844
@@ -44148,9 +44093,9 @@ GameObject107:
             - 401.49282836914062
             - -4092.173828125
           localRotation:
-            - 90.000040271195118
-            - -72.925312339592381
-            - 179.99999426240663
+            - 90.000040271176644
+            - -72.925305432869806
+            - 179.9999942624251
           localScale:
             - 155.38609313964844
             - 155.38609313964844
@@ -44185,9 +44130,9 @@ GameObject107:
             - 401.49282836914062
             - -4447.55859375
           localRotation:
-            - 90.000040271195118
-            - -72.925312339592381
-            - 179.99999426240663
+            - 90.000040271176644
+            - -72.925305432869806
+            - 179.9999942624251
           localScale:
             - 155.38609313964844
             - 155.38609313964844
@@ -45887,9 +45832,9 @@ GameObject107:
             - 0
             - 3936.121826171875
           localRotation:
-            - -89.999998354885548
-            - -70.919601305553073
-            - -1.8960060415945722e-05
+            - -89.999998354874947
+            - -70.91959108933699
+            - -1.89600720545215e-05
           localScale:
             - 100
             - 100
@@ -45925,7 +45870,7 @@ GameObject107:
             - 4214.556640625
           localRotation:
             - -90
-            - -89.893898520612751
+            - -89.895896651452134
             - 0
           localScale:
             - 100
@@ -45962,7 +45907,7 @@ GameObject107:
             - 1013.7897338867188
           localRotation:
             - -90
-            - -89.893898520612751
+            - -89.895896651452134
             - 0
           localScale:
             - 100
@@ -46109,9 +46054,9 @@ GameObject107:
             - 1.4901161193847656e-06
             - 2083.088623046875
           localRotation:
-            - -89.999986669846763
-            - -74.794672350096278
-            - -2.5388988649544963e-05
+            - -90.000006890763402
+            - -74.794653851869995
+            - -6.8907634043662875e-06
           localScale:
             - 100
             - 100
@@ -46257,9 +46202,9 @@ GameObject107:
             - 0
             - -1286.1590576171875
           localRotation:
-            - -90.000026684928699
-            - -50.935739124405579
-            - -1.1363067827680202e-05
+            - -90.000033604030406
+            - -50.935729237973028
+            - -8.0675887919084964e-06
           localScale:
             - 100
             - 100
@@ -46294,9 +46239,9 @@ GameObject107:
             - 0
             - 897.19256591796875
           localRotation:
-            - -90.000755564613485
-            - -89.171050753545089
-            - 0.00089729474944710472
+            - -90.001113806134413
+            - -89.171094514649482
+            - 0.0012469983083899896
           localScale:
             - 100
             - 100
@@ -46331,9 +46276,9 @@ GameObject107:
             - 58.736461639404297
             - -6378.72216796875
           localRotation:
-            - -0.00012569587360706497
-            - -88.516193276713494
-            - 87.304168001199201
+            - 4.1798289434285013e-05
+            - -88.516231123203667
+            - 87.303998920336014
           localScale:
             - 0.36166170239448547
             - 0.36166170239448547
@@ -46368,9 +46313,9 @@ GameObject107:
             - 0
             - -6580.556640625
           localRotation:
-            - -4.3256962108048816e-06
+            - -4.3257019857636221e-06
             - -88.516442511620042
-            - -9.0579322906386283e-12
+            - -3.7148161629547962e-12
           localScale:
             - 0.36166170239448547
             - 0.36166170239448547
@@ -46427,7 +46372,7 @@ GameObject107:
           name: Shader
           enabled: true
       Children: ~
-GameObject108:
+GameObject107:
   name: Colliders_Z1_Folder
   prefabPath: ""
   uuid: 11813497937159204824
@@ -46962,7 +46907,7 @@ GameObject108:
             - -153.50090026855469
           localRotation:
             - 0
-            - -89.332198109936598
+            - -89.331878034346985
             - 0
           localScale:
             - 32.727252960205078
@@ -46995,7 +46940,7 @@ GameObject108:
             - -136.5814208984375
           localRotation:
             - 0
-            - -89.331791106362331
+            - -89.331989092526314
             - 0
           localScale:
             - 2.8886909484863281
@@ -47028,7 +46973,7 @@ GameObject108:
             - -139.23141479492188
           localRotation:
             - 0
-            - -89.332198109936598
+            - -89.331878034346985
             - 0
           localScale:
             - 2.2269508838653564
@@ -47951,9 +47896,9 @@ GameObject108:
             - 0.3479820191860199
             - -166.00828552246094
           localRotation:
-            - 1.1861407032571834e-05
-            - 88.727762391577656
-            - 91.617649648226063
+            - 6.4331295119719438e-05
+            - 88.727924656732625
+            - 91.617702118114153
           localScale:
             - 1.9669058322906494
             - 4.4303240776062012
@@ -48446,9 +48391,9 @@ GameObject108:
             - 5.0879578590393066
             - -196.26585388183594
           localRotation:
-            - 105.95985599199231
-            - -88.923135018656666
-            - -107.09462732944849
+            - 105.95966944202215
+            - -88.923097761340671
+            - -107.09444560912772
           localScale:
             - 3.6338496208190918
             - 22.707525253295898
@@ -49140,7 +49085,7 @@ GameObject108:
             - -18.607112884521484
           localRotation:
             - 0
-            - -75.805750619037568
+            - -75.805738374334837
             - 0
           localScale:
             - 7.9203400611877441
@@ -49173,7 +49118,7 @@ GameObject108:
             - -29.748395919799805
           localRotation:
             - 0
-            - -75.80575548600298
+            - -75.805750619037568
             - 0
           localScale:
             - 32.363376617431641
@@ -49404,7 +49349,7 @@ GameObject108:
             - 144.80776977539062
           localRotation:
             - 0
-            - -88.494785580408447
+            - -88.494637970418964
             - 0
           localScale:
             - 30.431207656860352
@@ -49850,7 +49795,7 @@ GameObject108:
             - 0
           isTrigger: false
       Children: ~
-GameObject109:
+GameObject108:
   name: DestroyableObjects
   prefabPath: ""
   uuid: 13058592131146498515
@@ -50741,7 +50686,7 @@ GameObject109:
             name: DestroyEnviormentObject
             fields: ~
       Children: ~
-GameObject110:
+GameObject109:
   name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
   prefabPath: ""
   uuid: 5901527255372476756
@@ -50775,7 +50720,7 @@ GameObject110:
         - 0
       isTrigger: false
   Children: ~
-GameObject111:
+GameObject110:
   name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy
   prefabPath: ""
   uuid: 4996192130555642039
@@ -50809,7 +50754,7 @@ GameObject111:
         - 0
       isTrigger: false
   Children: ~
-GameObject112:
+GameObject111:
   name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_1
   prefabPath: ""
   uuid: 7878754941102642490
@@ -50843,7 +50788,7 @@ GameObject112:
         - 0
       isTrigger: false
   Children: ~
-GameObject113:
+GameObject112:
   name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_2
   prefabPath: ""
   uuid: 11221393403171746889
@@ -50877,7 +50822,7 @@ GameObject113:
         - 0
       isTrigger: false
   Children: ~
-GameObject114:
+GameObject113:
   name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_copy_3
   prefabPath: ""
   uuid: 14675676612700447289
@@ -50911,172 +50856,7 @@ GameObject114:
         - 0
       isTrigger: false
   Children: ~
-GameObject115:
-  name: BiblePagePickUp_Instance2
-  prefabPath: Assets\Prefabs\BiblePagePickUp.prefab.yaml
-  uuid: 3502781529200765987
-  tag: BiblePage
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 112.79914855957031
-        - 1.6145927906036377
-        - 0.37604939937591553
-      localRotation:
-        - 141.43397277656567
-        - 19.935101247776032
-        - 179.9999954447421
-      localScale:
-        - 0.51462656259536743
-        - 0.51462656259536743
-        - 0.51462650299072266
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 12528275894127540237
-      material:
-        name: bible_DefaultMaterial_BaseColor
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: BiblePagePickUp
-        fields:
-          floatSpeed: 1.09299123
-          floatHeight: 0.5
-          rotationSpeed: 55.941494
-  Children: ~
-GameObject116:
-  name: BiblePagePickUp_Instance3
-  prefabPath: Assets\Prefabs\BiblePagePickUp.prefab.yaml
-  uuid: 14351402895271377138
-  tag: BiblePage
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 715.395751953125
-        - 0.66510313749313354
-        - -7.7851614952087402
-      localRotation:
-        - -38.566020823227248
-        - -32.943469985490218
-        - 6.5512076291993127e-07
-      localScale:
-        - 0.51462656259536743
-        - 0.51462656259536743
-        - 0.51462650299072266
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 12528275894127540237
-      material:
-        name: bible_DefaultMaterial_BaseColor
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: BiblePagePickUp
-        fields:
-          floatSpeed: 0.537161171
-          floatHeight: 0.5
-          rotationSpeed: 67.2554703
-  Children: ~
-GameObject117:
-  name: BiblePagePickUp_Instance4
-  prefabPath: Assets\Prefabs\BiblePagePickUp.prefab.yaml
-  uuid: 5718404260341178068
-  tag: BiblePage
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 952.3115234375
-        - 1.0850547552108765
-        - -180.0191650390625
-      localRotation:
-        - -38.566020823227248
-        - -32.943469985490218
-        - 6.5512076291993127e-07
-      localScale:
-        - 0.51462656259536743
-        - 0.51462656259536743
-        - 0.51462650299072266
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 12528275894127540237
-      material:
-        name: bible_DefaultMaterial_BaseColor
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: BiblePagePickUp
-        fields:
-          floatSpeed: 1.19895685
-          floatHeight: 0.5
-          rotationSpeed: 45.243351
-  Children: ~
-GameObject118:
+GameObject114:
   name: Canvas_Interaction
   prefabPath: Assets\Prefabs\Canvas_Interaction_Level1.prefab.yaml
   uuid: 1136688395884097080
@@ -51297,7 +51077,7 @@ GameObject118:
             - 0
           anim_speed: 0
       Children: ~
-GameObject119:
+GameObject115:
   name: CheckPoint_Instance
   prefabPath: Assets\Prefabs\CheckPoint.prefab.yaml
   uuid: 15781612356191851988
@@ -51335,7 +51115,7 @@ GameObject119:
         name: Checkpoint
         fields: ~
   Children: ~
-GameObject120:
+GameObject116:
   name: bullett.001_1_1_Instance_Instance_Instance
   prefabPath: Assets\Prefabs\AmmunitionBlessingPrefab.prefab.yaml
   uuid: 4477690289056991158
@@ -51351,9 +51131,9 @@ GameObject120:
         - 2.9692173004150391
         - 11.894564628601074
       localRotation:
-        - -7.3107530269390013
-        - 72.465817886565304
-        - -4.7239977721560669
+        - -7.3107526145532082
+        - 72.465841115022783
+        - -4.7239973174007241
       localScale:
         - 0.0030200001783668995
         - 0.0030200004111975431
@@ -51411,12 +51191,12 @@ GameObject120:
       Script0:
         name: AmmunitionBlessing
         fields:
-          floatSpeed: 1.23653746
+          floatSpeed: 1.48014104
           floatHeight: 0.5
-          rotationSpeed: 66.3813248
+          rotationSpeed: 96.9873047
           lifeTime: 10
   Children: ~
-GameObject121:
+GameObject117:
   name: heart_1_1_Instance_Instance_Instance
   prefabPath: Assets\Prefabs\BlackHeartPrefab.prefab.yaml
   uuid: 16885227130202818442
@@ -51492,12 +51272,12 @@ GameObject121:
       Script0:
         name: BlackHeart
         fields:
-          floatSpeed: 1.1621747
+          floatSpeed: 1.78731632
           floatHeight: 0.5
-          rotationSpeed: 65.6379776
+          rotationSpeed: 71.1949768
           lifeTime: 10
   Children: ~
-GameObject122:
+GameObject118:
   name: boolets_1_Instance_Instance_Instance
   prefabPath: Assets\Prefabs\BoltgunBulletsPrefab.prefab.yaml
   uuid: 10319716025484776489
@@ -51573,13 +51353,13 @@ GameObject122:
       Script0:
         name: BoltgunBullets
         fields:
-          floatSpeed: 0.733135819
+          floatSpeed: 1.06703794
           floatHeight: 0.5
-          rotationSpeed: 89.1099167
+          rotationSpeed: 94.2953262
           lifeTime: 30
           isDetected: false
   Children: ~
-GameObject123:
+GameObject119:
   name: stim.001_1_1_Instance_Instance_Instance
   prefabPath: Assets\Prefabs\MedicaeStimmPrefab.prefab.yaml
   uuid: 2286871139816912995
@@ -51655,12 +51435,12 @@ GameObject123:
       Script0:
         name: MedicaeStimm
         fields:
-          floatSpeed: 0.895278215
+          floatSpeed: 0.942584336
           floatHeight: 0.5
-          rotationSpeed: 76.0903549
+          rotationSpeed: 99.781044
           lifeTime: 10
   Children: ~
-GameObject124:
+GameObject120:
   name: bullet.001_Instance_Instance_Instance
   prefabPath: Assets\Prefabs\PiercingBulletsPrefab.prefab.yaml
   uuid: 14537693507044453474
@@ -51676,9 +51456,9 @@ GameObject124:
         - 2.5702333450317383
         - 17.775384902954102
       localRotation:
-        - 10.887518993689547
-        - 4.8268470487203592
-        - 0.9272348445055727
+        - 10.887520695757422
+        - 4.826847046832218
+        - 0.9272348617652898
       localScale:
         - 0.0025800000876188278
         - 0.0025800003204494715
@@ -51736,11 +51516,11 @@ GameObject124:
       Script0:
         name: PiercingBullets
         fields:
-          floatSpeed: 1.9355073
+          floatSpeed: 1.13196337
           floatHeight: 0.5
-          rotationSpeed: 92.1230469
+          rotationSpeed: 59.7215843
   Children: ~
-GameObject125:
+GameObject121:
   name: magnet.001_1_1_Instance_Instance_Instance
   prefabPath: Assets\Prefabs\magnetPrefab.prefab.yaml
   uuid: 1287171535200146804
@@ -51816,12 +51596,12 @@ GameObject125:
       Script0:
         name: Magnet
         fields:
-          floatSpeed: 0.665073395
+          floatSpeed: 1.289487
           floatHeight: 0.5
-          rotationSpeed: 33.5379181
+          rotationSpeed: 95.4431839
           lifeTime: 10
   Children: ~
-GameObject126:
+GameObject122:
   name: estandarte.001_1_1_Instance_Instance_Instance
   prefabPath: Assets\Prefabs\ChapterStandardPrefab.prefab.yaml
   uuid: 10686515047630765322
@@ -51837,9 +51617,9 @@ GameObject126:
         - 2.5069756507873535
         - 18.400619506835938
       localRotation:
-        - -133.3433277055862
-        - -71.277422542861018
-        - 120.49716635800334
+        - -133.34332608442548
+        - -71.277419369170147
+        - 120.49717689718297
       localScale:
         - 0.0027348003350198269
         - 0.0027347977738827467
@@ -51897,12 +51677,12 @@ GameObject126:
       Script0:
         name: ChapterStandard
         fields:
-          floatSpeed: 1.91120362
+          floatSpeed: 1.25939703
           floatHeight: 0.5
-          rotationSpeed: 52.3124084
+          rotationSpeed: 65.2359085
           lifeTime: 10
   Children: ~
-GameObject127:
+GameObject123:
   name: shotgun boolets_1_Instance_Instance_Instance
   prefabPath: Assets\Prefabs\ShotgunShellsPrefab.prefab.yaml
   uuid: 3957330520597694885
@@ -51978,13 +51758,13 @@ GameObject127:
       Script0:
         name: ShotgunShells
         fields:
-          floatSpeed: 1.71152055
+          floatSpeed: 0.529192507
           floatHeight: 0.5
-          rotationSpeed: 87.1375732
+          rotationSpeed: 76.8453522
           lifeTime: 30
           isDetected: false
   Children: ~
-GameObject128:
+GameObject124:
   name: shotgun
   prefabPath: Assets/Prefabs/ShotgunPickUp.prefab.yaml
   uuid: 13442202668486948697
@@ -52113,3 +51893,223 @@ GameObject128:
           name: Shader
           enabled: true
       Children: ~
+GameObject125:
+  name: BiblePagePickUp_Instance_1_Instance
+  prefabPath: Assets\Prefabs\BiblePagePickUp.prefab.yaml
+  uuid: 17109756904425925512
+  tag: BiblePage
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 157.67964172363281
+        - 0.60818320512771606
+        - -218.51683044433594
+      localRotation:
+        - -38.56607136433923
+        - -32.943467975201116
+        - -8.1470761278183522e-07
+      localScale:
+        - 1.0121674811729386
+        - 1.0121674973657637
+        - 1.0121673267943023
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 12528275894127540237
+      material:
+        name: bible_DefaultMaterial_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BiblePagePickUp
+        fields:
+          floatSpeed: 1.64052975
+          floatHeight: 0.5
+          rotationSpeed: 90.4441223
+  Children: ~
+GameObject126:
+  name: BiblePagePickUp_Instance_1_Instance_1_Instance
+  prefabPath: Assets\Prefabs\BiblePagePickUp.prefab.yaml
+  uuid: 7149054577987352022
+  tag: BiblePage
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 114.01962280273438
+        - 0.60818320512771606
+        - 0.88553959131240845
+      localRotation:
+        - -38.566063220541864
+        - -32.943467975201102
+        - -1.1417434401897204e-06
+      localScale:
+        - 1.0121674811729389
+        - 1.0121674613953686
+        - 1.0121673042598605
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 12528275894127540237
+      material:
+        name: bible_DefaultMaterial_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BiblePagePickUp
+        fields:
+          floatSpeed: 1.64052975
+          floatHeight: 0.5
+          rotationSpeed: 90.4441223
+  Children: ~
+GameObject127:
+  name: BiblePagePickUp_Instance_1_Instance_1_Instance2
+  prefabPath: Assets\Prefabs\BiblePagePickUp.prefab.yaml
+  uuid: 11746514333259255739
+  tag: BiblePage
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 714.0562744140625
+        - 0.60818320512771606
+        - -8.463160514831543
+      localRotation:
+        - -38.566063220541864
+        - -32.943467975201102
+        - -1.1417434401897204e-06
+      localScale:
+        - 1.0121674811729389
+        - 1.0121674613953686
+        - 1.0121673042598605
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 12528275894127540237
+      material:
+        name: bible_DefaultMaterial_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BiblePagePickUp
+        fields:
+          floatSpeed: 1.64052975
+          floatHeight: 0.5
+          rotationSpeed: 90.4441223
+  Children: ~
+GameObject128:
+  name: BiblePagePickUp_Instance_1_Instance_1_Instance3
+  prefabPath: Assets\Prefabs\BiblePagePickUp.prefab.yaml
+  uuid: 5988733695605975707
+  tag: BiblePage
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 953.9951171875
+        - 0.60815310478210449
+        - -181.44073486328125
+      localRotation:
+        - -38.566063220541864
+        - -32.943467975201102
+        - -1.1417434401897204e-06
+      localScale:
+        - 1.0121674811729389
+        - 1.0121674613953686
+        - 1.0121673042598605
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 12528275894127540237
+      material:
+        name: bible_DefaultMaterial_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BiblePagePickUp
+        fields:
+          floatSpeed: 1.64052975
+          floatHeight: 0.5
+          rotationSpeed: 90.4441223
+  Children: ~

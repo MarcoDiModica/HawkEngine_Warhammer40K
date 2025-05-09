@@ -472,6 +472,7 @@ public class EnemyControllerMelee : EnemyController
         if (pc.redThirstManager.redThirstBonus < clawDamage)
         {
             pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
+            pc.StartFlashColor(pc.flashColor, pc.flashDuration);
         }
         else
         {
@@ -514,6 +515,7 @@ public class EnemyControllerMelee : EnemyController
                 if (pc.redThirstManager.redThirstBonus < leapDamage)
                 {
                     pc.playerData.TakeDamage(leapDamage - pc.redThirstManager.redThirstBonus);
+                    pc.StartFlashColor(pc.flashColor, pc.flashDuration);
                 }
                 else
                 {
@@ -523,6 +525,7 @@ public class EnemyControllerMelee : EnemyController
             else
             {
                 pc.playerData.TakeDamage(leapDamage);
+                pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
             Engineson.print(other.tag + " health: " + (pc.playerData.GetHealth()));
         }

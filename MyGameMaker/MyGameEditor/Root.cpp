@@ -209,6 +209,8 @@ bool Root::Start()
 	powerUp4->AddComponent<ScriptComponent>()->LoadScript("PiercingBullets");
 	powerUp4->SetTag("PowerUp");*/
 
+
+
 		/*auto boltgunUpgrade = CreateGameObject("BoltgunUpgrade");
 		boltgunUpgrade->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 		auto boltgunMesh = CreateGameObjectWithPath("Assets/boltgun.fbx");

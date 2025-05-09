@@ -68,7 +68,7 @@ bool Root::Start()
 	resourceManager->LoadResources(); // Esto no se mutea
 	resourceManager->CreateCube(); // Esto no se mutea
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
 
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
@@ -208,6 +208,41 @@ bool Root::Start()
 	powerUp4->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(PiercingBulletsMetallic);
 	powerUp4->AddComponent<ScriptComponent>()->LoadScript("PiercingBullets");
 	powerUp4->SetTag("PowerUp");*/
+
+
+
+		/*auto boltgunUpgrade = CreateGameObject("BoltgunUpgrade");
+		boltgunUpgrade->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+		auto boltgunMesh = CreateGameObjectWithPath("Assets/boltgun.fbx");
+		boltgunMesh->SetName("boltgunMesh");
+		ParentGameObject(*boltgunMesh, *boltgunUpgrade);
+		boltgunUpgrade->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
+		boltgunUpgrade->AddComponent<BoxColliderComponent>(Application->physicsModule);
+		boltgunUpgrade->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+		boltgunUpgrade->AddComponent<ScriptComponent>()->LoadScript("BoltgunUpgradePickUp");
+		boltgunUpgrade->SetTag("Upgrade");
+
+		auto shotgunUpgrade = CreateGameObject("ShotgunUpgrade");
+		shotgunUpgrade->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+		auto shotgunMesh = CreateGameObjectWithPath("Assets/shotgun.fbx");
+		shotgunMesh->SetName("shotgunMesh");
+		ParentGameObject(*shotgunMesh, *shotgunUpgrade);
+		shotgunUpgrade->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
+		shotgunUpgrade->AddComponent<BoxColliderComponent>(Application->physicsModule);
+		shotgunUpgrade->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+		shotgunUpgrade->AddComponent<ScriptComponent>()->LoadScript("ShotgunUpgradePickUp");
+		shotgunUpgrade->SetTag("Upgrade");
+		
+		auto railgunUpgrade = CreateGameObject("RailgunUpgrade");
+		railgunUpgrade->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+		auto railgunMesh = CreateGameObjectWithPath("Assets/railgun.fbx");
+		railgunMesh->SetName("railgunMesh");
+		ParentGameObject(*railgunMesh, *railgunUpgrade);
+		railgunUpgrade->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
+		railgunUpgrade->AddComponent<BoxColliderComponent>(Application->physicsModule);
+		railgunUpgrade->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+		railgunUpgrade->AddComponent<ScriptComponent>()->LoadScript("RailgunUpgradePickUp");
+		railgunUpgrade->SetTag("Upgrade");*/
 	//
 	////// Test Ammunition
 	//auto ShotgunShells = CreateGameObjectWithPath("Assets/Meshes/ShotgunShells.fbx");

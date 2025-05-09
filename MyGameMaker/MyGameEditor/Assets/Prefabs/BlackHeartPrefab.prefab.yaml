@@ -1,6 +1,6 @@
-name: heart_1_1_Instance
+name: heart_1_1_Instance_Instance
 prefabPath: Assets\Prefabs\BlackHeartPrefab.prefab.yaml
-uuid: 5540422953138167897
+uuid: 1283899584680337036
 tag: PowerUp
 active: true
 isStatic: false
@@ -9,17 +9,17 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 1.5818749666213989
-      - 3
-      - -14.371868133544922
+      - 14.317693710327148
+      - 2.8426132202148438
+      - 5.8471565246582031
     localRotation:
       - 0
-      - -0
+      - 3.3840310962216478
       - 0
     localScale:
-      - 0.0020000000949949026
-      - 0.0020000000949949026
-      - 0.0020000000949949026
+      - 0.002919999892063577
+      - 0.0029199998825788498
+      - 0.002919999892063577
   MeshRenderer:
     name: MeshRenderer
     enabled: true
@@ -31,6 +31,9 @@ Components:
       - 1
       - 1
       - 1
+  Shader:
+    name: Shader
+    enabled: true
   BoxColliderComponent:
     size:
       - 1
@@ -70,8 +73,8 @@ Components:
     Script0:
       name: BlackHeart
       fields:
-        floatSpeed: 1.23809624
+        floatSpeed: 1.48422301
         floatHeight: 0.5
-        rotationSpeed: 93.4034882
+        rotationSpeed: 54.9048271
         lifeTime: 10
 Children: ~

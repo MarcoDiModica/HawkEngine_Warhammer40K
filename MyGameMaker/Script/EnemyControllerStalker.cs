@@ -310,6 +310,7 @@ public class EnemyControllerStalker : EnemyController
             if (pc.redThirstManager.redThirstBonus < clawDamage)
             {
                 pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
+                pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
             else
             {
@@ -319,6 +320,7 @@ public class EnemyControllerStalker : EnemyController
         else
         {
             pc.playerData.TakeDamage(clawDamage);
+            pc.StartFlashColor(pc.flashColor, pc.flashDuration);
         }
 
         Audio.PlayOneShot(SFX_ATTACK);
@@ -398,6 +400,7 @@ public class EnemyControllerStalker : EnemyController
                 if (pc.redThirstManager.redThirstBonus < pounceDamage)
                 {
                     pc.playerData.TakeDamage(pounceDamage - pc.redThirstManager.redThirstBonus);
+                    pc.StartFlashColor(pc.flashColor, pc.flashDuration);
                 }
                 else
                 {
@@ -407,6 +410,7 @@ public class EnemyControllerStalker : EnemyController
             else
             {
                 pc.playerData.TakeDamage(pounceDamage);
+                pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
         }
     }

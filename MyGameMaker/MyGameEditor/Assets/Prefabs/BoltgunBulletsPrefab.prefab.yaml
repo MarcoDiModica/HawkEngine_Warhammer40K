@@ -1,6 +1,6 @@
-name: boolets_1_Instance
+name: boolets_1_Instance_Instance
 prefabPath: Assets\Prefabs\BoltgunBulletsPrefab.prefab.yaml
-uuid: 13677996586570201437
+uuid: 17922533948957913322
 tag: Ammunition
 active: true
 isStatic: false
@@ -10,16 +10,16 @@ Components:
     enabled: true
     localPosition:
       - 1.7412950992584229
-      - 3
-      - -16.371944427490234
+      - 2.1566262245178223
+      - -17.497959136962891
     localRotation:
       - 0
       - -0
       - 0
     localScale:
-      - 0.0080000003799796104
-      - 0.0080000003799796104
-      - 0.0080000003799796104
+      - 0.01305919885635376
+      - 0.01305919885635376
+      - 0.01305919885635376
   MeshRenderer:
     name: MeshRenderer
     enabled: true
@@ -31,6 +31,9 @@ Components:
       - 1
       - 1
       - 1
+  Shader:
+    name: Shader
+    enabled: true
   BoxColliderComponent:
     size:
       - 1
@@ -70,9 +73,9 @@ Components:
     Script0:
       name: BoltgunBullets
       fields:
-        floatSpeed: 1.47841668
+        floatSpeed: 1.38363707
         floatHeight: 0.5
-        rotationSpeed: 36.4801178
+        rotationSpeed: 60.243866
         lifeTime: 30
         isDetected: false
 Children: ~

@@ -139,7 +139,6 @@ GameObject2:
           maxOffsetDistance: 3.5999999
           offsetSmoothness: 5
           returnDelay: 0.200000003
-          dashFOV: 35
   Children: ~
 GameObject3:
   name: CollisionNextLevel
@@ -469,6 +468,7 @@ GameObject6:
       Script4:
         name: PlayerController
         fields:
+          isShootInput: false
           isRunning: false
           canMove: true
       Script5:
@@ -480,11 +480,15 @@ GameObject6:
           hasPiercingBullets: false
       Script6:
         name: Boltgun
-        fields: ~
+        fields:
+          shakeIntensity: 0.150000006
+          shakeDuration: 0.200000003
       Script7:
         name: Shotgun
         fields:
           timeSinceLastShot: 28.0336056
+          shakeIntensity: 0.400000006
+          shakeDuration: 0.25
       Script8:
         name: GrenadeLauncher
         fields:
@@ -498,6 +502,8 @@ GameObject6:
           isCooling: false
           isRecharged: true
           isReloading: false
+          shakeIntensity: 0.400000006
+          shakeDuration: 0.25
       Script10:
         name: LaserBeam
         fields:
@@ -646,7 +652,8 @@ GameObject6:
         ScriptComponents:
           Script0:
             name: PlayerAnimations
-            fields: ~
+            fields:
+              animIndex: 0
       Children:
         - name: ROOT
           prefabPath: ""
@@ -12149,9 +12156,9 @@ GameObject18:
       Script0:
         name: AmmunitionBlessing
         fields:
-          floatSpeed: 1.42784119
+          floatSpeed: 1.10998976
           floatHeight: 0.5
-          rotationSpeed: 58.7038307
+          rotationSpeed: 78.178772
           lifeTime: 10
   Children: ~
 GameObject19:
@@ -12205,9 +12212,9 @@ GameObject19:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.762647986
+          floatSpeed: 0.987663627
           floatHeight: 0.5
-          rotationSpeed: 31.4459515
+          rotationSpeed: 46.0120544
   Children: ~
 GameObject20:
   name: heart_1_1_Instance_Instance
@@ -12285,9 +12292,9 @@ GameObject20:
       Script0:
         name: BlackHeart
         fields:
-          floatSpeed: 0.806920648
+          floatSpeed: 1.49347019
           floatHeight: 0.5
-          rotationSpeed: 41.5267868
+          rotationSpeed: 67.9576797
           lifeTime: 10
   Children: ~
 GameObject21:
@@ -12366,9 +12373,9 @@ GameObject21:
       Script0:
         name: ChapterStandard
         fields:
-          floatSpeed: 1.54190767
+          floatSpeed: 1.14533782
           floatHeight: 0.5
-          rotationSpeed: 55.9311523
+          rotationSpeed: 32.3867798
           lifeTime: 10
   Children: ~
 GameObject22:
@@ -12447,9 +12454,9 @@ GameObject22:
       Script0:
         name: MedicaeStimm
         fields:
-          floatSpeed: 1.61663544
+          floatSpeed: 0.510143042
           floatHeight: 0.5
-          rotationSpeed: 37.9951172
+          rotationSpeed: 42.9385605
           lifeTime: 10
   Children: ~
 GameObject23:
@@ -12528,9 +12535,9 @@ GameObject23:
       Script0:
         name: PiercingBullets
         fields:
-          floatSpeed: 1.63863516
+          floatSpeed: 1.10705531
           floatHeight: 0.5
-          rotationSpeed: 60.7120056
+          rotationSpeed: 97.2575455
   Children: ~
 GameObject24:
   name: magnet.001_1_1_Instance_Instance
@@ -12608,9 +12615,9 @@ GameObject24:
       Script0:
         name: Magnet
         fields:
-          floatSpeed: 1.8817426
+          floatSpeed: 1.31788206
           floatHeight: 0.5
-          rotationSpeed: 32.6918221
+          rotationSpeed: 56.7698822
           lifeTime: 10
   Children: ~
 GameObject25:
@@ -12690,7 +12697,7 @@ GameObject25:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556832
+            - -37.029465936556825
             - 30.029442018358075
           localScale:
             - 100
@@ -12727,7 +12734,7 @@ GameObject25:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556832
+            - -37.029465936556825
             - 30.029442018358075
           localScale:
             - 100
@@ -12764,7 +12771,7 @@ GameObject25:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556832
+            - -37.029465936556825
             - 30.029442018358075
           localScale:
             - 100
@@ -17741,7 +17748,7 @@ GameObject26:
             - -148.216064453125
           localRotation:
             - -179.99999499104374
-            - 25.858725770479126
+            - 25.858725770479122
             - -179.99999499104374
           localScale:
             - 10.84910774230957
@@ -18335,7 +18342,7 @@ GameObject26:
             - -57.019905090332031
           localRotation:
             - 0
-            - -21.351410654346921
+            - -21.351410654346925
             - 0
           localScale:
             - 6.2044053077697754
@@ -46427,7 +46434,7 @@ GameObject114:
             - -2660.950927734375
           localRotation:
             - -90.000010136177096
-            - 31.526515331488444
+            - 31.526515331488447
             - -3.5202831198592853e-07
           localScale:
             - 100
@@ -51575,9 +51582,9 @@ GameObject122:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.712914467
+          floatSpeed: 0.713548958
           floatHeight: 0.5
-          rotationSpeed: 82.7278671
+          rotationSpeed: 58.5423546
   Children: ~
 GameObject123:
   name: BiblePagePickUp_Instance3
@@ -51630,9 +51637,9 @@ GameObject123:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.81760621
+          floatSpeed: 1.19834316
           floatHeight: 0.5
-          rotationSpeed: 35.0567207
+          rotationSpeed: 77.6045761
   Children: ~
 GameObject124:
   name: BiblePagePickUp_Instance4
@@ -51685,9 +51692,9 @@ GameObject124:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.03528118
+          floatSpeed: 0.57415241
           floatHeight: 0.5
-          rotationSpeed: 39.0144691
+          rotationSpeed: 70.9042969
   Children: ~
 GameObject125:
   name: Canvas_Interaction
@@ -51946,5 +51953,33 @@ GameObject126:
     ScriptComponents:
       Script0:
         name: Checkpoint
+        fields: ~
+  Children: ~
+GameObject127:
+  name: ShakeManager
+  prefabPath: ""
+  uuid: 4490001094745355424
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: ShakeManager
         fields: ~
   Children: ~

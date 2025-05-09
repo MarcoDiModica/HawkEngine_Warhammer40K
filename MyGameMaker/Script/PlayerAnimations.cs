@@ -122,7 +122,7 @@ public class PlayerAnimations : MonoBehaviour
     public void SetDashToRunningAnimation()
     {
         esk.TransitionAnimations(0, 6, 0.1f);
-        esk.SetAnimationSpeed(1.5f);
+        esk.SetAnimationSpeed(2.0f);
     }
 
     public void SetDashToShootingRunningAnimation()

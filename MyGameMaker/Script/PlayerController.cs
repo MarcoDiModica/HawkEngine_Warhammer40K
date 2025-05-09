@@ -119,6 +119,21 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             playerData.TakeDamage(10);
+            MeshRenderer renderer = playerMesh.GetComponent<MeshRenderer>();
+            if (renderer != null)
+            {
+                renderer.SetColor(new Vector4(1, 0, 0, 1));
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            playerData.AddHealth(10);
+            MeshRenderer renderer = playerMesh.GetComponent<MeshRenderer>();
+            if (renderer != null)
+            {
+                renderer.SetColor(new Vector4(0, 1, 0, 1));
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.M))
@@ -505,4 +520,18 @@ public class PlayerController : MonoBehaviour
         }
         
     }
+
+    //public IEnumerator SetColorDelay(Vector4 color, float delay)
+    //{
+    //    MeshRenderer renderer = playerMesh.GetComponent<MeshRenderer>();
+    //    if (renderer != null)
+    //    {
+    //        renderer.SetColor(color);
+    //    }
+    //    yield return new WaitForSeconds(delay);
+    //    if (renderer != null)
+    //    {
+    //        renderer.SetColor(new Vector4(1, 1, 1, 1));
+    //    }
+    //}
 }

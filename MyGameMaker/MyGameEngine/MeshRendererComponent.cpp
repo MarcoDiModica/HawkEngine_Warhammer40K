@@ -109,38 +109,32 @@ void MeshRenderer::SetImage(std::shared_ptr<Image> image) {
 	}
 }
 
-MonoObject* MeshRenderer::GetSharp() {
+MonoObject* MeshRenderer::GetSharp()
+{
 	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "MeshRenderer");
 	if (!klass) {
 		return nullptr;
 	}
-
 	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
 	if (!monoObject) {
 		return nullptr;
 	}
-
 	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.MeshRenderer:.ctor(uintptr,HawkEngine.GameObject)", true);
 	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
-	if (!method) {
-		mono_method_desc_free(constructorDesc);
+	if (!method)
+	{
 		return nullptr;
 	}
-
 	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
-	MonoObject* ownerGo = owner->GetSharp();
-	if (!ownerGo) {
-		mono_method_desc_free(constructorDesc);
+	MonoObject* ownerGo = owner ? owner->GetSharp() : nullptr;
+	if (!ownerGo)
+	{
 		return nullptr;
 	}
-
 	void* args[2];
 	args[0] = &componentPtr;
 	args[1] = ownerGo;
-
 	mono_runtime_invoke(method, monoObject, args, nullptr);
-	mono_method_desc_free(constructorDesc);
-
 	return monoObject;
 }
 

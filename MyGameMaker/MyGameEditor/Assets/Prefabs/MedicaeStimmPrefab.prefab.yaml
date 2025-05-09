@@ -1,6 +1,6 @@
-name: stim.001_1_1_Instance
+name: stim.001_1_1_Instance_Instance
 prefabPath: Assets\Prefabs\MedicaeStimmPrefab.prefab.yaml
-uuid: 2015743065372181199
+uuid: 6091300311670352603
 tag: PowerUp
 active: true
 isStatic: false
@@ -9,17 +9,17 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 2.6485965251922607
-      - 3
-      - -14.520302772521973
+      - 8.0046119689941406
+      - 3.3783011436462402
+      - 11.429549217224121
     localRotation:
-      - 0
-      - -0
-      - 0
+      - 179.99999487940659
+      - -13.525313462361002
+      - -157.074023877412
     localScale:
-      - 0.0020000000949949026
-      - 0.0020000000949949026
-      - 0.0020000000949949026
+      - 0.0027800013776868582
+      - 0.0027799995150417089
+      - 0.0027800004463642836
   MeshRenderer:
     name: MeshRenderer
     enabled: true
@@ -31,6 +31,9 @@ Components:
       - 1
       - 1
       - 1
+  Shader:
+    name: Shader
+    enabled: true
   BoxColliderComponent:
     size:
       - 1
@@ -70,8 +73,8 @@ Components:
     Script0:
       name: MedicaeStimm
       fields:
-        floatSpeed: 0.86925894
+        floatSpeed: 1.55059683
         floatHeight: 0.5
-        rotationSpeed: 85.8803177
+        rotationSpeed: 45.4626846
         lifeTime: 10
 Children: ~

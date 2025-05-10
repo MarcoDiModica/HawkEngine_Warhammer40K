@@ -18,7 +18,8 @@ public class InteractionSystem : MonoBehaviour
     private Transform cachedTransform;
 
     private float interactionCooldown = 0.5f; 
-    private float interactionTimer = 0.0f; 
+    private float interactionTimer = 0.0f;
+    private string TextSFX = "Assets/Audio/UI/Dialog_Beeps.wav";
 
     public override void Awake() { }
 
@@ -101,6 +102,7 @@ public class InteractionSystem : MonoBehaviour
             {
                 if(Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B))
                 {
+                    Audio.PlayOneShot(TextSFX);
                     isInteracting = false;
                     interaction?.SpawnDialogueText(false);
                     playerInput.UnblockMovement();

@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private GameObject playerMesh;
     private ParticleFX bloodSplashEffect;
     private CapsuleCollider capsuleCollider;
-    private ShakeManager shakeManager;
+    //private ShakeManager shakeManager;
     private bool isIdle = false;
     public bool isShootInput = false;
     public bool isRunning = false;
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         inactiveDashFX = GameObject.Find("InactiveDashFX").GetComponent<ParticleFX>();
         walkingFX = GameObject.Find("WalkingFX").GetComponent<ParticleFX>();
         capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
-        shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
+        //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
     }
 
     public override void Start()
@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     //shake
-                    shakeManager.ApplyShake(1,0.3f, 0.1f);
+                    //shakeManager.ApplyShake(1,0.3f, 0.1f);
                     //if (isRunning)
                     //{
                     //    playerAnimations.SetHitRunningAnimation();

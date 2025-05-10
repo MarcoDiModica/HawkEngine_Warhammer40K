@@ -39,7 +39,7 @@ public class PlayerCamera : MonoBehaviour
 
 
     private PlayerController playerController;
-    private ShakeManager shakeManager;
+    //private ShakeManager shakeManager;
 
 
     //paning
@@ -97,11 +97,11 @@ public class PlayerCamera : MonoBehaviour
             return;
         }
 
-        shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
-        if (shakeManager == null)
-        {
-            Engineson.print("ERROR: ShakeManager not found");
-        }
+        //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
+        //if (shakeManager == null)
+        //{
+        //    Engineson.print("ERROR: ShakeManager not found");
+        //}
 
 
         cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
@@ -210,8 +210,8 @@ public class PlayerCamera : MonoBehaviour
         else
         {
             totalOffset = targetOffset + dashOffset;
-            if (shakeManager != null)
-                totalOffset += shakeManager.currentShakeOffset;
+            //if (shakeManager != null)
+            //    totalOffset += shakeManager.currentShakeOffset;
         }
 
         currentOffset = SmoothDampVector3(currentOffset, totalOffset, ref offsetVelocity, 1f / offsetSmoothness, deltaTime);

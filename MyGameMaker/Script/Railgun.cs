@@ -31,7 +31,7 @@ public class Railgun : BaseWeapon
     private float bulletSpeed = 90f;
     private float maxLifetime = 1.5f;
 
-    private ShakeManager shakeManager;
+    //private ShakeManager shakeManager;
     public float shakeIntensity = 0.4f;
     public float shakeDuration = 0.25f;
     public float shakeSpeed = 0.2f;
@@ -66,11 +66,11 @@ public class Railgun : BaseWeapon
         energyBall = gameObject.GetComponent<EnergyBall>();
         laserBeam = gameObject.GetComponent<LaserBeam>();
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
-        shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
-        if (shakeManager == null)
-        {
-            Engineson.print("ERROR: ShakeManager not found");
-        }
+        //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
+        //if (shakeManager == null)
+        //{
+        //    Engineson.print("ERROR: ShakeManager not found");
+        //}
 
     }
 
@@ -199,7 +199,7 @@ public class Railgun : BaseWeapon
 
         if (currentMagazineAmmo > 0 && !isCooling && isRecharged && timeSinceLastShot >= shootCadence)
         {
-            shakeManager.ApplyShake(shakeIntensity, shakeDuration, shakeSpeed);
+            //shakeManager.ApplyShake(shakeIntensity, shakeDuration, shakeSpeed);
 
             timeSinceLastShot = 0f;
             if (!playerData.infiniteBullets)

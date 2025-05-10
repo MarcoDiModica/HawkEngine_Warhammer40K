@@ -95,6 +95,7 @@ public class InteractionSystem : MonoBehaviour
                 currentInteractable = interactable.gameObject;
                 playerInput.BlockMovement();
                 interactable.Interact();
+                Audio.PlayOneShot(TextSFX);
                 interaction?.SpawnDialogueText(true);
                 interactionTimer = 0.0f; 
             }

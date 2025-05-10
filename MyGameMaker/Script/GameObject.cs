@@ -56,6 +56,9 @@ namespace HawkEngine
         public static extern GameObject Find(string name);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern GameObject[] FindGameObjectsWithTag(string tag);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void AddScript(string scriptName);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]

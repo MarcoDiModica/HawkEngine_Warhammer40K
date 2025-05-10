@@ -55,7 +55,7 @@ public class EnemyControllerStalker : EnemyController
     private float deathDuration = 3f;
     public override void Awake()
     {
-
+        startPosition = gameObject.GetComponent<Transform>().position;
     }
 
     public override void Start()
@@ -289,6 +289,27 @@ public class EnemyControllerStalker : EnemyController
         }
     }
 
+    public override void ResetEnemyCheckPoint()
+    {
+        if (!isDead)
+        {
+            currentHealth = maxHealth;
+            currentState = EnemyState.IDLE;
+            rb.SetVelocity(Vector3.Zero);
+            anim.SetIdleAnimation();
+            isStunned = false;
+            hasPlayedDeathSound = false;
+            hasDropped = false;
+            dodgewindow = false;
+            hasPounce = true;
+            isPouncing = false;
+            lictorMesh.SetActive(true);
+            
+
+            gameObject.GetComponent<Collider>().SetPosition(startPosition);
+        }
+        
+    }
     public override void Attack()
     {
         //Engineson.print("Melee attack executed!");
@@ -297,6 +318,7 @@ public class EnemyControllerStalker : EnemyController
             if (pc.redThirstManager.redThirstBonus < clawDamage)
             {
                 pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
+                pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
             else
             {
@@ -306,6 +328,7 @@ public class EnemyControllerStalker : EnemyController
         else
         {
             pc.playerData.TakeDamage(clawDamage);
+            pc.StartFlashColor(pc.flashColor, pc.flashDuration);
         }
 
         Audio.PlayOneShot(SFX_ATTACK);
@@ -385,6 +408,7 @@ public class EnemyControllerStalker : EnemyController
                 if (pc.redThirstManager.redThirstBonus < pounceDamage)
                 {
                     pc.playerData.TakeDamage(pounceDamage - pc.redThirstManager.redThirstBonus);
+                    pc.StartFlashColor(pc.flashColor, pc.flashDuration);
                 }
                 else
                 {
@@ -394,6 +418,7 @@ public class EnemyControllerStalker : EnemyController
             else
             {
                 pc.playerData.TakeDamage(pounceDamage);
+                pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
         }
     }

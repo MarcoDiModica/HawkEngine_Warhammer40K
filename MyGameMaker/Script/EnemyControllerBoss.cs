@@ -326,6 +326,10 @@ public class EnemyControllerBoss : EnemyController
             }
     }
 
+    public override void ResetEnemyCheckPoint()
+    {
+        
+    }
     override public void OnCollisionEnter(GameObject other)
     {
 

@@ -49,6 +49,7 @@ public class EnemyControllerWarrior : EnemyController
     public override void Awake()
     {
         //music = gameObject.GetComponent<Audio>();
+        startPosition = gameObject.GetComponent<Transform>().position;
     }
 
     public override void Start()
@@ -273,6 +274,22 @@ public class EnemyControllerWarrior : EnemyController
         CleanupProjectiles();
     }
 
+    public override void ResetEnemyCheckPoint()
+    {
+        if (!isDead)
+        {
+            currentHealth = maxHealth;
+            gameObject.GetComponent<Collider>().SetPosition(startPosition);
+            rb.SetVelocity(Vector3.Zero);
+            currentState = EnemyState.IDLE;
+            isAttacking = false;
+            isShooting = false;
+            hasPlayedDeathSound = false;
+            hasDropped = false;
+        }
+        
+        //anim.SetStandardIdleAnimation();
+    }
     public override void Attack()
     {
         if (isAttacking)
@@ -284,6 +301,7 @@ public class EnemyControllerWarrior : EnemyController
                 if (pc.redThirstManager.redThirstBonus < swordDamage)
                 {
                     pc.playerData.TakeDamage(swordDamage - pc.redThirstManager.redThirstBonus);
+                    pc.StartFlashColor(pc.flashColor, pc.flashDuration);
                 }
                 else
                 {
@@ -293,6 +311,7 @@ public class EnemyControllerWarrior : EnemyController
             else
             {
                 pc.playerData.TakeDamage(swordDamage);
+                pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
 
             //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");

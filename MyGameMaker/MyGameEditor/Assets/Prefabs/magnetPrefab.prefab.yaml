@@ -1,6 +1,6 @@
-name: magnet.001_1_1_Instance
+name: magnet.001_1_1_Instance_Instance
 prefabPath: Assets\Prefabs\magnetPrefab.prefab.yaml
-uuid: 2436652902732066924
+uuid: 17708862457841012627
 tag: PowerUp
 active: true
 isStatic: false
@@ -9,17 +9,17 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 1.9941643476486206
-      - 3
-      - -14.749327659606934
+      - 1.3421037197113037
+      - 2.5000956058502197
+      - 6.1832160949707031
     localRotation:
       - 0
-      - -0
+      - -60.869580416918367
       - 0
     localScale:
-      - 0.0020000000949949026
-      - 0.0020000000949949026
-      - 0.0020000000949949026
+      - 0.0027400001914385419
+      - 0.0027399999089539051
+      - 0.0027400001914385419
   MeshRenderer:
     name: MeshRenderer
     enabled: true
@@ -31,6 +31,9 @@ Components:
       - 1
       - 1
       - 1
+  Shader:
+    name: Shader
+    enabled: true
   BoxColliderComponent:
     size:
       - 1
@@ -70,8 +73,8 @@ Components:
     Script0:
       name: Magnet
       fields:
-        floatSpeed: 0.957446873
+        floatSpeed: 1.74554563
         floatHeight: 0.5
-        rotationSpeed: 50.4057198
+        rotationSpeed: 80.8279266
         lifeTime: 10
 Children: ~

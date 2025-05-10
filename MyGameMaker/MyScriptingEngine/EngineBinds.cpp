@@ -150,7 +150,7 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 
         MonoClass* targetClass = mono_class_from_name_case(
             MonoManager::GetInstance().GetImage(),
-            "", // Namespace vacío (se puede mejorar)
+            "", // Namespace vacï¿½o (se puede mejorar)
             C_name
         );
 
@@ -320,6 +320,47 @@ MonoObject* EngineBinds::GetGameObjectByName(MonoString* name)
 	GameObject* go = SceneManagement->FindGOByName(std::string(C_name)).get();
     return go ? go->GetSharp() : nullptr;
 }
+
+MonoArray* EngineBinds::GetGameObjectsByTag(MonoString* tag) {
+    // Convert MonoString* to std::string
+    char* tagStr = mono_string_to_utf8(tag);
+    std::string tagCpp(tagStr);
+    mono_free(tagStr);
+
+    // Find all GameObjects with the specified tag
+    std::vector<GameObject*> matchingGameObjects = SceneManagement->FindGOsByTag(tagCpp);
+
+    // Retrieve the MonoClass for GameObject
+    MonoClass* gameObjectClass = mono_class_from_name(
+        MonoManager::GetInstance().GetImage(),
+        "HawkEngine",
+        "GameObject"
+    );
+
+    if (!gameObjectClass) {
+        //Logger::LogError("Failed to find MonoClass for GameObject. Check namespace and class name.");
+        return nullptr;
+    }
+
+    // Create a MonoArray to hold the results
+    MonoArray* resultArray = mono_array_new(
+        mono_domain_get(),
+        gameObjectClass,
+        matchingGameObjects.size()
+    );
+
+    // Populate the MonoArray with GameObjects
+    for (size_t i = 0; i < matchingGameObjects.size(); ++i) {
+        MonoObject* sharpObject = CreateGameObjectSharp(
+            mono_string_new(mono_domain_get(), matchingGameObjects[i]->GetName().c_str()),
+            matchingGameObjects[i]
+        );
+        mono_array_set(resultArray, MonoObject*, i, sharpObject);
+    }
+
+    return resultArray;
+}
+
 
 // Input
 bool EngineBinds::GetKey(int keyID) {
@@ -594,77 +635,26 @@ void EngineBinds::SetOffset(MonoObject* cameraRef, glm::vec3* offset)
 }
 
 // MeshRenderer
-void EngineBinds::SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef)
-{
-    if (!meshRendererRef || !meshRef) return;
-
-    MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-	Mesh* mesh = ConvertFromSharpComponent<Mesh>(meshRef);
-
-    if (meshRenderer && mesh)
-    {
-        meshRenderer->SetMesh(std::shared_ptr<Mesh>(mesh));
-    }
-}
-
-void EngineBinds::SetCubeMesh(MonoObject* meshRendererRef)
-{
-    if (!meshRendererRef) return;
-
-	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-	if (!meshRenderer) return;
-
-	meshRenderer->SetMesh(Mesh::CreateCube());
-}
-
-MonoObject* EngineBinds::GetMesh(MonoObject* meshRendererRef)
-{
-    if (!meshRendererRef) return nullptr;
-
-	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-    if (!meshRendererRef) return nullptr;
-
-    std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
-	if (!mesh) return nullptr;
-
-	//return Mono::CreateSharpObjectFromCPlusPlus(mesh.get());
-
-}
-
-void EngineBinds::SetMaterial(MonoObject* meshRendererRef, MonoObject* materialRef)
-{
-	if (!meshRendererRef || !materialRef) return;
-
-	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-	Material* material = ConvertFromSharpComponent<Material>(materialRef);
-
-	if (meshRenderer && material)
-	{
-		meshRenderer->SetMaterial(std::shared_ptr<Material>(material));
-	}
-}
-
-MonoObject* EngineBinds::GetMaterial(MonoObject* meshRendererRef)
-{
-	if (!meshRendererRef) return nullptr;
-
-	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-	if (!meshRendererRef) return nullptr;
-
-	std::shared_ptr<Material> material = meshRenderer->GetMaterial();
-	if (!material) return nullptr;
-
-	//return Mono::CreateSharpObjectFromCPlusPlus(material.get());
-}
-
-void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec3* color)
+void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec4* color)
 {
     if (!meshRendererRef || !color) return;
 
     MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
     if (meshRenderer) {
-        meshRenderer->SetColor(*color);
+        meshRenderer->GetMaterial()->SetColor(*color);
     }
+}
+
+glm::vec4 EngineBinds::GetColor(MonoObject* meshRendererRef)
+{
+    if (!meshRendererRef) return glm::vec4(0.0f);
+
+	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
+	if (meshRenderer) {
+		return meshRenderer->GetMaterial()->GetColor();
+	}
+
+	return glm::vec4(0.0f);
 }
 	
 // Physics Collider
@@ -1551,6 +1541,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName); 
     mono_add_internal_call("HawkEngine.GameObject::FindChild", (const void*)EngineBinds::GameObjectFindChild);
+	mono_add_internal_call("HawkEngine.GameObject::FindGameObjectsWithTag", (const void*)GetGameObjectsByTag);
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
     mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)GameObjectSetActive);
     mono_add_internal_call("HawkEngine.GameObject::IsActive", (const void*)GameObjectIsActive);
@@ -1608,13 +1599,8 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Camera::SetOffset", (const void*)&EngineBinds::SetOffset);
 
     // MeshRenderer
-    mono_add_internal_call("HawkEngine.MeshRenderer::SetMesh", (const void*)&EngineBinds::SetMesh);
-    mono_add_internal_call("HawkEngine.MeshRenderer::SetCubeMesh", (const void*)&EngineBinds::SetCubeMesh);
-    mono_add_internal_call("HawkEngine.MeshRenderer::GetMesh", (const void*)&EngineBinds::GetMesh);
-    mono_add_internal_call("HawkEngine.MeshRenderer::SetMaterial", (const void*)&EngineBinds::SetMaterial);
-    mono_add_internal_call("HawkEngine.MeshRenderer::GetMaterial", (const void*)&EngineBinds::GetMaterial);
     mono_add_internal_call("HawkEngine.MeshRenderer::SetColor", (const void*)&EngineBinds::SetColor);
-
+    mono_add_internal_call("HawkEngine.MeshRenderer::GetColor", (const void*)&EngineBinds::GetColor);
 
     //Physics
     mono_add_internal_call("HawkEngine.Physics::OverlapSphere", (const void*)&EngineBinds::OverlapSphere);

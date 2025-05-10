@@ -1,6 +1,6 @@
-name: bullett.001_1_1_Instance
+name: bullett.001_1_1_Instance_Instance
 prefabPath: Assets\Prefabs\AmmunitionBlessingPrefab.prefab.yaml
-uuid: 13768086689783007896
+uuid: 1757040912618130239
 tag: PowerUp
 active: true
 isStatic: false
@@ -9,17 +9,17 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 0
-      - 3
-      - -14.595637321472168
+      - 14.428686141967773
+      - 2.9692173004150391
+      - 11.894564628601074
     localRotation:
-      - 0
-      - -0
-      - 0
+      - -7.3107530727380405
+      - 72.465789375676465
+      - -4.7239984184250599
     localScale:
-      - 0.0020000000949949026
-      - 0.0020000000949949026
-      - 0.0020000000949949026
+      - 0.0030200002643650829
+      - 0.0030200003283541283
+      - 0.0030199978231735605
   MeshRenderer:
     name: MeshRenderer
     enabled: true
@@ -31,6 +31,9 @@ Components:
       - 1
       - 1
       - 1
+  Shader:
+    name: Shader
+    enabled: true
   BoxColliderComponent:
     size:
       - 1
@@ -70,8 +73,8 @@ Components:
     Script0:
       name: AmmunitionBlessing
       fields:
-        floatSpeed: 0.997750819
+        floatSpeed: 1.40748179
         floatHeight: 0.5
-        rotationSpeed: 86.0257111
+        rotationSpeed: 52.5571632
         lifeTime: 10
 Children: ~

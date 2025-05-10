@@ -133,6 +133,11 @@ public class EnemyControllerBossTail : EnemyController
         }
     }
 
+    public override void ResetEnemyCheckPoint()
+    {
+       
+    }
+
     public void ChangePositionToClosest()
     {
         if (isDead == false)

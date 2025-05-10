@@ -1,0 +1,128 @@
+name: shotgun
+prefabPath: ""
+uuid: 13442202668486948697
+tag: Weapon
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0
+      - 2
+      - 0
+    localRotation:
+      - 0
+      - 0
+      - -34.819204954921958
+    localScale:
+      - 0.0029999984249120533
+      - 0.0029999984249120533
+      - 0.0030000000260770321
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 0
+    material:
+      name: Abeto_Low_1001_BaseColor
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  ScriptComponents:
+    Script0:
+      name: ShotgunPickUp
+      fields:
+        floatSpeed: 1
+        floatHeight: 0.5
+        rotationSpeed: 50
+Children:
+  - name: bOLTER.010
+    prefabPath: ""
+    uuid: 6196318924992102555
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - -168.35947685127911
+          - 265.19198981878174
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1.0000000000000002
+          - 1.0000000000000002
+          - 1.0000000000000002
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 12445246452344068261
+        material:
+          name: shotgun_DefaultMaterial_BaseColor
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~
+  - name: Cone
+    prefabPath: ""
+    uuid: 989901120173885559
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - -168.35947685127911
+          - 265.19198981878174
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1.0000000000000002
+          - 1.0000000000000002
+          - 1.0000000000000002
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 5508932554690171827
+        material:
+          name: ""
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~

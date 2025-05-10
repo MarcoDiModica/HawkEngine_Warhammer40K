@@ -83,6 +83,21 @@ public class PlayerData
         Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
     }
 
+    public void SetTempHealth(float health)
+    {
+        if (health > maxHealthTemp)
+        {
+            healthTemp = maxHealthTemp;
+            return;
+        }
+        else if (health < 0)
+        {
+            healthTemp = 0;
+            return;
+        }
+        healthTemp = health;
+    }
+
     public void AddHealth(float health)
     {
         if (healthTemp > 0)

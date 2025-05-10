@@ -6,10 +6,10 @@ public class PlayerPowerUp : MonoBehaviour
 {
     private PlayerController playerController;
 
-    private bool hasMedicaeStimm = false;
-    private bool hasAmmunitionBlessing = false;
-    private bool hasMagnet = false;
-    private bool hasPiercingBullets = false;
+    public bool hasMedicaeStimm = false;
+    public bool hasAmmunitionBlessing = false;
+    public bool hasMagnet = false;
+    public bool hasPiercingBullets = false;
     private float medicaeStimmDuration = 5.0f;
     private float medicaeStimmTimer = 0.0f;
     private float ammunitionBlessingDuration = 5.0f;
@@ -196,6 +196,26 @@ public class PlayerPowerUp : MonoBehaviour
             {
                 other.GetComponent<ShotgunShells>().OnPickUp(playerController);
                 int audioShotgunShells = Audio.PlayOneShot(ShotgunShellsPicked);
+                Engineson.Destroy(other);
+            }
+        }
+        if (other.tag == "Upgrade")
+        {
+            Engineson.print("Player Collided with:" + other.tag);
+
+            if (other.GetComponent<BoltgunUpgradePickUp>() != null )
+            {
+                other.GetComponent<BoltgunUpgradePickUp>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+            }
+            else if (other.GetComponent<ShotgunUpgradePickUp>() != null)
+            {
+              other.GetComponent<ShotgunUpgradePickUp>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+            }
+            else if (other.GetComponent<RailgunUpgradePickUp>() != null)
+            {
+                other.GetComponent<RailgunUpgradePickUp>().OnPickUp(playerController);
                 Engineson.Destroy(other);
             }
         }

@@ -20,7 +20,7 @@ public:
 
    bool LoadFont(const std::string& fontPath, int fontSize);  
 
-   void RenderTextWithShader(Shaders* shader, const std::string& text, float x, float y, float scale);
+   void RenderTextBoxedWithShader(Shaders* shader, const std::string& text, float x, float y, float scale, const glm::vec2& boxSize);
 
    void Start();
 

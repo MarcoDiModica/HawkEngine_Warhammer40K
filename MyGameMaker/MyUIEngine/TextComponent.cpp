@@ -33,6 +33,10 @@ void TextComponent::SetFontSize(float fontSize) {
     m_fontSize = fontSize;
 }
 
+void TextComponent::SetBoxSize(const glm::vec2& size) {
+	m_boxSize = size;
+}
+
 const std::string& TextComponent::GetText() const {
     return m_text;
 }
@@ -47,6 +51,10 @@ const glm::vec3& TextComponent::GetColor() const {
 
 float TextComponent::GetFontSize() const {
     return m_fontSize;
+}
+
+glm::vec2 TextComponent::GetBoxSize() const {
+	return m_boxSize;
 }
 
 void TextComponent::Render() const {
@@ -79,7 +87,7 @@ void TextComponent::Render() const {
     customShader->SetUniform("modColor", glm::vec4(m_color, 1.0f));
 
     const float scaleFactor = m_fontSize / 10.0f;  
-    FontManager::GetInstance().RenderTextWithShader(customShader, m_text, renderPosition.x, renderPosition.y, scaleFactor);
+    FontManager::GetInstance().RenderTextBoxedWithShader(customShader, m_text, renderPosition.x, renderPosition.y, scaleFactor, m_boxSize);
     customShader->UnBind();
 
     std::cout << "Renderizando texto: " << m_text

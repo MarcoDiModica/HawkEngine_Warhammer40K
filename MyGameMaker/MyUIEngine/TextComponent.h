@@ -15,11 +15,13 @@ public:
     void SetPosition(const glm::vec2& position);
     void SetColor(const glm::vec3& color);
     void SetFontSize(float fontSize);
+    void SetBoxSize(const glm::vec2& size);
 
     // Métodos para obtener propiedades  
     const std::string& GetText() const;
     const glm::vec2& GetPosition() const;
     const glm::vec3& GetColor() const;
+    glm::vec2 GetBoxSize() const;
     float GetFontSize() const;
 	void SetProjection(const glm::mat4& proj) { m_projection = proj; }
     // Método para renderizar el texto  
@@ -48,6 +50,7 @@ private:
     glm::vec2 m_position;
     glm::vec3 m_color;
     float m_fontSize;
+    glm::vec2 m_boxSize = glm::vec2(200.0f, 100.0f);
     glm::mat4 m_projection;
     glm::vec2 spriteSize = glm::vec2(0.0f, 0.0f);
     glm::vec2 sheetSize = glm::vec2(0.0f, 0.0f);

@@ -145,22 +145,22 @@ bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
     return true;
 }
 
-void FontManager::RenderTextWithShader(Shaders* shader, const std::string& text, float x, float y, float scale) {
-	
-    if (isFontLoaded == false) {
-		LoadFont("Assets/Arial.ttf", 16);
-		isFontLoaded = true;
+void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& text, float x, float y, float scale, const glm::vec2& boxSize) {
+    if (!isFontLoaded) {
+        LoadFont("Assets/Arial.ttf", 16);
+        isFontLoaded = true;
     }
-    if (Characters.empty()) {
-        std::cerr << "ERROR: No se ha cargado ninguna fuente. Llama a LoadFont primero." << std::endl;
-        return;
-    }
+    if (Characters.empty()) return;
 
     shader->Bind();
     shader->SetUniform("u_HasTexture", true);
 
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
+
+    float startX = x;
+    float maxWidth = boxSize.x;
+    float lineHeight = 0.0f;
 
     for (const char& c : text) {
         if (Characters.find(c) == Characters.end()) {
@@ -175,12 +175,13 @@ void FontManager::RenderTextWithShader(Shaders* shader, const std::string& text,
         float w = ch.Size.x * scale;
         float h = ch.Size.y * scale;
 
-        if (w <= 0.0f || h <= 0.0f) {
-            std::cerr << "[RenderText] Warning: Invalid character size for '" << c << "', skipping.\n";
-            continue;
+        if ((x + ch.Advance * scale / 64.0f - startX) > maxWidth) {
+            x = startX;
+            y -= lineHeight;
+            lineHeight = 0.0f;
         }
 
-        std::cout << "[RenderText] Drawing char '" << c << "' at (" << xpos << ", " << ypos << ") Size (" << w << "x" << h << ")\n";
+        lineHeight = std::max(lineHeight, h);
 
         float vertices[6][4] = {
             { xpos,     ypos + h,   0.0f, 0.0f },

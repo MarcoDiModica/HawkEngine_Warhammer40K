@@ -12,7 +12,7 @@ public class BlackHeart : PickUp
     public float floatHeight = 0.5f;
     public float rotationSpeed = 50f;
     public float lifeTime = 10f;
-
+    private const string PowerUpDown = "Assets/Audio/PowerUps/PowerUpDown.wav";
     public override void Awake()
     {
 
@@ -34,7 +34,8 @@ public class BlackHeart : PickUp
         PowerUpMovment(elapsedTime, deltaTime);
         if (elapsedTime >= lifeTime)
         {
-           // Destroy();
+            Audio.PlayOneShot(PowerUpDown);
+            // Destroy();
         }
     }
    // public void Destroy()

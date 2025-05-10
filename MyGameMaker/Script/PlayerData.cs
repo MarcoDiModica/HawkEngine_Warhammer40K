@@ -24,7 +24,7 @@ public class PlayerData
     public bool BoltgunUpgraded = false;
     public bool ShotgunUpgraded = false;
     public bool RailgunUpgraded = false;
-
+    private string HealthSFX = "Assets/Audio/UI/Lose_Temporary_heart_2.wav";
 
 
 
@@ -55,6 +55,7 @@ public class PlayerData
             healthTemp -= damage;
             if (healthTemp < 0)
             {
+                Audio.PlayOneShot(HealthSFX);
                 healthTemp = 0;
             }
         }

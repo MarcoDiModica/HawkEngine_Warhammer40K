@@ -41,6 +41,36 @@ public class PlayerCamera : MonoBehaviour
     private PlayerController playerController;
     private ShakeManager shakeManager;
 
+
+    //paning
+    private bool isPanning = false;
+    private Vector3 panStartOffset;
+    private Vector3 panTargetOffset;
+    private float panTimer = 0f;
+    private float panDuration = 0f;
+    private int panPhase = 0;
+
+
+    Vector3 totalOffset;
+    float panLerpDuration = 1.0f;
+
+    //public void PanToPoint(Vector3 worldTargetPosition, float holdDuration)
+    //{
+    //    isPanning = true;
+    //    panPhase = 0;
+    //    panTimer = 0f;
+    //    panDuration = holdDuration;
+
+    //    panStartOffset = currentOffset;
+    //    Vector3 playerPos = playerRef.GetComponent<Transform>().position;
+
+    //    Vector3 worldOffset = worldTargetPosition - playerPos;
+    //    panTargetOffset = worldOffset;
+
+    //    followPlayer = false;
+    //    cameraRef.SetFollowTarget(null, Vector3.Zero, 0, false, false, false, 0);
+    //}
+
     public override void Awake()
     {
         currentFOV = originalFOV;
@@ -82,6 +112,12 @@ public class PlayerCamera : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+
+        //    PanToPoint(new Vector3(0.5f, 0, 0), 1.0f);
+        //}
         Vector2 rightStickInput = Input.GetRightStick();
         Vector2 leftStickInput = Input.GetLeftStick();
 
@@ -131,10 +167,52 @@ public class PlayerCamera : MonoBehaviour
                 }
             }
         }
-        Vector3 totalOffset = targetOffset + dashOffset;
+       
 
-        if (shakeManager != null)
-            totalOffset += shakeManager.currentShakeOffset;
+        if (isPanning)
+        {
+            panTimer += deltaTime;
+
+            if (panPhase == 0) // Lerp hacia el punto
+            {
+                float t = Clamp01(panTimer / panLerpDuration);
+                totalOffset = LerpVector3(panStartOffset, panTargetOffset, t);
+
+                if (t >= 1f)
+                {
+                    panTimer = 0f;
+                    panPhase = 1;
+                }
+            }
+            else if (panPhase == 1) // Espera en el punto
+            {
+                totalOffset = panTargetOffset;
+
+                if (panTimer >= panDuration)
+                {
+                    panTimer = 0f;
+                    panPhase = 2;
+                }
+            }
+            else // Lerp de vuelta al jugador
+            {
+                float t = Clamp01(panTimer / panLerpDuration);
+                totalOffset = LerpVector3(panTargetOffset, panStartOffset, t);
+
+                if (t >= 1f)
+                {
+                    isPanning = false;
+                    followPlayer = true;
+                    cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
+                }
+            }
+        }
+        else
+        {
+            totalOffset = targetOffset + dashOffset;
+            if (shakeManager != null)
+                totalOffset += shakeManager.currentShakeOffset;
+        }
 
         currentOffset = SmoothDampVector3(currentOffset, totalOffset, ref offsetVelocity, 1f / offsetSmoothness, deltaTime);
         cameraRef.SetOffset(currentOffset);

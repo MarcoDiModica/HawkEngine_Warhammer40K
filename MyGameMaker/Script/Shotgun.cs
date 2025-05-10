@@ -27,6 +27,8 @@ public class Shotgun : BaseWeapon
     private ShakeManager shakeManager;
     public float shakeIntensity = 0.40f;
     public float shakeDuration = 0.25f;
+    public float shakeSpeed = 0.2f;
+
     private bool isReloading = false;
     private float reloadTimer = 0.0f;
     public override void Awake()
@@ -158,7 +160,7 @@ public class Shotgun : BaseWeapon
     {
         if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence && !isReloading)
         {
-            shakeManager.ApplyShake(shakeIntensity, shakeDuration);
+            shakeManager.ApplyShake(shakeIntensity, shakeDuration,shakeSpeed);
 
             timeSinceLastShot = 0f;
 

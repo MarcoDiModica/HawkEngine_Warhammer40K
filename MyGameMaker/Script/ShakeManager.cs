@@ -10,6 +10,7 @@ public class ShakeManager : MonoBehaviour
     {
         public float intensity;
         public float duration;
+        public float rate;
         public float elapsedTime;
         public float nextUpdateTime;
     }
@@ -22,12 +23,13 @@ public class ShakeManager : MonoBehaviour
         random = new Random();
     }
 
-    public void ApplyShake(float intensity, float duration)
+    public void ApplyShake(float intensity, float duration, float rate)
     {
         activeShakes.Add(new ActiveShake
         {
             intensity = intensity,
             duration = duration,
+            rate = rate,
             elapsedTime = 0f,
             nextUpdateTime = 0f
         });
@@ -35,6 +37,8 @@ public class ShakeManager : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+
+       
         currentShakeOffset = Vector3.Zero;
 
         for (int i = activeShakes.Count - 1; i >= 0; i--)
@@ -56,7 +60,7 @@ public class ShakeManager : MonoBehaviour
 
                 currentShakeOffset += GenerateRandomOffset(currentIntensity);
 
-                shake.nextUpdateTime += 0.1f;
+                shake.nextUpdateTime += shake.rate;
             }
         }
     }

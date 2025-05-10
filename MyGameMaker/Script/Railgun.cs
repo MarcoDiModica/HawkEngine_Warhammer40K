@@ -34,6 +34,7 @@ public class Railgun : BaseWeapon
     private ShakeManager shakeManager;
     public float shakeIntensity = 0.4f;
     public float shakeDuration = 0.25f;
+    public float shakeSpeed = 0.2f;
     public enum RailgunMode
     {
         SEMIAUTOMATIC,
@@ -198,7 +199,7 @@ public class Railgun : BaseWeapon
 
         if (currentMagazineAmmo > 0 && !isCooling && isRecharged && timeSinceLastShot >= shootCadence)
         {
-            shakeManager.ApplyShake(shakeIntensity, shakeDuration);
+            shakeManager.ApplyShake(shakeIntensity, shakeDuration, shakeSpeed);
 
             timeSinceLastShot = 0f;
             if (!playerData.infiniteBullets)

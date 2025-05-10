@@ -30,6 +30,7 @@ public class Boltgun : BaseWeapon
     private ShakeManager shakeManager;
     public float shakeIntensity = 0.15f;
     public float shakeDuration = 0.2f;
+    public float shakeSpeed = 0.2f;
 
     private bool isReloading = false;
     private float reloadTimer = 0.0f;
@@ -167,7 +168,7 @@ public class Boltgun : BaseWeapon
 
         if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence && !isReloading)
         {
-            shakeManager.ApplyShake(shakeIntensity, shakeDuration);
+            shakeManager.ApplyShake(shakeIntensity, shakeDuration, shakeSpeed);
             timeSinceLastShot = 0f;
 
             if (!playerData.infiniteBullets)

@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     //shake
-                    shakeManager.ApplyShake(1,0.3f);
+                    shakeManager.ApplyShake(1,0.3f, 0.1f);
                     //if (isRunning)
                     //{
                     //    playerAnimations.SetHitRunningAnimation();

@@ -230,7 +230,7 @@ public class EnemyControllerMelee : EnemyController
                 }
                 if (isCombatMusicPlaying == false)
                 {
-                    Audio.Play(MUSIC_COMBAT, true);
+                    //Audio.Play(MUSIC_COMBAT, true);
                     isCombatMusicPlaying = true;
                 }
 

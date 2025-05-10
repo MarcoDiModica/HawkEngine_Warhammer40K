@@ -32,14 +32,16 @@ public class MenuButtons : MonoBehaviour
     private ButtonState prevState_quitButton = ButtonState.DEFAULT;
 
     private bool[] hasPlayedHoverSound;
+    private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
+    private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
 
-//     private AudioSource sound;
-//     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
-//     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
-//     private string buttonStartGame = "Assets/Audio/SFX/UI/UI_Confirm.wav"; 
-//     private AudioClip buttonHoveredFX;
-//     private AudioClip buttonClickedFX;
-//     private AudioClip buttonStartGameFX;
+    //     private AudioSource sound;
+    //     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
+    //     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+    //     private string buttonStartGame = "Assets/Audio/SFX/UI/UI_Confirm.wav"; 
+    //     private AudioClip buttonHoveredFX;
+    //     private AudioClip buttonClickedFX;
+    //     private AudioClip buttonStartGameFX;
 
     private int selectedButtonIndex = -1;
     private UIButton[] buttons;
@@ -201,22 +203,23 @@ public class MenuButtons : MonoBehaviour
 
             if (selectedButton == button_newGameButton)
             {
-                //sound?.Play(buttonStartGameFX);
+                Audio.PlayOneShot(ConfirmSFX);
                 SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
             }
             else if (selectedButton == button_continueButton)
             {
-                //sound?.Play(buttonStartGameFX);
+                Audio.PlayOneShot(ConfirmSFX);
                 SceneManager.LoadScene("BetaRelease_Week1_Lvl2");
             }
             else if (selectedButton == button_optionsButton)
             {
                 //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(MenuSFX);
                 optionsCanvas.SetActive(true);
             }
             else if (selectedButton == button_quitButton)
             {
-                //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(ConfirmSFX);
             }
         }
         

@@ -66,6 +66,8 @@ public class HUD : MonoBehaviour
     private UIImage hpTempBarAnimImage;
     private UIImage redThirstBarAnimImage;
 
+    private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
+
 
     void win()
     {
@@ -537,6 +539,7 @@ public class HUD : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P) || Input.GetControllerButtonDown(ControllerButton.Start))
         {
+            Audio.PlayOneShot(MenuSFX);
             if (pauseMenu.IsActive())
             {
                 pauseMenu.SetActive(false);

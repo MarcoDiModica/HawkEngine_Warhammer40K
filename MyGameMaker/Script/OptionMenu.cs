@@ -50,7 +50,7 @@ public class OptionMenu : MonoBehaviour
     int bgmVolume = 100; // Default volume level
     float sliderPosBGM = 0.575f;
 
-
+    private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
     GameObject sfxSlider;
     GameObject sfxLeft;
     GameObject sfxRight;
@@ -153,21 +153,18 @@ public class OptionMenu : MonoBehaviour
                 pauseMenu.SetActive(true);
             }
             gameObject.SetActive(false);
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
         }
 
         if (rLeftButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
             PreviousResolution();
         }
 
         if (rRightButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
             NextResolution();
         }
 
@@ -201,8 +198,7 @@ public class OptionMenu : MonoBehaviour
 
         if (fullScreenButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
 
             if (fullScreenTick.IsActive())
             {
@@ -230,8 +226,8 @@ public class OptionMenu : MonoBehaviour
 
         if (masterLeftButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
+
             if (masterVolume > 0)
             {
                 masterVolume -= 10;
@@ -252,8 +248,8 @@ public class OptionMenu : MonoBehaviour
 
         if (masterRightButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
+
             if (masterVolume < 100)
             {
                 masterVolume += 10;
@@ -274,8 +270,8 @@ public class OptionMenu : MonoBehaviour
 
         if (bgmLeftButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
+
             if (bgmVolume > 0)
             {
                 bgmVolume -= 10;
@@ -286,8 +282,8 @@ public class OptionMenu : MonoBehaviour
 
         if (bgmRightButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
+
             if (bgmVolume < 100)
             {
                 bgmVolume += 10;
@@ -317,8 +313,8 @@ public class OptionMenu : MonoBehaviour
 
         if (sfxLeftButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
+
             if (sfxVolume > 0)
             {
                 sfxVolume -= 10;
@@ -329,8 +325,8 @@ public class OptionMenu : MonoBehaviour
 
         if (sfxRightButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
+
             if (sfxVolume < 100)
             {
                 sfxVolume += 10;

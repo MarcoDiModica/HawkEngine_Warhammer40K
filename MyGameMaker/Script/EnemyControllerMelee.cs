@@ -112,6 +112,8 @@ public class EnemyControllerMelee : EnemyController
             return;
         }
 
+        renderer = gameObject.GetChild("HormagauntMesh").GetComponent<MeshRenderer>();
+
         particles = gameObject.AddComponent<ParticleFX>();
         particles.ApplyPreset(9);
         Audio.MasterVolume = 0.8f;
@@ -475,6 +477,18 @@ public class EnemyControllerMelee : EnemyController
             default:
                 break;
         }
+        if (isFlashingColor)
+        {
+            flashTimer -= deltaTime;
+            if (flashTimer <= 0.0f)
+            {
+                if (renderer != null)
+                {
+                    renderer.SetColor(originalColor);
+                }
+                isFlashingColor = false;
+            }
+        }
         Engineson.print("Enemy end update");
     }
 
@@ -552,6 +566,7 @@ public class EnemyControllerMelee : EnemyController
         if (currentHealth > 0)
         {
             currentHealth -= damage;
+            StartFlashColor(flashColor, flashDuration);
             anim.SetHitAnimation();
             particles.ApplyPreset(19);
             particles.EmitBurst(1);
@@ -592,6 +607,16 @@ public class EnemyControllerMelee : EnemyController
                 pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
             Engineson.print(other.tag + " health: " + (pc.playerData.GetHealth()));
+        }
+    }
+
+    public void StartFlashColor(Vector4 color, float duration)
+    {
+        if (renderer != null)
+        {
+            renderer.SetColor(color);
+            isFlashingColor = true;
+            flashTimer = duration;
         }
     }
 

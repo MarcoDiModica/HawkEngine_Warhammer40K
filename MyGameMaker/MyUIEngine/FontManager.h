@@ -6,6 +6,7 @@
 #include <ft2build.h>  
 #include FT_FREETYPE_H 
 #include "../MyGameEngine/Shaders.h"
+#include <yaml-cpp/yaml.h>
 
 struct Character {  
    GLuint TextureID;   
@@ -33,5 +34,5 @@ private:
 
    std::map<char, Character> Characters;  
    bool isFontLoaded = false;
-   GLuint VAO, VBO;  
+   GLuint VAO, VBO;
 };

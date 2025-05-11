@@ -31,12 +31,14 @@ public class MawlocTailAnimation : MonoBehaviour
             }
         }
 
-        //if (mawlocTailesk?.GetAnimationIndex() != 5)
-        //{
-        //    mawlocTailesk?.SetAnimationPlayState(false);
-        //    isAnimFinished = true;
-        //    Engineson.print("Animation finished");
-        //}
+        if (mawlocTailesk?.GetAnimationIndex() != 5)
+        {
+            if (mawlocTailesk?.GetAnimationIndex() >= mawlocTailesk?.GetAnimationLength() - 1.0f && !isAnimFinished)
+            {
+                mawlocTailesk?.SetAnimationPlayState(false);
+                isAnimFinished = true;
+            }
+        }
     }
 
     public void SetBurrowingAnimation()

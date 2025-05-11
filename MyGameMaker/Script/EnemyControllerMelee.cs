@@ -111,9 +111,7 @@ public class EnemyControllerMelee : EnemyController
 
         particles = gameObject.AddComponent<ParticleFX>();
         particles.ApplyPreset(9);
-        Audio.MasterVolume = 0.8f;
-        Audio.MusicVolume = 0.6f;
-        Audio.SfxVolume = 1.0f;
+        
 
         maxHealth = health;
         currentHealth = maxHealth;

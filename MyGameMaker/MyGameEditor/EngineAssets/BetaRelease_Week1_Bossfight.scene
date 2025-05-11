@@ -1587,9 +1587,9 @@ GameObject10:
             - -5.9227728843688965
             - 38.248489379882812
           localRotation:
-            - 70.364098493915634
-            - 69.519548472990593
-            - 153.26636615667229
+            - 70.364101239541171
+            - 69.519554353241446
+            - 153.26637095638054
           localScale:
             - 2.6595504283905029
             - 2.659550666809082
@@ -1772,9 +1772,9 @@ GameObject10:
             - -11.527710914611816
             - 144.69508361816406
           localRotation:
-            - 90.000038965826022
-            - 81.889388733908149
-            - -179.99991823834085
+            - 90.000064822657791
+            - 81.889364768289568
+            - -179.99989580517573
           localScale:
             - 4.3183484077453613
             - 6.8110980987548828
@@ -1909,7 +1909,7 @@ GameObject10:
       prefabPath: ""
       uuid: 8459786057452587383
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -2057,7 +2057,7 @@ GameObject10:
       prefabPath: ""
       uuid: 18326094689791750669
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -2176,17 +2176,17 @@ GameObject11:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -74.551803588867188
+        - -94.871368408203125
         - 43.577167510986328
-        - 32.835773468017578
+        - 29.94032096862793
       localRotation:
         - -130.00000393764998
         - 45.000002600858409
         - -179.99999565358834
       localScale:
-        - 0.99999988079071045
+        - 0.9999997615814209
         - 0.99999994039535522
-        - 0.99999982118606567
+        - 0.9999997615814209
     CameraComponent:
       name: CameraComponent
       enabled: true
@@ -3868,14 +3868,14 @@ GameObject12:
                                       emitterShape: 0
                                       emissionRate: 1
                                       particlesPerSecond: 1
-                                      minLifetime: 0.25
-                                      maxLifetime: 0.25
+                                      minLifetime: 1
+                                      maxLifetime: 1
                                       minSpeed: 0
                                       maxSpeed: 0
-                                      startSize: 1
-                                      endSize: 1
-                                      minSize: 1
-                                      maxSize: 1
+                                      startSize: 8
+                                      endSize: 5
+                                      minSize: 8
+                                      maxSize: 8
                                       startColor:
                                         - 1
                                         - 1
@@ -3902,7 +3902,7 @@ GameObject12:
                                         - 1920
                                         - 1080
                                       useAnimation: true
-                                      animSpeed: 0.0500000007
+                                      animSpeed: 0.0700000003
                                       startRotation: 0
                                       randomRotation: false
                                       material:
@@ -3945,10 +3945,10 @@ GameObject12:
                                       maxLifetime: 1
                                       minSpeed: 0
                                       maxSpeed: 0
-                                      startSize: 1
-                                      endSize: 1
-                                      minSize: 1
-                                      maxSize: 1
+                                      startSize: 10
+                                      endSize: 10
+                                      minSize: 10
+                                      maxSize: 10
                                       startColor:
                                         - 1
                                         - 1
@@ -10007,7 +10007,7 @@ GameObject17:
 GameObject18:
   name: Mawloc
   prefabPath: ""
-  uuid: 12920870091878476577
+  uuid: 5261924723502046016
   tag: Boss
   active: true
   isStatic: false
@@ -10017,7 +10017,7 @@ GameObject18:
       enabled: true
       localPosition:
         - -76
-        - 9.0909414291381836
+        - 3.4610793590545654
         - -2
       localRotation:
         - 0
@@ -10057,7 +10057,7 @@ GameObject18:
   Children:
     - name: MawlocMesh
       prefabPath: ""
-      uuid: 318981159096899587
+      uuid: 14835566811950241551
       tag: Untagged
       active: true
       isStatic: false
@@ -10202,7 +10202,7 @@ GameObject18:
       Children:
         - name: root.x
           prefabPath: ""
-          uuid: 14641196970428383518
+          uuid: 13767040413261345744
           tag: Untagged
           active: true
           isStatic: false
@@ -10212,8 +10212,8 @@ GameObject18:
               enabled: true
               localPosition:
                 - 0.079583896434542112
-                - -396.18529570759642
-                - 0.31265376896699237
+                - -396.18529230161681
+                - 0.3126537689671558
               localRotation:
                 - -2.0490613465319615e-05
                 - -0.11015725084948925
@@ -10225,7 +10225,7 @@ GameObject18:
           Children:
             - name: spine_01.x
               prefabPath: ""
-              uuid: 13214091532957213820
+              uuid: 4792045352029254255
               tag: Untagged
               active: true
               isStatic: false
@@ -10235,7 +10235,7 @@ GameObject18:
                   enabled: true
                   localPosition:
                     - -1.9982948629149178e-10
-                    - 0.39765096327944827
+                    - 0.39765096327944693
                     - -9.126073896581488e-09
                   localRotation:
                     - -0.022210668577164805
@@ -10248,7 +10248,7 @@ GameObject18:
               Children:
                 - name: spine_02.x
                   prefabPath: ""
-                  uuid: 18411754993850236349
+                  uuid: 5213045668272190075
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -10257,9 +10257,9 @@ GameObject18:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -1.5688783605583015e-10
-                        - 0.3750205891594845
-                        - -9.718211124720712e-09
+                        - -1.5688961241266955e-10
+                        - 0.37502058915948538
+                        - -9.7182110692095608e-09
                       localRotation:
                         - -8.1199927920181558
                         - -0.16771058206474901
@@ -10271,7 +10271,7 @@ GameObject18:
                   Children:
                     - name: spine_03.x
                       prefabPath: ""
-                      uuid: 17559935100224166327
+                      uuid: 637438004361225161
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -10280,8 +10280,8 @@ GameObject18:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -8.5794482629353297e-11
-                            - 0.26894164475297977
+                            - -8.5789153558835096e-11
+                            - 0.26894164475298021
                             - -7.319035666419893e-08
                           localRotation:
                             - -0.22747497153023569
@@ -10294,7 +10294,7 @@ GameObject18:
                       Children:
                         - name: spine_04.x
                           prefabPath: ""
-                          uuid: 7900888934346721551
+                          uuid: 13545472715789093215
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -10303,9 +10303,9 @@ GameObject18:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 5.2678750250834128e-10
+                                - 5.2678394979466248e-10
                                 - 0.18607312776915519
-                                - 1.850930059221767e-08
+                                - 1.8509300647728821e-08
                               localRotation:
                                 - -14.455636507816671
                                 - 1.402738227477041
@@ -10317,7 +10317,7 @@ GameObject18:
                           Children:
                             - name: spine_05.x
                               prefabPath: ""
-                              uuid: 15736678033787671444
+                              uuid: 2649929614225313278
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -10326,9 +10326,9 @@ GameObject18:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 9.772911191419098e-08
-                                    - 0.37976926497285557
-                                    - 1.9751905211418119e-07
+                                    - 9.772911369054782e-08
+                                    - 0.37976926497285568
+                                    - 1.975190522252035e-07
                                   localRotation:
                                     - -4.4092695946653047
                                     - 0.58147924374620319
@@ -10340,7 +10340,7 @@ GameObject18:
                               Children:
                                 - name: c_subneck_1.x
                                   prefabPath: ""
-                                  uuid: 11245769778424305247
+                                  uuid: 2947251573917915533
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -10349,9 +10349,9 @@ GameObject18:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.002006320933535477
-                                        - 0.39340659948415369
-                                        - 0.010857480161089339
+                                        - 0.0020063209335337007
+                                        - 0.39340659948415335
+                                        - 0.010857480161089228
                                       localRotation:
                                         - 36.056949504543631
                                         - -0.62110067498854693
@@ -10363,7 +10363,7 @@ GameObject18:
                                   Children:
                                     - name: neck.x
                                       prefabPath: ""
-                                      uuid: 14391236159246293073
+                                      uuid: 18158395753351816038
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -10373,8 +10373,8 @@ GameObject18:
                                           enabled: true
                                           localPosition:
                                             - -1.9787476190913369e-07
-                                            - 0.2434294165769306
-                                            - 3.2746772293812405e-08
+                                            - 0.2434294165769311
+                                            - 3.2746772238301254e-08
                                           localRotation:
                                             - -23.298357549311238
                                             - 1.0211458209313627e-05
@@ -10386,7 +10386,7 @@ GameObject18:
                                       Children:
                                         - name: head.x
                                           prefabPath: ""
-                                          uuid: 6266933791904933024
+                                          uuid: 9131587809565651967
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -10396,8 +10396,8 @@ GameObject18:
                                               enabled: true
                                               localPosition:
                                                 - -2.2304481994694925e-07
-                                                - 0.24784095946219989
-                                                - -9.1932123691407241e-08
+                                                - 0.24784095946219997
+                                                - -9.1932123913451846e-08
                                               localRotation:
                                                 - -31.798814364516222
                                                 - -2.9203811370281544e-05
@@ -10409,7 +10409,7 @@ GameObject18:
                                           Children:
                                             - name: c_skull_01.x
                                               prefabPath: ""
-                                              uuid: 897782963539777123
+                                              uuid: 18208133408640883972
                                               tag: Untagged
                                               active: true
                                               isStatic: false
@@ -10418,9 +10418,9 @@ GameObject18:
                                                   name: Transform_Component
                                                   enabled: true
                                                   localPosition:
-                                                    - 4.3675912664298266e-08
-                                                    - -0.055818767166270877
-                                                    - -3.5447520380094133e-07
+                                                    - 4.3675910887941427e-08
+                                                    - -0.055818767166270787
+                                                    - -3.5447520363440788e-07
                                                   localRotation:
                                                     - 177.97489009430751
                                                     - -89.999969335379092
@@ -10432,7 +10432,7 @@ GameObject18:
                                               Children:
                                                 - name: c_jawbone.x
                                                   prefabPath: ""
-                                                  uuid: 11268455248914396348
+                                                  uuid: 1596245727264117241
                                                   tag: Untagged
                                                   active: true
                                                   isStatic: false
@@ -10441,8 +10441,8 @@ GameObject18:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - -0.12626369953362732
-                                                        - 0.027907252271183236
+                                                        - -0.12626369953362737
+                                                        - 0.027907252271183486
                                                         - -2.0062906429529903e-06
                                                       localRotation:
                                                         - -24.405480728505236
@@ -10455,7 +10455,7 @@ GameObject18:
                                                   Children:
                                                     - name: c_lips_bot_01.l
                                                       prefabPath: ""
-                                                      uuid: 11193874269003712474
+                                                      uuid: 15945769542177079094
                                                       tag: Untagged
                                                       active: true
                                                       isStatic: false
@@ -10464,9 +10464,9 @@ GameObject18:
                                                           name: Transform_Component
                                                           enabled: true
                                                           localPosition:
-                                                            - 0.3754495522135084
-                                                            - 0.79278464308080809
-                                                            - -0.21267342268092468
+                                                            - 0.37544955221351195
+                                                            - 0.7927846430808082
+                                                            - -0.21267342268092471
                                                           localRotation:
                                                             - -78.120203615742483
                                                             - 27.088319926110046
@@ -10478,7 +10478,7 @@ GameObject18:
                                                       Children: ~
                                                     - name: c_lips_bot_01.r
                                                       prefabPath: ""
-                                                      uuid: 11651823665476316059
+                                                      uuid: 7428478407141809370
                                                       tag: Untagged
                                                       active: true
                                                       isStatic: false
@@ -10487,9 +10487,9 @@ GameObject18:
                                                           name: Transform_Component
                                                           enabled: true
                                                           localPosition:
-                                                            - -0.38128444890092794
-                                                            - 0.79278470711629834
-                                                            - -0.21267307110741829
+                                                            - -0.38128444890092617
+                                                            - 0.79278470711629845
+                                                            - -0.21267307110741851
                                                           localRotation:
                                                             - -78.120257998531812
                                                             - -27.088376988399922
@@ -10501,7 +10501,7 @@ GameObject18:
                                                       Children: ~
                                                     - name: c_lips_bot.l
                                                       prefabPath: ""
-                                                      uuid: 11921793588865481001
+                                                      uuid: 15164044085198261747
                                                       tag: Untagged
                                                       active: true
                                                       isStatic: false
@@ -10510,9 +10510,9 @@ GameObject18:
                                                           name: Transform_Component
                                                           enabled: true
                                                           localPosition:
-                                                            - 0.17203779391344831
+                                                            - 0.17203779391345186
                                                             - 0.80825904026526096
-                                                            - -0.18396537458091647
+                                                            - -0.18396537458091666
                                                           localRotation:
                                                             - -80.282431812763718
                                                             - 30.164485838641795
@@ -10524,7 +10524,7 @@ GameObject18:
                                                       Children: ~
                                                     - name: c_lips_bot.r
                                                       prefabPath: ""
-                                                      uuid: 6740027065899240820
+                                                      uuid: 14211939514029275743
                                                       tag: Untagged
                                                       active: true
                                                       isStatic: false
@@ -10533,9 +10533,9 @@ GameObject18:
                                                           name: Transform_Component
                                                           enabled: true
                                                           localPosition:
-                                                            - -0.17772985680406705
-                                                            - 0.80827307879466381
-                                                            - -0.18397427029737357
+                                                            - -0.1777298568040635
+                                                            - 0.80827307879466392
+                                                            - -0.18397427029737379
                                                           localRotation:
                                                             - -80.282532074017567
                                                             - -30.164498637324552
@@ -10547,7 +10547,7 @@ GameObject18:
                                                       Children: ~
                                                     - name: c_lips_bot.x
                                                       prefabPath: ""
-                                                      uuid: 16689040904794087944
+                                                      uuid: 13092128126320444485
                                                       tag: Untagged
                                                       active: true
                                                       isStatic: false
@@ -10556,9 +10556,9 @@ GameObject18:
                                                           name: Transform_Component
                                                           enabled: true
                                                           localPosition:
-                                                            - -0.0028781859402613463
-                                                            - 0.79739964430241816
-                                                            - -0.17897407646361638
+                                                            - -0.0028781859402577936
+                                                            - 0.79739964430241828
+                                                            - -0.17897407646361652
                                                           localRotation:
                                                             - -89.99991409346211
                                                             - 33.32372854899193
@@ -10570,7 +10570,7 @@ GameObject18:
                                                       Children: ~
                                                     - name: c_teeth_bot.x
                                                       prefabPath: ""
-                                                      uuid: 15375466889395813803
+                                                      uuid: 10006495229517731620
                                                       tag: Untagged
                                                       active: true
                                                       isStatic: false
@@ -10579,9 +10579,9 @@ GameObject18:
                                                           name: Transform_Component
                                                           enabled: true
                                                           localPosition:
-                                                            - -0.0051028899600389366
-                                                            - 0.41903523214397165
-                                                            - -0.17742438299584834
+                                                            - -0.0051028899600353839
+                                                            - 0.41903523214397176
+                                                            - -0.1774243829958484
                                                           localRotation:
                                                             - -151.18300394037749
                                                             - 0.00045944399774331649
@@ -10593,7 +10593,7 @@ GameObject18:
                                                       Children: ~
                                                     - name: c_teeth_bot.l
                                                       prefabPath: ""
-                                                      uuid: 10230859900744198471
+                                                      uuid: 12551454202711729040
                                                       tag: Untagged
                                                       active: true
                                                       isStatic: false
@@ -10602,9 +10602,9 @@ GameObject18:
                                                           name: Transform_Component
                                                           enabled: true
                                                           localPosition:
-                                                            - 0.28238820547655585
-                                                            - 0.53233051145333465
-                                                            - -0.18040919488286972
+                                                            - 0.28238820547655941
+                                                            - 0.53233051145333476
+                                                            - -0.18040919488286988
                                                           localRotation:
                                                             - -151.18459713164606
                                                             - 0.00097853817212788003
@@ -10616,7 +10616,7 @@ GameObject18:
                                                       Children: ~
                                                     - name: c_teeth_bot.r
                                                       prefabPath: ""
-                                                      uuid: 1111880408363688779
+                                                      uuid: 4527958771420999678
                                                       tag: Untagged
                                                       active: true
                                                       isStatic: false
@@ -10625,9 +10625,9 @@ GameObject18:
                                                           name: Transform_Component
                                                           enabled: true
                                                           localPosition:
-                                                            - -0.28822331952149405
-                                                            - 0.53233042477804748
-                                                            - -0.18040850911315384
+                                                            - -0.2882233195214905
+                                                            - 0.5323304247780476
+                                                            - -0.18040850911315409
                                                           localRotation:
                                                             - -151.18459713488397
                                                             - -0.00054140606291995595
@@ -10639,7 +10639,7 @@ GameObject18:
                                                       Children: ~
                                                     - name: tong_01.x
                                                       prefabPath: ""
-                                                      uuid: 18375721270439315476
+                                                      uuid: 18423064960529510979
                                                       tag: Untagged
                                                       active: true
                                                       isStatic: false
@@ -10648,9 +10648,9 @@ GameObject18:
                                                           name: Transform_Component
                                                           enabled: true
                                                           localPosition:
-                                                            - -0.0060685892744611891
-                                                            - 0.050439796868137932
-                                                            - 0.040588725071590115
+                                                            - -0.0060685892744594128
+                                                            - 0.050439796868137987
+                                                            - 0.040588725071589948
                                                           localRotation:
                                                             - -134.58484170016939
                                                             - -4.1282794919518757
@@ -10662,7 +10662,7 @@ GameObject18:
                                                       Children:
                                                         - name: tong_02.x
                                                           prefabPath: ""
-                                                          uuid: 13093550709383498782
+                                                          uuid: 11945151677103116144
                                                           tag: Untagged
                                                           active: true
                                                           isStatic: false
@@ -10672,8 +10672,8 @@ GameObject18:
                                                               enabled: true
                                                               localPosition:
                                                                 - -2.9037764193162729e-08
-                                                                - 0.22666040818540023
-                                                                - 1.0753581736189233e-07
+                                                                - 0.22666040818540001
+                                                                - 1.0753581730638118e-07
                                                               localRotation:
                                                                 - -26.076846381816271
                                                                 - -9.2726354313831525
@@ -10685,7 +10685,7 @@ GameObject18:
                                                           Children:
                                                             - name: tong_03.x
                                                               prefabPath: ""
-                                                              uuid: 15970374185813411916
+                                                              uuid: 3293818746523253875
                                                               tag: Untagged
                                                               active: true
                                                               isStatic: false
@@ -10695,8 +10695,8 @@ GameObject18:
                                                                   enabled: true
                                                                   localPosition:
                                                                     - -1.1718043602115813e-07
-                                                                    - 0.26818197169153152
-                                                                    - -9.3367790832132869e-08
+                                                                    - 0.26818197169153146
+                                                                    - -9.3367791054177474e-08
                                                                   localRotation:
                                                                     - -27.040385037548891
                                                                     - 5.0428509774910655
@@ -10708,7 +10708,7 @@ GameObject18:
                                                               Children: ~
                                                 - name: c_lips_top.x
                                                   prefabPath: ""
-                                                  uuid: 6468378255996964458
+                                                  uuid: 9508977983192928816
                                                   tag: Untagged
                                                   active: true
                                                   isStatic: false
@@ -10717,9 +10717,9 @@ GameObject18:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - 0.4657241755560742
-                                                        - -0.15826042143230512
-                                                        - 0.003322470459435678
+                                                        - 0.46572417555607404
+                                                        - -0.15826042143230487
+                                                        - 0.0033224704594374543
                                                       localRotation:
                                                         - -161.98713192208365
                                                         - -18.91782505250994
@@ -10731,7 +10731,7 @@ GameObject18:
                                                   Children: ~
                                                 - name: c_lips_top.l
                                                   prefabPath: ""
-                                                  uuid: 12864907097044508688
+                                                  uuid: 17043765162987616483
                                                   tag: Untagged
                                                   active: true
                                                   isStatic: false
@@ -10740,8 +10740,8 @@ GameObject18:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - 0.43867968746774522
-                                                        - -0.15375802912208725
+                                                        - 0.43867968746774511
+                                                        - -0.153758029122087
                                                         - 0.059953368675390806
                                                       localRotation:
                                                         - -176.14947189254195
@@ -10754,7 +10754,7 @@ GameObject18:
                                                   Children: ~
                                                 - name: c_lips_top.r
                                                   prefabPath: ""
-                                                  uuid: 9890531314404427448
+                                                  uuid: 8045928265076419298
                                                   tag: Untagged
                                                   active: true
                                                   isStatic: false
@@ -10763,9 +10763,9 @@ GameObject18:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - 0.43867968028869914
-                                                        - -0.15375798601637269
-                                                        - -0.065792234950507122
+                                                        - 0.43867968028869908
+                                                        - -0.15375798601637231
+                                                        - -0.065792234950505346
                                                       localRotation:
                                                         - 3.8505262564785121
                                                         - 9.2060835440009008
@@ -10777,7 +10777,7 @@ GameObject18:
                                                   Children: ~
                                                 - name: c_lips_top_01.l
                                                   prefabPath: ""
-                                                  uuid: 2167933694357921216
+                                                  uuid: 354963835159710862
                                                   tag: Untagged
                                                   active: true
                                                   isStatic: false
@@ -10786,8 +10786,8 @@ GameObject18:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - 0.33543234472653799
-                                                        - -0.13326883307140025
+                                                        - 0.33543234472653782
+                                                        - -0.13326883307139989
                                                         - 0.10779966100385607
                                                       localRotation:
                                                         - -172.27674173056405
@@ -10800,7 +10800,7 @@ GameObject18:
                                                   Children: ~
                                                 - name: c_lips_top_01.r
                                                   prefabPath: ""
-                                                  uuid: 15955680196824796742
+                                                  uuid: 2678296240048740502
                                                   tag: Untagged
                                                   active: true
                                                   isStatic: false
@@ -10809,9 +10809,9 @@ GameObject18:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - 0.335432488866234
-                                                        - -0.13326883746021601
-                                                        - -0.11363715679507713
+                                                        - 0.33543248886623389
+                                                        - -0.13326883746021576
+                                                        - -0.11363715679507536
                                                       localRotation:
                                                         - 7.7233094572744063
                                                         - 14.408319638992069
@@ -10823,7 +10823,7 @@ GameObject18:
                                                   Children: ~
                                                 - name: c_lips_smile.l
                                                   prefabPath: ""
-                                                  uuid: 4409541048373916079
+                                                  uuid: 5225969482061092728
                                                   tag: Untagged
                                                   active: true
                                                   isStatic: false
@@ -10832,9 +10832,9 @@ GameObject18:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - 0.22063363145104842
-                                                        - -0.030040174320683954
-                                                        - 0.17862904977292615
+                                                        - 0.22063363145104831
+                                                        - -0.030040174320683705
+                                                        - 0.17862904977292793
                                                       localRotation:
                                                         - -171.97375551918495
                                                         - -0.58773822251694152
@@ -10846,7 +10846,7 @@ GameObject18:
                                                   Children:
                                                     - name: c_lips_corner_mini.l
                                                       prefabPath: ""
-                                                      uuid: 4688495036265790174
+                                                      uuid: 6278249791369170724
                                                       tag: Untagged
                                                       active: true
                                                       isStatic: false
@@ -10855,9 +10855,9 @@ GameObject18:
                                                           name: Transform_Component
                                                           enabled: true
                                                           localPosition:
-                                                            - 0.00015606737911716406
-                                                            - 0.0010983919627629568
-                                                            - 6.7987656354517867e-05
+                                                            - 0.00015606737911710855
+                                                            - 0.0010983919627631789
+                                                            - 6.7987656356294224e-05
                                                           localRotation:
                                                             - 0.07100517859956508
                                                             - -0.042487531293365993
@@ -10869,7 +10869,7 @@ GameObject18:
                                                       Children: ~
                                                 - name: c_lips_smile.r
                                                   prefabPath: ""
-                                                  uuid: 6509178238608768145
+                                                  uuid: 9740753741650873143
                                                   tag: Untagged
                                                   active: true
                                                   isStatic: false
@@ -10878,9 +10878,9 @@ GameObject18:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - 0.220633458006153
-                                                        - -0.030040034576085839
-                                                        - -0.18446721173867253
+                                                        - 0.22063345800615297
+                                                        - -0.030040034576085589
+                                                        - -0.18446721173867076
                                                       localRotation:
                                                         - 8.0262098175254284
                                                         - -0.5877615711187032
@@ -10892,7 +10892,7 @@ GameObject18:
                                                   Children:
                                                     - name: c_lips_corner_mini.r
                                                       prefabPath: ""
-                                                      uuid: 8209612666271319048
+                                                      uuid: 12119558737109366087
                                                       tag: Untagged
                                                       active: true
                                                       isStatic: false
@@ -10901,9 +10901,9 @@ GameObject18:
                                                           name: Transform_Component
                                                           enabled: true
                                                           localPosition:
-                                                            - -0.00015641091474791202
-                                                            - 0.0010980848880040028
-                                                            - 6.6932576858746984e-05
+                                                            - -0.00015641091474793978
+                                                            - 0.0010980848880044469
+                                                            - 6.6932576860523341e-05
                                                           localRotation:
                                                             - 0.071003066806297158
                                                             - 0.042488468620377078
@@ -10915,7 +10915,7 @@ GameObject18:
                                                       Children: ~
                                                 - name: c_teeth_top.x
                                                   prefabPath: ""
-                                                  uuid: 12158049940446474807
+                                                  uuid: 7432704051233448941
                                                   tag: Untagged
                                                   active: true
                                                   isStatic: false
@@ -10924,8 +10924,8 @@ GameObject18:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - 0.46787416560038358
-                                                        - -0.13933113262513297
+                                                        - 0.46787416560038353
+                                                        - -0.13933113262513269
                                                         - -6.6800606468575552e-07
                                                       localRotation:
                                                         - 91.249726539682754
@@ -10938,7 +10938,7 @@ GameObject18:
                                                   Children: ~
                                                 - name: c_teeth_top.l
                                                   prefabPath: ""
-                                                  uuid: 198719402811886548
+                                                  uuid: 5605543991867157461
                                                   tag: Untagged
                                                   active: true
                                                   isStatic: false
@@ -10947,9 +10947,9 @@ GameObject18:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - 0.30884843597263195
-                                                        - -0.12728804649019199
-                                                        - 0.11086562680834078
+                                                        - 0.3088484359726319
+                                                        - -0.12728804649019163
+                                                        - 0.11086562680834255
                                                       localRotation:
                                                         - 90.15958807785924
                                                         - 89.99939204781532
@@ -10961,7 +10961,7 @@ GameObject18:
                                                   Children: ~
                                                 - name: c_teeth_top.r
                                                   prefabPath: ""
-                                                  uuid: 15402030020390761924
+                                                  uuid: 17123766492028454327
                                                   tag: Untagged
                                                   active: true
                                                   isStatic: false
@@ -10970,8 +10970,8 @@ GameObject18:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - 0.30884866683469481
-                                                        - -0.12728794813114075
+                                                        - 0.3088486668346947
+                                                        - -0.12728794813114039
                                                         - -0.11670304937913833
                                                       localRotation:
                                                         - 89.999376790974111
@@ -10984,7 +10984,7 @@ GameObject18:
                                                   Children: ~
                                             - name: c_skull_02.x
                                               prefabPath: ""
-                                              uuid: 18167304179710088064
+                                              uuid: 10017993634260703059
                                               tag: Untagged
                                               active: true
                                               isStatic: false
@@ -10993,9 +10993,9 @@ GameObject18:
                                                   name: Transform_Component
                                                   enabled: true
                                                   localPosition:
-                                                    - 4.3675912664298266e-08
-                                                    - -0.055818767166270877
-                                                    - -3.5447520380094133e-07
+                                                    - 4.3675910887941427e-08
+                                                    - -0.055818767166270787
+                                                    - -3.5447520363440788e-07
                                                   localRotation:
                                                     - 7.1736998905062095e-15
                                                     - -1.3580808532412262e-05
@@ -11007,7 +11007,7 @@ GameObject18:
                                               Children:
                                                 - name: c_ear_01.l
                                                   prefabPath: ""
-                                                  uuid: 2327098482426433425
+                                                  uuid: 1710073655407599454
                                                   tag: Untagged
                                                   active: true
                                                   isStatic: false
@@ -11016,9 +11016,9 @@ GameObject18:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - 0.15774098458733832
-                                                        - 0.046409243937510392
-                                                        - 0.19673292417901789
+                                                        - 0.15774098458734009
+                                                        - 0.046409243937510225
+                                                        - 0.19673292417901778
                                                       localRotation:
                                                         - -123.92408706350655
                                                         - -52.582915866024464
@@ -11030,7 +11030,7 @@ GameObject18:
                                                   Children:
                                                     - name: c_ear_02.l
                                                       prefabPath: ""
-                                                      uuid: 8284019519616789862
+                                                      uuid: 5349484496279054547
                                                       tag: Untagged
                                                       active: true
                                                       isStatic: false
@@ -11041,7 +11041,7 @@ GameObject18:
                                                           localPosition:
                                                             - 1.7506290195257179e-07
                                                             - 0.089462996167595676
-                                                            - -3.7245762529725113e-08
+                                                            - -3.7245762918303171e-08
                                                           localRotation:
                                                             - -10.929680065693635
                                                             - -0.057401211997135847
@@ -11053,7 +11053,7 @@ GameObject18:
                                                       Children:
                                                         - name: c_ear_03.l
                                                           prefabPath: ""
-                                                          uuid: 15615604666261787253
+                                                          uuid: 5992471888420532545
                                                           tag: Untagged
                                                           active: true
                                                           isStatic: false
@@ -11062,8 +11062,8 @@ GameObject18:
                                                               name: Transform_Component
                                                               enabled: true
                                                               localPosition:
-                                                                - 3.3197812054908127e-07
-                                                                - 0.10791584994031567
+                                                                - 3.3197812232543811e-07
+                                                                - 0.10791584994031744
                                                                 - 5.6976483442383596e-07
                                                               localRotation:
                                                                 - -14.87983233763261
@@ -11076,7 +11076,7 @@ GameObject18:
                                                           Children: ~
                                                 - name: c_ear_01.r
                                                   prefabPath: ""
-                                                  uuid: 3345026301593806116
+                                                  uuid: 10578226735922214951
                                                   tag: Untagged
                                                   active: true
                                                   isStatic: false
@@ -11085,9 +11085,9 @@ GameObject18:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - -0.16357990428659441
-                                                        - 0.04640921228293643
-                                                        - 0.19673257024149746
+                                                        - -0.16357990428659264
+                                                        - 0.046409212282936207
+                                                        - 0.19673257024149737
                                                       localRotation:
                                                         - -120.88137110663673
                                                         - 49.306996198221725
@@ -11099,7 +11099,7 @@ GameObject18:
                                                   Children:
                                                     - name: c_ear_02.r
                                                       prefabPath: ""
-                                                      uuid: 11242082688143035991
+                                                      uuid: 5839798134644056086
                                                       tag: Untagged
                                                       active: true
                                                       isStatic: false
@@ -11122,7 +11122,7 @@ GameObject18:
                                                       Children:
                                                         - name: c_ear_03.r
                                                           prefabPath: ""
-                                                          uuid: 14338124305337522981
+                                                          uuid: 14345223892572077134
                                                           tag: Untagged
                                                           active: true
                                                           isStatic: false
@@ -11131,8 +11131,8 @@ GameObject18:
                                                               name: Transform_Component
                                                               enabled: true
                                                               localPosition:
-                                                                - -1.0753017054554449e-07
-                                                                - 0.10791530908685944
+                                                                - -1.0753017143372291e-07
+                                                                - 0.10791530908685766
                                                                 - 4.6098502659575052e-07
                                                               localRotation:
                                                                 - -14.879830197860795
@@ -11145,7 +11145,7 @@ GameObject18:
                                                           Children: ~
                                             - name: c_skull_03.x
                                               prefabPath: ""
-                                              uuid: 1859561530060056224
+                                              uuid: 4312550310555843372
                                               tag: Untagged
                                               active: true
                                               isStatic: false
@@ -11154,9 +11154,9 @@ GameObject18:
                                                   name: Transform_Component
                                                   enabled: true
                                                   localPosition:
-                                                    - -8.9772624889405961e-08
-                                                    - 0.11473194285829857
-                                                    - 6.7153970328970303e-08
+                                                    - -8.97726266657628e-08
+                                                    - 0.11473194285829866
+                                                    - 6.7153970606526059e-08
                                                   localRotation:
                                                     - 5.5182656036952591e-06
                                                     - -1.3580808532412262e-05
@@ -11168,7 +11168,7 @@ GameObject18:
                                               Children: ~
                                 - name: shoulder.l
                                   prefabPath: ""
-                                  uuid: 17618323663767401973
+                                  uuid: 3510915093012422604
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -11177,8 +11177,8 @@ GameObject18:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.33320168444704557
-                                        - 0.28947018837890304
+                                        - 0.33320168444704379
+                                        - 0.2894701883789027
                                         - -0.030162964008715765
                                       localRotation:
                                         - 86.903628890227537
@@ -11191,7 +11191,7 @@ GameObject18:
                                   Children:
                                     - name: arm_stretch.l
                                       prefabPath: ""
-                                      uuid: 9390016552735870839
+                                      uuid: 8174768940025018206
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -11200,7 +11200,7 @@ GameObject18:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 5.8064372510102658e-07
+                                            - 5.8064372532307118e-07
                                             - 0.098008870523141667
                                             - 4.7599635699668852e-07
                                           localRotation:
@@ -11214,7 +11214,7 @@ GameObject18:
                                       Children:
                                         - name: forearm_stretch.l
                                           prefabPath: ""
-                                          uuid: 3156963215035799319
+                                          uuid: 2963021339850308923
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -11224,8 +11224,8 @@ GameObject18:
                                               enabled: true
                                               localPosition:
                                                 - 7.3325476801500145e-08
-                                                - 0.5882984827758051
-                                                - 6.1706167642228138e-07
+                                                - 0.58829848277580377
+                                                - 6.1706167464592454e-07
                                               localRotation:
                                                 - -3.1731909214489346e-06
                                                 - 1.0565898544396431e-05
@@ -11237,7 +11237,7 @@ GameObject18:
                                           Children:
                                             - name: hand.l
                                               prefabPath: ""
-                                              uuid: 6506373730904884650
+                                              uuid: 18409331649171905350
                                               tag: Untagged
                                               active: true
                                               isStatic: false
@@ -11246,9 +11246,9 @@ GameObject18:
                                                   name: Transform_Component
                                                   enabled: true
                                                   localPosition:
-                                                    - -4.4452489689206232e-08
-                                                    - 0.51000222865606015
-                                                    - -4.3909883373771663e-07
+                                                    - -4.4452489467161627e-08
+                                                    - 0.51000222865606126
+                                                    - -4.3909883196135979e-07
                                                   localRotation:
                                                     - -168.98898245217481
                                                     - 7.4929826416776457
@@ -11260,7 +11260,7 @@ GameObject18:
                                               Children: ~
                                 - name: shoulder_dupli_002.l
                                   prefabPath: ""
-                                  uuid: 10501101668681756786
+                                  uuid: 12956838574273110567
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -11269,8 +11269,8 @@ GameObject18:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.29577160433778715
-                                        - -0.24806330203244298
+                                        - 0.29577160433778538
+                                        - -0.2480633020324432
                                         - -0.061567788749959274
                                       localRotation:
                                         - 51.597584765863871
@@ -11283,7 +11283,7 @@ GameObject18:
                                   Children:
                                     - name: arm_stretch_dupli_002.l
                                       prefabPath: ""
-                                      uuid: 2666691133148378546
+                                      uuid: 10867424384344450353
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -11292,9 +11292,9 @@ GameObject18:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 2.384856070403174e-07
-                                            - 0.095195930421033026
-                                            - -1.3630299333655671e-08
+                                            - 2.3848560672112828e-07
+                                            - 0.09519593042103125
+                                            - -1.3630298667521856e-08
                                           localRotation:
                                             - -75.961370436792791
                                             - -33.95790553164008
@@ -11306,7 +11306,7 @@ GameObject18:
                                       Children:
                                         - name: forearm_stretch_dupli_002.l
                                           prefabPath: ""
-                                          uuid: 17475810472510463706
+                                          uuid: 12558435141572517210
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -11315,9 +11315,9 @@ GameObject18:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 7.8720758267536439e-07
+                                                - 7.8720758089900755e-07
                                                 - 0.50087787482202639
-                                                - -2.5381316082206951e-07
+                                                - -2.5381316137718102e-07
                                               localRotation:
                                                 - 0.020609744857700854
                                                 - 0.51413075487199877
@@ -11329,7 +11329,7 @@ GameObject18:
                                           Children:
                                             - name: hand_dupli_002.l
                                               prefabPath: ""
-                                              uuid: 305012186855849201
+                                              uuid: 2578332679401370315
                                               tag: Untagged
                                               active: true
                                               isStatic: false
@@ -11338,9 +11338,9 @@ GameObject18:
                                                   name: Transform_Component
                                                   enabled: true
                                                   localPosition:
-                                                    - 2.1224688850907114e-07
-                                                    - 0.47360287060406492
-                                                    - -9.3733996398004393e-08
+                                                    - 2.1224688717680351e-07
+                                                    - 0.47360287060407025
+                                                    - -9.3733996453515545e-08
                                                   localRotation:
                                                     - 165.33183198130502
                                                     - -8.3149594419650636
@@ -11352,7 +11352,7 @@ GameObject18:
                                               Children: ~
                                 - name: shoulder_dupli_001.l
                                   prefabPath: ""
-                                  uuid: 14696830222434003910
+                                  uuid: 1825638338457997931
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -11361,8 +11361,8 @@ GameObject18:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.3660452853997036
-                                        - 0.020612329926260164
+                                        - 0.36604528539970183
+                                        - 0.020612329926259942
                                         - -0.031584562407425354
                                       localRotation:
                                         - 56.877001464192837
@@ -11375,7 +11375,7 @@ GameObject18:
                                   Children:
                                     - name: arm_stretch_dupli_001.l
                                       prefabPath: ""
-                                      uuid: 4485389349717770223
+                                      uuid: 8889004028899610702
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -11384,9 +11384,9 @@ GameObject18:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -9.3213301854966346e-08
+                                            - -9.3213301827210771e-08
                                             - 0.095319751925796226
-                                            - -3.4971653882498455e-07
+                                            - -3.4971653850579543e-07
                                           localRotation:
                                             - -61.319494427286251
                                             - -60.182251106793117
@@ -11398,7 +11398,7 @@ GameObject18:
                                       Children:
                                         - name: forearm_stretch_dupli_001.l
                                           prefabPath: ""
-                                          uuid: 6722421373710392012
+                                          uuid: 11139327707679418587
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -11407,8 +11407,8 @@ GameObject18:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 1.5015590504319221e-07
-                                                - 0.52087055980147667
+                                                - 1.50155904599103e-07
+                                                - 0.5208705598014749
                                                 - -3.0727939170915874e-07
                                               localRotation:
                                                 - 0.13705840960782478
@@ -11421,7 +11421,7 @@ GameObject18:
                                           Children:
                                             - name: hand_dupli_001.l
                                               prefabPath: ""
-                                              uuid: 34325074143547786
+                                              uuid: 16757741437448907553
                                               tag: Untagged
                                               active: true
                                               isStatic: false
@@ -11430,9 +11430,9 @@ GameObject18:
                                                   name: Transform_Component
                                                   enabled: true
                                                   localPosition:
-                                                    - 6.855572323161141e-07
-                                                    - 0.490690520773295
-                                                    - -2.0083444507434933e-07
+                                                    - 6.8555722876340042e-07
+                                                    - 0.49069052077329589
+                                                    - -2.0083444551843854e-07
                                                   localRotation:
                                                     - 167.91858283426748
                                                     - -12.98151037052606
@@ -11444,7 +11444,7 @@ GameObject18:
                                               Children: ~
                                 - name: shoulder.r
                                   prefabPath: ""
-                                  uuid: 1896615425953512389
+                                  uuid: 6767148908722057676
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -11453,8 +11453,8 @@ GameObject18:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.33406111754575107
-                                        - 0.28946961332569016
+                                        - -0.33406111754575285
+                                        - 0.28946961332568988
                                         - -0.037396906960553533
                                       localRotation:
                                         - 87.10639343936451
@@ -11467,7 +11467,7 @@ GameObject18:
                                   Children:
                                     - name: arm_stretch.r
                                       prefabPath: ""
-                                      uuid: 11556049319360529040
+                                      uuid: 15730453494871368629
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -11477,8 +11477,8 @@ GameObject18:
                                           enabled: true
                                           localPosition:
                                             - -5.3229645669006242e-07
-                                            - 0.098008913582905435
-                                            - 3.2170973773837381e-08
+                                            - 0.098008913582907212
+                                            - 3.217097371832623e-08
                                           localRotation:
                                             - 58.876340425777236
                                             - 66.750829299842835
@@ -11490,7 +11490,7 @@ GameObject18:
                                       Children:
                                         - name: forearm_stretch.r
                                           prefabPath: ""
-                                          uuid: 10663602766798938102
+                                          uuid: 11655410311520149393
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -11499,8 +11499,8 @@ GameObject18:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 8.2372377363526539e-08
-                                                - 0.58829846151652831
+                                                - 8.2372376919437329e-08
+                                                - 0.58829846151652765
                                                 - -8.1041601873721447e-08
                                               localRotation:
                                                 - 4.6284645245830778e-05
@@ -11513,7 +11513,7 @@ GameObject18:
                                           Children:
                                             - name: hand.r
                                               prefabPath: ""
-                                              uuid: 10734022129461398700
+                                              uuid: 12012386914319359525
                                               tag: Untagged
                                               active: true
                                               isStatic: false
@@ -11523,7 +11523,7 @@ GameObject18:
                                                   enabled: true
                                                   localPosition:
                                                     - 9.0341038649910388e-08
-                                                    - 0.51000259575776008
+                                                    - 0.51000259575776097
                                                     - 3.5158759636999548e-07
                                                   localRotation:
                                                     - -168.98522926021829
@@ -11536,7 +11536,7 @@ GameObject18:
                                               Children: ~
                                 - name: shoulder_dupli_001.r
                                   prefabPath: ""
-                                  uuid: 2664983799213810897
+                                  uuid: 14311624829551671809
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -11545,9 +11545,9 @@ GameObject18:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.36686571862811768
-                                        - 0.020612245189042866
-                                        - -0.039530083713584574
+                                        - -0.36686571862811945
+                                        - 0.020612245189042699
+                                        - -0.039530083713584796
                                       localRotation:
                                         - 51.564570336025781
                                         - 82.120525770168186
@@ -11559,7 +11559,7 @@ GameObject18:
                                   Children:
                                     - name: arm_stretch_dupli_001.r
                                       prefabPath: ""
-                                      uuid: 15538367227643039819
+                                      uuid: 10451098677841191460
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -11568,7 +11568,7 @@ GameObject18:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -8.0640385924368729e-08
+                                            - -8.0640386368457939e-08
                                             - 0.095319904121039301
                                             - 5.3620921436348112e-07
                                           localRotation:
@@ -11582,7 +11582,7 @@ GameObject18:
                                       Children:
                                         - name: forearm_stretch_dupli_001.r
                                           prefabPath: ""
-                                          uuid: 2097018070306970787
+                                          uuid: 17231020039247555874
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -11591,9 +11591,9 @@ GameObject18:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -5.9032817878446053e-07
-                                                - 0.52087100314434487
-                                                - 1.3966963141598399e-07
+                                                - -5.9032817900650514e-07
+                                                - 0.52087100314434664
+                                                - 1.3966963230416241e-07
                                               localRotation:
                                                 - 0.1393971518884968
                                                 - 0.61067408584111149
@@ -11605,7 +11605,7 @@ GameObject18:
                                           Children:
                                             - name: hand_dupli_001.r
                                               prefabPath: ""
-                                              uuid: 3705400405382399871
+                                              uuid: 7927083862615677835
                                               tag: Untagged
                                               active: true
                                               isStatic: false
@@ -11614,9 +11614,9 @@ GameObject18:
                                                   name: Transform_Component
                                                   enabled: true
                                                   localPosition:
-                                                    - -5.2803405381496304e-07
+                                                    - -5.2803405736767672e-07
                                                     - 0.49069016720517655
-                                                    - -4.5999038622568378e-07
+                                                    - -4.599903871138622e-07
                                                   localRotation:
                                                     - 168.28581874303404
                                                     - 13.530361799016363
@@ -11628,7 +11628,7 @@ GameObject18:
                                               Children: ~
                                 - name: shoulder_dupli_002.r
                                   prefabPath: ""
-                                  uuid: 15577693621042183692
+                                  uuid: 10385880327435902485
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -11637,9 +11637,9 @@ GameObject18:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.29595805880179427
-                                        - -0.24806353854439334
-                                        - -0.067982796183826522
+                                        - -0.29595805880179604
+                                        - -0.24806353854439345
+                                        - -0.067982796183826633
                                       localRotation:
                                         - 46.167536881045478
                                         - 82.100619788334669
@@ -11651,7 +11651,7 @@ GameObject18:
                                   Children:
                                     - name: arm_stretch_dupli_002.r
                                       prefabPath: ""
-                                      uuid: 16902930290677581922
+                                      uuid: 6956004877727390979
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -11662,7 +11662,7 @@ GameObject18:
                                           localPosition:
                                             - 1.1634247654157548e-07
                                             - 0.095197000067576809
-                                            - 5.2872889366728515e-07
+                                            - 5.2872889377830745e-07
                                           localRotation:
                                             - -75.95131057524911
                                             - 33.891168036605116
@@ -11674,7 +11674,7 @@ GameObject18:
                                       Children:
                                         - name: forearm_stretch_dupli_002.r
                                           prefabPath: ""
-                                          uuid: 15975213751591245871
+                                          uuid: 18237446995909370472
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -11684,8 +11684,8 @@ GameObject18:
                                               enabled: true
                                               localPosition:
                                                 - -4.7668972769088219e-07
-                                                - 0.50087729151275362
-                                                - -2.5597328856541429e-07
+                                                - 0.50087729151275273
+                                                - -2.5597328812132508e-07
                                               localRotation:
                                                 - 0.020406924786754436
                                                 - -0.51417408853277635
@@ -11697,7 +11697,7 @@ GameObject18:
                                           Children:
                                             - name: hand_dupli_002.r
                                               prefabPath: ""
-                                              uuid: 8898833540571625087
+                                              uuid: 4153764962932493818
                                               tag: Untagged
                                               active: true
                                               isStatic: false
@@ -11706,9 +11706,9 @@ GameObject18:
                                                   name: Transform_Component
                                                   enabled: true
                                                   localPosition:
-                                                    - 4.5431802586648473e-07
-                                                    - 0.47360270587938835
-                                                    - 3.7247871564893842e-08
+                                                    - 4.5431802675466315e-07
+                                                    - 0.47360270587939013
+                                                    - 3.7247871342849237e-08
                                                   localRotation:
                                                     - 165.31556861644751
                                                     - 8.3218158290495481
@@ -11720,7 +11720,7 @@ GameObject18:
                                               Children: ~
                                 - name: miniarm_ref.r
                                   prefabPath: ""
-                                  uuid: 6034455984678855584
+                                  uuid: 15898322768348445638
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -11729,9 +11729,9 @@ GameObject18:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.22767983747667841
-                                        - 0.19920749076917676
-                                        - 0.13870900819829068
+                                        - -0.22767983747668019
+                                        - 0.19920749076917665
+                                        - 0.13870900819829046
                                       localRotation:
                                         - 45.361976294999771
                                         - -6.1981299510524934
@@ -11743,7 +11743,7 @@ GameObject18:
                                   Children:
                                     - name: miniarm_ref.r.006
                                       prefabPath: ""
-                                      uuid: 17189995603803333740
+                                      uuid: 8797429169845355518
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -11754,7 +11754,7 @@ GameObject18:
                                           localPosition:
                                             - 2.3930123704829498e-07
                                             - 0.071290898022249749
-                                            - 2.5325016750343821e-08
+                                            - 2.5325014973986981e-08
                                           localRotation:
                                             - 46.030055250449145
                                             - 4.0505981543974041
@@ -11766,7 +11766,7 @@ GameObject18:
                                       Children: ~
                                 - name: miniarm_ref.r.001
                                   prefabPath: ""
-                                  uuid: 10612231768791595449
+                                  uuid: 18055016371437325122
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -11775,9 +11775,9 @@ GameObject18:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.28248697070829287
-                                        - -0.031320157621360312
-                                        - 0.17831867367017462
+                                        - -0.28248697070829465
+                                        - -0.031320157621360645
+                                        - 0.17831867367017451
                                       localRotation:
                                         - 45.947726342583707
                                         - -8.5288830938246942
@@ -11789,7 +11789,7 @@ GameObject18:
                                   Children:
                                     - name: miniarm_ref.r.007
                                       prefabPath: ""
-                                      uuid: 8177527753363645267
+                                      uuid: 11457235315895113762
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -11798,7 +11798,7 @@ GameObject18:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 3.955302450009413e-07
+                                            - 3.9553024544503051e-07
                                             - 0.057779304413587702
                                             - -1.9241665327740523e-07
                                           localRotation:
@@ -11812,7 +11812,7 @@ GameObject18:
                                       Children: ~
                                 - name: miniarm_ref.l
                                   prefabPath: ""
-                                  uuid: 6297006230802088954
+                                  uuid: 11722153363034273806
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -11821,8 +11821,8 @@ GameObject18:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.22302760321277226
-                                        - 0.19920774246993495
+                                        - 0.22302760321277049
+                                        - 0.19920774246993489
                                         - 0.14359519473335824
                                       localRotation:
                                         - 46.603623535030465
@@ -11835,7 +11835,7 @@ GameObject18:
                                   Children:
                                     - name: miniarm_ref.l.006
                                       prefabPath: ""
-                                      uuid: 16886086668945154315
+                                      uuid: 6897237940844486431
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -11844,9 +11844,9 @@ GameObject18:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 3.0474606493857697e-07
-                                            - 0.071290659697121242
-                                            - -8.4949138390300063e-08
+                                            - 3.0474606488306582e-07
+                                            - 0.071290659697117689
+                                            - -8.4949136613943223e-08
                                           localRotation:
                                             - 50.736952159269499
                                             - -3.6383773133390598
@@ -11858,7 +11858,7 @@ GameObject18:
                                       Children: ~
                                 - name: miniarm_ref.l.001
                                   prefabPath: ""
-                                  uuid: 9921946212864140926
+                                  uuid: 9437231380648246531
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -11867,9 +11867,9 @@ GameObject18:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.27696351609148095
-                                        - -0.031319995687959734
-                                        - 0.18438382630383987
+                                        - 0.27696351609147918
+                                        - -0.031319995687959956
+                                        - 0.18438382630383954
                                       localRotation:
                                         - 47.180052650914789
                                         - 8.2900399353406051
@@ -11881,7 +11881,7 @@ GameObject18:
                                   Children:
                                     - name: miniarm_ref.l.007
                                       prefabPath: ""
-                                      uuid: 8191647177752812825
+                                      uuid: 10412812620768124743
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -11890,9 +11890,9 @@ GameObject18:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -2.0312540094380438e-07
-                                            - 0.057779201968194194
-                                            - -1.981944786066947e-07
+                                            - -2.0312540127687129e-07
+                                            - 0.057779201968193306
+                                            - -1.9819447771851628e-07
                                           localRotation:
                                             - 44.737948456204549
                                             - -10.563138846244769
@@ -11904,7 +11904,7 @@ GameObject18:
                                       Children: ~
                             - name: miniarm_ref.r.002
                               prefabPath: ""
-                              uuid: 4263106759656214141
+                              uuid: 9113550992914987916
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -11913,9 +11913,9 @@ GameObject18:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - -0.23537101467992194
-                                    - 0.13310061143498231
-                                    - 0.11689118916636365
+                                    - -0.23537101467992017
+                                    - 0.13310061143498264
+                                    - 0.11689118916636387
                                   localRotation:
                                     - 37.35276014724014
                                     - -3.2546205334100815
@@ -11927,7 +11927,7 @@ GameObject18:
                               Children:
                                 - name: miniarm_ref.r.008
                                   prefabPath: ""
-                                  uuid: 6555421168013714176
+                                  uuid: 6365789770141857065
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -11936,9 +11936,9 @@ GameObject18:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 1.3680247290537295e-07
-                                        - 0.076959621943531786
-                                        - 1.6620206455542075e-07
+                                        - 1.3680247268332835e-07
+                                        - 0.076959621943535339
+                                        - 1.6620206277906391e-07
                                       localRotation:
                                         - 50.698542497907127
                                         - 3.7734835143308945
@@ -11950,7 +11950,7 @@ GameObject18:
                                   Children: ~
                             - name: miniarm_ref.l.002
                               prefabPath: ""
-                              uuid: 483710072746134745
+                              uuid: 13503745372029845972
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -11959,9 +11959,9 @@ GameObject18:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 0.23362532519094081
-                                    - 0.13310051154616453
-                                    - 0.1172006415480743
+                                    - 0.23362532519094259
+                                    - 0.13310051154616476
+                                    - 0.11720064154807464
                                   localRotation:
                                     - 37.428469960303183
                                     - 3.2521187789332275
@@ -11973,7 +11973,7 @@ GameObject18:
                               Children:
                                 - name: miniarm_ref.l.008
                                   prefabPath: ""
-                                  uuid: 5342632310390026515
+                                  uuid: 1549972558339973323
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -11982,8 +11982,8 @@ GameObject18:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -1.3684991473361663e-09
-                                        - 0.076959757943047435
+                                        - -1.3684986477358052e-09
+                                        - 0.076959757943045659
                                         - 3.5275881948848564e-07
                                       localRotation:
                                         - 55.610210430835103
@@ -11996,7 +11996,7 @@ GameObject18:
                                   Children: ~
                 - name: shoulder_dupli_003.l
                   prefabPath: ""
-                  uuid: 9778984449569107726
+                  uuid: 16982950149646905736
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -12006,7 +12006,7 @@ GameObject18:
                       enabled: true
                       localPosition:
                         - 0.14574837412323841
-                        - 0.29271096594987972
+                        - 0.29271096594988016
                         - -0.019769872960715088
                       localRotation:
                         - 52.707027096436022
@@ -12019,7 +12019,7 @@ GameObject18:
                   Children:
                     - name: arm_stretch_dupli_003.l
                       prefabPath: ""
-                      uuid: 14845201324094552779
+                      uuid: 3445299108355688432
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -12028,9 +12028,9 @@ GameObject18:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -7.1971626769418151e-08
-                            - 0.095147590899596679
-                            - 2.6105513972751737e-08
+                            - -7.1971626991462756e-08
+                            - 0.095147590899594903
+                            - 2.6105515082974762e-08
                           localRotation:
                             - -87.048869668770266
                             - 1.0334533302876467
@@ -12042,7 +12042,7 @@ GameObject18:
                       Children:
                         - name: forearm_stretch_dupli_003.l
                           prefabPath: ""
-                          uuid: 12966844940751515330
+                          uuid: 4487679019017260414
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -12052,7 +12052,7 @@ GameObject18:
                               enabled: true
                               localPosition:
                                 - 2.3019306638616399e-07
-                                - 0.4713635637444531
+                                - 0.47136356374445354
                                 - 1.2338808463852047e-07
                               localRotation:
                                 - 0.25653798993542481
@@ -12065,7 +12065,7 @@ GameObject18:
                           Children:
                             - name: hand_dupli_003.l
                               prefabPath: ""
-                              uuid: 13453311558092185271
+                              uuid: 13661923241273757608
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -12074,8 +12074,8 @@ GameObject18:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 2.1748021672429729e-07
-                                    - 0.45324435987488165
+                                    - 2.1748021700185305e-07
+                                    - 0.45324435987488521
                                     - -1.488157330697959e-07
                                   localRotation:
                                     - -154.14515019626825
@@ -12088,7 +12088,7 @@ GameObject18:
                               Children: ~
                 - name: shoulder_dupli_003.r
                   prefabPath: ""
-                  uuid: 13859148984108832407
+                  uuid: 1536892040868149240
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -12098,7 +12098,7 @@ GameObject18:
                       enabled: true
                       localPosition:
                         - -0.14727891446612598
-                        - 0.29271205571616671
+                        - 0.2927120557161676
                         - -0.020214936648510321
                       localRotation:
                         - 51.829064508535076
@@ -12111,7 +12111,7 @@ GameObject18:
                   Children:
                     - name: arm_stretch_dupli_003.r
                       prefabPath: ""
-                      uuid: 2229045005042752863
+                      uuid: 11526580228421496491
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -12120,9 +12120,9 @@ GameObject18:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 1.8916933797186175e-08
-                            - 0.095147558051955627
-                            - -1.8232656939787262e-07
+                            - 1.8916934241275385e-08
+                            - 0.095147558051953851
+                            - -1.8232656895378341e-07
                           localRotation:
                             - -87.05093418258555
                             - -1.0333627688691562
@@ -12134,7 +12134,7 @@ GameObject18:
                       Children:
                         - name: forearm_stretch_dupli_003.r
                           prefabPath: ""
-                          uuid: 15575187521936623799
+                          uuid: 14854021730446724721
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -12143,9 +12143,9 @@ GameObject18:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 2.7252557543988587e-07
-                                - 0.47136373156031386
-                                - -1.6722482154563068e-07
+                                - 2.7252557366352903e-07
+                                - 0.47136373156031297
+                                - -1.6722482065745226e-07
                               localRotation:
                                 - 0.25653726970085905
                                 - 0.67538888595112667
@@ -12157,7 +12157,7 @@ GameObject18:
                           Children:
                             - name: hand_dupli_003.r
                               prefabPath: ""
-                              uuid: 16195489298970067845
+                              uuid: 686144605276276665
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -12167,8 +12167,8 @@ GameObject18:
                                   enabled: true
                                   localPosition:
                                     - 3.5657716335180112e-07
-                                    - 0.45324522662333777
-                                    - -1.4768124501074453e-09
+                                    - 0.45324522662333955
+                                    - -1.4768115619290256e-09
                                   localRotation:
                                     - -154.14357822055226
                                     - -6.9540613722399085
@@ -12180,7 +12180,7 @@ GameObject18:
                               Children: ~
                 - name: miniarm_ref.r.003
                   prefabPath: ""
-                  uuid: 14150902809447419141
+                  uuid: 13852959779752613836
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -12190,8 +12190,8 @@ GameObject18:
                       enabled: true
                       localPosition:
                         - -0.11966551514330172
-                        - 0.25293221841821151
-                        - 0.075667205589635203
+                        - 0.25293221841821284
+                        - 0.075667205589635231
                       localRotation:
                         - 34.309659236499627
                         - -6.348751516477555
@@ -12203,7 +12203,7 @@ GameObject18:
                   Children:
                     - name: miniarm_ref.r.010
                       prefabPath: ""
-                      uuid: 4051034819657838780
+                      uuid: 10225769985563345180
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -12212,8 +12212,8 @@ GameObject18:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -1.8484184582945318e-07
-                            - 0.089208343206530927
+                            - -1.8484184627354239e-07
+                            - 0.08920834320652915
                             - -5.8139000813639541e-07
                           localRotation:
                             - 49.544679251505521
@@ -12226,7 +12226,7 @@ GameObject18:
                       Children: ~
                 - name: miniarm_ref.r.004
                   prefabPath: ""
-                  uuid: 15037992916608658787
+                  uuid: 10721623943418842420
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -12235,9 +12235,9 @@ GameObject18:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -0.14247445721128396
-                        - 0.025592508338379897
-                        - 0.066532972390651771
+                        - -0.14247445721128574
+                        - 0.025592508338380785
+                        - 0.066532972390651798
                       localRotation:
                         - 47.078308852531599
                         - -1.5362969871372993
@@ -12249,7 +12249,7 @@ GameObject18:
                   Children:
                     - name: miniarm_ref.r.011
                       prefabPath: ""
-                      uuid: 16273138567778498046
+                      uuid: 6192775889921084843
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -12258,8 +12258,8 @@ GameObject18:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 1.8523987987961732e-07
-                            - 0.090660552256505156
+                            - 1.8523988032370653e-07
+                            - 0.090660552256502491
                             - -4.5597111864026374e-08
                           localRotation:
                             - 34.847720975305982
@@ -12272,7 +12272,7 @@ GameObject18:
                       Children: ~
                 - name: miniarm_ref.l.003
                   prefabPath: ""
-                  uuid: 2076064747770073579
+                  uuid: 12341393380913392822
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -12282,8 +12282,8 @@ GameObject18:
                       enabled: true
                       localPosition:
                         - 0.11784381934969802
-                        - 0.25293221853365738
-                        - 0.076027956905856911
+                        - 0.25293221853365827
+                        - 0.076027956905856939
                       localRotation:
                         - 34.483214581662018
                         - 6.3253362532799535
@@ -12295,7 +12295,7 @@ GameObject18:
                   Children:
                     - name: miniarm_ref.l.010
                       prefabPath: ""
-                      uuid: 3063942441890569744
+                      uuid: 9932476563865621968
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -12304,9 +12304,9 @@ GameObject18:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 6.638669622915927e-07
+                            - 6.6386696140341428e-07
                             - 0.089208325125284205
-                            - -5.3721735149281358e-07
+                            - -5.3721735060463516e-07
                           localRotation:
                             - 49.544714823510056
                             - -1.9887640365163037
@@ -12318,7 +12318,7 @@ GameObject18:
                       Children: ~
                 - name: miniarm_ref.l.004
                   prefabPath: ""
-                  uuid: 5052506788494565075
+                  uuid: 3545686356941945608
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -12328,8 +12328,8 @@ GameObject18:
                       enabled: true
                       localPosition:
                         - 0.14068040550171015
-                        - 0.025591691039402734
-                        - 0.066963057345569885
+                        - 0.0255916910394034
+                        - 0.066963057345569912
                       localRotation:
                         - 47.252320041406875
                         - 1.530065559151089
@@ -12341,7 +12341,7 @@ GameObject18:
                   Children:
                     - name: miniarm_ref.l.011
                       prefabPath: ""
-                      uuid: 14305589522860792849
+                      uuid: 10877210715004865259
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -12350,9 +12350,9 @@ GameObject18:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -1.7388858597477966e-07
+                            - -1.7388858708500268e-07
                             - 0.090660618404914586
-                            - 2.4411181520633821e-08
+                            - 2.4411180632455401e-08
                           localRotation:
                             - 34.847733607980423
                             - -0.40990866660467651
@@ -12364,7 +12364,7 @@ GameObject18:
                       Children: ~
             - name: miniarm_ref.r.005
               prefabPath: ""
-              uuid: 660470771183818409
+              uuid: 14668868668103237097
               tag: Untagged
               active: true
               isStatic: false
@@ -12374,8 +12374,8 @@ GameObject18:
                   enabled: true
                   localPosition:
                     - -0.10550992713461937
-                    - 0.16254099040184222
-                    - 0.052954225979362085
+                    - 0.16254099040184089
+                    - 0.052954225979362113
                   localRotation:
                     - 46.899314927606561
                     - -6.7794008642125378
@@ -12387,7 +12387,7 @@ GameObject18:
               Children:
                 - name: miniarm_ref.r.009
                   prefabPath: ""
-                  uuid: 9759027796546879065
+                  uuid: 9789304424093272694
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -12396,9 +12396,9 @@ GameObject18:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -3.3250729902789544e-07
+                        - -3.3250729813971702e-07
                         - 0.059129259232814313
-                        - -1.2803150539753005e-08
+                        - -1.2803151427931425e-08
                       localRotation:
                         - 26.06527165577214
                         - 0.60874174488739141
@@ -12410,7 +12410,7 @@ GameObject18:
                   Children: ~
             - name: miniarm_ref.l.005
               prefabPath: ""
-              uuid: 9800230719859641055
+              uuid: 672605321021766298
               tag: Untagged
               active: true
               isStatic: false
@@ -12420,8 +12420,8 @@ GameObject18:
                   enabled: true
                   localPosition:
                     - 0.1041214957217953
-                    - 0.16254099049793469
-                    - 0.052551186562705132
+                    - 0.16254099049793336
+                    - 0.05255118656270516
                   localRotation:
                     - 46.678757856968915
                     - 6.8035901021284246
@@ -12433,7 +12433,7 @@ GameObject18:
               Children:
                 - name: miniarm_ref.l.009
                   prefabPath: ""
-                  uuid: 6812567152593635658
+                  uuid: 10820360449484199305
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -12442,8 +12442,8 @@ GameObject18:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 3.2312135456180613e-07
-                        - 0.059129320601518209
+                        - 3.231213532295385e-07
+                        - 0.059129320601519986
                         - 6.1346121071892412e-08
                       localRotation:
                         - 26.065297460760327
@@ -12457,7 +12457,7 @@ GameObject18:
 GameObject19:
   name: MawlocTail
   prefabPath: ""
-  uuid: 1199259169068095671
+  uuid: 16503133221174634208
   tag: Boss
   active: false
   isStatic: false
@@ -12466,9 +12466,9 @@ GameObject19:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -42.093238830566406
-        - 5.0946769714355469
-        - -30.601823806762695
+        - -39.048976898193359
+        - 6.6703615188598633
+        - -24.588630676269531
       localRotation:
         - 0
         - -0
@@ -12506,9 +12506,9 @@ GameObject19:
   Children:
     - name: MawlocTailMesh
       prefabPath: ""
-      uuid: 14746850890117384533
+      uuid: 8823032132915985227
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12559,7 +12559,7 @@ GameObject19:
       Children:
         - name: root.x
           prefabPath: ""
-          uuid: 10955950084448516885
+          uuid: 18383875061501167473
           tag: Untagged
           active: true
           isStatic: false
@@ -12568,21 +12568,21 @@ GameObject19:
               name: Transform_Component
               enabled: true
               localPosition:
-                - 5.6843418860808027e-14
-                - -2.1647787743130995
-                - 0.069268417032418497
+                - 0
+                - -341.57289316458247
+                - 0.069311765022661134
               localRotation:
-                - -0.27453709490240713
-                - -0.00038547563589005191
-                - 1.1940469875093334e-06
+                - -0.27453711268915998
+                - -0.00038547563999534023
+                - 1.1940600015808973e-06
               localScale:
-                - 99.999994290151292
-                - 99.999967750805141
-                - 99.999966077624393
+                - 100.00000223743746
+                - 99.9999677509539
+                - 99.999974024819295
           Children:
             - name: c_tail_00.x
               prefabPath: ""
-              uuid: 4825392077940327917
+              uuid: 17442328585148945159
               tag: Untagged
               active: true
               isStatic: false
@@ -12591,21 +12591,21 @@ GameObject19:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - 3.9127872941691066e-08
-                    - 0.3353492088914678
-                    - 0.0063838948269321349
+                    - 3.912795065730279e-08
+                    - 0.33534935193854221
+                    - 0.0063838951091437224
                   localRotation:
-                    - 0.27325071274485813
-                    - 0.026632959254479206
-                    - -5.4825208028644274
+                    - 0.27454346577024968
+                    - 0.00033594679076643199
+                    - 0.014097245190000518
                   localScale:
-                    - 0.9999997778136458
-                    - 0.99999989862296201
-                    - 1.0000002026295209
+                    - 0.99999995077073978
+                    - 0.9999998982697117
+                    - 1.0000002026322374
               Children:
                 - name: c_tail_01.x
                   prefabPath: ""
-                  uuid: 18181582493962544590
+                  uuid: 17902832341716326731
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -12614,21 +12614,21 @@ GameObject19:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -3.6086152288561379e-08
-                        - 0.45822600387060469
-                        - -2.3613634603236733e-08
+                        - -1.1276516032054928e-07
+                        - 0.45822546877082138
+                        - -2.2942437727380138e-08
                       localRotation:
-                        - 1.7077359343649853e-06
-                        - 8.6416823555072821e-07
-                        - -5.4825818409317595
+                        - -5.4669619792367378e-13
+                        - 4.0572867366793222e-13
+                        - -0.28768688298141071
                       localScale:
-                        - 0.99999990798864657
-                        - 0.99999980982281134
-                        - 1.0000000000000062
+                        - 1.0000000056443141
+                        - 1.0000000215314127
+                        - 0.99999999999999956
                   Children:
                     - name: c_tail_02.x
                       prefabPath: ""
-                      uuid: 16147431558486133411
+                      uuid: 8914434686625784380
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -12637,21 +12637,21 @@ GameObject19:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -2.4160005107631836e-08
-                            - 0.45837648651022017
-                            - -2.275137589435872e-08
+                            - -8.0654950274094972e-08
+                            - 0.45837667795984727
+                            - -2.2226021023641351e-08
                           localRotation:
-                            - 1.7077253079337306e-06
-                            - 8.6424017853697693e-07
-                            - -5.4825814471818468
+                            - -1.7565140790346699e-13
+                            - 1.6168321076808537e-12
+                            - 0.45296013792064443
                           localScale:
-                            - 0.99999985455466578
-                            - 0.99999989339865825
-                            - 1.0000000000000067
+                            - 1.0000000165551015
+                            - 0.99999988940243589
+                            - 1
                       Children:
                         - name: c_tail_03.x
                           prefabPath: ""
-                          uuid: 160480933250049226
+                          uuid: 185542223367866162
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -12660,21 +12660,21 @@ GameObject19:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 1.8122456424407574e-07
-                                - 0.4581295851246876
-                                - -2.1063656596709279e-08
+                                - 2.0681117263166016e-07
+                                - 0.45812932077346624
+                                - -2.3352946687538179e-08
                               localRotation:
-                                - 1.7077303912688413e-06
-                                - 8.6424040300397422e-07
-                                - -5.4825842745807938
+                                - 2.1690098059370519e-07
+                                - -3.410220631185265e-09
+                                - -0.56900803931687149
                               localScale:
-                                - 0.9999997911939027
-                                - 0.99999976313795136
-                                - 1.0000000000000064
+                                - 1.0000000235027882
+                                - 0.99999991223624352
+                                - 1.0000000000000002
                           Children:
                             - name: c_tail_04.x
                               prefabPath: ""
-                              uuid: 2966655943936261566
+                              uuid: 10665608970623874214
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -12683,15 +12683,15 @@ GameObject19:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - -2.3397174775396934e-07
-                                    - 0.45775810303647901
-                                    - -1.8582887229001699e-08
+                                    - -1.5443224610223183e-07
+                                    - 0.45775842387818122
+                                    - -2.3637162893663799e-08
                                   localRotation:
-                                    - 1.7077301536170686e-06
-                                    - 8.6423272421067915e-07
-                                    - -5.4825804712979256
+                                    - -2.0926451558966192e-13
+                                    - 1.6443359397203734e-12
+                                    - 0.47147098151167494
                                   localScale:
-                                    - 1.0000000672781679
-                                    - 0.99999996765106813
-                                    - 0.99999984105426232
+                                    - 0.99999991084380224
+                                    - 1.0000000220966883
+                                    - 1
                               Children: ~

@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
     //color change
     private bool isFlashingColor = false;
     private float flashTimer = 0f;
-    private Vector4 originalColor;
+    private Vector4 originalColor = new Vector4(1, 1, 1 ,1);
     public Vector4 flashColor = new Vector4(1, 0, 0, 1); // rojo
     public float flashDuration = 0.1f;
     //private AudioSource sound;
@@ -497,7 +497,6 @@ public class PlayerController : MonoBehaviour
         MeshRenderer renderer = playerMesh.GetComponent<MeshRenderer>();
         if (renderer != null)
         {
-            originalColor = renderer.GetColor();
             renderer.SetColor(color);
             isFlashingColor = true;
             flashTimer = duration;

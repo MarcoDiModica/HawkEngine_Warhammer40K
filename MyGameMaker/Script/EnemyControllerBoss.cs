@@ -38,7 +38,9 @@ public class EnemyControllerBoss : EnemyController
     private const string ClawClip = "Assets/Audio/Mawloc_Claw_Attack.wav";
     private const string AcidClip = "Assets/Audio/Mawloc_Acid_Attack.wav";
     private const string DeathClip = "Assets/Audio/Mawloc_Death.wav";
+    private const string BossTheme = "Assets/Audio/Music/MainTheme_BetaBuild2.ogg";
 
+    private bool isBossMusicPlaying = false;
     //stats
     bool isCombatMusicPlaying = false;
     private float health = 1500.0f;
@@ -89,6 +91,8 @@ public class EnemyControllerBoss : EnemyController
     private EnemyControllerBossTail tailController;
     private bool hasUnburiedInPhase2 = false;
 
+    private MawlocAnimation anim;
+
     private enum BossPhase
     {
         PHASE1,
@@ -122,18 +126,26 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Collider component!");
             return;
         }
-//         sound = gameObject.GetComponent<AudioSource>();
-//         if (sound == null)
-//         {
-//             Engineson.print("PlayerShooting: Audio component not found");
-//         }
+        //         sound = gameObject.GetComponent<AudioSource>();
+        //         if (sound == null)
+        //         {
+        //             Engineson.print("PlayerShooting: Audio component not found");
+        //         }
+
+        anim = gameObject.GetChild("MawlocMesh").GetComponent<MawlocAnimation>();
+        if (anim == null)
+        {
+            Engineson.print("ERROR: Mawloc animation requires a script component!");
+            return;
+        }
+
         enemyTransform = gameObject.GetComponent<Transform>();
         if (enemyTransform == null)
         {
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 1500.0f;
+        currentHealth = 1f;
         gameObject.tag = "Boss";
         isDead = false;
 //         musicClip = new AudioClip(combatMusic, "BossMusic", true, false);
@@ -145,7 +157,13 @@ public class EnemyControllerBoss : EnemyController
     {
         if (!isDead)
         {
-                float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+            if (!isBossMusicPlaying)
+            {
+                Audio.Play(BossTheme, true);
+                isBossMusicPlaying = true;
+            }
+
+            float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
                 if (playerTransform != null)
                 {
@@ -318,12 +336,13 @@ public class EnemyControllerBoss : EnemyController
             if (isDead)
             {
                 collider.SetActive(false);
-                //if (isCombatMusicPlaying == true)
-                //{
-                //    sound?.Stop();
-                //    isCombatMusicPlaying = false;
-                //}
-            }
+                Audio.Stop(BossTheme); 
+            //if (isCombatMusicPlaying == true)
+            //{
+            //    sound?.Stop();
+            //    isCombatMusicPlaying = false;
+            //}
+        }
     }
 
     public override void ResetEnemyCheckPoint()
@@ -377,6 +396,7 @@ public class EnemyControllerBoss : EnemyController
                 enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
                 collider.SetPosition(enemyTransform.position);
                 Engineson.print("Unburrowing Attack Phase 2");
+                anim.SetUnburrowingAnimation();
             }
             Audio.PlayOneShot(UnburrowClip);
             Engineson.print("PlaySound Attack Phase 2");
@@ -391,6 +411,7 @@ public class EnemyControllerBoss : EnemyController
             Audio.PlayOneShot(UnburrowClip);
             enemyTransform.position = fixedPositions[2];
             collider.SetPosition(enemyTransform.position);
+            anim.SetUnburrowingAnimation();
         }
         isBuried = false;
     }
@@ -404,6 +425,7 @@ public class EnemyControllerBoss : EnemyController
             hurtboxDuration = 0.0f;
             isSlamActive = true;
             slamAttackTimer = 0.0f;
+            anim.SetSlamAnimation();
         }
     }
 
@@ -414,6 +436,7 @@ public class EnemyControllerBoss : EnemyController
             Audio.PlayOneShot(ClawClip);
             CreateClawHurtbox();
             slamAttackTimer = 0.0f;
+            anim.SetClawStrikeAnimation();
         }
     }
 
@@ -434,6 +457,7 @@ public class EnemyControllerBoss : EnemyController
             var transform = metalSlideObject.GetComponent<Transform>();
             transform.position = spawnPosition;
             transform.SetScale(3, 3, 3);
+            anim.SetIdleAnimation(); //Temporary, missing metal slide animation
             Audio.PlayOneShot(AcidClip);
         }
     }
@@ -514,6 +538,7 @@ public class EnemyControllerBoss : EnemyController
             Audio.PlayOneShot(BurrowClip);
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
             collider.SetPosition(enemyTransform.position);
+            anim.SetBurrowingAnimation();
             isBuried = true;
         }
     }
@@ -524,6 +549,7 @@ public class EnemyControllerBoss : EnemyController
         Engineson.Destroy(GetGameObject());
         isDead = true;
         Audio.PlayOneShot(DeathClip);
+        anim.SetDeathAnimation();
         SceneManager.LoadScene("WinScene");
     }
 

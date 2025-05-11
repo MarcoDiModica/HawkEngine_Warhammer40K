@@ -20,16 +20,18 @@ public class PlayerPowerUp : MonoBehaviour
     private float piercingBulletsTimer = 0.0f;
 
    // private AudioSource sound;
-    private const string AmmunitionBlessingActivated = "Assets/Audio/SFX/PickUps/PowerUps/AmmunitionBlessing/AmmunitionBlessingActivated.wav";
-    private const string BlackHeartActivated = "Assets/Audio/SFX/PickUps/PowerUps/BlackHeart/BlackHeartActivated.wav";
+    private const string AmmunitionBlessingActivated = "Assets/Audio/PowerUps/AmmoBless2.wav";
+    private const string BlackHeartActivated = "Assets/Audio/PowerUps/Black_Heart.wav";
     private const string ChapterStandardActivated = "Assets/Audio/SFX/PickUps/PowerUps/ChapterStandard/ChapterStandardActivated.wav";
     private const string MagnetEffect = "Assets/Audio/SFX/PickUps/PowerUps/Magnet/MagnetEffect.wav";
-    private const string MedicaeStimmActivated = "Assets/Audio/SFX/PickUps/PowerUps/MedicaeStimm/Injection Heal Sound Effect.wav";
-    private const string PiercingBulletsPicked = "Assets/Audio/SFX/PickUps/PowerUps/PiercingBullets/PiercingBulletsPicked.wav";
+    private const string MedicaeStimmActivated = "Assets/Audio/PowerUps/Stim_2.wav";
+    private const string PiercingBulletsPicked = "Assets/Audio/PowerUps/Piercing_ammo.wav";
     private const string BoltgunBulletsPicked = "Assets/Audio/SFX/PickUps/Ammunition/BoltgunBulletsPicked.wav";
     private const string ShotgunShellsPicked = "Assets/Audio/SFX/PickUps/Ammunition/ShotgunShellsPicked.wav";
     private const string ShotgunObtained = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunEqquiped.wav";
     private const string RailgunObtained = "Assets/Audio/SFX/Weapons/Railgun/RailGunEquipped.wav";
+    private const string PowerUpDown = "Assets/Audio/PowerUps/PowerUpDown.wav";
+
     private ParticleFX MedicaeStimmSpeed;
     private ParticleFX AmmunitionBlessing;
 

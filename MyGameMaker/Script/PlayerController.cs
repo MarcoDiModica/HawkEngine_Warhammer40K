@@ -41,16 +41,16 @@ public class PlayerController : MonoBehaviour
     //color change
     private bool isFlashingColor = false;
     private float flashTimer = 0f;
-    private Vector4 originalColor;
+    private Vector4 originalColor = new Vector4(1, 1, 1 ,1);
     public Vector4 flashColor = new Vector4(1, 0, 0, 1); // rojo
     public float flashDuration = 0.1f;
     //private AudioSource sound;
     private bool isFootstepPlaying = false;
     private bool hasStoppedFootsteps = false;
-    private const string Runfootsteps = "Assets/Audio/SFX/Player/PlayerFootstep_ready.wav";
-    private const string Walkfootsteps = "Assets/Audio/SFX/Player/PlayerWalkFootstep_ready.wav";
-    public const string HitAudio = "Assets/Audio/SFX/Player/PlayerHit_ready.wav";
-    public const string DeathAudio = "Assets/Audio/SFX/PlayerPlayerDeath_ready.wav";
+    private const string Runfootsteps = "Assets/Audio/Player/Player_Footsteps.wav";
+    private const string Walkfootsteps = "Assets/Audio/Player/Player_Footsteps.wav";
+    public const string HitAudio = "Assets/Audio/Player/PlayerHurt.wav";
+    public const string DeathAudio = "Assets/Audio/Player/Player_Death.wav";
     private int audioRun;
     private int audioWalk;
 
@@ -445,7 +445,7 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
             isTransitioning = true;
             transitionTimer = transitionDelay;
-            PlayFootstep();
+
         }
         else if (transitionTimer <= 0f && !isWalking)
         {
@@ -457,7 +457,7 @@ public class PlayerController : MonoBehaviour
             isShootingRunning = false;
             isMoving = true;
             isTransitioning = false;
-            PlayFootstep();
+
         }
     }
 
@@ -478,7 +478,7 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
             isTransitioning = true;
             transitionTimer = transitionDelay;
-            PlayFootstep();
+
         }
         else if (transitionTimer <= 0f && !isRunning)
         {
@@ -489,7 +489,7 @@ public class PlayerController : MonoBehaviour
             isShootingRunning = false;
             isMoving = true;
             isTransitioning = false;
-            PlayFootstep();
+
         }
     }
 
@@ -571,27 +571,23 @@ public class PlayerController : MonoBehaviour
     {
         string newFootstep = isRunning ? Runfootsteps : Walkfootsteps;
 
-        if (!isFootstepPlaying || currentFootstep != newFootstep)
+        if (isFootstepPlaying && currentFootstep == newFootstep)
+            return;
+
+        StopFootsteps();
+
+        if (isRunning)
         {
-            if (audioRun > 0) Audio.Stop(audioRun);
-            if (audioWalk > 0) Audio.Stop(audioWalk);
-
-            audioRun = 0;
-            audioWalk = 0;
-
-            if (isRunning)
-            {
-                audioRun = Audio.Play(Runfootsteps, true);
-            }
-            else
-            {
-                audioWalk = Audio.Play(Walkfootsteps, true);
-            }
-
-            isFootstepPlaying = (audioRun > 0 || audioWalk > 0);
-            hasStoppedFootsteps = !isFootstepPlaying;
-            currentFootstep = newFootstep;
+            audioRun = Audio.Play(Runfootsteps, true); // loop = true
         }
+        else
+        {
+            audioWalk = Audio.Play(Walkfootsteps, true);
+        }
+
+        isFootstepPlaying = true;
+        hasStoppedFootsteps = false;
+        currentFootstep = newFootstep;
     }
 
     private void StopFootsteps()
@@ -613,7 +609,6 @@ public class PlayerController : MonoBehaviour
         MeshRenderer renderer = playerMesh.GetComponent<MeshRenderer>();
         if (renderer != null)
         {
-            originalColor = renderer.GetColor();
             renderer.SetColor(color);
             isFlashingColor = true;
             flashTimer = duration;

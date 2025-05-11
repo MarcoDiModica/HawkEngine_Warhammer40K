@@ -133,28 +133,6 @@ public class EnemyControllerWarrior : EnemyController
                     {
                         currentState = EnemyState.CHASE;
                     }
-
-                    // Rotation
-                    if (moveDirection != Vector3.Zero)
-                    {
-                        currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-                        float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-                        float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
-
-                        while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-                        while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
-
-                        currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
-
-                        Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-                        Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                            eulerRotation.Y * ((float)Math.PI / 180.0f),
-                            eulerRotation.X * ((float)Math.PI / 180.0f),
-                            eulerRotation.Z * ((float)Math.PI / 180.0f)
-                        );
-
-                        collider.SetRotation(newRotation);
-                    }
                 }
                 else
                 {
@@ -211,6 +189,23 @@ public class EnemyControllerWarrior : EnemyController
 
                 Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
                 rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
+
+                while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+
+                currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+
+                Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                    eulerRotation.Y * ((float)Math.PI / 180.0f),
+                    eulerRotation.X * ((float)Math.PI / 180.0f),
+                    eulerRotation.Z * ((float)Math.PI / 180.0f)
+                );
+
+                collider.SetRotation(newRotation);
                 break;
 
             case EnemyState.ATTACK:
@@ -250,6 +245,23 @@ public class EnemyControllerWarrior : EnemyController
                         shootTimer = 0;
                     }
                 }
+                currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                float targetAttackAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                float targetAttackAngleDegrees = targetAttackAngle * (180.0f / (float)Math.PI);
+
+                while (targetAttackAngleDegrees - currentRotationAngle > 180.0f) targetAttackAngleDegrees -= 360.0f;
+                while (targetAttackAngleDegrees - currentRotationAngle < -180.0f) targetAttackAngleDegrees += 360.0f;
+
+                currentRotationAngle = Lerp(currentRotationAngle, targetAttackAngleDegrees, rotationSpeed * deltaTime);
+
+                Vector3 eulerAttackRotation = new Vector3(0, currentRotationAngle, 0);
+                Quaternion newAttackRotation = Quaternion.CreateFromYawPitchRoll(
+                    eulerAttackRotation.Y * ((float)Math.PI / 180.0f),
+                    eulerAttackRotation.X * ((float)Math.PI / 180.0f),
+                    eulerAttackRotation.Z * ((float)Math.PI / 180.0f)
+                );
+
+                collider.SetRotation(newAttackRotation);
                 break;
             case EnemyState.STUNNED:
                 break;

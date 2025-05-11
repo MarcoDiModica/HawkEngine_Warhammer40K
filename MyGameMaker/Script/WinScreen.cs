@@ -10,14 +10,16 @@ public class WinScreen : MonoBehaviour
     private UIButton button_quitButton;
     private UITransform transform_mainMenuButton;
     private UITransform transform_quitButton;
-//     private AudioSource sound;
-//     private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
-//     private ButtonState prevState_quitButton = ButtonState.DEFAULT;
-// 
-//     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
-//     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
-//     private AudioClip buttonHoveredFX;
-//     private AudioClip buttonClickedFX;
+
+    private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
+    //     private AudioSource sound;
+    //     private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
+    //     private ButtonState prevState_quitButton = ButtonState.DEFAULT;
+    // 
+    //     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
+    //     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+    //     private AudioClip buttonHoveredFX;
+    //     private AudioClip buttonClickedFX;
 
     private int selectedButtonIndex = -1;
     private UIButton[] buttons;
@@ -171,12 +173,12 @@ public class WinScreen : MonoBehaviour
 
             if (selectedButton == button_mainMenuButton)
             {
-                //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(ConfirmSFX);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)
             {
-                //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(ConfirmSFX);
                 // Aquí puedes agregar la lógica para salir del juego
             }
         }

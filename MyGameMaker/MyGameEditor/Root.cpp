@@ -68,9 +68,7 @@ bool Root::Start()
 	resourceManager->LoadResources(); // Esto no se mutea
 	resourceManager->CreateCube(); // Esto no se mutea
 
-	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
-
-	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");
 
 	//-------------------SHAKE MANAGER COLOCAR EN TODAS LAS ESCENAS -------------------//
 	/*auto shakeManager = CreateGameObject("ShakeManager");
@@ -327,10 +325,11 @@ bool Root::Start()
 	//mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	//mawloc->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(2, 5, 2));
 	//mawloc->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 7.5, 0));
-	//auto mawlocMesh = CreateGameObjectWithPath("Assets/Meshes/MawlocBueno2.fbx");
+	//auto mawlocMesh = CreateGameObjectWithPath("Assets/Meshes/Mawloc.fbx");
 	//mawlocMesh->SetName("MawlocMesh");
 	//mawlocMesh->GetTransform()->SetScale(glm::vec3(0.035, 0.014, 0.035));
 	//mawlocMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//mawlocMesh->AddComponent<ScriptComponent>()->LoadScript("MawlocAnimation");
 	//ParentGameObject(*mawlocMesh, *mawloc);
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 	//
@@ -339,10 +338,11 @@ bool Root::Start()
 	//mawlocTail->GetComponent<Transform_Component>()->SetScale(glm::vec3(3, 5, 3));
 	//mawlocTail->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	//mawlocTail->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 0));
-	//auto mawlocTailMesh = CreateGameObjectWithPath("Assets/Meshes/tail.fbx");
+	//auto mawlocTailMesh = CreateGameObjectWithPath("Assets/Meshes/MawlocTail.fbx");
 	//mawlocTailMesh->SetName("MawlocTailMesh");
 	//mawlocTailMesh->GetTransform()->SetScale(glm::vec3(0.04, 0.02, 0.04));
 	//mawlocTailMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//mawlocTailMesh->AddComponent<ScriptComponent>()->LoadScript("MawlocTailAnimation");
 	//ParentGameObject(*mawlocTailMesh, *mawlocTail);
 	//mawlocTail->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBossTail");
 	

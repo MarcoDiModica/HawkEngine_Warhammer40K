@@ -107,6 +107,8 @@
     <Compile Include="Arc.cs" />
     <Compile Include="ArcSnare.cs" />
     <Compile Include="Audio.cs" />
+    <Compile Include="AudioLevel1.cs" />
+    <Compile Include="AudioLevel2.cs" />
     <Compile Include="Ball.cs" />
     <Compile Include="Barrage.cs" />
     <Compile Include="BarrageBullet.cs" />
@@ -157,6 +159,8 @@
     <Compile Include="LoseScreen.cs" />
     <Compile Include="Magnet.cs" />
     <Compile Include="Mathf.cs" />
+    <Compile Include="MawlocAnimation.cs" />
+    <Compile Include="MawlocTailAnimation.cs" />
     <Compile Include="MedicaeStimm.cs" />
     <Compile Include="IInteractable.cs" />
     <Compile Include="ImageAsSlider.cs" />

@@ -1,9 +1,3 @@
-#pragma once  
-#include <string>  
-#include <glm/glm.hpp>  
-#include "../MyGameEngine/GameObject.h"
-#include <yaml-cpp/yaml.h>
-
 class TextComponent : public Component
 {
 public:
@@ -17,26 +11,26 @@ public:
     void SetFontSize(float fontSize);
     void SetBoxSize(const glm::vec2& size);
 
-    // Métodos para obtener propiedades  
+    // M?todos para obtener propiedades  
     const std::string& GetText() const;
     const glm::vec2& GetPosition() const;
     const glm::vec3& GetColor() const;
     glm::vec2 GetBoxSize() const;
     float GetFontSize() const;
-	void SetProjection(const glm::mat4& proj) { m_projection = proj; }
-    // Método para renderizar el texto  
+    void SetProjection(const glm::mat4& proj) { m_projection = proj; }
+    // M?todo para renderizar el texto  
     void Render() const;
 
     ComponentType GetType() const override { return ComponentType::UI; }
     void Awake() override {}
-	void Start() override {}
+    void Start() override {}
     void Update(float deltaTime) override;
-	void Destroy() override {}
-	
-	std::unique_ptr<Component> Clone(GameObject* owner) override
-	{
-		return std::make_unique<TextComponent>(owner, m_text, m_position, m_color, m_fontSize);
-	}
+    void Destroy() override {}
+
+    std::unique_ptr<Component> Clone(GameObject* owner) override
+    {
+        return std::make_unique<TextComponent>(owner, m_text, m_position, m_color, m_fontSize);
+    }
     // New method to access the owner  
     GameObject* GetOwner() const { return m_owner; }
 
@@ -61,24 +55,27 @@ protected:
     friend class SceneSerializer;
 
     YAML::Node encode() override {
+
         YAML::Node node = Component::encode();
 
-		node["text"] = m_text;
-		node["position"] = std::vector<float>{ m_position.x, m_position.y };
-		node["color"] = std::vector<float>{ m_color.r, m_color.g, m_color.b };
-		node["fontSize"] = m_fontSize;
-		node["boxSize"] = std::vector<float>{ m_boxSize.x, m_boxSize.y };
-		node["spriteSize"] = std::vector<float>{ spriteSize.x, spriteSize.y };
-		node["sheetSize"] = std::vector<float>{ sheetSize.x, sheetSize.y };
-		node["spriteOffset"] = std::vector<float>{ spriteOffset.x, spriteOffset.y };
+        node["text"] = m_text;
+        node["position"] = std::vector<float>{ m_position.x, m_position.y };
+        node["color"] = std::vector<float>{ m_color.r, m_color.g, m_color.b };
+        node["fontSize"] = m_fontSize;
+        node["boxSize"] = std::vector<float>{ m_boxSize.x, m_boxSize.y };
+        node["spriteSize"] = std::vector<float>{ spriteSize.x, spriteSize.y };
+        node["sheetSize"] = std::vector<float>{ sheetSize.x, sheetSize.y };
+        node["spriteOffset"] = std::vector<float>{ spriteOffset.x, spriteOffset.y };
 
         return node;
     }
 
     bool decode(const YAML::Node& node) override {
+
         if (!Component::decode(node)) {
             return false;
         }
+
         m_text = node["text"].as<std::string>();
         m_position.x = node["position"][0].as<float>();
         m_position.y = node["position"][1].as<float>();

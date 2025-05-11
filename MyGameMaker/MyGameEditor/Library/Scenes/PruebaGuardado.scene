@@ -1,0 +1,2608 @@
+SceneMetadata:
+  SceneName: PruebaGuardado
+GameObject0:
+  name: MainCamera
+  uuid: 3625096376915730259
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -14
+        - 20
+        - 14
+      localRotation:
+        - -130.00000393764998
+        - 45.000002600858409
+        - -179.99999565358834
+      localScale:
+        - 1
+        - 1
+        - 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975803375244
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500
+      priority: 1
+    ScriptComponents:
+      Script0:
+        name: PlayerCamera
+  Children: ~
+GameObject1:
+  name: Cube
+  uuid: 10045118259756039659
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 0
+      material:
+        name: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: Test1
+  Children: ~
+GameObject2:
+  name: Canvas_HUD
+  uuid: 15605680666634304528
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    ScriptComponents:
+      Script0:
+        name: HUD
+  Children:
+    - name: blood_bg1
+      uuid: 15398550874093653563
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0560000017
+            - 0.887000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.108999997
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/healthbar_blood_bg.png
+          use_animation: false
+          sprite_size:
+            - 558
+            - 83
+          sheet_size:
+            - 558
+            - 83
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: blood_bg2
+      uuid: 11833358145793627216
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0590000004
+            - 0.92900002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0590000004
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/healthbar_blood_bg.png
+          use_animation: false
+          sprite_size:
+            - 558
+            - 83
+          sheet_size:
+            - 558
+            - 83
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: blood_bar1
+      uuid: 3004620782131511024
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0560000017
+            - 0.887000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.108999997
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/healthbar_blood.png
+          use_animation: false
+          sprite_size:
+            - 265
+            - 51
+          sheet_size:
+            - 265
+            - 51
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: blood_bar2
+      uuid: 14821214574855903591
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.064000003
+            - 0.930999994
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0549999997
+            - 0.0179999992
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/healthbar_blood.png
+          use_animation: false
+          sprite_size:
+            - 265
+            - 51
+          sheet_size:
+            - 265
+            - 51
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: healthbar_bg
+      uuid: 15985940106465188156
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0170000009
+            - 0.85799998
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0430000015
+            - 0.0949999988
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/healthbar_bg.png
+          use_animation: false
+          sprite_size:
+            - 200
+            - 263
+          sheet_size:
+            - 200
+            - 263
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: red_thirst_bar
+      uuid: 18155672536795954270
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0189999994
+            - 0.948000014
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0370000005
+            - 0.0799999982
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/hautoealthbar_blood.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 0
+            - 0
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: healthbar_empty
+      uuid: 291702459578100035
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.00999999978
+            - 0.980000019
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.159999996
+            - 0.125
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/healthbar_empty.png
+          use_animation: false
+          sprite_size:
+            - 816
+            - 357
+          sheet_size:
+            - 816
+            - 357
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: boltgun_small_L
+      uuid: 13333387876591753825
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.922999978
+            - 0.79400003
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0250000004
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/gun_boltgun_small_icon.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 130
+            - 142
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: railgun_small_L
+      uuid: 5601626845206676893
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.922999978
+            - 0.796000004
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0250000004
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/gun_railgun_small_icon.png
+          use_animation: false
+          sprite_size:
+            - 134
+            - 146
+          sheet_size:
+            - 134
+            - 146
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: shotgun_small_L
+      uuid: 9773116554398514622
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.922999978
+            - 0.792999983
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0250000004
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/gun_shotgun_small_icon.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 125
+            - 139
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: boltgun_small_R
+      uuid: 2213795214501071471
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.954999983
+            - 0.79400003
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0250000004
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/gun_boltgun_small_icon.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 130
+            - 142
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: railgun_small_R
+      uuid: 16962873894322906344
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.954999983
+            - 0.796000004
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0250000004
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/gun_railgun_small_icon.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 134
+            - 146
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: shotgun_small_R
+      uuid: 15510192736853931910
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.954999983
+            - 0.792999983
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0250000004
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/gun_shotgun_small_icon.png
+          use_animation: false
+          sprite_size:
+            - 125
+            - 139
+          sheet_size:
+            - 125
+            - 139
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: railgun
+      uuid: 17824658152625935440
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.917999983
+            - 0.84799999
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0689999983
+            - 0.104000002
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/gun_railgun_icon_panel.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 322
+            - 266
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: shotgun
+      uuid: 2279325978643930971
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.916000009
+            - 0.850000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0689999983
+            - 0.104000002
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/gun_shotgun_icon_panel.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 322
+            - 266
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: boltgun
+      uuid: 2544150579544082222
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.916000009
+            - 0.850000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0689999983
+            - 0.104000002
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/gun_boltgun_icon_panel.png
+          use_animation: false
+          sprite_size:
+            - 319
+            - 266
+          sheet_size:
+            - 319
+            - 266
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: weapon_switcher_frame
+      uuid: 8377016290178910189
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.99000001
+            - 0.980000019
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.152999997
+            - 0.131999999
+            - 1
+          pivot_offset:
+            - 1
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/gunswitcher_frame.png
+          use_animation: false
+          sprite_size:
+            - 778
+            - 380
+          sheet_size:
+            - 778
+            - 380
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: boltgun_ability_1
+      uuid: 9267561899360482141
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.848999977
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.023
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/powerupi_grenade_icon_1.png
+          use_animation: false
+          sprite_size:
+            - 114
+            - 124
+          sheet_size:
+            - 114
+            - 124
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: boltgun_ability_2
+      uuid: 12609914116394009356
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.875999987
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.023
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/powerup_chainballs.png
+          use_animation: false
+          sprite_size:
+            - 114
+            - 125
+          sheet_size:
+            - 114
+            - 125
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: shotgun_ability_1
+      uuid: 5968707308241933029
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.848999977
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.023
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/powerup_hook.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 116
+            - 125
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: shotgun_ability_2
+      uuid: 15169705447659620508
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.875999987
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.023
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/powerup_explosion.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 114
+            - 125
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: railgun_ability_1
+      uuid: 13590210484724199814
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.848999977
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.023
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/powerup_railgun_reload.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 114
+            - 125
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: railgun_ability_2a
+      uuid: 13799827305031850845
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.875999987
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.023
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/powerup_railgun_Eball.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 114
+            - 125
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: railgun_ability_2b
+      uuid: 731949176971046645
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.875999987
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.023
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/powerup_railgun_shot.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 114
+            - 125
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: gun_small_frame
+      uuid: 17857143183618268003
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.91900003
+            - 0.791999996
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.064000003
+            - 0.0540000014
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/gun_weapon_frames.png
+          use_animation: false
+          sprite_size:
+            - 326
+            - 161
+          sheet_size:
+            - 326
+            - 161
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: frames
+      uuid: 15417253700281083738
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.847000003
+            - 0.887000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0529999994
+            - 0.057
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/powerup_frame.png
+          use_animation: false
+          sprite_size:
+            - 292
+            - 152
+          sheet_size:
+            - 292
+            - 152
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: lock_L
+      uuid: 3198332280649990247
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.922999978
+            - 0.795000017
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0250000004
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/lock.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 96
+            - 96
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: lock_R
+      uuid: 1664013344383202052
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.954999983
+            - 0.795000017
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0250000004
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/lock.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 96
+            - 96
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: nodash
+      uuid: 5880815333172320729
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0659999996
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/status_nodash.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 51
+            - 40
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: msup
+      uuid: 17939990152887438643
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0829999968
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/status_msup.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 42
+            - 35
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: noreload
+      uuid: 2463064670605158890
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.133000001
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/status_noreload.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 46
+            - 38
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: defenseup
+      uuid: 14347828309535383565
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0989999995
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/status_defenseup.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 35
+            - 31
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: asup
+      uuid: 4448963729855124746
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.149000004
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/status_asup.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 35
+            - 37
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: attackup
+      uuid: 13091499812632204051
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.115999997
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/status_attackup.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 42
+            - 39
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: magnet
+      uuid: 6835460627720158709
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.167999998
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/status_magnet.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 35
+            - 39
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: bookshelf
+      uuid: 13768977054211086575
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.123000003
+            - 0.926999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0189999994
+            - 0.0250000004
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UdeI/bookshelf.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 0
+            - 0
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: bible1
+      uuid: 12643033428836866463
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.125
+            - 0.92900002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00300000003
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/bible.png
+          use_animation: false
+          sprite_size:
+            - 141
+            - 362
+          sheet_size:
+            - 141
+            - 362
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: bible2
+      uuid: 15432948712756267362
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.128000006
+            - 0.92900002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00300000003
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/bible.png
+          use_animation: false
+          sprite_size:
+            - 141
+            - 362
+          sheet_size:
+            - 141
+            - 362
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: bible3
+      uuid: 13305541849971780725
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.130999997
+            - 0.92900002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00300000003
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/bible.png
+          use_animation: false
+          sprite_size:
+            - 141
+            - 362
+          sheet_size:
+            - 141
+            - 362
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: bible4
+      uuid: 10932472655228765527
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.134000003
+            - 0.92900002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00300000003
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/bible.png
+          use_animation: false
+          sprite_size:
+            - 141
+            - 362
+          sheet_size:
+            - 141
+            - 362
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: bible5
+      uuid: 8181875350166727565
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.136999995
+            - 0.92900002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00300000003
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/bible.png
+          use_animation: false
+          sprite_size:
+            - 141
+            - 362
+          sheet_size:
+            - 141
+            - 362
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Empty
+      uuid: 1357216829881545570
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.405000001
+            - 0.407000005
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        "":
+          name: ""
+          enabled: true
+          text: AAAAAAAAAAAA
+          position:
+            - 0
+            - 0
+          color:
+            - 1
+            - 1
+            - 1
+          fontSize: 16
+          boxSize:
+            - 200
+            - 100
+          spriteSize:
+            - 0
+            - 0
+          sheetSize:
+            - 0
+            - 0
+          spriteOffset:
+            - 0
+            - 0
+      Children: ~
+GameObject3:
+  name: Canvas_OptionsMenu
+  uuid: 8925403556996507450
+  tag: Untagged
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    ScriptComponents:
+      Script0:
+        name: OptionMenu
+  Children:
+    - name: Canvas_OptionsMenu_
+      uuid: 5230955948386383513
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/options_menu.png
+          use_animation: false
+          sprite_size:
+            - 2560
+            - 1440
+          sheet_size:
+            - 2560
+            - 1440
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~

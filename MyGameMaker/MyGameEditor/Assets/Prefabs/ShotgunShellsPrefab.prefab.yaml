@@ -1,6 +1,6 @@
-name: shotgun boolets_1_Instance
+name: shotgun boolets_1_Instance_Instance
 prefabPath: Assets\Prefabs\ShotgunShellsPrefab.prefab.yaml
-uuid: 4173041297100968582
+uuid: 2457045105027175042
 tag: Ammunition
 active: true
 isStatic: false
@@ -10,16 +10,16 @@ Components:
     enabled: true
     localPosition:
       - 1.2294057607650757
-      - 3
+      - 2.1560211181640625
       - -14.578598976135254
     localRotation:
       - 0
       - -0
       - 0
     localScale:
-      - 0.0078000002540647984
-      - 0.0078000002540647984
-      - 0.0078000002540647984
+      - 0.013103999197483063
+      - 0.013103999197483063
+      - 0.013103999197483063
   MeshRenderer:
     name: MeshRenderer
     enabled: true
@@ -31,6 +31,9 @@ Components:
       - 1
       - 1
       - 1
+  Shader:
+    name: Shader
+    enabled: true
   BoxColliderComponent:
     size:
       - 1
@@ -70,9 +73,9 @@ Components:
     Script0:
       name: ShotgunShells
       fields:
-        floatSpeed: 1.9298687
+        floatSpeed: 1.02037752
         floatHeight: 0.5
-        rotationSpeed: 36.534565
+        rotationSpeed: 91.7639618
         lifeTime: 30
         isDetected: false
 Children: ~

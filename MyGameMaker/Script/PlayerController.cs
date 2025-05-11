@@ -36,6 +36,13 @@ public class PlayerController : MonoBehaviour
     private float dashDelayTimer = 0f; 
     private float dashDelayDuration = 0.45f;
 
+
+    //color change
+    private bool isFlashingColor = false;
+    private float flashTimer = 0f;
+    private Vector4 originalColor;
+    public Vector4 flashColor = new Vector4(1, 0, 0, 1); // rojo
+    public float flashDuration = 0.1f;
     //private AudioSource sound;
     private bool isFootstepPlaying = false;
     private bool hasStoppedFootsteps = false;
@@ -124,6 +131,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             playerData.TakeDamage(10);
+            StartFlashColor(flashColor, flashDuration);
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            playerData.AddHealth(10);
+            MeshRenderer renderer = playerMesh.GetComponent<MeshRenderer>();
+            if (renderer != null)
+            {
+                renderer.SetColor(new Vector4(0, 1, 0, 1));
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.M))
@@ -295,6 +313,19 @@ public class PlayerController : MonoBehaviour
             isDashing = false;
         }
 
+        if (isFlashingColor)
+        {
+            flashTimer -= deltaTime;
+            if (flashTimer <= 0f)
+            {
+                MeshRenderer renderer = playerMesh.GetComponent<MeshRenderer>();
+                if (renderer != null)
+                {
+                    renderer.SetColor(originalColor);
+                }
+                isFlashingColor = false;
+            }
+        }
     }
 
 
@@ -505,7 +536,17 @@ public class PlayerController : MonoBehaviour
             currentFootstep = "";
         }
     }
-
+    public void StartFlashColor(Vector4 color, float duration)
+    {
+        MeshRenderer renderer = playerMesh.GetComponent<MeshRenderer>();
+        if (renderer != null)
+        {
+            originalColor = renderer.GetColor();
+            renderer.SetColor(color);
+            isFlashingColor = true;
+            flashTimer = duration;
+        }
+    }
     public override void OnTriggerEnter(GameObject other)
     {
         if (other.name == "Hurtbox")

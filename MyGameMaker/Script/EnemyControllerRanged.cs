@@ -24,6 +24,7 @@ public class EnemyControllerRanged : EnemyController
     public override void Awake()
     {
         //music = gameObject.GetComponent<AudioSource>();
+        startPosition = gameObject.GetComponent<Transform>().position;
     }
     public override void Start()
     {
@@ -165,6 +166,21 @@ public class EnemyControllerRanged : EnemyController
                 pc.playerData.AddHealth(5.0f);
             }
         }
+    }
+
+    public override void ResetEnemyCheckPoint()
+    {
+        if (!isDead)
+        {
+            currentHealth = maxHealth;
+            isStunned = false;
+            rb.SetVelocity(Vector3.Zero);
+            collider.SetActive(true);
+            gameObject.GetComponent<Collider>().SetPosition(startPosition);
+            //sound?.Stop();
+            isCombatMusicPlaying = false;
+        }
+        
     }
 
     public override void Attack()

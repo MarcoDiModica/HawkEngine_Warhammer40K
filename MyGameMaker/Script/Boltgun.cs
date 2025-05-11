@@ -57,8 +57,10 @@ public class Boltgun : BaseWeapon
 
     public override void Update(float deltaTime)
     {
-
-        timeSinceLastShot += deltaTime;
+        if (timeSinceLastShot <= shootCadence + 0.5f)
+        {
+            timeSinceLastShot += deltaTime;
+        }
 
         if (isReloading)
         {

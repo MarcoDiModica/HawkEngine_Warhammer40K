@@ -43,6 +43,8 @@ namespace EngineBinds {
 	MonoString* GetTag(MonoObject* ref);
 	void SetTag(MonoObject* ref, MonoString* tag);
     MonoObject* GetGameObjectByName(MonoString* name);	
+    MonoObject* GameObjectFindChild(MonoObject* parent, MonoString* name);
+	MonoArray* GetGameObjectsByTag(MonoString* tag);
     void GameObjectSetActive(MonoObject* ref, bool active);
     MonoObject* InstantiatePrefab(MonoObject* prefabObj, MonoObject* parentTransformObj, bool worldPositionStays);
 	bool GameObjectIsActive(MonoObject* ref);
@@ -100,15 +102,8 @@ namespace EngineBinds {
     void SetOffset(MonoObject* cameraRef, glm::vec3* offset);
 
     // MeshRenderer
-	void SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef);
-    void SetCubeMesh(MonoObject* meshRendererRef);
-	MonoObject* GetMesh(MonoObject* meshRendererRef);
-    void SetMaterial(MonoObject* meshRendererRef, MonoObject* materialRef);
-    MonoObject* GetMaterial(MonoObject* meshRendererRef);
-	void SetColor(MonoObject* meshRendererRef, glm::vec3* color);
-    void GetColor(MonoObject* meshRendererRef, glm::vec3* color);
-    void Render(MonoObject* meshRendererRef);
-    
+	void SetColor(MonoObject* meshRendererRef, glm::vec4* color);
+    glm::vec4 GetColor(MonoObject* meshRendererRef);
 
     //Physics
     MonoArray* OverlapSphere(glm::vec3* position, float radius, MonoString* tag);

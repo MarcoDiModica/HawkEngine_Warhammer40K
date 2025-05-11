@@ -7,7 +7,7 @@ public class PlayerData
 
     float health;
     float healthTemp;
-    float maxHealth = 100;
+    float maxHealth = 100000;
     float maxHealthTemp = 50;
     public bool isHit = false;
     public float movSpeed = 10;
@@ -81,6 +81,21 @@ public class PlayerData
         }
         this.health = health;
         Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
+    }
+
+    public void SetTempHealth(float health)
+    {
+        if (health > maxHealthTemp)
+        {
+            healthTemp = maxHealthTemp;
+            return;
+        }
+        else if (health < 0)
+        {
+            healthTemp = 0;
+            return;
+        }
+        healthTemp = health;
     }
 
     public void AddHealth(float health)

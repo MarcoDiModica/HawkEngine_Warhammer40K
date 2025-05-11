@@ -154,16 +154,16 @@ namespace ParticlePresets {
 	const ParticlePreset Explosion = {
 		ParticleType::EXPLOSION,
 		false,						   // PlayOnAwake
-		0.2f,						   // Duration (only if one-shot)
+		0.1f,						   // Duration (only if one-shot)
 		glm::vec3(1.0f, 0.5f, 0.0f),   // Start color (orange)
 		glm::vec3(0.5f, 1.0f, 0.0f),   // End color (dark red)
 		1.0f,                          // Alpha start
 		0.0f,                          // Alpha end
 		1.0f,                          // Size start
 		3.0f,                          // Size end
-		0.2f,                          // Min lifetime
-		1.0f,                          // Max lifetime
-		5.0f,                          // Min speed
+		0.35f,                          // Min lifetime
+		0.35f,                          // Max lifetime
+		5.0f ,                          // Min speed
 		10.0f,                         // Max speed
 		4.0f,						   // End Speed
 		glm::vec3(0.0f,-0.5f,0.0f),	   // Gravity (negative for upward)
@@ -256,21 +256,21 @@ namespace ParticlePresets {
 	const ParticlePreset Environment_Explosion = {
 		ParticleType::ENVIRONMENT_EXPLOSION,
 		true,						   // PlayOnAwake
-		5,						   // Duration (only if one-shot)
+		0.01f,						   // Duration (only if one-shot)
 		glm::vec3(1,1,1),   // Start color (light gray)
 		glm::vec3(1,1,1),   // End color (dark gray)
 		1.0f,                          // Alpha start
 		1.0f,                          // Alpha end
-		1,                          // Size start
-		1,                          // Size end
-		1,                          // Min lifetime
-		1,                          // Max lifetime
+		12.0f,                          // Size start
+		8.0f ,                          // Size end
+		0.35f,                          // Min lifetime
+		0.35f,                          // Max lifetime
 		0.0f,                          // Min speed
 		0.0f,                          // Max speed
 		0.0f,						   // End Speed
 		glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
 		0,                          // Rotation speed
-		1,                         // Emission rate (particles per second)
+		0.2f,                         // Emission rate (particles per second)
 		EmitterShape::POINT,            // Shape
 		0.2f,                          // Cone base radius
 		1.0f,                          // Cone height
@@ -278,11 +278,11 @@ namespace ParticlePresets {
 		glm::vec2(640,360),			   // Sprite size
 		true,						   // Use animation
 		false,						   // Random animation Index
-		0.05f,						   // Animation speed
+		0.07f,						   // Animation speed
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
-		1.0f,						   // Min scale
-		1.0f,						   // Max scale
+		12.0f,						   // Min scale
+		12.0f,						   // Max scale
 		"Assets/Textures/ixplosion.png", // Texture path
 		false						   // Is Local Space
 	};
@@ -296,10 +296,10 @@ namespace ParticlePresets {
 		glm::vec3(1,1,1),   // End color (dark gray)
 		1.0f,                          // Alpha start
 		1.0f,                          // Alpha end
-		1,                          // Size start
-		1,                          // Size end
-		0.25f,                          // Min lifetime
-		0.25f,                          // Max lifetime
+		8,                          // Size start
+		5,                          // Size end
+		1.0f,                          // Min lifetime
+		1.0f,                          // Max lifetime
 		0.0f,                          // Min speed
 		0.0f,                          // Max speed
 		0.0f,						   // End Speed
@@ -313,11 +313,11 @@ namespace ParticlePresets {
 		glm::vec2(1920,1080),			   // Sprite size
 		true,						   // Use animation
 		false,						   // Random animation Index
-		0.05f,						   // Animation speed
+		0.07f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
-		1.0f,						   // Min scale
-		1.0f,						   // Max scale
+		8.0f,						   // Min scale
+		8.0f,						   // Max scale
 		"Assets/Textures/muzzle.png", // Texture path
 		true						   // Is Local Space
 	};
@@ -359,21 +359,21 @@ namespace ParticlePresets {
 	const ParticlePreset Enemy_Dash = {
 		ParticleType::ENEMY_DASH,
 		true,						   // PlayOnAwake
-		1.0f,						   // Duration (only if one-shot)
+		0.01f,						   // Duration (only if one-shot)
 		glm::vec3(1,1,1),   // Start color (light gray)
 		glm::vec3(1,1,1),   // End color (dark gray)
 		1.0f,                          // Alpha start
 		1.0f,                          // Alpha end
-		2,                          // Size start
-		2,                          // Size end
-		1,                          // Min lifetime
-		1,                          // Max lifetime
+		17,                          // Size start
+		17,                          // Size end
+		0.35f,                          // Min lifetime
+		0.35f,                          // Max lifetime
 		0.0f,                          // Min speed
 		0.0f,                          // Max speed
 		0.0f,						   // End Speed
 		glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
 		0,                          // Rotation speed
-		1,                         // Emission rate (particles per second)
+		0.2f,                         // Emission rate (particles per second)
 		EmitterShape::POINT,            // Shape
 		0.2f,                          // Cone base radius
 		1.0f,                          // Cone height
@@ -384,8 +384,8 @@ namespace ParticlePresets {
 		0.05f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
-		1.0f,						   // Min scale
-		1.0f,						   // Max scale
+		17.0f,						   // Min scale
+		17.0f,						   // Max scale
 		"Assets/Textures/EnemyDash.png", // Texture path
 		false						   // Is Local Space
 	};
@@ -399,8 +399,8 @@ namespace ParticlePresets {
 	glm::vec3(1,1,1),   // End color (dark gray)
 	1.0f,                          // Alpha start
 	1.0f,                          // Alpha end
-	1,                          // Size start
-	1,                          // Size end
+	10,                          // Size start
+	10,                          // Size end
 	1,                          // Min lifetime
 	1,                          // Max lifetime
 	0.0f,                          // Min speed
@@ -419,8 +419,8 @@ namespace ParticlePresets {
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
-	1.0f,						   // Min scale
-	1.0f,						   // Max scale
+	10.0f,						   // Min scale
+	10.0f,						   // Max scale
 	"Assets/Textures/Acid_Splash.png", // Texture path
 	false						   // Is Local Space
 	};
@@ -501,8 +501,8 @@ namespace ParticlePresets {
 	glm::vec3(1,1,1),   // End color (dark gray)
 	1.0f,                          // Alpha start
 	1.0f,                          // Alpha end
-	1,                          // Size start
-	1,                          // Size end
+	10.0f,                          // Size start
+	10.0f,                          // Size end
 	1,                          // Min lifetime
 	1,                          // Max lifetime
 	0.0f,                          // Min speed
@@ -521,8 +521,8 @@ namespace ParticlePresets {
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
-	1.0f,						   // Min scale
-	1.0f,						   // Max scale
+	10.0f,						   // Min scale
+	10.0f,						   // Max scale
 	"Assets/Textures/RailGunAuto.png", // Texture path
 	true						   // Is Local Space
 	};

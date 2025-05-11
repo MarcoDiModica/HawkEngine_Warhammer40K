@@ -207,7 +207,19 @@ public class MenuButtons : MonoBehaviour
             else if (selectedButton == button_continueButton)
             {
                 //sound?.Play(buttonStartGameFX);
-                SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl1");
+                if (SceneManager.isLevel2)
+                {
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl2");
+                }
+                else if (SceneManager.isBossFight)
+                {
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Bossfight");
+                }
+                else
+                {
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl1");
+                }
+                
             }
             else if (selectedButton == button_optionsButton)
             {

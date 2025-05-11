@@ -36,6 +36,8 @@ public class EnemyControllerBossTail : EnemyController
 
     private List<(GameObject, float)> activeHurtboxes = new List<(GameObject, float)>();
 
+    private MawlocTailAnimation anim;
+
     public override void Awake()
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
@@ -51,6 +53,12 @@ public class EnemyControllerBossTail : EnemyController
         if (collider == null)
         {
             Engineson.print("ERROR: PlayerMovement requires a Collider component!");
+            return;
+        }
+        anim = gameObject.GetChild("MawlocTailMesh").GetComponent<MawlocTailAnimation>();
+        if (anim == null)
+        {
+            Engineson.print("ERROR: Mawloc animation requires a script component!");
             return;
         }
         //sound = gameObject.GetComponent<Audio>();
@@ -156,6 +164,7 @@ public class EnemyControllerBossTail : EnemyController
             Engineson.print("Burrowed");
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
             collider.SetPosition(enemyTransform.position);
+            anim.SetBurrowingAnimation();
             isBuried = true;
         }
     }
@@ -168,6 +177,7 @@ public class EnemyControllerBossTail : EnemyController
             {
                 enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
                 collider.SetPosition(enemyTransform.position);
+                anim.SetUnburrowingAnimation();
                 isBuried = false;
             }
         }
@@ -199,6 +209,7 @@ public class EnemyControllerBossTail : EnemyController
         if (isDead == false)
         {
             actionTimer = 1.5f;
+            anim.SetSlashAnimation();
             CreateTailSlashHurtbox();
         }
     }
@@ -208,6 +219,7 @@ public class EnemyControllerBossTail : EnemyController
         if (isDead == false)
         {
             actionTimer = 1.5f;
+            anim.SetStabAnimation();
             CreateTailStabHurtbox();
         }
     }
@@ -294,6 +306,7 @@ public class EnemyControllerBossTail : EnemyController
 
     public void Die()
     {
+        anim.SetDeathAnimation();
         Engineson.Destroy(GetGameObject());
     }
 

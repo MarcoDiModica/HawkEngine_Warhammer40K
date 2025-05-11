@@ -50,6 +50,9 @@ public class EnemyControllerStalker : EnemyController
     private bool isPouncing = false;
     private bool hasMissed = true;
 
+    // Death
+    private float deathTimer = 0f;
+    private float deathCooldown = 2f;
     public override void Awake()
     {
         startPosition = gameObject.GetComponent<Transform>().position;
@@ -86,7 +89,7 @@ public class EnemyControllerStalker : EnemyController
             return;
         }
 
-        anim = GameObject.Find("LictorMesh").GetComponent<LictorAnimation>();
+        anim = gameObject.GetChild("LictorMesh").GetComponent<LictorAnimation>();
         if (anim == null)
         {
             Engineson.print("ERROR: LictorAnimation requires SkeletalANimation component");
@@ -131,28 +134,6 @@ public class EnemyControllerStalker : EnemyController
                     if (distanceToPlayer > minDistToChase)
                     {
                         currentState = EnemyState.CHASE;
-                    }
-
-                    // Rotation
-                    if (moveDirection != Vector3.Zero)
-                    {
-                        currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-                        float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-                        float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
-
-                        while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-                        while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
-
-                        currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
-
-                        Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-                        Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                            eulerRotation.Y * ((float)Math.PI / 180.0f),
-                            eulerRotation.X * ((float)Math.PI / 180.0f),
-                            eulerRotation.Z * ((float)Math.PI / 180.0f)
-                        );
-
-                        collider.SetRotation(newRotation);
                     }
                 }
                 else
@@ -222,6 +203,23 @@ public class EnemyControllerStalker : EnemyController
                 {
                     anticipationTimer = 0;
                 }
+                currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
+
+                while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+
+                currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+
+                Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                    eulerRotation.Y * ((float)Math.PI / 180.0f),
+                    eulerRotation.X * ((float)Math.PI / 180.0f),
+                    eulerRotation.Z * ((float)Math.PI / 180.0f)
+                );
+
+                collider.SetRotation(newRotation);
                 break;
 
             case EnemyState.ATTACK:
@@ -249,6 +247,23 @@ public class EnemyControllerStalker : EnemyController
                     dodgewindow = false;
                     isAttacking = false;
                 }
+                currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                float targetAttackAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                float targetAttackAngleDegrees = targetAttackAngle * (180.0f / (float)Math.PI);
+
+                while (targetAttackAngleDegrees - currentRotationAngle > 180.0f) targetAttackAngleDegrees -= 360.0f;
+                while (targetAttackAngleDegrees - currentRotationAngle < -180.0f) targetAttackAngleDegrees += 360.0f;
+
+                currentRotationAngle = Lerp(currentRotationAngle, targetAttackAngleDegrees, rotationSpeed * deltaTime);
+
+                Vector3 eulerAttackRotation = new Vector3(0, currentRotationAngle, 0);
+                Quaternion newAttackRotation = Quaternion.CreateFromYawPitchRoll(
+                    eulerAttackRotation.Y * ((float)Math.PI / 180.0f),
+                    eulerAttackRotation.X * ((float)Math.PI / 180.0f),
+                    eulerAttackRotation.Z * ((float)Math.PI / 180.0f)
+                );
+
+                collider.SetRotation(newAttackRotation);
                 break;
 
             case EnemyState.STUNNED:
@@ -271,6 +286,14 @@ public class EnemyControllerStalker : EnemyController
                 if ((!hasDropped))
                 {
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
+                }
+                if (anim.isAnimFinished)
+                {
+                    deathTimer += deltaTime;
+                    if (deathTimer >= deathCooldown)
+                    {
+                        Engineson.Destroy(gameObject);
+                    }
                 }
                 hasDropped = true;
                 collider.SetActive(false);

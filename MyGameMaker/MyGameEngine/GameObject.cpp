@@ -24,6 +24,7 @@
 #include "../MyUIEngine/UITransformComponent.h"
 #include "MyAnimationEngine/SkeletalAnimationComponent.h"
 #include "External/Optick/include/optick.h"
+#include "MyPhysicsEngine/RigidBodyComponent.h"
 
 GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)), m_UUID(), active(true)
 {
@@ -249,6 +250,17 @@ void GameObject::Update(float deltaTime)
     {
 		return;
 	}
+
+    /*if (this->tag == "Melee") {
+        if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+            auto btRigidBody = this->GetComponent<RigidbodyComponent>();
+            auto rb = btRigidBody->GetRigidBody();
+            if (rb) {
+                btVector3 velocity(1, 0, 1);
+                rb->setLinearVelocity(velocity);
+            }
+        }
+    }*/
 
 	for (auto it = components.begin(); it != components.end(); ) {
 		if (!it->second) {

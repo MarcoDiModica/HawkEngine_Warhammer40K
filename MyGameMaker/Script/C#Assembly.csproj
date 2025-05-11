@@ -159,6 +159,8 @@
     <Compile Include="LoseScreen.cs" />
     <Compile Include="Magnet.cs" />
     <Compile Include="Mathf.cs" />
+    <Compile Include="MawlocAnimation.cs" />
+    <Compile Include="MawlocTailAnimation.cs" />
     <Compile Include="MedicaeStimm.cs" />
     <Compile Include="IInteractable.cs" />
     <Compile Include="ImageAsSlider.cs" />
@@ -198,6 +200,7 @@
     <Compile Include="Scene2ToMenu.cs" />
     <Compile Include="Scene2ToScene3.cs" />
     <Compile Include="SceneAudio.cs" />
+    <Compile Include="ShakeManager.cs" />
     <Compile Include="Shotgun.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="ShotgunPickUp.cs" />

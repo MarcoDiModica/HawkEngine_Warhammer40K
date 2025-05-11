@@ -12,12 +12,13 @@ public class PlayerController : MonoBehaviour
     private GameObject playerMesh;
     private ParticleFX bloodSplashEffect;
     private CapsuleCollider capsuleCollider;
+    //private ShakeManager shakeManager;
     private bool isIdle = false;
+    public bool isShootInput = false;
     public bool isRunning = false;
     private bool isWalking = false;
     private bool isMoving = false;
     private bool isDashInput = false;
-    private bool isShootInput = false;
     private bool isRunningInput = false;
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
     //color change
     private bool isFlashingColor = false;
     private float flashTimer = 0f;
-    private Vector4 originalColor;
+    private Vector4 originalColor = new Vector4(1, 1, 1 ,1);
     public Vector4 flashColor = new Vector4(1, 0, 0, 1); // rojo
     public float flashDuration = 0.1f;
     //private AudioSource sound;
@@ -57,6 +58,11 @@ public class PlayerController : MonoBehaviour
     private ParticleFX walkingFX;
     
     public PlayerData playerData;
+
+    public GameObject aimLaser;
+    public GameObject aimLaserEnd;
+    private Transform transform;
+    private float dashEndTimer = 0.25f;
 
     public override void Awake()
     {
@@ -77,7 +83,9 @@ public class PlayerController : MonoBehaviour
         inactiveDashFX = GameObject.Find("InactiveDashFX").GetComponent<ParticleFX>();
         walkingFX = GameObject.Find("WalkingFX").GetComponent<ParticleFX>();
         capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
+        transform = gameObject.GetComponent<Transform>();
 
+        //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
     }
 
     public override void Start()
@@ -96,6 +104,9 @@ public class PlayerController : MonoBehaviour
             walkingFX.Stop();
             return;
         }
+
+        
+
         if (playerData.isHit )
         {
             if (!playerDash.isInvulnerable && !playerData.GodMode)
@@ -117,7 +128,28 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    playerAnimations.SetHitIdleAnimation();
+                    //shake
+                    //shakeManager.ApplyShake(1,0.3f, 0.1f);
+                    //if (isRunning)
+                    //{
+                    //    playerAnimations.SetHitRunningAnimation();
+                    //}
+                    //else if (isShootingRunning)
+                    //{
+                    //    playerAnimations.SetHitShootingRunningAnimation();
+                    //}
+                    //else if (isShootingStanding)
+                    //{
+                    //    playerAnimations.SetHitShootingStandingAnimation();
+                    //}
+                    //else if (isWalking)
+                    //{
+                    //    playerAnimations.SetHitWalkingAnimation();
+                    //}
+                    //else 
+                    //{
+                    //    playerAnimations.SetHitAnimation();
+                    //}
                 }
             }
             playerData.isHit = false; 
@@ -199,18 +231,57 @@ public class PlayerController : MonoBehaviour
         playerMovement.SetMoveDirection(moveDirection);
         playerMovement.SetLookDirection(lookDirection);
 
+        Vector3 localOffset = new Vector3(-0.9f, 2.5f, 0.5f);
+
+        Vector3 bulletStart = transform.position +
+                              (transform.right * localOffset.X) +
+                              (transform.up * localOffset.Y) +
+                              (transform.forward * localOffset.Z);
+        bulletStart.Y += 0.75f;
+
+        RayCast rayAim = new RayCast();
+        int maxDistance = 50;
+        rayAim.PerformRaycast(bulletStart, Vector3.Normalize(transform.forward), maxDistance);
+
+        //aimLaser.transform.LookAt(lookDirection);
+        if (playerInput.IsShooting())
+        {
+            aimLaser.SetActive(true);
+            
+
+            if (rayAim.hit.isHit)
+            {
+                //aimLaser.transform.localScale = new Vector3(aimLaser.transform.localScale.X, rayAim.hit.distance / 2, aimLaser.transform.localScale.Z);
+                aimLaserEnd.SetActive(true);
+                aimLaser.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * 2);
+                aimLaserEnd.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * (rayAim.hit.distance));
+            }
+            else
+            {
+                //aimLaser.transform.localScale = new Vector3(aimLaser.transform.localScale.X, maxDistance / 2, aimLaser.transform.localScale.Z);
+                aimLaserEnd.SetActive(false);
+                aimLaser.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * 2);
+            }
+
+        }
+        else
+        {
+            aimLaser.SetActive(false);
+            aimLaserEnd.SetActive(false);
+        }
+
         //if (dashDelayTimer > 0f)
         //{
         //    return;
         //}
-        if (isShootInput)
+        if (isShootInput && !isDashing)
         {
             SetShootingState();
             isIdle = false;
         }
         else
         {
-           
+            Engineson.print(moveDirection.ToString());
             if (moveDirection == Vector3.Zero)
             {
                 StopFootsteps();
@@ -257,17 +328,31 @@ public class PlayerController : MonoBehaviour
             isDashing = true;
             playerDash.InitiateDash(moveDirection, elapsedTime);
             playerAnimations.SetDashAnimation();
+            playerInput.BlockMovement();
             //dashDelayTimer = dashDelayDuration;
-            isRunning = false;
-            isWalking = false;
             StopFootsteps();
 
         }
-        if (playerAnimations.esk.IsAnimationFinished() && isDashing == true)
+
+         
+        if (isDashing)
         {
-            playerAnimations.SetStandardIdleAnimation();
-            isDashing = false;
+            dashEndTimer -= deltaTime;
+            if (dashEndTimer <= 0f)
+            {
+                playerInput.UnblockMovement();
+                TransitionFromDashState();
+                isDashing = false;
+                dashEndTimer = 0.25f; 
+            }
         }
+    
+        //if (playerAnimations.esk.IsAnimationFinished() && isDashing == true)
+        //{
+        //    playerInput.UnblockMovement();
+        //    TransitionFromDashState();
+        //    isDashing = false;
+        //}
 
         if (isFlashingColor)
         {
@@ -284,6 +369,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void TransitionFromDashState()
+    {
+        if (isRunning)
+        {
+            playerAnimations.SetDashToRunningAnimation();
+        }
+        else if (isShootingRunning)
+        {
+            playerAnimations.SetDashToShootingRunningAnimation();
+        }
+        else if (isShootingStanding)
+        {
+            playerAnimations.SetDashToShootingStandingAnimation();
+        }
+        else if (isWalking)
+        {
+            playerAnimations.SetDashToWalkingAnimation();
+        }
+        else
+        {
+            playerAnimations.SetDashToIdleAnimation();
+        }
+    }
 
     private void SetIdleState()
     {
@@ -291,10 +399,14 @@ public class PlayerController : MonoBehaviour
         {
             if (isShootingStanding)
             {
+                Engineson.print("Idle");
                 playerAnimations.SetShootingStandingToIdleAnimation();
             }
+            else 
+            {
+                playerAnimations.SetStandardIdleAnimation();
+            }
 
-            playerAnimations.SetIdleRandomAnimation();
             isIdle = true;
             isRunning = false;
             isWalking = false;
@@ -302,6 +414,8 @@ public class PlayerController : MonoBehaviour
             isShootingRunning = false;
             isMoving = false;
         }
+      
+        
 
         if (!hasStoppedFootsteps)
         {
@@ -493,7 +607,6 @@ public class PlayerController : MonoBehaviour
         MeshRenderer renderer = playerMesh.GetComponent<MeshRenderer>();
         if (renderer != null)
         {
-            originalColor = renderer.GetColor();
             renderer.SetColor(color);
             isFlashingColor = true;
             flashTimer = duration;

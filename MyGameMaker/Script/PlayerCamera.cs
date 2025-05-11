@@ -5,8 +5,7 @@ using HawkEngine;
 public class PlayerCamera : MonoBehaviour
 {
     public GameObject playerRef;
-    private Camera cameraRef;
-    private PlayerInput playerInput;
+    public Camera cameraRef;
     private Transform cameraTransform;
 
     public float smoothness = 19.0f;
@@ -16,7 +15,7 @@ public class PlayerCamera : MonoBehaviour
     public float returnDelay = 0.2f;
 
     public Vector3 currentOffset = new Vector3(0, 20, -10.5f);
-    private Vector3 targetOffset = new Vector3(0, 20, 0);
+    public Vector3 targetOffset = new Vector3(0, 20, 0);
     private Vector3 offsetVelocity = Vector3.Zero;
 
     private Vector3 dashOffset = Vector3.Zero;
@@ -26,7 +25,7 @@ public class PlayerCamera : MonoBehaviour
     private bool isDashingCamera = false;
 
     public double originalFOV = 45.0;
-    public float dashFOV = 35.0f;
+    private float dashFOV = 40.0f;
     private double currentFOV;
     private double targetFOV;
     private double fovVelocity = 0;
@@ -37,6 +36,40 @@ public class PlayerCamera : MonoBehaviour
     private Vector3 originalRotation;
 
     private float timeSinceInput = 0f;
+
+
+    private PlayerController playerController;
+    //private ShakeManager shakeManager;
+
+
+    //paning
+    private bool isPanning = false;
+    private Vector3 panStartOffset;
+    private Vector3 panTargetOffset;
+    private float panTimer = 0f;
+    private float panDuration = 0f;
+    private int panPhase = 0;
+
+
+    Vector3 totalOffset;
+    float panLerpDuration = 1.0f;
+
+    //public void PanToPoint(Vector3 worldTargetPosition, float holdDuration)
+    //{
+    //    isPanning = true;
+    //    panPhase = 0;
+    //    panTimer = 0f;
+    //    panDuration = holdDuration;
+
+    //    panStartOffset = currentOffset;
+    //    Vector3 playerPos = playerRef.GetComponent<Transform>().position;
+
+    //    Vector3 worldOffset = worldTargetPosition - playerPos;
+    //    panTargetOffset = worldOffset;
+
+    //    followPlayer = false;
+    //    cameraRef.SetFollowTarget(null, Vector3.Zero, 0, false, false, false, 0);
+    //}
 
     public override void Awake()
     {
@@ -57,13 +90,34 @@ public class PlayerCamera : MonoBehaviour
             return;
         }
 
+        playerController = playerRef.GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            Engineson.print("ERROR: PlayerCamera requires a PlayerController component on the Player GameObject!");
+            return;
+        }
+
+        //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
+        //if (shakeManager == null)
+        //{
+        //    Engineson.print("ERROR: ShakeManager not found");
+        //}
+
+
         cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
         cameraRef.SetCameraFieldOfView(originalFOV * (Math.PI / 180.0));
-       // originalRotation = cameraTransform.rotation;
+
+        // originalRotation = cameraTransform.rotation;
     }
 
     public override void Update(float deltaTime)
     {
+
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+
+        //    PanToPoint(new Vector3(0.5f, 0, 0), 1.0f);
+        //}
         Vector2 rightStickInput = Input.GetRightStick();
         Vector2 leftStickInput = Input.GetLeftStick();
 
@@ -99,7 +153,6 @@ public class PlayerCamera : MonoBehaviour
             }
         }
 
-        // Smooth return of dash offset
         if (isDashingCamera)
         {
             dashOffsetTimer += deltaTime;
@@ -114,8 +167,54 @@ public class PlayerCamera : MonoBehaviour
                 }
             }
         }
+       
 
-        currentOffset = SmoothDampVector3(currentOffset, targetOffset + dashOffset, ref offsetVelocity, 1f / offsetSmoothness, deltaTime);
+        if (isPanning)
+        {
+            panTimer += deltaTime;
+
+            if (panPhase == 0) // Lerp hacia el punto
+            {
+                float t = Clamp01(panTimer / panLerpDuration);
+                totalOffset = LerpVector3(panStartOffset, panTargetOffset, t);
+
+                if (t >= 1f)
+                {
+                    panTimer = 0f;
+                    panPhase = 1;
+                }
+            }
+            else if (panPhase == 1) // Espera en el punto
+            {
+                totalOffset = panTargetOffset;
+
+                if (panTimer >= panDuration)
+                {
+                    panTimer = 0f;
+                    panPhase = 2;
+                }
+            }
+            else // Lerp de vuelta al jugador
+            {
+                float t = Clamp01(panTimer / panLerpDuration);
+                totalOffset = LerpVector3(panTargetOffset, panStartOffset, t);
+
+                if (t >= 1f)
+                {
+                    isPanning = false;
+                    followPlayer = true;
+                    cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
+                }
+            }
+        }
+        else
+        {
+            totalOffset = targetOffset + dashOffset;
+            //if (shakeManager != null)
+            //    totalOffset += shakeManager.currentShakeOffset;
+        }
+
+        currentOffset = SmoothDampVector3(currentOffset, totalOffset, ref offsetVelocity, 1f / offsetSmoothness, deltaTime);
         cameraRef.SetOffset(currentOffset);
 
         if (targetFOV != currentFOV)
@@ -210,6 +309,7 @@ public class PlayerCamera : MonoBehaviour
             return;
         }
     }
+
     public void StartDash(Vector3 dashDirection)
     {
         targetFOV = dashFOV;
@@ -232,7 +332,7 @@ public class PlayerCamera : MonoBehaviour
         float rightComponent = Vector3.Dot(flattenedDash, camRight);
 
         Vector3 offsetDir = camForward * forwardComponent + camRight * rightComponent;
-        dashOffset = Vector3.Normalize(offsetDir) * 4.0f; // Puedes ajustar la intensidad
+        dashOffset = Vector3.Normalize(offsetDir) * 1.0f; // Puedes ajustar la intensidad
 
         dashOffsetTimer = 0f;
         isDashingCamera = true;

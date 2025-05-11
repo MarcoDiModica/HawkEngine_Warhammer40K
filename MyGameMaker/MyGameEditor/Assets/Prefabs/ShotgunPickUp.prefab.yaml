@@ -1,6 +1,6 @@
-name: shotgun
-prefabPath: ""
-uuid: 13442202668486948697
+name: shotgun_Instance
+prefabPath: Assets\Prefabs\ShotgunPickUp.prefab.yaml
+uuid: 15749538981690564962
 tag: Weapon
 active: true
 isStatic: false
@@ -9,9 +9,9 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 0
+      - 297.38861083984375
       - 2
-      - 0
+      - 34.265037536621094
     localRotation:
       - 0
       - 0
@@ -27,6 +27,11 @@ Components:
       name: 0
     material:
       name: Abeto_Low_1001_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+        - 1
     color:
       - 1
       - 1
@@ -44,6 +49,31 @@ Components:
       - 0
       - 0
     isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.20000000298023224
+      - 0.20000000298023224
+      - 0.20000000298023224
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - -0.20000000298023224
+      - -1
+      - -0.30000001192092896
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 6
+    intensity: 3
+    direction:
+      - -1
+      - -1
+      - 0
   ScriptComponents:
     Script0:
       name: ShotgunPickUp
@@ -64,16 +94,16 @@ Children:
         enabled: true
         localPosition:
           - 0
-          - -168.35947685127911
-          - 265.19198981878174
+          - -168.35948181152344
+          - 265.19198608398438
         localRotation:
           - 0
           - -0
           - 0
         localScale:
-          - 1.0000000000000002
-          - 1.0000000000000002
-          - 1.0000000000000002
+          - 1
+          - 1
+          - 1
       MeshRenderer:
         name: MeshRenderer
         enabled: true
@@ -81,6 +111,11 @@ Children:
           name: 12445246452344068261
         material:
           name: shotgun_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
         color:
           - 1
           - 1
@@ -101,16 +136,16 @@ Children:
         enabled: true
         localPosition:
           - 0
-          - -168.35947685127911
-          - 265.19198981878174
+          - -168.35948181152344
+          - 265.19198608398438
         localRotation:
           - 0
           - -0
           - 0
         localScale:
-          - 1.0000000000000002
-          - 1.0000000000000002
-          - 1.0000000000000002
+          - 1
+          - 1
+          - 1
       MeshRenderer:
         name: MeshRenderer
         enabled: true
@@ -118,6 +153,11 @@ Children:
           name: 5508932554690171827
         material:
           name: ""
+          color:
+            - 1
+            - 0
+            - 0
+            - 1
         color:
           - 1
           - 1

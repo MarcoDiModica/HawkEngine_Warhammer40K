@@ -46,6 +46,7 @@ public class EnemyControllerWarrior : EnemyController
     private string HitSound = "Assets/Audio/TyranidWarrior/Tyranid_WAR_Hit_1.wav";
 
     private bool hasPlayedDeathSound = false;
+    private WarriorAnimation anim;
     public override void Awake()
     {
         //music = gameObject.GetComponent<Audio>();
@@ -82,12 +83,12 @@ public class EnemyControllerWarrior : EnemyController
             return;
         }
 
-        //anim = gameObject.GetChild("TyranidWarriorMesh").GetComponent<TyranidWarriorAnimation>();
-        //if (anim == null)
-        //{
-        //    Engineson.print("ERROR: TyranidWarriorAnimation requires SkeletalANimation component");
-        //    return;
-        //}
+        anim = gameObject.GetChild("TyranidWarriorMesh").GetComponent<WarriorAnimation>();
+        if (anim == null)
+        {
+            Engineson.print("ERROR: TyranidWarriorAnimation requires SkeletalANimation component");
+            return;
+        }
 
         //particles = gameObject.GetComponent<ParticleFX>();
         //particles.ApplyPreset(9);
@@ -140,7 +141,7 @@ public class EnemyControllerWarrior : EnemyController
                     {
                         currentState = EnemyState.IDLE;
                         rb.SetVelocity(Vector3.Zero);
-                        //anim.SetStandardIdleAnimation();
+                        anim.SetIdleAnimation();
                     }
                 }
             }
@@ -206,6 +207,7 @@ public class EnemyControllerWarrior : EnemyController
                 );
 
                 collider.SetRotation(newRotation);
+                anim.SetRunAnimation();
                 break;
 
             case EnemyState.ATTACK:
@@ -275,6 +277,7 @@ public class EnemyControllerWarrior : EnemyController
                 {
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
                 }
+                anim.SetDeathAnimation();
                 hasDropped = true;
                 collider.SetActive(false);
                 break;
@@ -325,7 +328,7 @@ public class EnemyControllerWarrior : EnemyController
                 pc.playerData.TakeDamage(swordDamage);
                 pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
-
+            anim.SetMeleeAnimation();
             //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
             //sound?.Play();
         }
@@ -341,7 +344,7 @@ public class EnemyControllerWarrior : EnemyController
                 projectile.AddComponent<BoxCollider>();
                 //sound?.Play();
                 projectile.tag = "EnemyAttack";
-
+                anim.SetShootAnimation();
                 if (projectile != null)
                 {
                     Transform projTransform = projectile.GetComponent<Transform>();
@@ -374,6 +377,7 @@ public class EnemyControllerWarrior : EnemyController
         {
             Audio.PlayOneShot(HitSound);
             currentHealth -= damage;
+            anim.SetHurtAnimation();
         }
     }
 

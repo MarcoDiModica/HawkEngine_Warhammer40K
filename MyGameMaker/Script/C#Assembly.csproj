@@ -222,6 +222,7 @@
     <Compile Include="UIImage.cs" />
     <Compile Include="UITransform.cs" />
     <Compile Include="WaitForSeconds.cs" />
+    <Compile Include="WarriorAnimation.cs" />
     <Compile Include="WinScreen.cs" />
   </ItemGroup>
   <ItemGroup>

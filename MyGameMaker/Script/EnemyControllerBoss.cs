@@ -145,7 +145,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 1f;
+        currentHealth = 1500f;
         gameObject.tag = "Boss";
         isDead = false;
 //         musicClip = new AudioClip(combatMusic, "BossMusic", true, false);

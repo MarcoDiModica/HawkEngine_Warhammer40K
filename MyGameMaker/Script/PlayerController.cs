@@ -46,10 +46,10 @@ public class PlayerController : MonoBehaviour
     //private AudioSource sound;
     private bool isFootstepPlaying = false;
     private bool hasStoppedFootsteps = false;
-    private const string Runfootsteps = "Assets/Audio/SFX/Player/PlayerFootstep_ready.wav";
-    private const string Walkfootsteps = "Assets/Audio/SFX/Player/PlayerWalkFootstep_ready.wav";
-    public const string HitAudio = "Assets/Audio/SFX/Player/PlayerHit_ready.wav";
-    public const string DeathAudio = "Assets/Audio/SFX/PlayerPlayerDeath_ready.wav";
+    private const string Runfootsteps = "Assets/Audio/Player/Player_Footsteps.wav";
+    private const string Walkfootsteps = "Assets/Audio/Player/Player_Footsteps.wav";
+    public const string HitAudio = "Assets/Audio/Player/PlayerHurt.wav";
+    public const string DeathAudio = "Assets/Audio/Player/Player_Death.wav";
     private int audioRun;
     private int audioWalk;
 

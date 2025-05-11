@@ -228,9 +228,9 @@ public class OptionMenu : MonoBehaviour
         {
             Audio.PlayOneShot(ConfirmSFX);
 
-            if (Audio.MasterVolume > 0)
+            if (Audio.MasterVolume > -79)
             {
-                Audio.MasterVolume -= 10;
+                Audio.MasterVolume -= 8.0f;
                 sliderPosMaster -= sliderScale;
                 transform_masterSlider.DOMoveXUI(sliderPosMaster, 0, Modes.LINEAR);
             }
@@ -250,9 +250,9 @@ public class OptionMenu : MonoBehaviour
         {
             Audio.PlayOneShot(ConfirmSFX);
 
-            if (Audio.MasterVolume < 100)
+            if (Audio.MasterVolume < 1)
             {
-                Audio.MasterVolume += 10;
+                Audio.MasterVolume += 8.0f;
                 sliderPosMaster += sliderScale;
                 transform_masterSlider.DOMoveXUI(sliderPosMaster, 0, Modes.LINEAR);
             }
@@ -272,9 +272,9 @@ public class OptionMenu : MonoBehaviour
         {
             Audio.PlayOneShot(ConfirmSFX);
 
-            if (Audio.MusicVolume > 0)
+            if (Audio.MusicVolume > -79)
             {
-                Audio.MusicVolume -= 10;
+                Audio.MusicVolume -= 8.0f;
                 sliderPosBGM -= sliderScale;
                 transform_bgmSlider.DOMoveXUI(sliderPosBGM, 0, Modes.LINEAR);
             }
@@ -284,9 +284,9 @@ public class OptionMenu : MonoBehaviour
         {
             Audio.PlayOneShot(ConfirmSFX);
 
-            if (Audio.MusicVolume < 100)
+            if (Audio.MusicVolume < 1)
             {
-                Audio.MusicVolume += 10;
+                Audio.MusicVolume += 8.0f;
                 sliderPosBGM += sliderScale;
                 transform_bgmSlider.DOMoveXUI(sliderPosBGM, 0, Modes.LINEAR);
             }
@@ -315,9 +315,9 @@ public class OptionMenu : MonoBehaviour
         {
             Audio.PlayOneShot(ConfirmSFX);
 
-            if (Audio.SfxVolume > 0)
+            if (Audio.SfxVolume > -79)
             {
-                Audio.SfxVolume -= 10;
+                Audio.SfxVolume -= 8.0f;
                 sliderPosSFX -= sliderScale;
                 transform_sfxSlider.DOMoveXUI(sliderPosSFX, 0, Modes.LINEAR);
             }
@@ -327,9 +327,9 @@ public class OptionMenu : MonoBehaviour
         {
             Audio.PlayOneShot(ConfirmSFX);
 
-            if (Audio.SfxVolume < 100)
+            if (Audio.SfxVolume < 1)
             {
-                Audio.SfxVolume += 10;
+                Audio.SfxVolume += 8.0f;
                 sliderPosSFX += sliderScale;
                 transform_sfxSlider.DOMoveXUI(sliderPosSFX, 0, Modes.LINEAR);
             }

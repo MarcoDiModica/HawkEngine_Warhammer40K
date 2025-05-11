@@ -108,6 +108,7 @@
     <Compile Include="ArcSnare.cs" />
     <Compile Include="Audio.cs" />
     <Compile Include="AudioLevel1.cs" />
+    <Compile Include="AudioLevel2.cs" />
     <Compile Include="Ball.cs" />
     <Compile Include="Barrage.cs" />
     <Compile Include="BarrageBullet.cs" />

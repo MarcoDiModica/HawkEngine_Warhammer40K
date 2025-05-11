@@ -38,7 +38,9 @@ public class EnemyControllerBoss : EnemyController
     private const string ClawClip = "Assets/Audio/Mawloc_Claw_Attack.wav";
     private const string AcidClip = "Assets/Audio/Mawloc_Acid_Attack.wav";
     private const string DeathClip = "Assets/Audio/Mawloc_Death.wav";
+    private const string BossTheme = "Assets/Audio/Music/MainTheme_BetaBuild2.ogg";
 
+    private bool isBossMusicPlaying = false;
     //stats
     bool isCombatMusicPlaying = false;
     private float health = 1500.0f;
@@ -155,7 +157,13 @@ public class EnemyControllerBoss : EnemyController
     {
         if (!isDead)
         {
-                float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+            if (!isBossMusicPlaying)
+            {
+                Audio.Play(BossTheme, true);
+                isBossMusicPlaying = true;
+            }
+
+            float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
                 if (playerTransform != null)
                 {
@@ -328,12 +336,13 @@ public class EnemyControllerBoss : EnemyController
             if (isDead)
             {
                 collider.SetActive(false);
-                //if (isCombatMusicPlaying == true)
-                //{
-                //    sound?.Stop();
-                //    isCombatMusicPlaying = false;
-                //}
-            }
+                Audio.Stop(BossTheme); 
+            //if (isCombatMusicPlaying == true)
+            //{
+            //    sound?.Stop();
+            //    isCombatMusicPlaying = false;
+            //}
+        }
     }
 
     public override void ResetEnemyCheckPoint()

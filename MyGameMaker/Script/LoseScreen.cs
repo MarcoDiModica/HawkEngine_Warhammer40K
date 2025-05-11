@@ -15,6 +15,7 @@ public class LoseScreen : MonoBehaviour
     private UITransform transform_quitButton;
 
     //private AudioSource sound;
+    private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
 
     private ButtonState prevState_loadLastCheckpoint = ButtonState.DEFAULT;
     private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
@@ -182,17 +183,17 @@ public class LoseScreen : MonoBehaviour
 
             if (selectedButton == button_loadLastCheckpoint)
             {
-                //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(ConfirmSFX);
                 SceneManager.LoadScene("SpaceShip");
             }
             else if (selectedButton == button_mainMenuButton)
             {
-                //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(ConfirmSFX);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)
             {
-                //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(ConfirmSFX);
                 // Aquí puedes agregar la lógica para salir del juego
             }
         }
@@ -208,12 +209,6 @@ public class LoseScreen : MonoBehaviour
             Engineson.print("ERROR: No Button or object found");
             return;
         }
-
-//         if (sound == null)
-//         {
-//             Engineson.print("ERROR: Audio not found");
-//             return;
-//         }
 
         NavigateMenu();
     }

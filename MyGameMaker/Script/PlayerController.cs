@@ -232,7 +232,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 //aimLaser.transform.localScale = new Vector3(aimLaser.transform.localScale.X, maxDistance / 2, aimLaser.transform.localScale.Z);
-                
+                aimLaserEnd.SetActive(false);
                 aimLaser.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * 2);
             }
 

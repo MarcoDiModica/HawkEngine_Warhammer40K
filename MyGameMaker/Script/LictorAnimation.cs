@@ -20,7 +20,6 @@ public class LictorAnimation : MonoBehaviour
             Engineson.print("ERROR: LictorAnimation requires a SkeletalAnimation component!");
             return;
         }
-        lictorAnimation.SetAnimation(8);
     }
     public override void Update(float deltaTime)
     {

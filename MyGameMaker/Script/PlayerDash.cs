@@ -23,7 +23,7 @@ public class PlayerDash : MonoBehaviour
 
     private float targetFOV;
     private float zoomSpeed = 0.5f;
-    private const string DashSound = "Assets/Audio/Player/Player_Dash.wav";
+    private const string DashSound = "Assets/Audio/SFX/Player/PlayerDash_ready.wav";
     private const string DashRecharge = "Assets/Audio/Player/Jetpack_Charge.wav";
 
 

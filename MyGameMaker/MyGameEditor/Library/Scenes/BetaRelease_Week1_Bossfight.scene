@@ -506,9 +506,9 @@ GameObject10:
         - 35.751331329345703
         - 0
       localRotation:
-        - 179.99999499104365
+        - -179.99999499104365
         - 3.0000014956288523
-        - 179.99999499104365
+        - -179.99999499104365
       localScale:
         - 0.8811001181602478
         - 0.88109993934631348
@@ -530,8 +530,8 @@ GameObject10:
             - 34.788475036621094
           localRotation:
             - 179.99999134857779
-            - 3.9063588180176639e-08
-            - -179.99999499104388
+            - 3.9063588820840001e-08
+            - 179.99999499104388
           localScale:
             - 1.0000001192092896
             - 1
@@ -562,9 +562,9 @@ GameObject10:
             - -25.712728500366211
             - 5.7772140502929688
           localRotation:
-            - 179.99999134857811
-            - -29.933600729853847
-            - -179.99999499104416
+            - 179.99999134857705
+            - -29.933600729854721
+            - 179.99999499104462
           localScale:
             - 1.0000001192092896
             - 1
@@ -595,9 +595,9 @@ GameObject10:
             - -25.911792755126953
             - -22.571996688842773
           localRotation:
-            - 179.99999134857819
-            - -2.3505204836832299
-            - 179.99999499104371
+            - 179.9999913485774
+            - -2.3505204836824736
+            - -179.99999499104402
           localScale:
             - 1.7877451181411743
             - 1
@@ -694,9 +694,9 @@ GameObject10:
             - -24.277111053466797
             - 96.062271118164062
           localRotation:
-            - 179.99996402782114
-            - 25.144829201701313
-            - 179.99999499104385
+            - 179.99996402782409
+            - 25.144829201704784
+            - -179.99999499104362
           localScale:
             - 1
             - 1
@@ -807,6 +807,11 @@ GameObject10:
             name: 16985549430831654082
           material:
             name: Estalacmitas_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -844,6 +849,11 @@ GameObject10:
             name: 16985549430831654082
           material:
             name: Estalacmitas_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -867,9 +877,9 @@ GameObject10:
             - -28.222217559814453
             - 107.4677734375
           localRotation:
-            - 89.999995457790689
-            - 6.9744798982631728
-            - -179.99999513575139
+            - 89.999994865868985
+            - 6.9744798982627625
+            - 179.99999515091315
           localScale:
             - 2.659550666809082
             - 2.6595501899719238
@@ -881,6 +891,11 @@ GameObject10:
             name: 7994363321730715637
           material:
             name: Estalacmita1_Base_color
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -904,9 +919,9 @@ GameObject10:
             - -29.31329345703125
             - -31.182197570800781
           localRotation:
-            - 90.000023753547538
-            - 70.619415167317499
-            - -179.99998317550543
+            - 90.000006929052773
+            - 70.61942011503784
+            - 179.99999307094723
           localScale:
             - 2.6595499515533447
             - 2.6595499515533447
@@ -918,6 +933,11 @@ GameObject10:
             name: 7994363321730715637
           material:
             name: Estalacmita1_Base_color
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -955,6 +975,11 @@ GameObject10:
             name: 7994363321730715637
           material:
             name: Estalacmita1_Base_color
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -992,6 +1017,11 @@ GameObject10:
             name: 16985549430831654082
           material:
             name: Estalacmitas_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -1029,6 +1059,11 @@ GameObject10:
             name: 16985549430831654082
           material:
             name: Estalacmitas_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -1052,9 +1087,9 @@ GameObject10:
             - -13.223793029785156
             - -86.1815185546875
           localRotation:
-            - 89.999971407356654
-            - -44.27764038471436
-            - 179.99999338352802
+            - 89.999966323110769
+            - -44.277640384710949
+            - -179.99999411978078
           localScale:
             - 7.0854859352111816
             - 7.8299469947814941
@@ -1066,6 +1101,11 @@ GameObject10:
             name: 16985549430831654082
           material:
             name: Estalacmitas_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -1089,9 +1129,9 @@ GameObject10:
             - -11.527710914611816
             - 144.69508361816406
           localRotation:
-            - 90.000057029915553
-            - 81.88942067247757
-            - -179.99991215708599
+            - 90.000038965520773
+            - 81.889368191963001
+            - -179.9999182386461
           localScale:
             - 4.3183484077453613
             - 6.8110980987548828
@@ -1103,6 +1143,11 @@ GameObject10:
             name: 16985549430831654082
           material:
             name: Estalacmitas_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -1140,6 +1185,11 @@ GameObject10:
             name: 7994363321730715637
           material:
             name: Estalacmita1_Base_color
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -1163,9 +1213,9 @@ GameObject10:
             - -7.9284439086914062
             - -34.6810302734375
           localRotation:
-            - 89.999995271388428
-            - 2.3582247407573624
-            - -179.99999504019098
+            - 89.999995066233708
+            - 2.3582247407569423
+            - 179.9999949922763
           localScale:
             - 2.6595497131347656
             - 2.6595494747161865
@@ -1177,6 +1227,11 @@ GameObject10:
             name: 7994363321730715637
           material:
             name: Estalacmita1_Base_color
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -1214,6 +1269,11 @@ GameObject10:
             name: 11876945135872829347
           material:
             name: Socabon_Base_color
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -1251,6 +1311,11 @@ GameObject10:
             name: 11876945135872829347
           material:
             name: Socabon_Base_color
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -1288,6 +1353,11 @@ GameObject10:
             name: 11876945135872829347
           material:
             name: Socabon_Base_color
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -1325,6 +1395,11 @@ GameObject10:
             name: 11876945135872829347
           material:
             name: Socabon_Base_color
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -1348,9 +1423,9 @@ GameObject10:
             - -35.877773284912109
             - 3.1861171722412109
           localRotation:
-            - -89.999995860363498
-            - -68.954334507613325
-            - -1.4560170807633646e-05
+            - -90.000006947022655
+            - -68.954342120760089
+            - -6.9470226572472448e-06
           localScale:
             - 6.9018840789794922
             - 6.9018840789794922
@@ -1362,6 +1437,11 @@ GameObject10:
             name: 11876945135872829347
           material:
             name: Socabon_Base_color
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -1386,9 +1466,9 @@ GameObject11:
         - 138.87570190429688
         - 79.180763244628906
       localRotation:
-        - -130.00000081846878
-        - 45.000004833421613
-        - 179.99999570086939
+        - -130.00000393764998
+        - 45.000002600858409
+        - -179.99999565358834
       localScale:
         - 0.99999958276748657
         - 0.99999994039535522
@@ -1411,7 +1491,6 @@ GameObject11:
           maxOffsetDistance: 3.5999999
           offsetSmoothness: 5
           returnDelay: 0.200000003
-          dashFOV: 35
   Children: ~
 GameObject12:
   name: Player
@@ -1541,9 +1620,12 @@ GameObject12:
       Script4:
         name: PlayerController
         fields:
+          isShootInput: false
           isRunning: false
           canMove: true
           flashDuration: 0.100000001
+          aimLaser: AimLaser
+          aimLaserEnd: AimLaserEnd
       Script5:
         name: PlayerPowerUp
         fields:
@@ -1553,11 +1635,17 @@ GameObject12:
           hasPiercingBullets: false
       Script6:
         name: Boltgun
-        fields: ~
+        fields:
+          shakeIntensity: 0.150000006
+          shakeDuration: 0.200000003
+          shakeSpeed: 0.200000003
       Script7:
         name: Shotgun
         fields:
           timeSinceLastShot: 0
+          shakeIntensity: 0.400000006
+          shakeDuration: 0.25
+          shakeSpeed: 0.200000003
       Script8:
         name: GrenadeLauncher
         fields:
@@ -1571,6 +1659,9 @@ GameObject12:
           isCooling: false
           isRecharged: true
           isReloading: false
+          shakeIntensity: 0.400000006
+          shakeDuration: 0.25
+          shakeSpeed: 0.200000003
       Script10:
         name: LaserBeam
         fields:
@@ -1643,6 +1734,11 @@ GameObject12:
             name: 17597220777981042704
           material:
             name: dieno zachael jetpack 2_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -1719,7 +1815,8 @@ GameObject12:
         ScriptComponents:
           Script0:
             name: PlayerAnimations
-            fields: ~
+            fields:
+              animIndex: 0
       Children:
         - name: ROOT
           prefabPath: ""
@@ -2785,6 +2882,11 @@ GameObject12:
                                             name: 15519798888640081881
                                           material:
                                             name: boltgun_DefaultMaterial_BaseColor
+                                            color:
+                                              - 1
+                                              - 1
+                                              - 1
+                                              - 1
                                           color:
                                             - 1
                                             - 1
@@ -2868,6 +2970,11 @@ GameObject12:
                                                 name: 12445246452344068261
                                               material:
                                                 name: shotgun_DefaultMaterial_BaseColor
+                                                color:
+                                                  - 1
+                                                  - 1
+                                                  - 1
+                                                  - 1
                                               color:
                                                 - 1
                                                 - 1
@@ -2905,6 +3012,11 @@ GameObject12:
                                                 name: 5508932554690171827
                                               material:
                                                 name: ""
+                                                color:
+                                                  - 1
+                                                  - 0
+                                                  - 0
+                                                  - 1
                                               color:
                                                 - 1
                                                 - 1
@@ -2965,6 +3077,11 @@ GameObject12:
                                             name: 5139834007055871956
                                           material:
                                             name: railgun_DefaultMaterial_BaseColor
+                                            color:
+                                              - 1
+                                              - 1
+                                              - 1
+                                              - 1
                                           color:
                                             - 1
                                             - 1
@@ -3948,6 +4065,115 @@ GameObject12:
             texturePath: Assets/Textures/Smoke30Frames.png
           particleType: 1
       Children: ~
+    - name: AimLaser
+      prefabPath: ""
+      uuid: 15992028836635581959
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 1.4210854715202004e-14
+            - 1.332777738571167
+            - 0
+          localRotation:
+            - 90
+            - -0
+            - 0
+          localScale:
+            - 0.05000000074505806
+            - 1
+            - 0.05000000074505806
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 0
+          material:
+            name: ""
+            color:
+              - 1
+              - 0
+              - 0
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: AimLaserEnd
+      prefabPath: ""
+      uuid: 17772146937438746372
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 1.4210854715202004e-14
+            - 0.50576424598693848
+            - 0
+          localRotation:
+            - 90
+            - -0
+            - 0
+          localScale:
+            - 0.20000000298023224
+            - 0.29999998211860657
+            - 0.20000000298023224
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 0
+          material:
+            name: ""
+            color:
+              - 1
+              - 0
+              - 0
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        LightComponent:
+          name: LightComponent
+          enabled: true
+          light_type: 1
+          ambient:
+            - 1
+            - 0
+            - 0
+          diffuse:
+            - 1
+            - 0
+            - 0
+          specular:
+            - 1
+            - 0
+            - 0
+          constant: 1
+          linear: 0.0900000036
+          quadratic: 0.0320000015
+          radius: 5
+          intensity: 100
+          direction:
+            - -1
+            - -1
+            - 0
+      Children: ~
 GameObject13:
   name: Mawloc
   prefabPath: ""
@@ -4028,6 +4254,11 @@ GameObject13:
             name: 4207676092079321498
           material:
             name: bicho_low_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -6477,6 +6708,11 @@ GameObject14:
             name: 8880094310175707258
           material:
             name: bicho_low_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -6655,9 +6891,9 @@ GameObject15:
         - 4.0258684158325195
         - -7.611910343170166
       localRotation:
-        - -179.99999499104399
+        - 179.99999499104399
         - -28.58177587020446
-        - -179.99999499104399
+        - 179.99999499104399
       localScale:
         - 0.42135539650917053
         - 0.42135560512542725
@@ -6692,6 +6928,11 @@ GameObject15:
             name: 3231945927297810436
           material:
             name: Probancodueva_low_Material.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -6729,6 +6970,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -6766,6 +7012,11 @@ GameObject15:
             name: 5439158343311500969
           material:
             name: Probancodueva_low_Material.002_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -6803,6 +7054,11 @@ GameObject15:
             name: 16204154244111210210
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -6840,6 +7096,11 @@ GameObject15:
             name: 17564151616904288020
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -6877,6 +7138,11 @@ GameObject15:
             name: 4537437403477682357
           material:
             name: Probancodueva_low_Material.002_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -6914,6 +7180,11 @@ GameObject15:
             name: 2704274372596975892
           material:
             name: Probancodueva_low_Material.002_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -6951,6 +7222,11 @@ GameObject15:
             name: 8438162400140625180
           material:
             name: Probancodueva_low_Material.002_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -6988,6 +7264,11 @@ GameObject15:
             name: 4902836731445701217
           material:
             name: cristal_Cueva_high.002_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7025,6 +7306,11 @@ GameObject15:
             name: 4902836731445701217
           material:
             name: cristal_Cueva_high.002_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7062,6 +7348,11 @@ GameObject15:
             name: 4902836731445701217
           material:
             name: cristal_Cueva_high.002_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7099,6 +7390,11 @@ GameObject15:
             name: 4902836731445701217
           material:
             name: cristal_Cueva_high.002_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7136,6 +7432,11 @@ GameObject15:
             name: 4902836731445701217
           material:
             name: cristal_Cueva_high.002_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7173,6 +7474,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7210,6 +7516,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7247,6 +7558,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7284,6 +7600,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7307,9 +7628,9 @@ GameObject15:
             - 44.921398162841797
             - -100.12086486816406
           localRotation:
-            - -98.074949864689927
-            - 63.048607140078381
-            - -46.803241487065755
+            - -98.074951882851735
+            - 63.048602223736808
+            - -46.803243595273301
           localScale:
             - -88.493980407714844
             - -88.493988037109375
@@ -7321,6 +7642,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7358,6 +7684,11 @@ GameObject15:
             name: 4902836731445701217
           material:
             name: cristal_Cueva_high.002_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7395,6 +7726,11 @@ GameObject15:
             name: 4902836731445701217
           material:
             name: cristal_Cueva_high.002_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7432,6 +7768,11 @@ GameObject15:
             name: 4902836731445701217
           material:
             name: cristal_Cueva_high.002_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7469,6 +7810,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7492,9 +7838,9 @@ GameObject15:
             - 35.072986602783203
             - -110.19345855712891
           localRotation:
-            - 85.889804458773966
-            - -47.371824670938736
-            - -177.38607588879205
+            - 85.889805057643756
+            - -47.371830406159773
+            - -177.38607639193194
           localScale:
             - 34.513263702392578
             - 34.513267517089844
@@ -7506,6 +7852,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7543,6 +7894,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7580,6 +7936,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7617,6 +7978,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7654,6 +8020,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7691,6 +8062,11 @@ GameObject15:
             name: 16628017123127241742
           material:
             name: Probancodueva_low_Material.002_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7728,6 +8104,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7765,6 +8146,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7802,6 +8188,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7839,6 +8230,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7862,9 +8258,9 @@ GameObject15:
             - 103.88833618164062
             - 27.61555290222168
           localRotation:
-            - 154.03238916119923
-            - 36.583692565528253
-            - -3.9603559539563786
+            - 154.03238876399794
+            - 36.583683818038153
+            - -3.9603579727661447
           localScale:
             - 63.569477081298828
             - 63.569473266601562
@@ -7876,6 +8272,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7913,6 +8314,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7950,6 +8356,11 @@ GameObject15:
             name: 16972476445512758092
           material:
             name: tripaslow_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -7987,6 +8398,11 @@ GameObject15:
             name: 10107394559069383881
           material:
             name: tripaslow_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8024,6 +8440,11 @@ GameObject15:
             name: 16204154244111210210
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8061,6 +8482,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8098,6 +8524,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8135,6 +8566,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8172,6 +8608,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8209,6 +8650,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8246,6 +8692,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8265,17 +8716,17 @@ GameObject15:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -5.4769422619711463
-            - 24.198019778655386
-            - 139.26609507578758
+            - -5.4769420623779297
+            - 24.198019027709961
+            - 139.26609802246094
           localRotation:
-            - -146.79486342477543
-            - 87.995427681104147
-            - 17.00703549843297
+            - -146.79495644225412
+            - 87.995490591726465
+            - 17.006939211425294
           localScale:
-            - 51.601948534719916
-            - 51.601947744342695
-            - 51.601959750899226
+            - 51.601947784423828
+            - 51.601947784423828
+            - 51.601959228515625
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -8283,6 +8734,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8306,9 +8762,9 @@ GameObject15:
             - 15.473936080932617
             - 140.41348266601562
           localRotation:
-            - 85.39625942936658
-            - 79.252543683182878
-            - -93.80922885921818
+            - 85.396277829881143
+            - 79.252528872413279
+            - -93.809212850508246
           localScale:
             - 63.569477081298828
             - 63.569480895996094
@@ -8320,6 +8776,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8343,9 +8804,9 @@ GameObject15:
             - 30.123611450195312
             - 142.57989501953125
           localRotation:
-            - 37.038560871925696
-            - 81.597364609725005
-            - -128.79311319471
+            - 37.03860293787551
+            - 81.597378998965638
+            - -128.79306632304261
           localScale:
             - 45.338413238525391
             - 45.338409423828125
@@ -8357,6 +8818,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8380,9 +8846,9 @@ GameObject15:
             - 12.570405006408691
             - 129.93734741210938
           localRotation:
-            - -146.79480307020009
-            - 87.995221237596041
-            - 17.007097797987058
+            - -146.79466082018726
+            - 87.995313942933194
+            - 17.007220919064636
           localScale:
             - 51.601955413818359
             - 51.601959228515625
@@ -8394,6 +8860,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8431,6 +8902,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8468,6 +8944,11 @@ GameObject15:
             name: 13190414902400049322
           material:
             name: Probancodueva_low_Cueva_high.001_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
           color:
             - 1
             - 1
@@ -8492,9 +8973,9 @@ GameObject16:
         - -25.712728500366211
         - 5.7772140502929688
       localRotation:
-        - 179.99999134857811
-        - -29.933600729853847
-        - -179.99999499104416
+        - 179.99999134857705
+        - -29.933600729854721
+        - 179.99999499104462
       localScale:
         - 1.0000001192092896
         - 1
@@ -8526,9 +9007,9 @@ GameObject17:
         - -25.712728500366211
         - 5.7772140502929688
       localRotation:
-        - 179.99999134857811
-        - -29.933600729853847
-        - -179.99999499104416
+        - 179.99999134857705
+        - -29.933600729854721
+        - 179.99999499104462
       localScale:
         - 1.0000001192092896
         - 1
@@ -8560,9 +9041,9 @@ GameObject18:
         - -25.712728500366211
         - 5.7772140502929688
       localRotation:
-        - 179.99999134857811
-        - -29.933600729853847
-        - -179.99999499104416
+        - 179.99999134857705
+        - -29.933600729854721
+        - 179.99999499104462
       localScale:
         - 1.0000001192092896
         - 1
@@ -8594,9 +9075,9 @@ GameObject19:
         - -25.712728500366211
         - 5.7772140502929688
       localRotation:
-        - 179.99999134857811
-        - -29.933600729853847
-        - -179.99999499104416
+        - 179.99999134857705
+        - -29.933600729854721
+        - 179.99999499104462
       localScale:
         - 1.0000001192092896
         - 1
@@ -8628,9 +9109,9 @@ GameObject20:
         - -25.712728500366211
         - 5.7772140502929688
       localRotation:
-        - 179.99999134857811
-        - -29.933600729853847
-        - -179.99999499104416
+        - 179.99999134857705
+        - -29.933600729854721
+        - 179.99999499104462
       localScale:
         - 1.0000001192092896
         - 1
@@ -8662,13 +9143,13 @@ GameObject21:
         - -25.712728500366211
         - 5.7772140502929688
       localRotation:
-        - 179.99999134857796
-        - -29.933598939407808
-        - -179.99999499104445
+        - 179.99999134857705
+        - -29.933600729854721
+        - 179.99999499104462
       localScale:
-        - 1.0000001923802013
-        - 1.0000000000000087
-        - 1.1545937542335893
+        - 1.0000002384185791
+        - 1
+        - 1.1545937061309814
     BoxColliderComponent:
       size:
         - 1
@@ -8821,6 +9302,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Resolution_1280x720
       prefabPath: ""
@@ -8878,6 +9361,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Resolution_1920x1080
       prefabPath: ""
@@ -8935,6 +9420,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Resolution_2560x1440
       prefabPath: ""
@@ -8992,6 +9479,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Resolution_3840x2160
       prefabPath: ""
@@ -9049,6 +9538,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Resolution_left
       prefabPath: ""
@@ -9110,6 +9601,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Resolution_right
       prefabPath: ""
@@ -9171,6 +9664,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Resolution_lefthover
       prefabPath: ""
@@ -9228,6 +9723,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Resolution_righthover
       prefabPath: ""
@@ -9285,6 +9782,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Fullscreen_checkbox
       prefabPath: ""
@@ -9346,6 +9845,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Fullscreen_checkboxhover
       prefabPath: ""
@@ -9403,6 +9904,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Fullscreen_tick
       prefabPath: ""
@@ -9460,6 +9963,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Master_bar
       prefabPath: ""
@@ -9517,6 +10022,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Master_slider
       prefabPath: ""
@@ -9574,6 +10081,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Master_left
       prefabPath: ""
@@ -9635,6 +10144,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Master_right
       prefabPath: ""
@@ -9696,6 +10207,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Master_lefthover
       prefabPath: ""
@@ -9753,6 +10266,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Master_righthover
       prefabPath: ""
@@ -9810,6 +10325,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: BGM_bar
       prefabPath: ""
@@ -9867,6 +10384,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: BGM_slider
       prefabPath: ""
@@ -9924,6 +10443,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: BGM_left
       prefabPath: ""
@@ -9985,6 +10506,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: BGM_right
       prefabPath: ""
@@ -10046,6 +10569,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: BGM_lefthover
       prefabPath: ""
@@ -10103,6 +10628,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: BGM_righthover
       prefabPath: ""
@@ -10160,6 +10687,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: SFX_bar
       prefabPath: ""
@@ -10217,6 +10746,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: SFX_slider
       prefabPath: ""
@@ -10274,6 +10805,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: SFX_left
       prefabPath: ""
@@ -10335,6 +10868,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: SFX_right
       prefabPath: ""
@@ -10396,6 +10931,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: SFX_lefthover
       prefabPath: ""
@@ -10453,6 +10990,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: SFX_righthover
       prefabPath: ""
@@ -10510,6 +11049,8 @@ GameObject23:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
 GameObject24:
   name: Canvas_PauseMenu
@@ -10617,6 +11158,8 @@ GameObject24:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Resume_Button
       prefabPath: ""
@@ -10674,6 +11217,8 @@ GameObject24:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
@@ -10735,6 +11280,8 @@ GameObject24:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
@@ -10796,6 +11343,8 @@ GameObject24:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
@@ -10857,6 +11406,8 @@ GameObject24:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
@@ -10968,6 +11519,8 @@ GameObject25:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: Text
       prefabPath: ""
@@ -11025,6 +11578,8 @@ GameObject25:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: InteractText
       prefabPath: ""
@@ -11082,6 +11637,8 @@ GameObject25:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
 GameObject26:
   name: Canvas_TitleBoT
@@ -11189,6 +11746,8 @@ GameObject26:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
 GameObject27:
   name: Canvas_HUD
@@ -11296,6 +11855,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: blood_bg2
       prefabPath: ""
@@ -11353,6 +11914,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: healthbar_bg
       prefabPath: ""
@@ -11410,6 +11973,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: healthbar_empty
       prefabPath: ""
@@ -11467,6 +12032,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: boltgun_small_L
       prefabPath: ""
@@ -11524,6 +12091,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: railgun_small_L
       prefabPath: ""
@@ -11581,6 +12150,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: shotgun_small_L
       prefabPath: ""
@@ -11638,6 +12209,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: boltgun_small_R
       prefabPath: ""
@@ -11695,6 +12268,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: railgun_small_R
       prefabPath: ""
@@ -11752,6 +12327,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: shotgun_small_R
       prefabPath: ""
@@ -11809,6 +12386,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: railgun
       prefabPath: ""
@@ -11866,6 +12445,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: shotgun
       prefabPath: ""
@@ -11923,6 +12504,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: boltgun
       prefabPath: ""
@@ -11980,6 +12563,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: boltgun_ability_1
       prefabPath: ""
@@ -12037,6 +12622,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: boltgun_ability_2
       prefabPath: ""
@@ -12094,6 +12681,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: shotgun_ability_1
       prefabPath: ""
@@ -12151,6 +12740,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: shotgun_ability_2
       prefabPath: ""
@@ -12208,6 +12799,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: railgun_ability_1
       prefabPath: ""
@@ -12265,6 +12858,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: railgun_ability_2a
       prefabPath: ""
@@ -12322,6 +12917,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: railgun_ability_2b
       prefabPath: ""
@@ -12379,6 +12976,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: gun_small_frame
       prefabPath: ""
@@ -12436,6 +13035,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: frames
       prefabPath: ""
@@ -12493,6 +13094,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: lock_L
       prefabPath: ""
@@ -12550,6 +13153,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: lock_R
       prefabPath: ""
@@ -12607,6 +13212,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: nodash
       prefabPath: ""
@@ -12664,6 +13271,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: msup
       prefabPath: ""
@@ -12721,6 +13330,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: noreload
       prefabPath: ""
@@ -12778,6 +13389,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: defenseup
       prefabPath: ""
@@ -12835,6 +13448,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: asup
       prefabPath: ""
@@ -12892,6 +13507,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: attackup
       prefabPath: ""
@@ -12949,6 +13566,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: magnet
       prefabPath: ""
@@ -13006,6 +13625,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: thirst_animation
       prefabPath: ""
@@ -13060,9 +13681,11 @@ GameObject27:
             - 1225
             - 40
           sprite_offset:
-            - 0
+            - 525
             - 0
           anim_speed: 0.5
+          anim_index: 3
+          anim_index_limit: 6
       Children: ~
     - name: red_thirst_bar
       prefabPath: ""
@@ -13120,6 +13743,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: blood_animation_main
       prefabPath: ""
@@ -13174,9 +13799,11 @@ GameObject27:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 150
             - 0
           anim_speed: 0.5
+          anim_index: 3
+          anim_index_limit: 4
       Children: ~
     - name: blood_bar1
       prefabPath: ""
@@ -13234,6 +13861,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: blood_animation_temp
       prefabPath: ""
@@ -13288,9 +13917,11 @@ GameObject27:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 150
             - 0
           anim_speed: 0.5
+          anim_index: 3
+          anim_index_limit: 4
       Children: ~
     - name: blood_bar2
       prefabPath: ""
@@ -13348,6 +13979,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: healthframe
       prefabPath: ""
@@ -13405,6 +14038,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: canister0
       prefabPath: ""
@@ -13462,6 +14097,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: canister1
       prefabPath: ""
@@ -13519,6 +14156,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: canister2
       prefabPath: ""
@@ -13576,6 +14215,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: canister3
       prefabPath: ""
@@ -13633,6 +14274,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: canister4
       prefabPath: ""
@@ -13690,6 +14333,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: canister5
       prefabPath: ""
@@ -13747,6 +14392,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0.100000001
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: overheat_bg
       prefabPath: ""
@@ -13804,6 +14451,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: overheat_bar
       prefabPath: ""
@@ -13861,6 +14510,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: overheat_warning
       prefabPath: ""
@@ -13918,6 +14569,8 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~
     - name: weapon_switcher_frame
       prefabPath: ""
@@ -13975,4 +14628,6 @@ GameObject27:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
       Children: ~

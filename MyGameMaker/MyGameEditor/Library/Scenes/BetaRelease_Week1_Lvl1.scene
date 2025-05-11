@@ -189,17 +189,17 @@ GameObject4:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 339.71200561523438
+        - 509.86428833007812
         - 72.90673828125
         - 28.277936935424805
       localRotation:
-        - 92.203908949835395
-        - 6.3565934286382157
-        - -2.7193370632145846
+        - 92.203911294235624
+        - 6.3565933724271648
+        - -2.7193370787228766
       localScale:
-        - 0.99999982118606567
-        - 0.94270598888397217
-        - 1
+        - 0.99999983765252243
+        - 0.94270602611716325
+        - 1.000000043812147
     CameraComponent:
       name: CameraComponent
       enabled: true
@@ -7407,7 +7407,7 @@ GameObject13:
       prefabPath: ""
       uuid: 6492893216393959884
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16128,7 +16128,7 @@ GameObject32:
   prefabPath: ""
   uuid: 17286585113535503956
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -16730,7 +16730,7 @@ GameObject46:
   prefabPath: ""
   uuid: 5334084108283415202
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -16773,7 +16773,7 @@ GameObject47:
   prefabPath: ""
   uuid: 4582362207637527686
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -16816,7 +16816,7 @@ GameObject48:
   prefabPath: ""
   uuid: 11717222921955110329
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -16859,7 +16859,7 @@ GameObject49:
   prefabPath: ""
   uuid: 871643957504231292
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -16902,7 +16902,7 @@ GameObject50:
   prefabPath: ""
   uuid: 2798559705409959625
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -16945,7 +16945,7 @@ GameObject51:
   prefabPath: ""
   uuid: 265558157892002293
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -16988,7 +16988,7 @@ GameObject52:
   prefabPath: ""
   uuid: 13581908822791023306
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -17031,7 +17031,7 @@ GameObject53:
   prefabPath: ""
   uuid: 2016973699587369698
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -17074,7 +17074,7 @@ GameObject54:
   prefabPath: ""
   uuid: 1309824500389311778
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -17117,7 +17117,7 @@ GameObject55:
   prefabPath: ""
   uuid: 16386252550075515124
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -17160,7 +17160,7 @@ GameObject56:
   prefabPath: ""
   uuid: 15231930752227285663
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -17805,7 +17805,7 @@ GameObject71:
   prefabPath: ""
   uuid: 4346145048318314277
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -17848,7 +17848,7 @@ GameObject72:
   prefabPath: ""
   uuid: 2739809895472493402
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -17934,7 +17934,7 @@ GameObject74:
   prefabPath: ""
   uuid: 10198894894476343609
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -17977,7 +17977,7 @@ GameObject75:
   prefabPath: ""
   uuid: 8142274324300616330
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -18106,7 +18106,7 @@ GameObject78:
   prefabPath: ""
   uuid: 9749314643525645289
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -18235,7 +18235,7 @@ GameObject81:
   prefabPath: ""
   uuid: 10740843859914569924
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -18278,7 +18278,7 @@ GameObject82:
   prefabPath: ""
   uuid: 4801133761748770327
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -20289,7 +20289,7 @@ GameObject89:
       prefabPath: ""
       uuid: 566562232330331800
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -24045,7 +24045,7 @@ GameObject91:
       prefabPath: ""
       uuid: 15931460460803116578
       tag: Destroyable
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -24325,7 +24325,7 @@ GameObject91:
       prefabPath: ""
       uuid: 18416103976424362333
       tag: Destroyable
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -25522,7 +25522,7 @@ GameObject102:
       prefabPath: ""
       uuid: 14317557316497478850
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -27496,7 +27496,7 @@ GameObject102:
       prefabPath: ""
       uuid: 7333959574975571419
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -27538,7 +27538,7 @@ GameObject102:
       prefabPath: ""
       uuid: 12144923542085374838
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -27580,7 +27580,7 @@ GameObject102:
       prefabPath: ""
       uuid: 8959505582935241826
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -27622,7 +27622,7 @@ GameObject102:
       prefabPath: ""
       uuid: 7110065593569334746
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -27664,7 +27664,7 @@ GameObject102:
       prefabPath: ""
       uuid: 5522459126042222721
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -27706,7 +27706,7 @@ GameObject102:
       prefabPath: ""
       uuid: 1864483823667414173
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -27748,7 +27748,7 @@ GameObject102:
       prefabPath: ""
       uuid: 9885845076597617463
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -27874,7 +27874,7 @@ GameObject102:
       prefabPath: ""
       uuid: 14355963996822934470
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -27916,7 +27916,7 @@ GameObject102:
       prefabPath: ""
       uuid: 6987971464584783157
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -27958,7 +27958,7 @@ GameObject102:
       prefabPath: ""
       uuid: 9412767926579675360
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -28042,7 +28042,7 @@ GameObject102:
       prefabPath: ""
       uuid: 4491615882476404959
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31822,7 +31822,7 @@ GameObject102:
       prefabPath: ""
       uuid: 2142292176585738035
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31864,7 +31864,7 @@ GameObject102:
       prefabPath: ""
       uuid: 143065635127845946
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31906,7 +31906,7 @@ GameObject102:
       prefabPath: ""
       uuid: 10595399544047275518
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -31948,7 +31948,7 @@ GameObject102:
       prefabPath: ""
       uuid: 6648593744870071211
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -32032,7 +32032,7 @@ GameObject102:
       prefabPath: ""
       uuid: 15045232564720192997
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -32074,7 +32074,7 @@ GameObject102:
       prefabPath: ""
       uuid: 16940574648032471397
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -34510,7 +34510,7 @@ GameObject102:
       prefabPath: ""
       uuid: 1663629804352137855
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -34552,7 +34552,7 @@ GameObject102:
       prefabPath: ""
       uuid: 11657061440299812759
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -34720,7 +34720,7 @@ GameObject102:
       prefabPath: ""
       uuid: 16212365896256068593
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -37534,7 +37534,7 @@ GameObject102:
       prefabPath: ""
       uuid: 16939208934889339450
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -37576,7 +37576,7 @@ GameObject102:
       prefabPath: ""
       uuid: 3744755117964157686
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -38962,7 +38962,7 @@ GameObject102:
       prefabPath: ""
       uuid: 10548077852066311829
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -39004,7 +39004,7 @@ GameObject102:
       prefabPath: ""
       uuid: 17811789690146429686
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -39130,7 +39130,7 @@ GameObject102:
       prefabPath: ""
       uuid: 1905839936663412154
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -39172,7 +39172,7 @@ GameObject102:
       prefabPath: ""
       uuid: 611413869884870009
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -39214,7 +39214,7 @@ GameObject102:
       prefabPath: ""
       uuid: 11888709760212253757
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40264,7 +40264,7 @@ GameObject102:
       prefabPath: ""
       uuid: 416705983398170038
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40306,7 +40306,7 @@ GameObject102:
       prefabPath: ""
       uuid: 2019202469630810059
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40348,7 +40348,7 @@ GameObject102:
       prefabPath: ""
       uuid: 15947537351792800844
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40390,7 +40390,7 @@ GameObject102:
       prefabPath: ""
       uuid: 2620753858268309905
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40432,7 +40432,7 @@ GameObject102:
       prefabPath: ""
       uuid: 13277819315447414959
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40474,7 +40474,7 @@ GameObject102:
       prefabPath: ""
       uuid: 1290957669825200417
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40516,7 +40516,7 @@ GameObject102:
       prefabPath: ""
       uuid: 1316752849147664351
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40558,7 +40558,7 @@ GameObject102:
       prefabPath: ""
       uuid: 9159883817166184989
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40642,7 +40642,7 @@ GameObject102:
       prefabPath: ""
       uuid: 13481207417144441659
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40684,7 +40684,7 @@ GameObject102:
       prefabPath: ""
       uuid: 10586365900733146670
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40726,7 +40726,7 @@ GameObject102:
       prefabPath: ""
       uuid: 7626099998675877785
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40768,7 +40768,7 @@ GameObject102:
       prefabPath: ""
       uuid: 883210891777835506
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40810,7 +40810,7 @@ GameObject102:
       prefabPath: ""
       uuid: 18149212572235572676
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -40852,7 +40852,7 @@ GameObject102:
       prefabPath: ""
       uuid: 6188316421936191296
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -43288,7 +43288,7 @@ GameObject102:
       prefabPath: ""
       uuid: 14438188780952324188
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -43498,7 +43498,7 @@ GameObject102:
       prefabPath: ""
       uuid: 70247946913799327
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -43792,7 +43792,7 @@ GameObject102:
       prefabPath: ""
       uuid: 12108758021613503222
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -43960,7 +43960,7 @@ GameObject102:
       prefabPath: ""
       uuid: 11973303099053131750
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -44002,7 +44002,7 @@ GameObject102:
       prefabPath: ""
       uuid: 16387104210572483800
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -44278,7 +44278,7 @@ GameObject103:
       prefabPath: ""
       uuid: 15902197937111758709
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -44320,7 +44320,7 @@ GameObject103:
       prefabPath: ""
       uuid: 13180727703849679390
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -44404,7 +44404,7 @@ GameObject103:
       prefabPath: ""
       uuid: 6824614410786923267
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -44446,7 +44446,7 @@ GameObject103:
       prefabPath: ""
       uuid: 14130715502521418461
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -44530,7 +44530,7 @@ GameObject103:
       prefabPath: ""
       uuid: 14327894083578777500
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -44572,7 +44572,7 @@ GameObject103:
       prefabPath: ""
       uuid: 15302780912666596111
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -44614,7 +44614,7 @@ GameObject103:
       prefabPath: ""
       uuid: 6111728596598065299
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -44656,7 +44656,7 @@ GameObject103:
       prefabPath: ""
       uuid: 16054634127203497789
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -44698,7 +44698,7 @@ GameObject103:
       prefabPath: ""
       uuid: 6010236299542106121
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -44740,7 +44740,7 @@ GameObject103:
       prefabPath: ""
       uuid: 3002171249134719598
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -44782,7 +44782,7 @@ GameObject103:
       prefabPath: ""
       uuid: 15073033277717636918
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -44824,7 +44824,7 @@ GameObject103:
       prefabPath: ""
       uuid: 7233244552529251166
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -44866,7 +44866,7 @@ GameObject103:
       prefabPath: ""
       uuid: 12709248101196617871
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -45160,7 +45160,7 @@ GameObject103:
       prefabPath: ""
       uuid: 17314035935211647626
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -45202,7 +45202,7 @@ GameObject103:
       prefabPath: ""
       uuid: 6571482845769960053
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -45244,7 +45244,7 @@ GameObject103:
       prefabPath: ""
       uuid: 7015594505162610570
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -45286,7 +45286,7 @@ GameObject103:
       prefabPath: ""
       uuid: 10842500432798432820
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -45454,7 +45454,7 @@ GameObject103:
       prefabPath: ""
       uuid: 18043898555338923373
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -45496,7 +45496,7 @@ GameObject103:
       prefabPath: ""
       uuid: 1256939392842559765
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -45580,7 +45580,7 @@ GameObject103:
       prefabPath: ""
       uuid: 15522560162549598603
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -45622,7 +45622,7 @@ GameObject103:
       prefabPath: ""
       uuid: 6801420963507202285
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -45664,7 +45664,7 @@ GameObject103:
       prefabPath: ""
       uuid: 11435583044944845261
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -45706,7 +45706,7 @@ GameObject103:
       prefabPath: ""
       uuid: 3230335034387844884
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -45748,7 +45748,7 @@ GameObject103:
       prefabPath: ""
       uuid: 15414367684784687155
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -45874,7 +45874,7 @@ GameObject103:
       prefabPath: ""
       uuid: 4756137072742313758
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -45958,7 +45958,7 @@ GameObject103:
       prefabPath: ""
       uuid: 11362015147986360146
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -46000,7 +46000,7 @@ GameObject103:
       prefabPath: ""
       uuid: 3180994270404863965
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -46126,7 +46126,7 @@ GameObject103:
       prefabPath: ""
       uuid: 17376815227811816612
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -46168,7 +46168,7 @@ GameObject103:
       prefabPath: ""
       uuid: 11782906370947948801
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -46210,7 +46210,7 @@ GameObject103:
       prefabPath: ""
       uuid: 653160326871116030
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -46252,7 +46252,7 @@ GameObject103:
       prefabPath: ""
       uuid: 1738037186998256578
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -46420,7 +46420,7 @@ GameObject103:
       prefabPath: ""
       uuid: 15789708065159999409
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -46546,7 +46546,7 @@ GameObject103:
       prefabPath: ""
       uuid: 2903245467262240246
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -46588,7 +46588,7 @@ GameObject103:
       prefabPath: ""
       uuid: 9794649372062766171
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -46630,7 +46630,7 @@ GameObject103:
       prefabPath: ""
       uuid: 2090654981034087660
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -46672,7 +46672,7 @@ GameObject103:
       prefabPath: ""
       uuid: 6136203805182106428
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -46714,7 +46714,7 @@ GameObject103:
       prefabPath: ""
       uuid: 17306338421375059106
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -46756,7 +46756,7 @@ GameObject103:
       prefabPath: ""
       uuid: 23711816589526993
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -46966,7 +46966,7 @@ GameObject103:
       prefabPath: ""
       uuid: 4838399878340161780
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -47008,7 +47008,7 @@ GameObject103:
       prefabPath: ""
       uuid: 10731110658028773581
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -47092,7 +47092,7 @@ GameObject103:
       prefabPath: ""
       uuid: 9806509344607400212
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -47134,7 +47134,7 @@ GameObject103:
       prefabPath: ""
       uuid: 18150289371672979405
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -47176,7 +47176,7 @@ GameObject103:
       prefabPath: ""
       uuid: 1094589836729152682
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -47218,7 +47218,7 @@ GameObject103:
       prefabPath: ""
       uuid: 14297234358819861872
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -47260,7 +47260,7 @@ GameObject103:
       prefabPath: ""
       uuid: 7999891472492913810
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -47386,7 +47386,7 @@ GameObject103:
       prefabPath: ""
       uuid: 12830904271221424167
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -47428,7 +47428,7 @@ GameObject103:
       prefabPath: ""
       uuid: 3910347812934878370
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -47638,7 +47638,7 @@ GameObject103:
       prefabPath: ""
       uuid: 6948109299600852603
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -47680,7 +47680,7 @@ GameObject103:
       prefabPath: ""
       uuid: 18111230064706999517
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -47764,7 +47764,7 @@ GameObject103:
       prefabPath: ""
       uuid: 7618876185489109176
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -47890,7 +47890,7 @@ GameObject103:
       prefabPath: ""
       uuid: 4975966495680713846
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -47974,7 +47974,7 @@ GameObject103:
       prefabPath: ""
       uuid: 17789217671509338685
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -48145,7 +48145,7 @@ GameObject106:
   prefabPath: Assets\Prefabs\ShotgunPickUp.prefab.yaml
   uuid: 17816855419032250650
   tag: Weapon
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -48229,7 +48229,7 @@ GameObject106:
       prefabPath: ""
       uuid: 6196318924992102555
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -48271,7 +48271,7 @@ GameObject106:
       prefabPath: ""
       uuid: 989901120173885559
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -48379,7 +48379,7 @@ GameObject107:
       prefabPath: ""
       uuid: 17675691866770397337
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -48957,7 +48957,7 @@ GameObject112:
       prefabPath: ""
       uuid: 14434331000613672665
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -49125,7 +49125,7 @@ GameObject112:
       prefabPath: ""
       uuid: 2290570411550387032
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -49209,7 +49209,7 @@ GameObject112:
       prefabPath: ""
       uuid: 4830376995468723770
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -49335,7 +49335,7 @@ GameObject112:
       prefabPath: ""
       uuid: 1491260440577114771
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -49377,7 +49377,7 @@ GameObject112:
       prefabPath: ""
       uuid: 13866353442709910836
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -49859,9 +49859,9 @@ GameObject122:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 273.37167358398438
+        - 257.94326782226562
         - 3.0125102996826172
-        - 65.62921142578125
+        - -2.5595147609710693
       localRotation:
         - 0
         - -0
@@ -49869,7 +49869,7 @@ GameObject122:
       localScale:
         - 19.724725723266602
         - 7.4319052696228027
-        - 25.198965072631836
+        - 13.350330352783203
     BoxColliderComponent:
       size:
         - 1
@@ -49938,6 +49938,74 @@ GameObject124:
         - 19.724725723266602
         - 7.4319052696228027
         - 25.198965072631836
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+  Children: ~
+GameObject125:
+  name: Bridge_collider_copy_copy_copy_copy
+  prefabPath: ""
+  uuid: 16531260082101687157
+  tag: Collider
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 273.37167358398438
+        - 3.0125102996826172
+        - 65.62921142578125
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 19.724725723266602
+        - 7.4319052696228027
+        - 25.198965072631836
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+  Children: ~
+GameObject126:
+  name: Bridge_collider_copy_copy_copy_copy
+  prefabPath: ""
+  uuid: 7308010983383879020
+  tag: Collider
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 257.94326782226562
+        - 3.0125102996826172
+        - 67.583564758300781
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 19.724725723266602
+        - 7.4319052696228027
+        - 13.350330352783203
     BoxColliderComponent:
       size:
         - 1

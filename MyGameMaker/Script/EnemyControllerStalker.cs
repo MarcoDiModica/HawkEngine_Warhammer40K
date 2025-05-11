@@ -50,6 +50,9 @@ public class EnemyControllerStalker : EnemyController
     private bool isPouncing = false;
     private bool hasMissed = true;
 
+    // Death
+    private float deathTimer = 0f;
+    private float deathDuration = 3f;
     public override void Awake()
     {
         startPosition = gameObject.GetComponent<Transform>().position;
@@ -86,7 +89,7 @@ public class EnemyControllerStalker : EnemyController
             return;
         }
 
-        anim = GameObject.Find("LictorMesh").GetComponent<LictorAnimation>();
+        anim = gameObject.GetChild("LictorMesh").GetComponent<LictorAnimation>();
         if (anim == null)
         {
             Engineson.print("ERROR: LictorAnimation requires SkeletalANimation component");
@@ -271,6 +274,11 @@ public class EnemyControllerStalker : EnemyController
                 if ((!hasDropped))
                 {
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
+                }
+                if (anim.isAnimFinished)
+                {
+                    Engineson.Destroy(lictorMesh);
+                    Engineson.Destroy(gameObject);
                 }
                 hasDropped = true;
                 collider.SetActive(false);

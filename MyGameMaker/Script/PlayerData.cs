@@ -7,7 +7,7 @@ public class PlayerData
 
     float health;
     float healthTemp;
-    float maxHealth = 100;
+    float maxHealth = 100000;
     float maxHealthTemp = 50;
     public bool isHit = false;
     public float movSpeed = 10;

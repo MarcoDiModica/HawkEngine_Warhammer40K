@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace HawkEngine
 {
-    class Camera : Component
+    public class Camera : Component
     {
 
         //[MethodImplAttribute(MethodImplOptions.InternalCall)]

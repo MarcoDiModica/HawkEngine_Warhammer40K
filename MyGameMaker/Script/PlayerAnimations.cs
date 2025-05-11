@@ -7,7 +7,7 @@ public class PlayerAnimations : MonoBehaviour
     public SkeletalAnimation esk;
     private PlayerController playerController;
     private PlayerData playerData;
-    int animIndex = 0;
+    public int animIndex = 0;
 
     public override void Awake()
     {
@@ -23,26 +23,45 @@ public class PlayerAnimations : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-
         if (Input.GetKeyDown(KeyCode.B))
         {
-            if(playerData.GetHealth() <= 0)
-            {
-                animIndex += 1;
-                SetDeathAnimation();
-            }
-            else
-            {
-                animIndex += 1;
+            //if(playerData.GetHealth() <= 0)
+            //{
+            //    animIndex += 1;
+            //    SetDeathAnimation();
+            //}
+            //else
+            //{
+            //    animIndex += 1;
 
-                SetHitIdleAnimation();
-            }
-            
+            //    SetHitAnimation();
+            //}
+            playerData.isHit = true;
         }
     }
-    public void SetHitIdleAnimation()
+    public void SetHitAnimation()
     {
+        //int currentanimIndex = esk
         esk.TransitionAnimations(2, 5, 0.1f);
+    }
+
+    public void SetHitRunningAnimation()
+    {
+        esk.TransitionAnimations(2, 6, 0.1f);
+    }
+
+    public void SetHitShootingRunningAnimation()
+    {
+        esk.TransitionAnimations(2, 8, 0.1f);
+    }
+    public void SetHitShootingStandingAnimation()
+    {
+        esk.TransitionAnimations(2, 8, 0.1f);
+    }
+
+    public void SetHitWalkingAnimation()
+    {
+        esk.TransitionAnimations(2, 9, 0.1f);
     }
     public void SetDeathAnimation()
     {
@@ -61,6 +80,7 @@ public class PlayerAnimations : MonoBehaviour
     {
         if (esk.GetAnimationTime() >= esk.GetAnimationLength() - 0.2f)
         {
+            Engineson.print("Idle Random Animation");   
             Random rand = new Random();
             int idleIndex = rand.Next(4, 5);
             esk.SetAnimation(idleIndex);
@@ -92,10 +112,41 @@ public class PlayerAnimations : MonoBehaviour
         esk.SetAnimationSpeed(2.0f);
     }
 
+
+    //-----------DASHING ANIMATION----------------//
     public void SetDashAnimation()
     {
         esk.PlayAnimOnce(0, 0.1f);
         esk.SetAnimationSpeed(2.5f);
+    } 
+    public void SetDashToRunningAnimation()
+    {
+        esk.TransitionAnimations(0, 6, 0.1f);
+        esk.SetAnimationSpeed(2.0f);
+    }
+
+    public void SetDashToShootingRunningAnimation()
+    {
+        esk.TransitionAnimations(0, 8, 0.1f);
+        esk.SetAnimationSpeed(1.5f);
+    }
+
+    public void SetDashToShootingStandingAnimation()
+    {
+        esk.TransitionAnimations(0, 7, 0.1f);
+        esk.SetAnimationSpeed(1.5f);
+    }
+
+    public void SetDashToWalkingAnimation()
+    {
+        esk.TransitionAnimations(0, 9, 0.1f);
+        esk.SetAnimationSpeed(1.5f);
+    }
+
+    public void SetDashToIdleAnimation()
+    {
+        esk.TransitionAnimations(0, 5, 0.1f);
+        esk.SetAnimationSpeed(1.5f);
     }
 
     public void SetShootingStandingToIdleAnimation()
@@ -120,12 +171,12 @@ public class PlayerAnimations : MonoBehaviour
     {
         esk.TransitionAnimations(8, 6, 0.1f);
         esk.SetAnimationSpeed(1.5f);
-
     }
     public void SetShootingStandingToShootingRunAnimation()
     {
         esk.TransitionAnimations(7, 8, 0.1f);
         esk.SetAnimationSpeed(1.5f);
-
     }
+
+  
 }

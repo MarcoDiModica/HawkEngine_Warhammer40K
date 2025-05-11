@@ -70,6 +70,10 @@ bool Root::Start()
 
 	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");
 
+	//-------------------SHAKE MANAGER COLOCAR EN TODAS LAS ESCENAS -------------------//
+	/*auto shakeManager = CreateGameObject("ShakeManager");
+	shakeManager->AddComponent<ScriptComponent>()->LoadScript("ShakeManager");*/
+
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
 	//auto canvasPauseMenu = FindGOByName("Canvas_PauseMenu");

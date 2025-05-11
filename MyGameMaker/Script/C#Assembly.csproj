@@ -198,6 +198,7 @@
     <Compile Include="Scene2ToMenu.cs" />
     <Compile Include="Scene2ToScene3.cs" />
     <Compile Include="SceneAudio.cs" />
+    <Compile Include="ShakeManager.cs" />
     <Compile Include="Shotgun.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="ShotgunPickUp.cs" />

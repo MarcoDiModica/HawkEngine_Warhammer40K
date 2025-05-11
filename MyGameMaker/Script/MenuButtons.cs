@@ -215,20 +215,20 @@ public class MenuButtons : MonoBehaviour
                 //sound?.Play(buttonStartGameFX);
                 if (SceneManager.isLevel2)
                 {
-                Audio.PlayOneShot(ConfirmSFX);
-                Audio.Stop(MainMenuMusic);
+                    Audio.PlayOneShot(ConfirmSFX);
+                    Audio.Stop(MainMenuMusic);
                     SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl2");
                 }
                 else if (SceneManager.isBossFight)
                 {
-                Audio.PlayOneShot(ConfirmSFX);
-                Audio.Stop(MainMenuMusic);
+                    Audio.PlayOneShot(ConfirmSFX);
+                    Audio.Stop(MainMenuMusic);
                     SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Bossfight");
                 }
                 else
                 {
-                                    Audio.PlayOneShot(ConfirmSFX);
-                Audio.Stop(MainMenuMusic);
+                    Audio.PlayOneShot(ConfirmSFX);
+                    Audio.Stop(MainMenuMusic);
                     SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl1");
                 }
                 

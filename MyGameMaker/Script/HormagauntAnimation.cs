@@ -20,8 +20,6 @@ public class HormagauntAnimation : MonoBehaviour
             Engineson.print("ERROR: PlayerAnimation requires a SkeletalAnimation component!");
             return;
         }
-        hormagauntesk?.SetAnimation(10);
-
     }
 
     public override void Update(float deltaTime)

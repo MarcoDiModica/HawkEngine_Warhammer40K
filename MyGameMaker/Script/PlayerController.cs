@@ -12,12 +12,13 @@ public class PlayerController : MonoBehaviour
     private GameObject playerMesh;
     private ParticleFX bloodSplashEffect;
     private CapsuleCollider capsuleCollider;
+    //private ShakeManager shakeManager;
     private bool isIdle = false;
+    public bool isShootInput = false;
     public bool isRunning = false;
     private bool isWalking = false;
     private bool isMoving = false;
     private bool isDashInput = false;
-    private bool isShootInput = false;
     private bool isRunningInput = false;
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour
     public GameObject aimLaser;
     public GameObject aimLaserEnd;
     private Transform transform;
+    private float dashEndTimer = 0.25f;
 
     public override void Awake()
     {
@@ -83,6 +85,7 @@ public class PlayerController : MonoBehaviour
         capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
         transform = gameObject.GetComponent<Transform>();
 
+        //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
     }
 
     public override void Start()
@@ -101,6 +104,9 @@ public class PlayerController : MonoBehaviour
             walkingFX.Stop();
             return;
         }
+
+        
+
         if (playerData.isHit )
         {
             if (!playerDash.isInvulnerable && !playerData.GodMode)
@@ -122,7 +128,28 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    playerAnimations.SetHitIdleAnimation();
+                    //shake
+                    //shakeManager.ApplyShake(1,0.3f, 0.1f);
+                    //if (isRunning)
+                    //{
+                    //    playerAnimations.SetHitRunningAnimation();
+                    //}
+                    //else if (isShootingRunning)
+                    //{
+                    //    playerAnimations.SetHitShootingRunningAnimation();
+                    //}
+                    //else if (isShootingStanding)
+                    //{
+                    //    playerAnimations.SetHitShootingStandingAnimation();
+                    //}
+                    //else if (isWalking)
+                    //{
+                    //    playerAnimations.SetHitWalkingAnimation();
+                    //}
+                    //else 
+                    //{
+                    //    playerAnimations.SetHitAnimation();
+                    //}
                 }
             }
             playerData.isHit = false; 
@@ -247,14 +274,14 @@ public class PlayerController : MonoBehaviour
         //{
         //    return;
         //}
-        if (isShootInput)
+        if (isShootInput && !isDashing)
         {
             SetShootingState();
             isIdle = false;
         }
         else
         {
-           
+            Engineson.print(moveDirection.ToString());
             if (moveDirection == Vector3.Zero)
             {
                 StopFootsteps();
@@ -301,17 +328,31 @@ public class PlayerController : MonoBehaviour
             isDashing = true;
             playerDash.InitiateDash(moveDirection, elapsedTime);
             playerAnimations.SetDashAnimation();
+            playerInput.BlockMovement();
             //dashDelayTimer = dashDelayDuration;
-            isRunning = false;
-            isWalking = false;
             StopFootsteps();
 
         }
-        if (playerAnimations.esk.IsAnimationFinished() && isDashing == true)
+
+         
+        if (isDashing)
         {
-            playerAnimations.SetStandardIdleAnimation();
-            isDashing = false;
+            dashEndTimer -= deltaTime;
+            if (dashEndTimer <= 0f)
+            {
+                playerInput.UnblockMovement();
+                TransitionFromDashState();
+                isDashing = false;
+                dashEndTimer = 0.25f; 
+            }
         }
+    
+        //if (playerAnimations.esk.IsAnimationFinished() && isDashing == true)
+        //{
+        //    playerInput.UnblockMovement();
+        //    TransitionFromDashState();
+        //    isDashing = false;
+        //}
 
         if (isFlashingColor)
         {
@@ -328,6 +369,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void TransitionFromDashState()
+    {
+        if (isRunning)
+        {
+            playerAnimations.SetDashToRunningAnimation();
+        }
+        else if (isShootingRunning)
+        {
+            playerAnimations.SetDashToShootingRunningAnimation();
+        }
+        else if (isShootingStanding)
+        {
+            playerAnimations.SetDashToShootingStandingAnimation();
+        }
+        else if (isWalking)
+        {
+            playerAnimations.SetDashToWalkingAnimation();
+        }
+        else
+        {
+            playerAnimations.SetDashToIdleAnimation();
+        }
+    }
 
     private void SetIdleState()
     {
@@ -335,10 +399,14 @@ public class PlayerController : MonoBehaviour
         {
             if (isShootingStanding)
             {
+                Engineson.print("Idle");
                 playerAnimations.SetShootingStandingToIdleAnimation();
             }
+            else 
+            {
+                playerAnimations.SetStandardIdleAnimation();
+            }
 
-            playerAnimations.SetIdleRandomAnimation();
             isIdle = true;
             isRunning = false;
             isWalking = false;
@@ -346,6 +414,8 @@ public class PlayerController : MonoBehaviour
             isShootingRunning = false;
             isMoving = false;
         }
+      
+        
 
         if (!hasStoppedFootsteps)
         {

@@ -39,7 +39,7 @@ public class PlayerInput : MonoBehaviour
 
             isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
             isShootPressed = Input.GetKey(KeyCode.J) || Input.GetControllerAxis(0, 5) > 0.5f;
-
+            
             isInteractPressed = Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B);
             isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
             isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightShoulder);
@@ -234,6 +234,17 @@ public class PlayerInput : MonoBehaviour
     public void BlockMovement()
     {
         isMovementBlocked = true;
+        isDashPressed = false;
+        isShootPressed = false;
+        //isReloadPressed = false;
+        //isAbility1Pressed = false;
+        //isAbility2Pressed = false;
+        //isInteractPressed = false;
+        //isRunningPressed = false;
+        //currentMoveDirection = Vector3.Zero;
+        //currentLookDirection = Vector3.Zero;
+        //directionAim = Vector3.Zero;
+        //isKeyboardMoving = false;
     }
 
     public void UnblockMovement()

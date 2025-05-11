@@ -59,6 +59,9 @@ public class PlayerController : MonoBehaviour
     
     public PlayerData playerData;
 
+    public GameObject aimLaser;
+    public GameObject aimLaserEnd;
+    private Transform transform;
     private float dashEndTimer = 0.25f;
 
     public override void Awake()
@@ -80,6 +83,8 @@ public class PlayerController : MonoBehaviour
         inactiveDashFX = GameObject.Find("InactiveDashFX").GetComponent<ParticleFX>();
         walkingFX = GameObject.Find("WalkingFX").GetComponent<ParticleFX>();
         capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
+        transform = gameObject.GetComponent<Transform>();
+
         //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
     }
 
@@ -225,6 +230,45 @@ public class PlayerController : MonoBehaviour
         elapsedTime += deltaTime;
         playerMovement.SetMoveDirection(moveDirection);
         playerMovement.SetLookDirection(lookDirection);
+
+        Vector3 localOffset = new Vector3(-0.9f, 2.5f, 0.5f);
+
+        Vector3 bulletStart = transform.position +
+                              (transform.right * localOffset.X) +
+                              (transform.up * localOffset.Y) +
+                              (transform.forward * localOffset.Z);
+        bulletStart.Y += 0.75f;
+
+        RayCast rayAim = new RayCast();
+        int maxDistance = 50;
+        rayAim.PerformRaycast(bulletStart, Vector3.Normalize(transform.forward), maxDistance);
+
+        //aimLaser.transform.LookAt(lookDirection);
+        if (playerInput.IsShooting())
+        {
+            aimLaser.SetActive(true);
+            
+
+            if (rayAim.hit.isHit)
+            {
+                //aimLaser.transform.localScale = new Vector3(aimLaser.transform.localScale.X, rayAim.hit.distance / 2, aimLaser.transform.localScale.Z);
+                aimLaserEnd.SetActive(true);
+                aimLaser.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * 2);
+                aimLaserEnd.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * (rayAim.hit.distance));
+            }
+            else
+            {
+                //aimLaser.transform.localScale = new Vector3(aimLaser.transform.localScale.X, maxDistance / 2, aimLaser.transform.localScale.Z);
+                aimLaserEnd.SetActive(false);
+                aimLaser.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * 2);
+            }
+
+        }
+        else
+        {
+            aimLaser.SetActive(false);
+            aimLaserEnd.SetActive(false);
+        }
 
         //if (dashDelayTimer > 0f)
         //{

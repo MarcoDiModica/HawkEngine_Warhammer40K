@@ -674,6 +674,24 @@ static void RenderOutline(GameObject* object) {
 	}
 }
 
+static void UpdateChildrenLights(shared_ptr<GameObject> object) {
+
+	auto activeScene = Application->root->GetActiveScene();
+	if (object->HasComponent<LightComponent>()) {
+		auto& lights = activeScene->_lights;
+		auto it = std::find(lights.begin(), lights.end(), object);
+		if (it == lights.end()) {
+			lights.push_back(object);
+		}
+	}
+
+	for (const auto& child : object->GetChildren()) {
+		if (child->IsActive()) {
+			UpdateChildrenLights(child);
+		}
+	}
+}
+
 static void RenderEditor()
 {
 	UISceneWindow* sceneWindow = static_cast<UISceneWindow*>(Application->gui->UISceneWindowPanel);
@@ -725,6 +743,8 @@ static void RenderEditor()
 					lights.push_back(objPtr);
 				}
 			}
+
+			UpdateChildrenLights(objPtr);
 		}
 	}
 	
@@ -758,6 +778,8 @@ static void RenderEditor()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+
+
 
 static void EditorRenderer(MyGUI* gui) {
 	if (Application->window->IsOpen()) {

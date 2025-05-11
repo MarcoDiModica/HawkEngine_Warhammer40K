@@ -34,6 +34,7 @@ public class MenuButtons : MonoBehaviour
     private bool[] hasPlayedHoverSound;
     private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
     private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
+    private string MainMenuMusic = "Assets/Audio/Music/MainTheme_BetaBuild2.ogg";
 
     //     private AudioSource sound;
     //     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
@@ -48,6 +49,8 @@ public class MenuButtons : MonoBehaviour
     private UITransform[] transforms;
 
     private long lastInputTime = 0;
+
+    private bool isMainMenuMusicPlaying = false;
     private enum InputMethod
     {
         None,
@@ -204,11 +207,13 @@ public class MenuButtons : MonoBehaviour
             if (selectedButton == button_newGameButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
+                Audio.Stop(MainMenuMusic);
                 SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
             }
             else if (selectedButton == button_continueButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
+                Audio.Stop(MainMenuMusic);
                 SceneManager.LoadScene("BetaRelease_Week1_Lvl2");
             }
             else if (selectedButton == button_optionsButton)
@@ -242,11 +247,17 @@ public class MenuButtons : MonoBehaviour
             Engineson.print("ERROR: No Canvas object found");
             return;
         }
-//         if (sound == null)
-//         {
-//             Engineson.print("ERROR: Audio not found");
-//             return;
-//         }
+
+        if (!isMainMenuMusicPlaying)
+        {
+            Audio.Play(MainMenuMusic, true);
+            isMainMenuMusicPlaying = true; 
+        }
+        //         if (sound == null)
+        //         {
+        //             Engineson.print("ERROR: Audio not found");
+        //             return;
+        //         }
 
         NavigateMenu();
     }

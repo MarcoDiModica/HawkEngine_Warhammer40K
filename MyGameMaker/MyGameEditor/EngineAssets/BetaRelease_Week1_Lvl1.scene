@@ -51191,9 +51191,9 @@ GameObject116:
       Script0:
         name: AmmunitionBlessing
         fields:
-          floatSpeed: 1.63284695
+          floatSpeed: 0.854324281
           floatHeight: 0.5
-          rotationSpeed: 66.7935333
+          rotationSpeed: 37.4448738
           lifeTime: 10
   Children: ~
 GameObject117:
@@ -51272,9 +51272,9 @@ GameObject117:
       Script0:
         name: BlackHeart
         fields:
-          floatSpeed: 0.887691736
+          floatSpeed: 1.21746337
           floatHeight: 0.5
-          rotationSpeed: 82.5945053
+          rotationSpeed: 44.5477295
           lifeTime: 10
   Children: ~
 GameObject118:
@@ -51353,9 +51353,9 @@ GameObject118:
       Script0:
         name: BoltgunBullets
         fields:
-          floatSpeed: 1.34855473
+          floatSpeed: 1.46329093
           floatHeight: 0.5
-          rotationSpeed: 51.0988503
+          rotationSpeed: 75.9263
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -51435,9 +51435,9 @@ GameObject119:
       Script0:
         name: MedicaeStimm
         fields:
-          floatSpeed: 1.08065629
+          floatSpeed: 1.35581684
           floatHeight: 0.5
-          rotationSpeed: 56.2325401
+          rotationSpeed: 35.4456367
           lifeTime: 10
   Children: ~
 GameObject120:
@@ -51516,9 +51516,9 @@ GameObject120:
       Script0:
         name: PiercingBullets
         fields:
-          floatSpeed: 1.90365994
+          floatSpeed: 0.685551047
           floatHeight: 0.5
-          rotationSpeed: 96.5856323
+          rotationSpeed: 52.8164139
   Children: ~
 GameObject121:
   name: magnet.001_1_1_Instance_Instance_Instance
@@ -51596,9 +51596,9 @@ GameObject121:
       Script0:
         name: Magnet
         fields:
-          floatSpeed: 0.660543203
+          floatSpeed: 0.882051229
           floatHeight: 0.5
-          rotationSpeed: 44.5752068
+          rotationSpeed: 56.4548912
           lifeTime: 10
   Children: ~
 GameObject122:
@@ -51677,9 +51677,9 @@ GameObject122:
       Script0:
         name: ChapterStandard
         fields:
-          floatSpeed: 1.05733383
+          floatSpeed: 1.45762002
           floatHeight: 0.5
-          rotationSpeed: 54.9039688
+          rotationSpeed: 58.8779182
           lifeTime: 10
   Children: ~
 GameObject123:
@@ -51758,9 +51758,9 @@ GameObject123:
       Script0:
         name: ShotgunShells
         fields:
-          floatSpeed: 0.693870842
+          floatSpeed: 1.92699862
           floatHeight: 0.5
-          rotationSpeed: 81.951416
+          rotationSpeed: 55.9036179
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -51944,9 +51944,9 @@ GameObject125:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.3070842
+          floatSpeed: 0.505972922
           floatHeight: 0.5
-          rotationSpeed: 42.2168541
+          rotationSpeed: 71.7969818
   Children: ~
 GameObject126:
   name: BiblePagePickUp_Instance_1_Instance_1_Instance
@@ -51999,9 +51999,9 @@ GameObject126:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.648201287
+          floatSpeed: 1.18343425
           floatHeight: 0.5
-          rotationSpeed: 38.2035217
+          rotationSpeed: 72.8445892
   Children: ~
 GameObject127:
   name: BiblePagePickUp_Instance_1_Instance_1_Instance2
@@ -52054,9 +52054,9 @@ GameObject127:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.86919391
+          floatSpeed: 1.37760603
           floatHeight: 0.5
-          rotationSpeed: 34.6539536
+          rotationSpeed: 51.8802834
   Children: ~
 GameObject128:
   name: BiblePagePickUp_Instance_1_Instance_1_Instance3
@@ -52109,9 +52109,9 @@ GameObject128:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.89956355
+          floatSpeed: 1.34326398
           floatHeight: 0.5
-          rotationSpeed: 98.5642929
+          rotationSpeed: 54.6248169
   Children: ~
 GameObject129:
   name: AudioManagerLvl1
@@ -52140,6 +52140,8 @@ GameObject129:
       Script0:
         name: ""
       Script1:
+        name: ""
+      Script2:
         name: AudioLevel1
         fields: ~
   Children: ~

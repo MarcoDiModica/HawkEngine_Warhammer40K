@@ -60287,7 +60287,7 @@ GameObject89:
   prefabPath: Assets\Prefabs\Canvas_Interaction.prefab.yaml
   uuid: 8171758255955888501
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -60514,7 +60514,7 @@ GameObject90:
   prefabPath: Assets\Prefabs\Canvas_TitleBoT.prefab.yaml
   uuid: 18438145191138475983
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -60623,7 +60623,7 @@ GameObject91:
   prefabPath: Assets\Prefabs\Canvas_HUD.prefab.yaml
   uuid: 14127330214126909828
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -62550,10 +62550,10 @@ GameObject91:
             - 1225
             - 40
           sprite_offset:
-            - 0
+            - 700
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 4
           anim_index_limit: 6
       Children: ~
     - name: red_thirst_bar
@@ -63614,9 +63614,9 @@ GameObject93:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.63205385
+          floatSpeed: 0.671845913
           floatHeight: 0.5
-          rotationSpeed: 85.2147141
+          rotationSpeed: 88.8026962
   Children: ~
 GameObject94:
   name: RailgunUpgrade_Instance
@@ -63680,9 +63680,9 @@ GameObject94:
       Script0:
         name: RailgunUpgradePickUp
         fields:
-          floatSpeed: 0.851552248
+          floatSpeed: 0.825894654
           floatHeight: 0.5
-          rotationSpeed: 76.406868
+          rotationSpeed: 33.0952225
   Children:
     - name: railgunMesh
       prefabPath: ""

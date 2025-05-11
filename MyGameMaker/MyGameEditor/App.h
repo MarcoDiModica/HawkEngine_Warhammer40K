@@ -88,7 +88,8 @@ public:
 			"Assets/Textures/Project3_AmmunitionBlessing_effect_Yiwei.png",
 			"Assets/Textures/BloodSplash_decals1_Yiwei.png",
 			"Assets/Textures/fireSpritesheetpx2.png",
-			"Assets/Textures/MawlocSmokeSpritesheet.png"
+			"Assets/Textures/MawlocSmokeSpritesheet.png",
+			"Assets/Textures/rock.png"
 		};
 
 		for (const auto& path : texturePaths) {

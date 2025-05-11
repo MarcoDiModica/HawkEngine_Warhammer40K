@@ -487,8 +487,8 @@ namespace ParticlePresets {
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
-	1.0f,						   // Min scale
-	1.0f,						   // Max scale
+	5.0f,						   // Min scale
+	5.0f,						   // Max scale
 	"Assets/Textures/ElectricityBall.png", // Texture path
 	true						   // Is Local Space
 	};
@@ -865,6 +865,41 @@ namespace ParticlePresets {
 		26.0f,                          // Max scale
 		"Assets/Textures/MawlocSmokeSpritesheet.png", // Texture path
 		false						   // Is Local Space
+	};
+
+	// use emit burst
+	const ParticlePreset Mawloc_Rocks = {
+	ParticleType::MAWLOC_ROCKS,
+	false,                         // PlayOnAwake
+	2.0f,                          // Duration (only if one-shot)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	4.0f,                          // Size start
+	3.0f,                          // Size end
+	1.0f,                          // Min lifetime
+	1.0f,                          // Max lifetime
+	1.0f,                         // Min speed
+	-40.0f,                         // Max speed
+	-40.0f,                         // End Speed
+	glm::vec3(4.0f,4.0f,4.0f),   // Gravity
+	0.0f,                          // Rotation speed
+	50.0f,                         // Emission rate (particles per second)
+	EmitterShape::POINT,           // Shape
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	glm::vec2(216.0f , 216.0f),     // Sprite size
+	false,                         // Use animation
+	false,                         // Random animation Index
+	0.02f,                          // Animation speed
+	190.0f,                          // Start rotation
+	true,                          // Random rotation
+	4.0f,                         // Min scale
+	8.0f,                          // Max scale
+	"Assets/Textures/rock.png", // Texture path
+	false						   // Is Local Space
 	};
 
 }
@@ -1394,6 +1429,10 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::MAWLOC_SLAM:
 		preset = ParticlePresets::Mawloc_Slam;
+		SetOneShot(false);
+		break;
+	case ParticleType::MAWLOC_ROCKS :
+		preset = ParticlePresets::Mawloc_Rocks;
 		SetOneShot(false);
 		break;
 	default:

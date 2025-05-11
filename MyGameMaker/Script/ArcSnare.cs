@@ -31,9 +31,7 @@ public class ArcSnare : BaseAbilities
     }
     public override void Start()
     {
-        //Audio.MasterVolume = 0.8f;
-        //Audio.MusicVolume = 0.6f;
-        //Audio.SfxVolume = 1.0f;
+        
     }
 
     public override void Update(float deltaTime)

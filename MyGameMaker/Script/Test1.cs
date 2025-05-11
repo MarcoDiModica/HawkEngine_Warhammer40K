@@ -20,9 +20,9 @@ public class Test1 : MonoBehaviour
 
     public override void Start()
     {
-        Audio.MasterVolume = 0.8f;
-        Audio.MusicVolume = 0.6f;
-        Audio.SfxVolume = 1.0f;
+        //Audio.MasterVolume = 0.8f;
+        //Audio.MusicVolume = 0.6f;
+        //Audio.SfxVolume = 1.0f;
 
         //backgroundMusicId = Audio.PlayMusic(MUSIC_BACKGROUND);
         //Audio.MusicVolume = 0.5f;
@@ -110,21 +110,21 @@ public class Test1 : MonoBehaviour
 
     private void CycleVolume()
     {
-        if (Audio.MasterVolume > 0.7f)
-        {
-            Audio.MasterVolume = 0.5f;
-            Engineson.print("Volume: Medium");
-        }
-        else if (Audio.MasterVolume > 0.3f)
-        {
-            Audio.MasterVolume = 0.2f;
-            Engineson.print("Volume: Low");
-        }
-        else
-        {
-            Audio.MasterVolume = 1.0f;
-            Engineson.print("Volume: High");
-        }
+        //if (Audio.MasterVolume > 0.7f)
+        //{
+        //    Audio.MasterVolume = 0.5f;
+        //    Engineson.print("Volume: Medium");
+        //}
+        //else if (Audio.MasterVolume > 0.3f)
+        //{
+        //    Audio.MasterVolume = 0.2f;
+        //    Engineson.print("Volume: Low");
+        //}
+        //else
+        //{
+        //    Audio.MasterVolume = 1.0f;
+        //    Engineson.print("Volume: High");
+        //}
     }
 
     private void SwitchBackgroundMusic()

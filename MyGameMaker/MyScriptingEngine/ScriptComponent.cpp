@@ -54,13 +54,10 @@ void ScriptComponent::Update(float deltaTime) {
 	MonoClass* scriptClass = mono_object_get_class(monoScript);
 	MonoMethod* updateMethod = mono_class_get_method_from_name(scriptClass, "Update", 1);
 
-	float SCRIPT_DT = 0.05f;
-	float SAFEDT = (deltaTime > SCRIPT_DT) ? SCRIPT_DT : deltaTime;
-
 	if (!updateMethod) return;
 
 	void* args[1];
-	args[0] = &SAFEDT;
+	args[0] = &deltaTime;
 
 	MonoObject* exception = nullptr;
 	mono_runtime_invoke(updateMethod, monoScript, args, &exception);

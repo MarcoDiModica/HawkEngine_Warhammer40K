@@ -467,8 +467,8 @@ namespace ParticlePresets {
 	glm::vec3(1,1,1),   // End color (dark gray)
 	1.0f,                          // Alpha start
 	1.0f,                          // Alpha end
-	5,                          // Size start
-	5,                          // Size end
+	2.5f,                          // Size start
+	2.5f,                          // Size end
 	1,                          // Min lifetime
 	1,                          // Max lifetime
 	0.0f,                          // Min speed
@@ -487,8 +487,8 @@ namespace ParticlePresets {
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
-	5.0f,						   // Min scale
-	5.0f,						   // Max scale
+	2.5f,						   // Min scale
+	2.5f,						   // Max scale
 	"Assets/Textures/ElectricityBall.png", // Texture path
 	true						   // Is Local Space
 	};

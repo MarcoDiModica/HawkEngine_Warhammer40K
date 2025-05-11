@@ -159,6 +159,9 @@ public class Boltgun : BaseWeapon
 
         if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence && !isReloading)
         {
+
+ 
+
             timeSinceLastShot = 0f;
 
             if (!playerData.infiniteBullets)
@@ -180,13 +183,22 @@ public class Boltgun : BaseWeapon
             float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
 
 
+            GameObject muzzle = Engineson.CreateGameObject("muzzleFX", null);
+            this.gameObject.AddChild(muzzle);
+            muzzle.transform.SetScale(0.25f, 0.25f, 0.25f);
+            muzzle.transform.position = bulletStart;
+            muzzle.transform.localPosition = new Vector3(muzzle.transform.localPosition.X, muzzle.transform.localPosition.Y, muzzle.transform.localPosition.Z + 2) ;
+            muzzle.AddComponent<ParticleFX>();
+            muzzle.GetComponent<ParticleFX>().ApplyPreset(8);
+            muzzle.GetComponent<ParticleFX>().EmitBurst(1);
+
             GameObject projectile = Engineson.CreateGameObject("BoltgunProjectile", null);
             //projectile.AddComponent<MeshRenderer>();
             projectile.transform.SetScale(0.25f, 0.25f, 0.25f);
             projectile.transform.position = bulletStart;
             projectile.transform.SetRotation(pitch, yaw, 0f);
             projectile.AddComponent<ParticleFX>();
-            projectile.GetComponent<ParticleFX>().ApplyPreset(14);
+            projectile.GetComponent<ParticleFX>().ApplyPreset(12);
             projectile.GetComponent<ParticleFX>().EmitBurst(1);
             
 

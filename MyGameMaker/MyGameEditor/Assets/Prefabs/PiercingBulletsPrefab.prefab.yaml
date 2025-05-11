@@ -1,6 +1,6 @@
-name: bullet.001_Instance
+name: bullet.001_Instance_Instance
 prefabPath: Assets\Prefabs\PiercingBulletsPrefab.prefab.yaml
-uuid: 2688052665829010466
+uuid: 8595253441817643810
 tag: PowerUp
 active: true
 isStatic: false
@@ -9,17 +9,17 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 3.9429113864898682
-      - 3
-      - -14.442834854125977
+      - 8.4796142578125
+      - 2.5702333450317383
+      - 17.775384902954102
     localRotation:
-      - 0
-      - -0
-      - 0
+      - 10.887516432874792
+      - 4.8268470692536516
+      - 0.92723463221129254
     localScale:
-      - 0.0020000000949949026
-      - 0.0020000000949949026
-      - 0.0020000000949949026
+      - 0.0025800000876188278
+      - 0.0025800003204494715
+      - 0.0025800003204494715
   MeshRenderer:
     name: MeshRenderer
     enabled: true
@@ -31,6 +31,9 @@ Components:
       - 1
       - 1
       - 1
+  Shader:
+    name: Shader
+    enabled: true
   BoxColliderComponent:
     size:
       - 1
@@ -70,7 +73,7 @@ Components:
     Script0:
       name: PiercingBullets
       fields:
-        floatSpeed: 1
+        floatSpeed: 1.642097
         floatHeight: 0.5
-        rotationSpeed: 50
+        rotationSpeed: 70.3975067
 Children: ~

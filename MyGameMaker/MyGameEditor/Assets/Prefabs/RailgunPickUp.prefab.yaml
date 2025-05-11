@@ -1,7 +1,7 @@
-name: BiblePagePickUp
+name: bOLTER.012
 prefabPath: ""
-uuid: 4239051222753987715
-tag: BiblePage
+uuid: 3495723395628897259
+tag: Weapon
 active: true
 isStatic: false
 Components:
@@ -9,24 +9,24 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 0
+      - 0.91428720951080322
       - 2
-      - 0
+      - 7.8897504806518555
     localRotation:
-      - -90.000016164857215
       - 0
       - 0
+      - -24.781442265162212
     localScale:
-      - 0.014999999664723873
-      - 0.014999999664723873
-      - 0.014999999664723873
+      - 0.0029999990643983076
+      - 0.0029999990643983076
+      - 0.0030000000260770321
   MeshRenderer:
     name: MeshRenderer
     enabled: true
     mesh:
-      name: 12528275894127540237
+      name: 5139834007055871956
     material:
-      name: bible_DefaultMaterial_BaseColor
+      name: railgun_DefaultMaterial_BaseColor
     color:
       - 1
       - 1
@@ -46,7 +46,7 @@ Components:
     isTrigger: true
   ScriptComponents:
     Script0:
-      name: BiblePagePickUp
+      name: RailgunPickUp
       fields:
         floatSpeed: 1
         floatHeight: 0.5

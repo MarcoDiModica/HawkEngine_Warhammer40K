@@ -101,15 +101,8 @@ namespace EngineBinds {
     void SetOffset(MonoObject* cameraRef, glm::vec3* offset);
 
     // MeshRenderer
-	void SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef);
-    void SetCubeMesh(MonoObject* meshRendererRef);
-	MonoObject* GetMesh(MonoObject* meshRendererRef);
-    void SetMaterial(MonoObject* meshRendererRef, MonoObject* materialRef);
-    MonoObject* GetMaterial(MonoObject* meshRendererRef);
-	void SetColor(MonoObject* meshRendererRef, glm::vec3* color);
-    void GetColor(MonoObject* meshRendererRef, glm::vec3* color);
-    void Render(MonoObject* meshRendererRef);
-    
+	void SetColor(MonoObject* meshRendererRef, glm::vec4* color);
+    glm::vec4 GetColor(MonoObject* meshRendererRef);
 
     //Physics
     MonoArray* OverlapSphere(glm::vec3* position, float radius, MonoString* tag);

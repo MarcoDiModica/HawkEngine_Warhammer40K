@@ -199,6 +199,26 @@ public class PlayerPowerUp : MonoBehaviour
                 Engineson.Destroy(other);
             }
         }
+        if (other.tag == "Upgrade")
+        {
+            Engineson.print("Player Collided with:" + other.tag);
+
+            if (other.GetComponent<BoltgunUpgradePickUp>() != null )
+            {
+                other.GetComponent<BoltgunUpgradePickUp>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+            }
+            else if (other.GetComponent<ShotgunUpgradePickUp>() != null)
+            {
+              other.GetComponent<ShotgunUpgradePickUp>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+            }
+            else if (other.GetComponent<RailgunUpgradePickUp>() != null)
+            {
+                other.GetComponent<RailgunUpgradePickUp>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+            }
+        }
         if (other.tag == "Weapon")
         {
             Engineson.print("Player Collided with:" + other.tag);

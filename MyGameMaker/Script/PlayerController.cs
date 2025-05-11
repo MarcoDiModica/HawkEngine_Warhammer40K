@@ -141,17 +141,17 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            SceneManager.LoadScene("Lvl2Alpha1Release");
+            SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl2");
         }
 
         if (Input.GetKeyDown(KeyCode.H))
         {
-            SceneManager.LoadScene("BossFight_Alpha1_Release");
+            SceneManager.LoadSceneFromCheckpoint("BossFight_Alpha1_Release");
         }
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            SceneManager.LoadScene("Lvl1Alpha1Release");
+            SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl1");
         }
 
         if (Input.GetKeyDown(KeyCode.N))

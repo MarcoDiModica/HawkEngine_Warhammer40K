@@ -183,7 +183,7 @@ public class LoseScreen : MonoBehaviour
             if (selectedButton == button_loadLastCheckpoint)
             {
                 //sound?.Play(buttonClickedFX);
-                SceneManager.LoadScene("SpaceShip");
+                SceneManager.LoadScene("BetaRelease_Week1_Lvl2");
             }
             else if (selectedButton == button_mainMenuButton)
             {

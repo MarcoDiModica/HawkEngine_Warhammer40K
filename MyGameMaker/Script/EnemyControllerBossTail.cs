@@ -237,7 +237,7 @@ public class EnemyControllerBossTail : EnemyController
     private void CreateTailSlashHurtbox()
     {
         var hurtbox = Engineson.CreateGameObject("TailSlashHurtbox", null);
-        hurtbox.AddComponent<MeshRenderer>();
+        //hurtbox.AddComponent<MeshRenderer>();
         hurtbox.AddComponent<BoxCollider>();
         hurtbox.GetComponent<BoxCollider>().SetTrigger(true);
         hurtbox.tag = "EnemyAttack";
@@ -262,7 +262,7 @@ public class EnemyControllerBossTail : EnemyController
     private void CreateTailStabHurtbox()
     {
         var hurtbox = Engineson.CreateGameObject("TailStabHurtbox", null);
-        hurtbox.AddComponent<MeshRenderer>();
+        //hurtbox.AddComponent<MeshRenderer>();
         hurtbox.AddComponent<BoxCollider>();
         hurtbox.GetComponent<BoxCollider>().SetTrigger(true);
         hurtbox.tag = "EnemyAttack";

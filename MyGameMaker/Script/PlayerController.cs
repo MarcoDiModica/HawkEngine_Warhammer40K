@@ -84,6 +84,8 @@ public class PlayerController : MonoBehaviour
         walkingFX = GameObject.Find("WalkingFX").GetComponent<ParticleFX>();
         capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
         transform = gameObject.GetComponent<Transform>();
+        aimLaser = gameObject.GetChild("AimLaser");
+        aimLaserEnd = gameObject.GetChild("AimLaserEnd");
 
         //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
     }

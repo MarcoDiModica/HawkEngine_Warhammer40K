@@ -50,6 +50,9 @@ public class EnemyControllerStalker : EnemyController
     private bool isPouncing = false;
     private bool hasMissed = true;
 
+    // Death
+    private float deathTimer = 0f;
+    private float deathDuration = 3f;
     public override void Awake()
     {
         startPosition = gameObject.GetComponent<Transform>().position;
@@ -86,7 +89,7 @@ public class EnemyControllerStalker : EnemyController
             return;
         }
 
-        anim = GameObject.Find("LictorMesh").GetComponent<LictorAnimation>();
+        anim = gameObject.GetChild("LictorMesh").GetComponent<LictorAnimation>();
         if (anim == null)
         {
             Engineson.print("ERROR: LictorAnimation requires SkeletalANimation component");
@@ -272,6 +275,11 @@ public class EnemyControllerStalker : EnemyController
                 {
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
                 }
+                if (anim.isAnimFinished)
+                {
+                    Engineson.Destroy(lictorMesh);
+                    Engineson.Destroy(gameObject);
+                }
                 hasDropped = true;
                 collider.SetActive(false);
                 break;
@@ -310,6 +318,7 @@ public class EnemyControllerStalker : EnemyController
             if (pc.redThirstManager.redThirstBonus < clawDamage)
             {
                 pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
+                pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
             else
             {
@@ -319,6 +328,7 @@ public class EnemyControllerStalker : EnemyController
         else
         {
             pc.playerData.TakeDamage(clawDamage);
+            pc.StartFlashColor(pc.flashColor, pc.flashDuration);
         }
 
         Audio.PlayOneShot(SFX_ATTACK);
@@ -398,6 +408,7 @@ public class EnemyControllerStalker : EnemyController
                 if (pc.redThirstManager.redThirstBonus < pounceDamage)
                 {
                     pc.playerData.TakeDamage(pounceDamage - pc.redThirstManager.redThirstBonus);
+                    pc.StartFlashColor(pc.flashColor, pc.flashDuration);
                 }
                 else
                 {
@@ -407,6 +418,7 @@ public class EnemyControllerStalker : EnemyController
             else
             {
                 pc.playerData.TakeDamage(pounceDamage);
+                pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
         }
     }

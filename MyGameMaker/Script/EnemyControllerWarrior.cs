@@ -82,7 +82,7 @@ public class EnemyControllerWarrior : EnemyController
             return;
         }
 
-        //anim = GameObject.Find("TyranidWarriorMesh").GetComponent<TyranidWarriorAnimation>();
+        //anim = gameObject.GetChild("TyranidWarriorMesh").GetComponent<TyranidWarriorAnimation>();
         //if (anim == null)
         //{
         //    Engineson.print("ERROR: TyranidWarriorAnimation requires SkeletalANimation component");
@@ -301,6 +301,7 @@ public class EnemyControllerWarrior : EnemyController
                 if (pc.redThirstManager.redThirstBonus < swordDamage)
                 {
                     pc.playerData.TakeDamage(swordDamage - pc.redThirstManager.redThirstBonus);
+                    pc.StartFlashColor(pc.flashColor, pc.flashDuration);
                 }
                 else
                 {
@@ -310,6 +311,7 @@ public class EnemyControllerWarrior : EnemyController
             else
             {
                 pc.playerData.TakeDamage(swordDamage);
+                pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
 
             //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");

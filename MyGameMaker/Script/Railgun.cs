@@ -76,7 +76,10 @@ public class Railgun : BaseWeapon
 
     public override void Update(float deltaTime)
     {
-        timeSinceLastShot += deltaTime;
+        if (timeSinceLastShot <= shootCadence + 0.5f)
+        {
+            timeSinceLastShot += deltaTime;
+        }
 
         if (railgunMode == RailgunMode.AUTOMATIC)
         {

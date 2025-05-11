@@ -94,6 +94,24 @@ GameObject* EngineBinds::GetScriptOwner(MonoObject* ref) {
     return reinterpret_cast<GameObject*>(Cptr);
 }
 
+MonoObject* EngineBinds::GameObjectFindChild(MonoObject* parentRef, MonoString* name)
+{
+    char* cName = mono_string_to_utf8(name);
+    std::string target(cName);
+    mono_free(cName);
+
+    GameObject* parentGO = ConvertFromSharp(parentRef);
+    if (!parentGO) return nullptr;
+
+    for (auto& child : parentGO->GetChildren()) {
+        if (child->GetName() == target) {
+            return child->GetSharp();
+        }
+    }
+
+    return nullptr;
+}
+
 void EngineBinds::GameObjectAddChild(MonoObject* parent, MonoObject* child) {
     if (!parent || !child) {
         return;
@@ -104,6 +122,8 @@ void EngineBinds::GameObjectAddChild(MonoObject* parent, MonoObject* child) {
 
     _parent->AddChild(_child);
 }
+
+
 
 void EngineBinds::Destroy(MonoObject* object_to_destroy) {
     if (object_to_destroy == nullptr) {
@@ -130,7 +150,7 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 
         MonoClass* targetClass = mono_class_from_name_case(
             MonoManager::GetInstance().GetImage(),
-            "", // Namespace vacío (se puede mejorar)
+            "", // Namespace vacï¿½o (se puede mejorar)
             C_name
         );
 
@@ -615,77 +635,26 @@ void EngineBinds::SetOffset(MonoObject* cameraRef, glm::vec3* offset)
 }
 
 // MeshRenderer
-void EngineBinds::SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef)
-{
-    if (!meshRendererRef || !meshRef) return;
-
-    MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-	Mesh* mesh = ConvertFromSharpComponent<Mesh>(meshRef);
-
-    if (meshRenderer && mesh)
-    {
-        meshRenderer->SetMesh(std::shared_ptr<Mesh>(mesh));
-    }
-}
-
-void EngineBinds::SetCubeMesh(MonoObject* meshRendererRef)
-{
-    if (!meshRendererRef) return;
-
-	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-	if (!meshRenderer) return;
-
-	meshRenderer->SetMesh(Mesh::CreateCube());
-}
-
-MonoObject* EngineBinds::GetMesh(MonoObject* meshRendererRef)
-{
-    if (!meshRendererRef) return nullptr;
-
-	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-    if (!meshRendererRef) return nullptr;
-
-    std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
-	if (!mesh) return nullptr;
-
-	//return Mono::CreateSharpObjectFromCPlusPlus(mesh.get());
-
-}
-
-void EngineBinds::SetMaterial(MonoObject* meshRendererRef, MonoObject* materialRef)
-{
-	if (!meshRendererRef || !materialRef) return;
-
-	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-	Material* material = ConvertFromSharpComponent<Material>(materialRef);
-
-	if (meshRenderer && material)
-	{
-		meshRenderer->SetMaterial(std::shared_ptr<Material>(material));
-	}
-}
-
-MonoObject* EngineBinds::GetMaterial(MonoObject* meshRendererRef)
-{
-	if (!meshRendererRef) return nullptr;
-
-	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-	if (!meshRendererRef) return nullptr;
-
-	std::shared_ptr<Material> material = meshRenderer->GetMaterial();
-	if (!material) return nullptr;
-
-	//return Mono::CreateSharpObjectFromCPlusPlus(material.get());
-}
-
-void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec3* color)
+void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec4* color)
 {
     if (!meshRendererRef || !color) return;
 
     MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
     if (meshRenderer) {
-        meshRenderer->SetColor(*color);
+        meshRenderer->GetMaterial()->SetColor(*color);
     }
+}
+
+glm::vec4 EngineBinds::GetColor(MonoObject* meshRendererRef)
+{
+    if (!meshRendererRef) return glm::vec4(0.0f);
+
+	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
+	if (meshRenderer) {
+		return meshRenderer->GetMaterial()->GetColor();
+	}
+
+	return glm::vec4(0.0f);
 }
 	
 // Physics Collider
@@ -1570,7 +1539,8 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Engineson::Destroy", (const void*)Destroy);
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
-    mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
+    mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName); 
+    mono_add_internal_call("HawkEngine.GameObject::FindChild", (const void*)EngineBinds::GameObjectFindChild);
 	mono_add_internal_call("HawkEngine.GameObject::FindGameObjectsWithTag", (const void*)GetGameObjectsByTag);
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
     mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)GameObjectSetActive);
@@ -1629,13 +1599,8 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Camera::SetOffset", (const void*)&EngineBinds::SetOffset);
 
     // MeshRenderer
-    mono_add_internal_call("HawkEngine.MeshRenderer::SetMesh", (const void*)&EngineBinds::SetMesh);
-    mono_add_internal_call("HawkEngine.MeshRenderer::SetCubeMesh", (const void*)&EngineBinds::SetCubeMesh);
-    mono_add_internal_call("HawkEngine.MeshRenderer::GetMesh", (const void*)&EngineBinds::GetMesh);
-    mono_add_internal_call("HawkEngine.MeshRenderer::SetMaterial", (const void*)&EngineBinds::SetMaterial);
-    mono_add_internal_call("HawkEngine.MeshRenderer::GetMaterial", (const void*)&EngineBinds::GetMaterial);
     mono_add_internal_call("HawkEngine.MeshRenderer::SetColor", (const void*)&EngineBinds::SetColor);
-
+    mono_add_internal_call("HawkEngine.MeshRenderer::GetColor", (const void*)&EngineBinds::GetColor);
 
     //Physics
     mono_add_internal_call("HawkEngine.Physics::OverlapSphere", (const void*)&EngineBinds::OverlapSphere);

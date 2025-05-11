@@ -1,0 +1,77 @@
+name: BoltgunUpgrade
+prefabPath: ""
+uuid: 12257161489704082236
+tag: Upgrade
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0.9368126392364502
+      - 2
+      - 2.9887964725494385
+    localRotation:
+      - 0
+      - 0
+      - -19.585679672481248
+    localScale:
+      - 1.6800000667572021
+      - 1.6800000667572021
+      - 1.6800000667572021
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  ScriptComponents:
+    Script0:
+      name: BoltgunUpgradePickUp
+      fields:
+        floatSpeed: 1.95817602
+        floatHeight: 0.5
+        rotationSpeed: 75.0654068
+Children:
+  - name: boltgunMesh
+    prefabPath: ""
+    uuid: 17675691866770397337
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0.70353788137435913
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 0.0015566733200103045
+          - 0.0015566733200103045
+          - 0.0015566733200103045
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 15519798888640081881
+        material:
+          name: boltgun_DefaultMaterial_BaseColor
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~

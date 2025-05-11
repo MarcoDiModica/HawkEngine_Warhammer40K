@@ -65,10 +65,10 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	resourceManager->LoadResources(); // Esto no se mutea
-	resourceManager->CreateCube(); // Esto no se mutea
+	//resourceManager->LoadResources(); // Esto no se mutea
+	//resourceManager->CreateCube(); // Esto no se mutea
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
 
 	//-------------------SHAKE MANAGER COLOCAR EN TODAS LAS ESCENAS -------------------//
 	/*auto shakeManager = CreateGameObject("ShakeManager");
@@ -287,7 +287,7 @@ bool Root::Start()
 	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
 
 	//Hormagaunt
-	//for (int i = 0; i < 20; i++) {
+	//for (int i = 0; i < 38; i++) {
 	//	auto hormagaunt = CreateGameObject("Hormagaunt");
 	//	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
 	//	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));

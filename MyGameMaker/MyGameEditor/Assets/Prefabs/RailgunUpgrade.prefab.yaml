@@ -1,6 +1,6 @@
-name: RailgunUpgrade
-prefabPath: ""
-uuid: 14696005733341428833
+name: RailgunUpgrade_Instance
+prefabPath: Assets\Prefabs\RailgunUpgrade.prefab.yaml
+uuid: 10539700971827334379
 tag: Upgrade
 active: true
 isStatic: false
@@ -9,16 +9,16 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - -2.6238698959350586
+      - 17.707366943359375
       - 2
-      - -2.5955934524536133
+      - -63.800304412841797
     localRotation:
       - 0
       - 0
-      - -28.175270131725554
+      - -28.175270416798817
     localScale:
-      - 2.790001392364502
-      - 2.790001392364502
+      - 2.7900013236317349
+      - 2.7900013236317349
       - 2.7899999618530273
   BoxColliderComponent:
     size:
@@ -30,6 +30,31 @@ Components:
       - 0
       - 0
     isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.20000000298023224
+      - 0.20000000298023224
+      - 0.20000000298023224
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - -0.20000000298023224
+      - -1
+      - -0.30000001192092896
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 3.20000005
+    intensity: 3
+    direction:
+      - -1
+      - -1
+      - 0
   ScriptComponents:
     Script0:
       name: RailgunUpgradePickUp

@@ -7,7 +7,6 @@ using HawkEngine;
 
 public class Boltgun : BaseWeapon
 {
-
     public GrenadeLauncher grenadeLauncher;
     public ArcSnare arcSnare;
     private PlayerController playerController;
@@ -27,6 +26,11 @@ public class Boltgun : BaseWeapon
     private float bulletSpeed = 60f;
     private float maxLifetime = 2f;
     private float hitRayLength = 1f;
+
+    //private ShakeManager shakeManager;
+    public float shakeIntensity = 0.15f;
+    public float shakeDuration = 0.2f;
+    public float shakeSpeed = 0.2f;
 
     private bool isReloading = false;
     private float reloadTimer = 0.0f;
@@ -52,13 +56,20 @@ public class Boltgun : BaseWeapon
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
+        //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
+        //if (shakeManager == null)
+        //{
+        //    Engineson.print("ERROR: ShakeManager not found");
+        //}
 
     }
 
     public override void Update(float deltaTime)
     {
-
-        timeSinceLastShot += deltaTime;
+        if (timeSinceLastShot <= shootCadence + 0.5f)
+        {
+            timeSinceLastShot += deltaTime;
+        }
 
         if (isReloading)
         {
@@ -159,6 +170,7 @@ public class Boltgun : BaseWeapon
 
         if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence && !isReloading)
         {
+            //shakeManager.ApplyShake(shakeIntensity, shakeDuration, shakeSpeed);
             timeSinceLastShot = 0f;
 
             if (!playerData.infiniteBullets)

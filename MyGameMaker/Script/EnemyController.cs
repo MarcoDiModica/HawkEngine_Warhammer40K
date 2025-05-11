@@ -15,6 +15,12 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     //protected AudioSource sound;
     protected ParticleFX particles;
     protected EnemyState currentState = EnemyState.IDLE;
+    protected MeshRenderer renderer;
+    protected Vector4 originalColor = new Vector4(1 ,1 ,1 ,1);
+    protected bool isFlashingColor = false;
+    protected float flashDuration = 0.1f;
+    protected float flashTimer = 0.0f;
+    protected Vector4 flashColor = new Vector4(1, 0, 0, 1); // rojo
 
     public float currentHealth;
     public float maxHealth;

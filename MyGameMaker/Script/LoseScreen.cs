@@ -185,7 +185,6 @@ public class LoseScreen : MonoBehaviour
             {
                 Audio.PlayOneShot(ConfirmSFX);
                 SceneManager.LoadScene("BetaRelease_Week1_Lvl2");
-                
             }
             else if (selectedButton == button_mainMenuButton)
             {

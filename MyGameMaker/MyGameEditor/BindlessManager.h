@@ -82,9 +82,17 @@ public:
 	BindlessHandle CreateTextureHandle(GLuint textureId);
 	void ReleaseTextureHandle(BindlessHandle& handle);
 
-	GLuint GetMeshBuffer() const { return meshBuffers[renderBufferIndex]; }
-	GLuint GetMaterialBuffer() const { return materialBuffers[renderBufferIndex]; }
-	GLuint GetInstanceBuffer() const { return instanceBuffers[renderBufferIndex]; }
+	GLuint GetMeshBuffer() const {
+		return meshBuffer;
+	}
+
+	GLuint GetMaterialBuffer() const {
+		return materialBuffer;
+	}
+
+	GLuint GetInstanceBuffer() const {
+		return instanceBuffer;
+	}
 
 	void UpdateBuffers();
 	void EndFrame();
@@ -128,14 +136,10 @@ private:
 	GLuint CreateStorageBuffer(size_t size, GLenum usage);
 	void CreateFallbackCubeMesh();
 
-	GLuint meshBuffers[2] = { 0, 0 };
-	GLuint materialBuffers[2] = { 0, 0 };
-	GLuint instanceBuffers[2] = { 0, 0 };
-
-	int updateBufferIndex = 0;
-	int renderBufferIndex = 1;
-
-	GLsync fences[2] = { nullptr, nullptr };
+	GLuint meshBuffer = 0;
+	GLuint materialBuffer = 0;
+	GLuint instanceBuffer = 0;
+	GLsync fence = nullptr;
 
 	std::vector<GPUMesh> meshes;
 	std::vector<GPUMaterial> materials;

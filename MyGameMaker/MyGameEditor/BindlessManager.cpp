@@ -25,26 +25,23 @@ bool BindlessManager::Initialize() {
 	materials.reserve(MAX_MATERIALS);
 	instances.reserve(MAX_INSTANCES);
 
-	for (int i = 0; i < 2; i++) {
-		meshBuffers[i] = CreateStorageBuffer(MAX_MESHES * sizeof(GPUMesh),
-			GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
-		materialBuffers[i] = CreateStorageBuffer(MAX_MATERIALS * sizeof(GPUMaterial),
-			GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
-		instanceBuffers[i] = CreateStorageBuffer(MAX_INSTANCES * sizeof(GPUInstance),
-			GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
+	meshBuffer = CreateStorageBuffer(MAX_MESHES * sizeof(GPUMesh),
+		GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
+	materialBuffer = CreateStorageBuffer(MAX_MATERIALS * sizeof(GPUMaterial),
+		GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
+	instanceBuffer = CreateStorageBuffer(MAX_INSTANCES * sizeof(GPUInstance),
+		GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
 
-		if (!meshBuffers[i] || !materialBuffers[i] || !instanceBuffers[i]) {
-			LOG(LogType::LOG_ERROR, "Error: No se pudieron crear los buffers de almacenamiento (set %d)", i);
-			Shutdown();
-			return false;
-		}
+	if (!meshBuffer || !materialBuffer || !instanceBuffer) {
+		LOG(LogType::LOG_ERROR, "Error: No se pudieron crear los buffers de almacenamiento");
+		Shutdown();
+		return false;
 	}
 
 	CreateFallbackTexture();
 	CreateFallbackCubeMesh();
 
-	updateBufferIndex = 0;
-	renderBufferIndex = 1;
+	LOG(LogType::LOG_INFO, "BindlessManager inicializado con un solo buffer");
 
 	return true;
 }
@@ -55,15 +52,18 @@ void BindlessManager::Shutdown() {
 	}
 	textureHandles.clear();
 
-	for (int i = 0; i < 2; i++) {
-		if (meshBuffers[i]) glDeleteBuffers(1, &meshBuffers[i]);
-		if (materialBuffers[i]) glDeleteBuffers(1, &materialBuffers[i]);
-		if (instanceBuffers[i]) glDeleteBuffers(1, &instanceBuffers[i]);
+	if (meshBuffer) glDeleteBuffers(1, &meshBuffer);
+	if (materialBuffer) glDeleteBuffers(1, &materialBuffer);
+	if (instanceBuffer) glDeleteBuffers(1, &instanceBuffer);
 
-		if (fences[i]) {
-			glDeleteSync(fences[i]);
-		}
+	if (fence) {
+		glDeleteSync(fence);
+		fence = nullptr;
 	}
+
+	meshBuffer = 0;
+	materialBuffer = 0;
+	instanceBuffer = 0;
 
 	if (fallbackTextureID) {
 		glDeleteTextures(1, &fallbackTextureID);
@@ -84,11 +84,6 @@ void BindlessManager::Shutdown() {
 		glDeleteBuffers(1, &fallbackIBO);
 		fallbackIBO = 0;
 	}
-
-	meshBuffers[0] = meshBuffers[1] = 0;
-	materialBuffers[0] = materialBuffers[1] = 0;
-	instanceBuffers[0] = instanceBuffers[1] = 0;
-	fences[0] = fences[1] = nullptr;
 
 	meshes.clear();
 	materials.clear();
@@ -585,91 +580,62 @@ void BindlessManager::ReleaseTextureHandle(BindlessHandle& handle) {
 }
 
 void BindlessManager::UpdateBuffers() {
-	updateBufferIndex = 0;
-	renderBufferIndex = 0;
-
-	GLuint currentMeshBuffer = meshBuffers[0];
-	GLuint currentMaterialBuffer = materialBuffers[0];
-	GLuint currentInstanceBuffer = instanceBuffers[0];
-	
-	if (fences[updateBufferIndex]) {
-		GLenum result = glClientWaitSync(fences[updateBufferIndex], GL_SYNC_FLUSH_COMMANDS_BIT, 16666000); // 10ms timeout
+	if (fence) {
+		GLenum result = glClientWaitSync(fence, GL_SYNC_FLUSH_COMMANDS_BIT, 16666000); // 16.6ms timeout (60fps)
 
 		if (result == GL_TIMEOUT_EXPIRED) {
-			LOG(LogType::LOG_WARNING, "UpdateBuffers: Timeout esperando a que la GPU libere el buffer %d", updateBufferIndex);
+			LOG(LogType::LOG_WARNING, "UpdateBuffers: Timeout esperando a que la GPU libere el buffer");
 		}
 
-		glDeleteSync(fences[updateBufferIndex]);
-		fences[updateBufferIndex] = nullptr;
+		glDeleteSync(fence);
+		fence = nullptr;
 	}
-
-// 	GLuint currentMeshBuffer = meshBuffers[updateBufferIndex];
-// 	GLuint currentMaterialBuffer = materialBuffers[updateBufferIndex];
-// 	GLuint currentInstanceBuffer = instanceBuffers[updateBufferIndex];
 
 	if (!meshes.empty()) {
 		size_t requiredSize = meshes.size() * sizeof(GPUMesh);
-
-		void* mappedData = glMapNamedBuffer(currentMeshBuffer, GL_WRITE_ONLY);
+		void* mappedData = glMapNamedBuffer(meshBuffer, GL_WRITE_ONLY);
 		if (mappedData) {
 			memcpy(mappedData, meshes.data(), requiredSize);
-			glUnmapNamedBuffer(currentMeshBuffer);
+			glUnmapNamedBuffer(meshBuffer);
 		}
 		else {
-			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de mallas %d (Error: 0x%X)",
-				updateBufferIndex, glGetError());
+			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de mallas (Error: 0x%X)",
+				glGetError());
 		}
 	}
 
 	if (!materials.empty()) {
 		size_t requiredSize = materials.size() * sizeof(GPUMaterial);
-
-		void* mappedData = glMapNamedBuffer(currentMaterialBuffer, GL_WRITE_ONLY);
+		void* mappedData = glMapNamedBuffer(materialBuffer, GL_WRITE_ONLY);
 		if (mappedData) {
 			memcpy(mappedData, materials.data(), requiredSize);
-			glUnmapNamedBuffer(currentMaterialBuffer);
+			glUnmapNamedBuffer(materialBuffer);
 		}
 		else {
-			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de materiales %d (Error: 0x%X)",
-				updateBufferIndex, glGetError());
+			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de materiales (Error: 0x%X)",
+				glGetError());
 		}
 	}
 
 	if (!instances.empty()) {
 		size_t requiredSize = instances.size() * sizeof(GPUInstance);
-
-		void* mappedData = glMapNamedBuffer(currentInstanceBuffer, GL_WRITE_ONLY);
+		void* mappedData = glMapNamedBuffer(instanceBuffer, GL_WRITE_ONLY);
 		if (mappedData) {
 			memcpy(mappedData, instances.data(), requiredSize);
-			glUnmapNamedBuffer(currentInstanceBuffer);
+			glUnmapNamedBuffer(instanceBuffer);
 		}
 		else {
-			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de instancias %d (Error: 0x%X)",
-				updateBufferIndex, glGetError());
+			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de instancias (Error: 0x%X)",
+				glGetError());
 		}
 	}
 }
 
 void BindlessManager::EndFrame() {
-	/*if (fences[renderBufferIndex]) {
-		GLenum result = glClientWaitSync(fences[renderBufferIndex], GL_SYNC_FLUSH_COMMANDS_BIT, 33000000);
-		if (result == GL_TIMEOUT_EXPIRED) {
-			LOG(LogType::LOG_WARNING, "Timeout esperando renderizado. Posible causa de parpadeos.");
-		}
-		glDeleteSync(fences[renderBufferIndex]);
-		fences[renderBufferIndex] = nullptr;
+	if (fence) {
+		glDeleteSync(fence);
 	}
-
-	int oldRenderIndex = renderBufferIndex;
-	renderBufferIndex = updateBufferIndex;
-	updateBufferIndex = oldRenderIndex;
-
-	fences[renderBufferIndex] = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);*/
-
-	if (fences[0]) {
-		glDeleteSync(fences[0]);
-	}
-	fences[0] = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+	fence = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
 }
 
 void BindlessManager::ClearInstances() {

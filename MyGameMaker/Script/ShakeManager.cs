@@ -38,7 +38,7 @@ public class ShakeManager : MonoBehaviour
     public override void Update(float deltaTime)
     {
 
-       
+
         currentShakeOffset = Vector3.Zero;
 
         for (int i = activeShakes.Count - 1; i >= 0; i--)

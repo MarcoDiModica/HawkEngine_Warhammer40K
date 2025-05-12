@@ -39,37 +39,42 @@ public class PlayerCamera : MonoBehaviour
 
 
     private PlayerController playerController;
-    //private ShakeManager shakeManager;
+    private PlayerInput playerInput;
+    private ShakeManager shakeManager;
 
 
-    //paning
     private bool isPanning = false;
     private Vector3 panStartOffset;
     private Vector3 panTargetOffset;
     private float panTimer = 0f;
-    private float panDuration = 0f;
-    private int panPhase = 0;
+    private float panHoldDuration = 0f;
+    private float panLerpToSpeed = 1f;
+    private float panLerpBackSpeed = 1f;
+    private PanState panState = PanState.Inactive;
+
+    private enum PanState { Inactive, MovingToPoint, Holding, Returning }
 
 
     Vector3 totalOffset;
     float panLerpDuration = 1.0f;
 
-    //public void PanToPoint(Vector3 worldTargetPosition, float holdDuration)
-    //{
-    //    isPanning = true;
-    //    panPhase = 0;
-    //    panTimer = 0f;
-    //    panDuration = holdDuration;
+    public void PanToPoint(Vector3 worldTargetPosition, float holdDuration, float panSpeed, float returnSpeed)
+    {
+        Vector3 playerPos = playerRef.GetComponent<Transform>().position;
+        Vector3 worldOffset = worldTargetPosition - playerPos;
 
-    //    panStartOffset = currentOffset;
-    //    Vector3 playerPos = playerRef.GetComponent<Transform>().position;
+        panStartOffset = currentOffset;
+        panTargetOffset = worldOffset;
+        panTimer = 0f;
+        panHoldDuration = holdDuration;
+        panLerpToSpeed = panSpeed;
+        panLerpBackSpeed = returnSpeed;
+        panState = PanState.MovingToPoint;
+        isPanning = true;
 
-    //    Vector3 worldOffset = worldTargetPosition - playerPos;
-    //    panTargetOffset = worldOffset;
-
-    //    followPlayer = false;
-    //    cameraRef.SetFollowTarget(null, Vector3.Zero, 0, false, false, false, 0);
-    //}
+        followPlayer = false;
+        playerInput.BlockMovement();
+    }
 
     public override void Awake()
     {
@@ -97,11 +102,18 @@ public class PlayerCamera : MonoBehaviour
             return;
         }
 
-        //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
-        //if (shakeManager == null)
-        //{
-        //    Engineson.print("ERROR: ShakeManager not found");
-        //}
+        playerInput = playerRef.GetComponent<PlayerInput>();
+        if (playerInput == null)
+        {
+            Engineson.print("ERROR: PlayerCamera requires a PlayerInput component on the Player GameObject!");
+            return;
+        }
+
+        shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
+        if (shakeManager == null)
+        {
+            Engineson.print("ERROR: ShakeManager not found");
+        }
 
 
         cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
@@ -113,11 +125,10 @@ public class PlayerCamera : MonoBehaviour
     public override void Update(float deltaTime)
     {
 
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-
-        //    PanToPoint(new Vector3(0.5f, 0, 0), 1.0f);
-        //}
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            PanToPoint(new Vector3(25, 30, 20), 2.0f, 1.5f, 1.0f);
+        }
         Vector2 rightStickInput = Input.GetRightStick();
         Vector2 leftStickInput = Input.GetLeftStick();
 
@@ -167,51 +178,54 @@ public class PlayerCamera : MonoBehaviour
                 }
             }
         }
-       
+
 
         if (isPanning)
         {
             panTimer += deltaTime;
+            float t;
 
-            if (panPhase == 0) // Lerp hacia el punto
+            switch (panState)
             {
-                float t = Clamp01(panTimer / panLerpDuration);
-                totalOffset = LerpVector3(panStartOffset, panTargetOffset, t);
+                case PanState.MovingToPoint:
+                    t = Mathf.Clamp01(panTimer / panLerpToSpeed);
+                    totalOffset = Vector3.Lerp(panStartOffset, panTargetOffset, t);
+                    if (t >= 1f)
+                    {
+                        panState = PanState.Holding;
+                        panTimer = 0f;
+                    }
+                    break;
 
-                if (t >= 1f)
-                {
-                    panTimer = 0f;
-                    panPhase = 1;
-                }
-            }
-            else if (panPhase == 1) // Espera en el punto
-            {
-                totalOffset = panTargetOffset;
+                case PanState.Holding:
+                    totalOffset = panTargetOffset;
+                    if (panTimer >= panHoldDuration)
+                    {
+                        panState = PanState.Returning;
+                        panTimer = 0f;
+                    }
+                    break;
 
-                if (panTimer >= panDuration)
-                {
-                    panTimer = 0f;
-                    panPhase = 2;
-                }
+                case PanState.Returning:
+                    t = Mathf.Clamp01(panTimer / panLerpBackSpeed);
+                    totalOffset = Vector3.Lerp(panTargetOffset, panStartOffset, t);
+                    if (t >= 1f)
+                    {
+                        panState = PanState.Inactive;
+                        isPanning = false;
+                        followPlayer = true;
+                        playerInput.UnblockMovement();
+                        cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
+                    }
+                    break;
             }
-            else // Lerp de vuelta al jugador
-            {
-                float t = Clamp01(panTimer / panLerpDuration);
-                totalOffset = LerpVector3(panTargetOffset, panStartOffset, t);
-
-                if (t >= 1f)
-                {
-                    isPanning = false;
-                    followPlayer = true;
-                    cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
-                }
-            }
+            
         }
         else
         {
             totalOffset = targetOffset + dashOffset;
-            //if (shakeManager != null)
-            //    totalOffset += shakeManager.currentShakeOffset;
+            if (shakeManager != null)
+                totalOffset += shakeManager.currentShakeOffset;
         }
 
         currentOffset = SmoothDampVector3(currentOffset, totalOffset, ref offsetVelocity, 1f / offsetSmoothness, deltaTime);

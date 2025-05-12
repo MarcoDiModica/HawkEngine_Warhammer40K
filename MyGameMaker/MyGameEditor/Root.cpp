@@ -68,11 +68,11 @@ bool Root::Start()
 	resourceManager->LoadResources(); // Esto no se mutea
 	resourceManager->CreateCube(); // Esto no se mutea
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
 
 	//-------------------SHAKE MANAGER COLOCAR EN TODAS LAS ESCENAS -------------------//
-	/*auto shakeManager = CreateGameObject("ShakeManager");
-	shakeManager->AddComponent<ScriptComponent>()->LoadScript("ShakeManager");*/
+	auto shakeManager = CreateGameObject("ShakeManager");
+	shakeManager->AddComponent<ScriptComponent>()->LoadScript("ShakeManager");
 
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");

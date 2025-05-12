@@ -134,7 +134,7 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Update(float deltaTime)
     {
-        Engineson.print("Enemy update");
+       // Engineson.print("Enemy update");
         if (!pathInitialized && pathfinder != null && enemyTransform != null && playerTransform != null)
         {
             pathfinder.UpdateGridOrigin(enemyTransform.position);
@@ -487,7 +487,7 @@ public class EnemyControllerMelee : EnemyController
                 isFlashingColor = false;
             }
         }
-        Engineson.print("Enemy end update");
+       // Engineson.print("Enemy end update");
     }
 
     private Vector3 SmoothVelocity(Vector3 desiredVelocity, Vector3 currentVelocity, float deltaTime)

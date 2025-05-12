@@ -138,6 +138,8 @@ public:
 		}
 	}
 
+	void DeleteAllUselessResources();
+
 private:
 	//meshes
 	std::unordered_map<size_t, size_t> meshIndex;

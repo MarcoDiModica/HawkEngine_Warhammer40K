@@ -187,3 +187,33 @@ std::shared_ptr<Material> ResourceManager::GetDefaultMaterial() {
 	AddMaterial(loadedMaterial);
 	return loadedMaterial;
 }
+
+void ResourceManager::DeleteAllUselessResources()
+{
+	std::string meshPath = std::filesystem::current_path().string() + "\\Library\\Mesh";
+	fs::path meshDir(meshPath);
+	for (const auto& entry : std::filesystem::directory_iterator(meshDir))
+	{
+		if (entry.path().extension() == ".mesh") {
+			std::string materialName = entry.path().stem().string();
+			size_t id = std::stoull(materialName);
+			if (GetMesh(id) == nullptr)
+			{
+				fs::remove(entry.path());
+			}
+		}
+	}
+
+	std::string materialPath = std::filesystem::current_path().string() + "\\Library\\Materials";
+	fs::path materialeDir(materialPath);
+	for (const auto& entry : std::filesystem::directory_iterator(materialeDir))
+	{
+		if (entry.path().extension() == ".mat") {
+			std::string materialName = entry.path().stem().string();
+			if (materialName != "" && GetMaterial(materialName) == nullptr)
+			{
+				fs::remove(entry.path());
+			}
+		}
+	}
+}

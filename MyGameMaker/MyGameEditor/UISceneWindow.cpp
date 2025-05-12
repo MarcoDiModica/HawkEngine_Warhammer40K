@@ -407,6 +407,8 @@ bool UISceneWindow::Draw()
 		glm::mat4 viewMatrix = Application->camera->view();
 		glm::mat4 projectionMatrix = Application->camera->projection();
 
+		Application->camera->frustum.Update(projectionMatrix * viewMatrix);
+
 		auto setActiveButtonColor = [](bool isActive) {
 			if (isActive) {
 				ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.53f, 0.81f, 0.92f, 0.75f));

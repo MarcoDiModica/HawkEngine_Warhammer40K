@@ -44,13 +44,6 @@ bool GPUDrivenRenderer::Initialize() {
 	GLuint zero = 0;
 	glNamedBufferSubData(visibleCountBuffer, 0, sizeof(GLuint), &zero);
 
-	if (useGPUCulling) {
-		if (!CompileCullingShader()) {
-			LOG(LogType::LOG_INFO, "No se pudo compilar shader de culling, usando CPU fallback");
-			useGPUCulling = false;
-		}
-	}
-
 	return true;
 }
 
@@ -84,14 +77,11 @@ void GPUDrivenRenderer::BeginFrame() {
 }
 
 void GPUDrivenRenderer::EndFrame() {
-	// Implementación futura si es necesario
 }
 
 void GPUDrivenRenderer::AddInstanceGroup(
 	uint32_t meshIndex,
 	uint32_t materialIndex,
-	const glm::vec3& min,
-	const glm::vec3& max,
 	const std::vector<GPUInstance>& instances) {
 
 	if (instances.empty() || meshIndex >= BindlessManager::GetInstance().GetMeshCount()) {
@@ -109,8 +99,6 @@ void GPUDrivenRenderer::AddInstanceGroup(
 	}
 
 	CullData cullItem;
-	cullItem.bboxMin = min;
-	cullItem.bboxMax = max;
 	cullItem.drawID = static_cast<uint32_t>(cullData.size());
 	cullItem.meshIndex = meshIndex;
 	cullItem.materialIndex = materialIndex;
@@ -125,7 +113,7 @@ void GPUDrivenRenderer::AddInstanceGroup(
 	cullData.push_back(cullItem);
 }
 
-void GPUDrivenRenderer::PrepareDrawCommands(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos, CameraBase::Plane* frustrumPlanes) {
+void GPUDrivenRenderer::PrepareDrawCommands() {
 	if (cullData.empty()) {
 		LOG(LogType::LOG_INFO, "No hay datos de culling para procesar");
 		return;
@@ -137,40 +125,7 @@ void GPUDrivenRenderer::PrepareDrawCommands(const glm::mat4& viewMatrix, const g
 	glNamedBufferSubData(cullDataBuffer, 0,
 		cullData.size() * sizeof(CullData), cullData.data());
 
-	if (!enableCulling) { //3r
-		ForceIncludeAllObjects();
-	}
-	else if (!useGPUCulling) { //2nd
-		CPUFrustumCulling(frustrumPlanes);
-	}
-	else { //1r
-		glUseProgram(cullingShader);
-		SetCullingUniforms(viewMatrix, projMatrix, cameraPos);
-
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, cullDataBuffer);
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, drawCommandBuffer);
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, visibleCountBuffer);
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, BindlessManager::GetInstance().GetMeshBuffer());
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4, BindlessManager::GetInstance().GetInstanceBuffer());
-
-		GLuint numGroups = (cullData.size() + 63) / 64;
-
-		glDispatchCompute(numGroups, 1, 1);
-
-		glMemoryBarrier(GL_COMMAND_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
-
-		glGetNamedBufferSubData(visibleCountBuffer, 0, sizeof(GLuint), &visibleInstanceCount);
-
-		drawCommands.resize(cullData.size());
-		glGetNamedBufferSubData(drawCommandBuffer, 0,
-			cullData.size() * sizeof(DrawElementsCommand), drawCommands.data());
-
-		LOG(LogType::LOG_INFO, "Draw commands generados: %zu", drawCommands.size());
-		if (!drawCommands.empty()) {
-			LOG(LogType::LOG_INFO, "Primer draw command: count=%u, instanceCount=%u",
-				drawCommands[0].count, drawCommands[0].instanceCount);
-		}
-	}
+	ForceIncludeAllObjects();
 
 	BatchCommandsByShaderType();
 }
@@ -181,7 +136,10 @@ void GPUDrivenRenderer::ForceIncludeAllObjects() {
 
 	for (const auto& cullItem : cullData) {
 		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(cullItem.meshIndex);
-		if (!meshData) continue;
+		if (!meshData) {
+			LOG(LogType::LOG_WARNING, "Mesh no encontrado para indice %u, saltando...", cullItem.meshIndex);
+			continue;
+		}
 
 		DrawElementsCommand command;
 		command.count = meshData->indexCount;
@@ -199,112 +157,12 @@ void GPUDrivenRenderer::ForceIncludeAllObjects() {
 			drawCommands.size() * sizeof(DrawElementsCommand),
 			drawCommands.data());
 	}
-
-	LOG(LogType::LOG_INFO, "Culling desactivado: Incluyendo todos los objetos (%zu)", drawCommands.size());
-}
-
-void GPUDrivenRenderer::SetCullingUniforms(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
-	glm::mat4 atrViewMatrix = viewMatrix;
-	glm::mat4 atrProjMatrix = projMatrix;
-	glm::vec3 atrCameraPos = cameraPos;
-
-	glUniformMatrix4fv(glGetUniformLocation(cullingShader, "u_viewMatrix"),
-		1, GL_FALSE, glm::value_ptr(atrViewMatrix));
-	glUniformMatrix4fv(glGetUniformLocation(cullingShader, "u_projMatrix"),
-		1, GL_FALSE, glm::value_ptr(atrProjMatrix));
-	glUniform3fv(glGetUniformLocation(cullingShader, "u_cameraPosition"),
-		1, glm::value_ptr(atrCameraPos));
-	glUniform1i(glGetUniformLocation(cullingShader, "u_useFrustumCulling"),
-		useFrustumCulling ? 1 : 0);
-	glUniform1i(glGetUniformLocation(cullingShader, "u_useOcclusionCulling"),
-		useOcclusionCulling ? 1 : 0);
-	glUniform1f(glGetUniformLocation(cullingShader, "u_maxDrawDistance"),
-		1000.0f);
-
-	if (useFrustumCulling) {
-		//send planes
-	}
-}
-
-CameraBase::FrustumIntersection GPUDrivenRenderer::TestFrustumAABB(glm::vec3 bboxMin, glm::vec3 bboxMax, CameraBase::Plane* frustumPlanes)
-{
-	CameraBase::FrustumIntersection result = CameraBase::FrustumIntersection::INSIDE;
-
-	for (int i = 0; i < 6; i++)
-	{
-		const CameraBase::Plane& plane = frustumPlanes[i];
-
-		glm::vec3 p(bboxMin);
-		if (plane.normal.x >= 0) p.x = bboxMax.x;
-		if (plane.normal.y >= 0) p.y = bboxMax.y;
-		if (plane.normal.z >= 0) p.z = bboxMax.z;
-
-		glm::vec3 n(bboxMax);
-		if (plane.normal.x >= 0) n.x = bboxMin.x;
-		if (plane.normal.y >= 0) n.y = bboxMin.y;
-		if (plane.normal.z >= 0) n.z = bboxMin.z;
-
-		if (plane.distanceToPoint(p) < 0)
-			return CameraBase::FrustumIntersection::OUTSIDE;
-
-		if (plane.distanceToPoint(n) < 0)
-			result = CameraBase::FrustumIntersection::INTERSECT;
+	else {
+		LOG(LogType::LOG_WARNING, "No hay draw commands para generar");
 	}
 
-	return result;
-}
-
-void GPUDrivenRenderer::CPUFrustumCulling(CameraBase::Plane* frustumPlanes) {
-	drawCommands.clear();
-	visibleInstanceCount = 0;
-
-	if (!useFrustumCulling || !frustumPlanes) {
-		ForceIncludeAllObjects();
-		return;
-	}
-
-	for (const auto& cullItem : cullData) {
-		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(cullItem.meshIndex);
-		if (!meshData) continue;
-
-		uint32_t visibleCount = 0;
-		bool anyInstanceVisible = false;
-
-		for (uint32_t i = 0; i < cullItem.instanceCount; ++i) {
-			const GPUInstance* instance = BindlessManager::GetInstance().GetInstanceData(
-				cullItem.instanceOffset + i);
-
-			if (!instance) continue;
-
-			CameraBase::FrustumIntersection result = TestFrustumAABB(cullItem.bboxMin, cullItem.bboxMax, frustumPlanes);
-
-			if (result != CameraBase::FrustumIntersection::OUTSIDE) {
-				visibleCount++;
-				anyInstanceVisible = true;
-			}
-		}
-
-		if (anyInstanceVisible) {
-			DrawElementsCommand command;
-			command.count = meshData->indexCount;
-			command.instanceCount = visibleCount;
-			command.firstIndex = 0;
-			command.baseVertex = 0;
-			command.baseInstance = cullItem.instanceOffset;
-
-			drawCommands.push_back(command);
-			visibleInstanceCount += visibleCount;
-		}
-	}
-
-	if (!drawCommands.empty()) {
-		glNamedBufferSubData(drawCommandBuffer, 0,
-			drawCommands.size() * sizeof(DrawElementsCommand),
-			drawCommands.data());
-	}
-
-	LOG(LogType::LOG_INFO, "Frustum Culling en CPU: %d instancias visibles de %d objetos",
-		visibleInstanceCount, cullData.size());
+	LOG(LogType::LOG_INFO, "Procesando objetos filtrados por frustum: %zu objetos, %d instancias visibles",
+		drawCommands.size(), visibleInstanceCount);
 }
 
 void GPUDrivenRenderer::BatchCommandsByShaderType() {
@@ -315,7 +173,7 @@ void GPUDrivenRenderer::BatchCommandsByShaderType() {
 
 		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(cullItem.materialIndex);
 		if (!materialData) {
-			LOG(LogType::LOG_WARNING, "Material inválido en índice %u, omitiendo", cullItem.materialIndex);
+			LOG(LogType::LOG_WARNING, "Material invalido en índice %u, omitiendo", cullItem.materialIndex);
 			continue;
 		}
 
@@ -647,22 +505,7 @@ void GPUDrivenRenderer::BindRegularTextures(Shaders* shader, GPUMaterial* materi
 	}
 }
 
-bool GPUDrivenRenderer::CompileCullingShader() {
-	if (!GLEW_ARB_compute_shader) {
-		LOG(LogType::LOG_ERROR, "Compute shaders no soportados, no se puede compilar el shader de culling");
-		return false;
-	}
-
-	cullingShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::CULLING_COMPUTE);
-	if (cullingShader == 0) {
-		LOG(LogType::LOG_ERROR, "Error: No se pudo obtener el programa de shader de culling");
-		return false;
-	}
-
-	LOG(LogType::LOG_INFO, "Shader de culling compilado exitosamente (ID: %u)", cullingShader);
-	return true;
-}
-
+#pragma region Debug
 void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 	GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
 	if (!meshData) {
@@ -774,3 +617,4 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 
 	LOG(LogType::LOG_INFO, "=== Fin de información de GPUMesh ===");
 }
+#pragma endregion

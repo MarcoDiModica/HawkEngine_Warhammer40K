@@ -116,14 +116,14 @@ void CameraComponent::Update(float deltaTime)
         }
     }
 
+	glm::mat4 view = GetViewMatrix(*owner->GetTransform());
+	glm::mat4 projection = GetProjectionMatrix();
+	glm::mat4 vpm = projection * view;
+
+	frustum.Update(vpm);
+
 #ifndef _BUILD
     if (frustrumRepresentation) {
-        glm::mat4 view = GetViewMatrix(*owner->GetTransform());
-        glm::mat4 projection = GetProjectionMatrix();
-        glm::mat4 vpm = projection * view;
-
-        frustum.Update(vpm);
-
         DrawFrustrum();
     }
 #endif

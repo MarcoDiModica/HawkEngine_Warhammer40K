@@ -94,20 +94,61 @@ void RenderManager::EndFrame() {
 	instanceGroups.clear();
 
 	GPUDrivenRenderer::GetInstance().EndFrame();
+	BindlessManager::GetInstance().EndFrame();
 }
 
-void RenderManager::SubmitGameObject(GameObject* gameObject) {
+void RenderManager::SubmitGameObject(GameObject* gameObject, const glm::mat4& viewMatrix, const glm::mat4& projMatrix, CameraBase::Plane* frustumPlanes) {
 	if (!gameObject || !gameObject->IsActive()) return;
 
 	stats.totalGameObjects++;
 
-	queuedObjects.push_back(gameObject);
+	bool objectVisible = true;
+
+	if (frustumPlanes && gameObject->HasComponent<MeshRenderer>()) {
+		BoundingBox bbox = gameObject->boundingBox();
+
+		CameraBase::FrustumIntersection result = TestFrustumAABB(bbox.min, bbox.max, frustumPlanes);
+
+		if (result == CameraBase::FrustumIntersection::OUTSIDE) {
+			objectVisible = false;
+		}
+	}
+
+	if (objectVisible) {
+		queuedObjects.push_back(gameObject);
+	}
 
 	for (const auto& child : gameObject->GetChildren()) {
 		if (child && child->IsActive()) {
-			SubmitGameObject(child.get());
+			SubmitGameObject(child.get(), viewMatrix, projMatrix, frustumPlanes);
 		}
 	}
+}
+
+CameraBase::FrustumIntersection RenderManager::TestFrustumAABB(const glm::vec3& bboxMin, const glm::vec3& bboxMax, CameraBase::Plane* frustumPlanes) {
+	CameraBase::FrustumIntersection result = CameraBase::FrustumIntersection::INSIDE;
+
+	for (int i = 0; i < 6; i++) {
+		const CameraBase::Plane& plane = frustumPlanes[i];
+
+		glm::vec3 p(bboxMin);
+		if (plane.normal.x >= 0) p.x = bboxMax.x;
+		if (plane.normal.y >= 0) p.y = bboxMax.y;
+		if (plane.normal.z >= 0) p.z = bboxMax.z;
+
+		glm::vec3 n(bboxMax);
+		if (plane.normal.x >= 0) n.x = bboxMin.x;
+		if (plane.normal.y >= 0) n.y = bboxMin.y;
+		if (plane.normal.z >= 0) n.z = bboxMin.z;
+
+		if (plane.distanceToPoint(p) < 0)
+			return CameraBase::FrustumIntersection::OUTSIDE;
+
+		if (plane.distanceToPoint(n) < 0)
+			result = CameraBase::FrustumIntersection::INTERSECT;
+	}
+
+	return result;
 }
 
 void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos, CameraBase::Plane* frustrumPlanes) {
@@ -128,11 +169,9 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 
 	CreateInstanceGroups();
 
-	GPUDrivenRenderer::GetInstance().PrepareDrawCommands(viewMatrix, projMatrix, cameraPos, frustrumPlanes);
+	GPUDrivenRenderer::GetInstance().PrepareDrawCommands();
 
 	GPUDrivenRenderer::GetInstance().RenderAll(viewMatrix, projMatrix, cameraPos);
-
-	BindlessManager::GetInstance().EndFrame();
 
 	stats.visibleGameObjects = GPUDrivenRenderer::GetInstance().GetVisibleInstanceCount();
 	stats.totalDrawCalls = GPUDrivenRenderer::GetInstance().GetTotalDrawCommands();
@@ -220,22 +259,9 @@ void RenderManager::CreateInstanceGroups() {
 
 		if (!instances.empty()) {
 
-			uint64_t id = instances[0].objectId;
-			std::shared_ptr<GameObject> go = Application->root->FindGOByID(id);
-
-			glm::vec3 min = glm::vec3(0.0f);
-			glm::vec3 max = glm::vec3(0.0f);
-
-			if (go) {
-				min = go->boundingBox().min;
-				max = go->boundingBox().max;
-			}
-			
 			GPUDrivenRenderer::GetInstance().AddInstanceGroup(
 				key.meshIndex,
 				key.materialIndex,
-				min,
-				max,
 				instances
 			);
 		}

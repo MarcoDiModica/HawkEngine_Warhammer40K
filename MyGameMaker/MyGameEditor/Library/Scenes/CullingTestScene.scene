@@ -1,0 +1,191 @@
+SceneMetadata:
+  SceneName: CullingTestScene
+GameObject0:
+  name: Kevin
+  prefabPath: ""
+  uuid: 7226658067684512712
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 0
+      material:
+        name: ""
+      color:
+        - 1
+        - 1
+        - 1
+      id: 0
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject1:
+  name: MainCamera
+  prefabPath: ""
+  uuid: 1049816288053856455
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 20
+        - -14
+      localRotation:
+        - 54.999999253784715
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975803375244
+      size: 5
+      near_plane: 0.10000000000000001
+      far_plane: 500
+      priority: 1
+  Children: ~
+GameObject2:
+  name: Lvl2Z1_Literal.003_copy
+  prefabPath: ""
+  uuid: 3666277690267407702
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - -0.00021837092140867737
+        - 85.082215306992794
+        - 89.999790191414959
+      localScale:
+        - 0.35999999031901542
+        - 0.35999992489817012
+        - 0.35999999031900243
+    Shader:
+      name: Shader
+      enabled: true
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 1380337368534024000
+      material:
+        name: Litera_low_DefaultMaterial_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+      id: -106234048
+  Children: ~
+GameObject3:
+  name: BarrilDestruible_copy
+  prefabPath: ""
+  uuid: 6616500687758504834
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - -0.25054812431335449
+        - 10.854186058044434
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 17581623121843433545
+      material:
+        name: BarrilDestructible_DestrucBarrel_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+      id: -263868343
+  Children: ~
+GameObject4:
+  name: BarrilDestruible_copy_copy
+  prefabPath: ""
+  uuid: 10442209764175664649
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - -0.25054812431335449
+        - 0.19420027732849121
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 17581623121843433545
+      material:
+        name: BarrilDestructible_DestrucBarrel_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+      id: -263868343
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~

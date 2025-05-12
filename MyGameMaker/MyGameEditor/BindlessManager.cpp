@@ -106,7 +106,12 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 
 	auto it = meshIndices.find(mesh);
 	if (it != meshIndices.end()) {
-		return it->second;
+		if (it->second < meshes.size()) {
+			return it->second;
+		}
+		else {
+			LOG(LogType::LOG_WARNING, "Warning: Índice de malla inválido en el mapa: %u", it->second);
+		}
 	}
 
 	if (meshes.size() >= MAX_MESHES) {
@@ -126,14 +131,11 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 		return UINT32_MAX;
 	}
 
-	// Check if mesh with this ID already exists
 	for (size_t i = 0; i < meshes.size(); ++i) {
 		if (meshes[i].meshId == modelID) {
 			uint32_t existingIndex = static_cast<uint32_t>(i);
-			meshIndices[mesh] = existingIndex;
 
-			LOG(LogType::LOG_INFO, "Malla '%s' ya registrada con ID=%u (Idx=%u), reutilizando",
-				model->GetMeshName().c_str(), modelID, existingIndex);
+			meshIndices[mesh] = existingIndex;
 
 			return existingIndex;
 		}
@@ -145,6 +147,17 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 		LOG(LogType::LOG_ERROR, "Error: Buffers inválidos (VAO: %u, IBO: %u, VBO: %u) para malla '%s'",
 			modelData.vA, modelData.iBID, modelData.vBPosID, model->GetMeshName().c_str());
 		return UINT32_MAX;
+	}
+
+	if (!glIsVertexArray(modelData.vA) || !glIsBuffer(modelData.iBID) || !glIsBuffer(modelData.vBPosID)) {
+		LOG(LogType::LOG_ERROR, "Error: Buffers GL inválidos para malla '%s' (VAO válido: %s, IBO válido: %s, VBO válido: %s)",
+			model->GetMeshName().c_str(),
+			glIsVertexArray(modelData.vA) ? "sí" : "NO",
+			glIsBuffer(modelData.iBID) ? "sí" : "NO",
+			glIsBuffer(modelData.vBPosID) ? "sí" : "NO");
+
+		return GetFallbackMeshIndex();
+		//return UINT32_MAX;
 	}
 
 	GPUMesh gpuMesh;
@@ -161,7 +174,6 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 	gpuMesh.vertexCount = modelData.vertexData.size();
 	gpuMesh.meshId = modelID;
 
-	// Set attribute flags based on which buffers are available
 	gpuMesh.attributeFlags = 0;
 	if (modelData.vBPosID != 0) gpuMesh.attributeFlags |= (1 << 0);  // Position
 	if (modelData.vBTCoordsID != 0) gpuMesh.attributeFlags |= (1 << 1);  // TexCoord
@@ -573,8 +585,15 @@ void BindlessManager::ReleaseTextureHandle(BindlessHandle& handle) {
 }
 
 void BindlessManager::UpdateBuffers() {
+	updateBufferIndex = 0;
+	renderBufferIndex = 0;
+
+	GLuint currentMeshBuffer = meshBuffers[0];
+	GLuint currentMaterialBuffer = materialBuffers[0];
+	GLuint currentInstanceBuffer = instanceBuffers[0];
+	
 	if (fences[updateBufferIndex]) {
-		GLenum result = glClientWaitSync(fences[updateBufferIndex], GL_SYNC_FLUSH_COMMANDS_BIT, 10000000); // 10ms timeout
+		GLenum result = glClientWaitSync(fences[updateBufferIndex], GL_SYNC_FLUSH_COMMANDS_BIT, 16666000); // 10ms timeout
 
 		if (result == GL_TIMEOUT_EXPIRED) {
 			LOG(LogType::LOG_WARNING, "UpdateBuffers: Timeout esperando a que la GPU libere el buffer %d", updateBufferIndex);
@@ -584,9 +603,9 @@ void BindlessManager::UpdateBuffers() {
 		fences[updateBufferIndex] = nullptr;
 	}
 
-	GLuint currentMeshBuffer = meshBuffers[updateBufferIndex];
-	GLuint currentMaterialBuffer = materialBuffers[updateBufferIndex];
-	GLuint currentInstanceBuffer = instanceBuffers[updateBufferIndex];
+// 	GLuint currentMeshBuffer = meshBuffers[updateBufferIndex];
+// 	GLuint currentMaterialBuffer = materialBuffers[updateBufferIndex];
+// 	GLuint currentInstanceBuffer = instanceBuffers[updateBufferIndex];
 
 	if (!meshes.empty()) {
 		size_t requiredSize = meshes.size() * sizeof(GPUMesh);
@@ -632,12 +651,25 @@ void BindlessManager::UpdateBuffers() {
 }
 
 void BindlessManager::EndFrame() {
-	std::swap(updateBufferIndex, renderBufferIndex);
-
-	if (fences[renderBufferIndex]) {
+	/*if (fences[renderBufferIndex]) {
+		GLenum result = glClientWaitSync(fences[renderBufferIndex], GL_SYNC_FLUSH_COMMANDS_BIT, 33000000);
+		if (result == GL_TIMEOUT_EXPIRED) {
+			LOG(LogType::LOG_WARNING, "Timeout esperando renderizado. Posible causa de parpadeos.");
+		}
 		glDeleteSync(fences[renderBufferIndex]);
+		fences[renderBufferIndex] = nullptr;
 	}
-	fences[renderBufferIndex] = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+
+	int oldRenderIndex = renderBufferIndex;
+	renderBufferIndex = updateBufferIndex;
+	updateBufferIndex = oldRenderIndex;
+
+	fences[renderBufferIndex] = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);*/
+
+	if (fences[0]) {
+		glDeleteSync(fences[0]);
+	}
+	fences[0] = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
 }
 
 void BindlessManager::ClearInstances() {

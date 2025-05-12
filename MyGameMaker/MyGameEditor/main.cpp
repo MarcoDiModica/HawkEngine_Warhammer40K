@@ -457,6 +457,64 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 	}
 }
 
+static void DebugDrawBoundingBox(GameObject* object, const glm::vec4& color = glm::vec4(0.0f, 1.0f, 0.0f, 0.8f)) {
+	if (object->HasComponent<MeshRenderer>() && object->IsActive()) {
+		BoundingBox bbox = object->boundingBox();//object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+		//bbox = object->GetTransform()->GetMatrix() * bbox;
+		glm::vec3 min = bbox.min;
+		glm::vec3 max = bbox.max;
+
+		glPushAttrib(GL_CURRENT_BIT | GL_LINE_BIT);
+
+		glLineWidth(2.0f);
+		glColor4f(color.r, color.g, color.b, color.a);
+
+		glBegin(GL_LINES);
+
+		glVertex3f(min.x, min.y, min.z);
+		glVertex3f(max.x, min.y, min.z);
+
+		glVertex3f(max.x, min.y, min.z);
+		glVertex3f(max.x, max.y, min.z);
+
+		glVertex3f(max.x, max.y, min.z);
+		glVertex3f(min.x, max.y, min.z);
+
+		glVertex3f(min.x, max.y, min.z);
+		glVertex3f(min.x, min.y, min.z);
+
+		glVertex3f(min.x, min.y, max.z);
+		glVertex3f(max.x, min.y, max.z);
+
+		glVertex3f(max.x, min.y, max.z);
+		glVertex3f(max.x, max.y, max.z);
+
+		glVertex3f(max.x, max.y, max.z);
+		glVertex3f(min.x, max.y, max.z);
+
+		glVertex3f(min.x, max.y, max.z);
+		glVertex3f(min.x, min.y, max.z);
+
+		// Conectores entre caras
+		glVertex3f(min.x, min.y, min.z);
+		glVertex3f(min.x, min.y, max.z);
+
+		glVertex3f(max.x, min.y, min.z);
+		glVertex3f(max.x, min.y, max.z);
+
+		glVertex3f(max.x, max.y, min.z);
+		glVertex3f(max.x, max.y, max.z);
+
+		glVertex3f(min.x, max.y, min.z);
+		glVertex3f(min.x, max.y, max.z);
+
+		glEnd();
+
+		// Restaurar estado de OpenGL
+		glPopAttrib();
+	}
+}
+
 static void RenderEditor() {
 	GLint lastProgram = 0;
 	GLint lastFBO = 0;
@@ -569,7 +627,12 @@ static void RenderEditor() {
 				return;
 			}
 
-			RenderManager::GetInstance().SubmitGameObject(object);
+			//DebugDrawBoundingBox(object);
+
+			glm::mat4 viewMatrix = Application->camera->view();
+			glm::mat4 projMatrix = Application->camera->projection();
+			CameraBase::Plane* frustumPlanes = Application->camera->GetPlanes();
+			RenderManager::GetInstance().SubmitGameObject(object, viewMatrix, projMatrix, frustumPlanes);
 		}
 	}
 	
@@ -668,7 +731,10 @@ static void RenderGameView() {
 	if (activeScene) {
 		for (auto& object : activeScene->children()) {
 			if (object && object->IsActive()) {
-				RenderManager::GetInstance().SubmitGameObject(object.get());
+				glm::mat4 viewMatrix = gameCamera->view();
+				glm::mat4 projMatrix = gameCamera->projection();
+				CameraBase::Plane* frustumPlanes = gameCamera->GetPlanes();
+				RenderManager::GetInstance().SubmitGameObject(object.get(), viewMatrix, projMatrix, frustumPlanes);
 			}
 		}
 	}
@@ -838,7 +904,10 @@ static void GameRelease() {
 					break;
 				}
 
-				RenderManager::GetInstance().SubmitGameObject(object.get());
+				glm::mat4 viewMatrix = gameCamera->view();
+				glm::mat4 projMatrix = gameCamera->projection();
+				CameraBase::Plane* frustumPlanes = gameCamera->GetPlanes();
+				RenderManager::GetInstance().SubmitGameObject(object.get(), viewMatrix, projMatrix, frustumPlanes);
 			}
 		}
 	}

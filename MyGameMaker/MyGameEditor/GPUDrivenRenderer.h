@@ -19,8 +19,6 @@ struct DrawElementsCommand {
 };
 
 struct CullData {
-	glm::vec3 bboxMin;      // Esquina inferior izquierda del AABB
-	glm::vec3 bboxMax;      // Esquina superior derecha del AABB
 	uint32_t drawID;           // ID del comando de dibujado
 	uint32_t meshIndex;        // Índice de la malla
 	uint32_t instanceOffset;   // Offset en el buffer de instancias
@@ -46,14 +44,11 @@ public:
 	void AddInstanceGroup(
 		uint32_t meshIndex,
 		uint32_t materialIndex,
-		const glm::vec3& min,
-		const glm::vec3& max,
 		const std::vector<GPUInstance>& instances
 	);
 
-	void PrepareDrawCommands(const glm::mat4& viewMatrix, const glm::mat4& projMatrix,const glm::vec3& cameraPos, CameraBase::Plane* frustumPlanes);	
+	void PrepareDrawCommands();	
 	void ForceIncludeAllObjects();
-	void SetCullingUniforms(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
 	
 	void RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
 
@@ -69,10 +64,6 @@ private:
 	~GPUDrivenRenderer() = default;
 	GPUDrivenRenderer(const GPUDrivenRenderer&) = delete;
 	GPUDrivenRenderer& operator=(const GPUDrivenRenderer&) = delete;
-
-	CameraBase::FrustumIntersection TestFrustumAABB(glm::vec3 bboxMin, glm::vec3 bboxMax, CameraBase::Plane* frustumPlanes);
-	void CPUFrustumCulling(CameraBase::Plane* fp);
-	bool CompileCullingShader();
 
 	void DebugMeshInfo(uint32_t meshIndex);
 	void BatchCommandsByShaderType();
@@ -107,7 +98,7 @@ private:
 	bool useGPUCulling = false;
 	bool useOcclusionCulling = false;
 	bool useFrustumCulling = true;
-	bool enableCulling = false;
+	bool enableCulling = true;
 
 	static constexpr int MAX_DRAW_COMMANDS = 10000;
 	bool bindlessErrorDetected;

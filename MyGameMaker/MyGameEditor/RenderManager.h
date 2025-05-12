@@ -49,8 +49,10 @@ public:
 	void BeginFrame();
 	void EndFrame();
 	
-	void SubmitGameObject(GameObject* gameObject);
-	
+	void SubmitGameObject(GameObject* gameObject, const glm::mat4& viewMatrix, const glm::mat4& projMatrix, CameraBase::Plane* frustumPlanes);
+
+	CameraBase::FrustumIntersection TestFrustumAABB(const glm::vec3& bboxMin, const glm::vec3& bboxMax, CameraBase::Plane* frustumPlanes);
+
 	void RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos, CameraBase::Plane* frustrumPlanes);
 	void RenderFromCamera(CameraComponent* camera);
 	

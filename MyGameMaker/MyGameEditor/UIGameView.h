@@ -30,6 +30,8 @@ public:
 	float GetWidth() { return width; }
 	float GetHeight() { return height; }
 
+    bool IsRenderGameView() { return renderGameView; }
+
 private:
     vec2 winSize = vec2(0, 0);
     vec2 winPos = vec2(0, 0);
@@ -44,5 +46,7 @@ private:
 	GLuint msaaDepthRbo = 0;
 	int msaaSamples = 0;
 	bool useMSAA = false;
+
+    bool renderGameView = false;
 };
 #endif // !__UI_GAME_VIEW_H__

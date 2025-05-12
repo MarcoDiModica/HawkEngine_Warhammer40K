@@ -218,9 +218,7 @@ bool UIGameView::Draw()
 		ImGuiWindowFlags_NoScrollWithMouse |
 		ImGuiWindowFlags_NoNavInputs |
 		ImGuiWindowFlags_NoTitleBar;
-
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-
 	if (ImGui::Begin("Game View", &enabled, flags))
 	{
 		if (Application->root->mainCamera == nullptr)
@@ -251,7 +249,6 @@ bool UIGameView::Draw()
 		if (offsetX > 0) {
 			ImGui::Indent(offsetX);
 		}
-
 		if (offsetY > 0) {
 			ImGui::Dummy(ImVec2(0, offsetY));
 		}
@@ -263,20 +260,32 @@ bool UIGameView::Draw()
 			ImVec2(1, 0)
 		);
 
+		ImVec2 viewportMin = ImGui::GetItemRectMin();
+		viewportPos = vec2(viewportMin.x, viewportMin.y);
+		viewportSize = vec2(width, height);
+
+		ImVec2 panelPos = viewportMin;
+		float panelHeight = 30.0f;
+		ImGui::GetWindowDrawList()->AddRectFilled(
+			panelPos,
+			ImVec2(panelPos.x + width, panelPos.y + panelHeight),
+			ImGui::ColorConvertFloat4ToU32(ImVec4(0.0f, 0.0f, 0.0f, 0.5f))
+		);
+
+		ImGui::SetCursorPos(ImVec2(viewportMin.x - ImGui::GetWindowPos().x + 10.0f,
+			viewportMin.y - ImGui::GetWindowPos().y + 5.0f));
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
+		ImGui::Checkbox("Render Game View", &renderGameView);
+		ImGui::PopStyleColor();
+
 		ImVec2 windowPos = ImGui::GetWindowPos();
 		ImVec2 windowSize = ImGui::GetWindowSize();
 		winPos = vec2(windowPos.x, windowPos.y);
 		winSize = vec2(windowSize.x, windowSize.y);
 
-		ImVec2 viewportMin = ImGui::GetItemRectMin();
-		viewportPos = vec2(viewportMin.x, viewportMin.y);
-		viewportSize = vec2(width, height);
-
 		ImGui::End();
 	}
-
 	ImGui::PopStyleVar();
-
 	return true;
 }
 

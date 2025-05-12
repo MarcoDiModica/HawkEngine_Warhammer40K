@@ -953,8 +953,9 @@ static void Render(MyGUI* gui) {
 
 		//estos 2 consumen casi lo mismo
 		RenderEditor();
-		RenderGameView();
-
+		if (Application->gui->UIGameViewPanel->IsRenderGameView() || SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+			RenderGameView();
+		}
 #ifdef PROFILE
 		OPTICK_CATEGORY("GUIRender", Optick::Category::GameLogic);
 #endif // PROFILE

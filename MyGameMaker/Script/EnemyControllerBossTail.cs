@@ -20,6 +20,9 @@ public class EnemyControllerBossTail : EnemyController
     private float shiftDuration = 5.0f;
     private float actionTimer = 0.0f;
 
+    private string hitStab = "Assets/Audio/Mawloc_Tail_Stab_2";
+    private string hitSlash = "Assets/Audio/Mawloc_Tail_Slash";
+
     bool waitingToEmerge = false;
     float emergeTimer = 0f;
 
@@ -208,6 +211,7 @@ public class EnemyControllerBossTail : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(hitSlash);
             actionTimer = 1.5f;
             anim.SetSlashAnimation();
             CreateTailSlashHurtbox();
@@ -218,6 +222,7 @@ public class EnemyControllerBossTail : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(hitStab);
             actionTimer = 1.5f;
             anim.SetStabAnimation();
             CreateTailStabHurtbox();

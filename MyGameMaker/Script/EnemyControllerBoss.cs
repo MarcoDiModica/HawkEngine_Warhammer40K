@@ -34,9 +34,12 @@ public class EnemyControllerBoss : EnemyController
 
     private const string BurrowClip = "Assets/Audio/Mawloc_Underground_move.wav";
     private const string UnburrowClip = "Assets/Audio/Mawloc_Underground_Attack.wav";
+    private const string MoveUndergroundClip = "Assets/Audio/Mawloc_Rumble_Underground.wav";
     private const string SlamClip = "Assets/Audio/Mawloc_Slam_Atack.wav";
+    private const string ClawPreparationClip = "Assets/Audio/Claw_Strike_Preparation.wav";
     private const string ClawClip = "Assets/Audio/Mawloc_Claw_Attack.wav";
-    private const string AcidClip = "Assets/Audio/Mawloc_Acid_Attack.wav";
+    private const string MetalClip = "Assets/Audio/Mawloc_Metal_Slide.wav";
+    private const string HurtClip = "Assets/Audio/Mawloc_Getting_Hit";
     private const string DeathClip = "Assets/Audio/Mawloc_Death.wav";
     private const string BossTheme = "Assets/Audio/Music/MainTheme_BetaBuild2.ogg";
 
@@ -296,7 +299,7 @@ public class EnemyControllerBoss : EnemyController
                             {
                                 if (distanceToPlayer <= 15.0f && slamAttackTimer <= 0.0f)
                                 {
-                                    ClawStrike();
+                                    ClawStrikeSequence();
                                     slamAttackTimer = slamAttackCooldown;
                                 }
                                 else if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
@@ -361,6 +364,7 @@ public class EnemyControllerBoss : EnemyController
 
     public override void TakeDamage(float damage)
     {
+        Audio.PlayOneShot(HurtClip);
         currentHealth -= damage;
 
         if (currentHealth <= 0.0f)
@@ -428,7 +432,13 @@ public class EnemyControllerBoss : EnemyController
             anim.SetSlamAnimation();
         }
     }
-
+    private async void ClawStrikeSequence()
+    {
+        if (isDead) return;
+        Audio.PlayOneShot(ClawPreparationClip);
+        await Task.Delay(1500); 
+        ClawStrike();
+    }
     private void ClawStrike()
     {
         if (isDead == false)
@@ -458,7 +468,7 @@ public class EnemyControllerBoss : EnemyController
             transform.position = spawnPosition;
             transform.SetScale(3, 3, 3);
             anim.SetIdleAnimation(); //Temporary, missing metal slide animation
-            Audio.PlayOneShot(AcidClip);
+            Audio.PlayOneShot(MetalClip);
         }
     }
 
@@ -466,6 +476,7 @@ public class EnemyControllerBoss : EnemyController
     {
         if (metalSlideObject != null)
         {
+            Audio.PlayOneShot(MetalClip);
             var transform = metalSlideObject.GetComponent<Transform>();
             Vector3 position = transform.position;
             position.Y -= metalSlideSpeed * deltaTime;
@@ -484,6 +495,7 @@ public class EnemyControllerBoss : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(MoveUndergroundClip);
             enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
             collider.SetPosition(enemyTransform.position);
             Burrow();
@@ -497,6 +509,7 @@ public class EnemyControllerBoss : EnemyController
 
         if (isDead == false)
         {
+            Audio.PlayOneShot(MoveUndergroundClip);
             for (int i = 0; i < fixedPositions.Length; i++)
             {
                 float distance = Vector3.Distance(playerTransform.position, fixedPositions[i]);

@@ -25,9 +25,9 @@ public class EnemyControllerMelee : EnemyController
     private const string SFX_ATTACK = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav";
     private const string SFX_HIT = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav";
 
-    private float health = 100.0f;
-    private float clawDamage = 10.0f;
-    private float leapDamage = 15.0f;
+    private float health = 50.0f;
+    private float clawDamage = 5.0f;
+    private float leapDamage = 7.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
 

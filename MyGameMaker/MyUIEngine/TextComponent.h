@@ -1,3 +1,8 @@
+#pragma once
+#include "../MyGameEngine/Component.h"
+#include "../MyGameEngine/GameObject.h"
+#include <yaml-cpp/yaml.h>
+
 class TextComponent : public Component
 {
 public:
@@ -21,7 +26,7 @@ public:
     // M?todo para renderizar el texto  
     void Render() const;
 
-    ComponentType GetType() const override { return ComponentType::UI; }
+    ComponentType GetType() const override { return ComponentType::TEXT; }
     void Awake() override {}
     void Start() override {}
     void Update(float deltaTime) override;
@@ -40,6 +45,7 @@ public:
 
 private:
     GameObject* m_owner; // Pointer to the owning GameObject  
+	std::string m_name = "TextComponent";
     std::string m_text;
     glm::vec2 m_position;
     glm::vec3 m_color;
@@ -58,6 +64,7 @@ protected:
 
         YAML::Node node = Component::encode();
 
+		node["name"] = m_name;
         node["text"] = m_text;
         node["position"] = std::vector<float>{ m_position.x, m_position.y };
         node["color"] = std::vector<float>{ m_color.r, m_color.g, m_color.b };
@@ -76,6 +83,7 @@ protected:
             return false;
         }
 
+		m_name = node["name"].as<std::string>();
         m_text = node["text"].as<std::string>();
         m_position.x = node["position"][0].as<float>();
         m_position.y = node["position"][1].as<float>();

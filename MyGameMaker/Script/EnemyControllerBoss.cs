@@ -39,7 +39,7 @@ public class EnemyControllerBoss : EnemyController
     private const string ClawPreparationClip = "Assets/Audio/Claw_Strike_Preparation.wav";
     private const string ClawClip = "Assets/Audio/Mawloc_Claw_Attack.wav";
     private const string MetalClip = "Assets/Audio/Mawloc_Metal_Slide.wav";
-    private const string HurtClip = "Assets/Audio/Mawloc_Getting_Hit";
+    private const string HurtClip = "Assets/Audio/Mawloc_Getting_Hit.wav";
     private const string DeathClip = "Assets/Audio/Mawloc_Death.wav";
     private const string BossTheme = "Assets/Audio/Music/MainTheme_BetaBuild2.ogg";
 

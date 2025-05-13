@@ -89,7 +89,10 @@ public:
 			"Assets/Textures/BloodSplash_decals1_Yiwei.png",
 			"Assets/Textures/fireSpritesheetpx2.png",
 			"Assets/Textures/MawlocSmokeSpritesheet.png",
-			"Assets/Textures/rock.png"
+			"Assets/Textures/rock.png",
+			"Assets/Textures/VFX_lictor_leap.png",
+			"Assets/Textures/VFX_lictor_dodge_cue.png"
+
 		};
 
 		for (const auto& path : texturePaths) {

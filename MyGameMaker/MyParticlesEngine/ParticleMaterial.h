@@ -23,6 +23,9 @@ enum class ParticleType {
     ACID_PUDDLE = 11,
     MAWLOC_SLAM = 24,
     MAWLOC_ROCKS = 25,
+    //Lictor
+	LICTOR_LEAP = 26,
+	LICTOR_DODGE = 27,
 
     // Player / Weapons
     ENERGY_BALL = 12,

@@ -62,11 +62,11 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-//	resourceManager->LoadResources(); // Esto no se mutea
-//	resourceManager->CreateDefaultCube(); // Esto no se mutea
+	resourceManager->LoadResources(); // Esto no se mutea
+	resourceManager->CreateDefaultCube(); // Esto no se mutea
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
-	/*Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");*/
+	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");
 
@@ -303,6 +303,17 @@ bool Root::Start()
 	//	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	//	hormagaunt->SetTag("Enemy");
 	//}
+
+	////Termagaunt
+	//auto termagaunt = CreateGameObject("Termagaunt");
+	//termagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
+	//termagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//termagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//termagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
+	//auto termagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Termagaunt.fbx");
+	//termagauntMesh->SetName("TermagauntMesh");
+
+
 
 	////Tyranid Warrior
 	//auto tyranidWarrior = CreateGameObject("Tyranid_Warrior");

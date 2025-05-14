@@ -3162,9 +3162,9 @@ GameObject8:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 1.56036317
+          floatSpeed: 1.47439969
           floatHeight: 0.5
-          rotationSpeed: 53.0649796
+          rotationSpeed: 66.290657
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -3270,9 +3270,9 @@ GameObject9:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 1.15484142
+          floatSpeed: 1.04181349
           floatHeight: 0.5
-          rotationSpeed: 31.9538441
+          rotationSpeed: 75.4658966
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -39202,9 +39202,9 @@ GameObject24:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.80386674
+          floatSpeed: 1.74008071
           floatHeight: 0.5
-          rotationSpeed: 98.140152
+          rotationSpeed: 76.3681107
   Children: ~
 GameObject25:
   name: BiblePagePickUp_Instance_1_Instance_Instance_Instance2
@@ -39287,9 +39287,9 @@ GameObject25:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.05030251
+          floatSpeed: 1.05628002
           floatHeight: 0.5
-          rotationSpeed: 74.789772
+          rotationSpeed: 60.9556847
   Children: ~
 GameObject26:
   name: BiblePagePickUp_Instance_1_Instance_Instance_Instance3
@@ -39372,9 +39372,9 @@ GameObject26:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.80639768
+          floatSpeed: 0.586104929
           floatHeight: 0.5
-          rotationSpeed: 76.0385742
+          rotationSpeed: 93.7589874
   Children: ~
 GameObject27:
   name: VFX_Sparkle

@@ -21,7 +21,7 @@ public:
 
    bool LoadFont(const std::string& fontPath, int fontSize);  
 
-   void RenderTextBoxedWithShader(Shaders* shader, const std::string& text, float x, float y, float scale, const glm::vec2& boxSize);
+   void RenderTextBoxedWithShader(Shaders* shader, const std::string& text, float x, float y, float scale, float spacing, const glm::vec2& boxSize);
 
    glm::vec2 CalculateTextBoxSize(const std::string& text, float scale);
 

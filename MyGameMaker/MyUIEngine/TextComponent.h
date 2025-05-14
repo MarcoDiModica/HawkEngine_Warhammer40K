@@ -15,6 +15,7 @@ public:
     void SetColor(const glm::vec3& color);
     void SetFontSize(float fontSize);
     void SetBoxSize(const glm::vec2& size);
+	void SetSpaceWidth(float spaceWidth) { m_spaceWidth = spaceWidth; }
     void SetDebugDrawBox(bool enabled) { m_debugDrawBox = enabled; }
 
     // M?todos para obtener propiedades  
@@ -24,6 +25,7 @@ public:
     glm::vec2 GetBoxSize() const;
     bool GetDebugDrawBox() const { return m_debugDrawBox; }
     float GetFontSize() const;
+	float GetSpaceWidth() const { return m_spaceWidth; }
     void SetProjection(const glm::mat4& proj) { m_projection = proj; }
     void Render() const;
 
@@ -51,6 +53,7 @@ private:
     glm::vec2 m_position;
     glm::vec3 m_color;
     float m_fontSize;
+	float m_spaceWidth = 0.0f;
     glm::vec2 m_boxSize = glm::vec2(200.0f, 100.0f);
     glm::mat4 m_projection;
     glm::vec2 spriteSize = glm::vec2(0.0f, 0.0f);

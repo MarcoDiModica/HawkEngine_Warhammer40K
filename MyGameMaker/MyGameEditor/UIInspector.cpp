@@ -2668,6 +2668,16 @@ private:
 		}
 		ImGui::PopItemWidth();
 
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Space Width");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		float spaceSize = textComponent->GetSpaceWidth();
+		if (ImGui::DragFloat("##SpaceWidth", &spaceSize, 0.1f, 0.1f, 100.0f)) {
+			textComponent->SetSpaceWidth(spaceSize);
+		}
+		ImGui::PopItemWidth();
+
 		ImGui::EndGroup();
 	}
 #pragma endregion

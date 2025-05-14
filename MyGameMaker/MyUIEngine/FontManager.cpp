@@ -145,7 +145,7 @@ bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
     return true;
 }
 
-void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& text, float x, float y, float scale, const glm::vec2& boxSize) {
+void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& text, float x, float y, float scale, float spacing, const glm::vec2& boxSize) {
     if (!isFontLoaded) {
         LoadFont("Assets/Arial.ttf", 16);
         isFontLoaded = true;
@@ -163,7 +163,7 @@ void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& 
     float cursorY = y;
     float lineHeight = 0.0f;
 
-    float lineSpacingFactor = 2.5f; 
+    spacing = 2.5f; 
 
     std::istringstream stream(text);
     std::string word;
@@ -183,7 +183,7 @@ void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& 
 
         if (cursorX + wordWidth > x + maxWidth / 2.0f) {
             cursorX = x - maxWidth / 2.0f;
-            cursorY -= lineHeight * lineSpacingFactor;
+            cursorY -= lineHeight * spacing;
             lineHeight = 0.0f;
         }
 

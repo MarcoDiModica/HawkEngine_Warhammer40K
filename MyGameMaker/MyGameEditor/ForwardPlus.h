@@ -52,6 +52,7 @@ public:
 	int GetTilesX() const { return tilesX; }
 	int GetTilesY() const { return tilesY; }
 	int GetTileSize() const { return tileSize; }
+	int GetMaxLightsPerTile() const { return maxLightsPerTile; }
 
 	int GetTotalLights() const { return (int)pointLights.size(); }
 	int GetVisibleLights() const { return visibleLightCount; }

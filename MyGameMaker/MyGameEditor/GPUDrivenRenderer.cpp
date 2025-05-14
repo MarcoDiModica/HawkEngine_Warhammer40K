@@ -5,6 +5,7 @@
 #include "Log.h"
 #include "MyGameEngine/ShaderManager.h"
 #include "MyGameEngine/CameraComponent.h"
+#include "ForwardPlus.h"
 
 GPUDrivenRenderer& GPUDrivenRenderer::GetInstance() {
 	static GPUDrivenRenderer instance;
@@ -390,6 +391,25 @@ void GPUDrivenRenderer::RenderPBRBatch(
 	shader->SetUniformMat4("view", viewMatrix);
 	shader->SetUniformMat4("projection", projMatrix);
 	shader->SetUniformVec3("cameraPos", cameraPos);
+
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, ForwardPlusLighting::GetInstance().GetPointLightBuffer());
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4, ForwardPlusLighting::GetInstance().GetDirectionalLightBuffer());
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 5, ForwardPlusLighting::GetInstance().GetLightGridBuffer());
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 6, ForwardPlusLighting::GetInstance().GetLightIndicesBuffer());
+
+	// Update Forward+ uniforms every frame
+	shader->SetUniform("useForwardPlus", 1);
+	shader->SetUniform("tileSize", ForwardPlusLighting::GetInstance().GetTileSize());
+	glm::vec2 tileSize = glm::vec2(
+		ForwardPlusLighting::GetInstance().GetTilesX() * ForwardPlusLighting::GetInstance().GetTileSize(),
+		ForwardPlusLighting::GetInstance().GetTilesY() * ForwardPlusLighting::GetInstance().GetTileSize());
+	shader->SetUniformVec2("screenSize", tileSize);
+	shader->SetUniform("numLights", ForwardPlusLighting::GetInstance().GetTotalLights());
+	shader->SetUniform("maxLightsPerTile", ForwardPlusLighting::GetInstance().GetMaxLightsPerTile());
+
+	GLint uniformCheck;
+	glGetUniformiv(shader->GetProgram(), glGetUniformLocation(shader->GetProgram(), "useForwardPlus"), &uniformCheck);
+	LOG(LogType::LOG_INFO, "Forward+ Uniform State: %d", uniformCheck);
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
 

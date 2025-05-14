@@ -169,6 +169,11 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 		ForwardPlusLighting::GetInstance().UpdateLights();
 		ForwardPlusLighting::GetInstance().PerformLightCulling(viewMatrix, projMatrix);
 
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, ForwardPlusLighting::GetInstance().GetPointLightBuffer());
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4, ForwardPlusLighting::GetInstance().GetDirectionalLightBuffer());
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 5, ForwardPlusLighting::GetInstance().GetLightGridBuffer());
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 6, ForwardPlusLighting::GetInstance().GetLightIndicesBuffer());
+
 		stats.totalLights = ForwardPlusLighting::GetInstance().GetTotalLights();
 		stats.visibleLights = ForwardPlusLighting::GetInstance().GetVisibleLights();
 	}

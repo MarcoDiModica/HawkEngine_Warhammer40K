@@ -23,6 +23,8 @@ public:
 
    void RenderTextBoxedWithShader(Shaders* shader, const std::string& text, float x, float y, float scale, const glm::vec2& boxSize);
 
+   glm::vec2 CalculateTextBoxSize(const std::string& text, float scale);
+
    void Start();
 
 private:  

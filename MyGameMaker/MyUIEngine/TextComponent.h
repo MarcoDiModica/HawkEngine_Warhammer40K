@@ -15,15 +15,16 @@ public:
     void SetColor(const glm::vec3& color);
     void SetFontSize(float fontSize);
     void SetBoxSize(const glm::vec2& size);
+    void SetDebugDrawBox(bool enabled) { m_debugDrawBox = enabled; }
 
     // M?todos para obtener propiedades  
     const std::string& GetText() const;
     const glm::vec2& GetPosition() const;
     const glm::vec3& GetColor() const;
     glm::vec2 GetBoxSize() const;
+    bool GetDebugDrawBox() const { return m_debugDrawBox; }
     float GetFontSize() const;
     void SetProjection(const glm::mat4& proj) { m_projection = proj; }
-    // M?todo para renderizar el texto  
     void Render() const;
 
     ComponentType GetType() const override { return ComponentType::TEXT; }
@@ -44,6 +45,8 @@ public:
     MonoObject* GetSharp() override;
 
 private:
+    bool m_debugDrawBox = false;
+	bool m_overrideBoxSize = false;
     std::string m_text;
     glm::vec2 m_position;
     glm::vec3 m_color;

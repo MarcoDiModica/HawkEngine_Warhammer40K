@@ -1,5 +1,7 @@
 #include "FontManager.h"
 #include <iostream>
+#include <sstream>
+#include <algorithm>
 
 FontManager& FontManager::GetInstance() {
     static FontManager instance;
@@ -61,16 +63,14 @@ bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
             continue;
         }
 
-        // Validar que el glyph tenga un bitmap válido
         if (!face->glyph->bitmap.buffer || face->glyph->bitmap.width == 0 || face->glyph->bitmap.rows == 0) {
             std::cerr << "[WARNING] Glyph vacío para char '" << c << "' en " << fontPath << ". Usando carácter de reemplazo." << std::endl;
 
-            // Crear un carácter de reemplazo (un cuadro vacío)
             GLuint emptyTexture;
             glGenTextures(1, &emptyTexture);
             glBindTexture(GL_TEXTURE_2D, emptyTexture);
 
-            unsigned char emptyBitmap[4] = { 0, 0, 0, 0 }; // Un píxel transparente
+            unsigned char emptyBitmap[4] = { 0, 0, 0, 0 };
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, emptyBitmap);
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -80,8 +80,8 @@ bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
 
             Character replacementCharacter = {
                 emptyTexture,
-                glm::ivec2(1, 1), // Tamaño de 1x1 píxel
-                glm::ivec2(0, 0), // Sin desplazamiento
+                glm::ivec2(1, 1),
+                glm::ivec2(0, 0),
                 static_cast<GLuint>(face->glyph->advance.x)
             };
             Characters.insert(std::pair<char, Character>(c, replacementCharacter));
@@ -107,10 +107,10 @@ bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
             for (int i = 0; i < width; ++i) {
                 int gray = buffer[j * face->glyph->bitmap.pitch + i];
                 int idx = (j * width + i) * 4;
-                rgbaBuffer[idx + 0] = 255; // R
-                rgbaBuffer[idx + 1] = 255; // G
-                rgbaBuffer[idx + 2] = 255; // B
-                rgbaBuffer[idx + 3] = gray; // A
+                rgbaBuffer[idx + 0] = 255;
+                rgbaBuffer[idx + 1] = 255;
+                rgbaBuffer[idx + 2] = 255;
+                rgbaBuffer[idx + 3] = gray;
             }
         }
 
@@ -162,48 +162,61 @@ void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& 
     float maxWidth = boxSize.x;
     float lineHeight = 0.0f;
 
-    for (const char& c : text) {
-        if (Characters.find(c) == Characters.end()) {
-            std::cerr << "[RenderText] Warning: Character '" << c << "' not found in font.\n";
-            continue;
+    std::istringstream stream(text);
+    std::string word;
+
+    glm::vec2 measured = CalculateTextBoxSize(text, scale);
+    float centeredX = x + (boxSize.x - measured.x) / 2.0f;
+    float cursorX = centeredX;
+    float cursorY = y;
+
+    while (stream >> word) {
+        float wordWidth = 0;
+        for (char wc : word) {
+            if (Characters.find(wc) == Characters.end()) continue;
+            wordWidth += (Characters[wc].Advance >> 6) * scale;
+        }
+        wordWidth += (Characters[' '].Advance >> 6) * scale;
+
+        if ((cursorX + wordWidth - centeredX) > maxWidth) {
+            cursorX = centeredX;
+            cursorY -= lineHeight;
+            lineHeight = 0;
         }
 
-        Character ch = Characters[c];
+        for (char c : word) {
+            if (Characters.find(c) == Characters.end()) continue;
+            Character ch = Characters[c];
 
-        float xpos = x + ch.Bearing.x * scale;
-        float ypos = y - (ch.Size.y - ch.Bearing.y) * scale;
-        float w = ch.Size.x * scale;
-        float h = ch.Size.y * scale;
+            float xpos = cursorX + ch.Bearing.x * scale;
+            float ypos = cursorY - (ch.Size.y - ch.Bearing.y) * scale;
+            float w = ch.Size.x * scale;
+            float h = ch.Size.y * scale;
+            lineHeight = std::max(lineHeight, h);
 
-        if ((x + ch.Advance * scale / 64.0f - startX) > maxWidth) {
-            x = startX;
-            y -= lineHeight;
-            lineHeight = 0.0f;
+            float vertices[6][4] = {
+                { xpos,     ypos + h,   0.0f, 0.0f },
+                { xpos,     ypos,       0.0f, 1.0f },
+                { xpos + w, ypos,       1.0f, 1.0f },
+                { xpos,     ypos + h,   0.0f, 0.0f },
+                { xpos + w, ypos,       1.0f, 1.0f },
+                { xpos + w, ypos + h,   1.0f, 0.0f }
+            };
+
+            glBindTexture(GL_TEXTURE_2D, ch.TextureID);
+
+            shader->SetUniformVec2("SpriteOffset", glm::vec2(0.0f, 0.0f));
+            shader->SetUniformVec2("SpriteSize", glm::vec2(ch.Size));
+            shader->SetUniformVec2("SheetSize", glm::vec2(ch.Size));
+
+            glBindBuffer(GL_ARRAY_BUFFER, VBO);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+            cursorX += (ch.Advance >> 6) * scale;
         }
-
-        lineHeight = std::max(lineHeight, h);
-
-        float vertices[6][4] = {
-            { xpos,     ypos + h,   0.0f, 0.0f },
-            { xpos,     ypos,       0.0f, 1.0f },
-            { xpos + w, ypos,       1.0f, 1.0f },
-            { xpos,     ypos + h,   0.0f, 0.0f },
-            { xpos + w, ypos,       1.0f, 1.0f },
-            { xpos + w, ypos + h,   1.0f, 0.0f }
-        };
-
-        glBindTexture(GL_TEXTURE_2D, ch.TextureID);
-
-        shader->SetUniformVec2("SpriteOffset", glm::vec2(0.0f, 0.0f));
-        shader->SetUniformVec2("SpriteSize", glm::vec2(ch.Size));
-        shader->SetUniformVec2("SheetSize", glm::vec2(ch.Size));
-
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        x += (ch.Advance >> 6) * scale;
+        cursorX += (Characters[' '].Advance >> 6) * scale;
     }
 
     glBindVertexArray(0);
@@ -214,4 +227,43 @@ void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& 
     if (error != GL_NO_ERROR) {
         std::cerr << "OpenGL Error: " << error << std::endl;
     }
+}
+
+glm::vec2 FontManager::CalculateTextBoxSize(const std::string& text, float scale) {
+    float maxLineWidth = 0.0f;
+    float currentLineWidth = 0.0f;
+    float totalHeight = 0.0f;
+    float lineHeight = 0.0f;
+
+    std::istringstream stream(text);
+    std::string word;
+
+    float spaceWidth = (Characters[' '].Advance >> 6) * scale;
+
+    while (stream >> word) {
+        float wordWidth = 0.0f;
+        float wordMaxHeight = 0.0f;
+
+        for (char wc : word) {
+            if (Characters.find(wc) == Characters.end()) continue;
+            Character ch = Characters[wc];
+            wordWidth += (ch.Advance >> 6) * scale;
+            wordMaxHeight = std::max(wordMaxHeight, ch.Size.y * scale);
+        }
+
+        if (currentLineWidth + wordWidth > 500.0f) {
+            totalHeight += lineHeight;
+            maxLineWidth = std::max(maxLineWidth, currentLineWidth);
+            currentLineWidth = 0.0f;
+            lineHeight = 0.0f;
+        }
+
+        currentLineWidth += wordWidth + spaceWidth;
+        lineHeight = std::max(lineHeight, wordMaxHeight);
+    }
+
+    totalHeight += lineHeight;
+    maxLineWidth = std::max(maxLineWidth, currentLineWidth);
+
+    return glm::vec2(maxLineWidth, totalHeight);
 }

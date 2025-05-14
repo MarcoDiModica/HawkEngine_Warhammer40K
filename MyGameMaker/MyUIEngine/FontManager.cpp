@@ -159,9 +159,11 @@ void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& 
     glBindVertexArray(VAO);
 
     float maxWidth = boxSize.x;
-    float cursorX = x - maxWidth / 2.0f;  // Centrado horizontal
+    float cursorX = x - maxWidth / 2.0f;
     float cursorY = y;
     float lineHeight = 0.0f;
+
+    float lineSpacingFactor = 2.5f; 
 
     std::istringstream stream(text);
     std::string word;
@@ -181,7 +183,7 @@ void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& 
 
         if (cursorX + wordWidth > x + maxWidth / 2.0f) {
             cursorX = x - maxWidth / 2.0f;
-            cursorY -= lineHeight;
+            cursorY -= lineHeight * lineSpacingFactor;
             lineHeight = 0.0f;
         }
 
@@ -217,6 +219,7 @@ void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& 
             glDrawArrays(GL_TRIANGLES, 0, 6);
             cursorX += (ch.Advance >> 6) * scale;
         }
+
         cursorX += spaceWidth;
     }
 

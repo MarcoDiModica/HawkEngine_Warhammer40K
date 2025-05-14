@@ -17,6 +17,7 @@
 #include "../MyUIEngine/UIButtonComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "../MyUIEngine/TextComponent.h"
 #include "../MyGameEngine/Tweening.h"
 
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
@@ -211,6 +212,9 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
 	}
+    else if (componentName == "HawkEngine.TextComponent") {
+		return GO->GetComponent<TextComponent>()->GetSharp();
+    }
 	else if (componentName == "HawkEngine.ParticleFX") {
 		return GO->GetComponent<ParticleFX>()->GetSharp();
 	}
@@ -249,6 +253,7 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break; 
     case 12: _component = static_cast<Component*>(go->AddComponent<CapsuleColliderComponent>(Application->physicsModule));
         break;
+	case 14: _component = static_cast<Component*>(go->AddComponent<TextComponent>());
 	case 13: _component = static_cast<Component*>(go->AddComponent<ParticleFX>());
 		break;
     default:
@@ -1412,7 +1417,34 @@ void EngineBinds::DOVec3(glm::vec3* value, glm::vec3 start, glm::vec3 target, fl
 {
 	Tweening::TweenVec3(value, start, target, duration, mode);
 }
-    
+
+//Text
+
+void EngineBinds::SetText(MonoObject* textRef, MonoString* text)
+{
+	char* C_text = mono_string_to_utf8(text);
+	auto uiText = ConvertFromSharpComponent<TextComponent>(textRef);
+	if (uiText) {
+		uiText->SetText(C_text);
+	}
+}
+
+void EngineBinds::SetTextColor(MonoObject* textRef, glm::vec4* color)
+{
+	auto uiText = ConvertFromSharpComponent<TextComponent>(textRef);
+	if (uiText) {
+		uiText->SetColor(*color);
+	}
+}
+
+void EngineBinds::SetTextSize(MonoObject* textRef, int size)
+{
+	auto uiText = ConvertFromSharpComponent<TextComponent>(textRef);
+	if (uiText) {
+		uiText->SetFontSize(size);
+	}
+}
+
 bool EngineBinds::LoadScene(MonoString* sceneName)
 {
     char* C_sceneName = mono_string_to_utf8(sceneName);
@@ -1721,6 +1753,10 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.Tweening::DOVector3", (const void*)&EngineBinds::DOVec3);
     mono_add_internal_call("HawkEngine.Tweening::CleanTweens", (const void*)&EngineBinds::CleanAllTweens);
 
+	// Text
+	mono_add_internal_call("HawkEngine.UIText::SetText", (const void*)&EngineBinds::SetText);
+	mono_add_internal_call("HawkEngine.UIText::SetTextColor", (const void*)&EngineBinds::SetTextColor);
+	mono_add_internal_call("HawkEngine.UIText::SetTextSize", (const void*)&EngineBinds::SetTextSize);
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);
 	mono_add_internal_call("HawkEngine.SceneManager::SetSceneToPlay", (const void*)&EngineBinds::SetScenePlay);

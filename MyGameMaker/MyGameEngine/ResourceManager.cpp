@@ -220,12 +220,14 @@ void ResourceManager::DeleteAllUselessResources()
 
 void ResourceManager::UpdateTextures()
 {
-	std::string texturePath = std::filesystem::current_path().string() + "\\Library\\Images\\";
+	std::string texturePath = std::filesystem::current_path().string() + "\\Assets\\Textures\\";
 	for (auto image : images)
 	{
-		texturePath += image->image_name + ".image";
-		image->LoadTexture(image->image_name);
-		image->SaveBinary(image->image_name);
+		std::string imageName = image->image_name;
+		texturePath += imageName + ".png";
+		image->LoadTexture(texturePath);
+		image->SaveBinary(imageName);
+		texturePath = std::filesystem::current_path().string() + "\\Assets\\Textures\\";
 	}
 }
 

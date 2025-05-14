@@ -20,6 +20,12 @@ public class EnemyControllerBossTail : EnemyController
     private float shiftDuration = 5.0f;
     private float actionTimer = 0.0f;
 
+    private string hitStab = "Assets/Audio/Mawloc_Tail_Stab_2.wav";
+    private string hitSlash = "Assets/Audio/Mawloc_Tail_Slash.wav";
+    private const string BurrowClip = "Assets/Audio/Mawloc_Underground_move.wav";
+    private const string UnburrowClip = "Assets/Audio/Mawloc_Underground_Attack.wav";
+    private const string MoveUndergroundClip = "Assets/Audio/Mawloc_Rumble_Underground.wav";
+
     bool waitingToEmerge = false;
     float emergeTimer = 0f;
 
@@ -161,6 +167,7 @@ public class EnemyControllerBossTail : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(BurrowClip);
             Engineson.print("Burrowed");
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
             collider.SetPosition(enemyTransform.position);
@@ -173,6 +180,7 @@ public class EnemyControllerBossTail : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(UnburrowClip);
             if (playerTransform != null)
             {
                 enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
@@ -190,6 +198,7 @@ public class EnemyControllerBossTail : EnemyController
 
         if (isDead == false)
         {
+            Audio.PlayOneShot(MoveUndergroundClip);
             for (int i = 0; i < fixedPositions.Length; i++)
             {
                 float distance = Vector3.Distance(playerTransform.position, fixedPositions[i]);
@@ -208,6 +217,7 @@ public class EnemyControllerBossTail : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(hitSlash);
             actionTimer = 1.5f;
             anim.SetSlashAnimation();
             CreateTailSlashHurtbox();
@@ -218,6 +228,7 @@ public class EnemyControllerBossTail : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(hitStab);
             actionTimer = 1.5f;
             anim.SetStabAnimation();
             CreateTailStabHurtbox();

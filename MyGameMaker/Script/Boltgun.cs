@@ -12,7 +12,8 @@ public class Boltgun : BaseWeapon
     private PlayerController playerController;
     public PlayerData playerData;
 
-    private const string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
+    private const string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/Boltgun_hit_enviroment.wav";
+    private const string boltgunShotEnemy = "Assets/Audio/SFX/Weapons/Boltgun/Boltgun_hit_enemy.wav";
     private const string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
     GameObject projectile;
     private RedThirstManager redThirstManager;
@@ -122,18 +123,23 @@ public class Boltgun : BaseWeapon
                         switch (tag)
                         {
                             case "Melee":
+                                Audio.PlayOneShot(boltgunShotEnemy);
                                 hitObject.GetComponent<EnemyControllerMelee>()?.TakeDamage(finalDamage);
                                 break;
                             case "Ranged":
+                                Audio.PlayOneShot(boltgunShotEnemy);
                                 hitObject.GetComponent<EnemyControllerRanged>()?.TakeDamage(finalDamage);
                                 break;
                             case "Stalker":
+                                Audio.PlayOneShot(boltgunShotEnemy);
                                 hitObject.GetComponent<EnemyControllerStalker>()?.TakeDamage(finalDamage);
                                 break;
                             case "Boss":
+                                Audio.PlayOneShot(boltgunShotEnemy);
                                 hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
                                 break;
                             case "Warrior":
+                                Audio.PlayOneShot(boltgunShotEnemy);
                                 hitObject.GetComponent<EnemyControllerWarrior>()?.TakeDamage(finalDamage);
                                 break;
                             case "Destroyable":

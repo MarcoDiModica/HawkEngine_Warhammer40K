@@ -1,6 +1,6 @@
-name: stalkerEnemyPrefab
+name: hormagauntPrefab
 prefabPath: ""
-uuid: 9912847447631833335
+uuid: 16680111324151886729
 tag: Enemy
 active: true
 isStatic: false
@@ -10,24 +10,24 @@ Components:
     enabled: true
     localPosition:
       - 0
-      - 4
-      - 40
+      - 0
+      - 10
     localRotation:
       - 0
       - -0
       - 0
     localScale:
-      - 5
-      - 5
-      - 5
+      - 2.2000000476837158
+      - 2.2000000476837158
+      - 2.2000000476837158
   BoxColliderComponent:
     size:
-      - 0.600000024
-      - 1.29999995
-      - 0.5
+      - 0.699999988
+      - 2
+      - 1.60000002
     offset:
       - 0
-      - -0.699999988
+      - 0
       - 0
     isTrigger: false
   RigidbodyComponent:
@@ -44,12 +44,15 @@ Components:
       angular: 0
   ScriptComponents:
     Script0:
-      name: EnemyControllerStalker
-      fields: ~
+      name: EnemyControllerMelee
+      fields:
+        maxLeapRange: 20
+        minLeapRange: 10
+        leapCooldown: 2
 Children:
-  - name: LictorMesh
+  - name: HormagauntMesh
     prefabPath: ""
-    uuid: 17891990046798627748
+    uuid: 6694242439079827101
     tag: Untagged
     active: false
     isStatic: false
@@ -58,24 +61,24 @@ Children:
         name: Transform_Component
         enabled: true
         localPosition:
-          - -0.00037008654908277094
-          - -0.09231160581111908
-          - -0.150098517537117
-        localRotation:
-          - -90.000009334667311
           - 0
+          - 0
+          - 0
+        localRotation:
+          - 0.8700226609134567
+          - -0
           - 0
         localScale:
-          - 0.40000000596046448
-          - 0.40000000596046448
-          - 0.40000000596046448
+          - 0.0099999997764825821
+          - 0.0099999997764825821
+          - 0.0099999997764825821
       MeshRenderer:
         name: MeshRenderer
         enabled: true
         mesh:
-          name: 11870353531569422037
+          name: 721985124442083796
         material:
-          name: Lictor_Base_color
+          name: Low_BSurfaceMesh_BaseColor
           color:
             - 1
             - 1
@@ -92,16 +95,16 @@ Children:
         name: SkeletalAnimationComponent
         enabled: true
         bone_names: ~
-        animation_file: skeletal_anim_LictorMesh
+        animation_file: skeletal_anim_HormagauntMesh
       ScriptComponents:
         Script0:
-          name: LictorAnimation
+          name: HormagauntAnimation
           fields:
             isAnimFinished: false
     Children:
-      - name: root
+      - name: root.x
         prefabPath: ""
-        uuid: 12311987448301327823
+        uuid: 1370465065314446019
         tag: Untagged
         active: true
         isStatic: false
@@ -122,9 +125,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: spine
+      - name: spine_01.x
         prefabPath: ""
-        uuid: 16257791020068027392
+        uuid: 8460118123768089778
         tag: Untagged
         active: true
         isStatic: false
@@ -145,9 +148,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: tail
+      - name: spine_02.x
         prefabPath: ""
-        uuid: 10984652023523755021
+        uuid: 15236716905418027612
         tag: Untagged
         active: true
         isStatic: false
@@ -168,9 +171,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: tail2
+      - name: spine_03.x
         prefabPath: ""
-        uuid: 12724691771284422033
+        uuid: 15205811327159838399
         tag: Untagged
         active: true
         isStatic: false
@@ -191,9 +194,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: tail3
+      - name: c_subneck_1.x
         prefabPath: ""
-        uuid: 9035299419295050874
+        uuid: 3427377452459149325
         tag: Untagged
         active: true
         isStatic: false
@@ -214,9 +217,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: tail4
+      - name: neck.x
         prefabPath: ""
-        uuid: 12424638717006351295
+        uuid: 152365501734862044
         tag: Untagged
         active: true
         isStatic: false
@@ -237,9 +240,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: tail5
+      - name: head.x
         prefabPath: ""
-        uuid: 4834456298188738707
+        uuid: 4602442787626572503
         tag: Untagged
         active: true
         isStatic: false
@@ -260,9 +263,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: spine2
+      - name: c_eyebrow_full.l
         prefabPath: ""
-        uuid: 4425169779838911442
+        uuid: 17054403342549770652
         tag: Untagged
         active: true
         isStatic: false
@@ -283,9 +286,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: spine3
+      - name: c_eyebrow_03.l
         prefabPath: ""
-        uuid: 16356647605901320774
+        uuid: 11364857776369532746
         tag: Untagged
         active: true
         isStatic: false
@@ -306,9 +309,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: spine4
+      - name: c_eyebrow_02.l
         prefabPath: ""
-        uuid: 12020347370448481981
+        uuid: 18420259507989064314
         tag: Untagged
         active: true
         isStatic: false
@@ -329,9 +332,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: neck
+      - name: c_eyebrow_01.l
         prefabPath: ""
-        uuid: 15949047880599545215
+        uuid: 2650490370007854547
         tag: Untagged
         active: true
         isStatic: false
@@ -352,9 +355,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: head
+      - name: c_eyebrow_01_end.l
         prefabPath: ""
-        uuid: 4940062220459084692
+        uuid: 5600030449030914249
         tag: Untagged
         active: true
         isStatic: false
@@ -375,9 +378,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: tentacle1
+      - name: c_eyebrow_full.r
         prefabPath: ""
-        uuid: 13845012832537050567
+        uuid: 3458366531589231569
         tag: Untagged
         active: true
         isStatic: false
@@ -398,9 +401,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: tentacle2
+      - name: c_eyebrow_03.r
         prefabPath: ""
-        uuid: 804511302966066152
+        uuid: 12708478155374447203
         tag: Untagged
         active: true
         isStatic: false
@@ -421,9 +424,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: tentacle3
+      - name: c_eyebrow_02.r
         prefabPath: ""
-        uuid: 14633151600948543544
+        uuid: 4806592500099387148
         tag: Untagged
         active: true
         isStatic: false
@@ -444,9 +447,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: ptentacle.r
+      - name: c_eyebrow_01.r
         prefabPath: ""
-        uuid: 2307425272051549735
+        uuid: 18323258361606572387
         tag: Untagged
         active: true
         isStatic: false
@@ -467,9 +470,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: ptentacle2.r
+      - name: c_eyebrow_01_end.r
         prefabPath: ""
-        uuid: 3981375729173220584
+        uuid: 13613877180299380190
         tag: Untagged
         active: true
         isStatic: false
@@ -490,9 +493,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: ptentacle3.r
+      - name: c_jawbone.x
         prefabPath: ""
-        uuid: 866220152745693087
+        uuid: 677698016197954600
         tag: Untagged
         active: true
         isStatic: false
@@ -513,9 +516,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: stentacle.r
+      - name: c_lips_bot.l
         prefabPath: ""
-        uuid: 6096988029649404533
+        uuid: 4232595266847462448
         tag: Untagged
         active: true
         isStatic: false
@@ -536,9 +539,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: stentacle2.r
+      - name: c_lips_bot.r
         prefabPath: ""
-        uuid: 6945155323518537296
+        uuid: 4036391002699443168
         tag: Untagged
         active: true
         isStatic: false
@@ -559,9 +562,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: stentacle.l
+      - name: c_lips_bot.x
         prefabPath: ""
-        uuid: 10256250185843611230
+        uuid: 18268137298966364568
         tag: Untagged
         active: true
         isStatic: false
@@ -582,9 +585,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: stentacle2.l
+      - name: tong_01.x
         prefabPath: ""
-        uuid: 10353946381688443848
+        uuid: 1941054608877566434
         tag: Untagged
         active: true
         isStatic: false
@@ -605,9 +608,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: ptentacle.l
+      - name: tong_02.x
         prefabPath: ""
-        uuid: 11605868329378873582
+        uuid: 16838536376052079379
         tag: Untagged
         active: true
         isStatic: false
@@ -628,9 +631,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: ptentacle2.l
+      - name: tong_03.x
         prefabPath: ""
-        uuid: 12575200585792477533
+        uuid: 14116377625816553303
         tag: Untagged
         active: true
         isStatic: false
@@ -651,9 +654,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: ptentacle3.l
+      - name: c_lips_top.x
         prefabPath: ""
-        uuid: 15164158091255832349
+        uuid: 17835017942488472741
         tag: Untagged
         active: true
         isStatic: false
@@ -674,9 +677,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: clavicle.r
+      - name: c_lips_top.l
         prefabPath: ""
-        uuid: 17858266578695003384
+        uuid: 16919834119302684315
         tag: Untagged
         active: true
         isStatic: false
@@ -697,9 +700,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: sythe.r
+      - name: c_lips_top.r
         prefabPath: ""
-        uuid: 8346302863083578665
+        uuid: 12901303165340403037
         tag: Untagged
         active: true
         isStatic: false
@@ -720,9 +723,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: sythe2.r
+      - name: c_lips_smile.l
         prefabPath: ""
-        uuid: 11211639934029112367
+        uuid: 2981283679110752768
         tag: Untagged
         active: true
         isStatic: false
@@ -743,9 +746,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: sythe3.r
+      - name: c_lips_corner_mini.l
         prefabPath: ""
-        uuid: 9246877240759216967
+        uuid: 18200246248643506658
         tag: Untagged
         active: true
         isStatic: false
@@ -766,9 +769,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: arm.r
+      - name: c_lips_smile.r
         prefabPath: ""
-        uuid: 10054629471432870873
+        uuid: 5994623461253000261
         tag: Untagged
         active: true
         isStatic: false
@@ -789,9 +792,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: arm2.r
+      - name: c_lips_corner_mini.r
         prefabPath: ""
-        uuid: 10579670689908299545
+        uuid: 8063352916910091151
         tag: Untagged
         active: true
         isStatic: false
@@ -812,9 +815,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: hand.r
+      - name: shoulder.l
         prefabPath: ""
-        uuid: 153715942006915260
+        uuid: 5827084419749790358
         tag: Untagged
         active: true
         isStatic: false
@@ -835,9 +838,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: thumb1.r
+      - name: arm_stretch.l
         prefabPath: ""
-        uuid: 15931992783813539576
+        uuid: 16023897698525166365
         tag: Untagged
         active: true
         isStatic: false
@@ -858,170 +861,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: tumb2.r
+      - name: forearm_stretch.l
         prefabPath: ""
-        uuid: 8779750478842560620
-        tag: Untagged
-        active: true
-        isStatic: false
-        Components:
-          Transform_Component:
-            name: Transform_Component
-            enabled: true
-            localPosition:
-              - 0
-              - 0
-              - 0
-            localRotation:
-              - 0
-              - -0
-              - 0
-            localScale:
-              - 1
-              - 1
-              - 1
-        Children: ~
-      - name: thumb3.r
-        prefabPath: ""
-        uuid: 9284330582312187054
-        tag: Untagged
-        active: true
-        isStatic: false
-        Components:
-          Transform_Component:
-            name: Transform_Component
-            enabled: true
-            localPosition:
-              - 0
-              - 0
-              - 0
-            localRotation:
-              - 0
-              - -0
-              - 0
-            localScale:
-              - 1
-              - 1
-              - 1
-        Children: ~
-      - name: middle.r
-        prefabPath: ""
-        uuid: 5828819561641445194
-        tag: Untagged
-        active: true
-        isStatic: false
-        Components:
-          Transform_Component:
-            name: Transform_Component
-            enabled: true
-            localPosition:
-              - 0
-              - 0
-              - 0
-            localRotation:
-              - 0
-              - -0
-              - 0
-            localScale:
-              - 1
-              - 1
-              - 1
-        Children: ~
-      - name: middle1.r
-        prefabPath: ""
-        uuid: 4829241713576659477
-        tag: Untagged
-        active: true
-        isStatic: false
-        Components:
-          Transform_Component:
-            name: Transform_Component
-            enabled: true
-            localPosition:
-              - 0
-              - 0
-              - 0
-            localRotation:
-              - 0
-              - -0
-              - 0
-            localScale:
-              - 1
-              - 1
-              - 1
-        Children: ~
-      - name: middle2.r
-        prefabPath: ""
-        uuid: 9146896761225333415
-        tag: Untagged
-        active: true
-        isStatic: false
-        Components:
-          Transform_Component:
-            name: Transform_Component
-            enabled: true
-            localPosition:
-              - 0
-              - 0
-              - 0
-            localRotation:
-              - 0
-              - -0
-              - 0
-            localScale:
-              - 1
-              - 1
-              - 1
-        Children: ~
-      - name: clavicle.l
-        prefabPath: ""
-        uuid: 7358985092436286446
-        tag: Untagged
-        active: true
-        isStatic: false
-        Components:
-          Transform_Component:
-            name: Transform_Component
-            enabled: true
-            localPosition:
-              - 0
-              - 0
-              - 0
-            localRotation:
-              - 0
-              - -0
-              - 0
-            localScale:
-              - 1
-              - 1
-              - 1
-        Children: ~
-      - name: arm.l
-        prefabPath: ""
-        uuid: 14938947154111181498
-        tag: Untagged
-        active: true
-        isStatic: false
-        Components:
-          Transform_Component:
-            name: Transform_Component
-            enabled: true
-            localPosition:
-              - 0
-              - 0
-              - 0
-            localRotation:
-              - 0
-              - -0
-              - 0
-            localScale:
-              - 1
-              - 1
-              - 1
-        Children: ~
-      - name: arm2.l
-        prefabPath: ""
-        uuid: 9848716400548104608
+        uuid: 2031249246779954611
         tag: Untagged
         active: true
         isStatic: false
@@ -1044,7 +886,7 @@ Children:
         Children: ~
       - name: hand.l
         prefabPath: ""
-        uuid: 9260609627398595138
+        uuid: 17403949500993840528
         tag: Untagged
         active: true
         isStatic: false
@@ -1065,9 +907,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: thumb1.l
+      - name: shoulder.r
         prefabPath: ""
-        uuid: 10432848323529159537
+        uuid: 17652509893154419512
         tag: Untagged
         active: true
         isStatic: false
@@ -1088,9 +930,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: tumb2.l
+      - name: arm_stretch.r
         prefabPath: ""
-        uuid: 9804614258423021965
+        uuid: 13624951403147580813
         tag: Untagged
         active: true
         isStatic: false
@@ -1111,9 +953,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: thumb3.l
+      - name: forearm_stretch.r
         prefabPath: ""
-        uuid: 13858055514283426471
+        uuid: 12527254330923440089
         tag: Untagged
         active: true
         isStatic: false
@@ -1134,9 +976,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: middle.l
+      - name: hand.r
         prefabPath: ""
-        uuid: 15520881420973126371
+        uuid: 4349556409706193896
         tag: Untagged
         active: true
         isStatic: false
@@ -1157,9 +999,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: middle1.l
+      - name: shoulder_dupli_001.l
         prefabPath: ""
-        uuid: 13000181458412025558
+        uuid: 10136484000335219449
         tag: Untagged
         active: true
         isStatic: false
@@ -1180,9 +1022,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: middle2.l
+      - name: arm_stretch_dupli_001.l
         prefabPath: ""
-        uuid: 3917133075162199638
+        uuid: 17300114904421222077
         tag: Untagged
         active: true
         isStatic: false
@@ -1203,9 +1045,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: sythe.l
+      - name: forearm_stretch_dupli_001.l
         prefabPath: ""
-        uuid: 10485782452958431468
+        uuid: 7687751417708380781
         tag: Untagged
         active: true
         isStatic: false
@@ -1226,9 +1068,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: sythe2.l
+      - name: hand_dupli_001.l
         prefabPath: ""
-        uuid: 12541519452131987122
+        uuid: 17359418514805592788
         tag: Untagged
         active: true
         isStatic: false
@@ -1249,9 +1091,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: sythe3.l
+      - name: shoulder_dupli_001.r
         prefabPath: ""
-        uuid: 4778038362898316049
+        uuid: 8908496708915833840
         tag: Untagged
         active: true
         isStatic: false
@@ -1272,9 +1114,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: leg.r
+      - name: arm_stretch_dupli_001.r
         prefabPath: ""
-        uuid: 13686531552293407177
+        uuid: 4784494309541253999
         tag: Untagged
         active: true
         isStatic: false
@@ -1295,9 +1137,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: leg2.r
+      - name: forearm_stretch_dupli_001.r
         prefabPath: ""
-        uuid: 10551114294310714433
+        uuid: 13116996040025736739
         tag: Untagged
         active: true
         isStatic: false
@@ -1318,9 +1160,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: leg3.r
+      - name: hand_dupli_001.r
         prefabPath: ""
-        uuid: 5038521532700551522
+        uuid: 4342486780172891001
         tag: Untagged
         active: true
         isStatic: false
@@ -1341,9 +1183,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: foot.r
+      - name: c_tail_00.x
         prefabPath: ""
-        uuid: 18040185119518769494
+        uuid: 3346119142692724503
         tag: Untagged
         active: true
         isStatic: false
@@ -1364,9 +1206,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: leg.l
+      - name: c_tail_01.x
         prefabPath: ""
-        uuid: 1300318679187414497
+        uuid: 3049429254671286230
         tag: Untagged
         active: true
         isStatic: false
@@ -1387,9 +1229,9 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: leg2.l
+      - name: c_tail_02.x
         prefabPath: ""
-        uuid: 11960563331638523269
+        uuid: 9399395840607099858
         tag: Untagged
         active: true
         isStatic: false
@@ -1410,9 +1252,124 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: leg3.l
+      - name: c_tail_03.x
         prefabPath: ""
-        uuid: 473879933774992505
+        uuid: 10353050428249356118
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0
+              - 0
+              - 0
+            localRotation:
+              - 0
+              - -0
+              - 0
+            localScale:
+              - 1
+              - 1
+              - 1
+        Children: ~
+      - name: c_tail_04.x
+        prefabPath: ""
+        uuid: 16849024329283402512
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0
+              - 0
+              - 0
+            localRotation:
+              - 0
+              - -0
+              - 0
+            localScale:
+              - 1
+              - 1
+              - 1
+        Children: ~
+      - name: c_tail_05.x
+        prefabPath: ""
+        uuid: 13860145430768011732
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0
+              - 0
+              - 0
+            localRotation:
+              - 0
+              - -0
+              - 0
+            localScale:
+              - 1
+              - 1
+              - 1
+        Children: ~
+      - name: thigh_b_str.l
+        prefabPath: ""
+        uuid: 10965901806382733533
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0
+              - 0
+              - 0
+            localRotation:
+              - 0
+              - -0
+              - 0
+            localScale:
+              - 1
+              - 1
+              - 1
+        Children: ~
+      - name: thigh_stretch.l
+        prefabPath: ""
+        uuid: 11260620388253700323
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0
+              - 0
+              - 0
+            localRotation:
+              - 0
+              - -0
+              - 0
+            localScale:
+              - 1
+              - 1
+              - 1
+        Children: ~
+      - name: leg_stretch.l
+        prefabPath: ""
+        uuid: 15708612279744306075
         tag: Untagged
         active: true
         isStatic: false
@@ -1435,7 +1392,7 @@ Children:
         Children: ~
       - name: foot.l
         prefabPath: ""
-        uuid: 1131398482092808730
+        uuid: 2280200679363147523
         tag: Untagged
         active: true
         isStatic: false
@@ -1456,9 +1413,124 @@ Children:
               - 1
               - 1
         Children: ~
-      - name: TENTACLE_IK_CNTRL
+      - name: toes_01.l
         prefabPath: ""
-        uuid: 2293194218847670261
+        uuid: 13464483276077908492
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0
+              - 0
+              - 0
+            localRotation:
+              - 0
+              - -0
+              - 0
+            localScale:
+              - 1
+              - 1
+              - 1
+        Children: ~
+      - name: thigh_b_str.r
+        prefabPath: ""
+        uuid: 1193336133732668510
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0
+              - 0
+              - 0
+            localRotation:
+              - 0
+              - -0
+              - 0
+            localScale:
+              - 1
+              - 1
+              - 1
+        Children: ~
+      - name: thigh_stretch.r
+        prefabPath: ""
+        uuid: 4413586760175010042
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0
+              - 0
+              - 0
+            localRotation:
+              - 0
+              - -0
+              - 0
+            localScale:
+              - 1
+              - 1
+              - 1
+        Children: ~
+      - name: leg_stretch.r
+        prefabPath: ""
+        uuid: 10932441836989961052
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0
+              - 0
+              - 0
+            localRotation:
+              - 0
+              - -0
+              - 0
+            localScale:
+              - 1
+              - 1
+              - 1
+        Children: ~
+      - name: foot.r
+        prefabPath: ""
+        uuid: 696166415730638611
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0
+              - 0
+              - 0
+            localRotation:
+              - 0
+              - -0
+              - 0
+            localScale:
+              - 1
+              - 1
+              - 1
+        Children: ~
+      - name: toes_01.r
+        prefabPath: ""
+        uuid: 6658045211137292418
         tag: Untagged
         active: true
         isStatic: false

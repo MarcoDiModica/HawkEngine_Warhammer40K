@@ -62,11 +62,11 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	//resourceManager->LoadResources(); // Esto no se mutea
-	//resourceManager->CreateDefaultCube(); // Esto no se mutea
+	resourceManager->LoadResources(); // Esto no se mutea
+	resourceManager->CreateDefaultCube(); // Esto no se mutea
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
-	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");
 
@@ -307,15 +307,16 @@ bool Root::Start()
 	////Tyranid Warrior
 	//auto tyranidWarrior = CreateGameObject("Tyranid_Warrior");
 	//tyranidWarrior->SetTag("Enemy");
-	//tyranidWarrior->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
+	//tyranidWarrior->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 0));
 	//tyranidWarrior->GetComponent<Transform_Component>()->SetScale(glm::vec3(1, 1, 1));
 	//tyranidWarrior->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	//tyranidWarrior->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.1, 0));
 	//tyranidWarrior->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(1.6,3.7,1.8));
 	//auto tyranidWarriorMesh = CreateGameObjectWithPath("Assets/Meshes/superTyranid.fbx");
 	//tyranidWarriorMesh->SetName("TyranidWarriorMesh");
+	//tyranidWarriorMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//tyranidWarriorMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//tyranidWarriorMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	//tyranidWarriorMesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
 	//tyranidWarriorMesh->AddComponent<ScriptComponent>()->LoadScript("WarriorAnimation");	
 	//ParentGameObject(*tyranidWarriorMesh, *tyranidWarrior);
 	//tyranidWarrior->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerWarrior");

@@ -221,6 +221,7 @@ public class EnemyControllerBossTail : EnemyController
             actionTimer = 1.5f;
             anim.SetStabAnimation();
             CreateTailStabHurtbox();
+
         }
     }
 

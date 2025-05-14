@@ -6,9 +6,11 @@ public class TyranidTentacles : MonoBehaviour
     private GameObject player;
     private PlayerController playerController;
     private TyranidTentaclesAnim tentacleAnim;
+    private TyranidTentaclesAnim tentacleAnim2;
+    private TyranidTentaclesAnim tentacleAnim3;
 
     private const float activationRadius = 0.25f;
-    private const float exposureBeforeStun = 0.3f;
+    private const float exposureBeforeStun = 0.15f;
     private const float stunDuration = 1.0f;
 
     private float exposureTimer = 0f;
@@ -24,8 +26,14 @@ public class TyranidTentacles : MonoBehaviour
             Engineson.print("ERROR: Tentacle collider not found.");
 
         tentacleAnim = gameObject.GetChild("TyranidTentacleMesh").GetComponent<TyranidTentaclesAnim>();
+        tentacleAnim2 = gameObject.GetChild("TyranidTentacleMesh2").GetComponent<TyranidTentaclesAnim>();
+        tentacleAnim3 = gameObject.GetChild("TyranidTentacleMesh3").GetComponent<TyranidTentaclesAnim>();
         if (tentacleAnim == null)
             Engineson.print("ERROR: TyranidTentaclesAnim script not found.");
+        if (tentacleAnim2 == null)
+            Engineson.print("ERROR: TyranidTentaclesAnim2 script not found.");
+        if (tentacleAnim3 == null)
+            Engineson.print("ERROR: TyranidTentaclesAnim3 script not found.");
     }
 
     public override void Update(float deltaTime)
@@ -70,12 +78,17 @@ public class TyranidTentacles : MonoBehaviour
             playerController.BlockMovement();
 
         tentacleAnim?.PlayStunAnim();
+        tentacleAnim2?.PlayStunAnim();
+        tentacleAnim3?.PlayStunAnim();
+
     }
 
     private void ReleasePlayer()
     {
         playerController.UnBlockMovement();
         tentacleAnim?.PlayHideAnim();
+        tentacleAnim2?.PlayHideAnim();
+        tentacleAnim3?.PlayHideAnim();
 
         ResetState();
     }

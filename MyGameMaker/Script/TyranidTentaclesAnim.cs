@@ -60,7 +60,7 @@ public class TyranidTentaclesAnim : MonoBehaviour
         if (skeletalAnim == null || currentAnim == 1) return;
 
         skeletalAnim.SetAnimation(1); // hide
-        skeletalAnim.SetAnimationSpeed(1.0f);
+        skeletalAnim.SetAnimationSpeed(1f);
         skeletalAnim.SetAnimationPlayState(true);
         isPlaying = true;
         animationTimer = 0.0f;

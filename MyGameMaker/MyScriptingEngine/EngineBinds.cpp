@@ -1319,7 +1319,34 @@ void EngineBinds::DOVec3(glm::vec3* value, glm::vec3 start, glm::vec3 target, fl
 {
 	Tweening::TweenVec3(value, start, target, duration, mode);
 }
-    
+
+//Text
+
+void EngineBinds::SetText(MonoObject* textRef, MonoString* text)
+{
+	char* C_text = mono_string_to_utf8(text);
+	auto uiText = ConvertFromSharpComponent<UITextComponent>(textRef);
+	if (uiText) {
+		uiText->SetText(C_text);
+	}
+}
+
+void EngineBinds::SetTextColor(MonoObject* textRef, glm::vec4* color)
+{
+	auto uiText = ConvertFromSharpComponent<UITextComponent>(textRef);
+	if (uiText) {
+		uiText->SetColor(*color);
+	}
+}
+
+void EngineBinds::SetTextSize(MonoObject* textRef, float size)
+{
+	auto uiText = ConvertFromSharpComponent<UITextComponent>(textRef);
+	if (uiText) {
+		uiText->SetSize(size);
+	}
+}
+
 bool EngineBinds::LoadScene(MonoString* sceneName)
 {
     char* C_sceneName = mono_string_to_utf8(sceneName);
@@ -1560,6 +1587,10 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.Tweening::DOVector3", (const void*)&EngineBinds::DOVec3);
     mono_add_internal_call("HawkEngine.Tweening::CleanTweens", (const void*)&EngineBinds::CleanAllTweens);
 
+	// Text
+	mono_add_internal_call("HawkEngine.UIText::SetText", (const void*)&EngineBinds::SetText);
+	mono_add_internal_call("HawkEngine.UIText::SetTextColor", (const void*)&EngineBinds::SetTextColor);
+	mono_add_internal_call("HawkEngine.UIText::SetTextSize", (const void*)&EngineBinds::SetTextSize);
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);
 	mono_add_internal_call("HawkEngine.SceneManager::SetSceneToPlay", (const void*)&EngineBinds::SetScenePlay);

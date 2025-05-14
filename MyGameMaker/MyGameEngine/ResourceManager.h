@@ -139,6 +139,7 @@ public:
 	}
 
 	void DeleteAllUselessResources();
+	void UpdateTextures();
 
 private:
 	//meshes
@@ -150,7 +151,5 @@ private:
 	//images
 	std::unordered_map<std::string, size_t> imageIndex;
 	std::vector<std::shared_ptr<Image>> images;
-
-
 };
 

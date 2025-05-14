@@ -145,7 +145,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 1500f;
+        //currentHealth = health;
         gameObject.tag = "Boss";
         isDead = false;
 //         musicClip = new AudioClip(combatMusic, "BossMusic", true, false);
@@ -449,7 +449,7 @@ public class EnemyControllerBoss : EnemyController
             Vector3 spawnPosition = playerTransform.position + metalSlideStartOffset;
 
             metalSlideObject = Engineson.CreateGameObject("MetalSlide", null);
-            metalSlideObject.AddComponent<MeshRenderer>();
+            //metalSlideObject.AddComponent<MeshRenderer>();
             metalSlideObject.AddComponent<BoxCollider>();
             metalSlideObject.GetComponent<BoxCollider>().SetTrigger(true);
             metalSlideObject.tag = "EnemyAttack";
@@ -458,6 +458,9 @@ public class EnemyControllerBoss : EnemyController
             transform.position = spawnPosition;
             transform.SetScale(3, 3, 3);
             anim.SetIdleAnimation(); //Temporary, missing metal slide animation
+            metalSlideObject.AddComponent<ParticleFX>();
+            metalSlideObject.GetComponent<ParticleFX>().ApplyPreset(25);
+            metalSlideObject.GetComponent<ParticleFX>().EmitBurst(50);
             Audio.PlayOneShot(AcidClip);
         }
     }
@@ -558,9 +561,12 @@ public class EnemyControllerBoss : EnemyController
         if (enemyTransform == null) return;
 
         slamHurtboxObject = Engineson.CreateGameObject("SlamHurtbox", null);
-        slamHurtboxObject.AddComponent<MeshRenderer>();
+        //slamHurtboxObject.AddComponent<MeshRenderer>();
         slamHurtboxObject.AddComponent<BoxCollider>();
         slamHurtboxObject.GetComponent<BoxCollider>().SetTrigger(true);
+        slamHurtboxObject.AddComponent<ParticleFX>();
+        slamHurtboxObject.GetComponent<ParticleFX>().ApplyPreset(24);
+        slamHurtboxObject.GetComponent<ParticleFX>().EmitBurst(1);
         slamHurtboxObject.tag = "EnemyAttack";
 
         Vector3 forward = enemyTransform.forward;
@@ -603,7 +609,7 @@ public class EnemyControllerBoss : EnemyController
             Vector3 position = origin + offset + new Vector3(0, 2, 0);
 
             GameObject clawSegment = Engineson.CreateGameObject("ClawHurtbox", null);
-            clawSegment.AddComponent<MeshRenderer>();
+            //clawSegment.AddComponent<MeshRenderer>();
             clawSegment.AddComponent<BoxCollider>();
             clawSegment.GetComponent<BoxCollider>().SetTrigger(true);
             clawSegment.tag = "EnemyAttack";

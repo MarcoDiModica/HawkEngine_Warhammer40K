@@ -53,6 +53,7 @@ public class EnemyControllerStalker : EnemyController
     // Death
     private float deathTimer = 0f;
     private float deathCooldown = 2f;
+
     public override void Awake()
     {
         startPosition = gameObject.GetComponent<Transform>().position;
@@ -379,6 +380,8 @@ public class EnemyControllerStalker : EnemyController
             hasPounce = false;
             isPouncing = true;
             Audio.PlayOneShot(SFX_POUNCE);
+            AddComponent<ParticleFX>().ApplyPreset(26);
+            GetComponent<ParticleFX>().EmitBurst(1);
             Engineson.print("Pouncing");
             anim.SetLeapAnimation();
             rb.SetVelocity(rb.GetVelocity() * 120f);

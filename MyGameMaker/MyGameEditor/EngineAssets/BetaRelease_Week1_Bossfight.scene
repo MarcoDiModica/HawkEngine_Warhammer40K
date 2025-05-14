@@ -1622,6 +1622,7 @@ GameObject12:
         fields:
           isShootInput: false
           isRunning: false
+          canMove: true
           flashDuration: 0.100000001
           aimLaser: AimLaser
           aimLaserEnd: AimLaserEnd
@@ -13798,10 +13799,10 @@ GameObject27:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 2
           anim_index_limit: 4
       Children: ~
     - name: blood_bar1
@@ -13916,10 +13917,10 @@ GameObject27:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 2
           anim_index_limit: 4
       Children: ~
     - name: blood_bar2
@@ -14630,3 +14631,77 @@ GameObject27:
           anim_index: 0
           anim_index_limit: 0
       Children: ~
+GameObject28:
+  name: EmptyGameObject
+  prefabPath: ""
+  uuid: 11441573788659346035
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 2.5999999
+      particlesPerSecond: 2.5999999
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 0.800000012
+      endSize: 8
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 0.349999994
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.200000003
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 384
+        - 216
+      useAnimation: true
+      animSpeed: 0.0299999993
+      startRotation: 0
+      randomRotation: true
+      material:
+        billboardType: 0
+        particleType: 18
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Medicae_Stim.png
+      particleType: 18
+  Children: ~

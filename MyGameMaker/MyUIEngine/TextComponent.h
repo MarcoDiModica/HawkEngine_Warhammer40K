@@ -37,15 +37,13 @@ public:
         return std::make_unique<TextComponent>(owner, m_text, m_position, m_color, m_fontSize);
     }
     // New method to access the owner  
-    GameObject* GetOwner() const { return m_owner; }
+    GameObject* GetOwner() const { return owner; }
 
     // Agregar instancia de clase abstracta
     MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
 
 private:
-    GameObject* m_owner; // Pointer to the owning GameObject  
-	std::string m_name = "TextComponent";
     std::string m_text;
     glm::vec2 m_position;
     glm::vec3 m_color;
@@ -64,7 +62,6 @@ protected:
 
         YAML::Node node = Component::encode();
 
-		node["name"] = m_name;
         node["text"] = m_text;
         node["position"] = std::vector<float>{ m_position.x, m_position.y };
         node["color"] = std::vector<float>{ m_color.r, m_color.g, m_color.b };
@@ -83,7 +80,6 @@ protected:
             return false;
         }
 
-		m_name = node["name"].as<std::string>();
         m_text = node["text"].as<std::string>();
         m_position.x = node["position"][0].as<float>();
         m_position.y = node["position"][1].as<float>();

@@ -9,8 +9,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 TextComponent::TextComponent(GameObject* owner, const std::string& text, const glm::vec2& position, const glm::vec3& color, float fontSize)
-    : Component(owner), m_owner(owner), m_text(text), m_position(position), m_color(color), m_fontSize(fontSize)
+    : Component(owner), m_text(text), m_position(position), m_color(color), m_fontSize(fontSize)
 {
+    name = "TextComponent";
 }
 
 MonoObject* TextComponent::GetSharp() {
@@ -72,8 +73,8 @@ void TextComponent::Render() const {
     glm::mat4 modelMatrix = glm::mat4(1.0f);
     glm::vec2 renderPosition = m_position;
 
-    if (m_owner->HasComponent<UITransformComponent>()) {
-        UITransformComponent* rectTransform = m_owner->GetComponent<UITransformComponent>();
+    if (owner->HasComponent<UITransformComponent>()) {
+        UITransformComponent* rectTransform = owner->GetComponent<UITransformComponent>();
         glm::vec2 uiPosition = rectTransform->GetPosition();  
 
         renderPosition.x = uiPosition.x * screenWidth;

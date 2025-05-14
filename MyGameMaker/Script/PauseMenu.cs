@@ -23,6 +23,7 @@ public class PauseMenu : MonoBehaviour
     private UITransform transform_quitButton;
 
     //private Audio sound;
+    private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
 
     private ButtonState prevState_resumeButton = ButtonState.DEFAULT;
     private ButtonState prevState_optionsMenuButton = ButtonState.DEFAULT;
@@ -213,27 +214,24 @@ public class PauseMenu : MonoBehaviour
 
             if (selectedButton == button_resumeButton)
             {
-                //sound?.LoadAudio(buttonClicked);
-                //sound?.Play();
+                Audio.PlayOneShot(ConfirmSFX);
                 gameObject.SetActive(false);
             }
             else if (selectedButton == button_optionsMenuButton)
             {
-                //sound?.LoadAudio(buttonClicked);
-                //sound?.Play();
+                Audio.PlayOneShot(ConfirmSFX);
                 optionsMenu.SetActive(true);
                 gameObject.SetActive(false);
             }
             else if (selectedButton == button_mainMenuButton)
             {
-                //sound?.LoadAudio(buttonClicked);
-                //sound?.Play();
+                Audio.PlayOneShot(ConfirmSFX);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)
             {
-                //sound?.LoadAudio(buttonClicked);
-                //sound?.Play();
+                Audio.PlayOneShot(ConfirmSFX);
+           
                 // Aquí puedes agregar la lógica para salir del juego
             }
         }

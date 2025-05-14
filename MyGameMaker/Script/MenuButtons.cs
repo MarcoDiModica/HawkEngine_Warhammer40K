@@ -32,20 +32,25 @@ public class MenuButtons : MonoBehaviour
     private ButtonState prevState_quitButton = ButtonState.DEFAULT;
 
     private bool[] hasPlayedHoverSound;
+    private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
+    private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
+    private string MainMenuMusic = "Assets/Audio/Music/MainTheme_BetaBuild2.ogg";
 
-//     private AudioSource sound;
-//     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
-//     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
-//     private string buttonStartGame = "Assets/Audio/SFX/UI/UI_Confirm.wav"; 
-//     private AudioClip buttonHoveredFX;
-//     private AudioClip buttonClickedFX;
-//     private AudioClip buttonStartGameFX;
+    //     private AudioSource sound;
+    //     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
+    //     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+    //     private string buttonStartGame = "Assets/Audio/SFX/UI/UI_Confirm.wav"; 
+    //     private AudioClip buttonHoveredFX;
+    //     private AudioClip buttonClickedFX;
+    //     private AudioClip buttonStartGameFX;
 
     private int selectedButtonIndex = -1;
     private UIButton[] buttons;
     private UITransform[] transforms;
 
     private long lastInputTime = 0;
+
+    private bool isMainMenuMusicPlaying = false;
     private enum InputMethod
     {
         None,
@@ -201,22 +206,25 @@ public class MenuButtons : MonoBehaviour
 
             if (selectedButton == button_newGameButton)
             {
-                //sound?.Play(buttonStartGameFX);
+                Audio.PlayOneShot(ConfirmSFX);
+                Audio.Stop(MainMenuMusic);
                 SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
             }
             else if (selectedButton == button_continueButton)
             {
-                //sound?.Play(buttonStartGameFX);
+                Audio.PlayOneShot(ConfirmSFX);
+                Audio.Stop(MainMenuMusic);
                 SceneManager.LoadScene("BetaRelease_Week1_Lvl2");
             }
             else if (selectedButton == button_optionsButton)
             {
                 //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(MenuSFX);
                 optionsCanvas.SetActive(true);
             }
             else if (selectedButton == button_quitButton)
             {
-                //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(ConfirmSFX);
             }
         }
         
@@ -239,11 +247,17 @@ public class MenuButtons : MonoBehaviour
             Engineson.print("ERROR: No Canvas object found");
             return;
         }
-//         if (sound == null)
-//         {
-//             Engineson.print("ERROR: Audio not found");
-//             return;
-//         }
+
+        if (!isMainMenuMusicPlaying)
+        {
+            Audio.Play(MainMenuMusic, true);
+            isMainMenuMusicPlaying = true; 
+        }
+        //         if (sound == null)
+        //         {
+        //             Engineson.print("ERROR: Audio not found");
+        //             return;
+        //         }
 
         NavigateMenu();
     }

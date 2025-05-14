@@ -8,6 +8,7 @@ public class Interaction : MonoBehaviour
     private GameObject Text;
     private GameObject interactText;
     private float timer = 0f;
+    private string TextSFX = "Assets/Audio/UI/Dialog_Beeps.wav";
 
     public void SpawnDialogueText(bool condition)
     {
@@ -52,6 +53,7 @@ public class Interaction : MonoBehaviour
         timer += deltaTime;
         if (Input.GetKeyDown(KeyCode.X))
         {
+            Audio.PlayOneShot(TextSFX);
             SpawnDialogueText(true);
         }
 

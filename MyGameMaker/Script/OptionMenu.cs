@@ -50,7 +50,7 @@ public class OptionMenu : MonoBehaviour
     int bgmVolume = 100; // Default volume level
     float sliderPosBGM = 0.575f;
 
-
+    private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
     GameObject sfxSlider;
     GameObject sfxLeft;
     GameObject sfxRight;
@@ -153,21 +153,18 @@ public class OptionMenu : MonoBehaviour
                 pauseMenu.SetActive(true);
             }
             gameObject.SetActive(false);
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
         }
 
         if (rLeftButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
             PreviousResolution();
         }
 
         if (rRightButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
             NextResolution();
         }
 
@@ -201,8 +198,7 @@ public class OptionMenu : MonoBehaviour
 
         if (fullScreenButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
+            Audio.PlayOneShot(ConfirmSFX);
 
             if (fullScreenTick.IsActive())
             {
@@ -230,11 +226,11 @@ public class OptionMenu : MonoBehaviour
 
         if (masterLeftButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
-            if (masterVolume > 0)
+            Audio.PlayOneShot(ConfirmSFX);
+
+            if (Audio.MasterVolume > -79)
             {
-                masterVolume -= 10;
+                Audio.MasterVolume -= 8.0f;
                 sliderPosMaster -= sliderScale;
                 transform_masterSlider.DOMoveXUI(sliderPosMaster, 0, Modes.LINEAR);
             }
@@ -252,11 +248,11 @@ public class OptionMenu : MonoBehaviour
 
         if (masterRightButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
-            if (masterVolume < 100)
+            Audio.PlayOneShot(ConfirmSFX);
+
+            if (Audio.MasterVolume < 1)
             {
-                masterVolume += 10;
+                Audio.MasterVolume += 8.0f;
                 sliderPosMaster += sliderScale;
                 transform_masterSlider.DOMoveXUI(sliderPosMaster, 0, Modes.LINEAR);
             }
@@ -274,11 +270,11 @@ public class OptionMenu : MonoBehaviour
 
         if (bgmLeftButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
-            if (bgmVolume > 0)
+            Audio.PlayOneShot(ConfirmSFX);
+
+            if (Audio.MusicVolume > -79)
             {
-                bgmVolume -= 10;
+                Audio.MusicVolume -= 8.0f;
                 sliderPosBGM -= sliderScale;
                 transform_bgmSlider.DOMoveXUI(sliderPosBGM, 0, Modes.LINEAR);
             }
@@ -286,11 +282,11 @@ public class OptionMenu : MonoBehaviour
 
         if (bgmRightButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
-            if (bgmVolume < 100)
+            Audio.PlayOneShot(ConfirmSFX);
+
+            if (Audio.MusicVolume < 1)
             {
-                bgmVolume += 10;
+                Audio.MusicVolume += 8.0f;
                 sliderPosBGM += sliderScale;
                 transform_bgmSlider.DOMoveXUI(sliderPosBGM, 0, Modes.LINEAR);
             }
@@ -317,11 +313,11 @@ public class OptionMenu : MonoBehaviour
 
         if (sfxLeftButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
-            if (sfxVolume > 0)
+            Audio.PlayOneShot(ConfirmSFX);
+
+            if (Audio.SfxVolume > -79)
             {
-                sfxVolume -= 10;
+                Audio.SfxVolume -= 8.0f;
                 sliderPosSFX -= sliderScale;
                 transform_sfxSlider.DOMoveXUI(sliderPosSFX, 0, Modes.LINEAR);
             }
@@ -329,11 +325,11 @@ public class OptionMenu : MonoBehaviour
 
         if (sfxRightButton.GetState() == ButtonState.CLICKED)
         {
-            //sound?.LoadAudio(buttonClicked);
-            //sound?.Play();
-            if (sfxVolume < 100)
+            Audio.PlayOneShot(ConfirmSFX);
+
+            if (Audio.SfxVolume < 1)
             {
-                sfxVolume += 10;
+                Audio.SfxVolume += 8.0f;
                 sliderPosSFX += sliderScale;
                 transform_sfxSlider.DOMoveXUI(sliderPosSFX, 0, Modes.LINEAR);
             }

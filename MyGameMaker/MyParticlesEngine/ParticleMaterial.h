@@ -17,15 +17,15 @@ enum class ParticleType {
     ENVIRONMENT_DROPPLET = 15,
     ENVIRONMENT_SPARK = 16,
     // Enemies
-    ENEMY_DASH  = 9,
-    ACID_ATK    = 10,
+    ENEMY_DASH = 9,
+    ACID_ATK = 10,
     // ACID_ATK_EXPLODE can use the same vfx structure as ACID_ATK with different texture
     ACID_PUDDLE = 11,
     MAWLOC_SLAM = 24,
     MAWLOC_ROCKS = 25,
     //Lictor
-	LICTOR_LEAP = 26,
-	LICTOR_DODGE = 27,
+    LICTOR_LEAP = 26,
+    LICTOR_DODGE = 27,
 
     // Player / Weapons
     ENERGY_BALL = 12,
@@ -35,9 +35,12 @@ enum class ParticleType {
     ARC_SNARE_IMPACT = 17,
     MEDICAE_STIM = 18,
     BLOOD_SPLASH = 19,
-	SHOTGUN_SHOT = 20,
-	MEDICAE_STIM_SPEED = 21,
-	AMMUNITION_BLESSING = 22,
+    SHOTGUN_SHOT = 20,
+    MEDICAE_STIM_SPEED = 21,
+
+    // PowerUps
+    AMMUNITION_BLESSING = 22,
+    MAGNET_AREA = 28
 };
 
 class ParticleMaterial : public Material {

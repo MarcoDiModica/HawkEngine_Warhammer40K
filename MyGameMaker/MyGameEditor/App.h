@@ -91,7 +91,8 @@ public:
 			"Assets/Textures/MawlocSmokeSpritesheet.png",
 			"Assets/Textures/rock.png",
 			"Assets/Textures/VFX_lictor_leap.png",
-			"Assets/Textures/VFX_lictor_dodge_cue.png"
+			"Assets/Textures/VFX_lictor_dodge_cue.png",
+			"Assets/Textures/Magnet_Area_animation_SpriteSheet_Yiwei.png"
 
 		};
 

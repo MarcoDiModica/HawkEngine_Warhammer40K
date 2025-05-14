@@ -238,7 +238,7 @@ public class PlayerShooting : MonoBehaviour
         if (playerInput?.IsAbility2Pressed() == true)
         {
             Engineson.print("Ability 2 pressed");
-            UseAbility2();
+            //UseAbility2();
         }
     }
 

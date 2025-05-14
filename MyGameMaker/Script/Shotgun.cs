@@ -9,7 +9,7 @@ public class Shotgun : BaseWeapon
 
     private const string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
     private const string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
-
+    private bool strongShot = false;
 
     private PlayerController playerController;
     public PlayerData playerData;
@@ -31,6 +31,9 @@ public class Shotgun : BaseWeapon
 
     private bool isReloading = false;
     private float reloadTimer = 0.0f;
+
+    private float strongshotTimer = 0.0f;
+    private float strongshotCooldown = 1.5f;
     public override void Awake()
     {
 
@@ -112,7 +115,7 @@ public class Shotgun : BaseWeapon
 
                         if (redThirstManager.IsInBlackRage())
                             finalDamage += redThirstManager.redThirstBonus;
-
+                        Engineson.print("Hit for this amount:" + finalDamage);
                         switch (tag)
                         {
                             case "Melee":
@@ -141,6 +144,17 @@ public class Shotgun : BaseWeapon
                 }
             }
 
+            if (strongShot)
+            {
+                strongshotTimer += deltaTime;
+                if (strongshotTimer >= strongshotCooldown)
+                {
+                    Engineson.print("Damage reset");
+                    damage = damage / 2;
+                    strongShot = false;
+                    strongshotTimer = 0.0f;
+                }
+            }
             bulletsPos[i] = newPos;
             bulletsObjects[i].GetComponent<Transform>().position = newPos;
 
@@ -164,7 +178,7 @@ public class Shotgun : BaseWeapon
         if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence && !isReloading)
         {
             //shakeManager.ApplyShake(shakeIntensity, shakeDuration,shakeSpeed);
-
+            
             timeSinceLastShot = 0f;
 
             if (!playerData.infiniteBullets)
@@ -251,12 +265,16 @@ public class Shotgun : BaseWeapon
 
     public override void UseAbility1()
     {
-        hookShot.TriggerAbility();
+        if (!strongShot)
+        {
+            damage = damage * 2;
+            strongShot = true;
+        }
+        Shoot();
     }
 
     public override void UseAbility2()
     {
-        barrage.TriggerAbility();
     }
 
     public override void CleanBullets()
@@ -266,7 +284,6 @@ public class Shotgun : BaseWeapon
 
     public override void ResetCooldowns()
     {
-        hookShot.ResetCooldowns();
         barrage.ResetCooldowns();
     }
 }

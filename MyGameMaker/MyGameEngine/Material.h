@@ -92,6 +92,9 @@ protected:
         std::string name = matName;
         node["name"] = name;
 
+		node["color"] = std::vector<float>{ color.r, color.g, color.b, color.a };
+
+
 		SaveBinary(name);
 
         return node;
@@ -117,6 +120,13 @@ protected:
 		fin.read(reinterpret_cast<char*>(&filter), sizeof(filter));
 		fin.read(reinterpret_cast<char*>(&color), sizeof(color));
 		fin.read(reinterpret_cast<char*>(&shaderType), sizeof(shaderType));
+
+		if (node["color"]) {
+			auto colorValues = node["color"].as<std::vector<float>>();
+			if (colorValues.size() == 4) {
+				color = glm::vec4(colorValues[0], colorValues[1], colorValues[2], colorValues[3]);
+			}
+		}
 
 		while (fin.peek() != EOF) {
 			char type[4];

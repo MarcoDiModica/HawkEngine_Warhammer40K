@@ -40,10 +40,6 @@ namespace HawkEngine
             {
                 return 4;
             }
-            else if(type == typeof(Audio))
-            {
-                return 5;
-            }
             else if (type == typeof(SkeletalAnimation))
             {
                 return 6;
@@ -61,11 +57,7 @@ namespace HawkEngine
                 return 13;
             }
 
-
-
-
             return -1;
         }
-
     }
 }

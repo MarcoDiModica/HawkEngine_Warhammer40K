@@ -1,0 +1,77 @@
+name: RailgunUpgrade
+prefabPath: ""
+uuid: 14696005733341428833
+tag: Upgrade
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - -2.6238698959350586
+      - 2
+      - -2.5955934524536133
+    localRotation:
+      - 0
+      - 0
+      - -28.175270131725554
+    localScale:
+      - 2.790001392364502
+      - 2.790001392364502
+      - 2.7899999618530273
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  ScriptComponents:
+    Script0:
+      name: RailgunUpgradePickUp
+      fields:
+        floatSpeed: 0.615087867
+        floatHeight: 0.5
+        rotationSpeed: 75.5006332
+Children:
+  - name: railgunMesh
+    prefabPath: ""
+    uuid: 8462308081342982845
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - -0.09075501561164856
+          - 0.61142861843109131
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 0.0010000000474974513
+          - 0.0010000000474974513
+          - 0.0010000000474974513
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 5139834007055871956
+        material:
+          name: railgun_DefaultMaterial_BaseColor
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~

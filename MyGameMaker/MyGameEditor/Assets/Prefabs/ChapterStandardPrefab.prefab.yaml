@@ -1,0 +1,80 @@
+name: estandarte.001_1_1_Instance_Instance
+prefabPath: Assets\Prefabs\ChapterStandardPrefab.prefab.yaml
+uuid: 11017546273344798488
+tag: PowerUp
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 7.9313750267028809
+      - 2.5069775581359863
+      - 5.7417173385620117
+    localRotation:
+      - -133.34330609603737
+      - -71.277428061608433
+      - 120.49717930131865
+    localScale:
+      - 0.0027348003563859463
+      - 0.0027347978656903152
+      - 0.0027347995853872725
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 11023065401122553535
+    material:
+      name: powerups_DefaultMaterial_BaseColor
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - -0.699999988
+      - 0
+    isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.85992217063903809
+      - 0.63135254383087158
+      - 0.097034022212028503
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - 1
+      - 1
+      - 1
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 6.5999999
+    intensity: 2.5
+    direction:
+      - -1
+      - -1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: ChapterStandard
+      fields:
+        floatSpeed: 0.747108757
+        floatHeight: 0.5
+        rotationSpeed: 94.7728119
+        lifeTime: 10
+Children: ~

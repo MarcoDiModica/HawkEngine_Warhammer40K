@@ -10,12 +10,9 @@
 #include "../MyGameEngine/InputEngine.h"
 #include "../MyGameEngine/Scene.h"
 #include "../MyPhysicsEngine/BoxColliderComponent.h"
-#include "../MyAudioEngine/SoundComponent.h"
-#include "ScriptComponent.h"
 #include <mono/metadata/debug-helpers.h>
 #include <MyPhysicsEngine/RigidBodyComponent.h>
 #include "../MyGameEditor/App.h"
-#include "../MyAudioEngine/SoundComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UIButtonComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
@@ -27,6 +24,8 @@
 #include "../MyParticlesEngine/ParticleFX.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
+#include <MyGameEngine/PrefabManager.h>
+#include "MyAudioEngine/AudioManager.h"
 
 // GameObject
 
@@ -96,6 +95,24 @@ GameObject* EngineBinds::GetScriptOwner(MonoObject* ref) {
     return reinterpret_cast<GameObject*>(Cptr);
 }
 
+MonoObject* EngineBinds::GameObjectFindChild(MonoObject* parentRef, MonoString* name)
+{
+    char* cName = mono_string_to_utf8(name);
+    std::string target(cName);
+    mono_free(cName);
+
+    GameObject* parentGO = ConvertFromSharp(parentRef);
+    if (!parentGO) return nullptr;
+
+    for (auto& child : parentGO->GetChildren()) {
+        if (child->GetName() == target) {
+            return child->GetSharp();
+        }
+    }
+
+    return nullptr;
+}
+
 void EngineBinds::GameObjectAddChild(MonoObject* parent, MonoObject* child) {
     if (!parent || !child) {
         return;
@@ -106,6 +123,8 @@ void EngineBinds::GameObjectAddChild(MonoObject* parent, MonoObject* child) {
 
     _parent->AddChild(_child);
 }
+
+
 
 void EngineBinds::Destroy(MonoObject* object_to_destroy) {
     if (object_to_destroy == nullptr) {
@@ -132,7 +151,7 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 
         MonoClass* targetClass = mono_class_from_name_case(
             MonoManager::GetInstance().GetImage(),
-            "", // Namespace vacío (se puede mejorar)
+            "", // Namespace vacï¿½o (se puede mejorar)
             C_name
         );
 
@@ -175,9 +194,6 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
     else if (componentName == "HawkEngine.Rigidbody") {
 		return GO->GetComponent<RigidbodyComponent>()->GetSharp();
 	}
-    else if (componentName == "HawkEngine.Audio") {
-        return GO->GetComponent<SoundComponent>()->GetSharp();
-    }
     else if (componentName == "HawkEngine.UIImage") {
         return GO->GetComponent<UIImageComponent>()->GetSharp();
     }
@@ -222,8 +238,6 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
     case 3: _component = static_cast<Component*>(go->AddComponent<BoxColliderComponent>(Application->physicsModule));
 		break;
     case 4: _component = static_cast<Component*>(go->AddComponent<RigidbodyComponent>(Application->physicsModule));
-        break;
-    case 5: _component = static_cast<Component*>(go->AddComponent<SoundComponent>());
         break;
     case 6: _component = static_cast<Component*>(go->AddComponent<UIImageComponent>());
 		break;
@@ -311,6 +325,47 @@ MonoObject* EngineBinds::GetGameObjectByName(MonoString* name)
 	GameObject* go = SceneManagement->FindGOByName(std::string(C_name)).get();
     return go ? go->GetSharp() : nullptr;
 }
+
+MonoArray* EngineBinds::GetGameObjectsByTag(MonoString* tag) {
+    // Convert MonoString* to std::string
+    char* tagStr = mono_string_to_utf8(tag);
+    std::string tagCpp(tagStr);
+    mono_free(tagStr);
+
+    // Find all GameObjects with the specified tag
+    std::vector<GameObject*> matchingGameObjects = SceneManagement->FindGOsByTag(tagCpp);
+
+    // Retrieve the MonoClass for GameObject
+    MonoClass* gameObjectClass = mono_class_from_name(
+        MonoManager::GetInstance().GetImage(),
+        "HawkEngine",
+        "GameObject"
+    );
+
+    if (!gameObjectClass) {
+        //Logger::LogError("Failed to find MonoClass for GameObject. Check namespace and class name.");
+        return nullptr;
+    }
+
+    // Create a MonoArray to hold the results
+    MonoArray* resultArray = mono_array_new(
+        mono_domain_get(),
+        gameObjectClass,
+        matchingGameObjects.size()
+    );
+
+    // Populate the MonoArray with GameObjects
+    for (size_t i = 0; i < matchingGameObjects.size(); ++i) {
+        MonoObject* sharpObject = CreateGameObjectSharp(
+            mono_string_new(mono_domain_get(), matchingGameObjects[i]->GetName().c_str()),
+            matchingGameObjects[i]
+        );
+        mono_array_set(resultArray, MonoObject*, i, sharpObject);
+    }
+
+    return resultArray;
+}
+
 
 // Input
 bool EngineBinds::GetKey(int keyID) {
@@ -585,77 +640,26 @@ void EngineBinds::SetOffset(MonoObject* cameraRef, glm::vec3* offset)
 }
 
 // MeshRenderer
-void EngineBinds::SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef)
-{
-    if (!meshRendererRef || !meshRef) return;
-
-    MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-	Mesh* mesh = ConvertFromSharpComponent<Mesh>(meshRef);
-
-    if (meshRenderer && mesh)
-    {
-        meshRenderer->SetMesh(std::shared_ptr<Mesh>(mesh));
-    }
-}
-
-void EngineBinds::SetCubeMesh(MonoObject* meshRendererRef)
-{
-    if (!meshRendererRef) return;
-
-	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-	if (!meshRenderer) return;
-
-	meshRenderer->SetMesh(Mesh::CreateCube());
-}
-
-MonoObject* EngineBinds::GetMesh(MonoObject* meshRendererRef)
-{
-    if (!meshRendererRef) return nullptr;
-
-	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-    if (!meshRendererRef) return nullptr;
-
-    std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
-	if (!mesh) return nullptr;
-
-	//return Mono::CreateSharpObjectFromCPlusPlus(mesh.get());
-
-}
-
-void EngineBinds::SetMaterial(MonoObject* meshRendererRef, MonoObject* materialRef)
-{
-	if (!meshRendererRef || !materialRef) return;
-
-	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-	Material* material = ConvertFromSharpComponent<Material>(materialRef);
-
-	if (meshRenderer && material)
-	{
-		meshRenderer->SetMaterial(std::shared_ptr<Material>(material));
-	}
-}
-
-MonoObject* EngineBinds::GetMaterial(MonoObject* meshRendererRef)
-{
-	if (!meshRendererRef) return nullptr;
-
-	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
-	if (!meshRendererRef) return nullptr;
-
-	std::shared_ptr<Material> material = meshRenderer->GetMaterial();
-	if (!material) return nullptr;
-
-	//return Mono::CreateSharpObjectFromCPlusPlus(material.get());
-}
-
-void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec3* color)
+void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec4* color)
 {
     if (!meshRendererRef || !color) return;
 
     MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
     if (meshRenderer) {
-        meshRenderer->SetColor(*color);
+        meshRenderer->GetMaterial()->SetColor(*color);
     }
+}
+
+glm::vec4 EngineBinds::GetColor(MonoObject* meshRendererRef)
+{
+    if (!meshRendererRef) return glm::vec4(0.0f);
+
+	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
+	if (meshRenderer) {
+		return meshRenderer->GetMaterial()->GetColor();
+	}
+
+	return glm::vec4(0.0f);
 }
 	
 // Physics Collider
@@ -715,29 +719,42 @@ MonoObject* GetMonoObjectFromGameObjectHelper(GameObject* gameObject) {
 	return monoGameObject;
 }
 
-// mirarse esta funcion rarilla
 MonoArray* EngineBinds::OverlapSphere(glm::vec3* position, float radius, MonoString* tag) {
-    if (!Application || !Application->physicsModule) {
-        return nullptr;
-    }
+	if (!Application || !Application->physicsModule) {
+		return nullptr;
+	}
 
-    std::string tagStr = mono_string_to_utf8(tag);
-    auto overlappingObjects = Application->physicsModule->OverlapSphere(*position, radius, tagStr);
+	try {
+		std::string tagStr = mono_string_to_utf8(tag);
+		auto overlappingObjects = Application->physicsModule->OverlapSphere(*position, radius, tagStr);
 
-    MonoDomain* domain = mono_domain_get();
-    MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
-    if (!gameObjectClass) return nullptr;
+		MonoDomain* domain = mono_domain_get();
+		if (!domain) return nullptr;
 
-    MonoArray* monoArray = mono_array_new(domain, gameObjectClass, overlappingObjects.size());
+		MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+		if (!gameObjectClass) return nullptr;
 
-    for (size_t i = 0; i < overlappingObjects.size(); i++) {
-        MonoObject* monoGameObject = GetMonoObjectFromGameObjectHelper(overlappingObjects[i]);
-        if (monoGameObject) {
-            mono_array_set(monoArray, MonoObject*, i, monoGameObject);
-        }
-    }
+		MonoArray* monoArray = mono_array_new(domain, gameObjectClass, overlappingObjects.size());
 
-    return monoArray;
+		for (size_t i = 0; i < overlappingObjects.size(); i++) {
+			if (overlappingObjects[i]) {
+				MonoObject* monoGameObject = GetMonoObjectFromGameObjectHelper(overlappingObjects[i]);
+				if (monoGameObject) {
+					mono_array_set(monoArray, MonoObject*, i, monoGameObject);
+				}
+			}
+		}
+
+		return monoArray;
+	}
+	catch (const std::exception& e) {
+		std::cerr << "Exception in OverlapSphere: " << e.what() << std::endl;
+		return nullptr;
+	}
+	catch (...) {
+		std::cerr << "Unknown exception in OverlapSphere" << std::endl;
+		return nullptr;
+	}
 }
 
 
@@ -903,61 +920,117 @@ MonoObject* EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float 
     return nullptr;
 }
 
-
-void EngineBinds::Play(MonoObject* audioRef, bool loop /*= false*/)
-{
-    auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-	if (sound) {
-		sound->Play(loop);
-	}
-
-}
-
-void EngineBinds::Stop(MonoObject* audioRef)
-{
-    auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-	if (sound) {
-		sound->Stop();
-	}
-}
-
-void EngineBinds::Pause(MonoObject* audioRef)
-{
-	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-	if (sound) {
-		sound->Pause();
-	}
-}
-
-void EngineBinds::Resume(MonoObject* audioRef)
-{
-	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-	if (sound) {
-		sound->Resume();
-	}
-}
-
-void EngineBinds::SetVolume(MonoObject* audioRef, float volume)
-{
-	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-	if (sound) {
-		sound->SetVolume(volume);
-	}
-}
-
-float EngineBinds::GetVolume(MonoObject* audioRef)
-{
-    auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-    return sound ? sound->GetVolume() : 0.0f;
-}
-
-void EngineBinds::LoadAudioClip(MonoObject* audioRef, MonoString* path)
-{
+int EngineBinds::AudioPlay(MonoString* path, bool loop) {
 	char* C_path = mono_string_to_utf8(path);
-	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-	if (sound) {
-		sound->LoadAudio(C_path, true);
-	}
+	int result = AudioManager::Play(C_path, loop);
+	mono_free(C_path);
+	return result;
+}
+
+int EngineBinds::AudioPlayOneShot(MonoString* path) {
+	char* C_path = mono_string_to_utf8(path);
+	int result = AudioManager::PlayOneShot(C_path);
+	mono_free(C_path);
+	return result;
+}
+
+void EngineBinds::AudioStop(int audioId) {
+	AudioManager::Stop(audioId);
+}
+
+void EngineBinds::AudioStopPath(MonoString* path) {
+	char* C_path = mono_string_to_utf8(path);
+	AudioManager::Stop(C_path);
+	mono_free(C_path);
+}
+
+void EngineBinds::AudioPause(int audioId) {
+	AudioManager::Pause(audioId);
+}
+
+void EngineBinds::AudioPausePath(MonoString* path) {
+	char* C_path = mono_string_to_utf8(path);
+	AudioManager::Pause(C_path);
+	mono_free(C_path);
+}
+
+void EngineBinds::AudioResume(int audioId) {
+	AudioManager::Resume(audioId);
+}
+
+void EngineBinds::AudioResumePath(MonoString* path) {
+	char* C_path = mono_string_to_utf8(path);
+	AudioManager::Resume(C_path);
+	mono_free(C_path);
+}
+
+int EngineBinds::AudioPlayMusic(MonoString* path) {
+	char* C_path = mono_string_to_utf8(path);
+	int result = AudioManager::PlayMusic(C_path);
+	mono_free(C_path);
+	return result;
+}
+
+void EngineBinds::AudioStopMusic(MonoString* path) {
+	char* C_path = mono_string_to_utf8(path);
+	AudioManager::StopMusic(C_path);
+	mono_free(C_path);
+}
+
+void EngineBinds::AudioStopAllMusic() {
+	AudioManager::StopAllMusic();
+}
+
+float EngineBinds::AudioGetMasterVolume() {
+	return AudioManager::GetMasterVolume();
+}
+
+void EngineBinds::AudioSetMasterVolume(float volume) {
+	AudioManager::SetMasterVolume(volume);
+}
+
+float EngineBinds::AudioGetMusicVolume() {
+	return AudioManager::GetMusicVolume();
+}
+
+void EngineBinds::AudioSetMusicVolume(float volume) {
+	AudioManager::SetMusicVolume(volume);
+}
+
+float EngineBinds::AudioGetSfxVolume() {
+	return AudioManager::GetSfxVolume();
+}
+
+void EngineBinds::AudioSetSfxVolume(float volume) {
+	AudioManager::SetSfxVolume(volume);
+}
+
+void EngineBinds::AudioSetVolumeById(int audioId, float volume) {
+	AudioManager::SetVolume(audioId, volume);
+}
+
+void EngineBinds::AudioSetVolumeByPath(MonoString* path, float volume) {
+	char* C_path = mono_string_to_utf8(path);
+	AudioManager::SetVolume(C_path, volume);
+	mono_free(C_path);
+}
+
+void EngineBinds::AudioStopAll() {
+	AudioManager::StopAll();
+}
+
+void EngineBinds::AudioPauseAll() {
+	AudioManager::PauseAll();
+}
+
+void EngineBinds::AudioResumeAll() {
+	AudioManager::ResumeAll();
+}
+
+void EngineBinds::AudioSchedulePlay(MonoString* path, float delay, bool loop) {
+	char* C_path = mono_string_to_utf8(path);
+	AudioManager::SchedulePlay(C_path, delay, loop);
+	mono_free(C_path);
 }
 
 void EngineBinds::SetTexture(MonoObject* uiImageRef, MonoString* path)
@@ -1020,6 +1093,20 @@ void EngineBinds::SetImageSpriteSize(MonoObject* uiImageRef, float width, float 
 	}
 }
 
+void EngineBinds::SetImageAnimIndex(MonoObject* uiImageRef, int index) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->SetAnimationIndex(index);
+	}
+}
+
+void EngineBinds::PlayStopAnimation(MonoObject* uiImageRef, bool play) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->PlayStopAnimation(play);
+	}
+}
+
 int EngineBinds::GetState(MonoObject* uiButtonRef)
 {
 	auto uiButton = ConvertFromSharpComponent<UIButtonComponent>(uiButtonRef);
@@ -1064,6 +1151,12 @@ void EngineBinds::SetAnimation(MonoObject* animationRef, int index)
 	if (animation) {
 		animation->PlayIndexAnimation(index);
 	}
+}
+
+bool EngineBinds::IsAnimationFinished(MonoObject* animationRef)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	return animation ? animation->IsAnimationFinished() : false;
 }
 
 int EngineBinds::GetAnimationIndex(MonoObject* animationRef)
@@ -1411,11 +1504,63 @@ void EngineBinds::EmitBurst(MonoObject* particleRef, int burstCount)
 		particle->EmitBurst(burstCount);
 	}
 }
+MonoObject* EngineBinds::InstantiatePrefab(MonoObject* prefabObj, MonoObject* parentTransformObj, bool worldPositionStays)  
+{  
+  if (!prefabObj) return nullptr;  
+
+  MonoClass* prefabClass = mono_object_get_class(prefabObj);  
+  MonoClassField* pathField = mono_class_get_field_from_name(prefabClass, "path");  
+
+  MonoString* pathString = nullptr;  
+  mono_field_get_value(prefabObj, pathField, &pathString);  
+
+  if (!pathString) return nullptr;  
+
+  char* cStr = mono_string_to_utf8(pathString);  
+  std::string prefabPath(cStr);  
+  mono_free(cStr);  
+
+  std::shared_ptr<GameObject> newGO = PrefabManager::LoadPrefab(prefabPath);
+
+  if (!newGO) return nullptr;  
+
+  // Handle parenting  
+  if (parentTransformObj) {
+      MonoClass* transformClass = mono_object_get_class(parentTransformObj);
+      MonoClassField* cppInstanceField = mono_class_get_field_from_name(transformClass, "CplusplusInstance");
+
+      if (cppInstanceField) {
+          uintptr_t cppInstance = 0;
+          mono_field_get_value(parentTransformObj, cppInstanceField, &cppInstance);
+          Transform_Component* parentTransform = reinterpret_cast<Transform_Component*>(cppInstance);
+
+          if (parentTransform) {
+              GameObject* parentGO = parentTransform->GetOwner();
+              if (parentGO) {
+                  if (worldPositionStays)
+                      Application->root->ParentGameObjectPreserve(*newGO, *parentGO);
+                  else
+                      Application->root->ParentGameObject(*newGO, *parentGO);
+              }
+          }
+      }
+  }
+   newGO->TraverseHierarchy([](GameObject* go) {  
+       go->Awake();  
+   });  
+
+   newGO->TraverseHierarchy([](GameObject* go) {  
+       go->Start();  
+   });
+
+  return MonoManager::GetInstance().CreateGameObjectReference(newGO.get());
+}
 
 void EngineBinds::BindEngine() {
 
     // GameObject
 	mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
+    mono_add_internal_call("MonoBehaviour::Instantiate", (const void*)InstantiatePrefab);
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
     mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GameObjectGetTag);
@@ -1426,7 +1571,9 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Engineson::Destroy", (const void*)Destroy);
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
-    mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
+    mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName); 
+    mono_add_internal_call("HawkEngine.GameObject::FindChild", (const void*)EngineBinds::GameObjectFindChild);
+	mono_add_internal_call("HawkEngine.GameObject::FindGameObjectsWithTag", (const void*)GetGameObjectsByTag);
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
     mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)GameObjectSetActive);
     mono_add_internal_call("HawkEngine.GameObject::IsActive", (const void*)GameObjectIsActive);
@@ -1484,13 +1631,8 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Camera::SetOffset", (const void*)&EngineBinds::SetOffset);
 
     // MeshRenderer
-    mono_add_internal_call("HawkEngine.MeshRenderer::SetMesh", (const void*)&EngineBinds::SetMesh);
-    mono_add_internal_call("HawkEngine.MeshRenderer::SetCubeMesh", (const void*)&EngineBinds::SetCubeMesh);
-    mono_add_internal_call("HawkEngine.MeshRenderer::GetMesh", (const void*)&EngineBinds::GetMesh);
-    mono_add_internal_call("HawkEngine.MeshRenderer::SetMaterial", (const void*)&EngineBinds::SetMaterial);
-    mono_add_internal_call("HawkEngine.MeshRenderer::GetMaterial", (const void*)&EngineBinds::GetMaterial);
     mono_add_internal_call("HawkEngine.MeshRenderer::SetColor", (const void*)&EngineBinds::SetColor);
-
+    mono_add_internal_call("HawkEngine.MeshRenderer::GetColor", (const void*)&EngineBinds::GetColor);
 
     //Physics
     mono_add_internal_call("HawkEngine.Physics::OverlapSphere", (const void*)&EngineBinds::OverlapSphere);
@@ -1528,13 +1670,29 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.RayCast::Raycast", (const void*)&EngineBinds::Raycast);
 
     // Audio
-    mono_add_internal_call("HawkEngine.Audio::Play", (const void*)&EngineBinds::Play);
-    mono_add_internal_call("HawkEngine.Audio::Stop", (const void*)&EngineBinds::Stop);
-    mono_add_internal_call("HawkEngine.Audio::Pause", (const void*)&EngineBinds::Pause);
-    mono_add_internal_call("HawkEngine.Audio::Resume", (const void*)&EngineBinds::Resume);
-    mono_add_internal_call("HawkEngine.Audio::SetVolume", (const void*)&EngineBinds::SetVolume);
-    mono_add_internal_call("HawkEngine.Audio::GetVolume", (const void*)&EngineBinds::GetVolume);
-	mono_add_internal_call("HawkEngine.Audio::LoadAudio", (const void*)&EngineBinds::LoadAudioClip);
+	mono_add_internal_call("HawkEngine.Audio::Play", (const void*)&EngineBinds::AudioPlay);
+	mono_add_internal_call("HawkEngine.Audio::PlayOneShot", (const void*)&EngineBinds::AudioPlayOneShot);
+	mono_add_internal_call("HawkEngine.Audio::Stop(int)", (const void*)&EngineBinds::AudioStop);
+	mono_add_internal_call("HawkEngine.Audio::Stop(string)", (const void*)&EngineBinds::AudioStopPath);
+	mono_add_internal_call("HawkEngine.Audio::Pause(int)", (const void*)&EngineBinds::AudioPause);
+	mono_add_internal_call("HawkEngine.Audio::Pause(string)", (const void*)&EngineBinds::AudioPausePath);
+	mono_add_internal_call("HawkEngine.Audio::Resume(int)", (const void*)&EngineBinds::AudioResume);
+	mono_add_internal_call("HawkEngine.Audio::Resume(string)", (const void*)&EngineBinds::AudioResumePath);
+	mono_add_internal_call("HawkEngine.Audio::PlayMusic", (const void*)&EngineBinds::AudioPlayMusic);
+	mono_add_internal_call("HawkEngine.Audio::StopMusic", (const void*)&EngineBinds::AudioStopMusic);
+	mono_add_internal_call("HawkEngine.Audio::StopAllMusic", (const void*)&EngineBinds::AudioStopAllMusic);
+	mono_add_internal_call("HawkEngine.Audio::GetMasterVolume", (const void*)&EngineBinds::AudioGetMasterVolume);
+	mono_add_internal_call("HawkEngine.Audio::SetMasterVolume", (const void*)&EngineBinds::AudioSetMasterVolume);
+	mono_add_internal_call("HawkEngine.Audio::GetMusicVolume", (const void*)&EngineBinds::AudioGetMusicVolume);
+	mono_add_internal_call("HawkEngine.Audio::SetMusicVolume", (const void*)&EngineBinds::AudioSetMusicVolume);
+	mono_add_internal_call("HawkEngine.Audio::GetSfxVolume", (const void*)&EngineBinds::AudioGetSfxVolume);
+	mono_add_internal_call("HawkEngine.Audio::SetSfxVolume", (const void*)&EngineBinds::AudioSetSfxVolume);
+	mono_add_internal_call("HawkEngine.Audio::SetVolume(int,float)", (const void*)&EngineBinds::AudioSetVolumeById);
+	mono_add_internal_call("HawkEngine.Audio::SetVolume(string,float)", (const void*)&EngineBinds::AudioSetVolumeByPath);
+	mono_add_internal_call("HawkEngine.Audio::StopAll", (const void*)&EngineBinds::AudioStopAll);
+	mono_add_internal_call("HawkEngine.Audio::PauseAll", (const void*)&EngineBinds::AudioPauseAll);
+	mono_add_internal_call("HawkEngine.Audio::ResumeAll", (const void*)&EngineBinds::AudioResumeAll);
+	mono_add_internal_call("HawkEngine.Audio::SchedulePlay", (const void*)&EngineBinds::AudioSchedulePlay);
 
     // UI Image
     mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);
@@ -1544,6 +1702,8 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.UIImage::SetImageAnimationIndexLimit", (const void*)&EngineBinds::SetImageAnimationIndexLimit);
 	mono_add_internal_call("HawkEngine.UIImage::SetImageAnimation", (const void*)&EngineBinds::SetImageAnimation);
 	mono_add_internal_call("HawkEngine.UIImage::SetImageSpriteSize", (const void*)&EngineBinds::SetImageSpriteSize);
+	mono_add_internal_call("HawkEngine.UIImage::SetImageAnimIndex", (const void*)&EngineBinds::SetImageAnimIndex);
+	mono_add_internal_call("HawkEngine.UIImage::PlayStopAnimation", (const void*)&EngineBinds::PlayStopAnimation);
 
 	// UI Button
 	mono_add_internal_call("HawkEngine.UIButton::GetState", (const void*)&EngineBinds::GetState);
@@ -1564,6 +1724,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::TransitionAnimations", (const void*)&EngineBinds::TransitionAnimations);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetLoop", (const void*)&EngineBinds::SetLoop);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::PlayAnimOnce", (const void*)&EngineBinds::PlayAnimOnce);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::IsAnimationFinished", (const void*)&EngineBinds::IsAnimationFinished);
 
 	// Tween
     

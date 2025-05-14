@@ -18,8 +18,7 @@
 #include "MyGameEngine/Material.h"
 #include "../MyGameEngine/ModelImporter.h"
 #include "../MyPhysicsEngine/PhysicsModule.h"
-#include "../MyAudioEngine/SoundComponent.h"
-#include "../MyAudioEngine/AudioAssetProcessor.h"
+//#include "../MyAudioEngine/AudioAssetProcessor.h"
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
@@ -464,18 +463,11 @@ void Input::HandleFileDrop(const std::string& fileDir)
             }
 
             // Then process to Library
-            AudioAssetProcessor::ProcessAudioFile(targetPath.string(), libraryPath.string());
+            //AudioAssetProcessor::ProcessAudioFile(targetPath.string(), libraryPath.string());
             LOG(LogType::LOG_OK, "Audio file processed to Library: %s", libraryPath.string().c_str());
         }
         catch (const std::exception& e) {
             LOG(LogType::LOG_ERROR, "Error processing audio file: %s", e.what());
-        }
-        
-        if (InputManagement->draggedObject != nullptr) {
-            auto soundComponent = InputManagement->draggedObject->GetComponent<SoundComponent>();
-            if (soundComponent) {
-                soundComponent->LoadAudio(targetPath.string());
-            }
         }
     }
     else if (fileExt == "image") {

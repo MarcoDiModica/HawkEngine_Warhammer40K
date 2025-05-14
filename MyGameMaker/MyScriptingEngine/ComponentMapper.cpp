@@ -4,7 +4,6 @@
 #include "../MyPhysicsEngine/BoxColliderComponent.h"
 #include "../MyGameEditor/Log.h" //QUITAR
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
-#include "../MyAudioEngine/SoundComponent.h"
 #include "../MyGameEngine/CameraComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UIButtonComponent.h"
@@ -24,7 +23,6 @@ ComponentMapper::ComponentMapper() {
     AddMapping(std::type_index(typeid(BoxColliderComponent)), "BoxCollider");
     AddMapping(std::type_index(typeid(BaseColliderComponent)), "Collider");
     AddMapping(std::type_index(typeid(RigidbodyComponent)), "Rigidbody");
-    AddMapping(std::type_index(typeid(SoundComponent)), "Audio");
     AddMapping(std::type_index(typeid(UIImageComponent)), "UIImage");
 	AddMapping(std::type_index(typeid(UIButtonComponent)), "UIButton");
 	AddMapping(std::type_index(typeid(UICanvasComponent)), "UICanvas");

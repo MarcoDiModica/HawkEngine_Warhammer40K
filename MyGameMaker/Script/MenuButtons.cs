@@ -30,17 +30,25 @@ public class MenuButtons : MonoBehaviour
     private ButtonState prevState_quitButton = ButtonState.DEFAULT;
 
     private bool[] hasPlayedHoverSound;
+    private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
+    private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
+    private string MainMenuMusic = "Assets/Audio/Music/MainTheme_BetaBuild2.ogg";
 
-    private Audio sound;
-    private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
-    private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
-    private string buttonStartGame = "Assets/Audio/SFX/UI/UI_Confirm.wav";
+    //     private AudioSource sound;
+    //     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
+    //     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+    //     private string buttonStartGame = "Assets/Audio/SFX/UI/UI_Confirm.wav"; 
+    //     private AudioClip buttonHoveredFX;
+    //     private AudioClip buttonClickedFX;
+    //     private AudioClip buttonStartGameFX;
 
     private int selectedButtonIndex = -1;
     private UIButton[] buttons;
     private UITransform[] transforms;
 
     private long lastInputTime = 0;
+
+    private bool isMainMenuMusicPlaying = false;
     private enum InputMethod
     {
         None,
@@ -61,80 +69,39 @@ public class MenuButtons : MonoBehaviour
         optionsButton = GameObject.Find("options_button");
         quitButton = GameObject.Find("exit_button");
         optionsCanvas = GameObject.Find("Canvas_OptionsMenu");
-        sound = gameObject.GetComponent<Audio>();
-
-        if (newGameButton == null)
-        {
-            Engineson.print("ERROR: new_game_button not found.");
-            return;
-        }
-        if (continueButton == null)
-        {
-            Engineson.print("ERROR: continue_button not found.");
-            return;
-        }
-        if (optionsButton == null)
-        {
-            Engineson.print("ERROR: options_button not found.");
-            return;
-        }
-        if (quitButton == null)
-        {
-            Engineson.print("ERROR: exit_button not found.");
-            return;
-        }
-        if (optionsCanvas == null)
-        {
-            Engineson.print("ERROR: Canvas_OptionsMenu not found.");
-            return;
-        }
-        if (sound == null)
-        {
-            Engineson.print("ERROR: Audio component not found.");
-            return;
-        }
+       // sound = gameObject.GetComponent<AudioSource>();
 
         button_newGameButton = newGameButton.GetComponent<UIButton>();
         button_continueButton = continueButton.GetComponent<UIButton>();
         button_optionsButton = optionsButton.GetComponent<UIButton>();
         button_quitButton = quitButton.GetComponent<UIButton>();
 
-        if (button_newGameButton == null || button_continueButton == null || button_optionsButton == null || button_quitButton == null)
-        {
-            Engineson.print("ERROR: One or more UIButton components are missing.");
-            return;
-        }
-
         transform_newGameButton = newGameButton.GetComponent<UITransform>();
         transform_continueButton = continueButton.GetComponent<UITransform>();
         transform_optionsButton = optionsButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
-
-        if (transform_newGameButton == null || transform_continueButton == null || transform_optionsButton == null || transform_quitButton == null)
-        {
-            Engineson.print("ERROR: One or more UITransform components are missing.");
-            return;
-        }
 
         buttons = new UIButton[] { button_newGameButton, button_continueButton, button_optionsButton, button_quitButton };
         transforms = new UITransform[] { transform_newGameButton, transform_continueButton, transform_optionsButton, transform_quitButton };
 
         hasPlayedHoverSound = new bool[buttons.Length];
 
+        if (newGameButton == null || optionsButton == null || creditsButton == null || quitButton == null)
+        {
+            Engineson.print("ERROR: No Button object found");
+        }
+
         if (optionsCanvas != null)
         {
             optionsCanvas.SetActive(false);
         }
 
-        Audio emptyMusic = GameObject.Find("EmptyMusic")?.GetComponent<Audio>();
-        if (emptyMusic != null)
-        {
-            emptyMusic.Play();
-        }
-        else
-        {
-            Engineson.print("WARNING: EmptyMusic object or Audio component not found.");
-        }
+//         buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false, false);
+//         buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
+//         buttonStartGameFX = new AudioClip(buttonStartGame, "ButtonStartGameFX", false, false);
+//         sound.LoadAudioClip(buttonHoveredFX);
+//         sound.LoadAudioClip(buttonClickedFX);
+//         sound.LoadAudioClip(buttonStartGameFX);
     }
 
     private void NavigateMenu()
@@ -210,8 +177,7 @@ public class MenuButtons : MonoBehaviour
 
                 if (!hasPlayedHoverSound[i])
                 {
-                    sound?.LoadAudio(buttonHovered);
-                    sound?.Play();
+                    //sound?.Play(buttonHoveredFX);
                     hasPlayedHoverSound[i] = true;
                 }
             }
@@ -238,26 +204,25 @@ public class MenuButtons : MonoBehaviour
 
             if (selectedButton == button_newGameButton)
             {
-                sound?.LoadAudio(buttonStartGame);
-                sound?.Play();
-                SceneManager.LoadScene("Mortis_Level1");
+                Audio.PlayOneShot(ConfirmSFX);
+                Audio.Stop(MainMenuMusic);
+                SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
             }
             else if (selectedButton == button_continueButton)
             {
-                sound?.LoadAudio(buttonStartGame);
-                sound?.Play();
-                SceneManager.LoadScene("SpaceShip");
+                Audio.PlayOneShot(ConfirmSFX);
+                Audio.Stop(MainMenuMusic);
+                SceneManager.LoadScene("BetaRelease_Week1_Lvl2");
             }
             else if (selectedButton == button_optionsButton)
             {
-                sound?.LoadAudio(buttonClicked);
-                sound?.Play();
+                //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(MenuSFX);
                 optionsCanvas.SetActive(true);
             }
             else if (selectedButton == button_quitButton)
             {
-                sound?.LoadAudio(buttonClicked);
-                sound?.Play();
+                Audio.PlayOneShot(ConfirmSFX);
             }
         }
         
@@ -280,11 +245,17 @@ public class MenuButtons : MonoBehaviour
             Engineson.print("ERROR: No Canvas object found");
             return;
         }
-        if (sound == null)
+
+        if (!isMainMenuMusicPlaying)
         {
-            Engineson.print("ERROR: Audio not found");
-            return;
+            Audio.Play(MainMenuMusic, true);
+            isMainMenuMusicPlaying = true; 
         }
+        //         if (sound == null)
+        //         {
+        //             Engineson.print("ERROR: Audio not found");
+        //             return;
+        //         }
 
         NavigateMenu();
     }

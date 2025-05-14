@@ -18,8 +18,11 @@ public class LaserBeam : BaseAbilities
     private float abilityCooldown = 3.0f; // Cooldown de la habilidad
     private float abilityTimer = 0.0f;    // Contador del cooldown
     private float time = 0.0f;
-    private Audio sound;
     private string laserBeamSound = "Assets/Audio/SFX/Weapons/Railgun/BarrageShot.wav";
+    private bool laserActive = false;
+    private float deathtimer = 3.0f;
+    private float deathTimerPrevention = 0.0f;
+    public List<string> collisionNames = new List<string>();
 
     //stats
     private float damage = 20.0f;
@@ -28,13 +31,8 @@ public class LaserBeam : BaseAbilities
     }
     public override void Start()
     {
-        sound = gameObject.GetComponent<Audio>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
-
         
+
     }
     public override void Update(float deltaTime)
     {
@@ -42,7 +40,7 @@ public class LaserBeam : BaseAbilities
         if (!canThrow)
         {
             abilityTimer += deltaTime;
-            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
+            //Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
 
             if (abilityTimer >= abilityCooldown)
             {
@@ -51,16 +49,31 @@ public class LaserBeam : BaseAbilities
                 //Engineson.print("Cooldown terminado. Habilidad lista.");
             }
         }
+
+        if (laserActive)
+        {
+            deathTimerPrevention += deltaTime;
+            if (deathTimerPrevention >= deathtimer)
+            {
+                if(laserBeam != null)
+                {
+                    laserActive = false;
+                    Engineson.Destroy(laserBeam);
+                    Audio.Stop(laserBeamSound);
+                    deathTimerPrevention = 0.0f;
+                }
+            }
+        }
+
     }
     public override void TriggerAbility()
     {
         if (canThrow)
         {
-            //Engineson.print("Lanzando granada...");
-            sound.LoadAudio(laserBeamSound);
-            sound.Play();
-
+            
             laserBeam = Engineson.CreateGameObject("LaserBeam", null);
+            laserBeam.tag = "LaserBeam";
+
 
             if (laserBeam == null)
             {
@@ -69,8 +82,18 @@ public class LaserBeam : BaseAbilities
             }
 
             laserBeam.AddScript("LaserBeamObject");
-            laserBeam.GetComponent<LaserBeamObject>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-
+            gameObject.AddChild(laserBeam);
+            laserBeam.AddComponent<MeshRenderer>();
+            laserBeam.AddComponent<BoxCollider>();
+            laserBeam.GetComponent<Transform>().position = gameObject.transform.GetPosition() + gameObject.transform.forward * 20.0f + new Vector3(0, 3, 0);
+            laserBeam.GetComponent<Transform>().SetScale(0.5f, 0.5f, 20.0f);
+            laserActive = true;
+            var energyBallFX = Engineson.CreateGameObject("LaserBeamFX", null);
+            gameObject.AddChild(energyBallFX);
+            energyBallFX.AddComponent<ParticleFX>().ApplyPreset(12);
+            //energyBallFX.GetComponent<ParticleFX>().EmitBurst(1);
+            energyBallFX.GetComponent<ParticleFX>().Play();
+            Audio.Play(laserBeamSound, true);
             canThrow = false; // Inicia el cooldown
             abilityTimer = 0.0f;
         }
@@ -99,6 +122,7 @@ public class LaserBeam : BaseAbilities
         canThrow = true;
     }
 
+   
 
 }
 

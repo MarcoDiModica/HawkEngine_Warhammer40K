@@ -1,0 +1,220 @@
+name: Canvas_Interaction
+prefabPath: Assets\Prefabs\Canvas_Interaction.prefab.yaml
+uuid: 8171758255955888501
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0
+      - 0
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  UITransformComponent:
+    name: UITransformComponent
+    enabled: true
+    position:
+      - 0
+      - 0
+      - 0
+    rotation:
+      - 0
+      - 0
+      - 0
+    scale:
+      - 1
+      - 1
+      - 1
+    pivot_offset:
+      - 0
+      - 1
+      - 0
+  UICanvasComponent:
+    name: UICanvasComponent
+    enabled: true
+  ScriptComponents:
+    Script0:
+      name: Interaction
+      fields: ~
+Children:
+  - name: Box
+    prefabPath: ""
+    uuid: 13130904076925775302
+    tag: Untagged
+    active: false
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.5
+          - 0.882000029
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.666999996
+          - 0.264999956
+          - 1
+        pivot_offset:
+          - 0.5
+          - 1
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\dialogue_box.png
+        use_animation: false
+        sprite_size:
+          - 1482
+          - 392
+        sheet_size:
+          - 1482
+          - 392
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+    Children: ~
+  - name: Text
+    prefabPath: ""
+    uuid: 9142295323120274569
+    tag: Untagged
+    active: false
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.5
+          - 0.882000029
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.666999996
+          - 0.264999986
+          - 1
+        pivot_offset:
+          - 0.5
+          - 1
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\dialogue_text.png
+        use_animation: false
+        sprite_size:
+          - 1482
+          - 392
+        sheet_size:
+          - 1482
+          - 392
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+    Children: ~
+  - name: InteractText
+    prefabPath: ""
+    uuid: 17748583486189563171
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.5
+          - 0.5
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.5
+          - 1
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\PressE.png
+        use_animation: false
+        sprite_size:
+          - 433
+          - 577
+        sheet_size:
+          - 433
+          - 577
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+    Children: ~

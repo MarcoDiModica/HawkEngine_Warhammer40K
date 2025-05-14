@@ -1,0 +1,80 @@
+name: bullett.001_1_1_Instance_Instance
+prefabPath: Assets\Prefabs\AmmunitionBlessingPrefab.prefab.yaml
+uuid: 1757040912618130239
+tag: PowerUp
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 14.428686141967773
+      - 2.9692173004150391
+      - 11.894564628601074
+    localRotation:
+      - -7.3107530727380405
+      - 72.465789375676465
+      - -4.7239984184250599
+    localScale:
+      - 0.0030200002643650829
+      - 0.0030200003283541283
+      - 0.0030199978231735605
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 12324077735829274207
+    material:
+      name: powerups_DefaultMaterial_BaseColor
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.7708544135093689
+      - 0.85603111982345581
+      - 0.14988872408866882
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - 1
+      - 1
+      - 1
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 5.69999981
+    intensity: 2.5
+    direction:
+      - -1
+      - -1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: AmmunitionBlessing
+      fields:
+        floatSpeed: 1.40748179
+        floatHeight: 0.5
+        rotationSpeed: 52.5571632
+        lifeTime: 10
+Children: ~

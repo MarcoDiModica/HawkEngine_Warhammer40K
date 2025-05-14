@@ -15,9 +15,13 @@ public class Ball : MonoBehaviour
     private float damage = 100.0f; // Placeholder damage value
     public override void Awake(){ }
 
+    public override void Start() 
+    {
+        
+    }
     public void Init(Vector3 pos, Vector3 dir)
     {
-        AddComponent<MeshRenderer>();
+        //AddComponent<MeshRenderer>();
         GetComponent<Transform>().position = pos + dir * 3.0f + new Vector3(0, 2, 0);
         GetComponent<Transform>().SetScale(2.0f, 2.0f, 2.0f);
         AddComponent<BoxCollider>();
@@ -27,6 +31,12 @@ public class Ball : MonoBehaviour
         rigidbody.SetGravity(new Vector3(0.0f, 0.0f, 0.0f) * 20);
         rigidbody.AddForce(dir * 20);
         rigidbody.SetFriction(0.5f);
+        var energyBallFX = Engineson.CreateGameObject("ExplosionFX", null);
+        gameObject.AddChild(energyBallFX);
+        energyBallFX.AddComponent<ParticleFX>().ApplyPreset(12);
+        //energyBallFX.GetComponent<ParticleFX>().EmitBurst(1);
+        energyBallFX.GetComponent<ParticleFX>().Play();
+        
     }
     public override void Update(float deltaTime)
     {
@@ -39,6 +49,8 @@ public class Ball : MonoBehaviour
                 needsDestroy = false;
             }
         }
+        
+
     }
 
     public override void OnCollisionEnter(GameObject other)

@@ -1,0 +1,228 @@
+name: Canvas_win_screen
+prefabPath: ""
+uuid: 12050990754441512370
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0
+      - 0
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  UICanvasComponent:
+    name: UICanvasComponent
+    enabled: true
+  UITransformComponent:
+    name: UITransformComponent
+    enabled: true
+    position:
+      - 0
+      - 0
+      - 0
+    rotation:
+      - 0
+      - 0
+      - 0
+    scale:
+      - 1
+      - 1
+      - 1
+    pivot_offset:
+      - 0
+      - 1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: WinScreen
+      fields: ~
+Children:
+  - name: win_screen
+    prefabPath: ""
+    uuid: 580163217924526292
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0
+          - 0
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 1
+          - 1
+          - 1
+        pivot_offset:
+          - 0
+          - 0
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/WIN_screen.png
+        use_animation: false
+        sprite_size:
+          - 2560
+          - 1440
+        sheet_size:
+          - 2560
+          - 1440
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+    Children: ~
+  - name: Menu_Button
+    prefabPath: ""
+    uuid: 16942033288024270079
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.38499999
+          - 0.861000001
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.184
+          - 0.064000003
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/WinMenu.png
+        use_animation: false
+        sprite_size:
+          - 445
+          - 87
+        sheet_size:
+          - 445
+          - 87
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~
+  - name: Quit_Button
+    prefabPath: ""
+    uuid: 1152489699870358097
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.578999996
+          - 0.861000001
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.184
+          - 0.064000003
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/WinQuit.png
+        use_animation: false
+        sprite_size:
+          - 455
+          - 90
+        sheet_size:
+          - 455
+          - 90
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~

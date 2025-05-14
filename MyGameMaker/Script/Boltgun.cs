@@ -7,14 +7,14 @@ using HawkEngine;
 
 public class Boltgun : BaseWeapon
 {
-
     public GrenadeLauncher grenadeLauncher;
     public ArcSnare arcSnare;
     private PlayerController playerController;
     public PlayerData playerData;
-    private Audio sound;
-    private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
-    private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
+
+    private const string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/Boltgun_hit_enviroment.wav";
+    private const string boltgunShotEnemy = "Assets/Audio/SFX/Weapons/Boltgun/Boltgun_hit_enemy.wav";
+    private const string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
     GameObject projectile;
     private RedThirstManager redThirstManager;
     private float timeSinceLastShot = 0.0f;
@@ -27,6 +27,14 @@ public class Boltgun : BaseWeapon
     private float bulletSpeed = 60f;
     private float maxLifetime = 2f;
     private float hitRayLength = 1f;
+
+    //private ShakeManager shakeManager;
+    public float shakeIntensity = 0.15f;
+    public float shakeDuration = 0.2f;
+    public float shakeSpeed = 0.2f;
+
+    private bool isReloading = false;
+    private float reloadTimer = 0.0f;
     public override void Awake()
     {
         
@@ -46,16 +54,33 @@ public class Boltgun : BaseWeapon
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
         arcSnare = gameObject.GetComponent<ArcSnare>();
-        sound = gameObject.GetComponent<Audio>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
+        //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
+        //if (shakeManager == null)
+        //{
+        //    Engineson.print("ERROR: ShakeManager not found");
+        //}
+
     }
 
     public override void Update(float deltaTime)
     {
+        if (timeSinceLastShot <= shootCadence + 0.5f)
+        {
+            timeSinceLastShot += deltaTime;
+        }
 
-        timeSinceLastShot += deltaTime;
+        if (isReloading)
+        {
+            reloadTimer += deltaTime;
+            if (reloadTimer >= reloadTime)
+            {
+                isReloading = false;
+                reloadTimer = 0.0f;
+            }
+        }
 
         for (int i = bulletsObjects.Count - 1; i >= 0; i--)
         {
@@ -98,16 +123,24 @@ public class Boltgun : BaseWeapon
                         switch (tag)
                         {
                             case "Melee":
+                                Audio.PlayOneShot(boltgunShotEnemy);
                                 hitObject.GetComponent<EnemyControllerMelee>()?.TakeDamage(finalDamage);
                                 break;
                             case "Ranged":
+                                Audio.PlayOneShot(boltgunShotEnemy);
                                 hitObject.GetComponent<EnemyControllerRanged>()?.TakeDamage(finalDamage);
                                 break;
                             case "Stalker":
+                                Audio.PlayOneShot(boltgunShotEnemy);
                                 hitObject.GetComponent<EnemyControllerStalker>()?.TakeDamage(finalDamage);
                                 break;
                             case "Boss":
+                                Audio.PlayOneShot(boltgunShotEnemy);
                                 hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
+                                break;
+                            case "Warrior":
+                                Audio.PlayOneShot(boltgunShotEnemy);
+                                hitObject.GetComponent<EnemyControllerWarrior>()?.TakeDamage(finalDamage);
                                 break;
                             case "Destroyable":
                                 hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
@@ -115,7 +148,7 @@ public class Boltgun : BaseWeapon
                         }
                     }
 
-                    if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss"))
+                    if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss" && tag != "Warrior"))
                     {
                         shouldDestroy = true;
                     }
@@ -141,23 +174,23 @@ public class Boltgun : BaseWeapon
     public override void Shoot()
     {
 
-        if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence)
+        if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence && !isReloading)
         {
+            //shakeManager.ApplyShake(shakeIntensity, shakeDuration, shakeSpeed);
             timeSinceLastShot = 0f;
 
             if (!playerData.infiniteBullets)
                 currentMagazineAmmo--;
 
-            sound?.LoadAudio(boltgunShot);
-            sound?.Play();
-
-            Vector3 localOffset = new Vector3(0.0f, 2.5f, 0.5f); // Y = altura, Z = hacia adelante, X = lateral si se desea
+            int audio = Audio.PlayOneShot(boltgunShot);
+            Vector3 localOffset = new Vector3(-0.9f, 2.5f, 0.5f); // Y = altura, Z = hacia adelante, X = lateral si se desea
 
             Vector3 bulletStart = transform.position +
                                   (transform.right * localOffset.X) +
                                   (transform.up * localOffset.Y) +
                                   (transform.forward * localOffset.Z);
             bulletStart.Y += 0.5f;
+            
             Vector3 direction = Vector3.Normalize(transform.forward);
 
             // Calcular rotaci�n desde la direcci�n (LookAt-like)
@@ -165,11 +198,15 @@ public class Boltgun : BaseWeapon
             float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
 
 
-            GameObject projectile = Engineson.CreateGameObject("Projectile", null);
-            projectile.AddComponent<MeshRenderer>();
-            projectile.transform.SetScale(0.2f, 0.2f, 0.2f);
+            GameObject projectile = Engineson.CreateGameObject("BoltgunProjectile", null);
+            //projectile.AddComponent<MeshRenderer>();
+            projectile.transform.SetScale(0.25f, 0.25f, 0.25f);
             projectile.transform.position = bulletStart;
             projectile.transform.SetRotation(pitch, yaw, 0f);
+            projectile.AddComponent<ParticleFX>();
+            projectile.GetComponent<ParticleFX>().ApplyPreset(14);
+            projectile.GetComponent<ParticleFX>().EmitBurst(1);
+            
 
             bulletsObjects.Add(projectile);
             bulletsPos.Add(bulletStart);
@@ -178,29 +215,28 @@ public class Boltgun : BaseWeapon
             bulletLifetimes.Add(0);
             bulletHitEnemies.Add(new HashSet<GameObject>());
             bulletStartPositions.Add(bulletStart);
-
+            playerController.playerShooting.rifleShotFX.EmitBurst(1);
         }
 
     }
 
     public override void Reload()
     {
-        if (currentTotalAmmo > 0)
+        if (currentTotalAmmo > 0 && currentMagazineAmmo != magazineSize)
         {
-            sound?.LoadAudio(boltgunReload);
-            sound?.Play();
-           
-            if(currentTotalAmmo >= magazineSize)
+            isReloading = true;
+            int audioo = Audio.PlayOneShot(boltgunReload);
+            if (currentMagazineAmmo + currentTotalAmmo >= magazineSize)
             {
+                currentTotalAmmo -= magazineSize - currentMagazineAmmo;
                 currentMagazineAmmo = magazineSize;
-                currentTotalAmmo = currentTotalAmmo - magazineSize;
             }
-            else 
+            else
             {
-                currentMagazineAmmo = currentTotalAmmo;
+                currentMagazineAmmo += currentTotalAmmo;
                 currentTotalAmmo = 0;
             }
-             currentTotalAmmo -= magazineSize - currentMagazineAmmo;
+
             Engineson.print("Boltgun reloaded");
             Engineson.print($"Current ammo: {currentTotalAmmo}");
         }
@@ -215,7 +251,6 @@ public class Boltgun : BaseWeapon
 
     public override void UseAbility2()
     {
-        
         Engineson.print("Boltgun ability 2 used");
         arcSnare.TriggerAbility();
     }
@@ -227,7 +262,7 @@ public class Boltgun : BaseWeapon
 
     public override void ResetCooldowns()
     {
-       arcSnare.ResetCooldowns();
+        arcSnare.ResetCooldowns();
         grenadeLauncher.ResetCooldowns();
     }
 

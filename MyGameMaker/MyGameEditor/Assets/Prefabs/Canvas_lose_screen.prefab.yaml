@@ -1,0 +1,289 @@
+name: Canvas_lose_screen
+prefabPath: ""
+uuid: 4529768632740398765
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0
+      - 0
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  UICanvasComponent:
+    name: UICanvasComponent
+    enabled: true
+  UITransformComponent:
+    name: UITransformComponent
+    enabled: true
+    position:
+      - 0
+      - 0
+      - 0
+    rotation:
+      - 0
+      - 0
+      - 0
+    scale:
+      - 1
+      - 1
+      - 1
+    pivot_offset:
+      - 0
+      - 1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: LoseScreen
+      fields: ~
+Children:
+  - name: Menu_Image_1
+    prefabPath: ""
+    uuid: 13095701923999628115
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0
+          - 0
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 1
+          - 1
+          - 1
+        pivot_offset:
+          - 0
+          - 0
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/GAME_OVER_screen.png
+        use_animation: false
+        sprite_size:
+          - 2560
+          - 1440
+        sheet_size:
+          - 2560
+          - 1440
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+    Children: ~
+  - name: MM_button
+    prefabPath: ""
+    uuid: 8988015620361234835
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.537
+          - 0.754999995
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.174999997
+          - 0.0579999983
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/game_over_MM.png
+        use_animation: false
+        sprite_size:
+          - 440
+          - 86
+        sheet_size:
+          - 440
+          - 86
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~
+  - name: QUIT_button
+    prefabPath: ""
+    uuid: 3532270866259177256
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.763000011
+          - 0.754999995
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.180999994
+          - 0.0599999987
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/game_over_quit.png
+        use_animation: false
+        sprite_size:
+          - 440
+          - 86
+        sheet_size:
+          - 440
+          - 86
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~
+  - name: LLC_button
+    prefabPath: ""
+    uuid: 9050611164900548700
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.282000005
+          - 0.754999995
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.261000007
+          - 0.0590000004
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/game_over_LLC.png
+        use_animation: false
+        sprite_size:
+          - 668
+          - 86
+        sheet_size:
+          - 668
+          - 86
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~

@@ -1,5 +1,8 @@
 ﻿#pragma region Includes
+#undef max
+#undef T 
 #include <glm/glm.hpp>
+
 #include <algorithm>
 #include <iostream>
 #include <filesystem>
@@ -9,6 +12,8 @@
 #include <mono/metadata/class.h> 
 #include <mono/metadata/reflection.h>
 #include <Windows.h>
+#include <shellapi.h>
+
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -20,8 +25,7 @@
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
 #include "../MyGameEngine/LightComponent.h"
-#include "../MyAudioEngine/SoundComponent.h"
-#include "../MyAudioEngine/AudioListener.h"
+//#include "../MyAudioEngine/AudioListener.h"
 #include "../MyGameEditor/Log.h"
 #include "../MyGameEngine/CameraComponent.h"
 #include "../MyGameEngine/Mesh.h"
@@ -38,7 +42,6 @@
 #include "../MyShadersEngine/ShaderComponent.h"
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
-#include <Windows.h>
 #include "../MyParticlesEngine/ParticleFX.h"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
@@ -48,6 +51,8 @@
 #include "../MyUIEngine/UIButtonComponent.h"
 
 #include <MyGameEngine/ImGuiCurveEditor.h>
+#include <MyGameEngine/PrefabManager.h>
+#include "DragDropManager.h"
 typedef unsigned int guint32;
 #pragma endregion
 
@@ -751,7 +756,7 @@ private:
 		ImGui::Text("Light Type");
 		ImGui::SameLine(labelWidth);
 		ImGui::PushItemWidth(-1);
-		if (ImGui::Combo("##Type", (int*)&lightType, "Directional\0Point\0")) {
+		if (ImGui::Combo("##Type", (int*)&lightType, "None\0Point\0Directional\0")) {
 			light->SetLightType(lightType);
 		}
 		ImGui::PopItemWidth();
@@ -856,137 +861,67 @@ private:
 
 			ImGui::EndGroup();
 		}
+		if (lightType == LightType::DIRECTIONAL)
+		{
+			ImGui::Separator();
+			ImGui::Text("Directional Light Properties");
+			ImGui::Spacing();
+
+			ImGui::BeginGroup();
+
+			// Dirección de la luz
+			glm::vec3 direction = light->GetDirection();
+			float directionArray[3] = { direction.x, direction.y, direction.z };
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Direction");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat3("##Direction", directionArray, 0.1f, -1.0f, 1.0f)) {
+				light->SetDirection(glm::vec3(directionArray[0], directionArray[1], directionArray[2]));
+			}
+			ImGui::PopItemWidth();
+
+			// Color difuso
+			glm::vec3 diffuse = light->GetDiffuse();
+			float diffuseArray[3] = { diffuse.x, diffuse.y, diffuse.z };
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Diffuse Color");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit3("##DiffuseColor", diffuseArray)) {
+				light->SetDiffuse(glm::vec3(diffuseArray[0], diffuseArray[1], diffuseArray[2]));
+			}
+			ImGui::PopItemWidth();
+
+			// Color especular
+			glm::vec3 specular = light->GetSpecular();
+			float specularArray[3] = { specular.x, specular.y, specular.z };
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Specular Color");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit3("##SpecularColor", specularArray)) {
+				light->SetSpecular(glm::vec3(specularArray[0], specularArray[1], specularArray[2]));
+			}
+			ImGui::PopItemWidth();
+
+			// Color ambiental
+			glm::vec3 ambient = light->GetAmbient();
+			float ambientArray[3] = { ambient.x, ambient.y, ambient.z };
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Ambient Color");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit3("##AmbientColor", ambientArray)) {
+				light->SetAmbient(glm::vec3(ambientArray[0], ambientArray[1], ambientArray[2]));
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::EndGroup();
+		}
+
 	}
     #pragma endregion
-
-    #pragma region Sound
-    static void DrawSoundComponent(SoundComponent* sound) {
-        if (!sound) return;
-
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Sound")) return;
-
-		if (ImGui::BeginPopupContextItem()) {
-			if (ImGui::MenuItem("Remove Component")) {
-				sound->GetOwner()->RemoveComponent<SoundComponent>();
-			}
-			ImGui::EndPopup();
-		}
-
-        DrawAudioFilePath(sound);
-        DrawSoundProperties(sound);
-        DrawPlaybackControls(sound);
-    }
-
-    static void DrawAudioFilePath(SoundComponent* sound) {
-        char audioPath[256];
-        strcpy_s(audioPath, sound->GetAudioPath().c_str());
-
-        if (ImGui::InputText("Audio File", audioPath, sizeof(audioPath))) {
-            sound->LoadAudio(audioPath);
-        }
-
-        // Drag and drop handler
-        if (ImGui::BeginDragDropTarget()) {
-            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-                HandleAudioFileDrop(sound, static_cast<const char*>(payload->Data));
-            }
-            ImGui::EndDragDropTarget();
-        }
-    }
-
-    static void HandleAudioFileDrop(SoundComponent* sound, const char* path) {
-        std::string extension = std::filesystem::path(path).extension().string();
-        std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
-
-        if (extension == ".wav" || extension == ".ogg" || extension == ".mp3") {
-            sound->LoadAudio(path);
-        }
-    }
-
-    static void DrawSoundProperties(SoundComponent* sound) {
-        bool isMusic = sound->IsMusic();
-        if (ImGui::Checkbox("Is Music", &isMusic)) {
-            if (!sound->GetAudioPath().empty()) {
-                sound->LoadAudio(sound->GetAudioPath(), isMusic);
-            }
-        }
-
-        bool isSpatial = sound->IsSpatial();
-        if (ImGui::Checkbox("3D Sound", &isSpatial)) {
-            sound->SetSpatial(isSpatial);
-        }
-
-        float volume = sound->GetVolume();
-        if (ImGui::SliderFloat("Volume", &volume, 0.0f, 1.0f)) {
-            sound->SetVolume(volume);
-        }
-
-        bool loop = sound->GetLoop();
-        if (ImGui::Checkbox("Loop", &loop)) {
-            sound->SetLoop(loop);
-        }
-
-        bool autoPlay = sound->GetAutoPlay();
-        if (ImGui::Checkbox("Auto Play", &autoPlay)) {
-            sound->SetAutoPlay(autoPlay);
-        }
-    }
-
-    static void DrawPlaybackControls(SoundComponent* sound) {
-        ImGui::Separator();
-
-        if (sound->IsPlaying()) {
-            if (ImGui::Button("Stop")) {
-                sound->Stop();
-            }
-            ImGui::SameLine();
-            if (ImGui::Button("Pause")) {
-                sound->Pause();
-            }
-            ImGui::SameLine();
-            if (ImGui::Button("Resume")) {
-                sound->Resume();
-            }
-        }
-        else {
-            if (ImGui::Button("Play")) {
-                sound->Play(sound->GetLoop());
-            }
-        }
-
-        if (sound->IsSpatial()) {
-            ImGui::Text("Position is controlled by Transform component");
-        }
-    }
-    #pragma endregion
-
-    #pragma region AudioListener
-    static void DrawAudioListenerComponent(AudioListener* listener, GameObject* gameObject) {
-        if (!listener) return;
-
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Audio Listener")) return;
-
-		if (ImGui::BeginPopupContextItem()) {
-			if (ImGui::MenuItem("Remove Component")) {
-				listener->GetOwner()->RemoveComponent<AudioListener>();
-			}
-			ImGui::EndPopup();
-		}
-
-        Transform_Component* transform = gameObject->GetTransform();
-        if (transform) {
-            glm::dvec3 position = transform->GetPosition();
-            float pos[3] = {
-                static_cast<float>(position.x),
-                static_cast<float>(position.y),
-                static_cast<float>(position.z)
-            };
-            ImGui::DragFloat3("Position", pos, 0.1f);
-        }
-    }
-    #pragma endregion 
 
     #pragma region SkeletalAnimation
 	static void DrawSkeletalAnimationComponent(SkeletalAnimationComponent* skeletal)
@@ -1599,6 +1534,9 @@ private:
 				if (strcmp(className, "GameObject") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
 					DrawGameObjectField(monoScript, field, fieldName);
 				}
+				else if (strcmp(className, "Prefab") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
+					DrawPrefabField(monoScript, field, fieldName);
+				}
 				else if (strcmp(className, "Transform") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
 					DrawComponentField(monoScript, field, fieldName, "Transform", "HawkEngine.Transform");
 				}
@@ -1798,12 +1736,12 @@ private:
 				GameObject* draggedGO = *(GameObject**)payload->Data;
 				if (draggedGO) {
 					MonoObject* managedGO = MonoManager::GetInstance().CreateGameObjectReference(draggedGO);
-
 					if (managedGO) {
 						mono_field_set_value(monoScript, field, managedGO);
 					}
 				}
 			}
+			DragDropManager::draggedObject = nullptr;
 			ImGui::EndDragDropTarget();
 		}
 
@@ -1822,6 +1760,73 @@ private:
 			ImGui::EndTooltip();
 		}
 	}
+
+	static void DrawPrefabField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		MonoObject* prefabObj = nullptr;
+		mono_field_get_value(monoScript, field, &prefabObj);
+
+		std::string displayPath = "None";
+
+		if (prefabObj) {
+			MonoClass* prefabClass = mono_object_get_class(prefabObj);
+			MonoClassField* pathField = mono_class_get_field_from_name(prefabClass, "path");
+			if (pathField) {
+				MonoString* monoStr = nullptr;  
+                mono_field_get_value(prefabObj, pathField, &monoStr);  
+				if (monoStr) {
+					char* cstr = mono_string_to_utf8(monoStr);
+					std::string fullPath = cstr;
+					mono_free(cstr);
+
+					size_t lastSlash = fullPath.find_last_of("/\\");
+					std::string fileName = (lastSlash != std::string::npos) ? fullPath.substr(lastSlash + 1) : fullPath;
+
+					size_t extensionPos = fileName.rfind(".prefab.yaml");
+					if (extensionPos != std::string::npos) {
+						fileName = fileName.substr(0, extensionPos);
+					}
+
+					displayPath = fileName;
+				}
+			
+			}
+		}
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.25f, 0.35f, 0.45f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.35f, 0.45f, 0.55f, 1.0f));
+		ImGui::Button(displayPath.c_str(), ImVec2(-1, 0));
+		ImGui::PopStyleColor(2);
+
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+				const char* rawPath = (const char*)payload->Data;
+				std::string assetPath = std::string(rawPath);
+
+				if (assetPath.ends_with(".prefab.yaml")) {
+					MonoObject* prefabGO = MonoManager::GetInstance().CreatePrefabReference(assetPath); 
+					if (prefabGO) {
+						mono_field_set_value(monoScript, field, prefabGO);
+					}
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Clear Reference")) {
+				void* nullRef = nullptr;
+				mono_field_set_value(monoScript, field, nullRef);
+			}
+			ImGui::EndPopup();
+		}
+
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("Prefab path: %s", displayPath.c_str());
+			ImGui::EndTooltip();
+		}
+	}
+
 
 	static void DrawStringField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
 		std::string value = MonoFieldHelper::GetStringValue(monoScript, field);
@@ -2055,6 +2060,13 @@ private:
 		if (ImGui::ColorEdit4("##EndColor", endColorArr)) {
 			system->SetParticleColor(system->GetStartColor(), glm::vec3(endColorArr[0], endColorArr[1], endColorArr[2]));
 			system->SetParticleAlpha(system->GetStartAlpha(), endColorArr[3]);
+		}
+
+		ImGui::Text("IsLocalSpace");
+
+		bool isLocalSpace = system->GetIsLocalSpace();
+		if (ImGui::Checkbox("##IsLocalSpace", &isLocalSpace)) {
+			system->SetIsLocalSpace(isLocalSpace);
 		}
 
 		ImGui::EndGroup();
@@ -2734,16 +2746,6 @@ public:
 			DrawLightComponent(light);
 		}
 
-		if (gameObject->HasComponent<SoundComponent>()) {
-			SoundComponent* sound = gameObject->GetComponent<SoundComponent>();
-			DrawSoundComponent(sound);
-		}
-
-		if (gameObject->HasComponent<AudioListener>()) {
-			AudioListener* listener = gameObject->GetComponent<AudioListener>();
-			DrawAudioListenerComponent(listener, gameObject);
-		}
-
 		if (gameObject->HasComponent<BoxColliderComponent>()) {
 			BoxColliderComponent* collider = gameObject->GetComponent<BoxColliderComponent>();
 			DrawColliderComponent(collider);
@@ -2936,18 +2938,6 @@ public:
 				}, !gameObject->HasComponent<RigidbodyComponent>());
 
 			break;
-
-		case 2:
-			DrawComponentButton(gameObject, "Sound", [gameObject]() {
-				gameObject->AddComponent<SoundComponent>();
-				}, !gameObject->HasComponent<SoundComponent>());
-
-			DrawComponentButton(gameObject, "Audio Listener", [gameObject]() {
-				gameObject->AddComponent<AudioListener>();
-				}, !gameObject->HasComponent<AudioListener>());
-
-			break;
-
 		case 3:
 			DrawComponentButton(gameObject, "Canvas", [gameObject]() {
 				if (!gameObject->HasComponent<UITransformComponent>()) {
@@ -3122,20 +3112,6 @@ public:
 			DrawComponentButton(gameObject, "Rigidbody", [gameObject]() {
 				gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
 				}, !gameObject->HasComponent<RigidbodyComponent>());
-		}
-
-		if (matchesSearch("Sound")) {
-			anyFound = true;
-			DrawComponentButton(gameObject, "Sound", [gameObject]() {
-				gameObject->AddComponent<SoundComponent>();
-				}, !gameObject->HasComponent<SoundComponent>());
-		}
-
-		if (matchesSearch("Audio Listener")) {
-			anyFound = true;
-			DrawComponentButton(gameObject, "Audio Listener", [gameObject]() {
-				gameObject->AddComponent<AudioListener>();
-				}, !gameObject->HasComponent<AudioListener>());
 		}
 
 		if (matchesSearch("Canvas")) {
@@ -3318,6 +3294,14 @@ bool UIInspector::Draw() {
 
     DrawGameObjectHeader(selectedObject);
     ImGui::Separator();
+
+	if (!selectedObject->GetPrefabSourcePath().empty()) {
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.5f, 0.2f, 1.0f));
+		if (ImGui::Button("Override Prefab")) {
+			PrefabManager::SavePrefab(selectedObject->shared_from_this(), selectedObject->GetPrefabSourcePath());
+		}
+		ImGui::PopStyleColor();
+	}
 
     ComponentDrawer::DrawComponents(selectedObject, snap, snapValue);
     ImGui::Separator();

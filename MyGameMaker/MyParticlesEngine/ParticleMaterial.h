@@ -11,6 +11,7 @@ enum class ParticleType {
     EXPLOSION = 4,
     // ENVIRONMENT
     FLAME = 5,
+    ENVIRONMENT_FIRE = 23,
     ENVIRONMENT_SMOKE = 6,
     ENVIRONMENT_EXPLOSION = 7,
     ENVIRONMENT_DROPPLET = 15,
@@ -20,6 +21,8 @@ enum class ParticleType {
     ACID_ATK    = 10,
     // ACID_ATK_EXPLODE can use the same vfx structure as ACID_ATK with different texture
     ACID_PUDDLE = 11,
+    MAWLOC_SLAM = 24,
+    MAWLOC_ROCKS = 25,
 
     // Player / Weapons
     ENERGY_BALL = 12,
@@ -29,6 +32,9 @@ enum class ParticleType {
     ARC_SNARE_IMPACT = 17,
     MEDICAE_STIM = 18,
     BLOOD_SPLASH = 19,
+	SHOTGUN_SHOT = 20,
+	MEDICAE_STIM_SPEED = 21,
+	AMMUNITION_BLESSING = 22,
 };
 
 class ParticleMaterial : public Material {

@@ -1,0 +1,80 @@
+name: stim.001_1_1_Instance_Instance
+prefabPath: Assets\Prefabs\MedicaeStimmPrefab.prefab.yaml
+uuid: 6091300311670352603
+tag: PowerUp
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 8.0046119689941406
+      - 3.3783011436462402
+      - 11.429549217224121
+    localRotation:
+      - 179.99999487940659
+      - -13.525313462361002
+      - -157.074023877412
+    localScale:
+      - 0.0027800013776868582
+      - 0.0027799995150417089
+      - 0.0027800004463642836
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 13020063393782694514
+    material:
+      name: powerups_DefaultMaterial_BaseColor
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.20000000298023224
+      - 0.80000001192092896
+      - 0.20000000298023224
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - 1
+      - 1
+      - 1
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 7.19999981
+    intensity: 2.5
+    direction:
+      - -1
+      - -1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: MedicaeStimm
+      fields:
+        floatSpeed: 1.55059683
+        floatHeight: 0.5
+        rotationSpeed: 45.4626846
+        lifeTime: 10
+Children: ~

@@ -23,10 +23,10 @@ public class PlayerDash : MonoBehaviour
 
     private float targetFOV;
     private float zoomSpeed = 0.5f;
-    private Audio sound;
-    private string DashSound = "Assets/Audio/SFX/Player/PlayerDash_ready.wav";
+    private const string DashSound = "Assets/Audio/SFX/Player/PlayerDash_ready.wav";
+    private const string DashRecharge = "Assets/Audio/Player/Jetpack_Charge.wav";
 
-    
+
 
     public override void Awake()
     {
@@ -40,7 +40,6 @@ public class PlayerDash : MonoBehaviour
 
         playerCamera = GameObject.Find("MainCamera");
         playerCamera.GetComponent<PlayerCamera>();    
-        sound = gameObject.GetComponent<Audio>();
     }
 
     public override void Update(float deltaTime)
@@ -50,6 +49,7 @@ public class PlayerDash : MonoBehaviour
             HandleActiveDash(deltaTime);
             
         }
+
 
        
 
@@ -63,10 +63,13 @@ public class PlayerDash : MonoBehaviour
 
     public void InitiateDash(Vector3 direction, float currentTime)
     {
-        if (!CanDash(currentTime)) return;
+        if (!CanDash(currentTime))
+        {
+            Audio.PlayOneShot(DashRecharge);
+            return;
+        }
 
-        
-        isDashing = true;
+            isDashing = true;
         currentDashTime = dashDuration;
         dashDirection = direction == Vector3.Zero ? gameObject.GetComponent<Transform>().forward : Vector3.Normalize(direction);
         lastDashTime = currentTime;
@@ -81,8 +84,7 @@ public class PlayerDash : MonoBehaviour
         {
             rb.AddForce(dashDirection * dashSpeed);
             currentDashTime -= deltaTime;
-            sound.LoadAudio(DashSound);
-            sound.Play();
+            int audio = Audio.PlayOneShot(DashSound);
         }
         else
         {

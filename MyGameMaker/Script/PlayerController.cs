@@ -11,18 +11,21 @@ public class PlayerController : MonoBehaviour
     private PlayerAnimations playerAnimations;
     private GameObject playerMesh;
     private ParticleFX bloodSplashEffect;
+    private CapsuleCollider capsuleCollider;
+    //private ShakeManager shakeManager;
     private bool isIdle = false;
+    public bool isShootInput = false;
     public bool isRunning = false;
     private bool isWalking = false;
     private bool isMoving = false;
     private bool isDashInput = false;
-    private bool isShootInput = false;
     private bool isRunningInput = false;
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
     private bool isTransitioning = false;
     private float transitionTimer = 0f;
     private float transitionDelay = 0.1f;
+    private bool isDashing = false;
     Vector3 moveDirection;
     private bool once = false;
 
@@ -34,18 +37,32 @@ public class PlayerController : MonoBehaviour
     private float dashDelayTimer = 0f; 
     private float dashDelayDuration = 0.45f;
 
-    private Audio sound;
+
+    //color change
+    private bool isFlashingColor = false;
+    private float flashTimer = 0f;
+    private Vector4 originalColor = new Vector4(1, 1, 1 ,1);
+    public Vector4 flashColor = new Vector4(1, 0, 0, 1); // rojo
+    public float flashDuration = 0.1f;
+    //private AudioSource sound;
     private bool isFootstepPlaying = false;
     private bool hasStoppedFootsteps = false;
-    private string Runfootsteps = "Assets/Audio/SFX/Player/PlayerFootstep_ready.wav";
-    private string Walkfootsteps = "Assets/Audio/SFX/Player/PlayerWalkFootstep_ready.wav";
-    public string HitAudio = "Assets/Audio/SFX/Player/PlayerHit_ready.wav";
-    public string DeathAudio = "Assets/Audio/SFX/PlayerPlayerDeath_ready.wav";
+    private const string Runfootsteps = "Assets/Audio/Player/Player_Footsteps.wav";
+    private const string Walkfootsteps = "Assets/Audio/Player/Player_Footsteps.wav";
+    public const string HitAudio = "Assets/Audio/Player/PlayerHurt.wav";
+    public const string DeathAudio = "Assets/Audio/Player/Player_Death.wav";
+    private int audioRun;
+    private int audioWalk;
 
     private ParticleFX inactiveDashFX;
     private ParticleFX walkingFX;
     
     public PlayerData playerData;
+
+    public GameObject aimLaser;
+    public GameObject aimLaserEnd;
+    private Transform transform;
+    private float dashEndTimer = 0.25f;
 
     public override void Awake()
     {
@@ -57,15 +74,18 @@ public class PlayerController : MonoBehaviour
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
         playerAnimations = playerMesh.GetComponent<PlayerAnimations>();
         playerMesh.GetComponent<SkeletalAnimation>().SetAnimationSpeed(2f);
-        sound = gameObject.GetComponent<Audio>();
+        //sound = gameObject.GetComponent<AudioSource>();
         //gameObject.GetComponent<Transform>().SetPosition(0, 0, 0);
-        playerData = new PlayerData();
+        playerData = PlayerData.Instance;
         // Add the blood splash effect directly to the player object
         bloodSplashEffect = gameObject.AddComponent<ParticleFX>();
         bloodSplashEffect.ApplyPreset(19); // BLOOD_SPLASH preset (index 19)
         inactiveDashFX = GameObject.Find("InactiveDashFX").GetComponent<ParticleFX>();
         walkingFX = GameObject.Find("WalkingFX").GetComponent<ParticleFX>();
+        capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
+        transform = gameObject.GetComponent<Transform>();
 
+        //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
     }
 
     public override void Start()
@@ -84,12 +104,14 @@ public class PlayerController : MonoBehaviour
             walkingFX.Stop();
             return;
         }
+
+        
+
         if (playerData.isHit )
         {
             if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
-                sound.LoadAudio(HitAudio);
-                sound.Play();
+                int audioHit = Audio.PlayOneShot(HitAudio);
 
                 if (bloodSplashEffect != null)
                 {
@@ -99,13 +121,35 @@ public class PlayerController : MonoBehaviour
                 if (playerData.GetHealth() <= 0)
                 {
                     playerAnimations.SetDeathAnimation();
-                    sound.LoadAudio(DeathAudio);
-                    sound.Play();
+                    playerInput.BlockMovement();
+                    capsuleCollider.SetActive(false);
+                    int audioDeath = Audio.PlayOneShot(DeathAudio);
                     SceneManager.LoadScene("LoseScene");
                 }
                 else
                 {
-                    playerAnimations.SetHitIdleAnimation();
+                    //shake
+                    //shakeManager.ApplyShake(1,0.3f, 0.1f);
+                    //if (isRunning)
+                    //{
+                    //    playerAnimations.SetHitRunningAnimation();
+                    //}
+                    //else if (isShootingRunning)
+                    //{
+                    //    playerAnimations.SetHitShootingRunningAnimation();
+                    //}
+                    //else if (isShootingStanding)
+                    //{
+                    //    playerAnimations.SetHitShootingStandingAnimation();
+                    //}
+                    //else if (isWalking)
+                    //{
+                    //    playerAnimations.SetHitWalkingAnimation();
+                    //}
+                    //else 
+                    //{
+                    //    playerAnimations.SetHitAnimation();
+                    //}
                 }
             }
             playerData.isHit = false; 
@@ -114,6 +158,32 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             playerData.TakeDamage(10);
+            StartFlashColor(flashColor, flashDuration);
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            playerData.AddHealth(10);
+            MeshRenderer renderer = playerMesh.GetComponent<MeshRenderer>();
+            if (renderer != null)
+            {
+                renderer.SetColor(new Vector4(0, 1, 0, 1));
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            SceneManager.LoadScene("Lvl2Alpha1Release");
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            SceneManager.LoadScene("BossFight_Alpha1_Release");
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            SceneManager.LoadScene("Lvl1Alpha1Release");
         }
 
         if (Input.GetKeyDown(KeyCode.N))
@@ -161,20 +231,61 @@ public class PlayerController : MonoBehaviour
         playerMovement.SetMoveDirection(moveDirection);
         playerMovement.SetLookDirection(lookDirection);
 
-        if (dashDelayTimer > 0f)
+        Vector3 localOffset = new Vector3(-0.9f, 2.5f, 0.5f);
+
+        Vector3 bulletStart = transform.position +
+                              (transform.right * localOffset.X) +
+                              (transform.up * localOffset.Y) +
+                              (transform.forward * localOffset.Z);
+        bulletStart.Y += 0.75f;
+
+        RayCast rayAim = new RayCast();
+        int maxDistance = 50;
+        rayAim.PerformRaycast(bulletStart, Vector3.Normalize(transform.forward), maxDistance);
+
+        //aimLaser.transform.LookAt(lookDirection);
+        if (playerInput.IsShooting())
         {
-            return;
+            aimLaser.SetActive(true);
+            
+
+            if (rayAim.hit.isHit)
+            {
+                //aimLaser.transform.localScale = new Vector3(aimLaser.transform.localScale.X, rayAim.hit.distance / 2, aimLaser.transform.localScale.Z);
+                aimLaserEnd.SetActive(true);
+                aimLaser.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * 2);
+                aimLaserEnd.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * (rayAim.hit.distance));
+            }
+            else
+            {
+                //aimLaser.transform.localScale = new Vector3(aimLaser.transform.localScale.X, maxDistance / 2, aimLaser.transform.localScale.Z);
+                aimLaserEnd.SetActive(false);
+                aimLaser.transform.position = bulletStart + (Vector3.Normalize(transform.forward) * 2);
+            }
+
         }
-        if (isShootInput)
+        else
+        {
+            aimLaser.SetActive(false);
+            aimLaserEnd.SetActive(false);
+        }
+
+        //if (dashDelayTimer > 0f)
+        //{
+        //    return;
+        //}
+        if (isShootInput && !isDashing)
         {
             SetShootingState();
             isIdle = false;
         }
         else
         {
-           
+            Engineson.print(moveDirection.ToString());
             if (moveDirection == Vector3.Zero)
             {
+                StopFootsteps();
+                walkingFX.Stop();
                 if (isWalking)
                 {
                     SetWalkingToIdle();
@@ -187,8 +298,7 @@ public class PlayerController : MonoBehaviour
                 {
                     SetIdleState();
                 }
-                StopFootsteps();
-                walkingFX.Stop();
+                
             }
             else
             {
@@ -197,9 +307,9 @@ public class PlayerController : MonoBehaviour
                 {
                     PlayFootstep();
                 }
-                if (playerMovement.moveSpeed == playerMovement.walkSpeed)
+                if (playerMovement.moveSpeed == playerMovement.walkSpeed && isDashing == false)
                     SetWalkingState();
-                else if (isRunningInput)
+                else if (isRunningInput && isDashing == false)
                     SetRunningState();
             }
         }
@@ -215,20 +325,73 @@ public class PlayerController : MonoBehaviour
 
         if (playerInput.GetDashInput() && playerDash.CanDash(elapsedTime))
         {
+            isDashing = true;
             playerDash.InitiateDash(moveDirection, elapsedTime);
             playerAnimations.SetDashAnimation();
-            dashDelayTimer = dashDelayDuration;
-            isRunning = false;
-            isWalking = false;
+            playerInput.BlockMovement();
+            //dashDelayTimer = dashDelayDuration;
             StopFootsteps();
-        }
-        if (isTransitioning && transitionTimer > 0f)
-        {
-            transitionTimer -= deltaTime;
 
+        }
+
+         
+        if (isDashing)
+        {
+            dashEndTimer -= deltaTime;
+            if (dashEndTimer <= 0f)
+            {
+                playerInput.UnblockMovement();
+                TransitionFromDashState();
+                isDashing = false;
+                dashEndTimer = 0.25f; 
+            }
+        }
+    
+        //if (playerAnimations.esk.IsAnimationFinished() && isDashing == true)
+        //{
+        //    playerInput.UnblockMovement();
+        //    TransitionFromDashState();
+        //    isDashing = false;
+        //}
+
+        if (isFlashingColor)
+        {
+            flashTimer -= deltaTime;
+            if (flashTimer <= 0f)
+            {
+                MeshRenderer renderer = playerMesh.GetComponent<MeshRenderer>();
+                if (renderer != null)
+                {
+                    renderer.SetColor(originalColor);
+                }
+                isFlashingColor = false;
+            }
         }
     }
 
+    private void TransitionFromDashState()
+    {
+        if (isRunning)
+        {
+            playerAnimations.SetDashToRunningAnimation();
+        }
+        else if (isShootingRunning)
+        {
+            playerAnimations.SetDashToShootingRunningAnimation();
+        }
+        else if (isShootingStanding)
+        {
+            playerAnimations.SetDashToShootingStandingAnimation();
+        }
+        else if (isWalking)
+        {
+            playerAnimations.SetDashToWalkingAnimation();
+        }
+        else
+        {
+            playerAnimations.SetDashToIdleAnimation();
+        }
+    }
 
     private void SetIdleState()
     {
@@ -236,10 +399,14 @@ public class PlayerController : MonoBehaviour
         {
             if (isShootingStanding)
             {
+                Engineson.print("Idle");
                 playerAnimations.SetShootingStandingToIdleAnimation();
             }
+            else 
+            {
+                playerAnimations.SetStandardIdleAnimation();
+            }
 
-            playerAnimations.SetIdleRandomAnimation();
             isIdle = true;
             isRunning = false;
             isWalking = false;
@@ -247,10 +414,13 @@ public class PlayerController : MonoBehaviour
             isShootingRunning = false;
             isMoving = false;
         }
+      
+        
 
         if (!hasStoppedFootsteps)
         {
-            sound?.Stop();
+            Audio.Stop(Runfootsteps);
+            Audio.Stop(Walkfootsteps);
             hasStoppedFootsteps = true;
             isFootstepPlaying = false;
         }
@@ -273,7 +443,7 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
             isTransitioning = true;
             transitionTimer = transitionDelay;
-            PlayFootstep();
+
         }
         else if (transitionTimer <= 0f && !isWalking)
         {
@@ -285,7 +455,7 @@ public class PlayerController : MonoBehaviour
             isShootingRunning = false;
             isMoving = true;
             isTransitioning = false;
-            PlayFootstep();
+
         }
     }
 
@@ -306,7 +476,7 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
             isTransitioning = true;
             transitionTimer = transitionDelay;
-            PlayFootstep();
+
         }
         else if (transitionTimer <= 0f && !isRunning)
         {
@@ -317,7 +487,7 @@ public class PlayerController : MonoBehaviour
             isShootingRunning = false;
             isMoving = true;
             isTransitioning = false;
-            PlayFootstep();
+
         }
     }
 
@@ -399,28 +569,49 @@ public class PlayerController : MonoBehaviour
     {
         string newFootstep = isRunning ? Runfootsteps : Walkfootsteps;
 
-        if (!isFootstepPlaying || currentFootstep != newFootstep)
+        if (isFootstepPlaying && currentFootstep == newFootstep)
+            return;
+
+        StopFootsteps();
+
+        if (isRunning)
         {
-            sound?.Stop(); 
-            sound?.LoadAudio(newFootstep);
-            sound?.Play(true); 
-            isFootstepPlaying = true;
-            hasStoppedFootsteps = false;
-            currentFootstep = newFootstep; 
+            audioRun = Audio.Play(Runfootsteps, true); // loop = true
         }
+        else
+        {
+            audioWalk = Audio.Play(Walkfootsteps, true);
+        }
+
+        isFootstepPlaying = true;
+        hasStoppedFootsteps = false;
+        currentFootstep = newFootstep;
     }
 
     private void StopFootsteps()
     {
         if (isFootstepPlaying)
         {
-            sound?.Stop();
+            if (audioRun > 0) Audio.Stop(audioRun);
+            if (audioWalk > 0) Audio.Stop(audioWalk);
+
+            audioRun = 0;
+            audioWalk = 0;
             isFootstepPlaying = false;
             hasStoppedFootsteps = true;
-            currentFootstep = ""; 
+            currentFootstep = "";
         }
     }
-
+    public void StartFlashColor(Vector4 color, float duration)
+    {
+        MeshRenderer renderer = playerMesh.GetComponent<MeshRenderer>();
+        if (renderer != null)
+        {
+            renderer.SetColor(color);
+            isFlashingColor = true;
+            flashTimer = duration;
+        }
+    }
     public override void OnTriggerEnter(GameObject other)
     {
         if (other.name == "Hurtbox")

@@ -60,10 +60,10 @@
 #include "UIGameView.h"
 #include "External/Optick/include/optick.h"
 
-#include "MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
 #include "MyParticlesEngine/ParticleFX.h"
 #include "SDL2/SDL_timer.h"
+#include "MyAudioEngine/AudioManager.h"
 
 using namespace std;
 
@@ -674,6 +674,24 @@ static void RenderOutline(GameObject* object) {
 	}
 }
 
+static void UpdateChildrenLights(shared_ptr<GameObject> object) {
+
+	auto activeScene = Application->root->GetActiveScene();
+	if (object->HasComponent<LightComponent>()) {
+		auto& lights = activeScene->_lights;
+		auto it = std::find(lights.begin(), lights.end(), object);
+		if (it == lights.end()) {
+			lights.push_back(object);
+		}
+	}
+
+	for (const auto& child : object->GetChildren()) {
+		if (child->IsActive()) {
+			UpdateChildrenLights(child);
+		}
+	}
+}
+
 static void RenderEditor()
 {
 	UISceneWindow* sceneWindow = static_cast<UISceneWindow*>(Application->gui->UISceneWindowPanel);
@@ -708,7 +726,10 @@ static void RenderEditor()
 			objects.push_back(child);
 		}
 		if (object->IsActive()) {
-			object->Update(static_cast<float>(Application->GetDt()));
+			/*if (object->HasComponent<UICanvasComponent>()) {
+				continue;
+			}*/
+			object->Update(FIXED_TIME_STEP);
 			
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
@@ -722,11 +743,14 @@ static void RenderEditor()
 					lights.push_back(objPtr);
 				}
 			}
+
+			UpdateChildrenLights(objPtr);
 		}
 	}
 	
+	Application->physicsModule->DrawDebugDrawer();
+
 	objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
-	Application->physicsModule->Update(Application->GetDt());
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
@@ -754,6 +778,8 @@ static void RenderEditor()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+
+
 
 static void EditorRenderer(MyGUI* gui) {
 	if (Application->window->IsOpen()) {
@@ -833,17 +859,15 @@ static void GameRelease() {
 		}
 	}
 
-	Application->physicsModule->Update(Application->GetDt());
-
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
 
-	for (size_t i = 0; i < UI.size(); i++)
+	for (const auto & i : UI)
 	{
-		if (UI[i]->IsActive())
+		if (i->IsActive())
 		{
-			UI[i]->Update(static_cast<float>(Application->GetDt()));
+			i->Update(static_cast<float>(Application->GetDt()));
 		}
 	}
 
@@ -865,7 +889,6 @@ int main(int argc, char** argv) {
 			Application = new App();
 			
 			MonoManager::GetInstance().Initialize();
-			SoundComponent::InitSharedAudioEngine();
 
 			ilInit();
 			iluInit();
@@ -882,14 +905,14 @@ int main(int argc, char** argv) {
 
 		case AWAKE:
 
-			Application->physicsModule->Awake();
+			Application->LoadAllParticleTextures();
+			AudioManager::Initialize();
 			if (Application->Awake()) { state = START; }
 			else { printf("Failed on Awake"); state = FAIL; }
 			break;
 
 		case START:
 
-			Application->physicsModule->Start();
 			if (Application->Start()) { state = LOOP; }
 			else { state = FAIL; printf("Failed on START"); }
 			break;
@@ -897,6 +920,8 @@ int main(int argc, char** argv) {
 		case LOOP:
 
 #ifndef _BUILD
+			lights.clear();
+			Application->root->GetActiveScene()->_lights.clear();
 			Application->gui->Render();
 			EditorRenderer(Application->gui);
 			RenderGameView();
@@ -910,6 +935,8 @@ int main(int argc, char** argv) {
 				ScriptHotReloader::GetInstance().Update();
 			}
 #else
+			lights.clear();
+			Application->root->GetActiveScene()->_lights.clear();
 			GameRelease();
 			Application->window->SwapBuffers();
 #endif // ENABLE_EDITOR
@@ -921,6 +948,7 @@ int main(int argc, char** argv) {
 
 			MonoManager::GetInstance().Shutdown();
 			ShaderManager::GetInstance().Cleanup();
+			AudioManager::Shutdown();
 
 			if (Application->CleanUP()) {
 				state = EXIT;

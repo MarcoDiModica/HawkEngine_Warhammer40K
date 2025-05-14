@@ -1,67 +1,78 @@
 #pragma once
-
-#include <AL/al.h>
-#include <AL/alc.h>
+#undef max
+#undef T 
+#include "fmod.hpp"
+#include "fmod_studio.hpp"
 #include <string>
-#include <memory>
-#include <unordered_map>
-#include "AudioAsset.h"
+#include <map>
+#include <vector>
+#include <math.h>
+#include <iostream>
+#include <glm/glm.hpp>
 
-class AudioEngine {
-public:
-    // Represents a playable sound source
-    struct AudioSource {
-        ALuint sourceId;
-        std::shared_ptr<AudioAsset> asset;
-        bool isLooping;
-        bool isMusic;  // true for background music, false for sound effects
-    };
+struct Implementation {
+    Implementation();
+    ~Implementation();
 
-    AudioEngine();
-    ~AudioEngine();
+    void Update();
 
-    bool Initialize();
-    void Shutdown();
+    FMOD::Studio::System* mpStudioSystem;
+    FMOD::System* mpSystem;
 
-    // Asset management
-    std::shared_ptr<AudioAsset> LoadAudioAsset(const std::string& filePath);
-    
-    // Playback control
-    ALuint PlaySound(std::shared_ptr<AudioAsset> asset, bool isLooping = false, bool isMusic = false);
-    void StopSound(ALuint sourceId);
-    void PauseSound(ALuint sourceId);
-    void ResumeSound(ALuint sourceId);
-    
-    // Volume control
-    void SetVolume(ALuint sourceId, float volume);  // volume range: 0.0f to 1.0f
-    void SetMasterVolume(float volume);
-    
-    // Spatial audio
-    void SetSourcePosition(ALuint sourceId, float x, float y, float z);
-    void SetListenerPosition(float x, float y, float z);
-    
-    // State queries
-    bool IsPlaying(ALuint sourceId) const;
-    bool IsInitialized() const { return m_Initialized; }
+    int mnNextChannelId;
+    float masterVolume = 1;
 
-    // Debug/Test functions
-    ALuint TestPlayMusic(const std::string& filePath, bool autoLoop = true);
-    ALuint TestPlaySoundEffect(const std::string& filePath, float x = 0.0f, float y = 0.0f, float z = 0.0f);
-    void TestSetListenerPosition(float x, float y, float z);
-    void TestPlayAllSupportedFormats();
-    void PrintAudioDeviceInfo() const;
-    void PrintActiveSourcesInfo() const;
+    typedef std::map<std::string, FMOD::Sound*> SoundMap;
+    typedef std::map<int, FMOD::Channel*> ChannelMap;
+    typedef std::map<std::string, FMOD::Studio::EventInstance*> EventMap;
+    typedef std::map<std::string, FMOD::Studio::Bank*> BankMap;
 
-private:
-    ALuint CreateAudioSource();
-    void DestroyAudioSource(ALuint sourceId);
-    void CleanupStoppedSources();
+    std::map<int, float> mChannelBaseVolumes; // Channel ID -> Base Volume
 
-    ALCdevice* m_Device;
-    ALCcontext* m_Context;
-    bool m_Initialized;
-    float m_MasterVolume;
-    
-    std::unordered_map<ALuint, AudioSource> m_ActiveSources;
-    std::unordered_map<std::string, std::weak_ptr<AudioAsset>> m_AudioAssets;
+
+    BankMap mBanks;
+    EventMap mEvents;
+    SoundMap mSounds;
+    ChannelMap mChannels;
 };
+
+class AudioEngine
+{
+public:
+	AudioEngine();
+	~AudioEngine();
+    static void Init();
+    static void Update();
+    static void Shutdown();
+
+public :
+
+    void LoadBank(const std::string& strBankName, FMOD_STUDIO_LOAD_BANK_FLAGS flags);
+    void LoadEvent(const std::string& strEventName);
+    void LoadSound(const std::string& strSoundName, bool b3d = true, bool bLooping = false, bool bStream = false);
+    void UnLoadSound(const std::string& strSoundName);
+    void Set3dListenerAndOrientation(const glm::vec3& vPos = glm::vec3{ 0, 0, 0 }, float fVolumedB = 0.0f);
+    int PlaySound(const std::string& strSoundName, const glm::vec3& vPos = glm::vec3{ 0, 0, 0 }, float fVolumedB = 0.0f);
+    void PlayEvent(const std::string& strEventName);
+	int GetChannelId(const std::string& strSoundName);
+    void StopSound(int nChannelId);
+	void PauseSound(int nChannelId);
+	void ResumeSound(int nChannelId);
+    void StopEvent(const std::string& strEventName, bool bImmediate = false);
+    void GetEventParameter(const std::string& strEventName, const std::string& strEventParameter, float* parameter);
+    void SetEventParameter(const std::string& strEventName, const std::string& strParameterName, float fValue);
+    void StopAllChannels();
+	void PauseAllChannels();
+	void ResumeAllChannels();
+    void SetChannel3dPosition(int nChannelId, const glm::vec3& vPosition);
+    void SetChannelVolume(int nChannelId, float fVolumedB);
+	void SetMasterVolume(float fVolumedB);
+    bool IsPlaying(int nChannelId) const;
+    bool IsEventPlaying(const std::string& strEventName) const;
+    static float dbToVolume(float db);
+    static float VolumeTodb(float volume);
+    FMOD_VECTOR VectorToFmod(const glm::vec3& vPosition);
+
+
+};
+

@@ -58,6 +58,10 @@ public:
 	void SetAnimationNum(int num) { animationNum = num; }
 	int GetAnimationNum() const { return animationNum; }
 
+	void SetAnimIndex(int index) { animIndex = index; }
+
+	void PlayStopAnimation(bool play) { playAnimation = play; }
+
 	void SetAnimationIndexLimit(int limit) { anim1IndexLimit = limit; }
 	int GetAnimationIndexLimit() const { return anim1IndexLimit; }
 
@@ -80,6 +84,7 @@ private:
 	float animSpeed = 0.0f;
 	int animIndex = 0;
 	int anim1IndexLimit = 0;
+	bool playAnimation = true;
 
 	int animationNum = 0;
 
@@ -95,7 +100,9 @@ protected:
        node["sprite_size"] = std::vector<float>{spriteSize.x, spriteSize.y};  
        node["sheet_size"] = std::vector<float>{sheetSize.x, sheetSize.y};  
        node["sprite_offset"] = std::vector<float>{spriteOffset.x, spriteOffset.y};  
-       node["anim_speed"] = animSpeed;  
+       node["anim_speed"] = animSpeed; 
+	   node["anim_index"] = animIndex;
+	   node["anim_index_limit"] = anim1IndexLimit;
 
        /*node["shader"] = shader;*/  
        /*node["mesh"] = mesh;*/  
@@ -122,6 +129,14 @@ protected:
 
        animSpeed = node["anim_speed"].as<float>();  
        SetTexture(path);  
+
+	   if (node["anim_index"]) {
+		   animIndex = node["anim_index"].as<int>();
+	   }
+
+	   if (node["anim_index_limit"]) {
+		   anim1IndexLimit = node["anim_index_limit"].as<int>();
+	   }
 
        /*shader = node["shader"].as<Shaders*>();*/  
        /*mesh = node["mesh"].as<std::shared_ptr<Mesh>>();*/  

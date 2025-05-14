@@ -1,0 +1,54 @@
+name: bOLTER.012
+prefabPath: ""
+uuid: 3495723395628897259
+tag: Weapon
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0.91428720951080322
+      - 2
+      - 7.8897504806518555
+    localRotation:
+      - 0
+      - 0
+      - -24.781442265162212
+    localScale:
+      - 0.0029999990643983076
+      - 0.0029999990643983076
+      - 0.0030000000260770321
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 5139834007055871956
+    material:
+      name: railgun_DefaultMaterial_BaseColor
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  ScriptComponents:
+    Script0:
+      name: RailgunPickUp
+      fields:
+        floatSpeed: 1
+        floatHeight: 0.5
+        rotationSpeed: 50
+Children: ~

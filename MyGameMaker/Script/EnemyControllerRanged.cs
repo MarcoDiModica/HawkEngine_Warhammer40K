@@ -17,12 +17,14 @@ public class EnemyControllerRanged : EnemyController
 
     //audio
     bool isCombatMusicPlaying = false;
-    private Audio music;
-    private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+//     private AudioSource music;
+//     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+//     private AudioClip combatSound;
 
     public override void Awake()
     {
-        music = gameObject.GetComponent<Audio>();
+        //music = gameObject.GetComponent<AudioSource>();
+        startPosition = gameObject.GetComponent<Transform>().position;
     }
     public override void Start()
     {
@@ -42,11 +44,11 @@ public class EnemyControllerRanged : EnemyController
             return;
         }
 
-        sound = gameObject.GetComponent<Audio>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
+//         sound = gameObject.GetComponent<AudioSource>();
+//         if (sound == null)
+//         {
+//             Engineson.print("PlayerShooting: Audio component not found");
+//         }
 
         enemyTransform = gameObject.GetComponent<Transform>();
         if (enemyTransform == null)
@@ -59,6 +61,9 @@ public class EnemyControllerRanged : EnemyController
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Ranged";
+
+//         combatSound = new AudioClip(combatMusic, "CombatMusic", true, false);
+//         sound.LoadAudioClip(combatSound);
     }
 
     public override void Update(float deltaTime)
@@ -80,14 +85,12 @@ public class EnemyControllerRanged : EnemyController
                     if (shootTimer <= 0)
                     {
                         Attack();
-                        sound?.Play();
                         shootTimer = shootCooldown;
                     }
 
                     if (isCombatMusicPlaying == false)
                     {
-                        sound?.LoadAudio(combatMusic);
-                        sound?.Play(true);
+                        //sound?.Play(combatSound);
                         isCombatMusicPlaying = true;
                     }
                     else
@@ -163,6 +166,21 @@ public class EnemyControllerRanged : EnemyController
                 pc.playerData.AddHealth(5.0f);
             }
         }
+    }
+
+    public override void ResetEnemyCheckPoint()
+    {
+        if (!isDead)
+        {
+            currentHealth = maxHealth;
+            isStunned = false;
+            rb.SetVelocity(Vector3.Zero);
+            collider.SetActive(true);
+            gameObject.GetComponent<Collider>().SetPosition(startPosition);
+            //sound?.Stop();
+            isCombatMusicPlaying = false;
+        }
+        
     }
 
     public override void Attack()

@@ -51,6 +51,7 @@ struct ParticlePreset {
 	float minSize;
 	float maxSize;
 	std::string texturePath;
+	bool isLocalSpace;
 };
 
 namespace ParticlePresets {
@@ -116,6 +117,7 @@ public:
 	void SetRandomRotation(bool randomRotation) { this->randomRotation = randomRotation; }
 	void SetParticleEndSize(float endSize);
 	void SetRandomStartIndex(bool randomAnimIndex) { this->randomAnimIndex = randomAnimIndex; }
+	void SetIsLocalSpace(bool isLocalSpace) { this->isLocalSpace = isLocalSpace; }
 
 
 	float GetEmissionRate() const { return emissionRate; }
@@ -131,6 +133,7 @@ public:
 	float GetStartRotation() const { return startRotation; }
 	float GetMinScale() const { return minSize; }
 	float GetMaxScale() const { return maxSize; }
+	bool GetIsLocalSpace() const { return isLocalSpace; }
 	bool GetPlayOnAwake() const { return playOnAwake; }
 	bool GetUseAnimation() const { return useAnimation; }
 	bool GetRandomRotation() const { return randomRotation; }
@@ -154,6 +157,8 @@ public:
 	std::string GetGradientPath() const { return material && material->GetColorGradientMap() ? material->GetColorGradientMap()->image_path : ""; }
 	int GetMaxParticles() const { return renderer ? static_cast<int>(renderer->GetMaxParticles()) : 0; }
 	glm::vec2 GenerateRandomSize(float minSize, float maxSize);
+
+	std::shared_ptr<Image> GetTexture(const std::string& texturePath);
 
 	//void ConfigureSmoke();
 	//void ConfigureFire();
@@ -222,7 +227,7 @@ private:
 	glm::vec3 position;
 	glm::quat rotation;
 	glm::vec3 scale;
-
+	bool isLocalSpace = false;
 	int particleTypeInt = 0;
 
 	// Spritesheet data

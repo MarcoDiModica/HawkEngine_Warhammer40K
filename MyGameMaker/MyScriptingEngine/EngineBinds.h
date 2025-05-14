@@ -43,7 +43,10 @@ namespace EngineBinds {
 	MonoString* GetTag(MonoObject* ref);
 	void SetTag(MonoObject* ref, MonoString* tag);
     MonoObject* GetGameObjectByName(MonoString* name);	
+    MonoObject* GameObjectFindChild(MonoObject* parent, MonoString* name);
+	MonoArray* GetGameObjectsByTag(MonoString* tag);
     void GameObjectSetActive(MonoObject* ref, bool active);
+    MonoObject* InstantiatePrefab(MonoObject* prefabObj, MonoObject* parentTransformObj, bool worldPositionStays);
 	bool GameObjectIsActive(MonoObject* ref);
 
     // Input
@@ -99,15 +102,8 @@ namespace EngineBinds {
     void SetOffset(MonoObject* cameraRef, glm::vec3* offset);
 
     // MeshRenderer
-	void SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef);
-    void SetCubeMesh(MonoObject* meshRendererRef);
-	MonoObject* GetMesh(MonoObject* meshRendererRef);
-    void SetMaterial(MonoObject* meshRendererRef, MonoObject* materialRef);
-    MonoObject* GetMaterial(MonoObject* meshRendererRef);
-	void SetColor(MonoObject* meshRendererRef, glm::vec3* color);
-    void GetColor(MonoObject* meshRendererRef, glm::vec3* color);
-    void Render(MonoObject* meshRendererRef);
-    
+	void SetColor(MonoObject* meshRendererRef, glm::vec4* color);
+    glm::vec4 GetColor(MonoObject* meshRendererRef);
 
     //Physics
     MonoArray* OverlapSphere(glm::vec3* position, float radius, MonoString* tag);
@@ -144,13 +140,29 @@ namespace EngineBinds {
 	MonoObject* Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance, glm::vec3& hitPoint, glm::vec3& normal, float& distance);
     
     //Audio
-    void Play(MonoObject* audioRef, bool loop = false);
-    void Stop(MonoObject* audioRef);
-    void Pause(MonoObject* audioRef);
-    void Resume(MonoObject* audioRef);
-    void SetVolume(MonoObject* audioRef, float volume);
-    float GetVolume(MonoObject* audioRef);
-	void LoadAudioClip(MonoObject* audioRef, MonoString* path);
+	static int AudioPlay(MonoString* path, bool loop);
+	static int AudioPlayOneShot(MonoString* path);
+	static void AudioStop(int audioId);
+	static void AudioStopPath(MonoString* path);
+	static void AudioPause(int audioId);
+	static void AudioPausePath(MonoString* path);
+	static void AudioResume(int audioId);
+	static void AudioResumePath(MonoString* path);
+	static int AudioPlayMusic(MonoString* path);
+	static void AudioStopMusic(MonoString* path);
+	static void AudioStopAllMusic();
+	static float AudioGetMasterVolume();
+	static void AudioSetMasterVolume(float volume);
+	static float AudioGetMusicVolume();
+	static void AudioSetMusicVolume(float volume);
+	static float AudioGetSfxVolume();
+	static void AudioSetSfxVolume(float volume);
+	static void AudioSetVolumeById(int audioId, float volume);
+	static void AudioSetVolumeByPath(MonoString* path, float volume);
+	static void AudioStopAll();
+	static void AudioPauseAll();
+	static void AudioResumeAll();
+	static void AudioSchedulePlay(MonoString* path, float delay, bool loop);
 
     //UIImage
     void SetTexture(MonoObject* uiImageRef, MonoString* path);
@@ -160,6 +172,8 @@ namespace EngineBinds {
 	void SetImageAnimationIndexLimit(MonoObject* uiImageRef, int indexLimit);
 	void SetImageAnimation(MonoObject* uiImageRef, int index);
 	void SetImageSpriteSize(MonoObject* uiImageRef, float width, float height);
+	void SetImageAnimIndex(MonoObject* uiImageRef, int index);
+	void PlayStopAnimation(MonoObject* uiImageRef, bool play);
 
 	//UIButton
     int GetState(MonoObject* uiButtonRef);
@@ -180,6 +194,7 @@ namespace EngineBinds {
 	void TransitionAnimations(MonoObject* skeletalAnimationRef, int oldAnim, int newAnim, float timeToTransition);
 	void SetLoop(MonoObject* skeletalAnimationRef, bool isLoop);
 	void PlayAnimOnce(MonoObject* skeletalAnimationRef, int index, float timeToTransitionAnim);
+	bool IsAnimationFinished(MonoObject* skeletalAnimationRef);
 
 	//Tweening
     void DOMove(MonoObject* transformRef, glm::vec3* targetPosition, float duration, Modes mode);

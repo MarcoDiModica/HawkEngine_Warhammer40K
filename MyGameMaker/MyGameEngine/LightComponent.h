@@ -78,14 +78,14 @@ private:
 	PointLight pointLight;
 	DirLight dirLight;
 
-    vec3 ambient = glm::vec3(0.2f, 0.8f, 0.2f);
+    vec3 ambient = glm::vec3(0.2f, 0.2f, 0.2f);
     vec3 diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
-    vec3 specular = glm::vec3(1.0f, 1.0f, 1.0f);
+    vec3 specular = glm::vec3(-0.2f, -1.0f, -0.3f);
     float constant = 1.0f;
     float linear = 0.09f;
     float quadratic = 0.032f;
     float radius = 1.0f;
-    float intensity = 2.5f;
+    float intensity = 3.0f;
     glm::vec3 direction = { -1.0f, -1.0f, 0.0f };
 
 protected:

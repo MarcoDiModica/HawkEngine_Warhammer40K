@@ -39,6 +39,7 @@ public class RailgunPickUp : PickUp
         {
             Engineson.print("Railgun Picked Up");
             playerController.playerShooting.hasRailgun = true;
+            playerController.playerData.hasRailgun = true;
         }
     }
 }

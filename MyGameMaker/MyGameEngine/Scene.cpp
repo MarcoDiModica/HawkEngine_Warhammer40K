@@ -13,6 +13,8 @@ void Scene::Start()
 
 void Scene::Update(float deltaTime)
 {
+	
+
 	for (auto& child : children())
 	{
 		child->Update(deltaTime);

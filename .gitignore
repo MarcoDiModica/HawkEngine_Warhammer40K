@@ -369,3 +369,7 @@ FodyWeavers.xsd
 /MyGameMaker.code-workspace
 /MyGameMaker/MyGameEditor/imgui.ini
 MyGameMaker/MyGameEditor/imgui.ini
+
+# Do upload fmod libraries
+!x64/fmod_vc.lib
+!x64/fmodstudio_vc.lib

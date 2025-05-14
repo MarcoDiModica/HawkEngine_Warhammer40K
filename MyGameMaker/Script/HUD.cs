@@ -5,7 +5,11 @@ using System.Numerics;
 public class HUD : MonoBehaviour
 {
     private GameObject hpBar;
+    private GameObject hpBarAnim;
     private GameObject hpTempBar;
+    private GameObject hpTempBarAnim;
+    private GameObject redThirstBar;
+    private GameObject redThirstBarAnim;
     private GameObject Player;
     private PlayerData playerData;
     private PlayerShooting playerShootingScript;
@@ -31,11 +35,13 @@ public class HUD : MonoBehaviour
     private GameObject railgunAbility2b;
 
     private UITransform transform_hpBar;
+    private UITransform transform_hpBarAnim;
     private UITransform transform_hpTempBar;
+    private UITransform transform_hpTempBarAnim;
     private UITransform transform_redThirstBar;
+    private UITransform transform_redThirstBarAnim;
 
     private RedThirstManager redThirstManager;
-    private GameObject redThirstBar;
 
     private GameObject nodash;
     private GameObject msup;
@@ -45,18 +51,22 @@ public class HUD : MonoBehaviour
     private GameObject asup;
     private GameObject magnet;
 
-    private GameObject bible1;
-    private GameObject bible2;
-    private GameObject bible3;
-    private GameObject bible4;
-    private GameObject bible5;
+    private GameObject canister1;
+    private GameObject canister2;
+    private GameObject canister3;
+    private GameObject canister4;
+    private GameObject canister5;
 
     private PlayerPowerUp playerPowerUp;
 
     private GameObject pauseMenu;
+    private GameObject optionMenu;
 
-    public bool openedPause = false;
-    public bool isPaused = false;
+    private UIImage hpBarAnimImage;
+    private UIImage hpTempBarAnimImage;
+    private UIImage redThirstBarAnimImage;
+
+    private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
 
 
     void win()
@@ -73,17 +83,34 @@ public class HUD : MonoBehaviour
     {
         float hp = playerData.GetHealth();
         float maxHp = playerData.GetMaxHealth();
-        float width = (hp / maxHp) * 0.1f;
+        float width = (hp / maxHp) * 0.2f;
         return width;
+    }
+
+    float CalculateHPBarAnimPos()
+    {
+        float hp = playerData.GetHealth();
+        float maxHp = playerData.GetMaxHealth();
+        float pos = (hp / maxHp) * 0.2f + 0.043f;
+        return pos;
     }
 
     float CalculateHPTempBarWidth()
     {
         float hpTemp = playerData.GetHealthTemp();
         float maxHpTemp = playerData.GetMaxHealthTemp();
-        float width = (hpTemp / maxHpTemp) * 0.055f;
+        float width = (hpTemp / maxHpTemp) * 0.138f;
         return width;
     }
+
+    float CalculateHPTempBarAnimPos()
+    {
+        float hpTemp = playerData.GetHealthTemp();
+        float maxHpTemp = playerData.GetMaxHealthTemp();
+        float pos = (hpTemp / maxHpTemp) * 0.138f + 0.057f;
+        return pos;
+    }
+
 
     float CalculateRedThirstBarHeight()
     {
@@ -92,6 +119,15 @@ public class HUD : MonoBehaviour
         float height = (redThirst / maxRedThirst) * 0.08f;
         return height;
     }
+
+    float CalculateRedThirstBarAnimPos()
+    {
+        float redThirst = redThirstManager.GetRedThirstPoints();
+        float maxRedThirst = 5;
+        float pos = 0.961f - (redThirst / maxRedThirst) * 0.08f;
+        return pos;
+    }
+
 
     public override void Awake()
     {
@@ -168,11 +204,17 @@ public class HUD : MonoBehaviour
             Engineson.print("ERROR: GunAbilities not found");
         }
 
-        railgunScript = playerShootingScript.railgun;
-
-        if (railgunScript == null)
+        if (playerShootingScript.hasRailgun)
         {
-            Engineson.print("ERROR: Railgun not found");
+            railgunScript = playerShootingScript.railgun;
+            if (railgunScript == null)
+            {
+                Engineson.print("ERROR: railgun unlocked but not instantiated!");
+            }
+            else
+            {
+                railgunScript.railgunMode = Railgun.RailgunMode.SEMIAUTOMATIC;
+            }
         }
 
         redThirstManager = Player.GetComponent<RedThirstManager>();
@@ -203,14 +245,14 @@ public class HUD : MonoBehaviour
             Engineson.print("ERROR: Buffs not found");
         }
 
-        bible1 = GameObject.Find("bible1");
-        bible2 = GameObject.Find("bible2");
-        bible3 = GameObject.Find("bible3");
-        bible4 = GameObject.Find("bible4");
-        bible5 = GameObject.Find("bible5");
-        if (bible1 == null || bible2 == null || bible3 == null || bible4 == null || bible5 == null)
+        canister1 = GameObject.Find("canister1");
+        canister2 = GameObject.Find("canister2");
+        canister3 = GameObject.Find("canister3");
+        canister4 = GameObject.Find("canister4");
+        canister5 = GameObject.Find("canister5");
+        if (canister1 == null || canister2 == null || canister3 == null || canister4 == null || canister5 == null)
         {
-            Engineson.print("ERROR: Bibles not found");
+            Engineson.print("ERROR: Canisters not found");
         }
 
         playerPowerUp = Player.GetComponent<PlayerPowerUp>();
@@ -221,52 +263,85 @@ public class HUD : MonoBehaviour
         }
 
         pauseMenu = GameObject.Find("Canvas_PauseMenu");
+        optionMenu = GameObject.Find("Canvas_OptionsMenu");
+
+        hpBarAnim = GameObject.Find("blood_animation_main");
+        transform_hpBarAnim = hpBarAnim.GetComponent<UITransform>();
+        hpBarAnimImage = hpBarAnim.GetComponent<UIImage>();
+        hpBarAnimImage.SetImageHasAnimation(true);
+        hpBarAnimImage.SetImageSpriteSize(50, 80);
+        hpBarAnimImage.SetImageAnimationSpeed(0.5f);
+        hpBarAnimImage.SetImageAnimationIndexLimit(4);
+
+        hpTempBarAnim = GameObject.Find("blood_animation_temp");
+        transform_hpTempBarAnim = hpTempBarAnim.GetComponent<UITransform>();
+        hpTempBarAnimImage = hpTempBarAnim.GetComponent<UIImage>();
+        hpTempBarAnimImage.SetImageHasAnimation(true);
+        hpTempBarAnimImage.SetImageSpriteSize(50, 80);
+        hpTempBarAnimImage.SetImageAnimationSpeed(0.5f);
+        hpTempBarAnimImage.SetImageAnimationIndexLimit(4);
+
+        redThirstBarAnim = GameObject.Find("thirst_animation");
+        transform_redThirstBarAnim = redThirstBarAnim.GetComponent<UITransform>();
+        redThirstBarAnimImage = redThirstBarAnim.GetComponent<UIImage>();
+        redThirstBarAnimImage.SetImageHasAnimation(true);
+        redThirstBarAnimImage.SetImageSpriteSize(175, 40);
+        redThirstBarAnimImage.SetImageAnimationSpeed(0.5f);
+        redThirstBarAnimImage.SetImageAnimationIndexLimit(6);
     }
     public override void Update(float deltaTime)
     {
         transform_hpBar.SetScaleUI(new Vector3(CalculateHPBarWidth(), 0.032f, 1.0f));
+        transform_hpBarAnim.DOMoveXUI(CalculateHPBarAnimPos(), 0f, Modes.LINEAR);
         transform_hpTempBar.SetScaleUI(new Vector3(CalculateHPTempBarWidth(), 0.018f, 1.0f));
+        transform_hpTempBarAnim.DOMoveXUI(CalculateHPTempBarAnimPos(), 0f, Modes.LINEAR);
         transform_redThirstBar.SetScaleUI(new Vector3(0.037f, CalculateRedThirstBarHeight(), 1.0f));
+        transform_redThirstBarAnim.DOMoveYUI(CalculateRedThirstBarAnimPos(), 0f, Modes.LINEAR);
+
+        if (playerShootingScript.hasRailgun && railgunScript == null)
+        {
+            railgunScript = playerShootingScript.railgun;
+        }
 
         if (redThirstManager.biblePages >= 1)
         {
-            bible1.SetActive(true);
+            canister1.SetActive(true);
         }
         else
         {
-            bible1.SetActive(false);
+            canister1.SetActive(false);
         }
         if (redThirstManager.biblePages >= 2)
         {
-            bible2.SetActive(true);
+            canister2.SetActive(true);
         }
         else
         {
-            bible2.SetActive(false);
+            canister2.SetActive(false);
         }
         if (redThirstManager.biblePages >= 3)
         {
-            bible3.SetActive(true);
+            canister3.SetActive(true);
         }
         else
         {
-            bible3.SetActive(false);
+            canister3.SetActive(false);
         }
         if (redThirstManager.biblePages >= 4)
         {
-            bible4.SetActive(true);
+            canister4.SetActive(true);
         }
         else
         {
-            bible4.SetActive(false);
+            canister4.SetActive(false);
         }
         if (redThirstManager.biblePages >= 5)
         {
-            bible5.SetActive(true);
+            canister5.SetActive(true);
         }
         else
         {
-            bible5.SetActive(false);
+            canister5.SetActive(false);
         }
 
         if (redThirstManager.IsInBlackRage())
@@ -385,6 +460,11 @@ public class HUD : MonoBehaviour
                 shotgunAbility1.SetActive(false);
                 shotgunAbility2.SetActive(false);
                 railgunAbility1.SetActive(true);
+                if (railgunScript == null)
+                {
+                    Engineson.print("ERROR: Hud.Update – railgunScript is null!");
+                    break;
+                }
                 switch (railgunScript.railgunMode)
                 {
                     case Railgun.RailgunMode.SEMIAUTOMATIC:
@@ -459,16 +539,25 @@ public class HUD : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P) || Input.GetControllerButtonDown(ControllerButton.Start))
         {
-            if (!isPaused)
+            Audio.PlayOneShot(MenuSFX);
+            if (pauseMenu.IsActive())
             {
-                openedPause = true;
-                Engineson.print("set openedPause to true");
-                pauseMenu.SetActive(true);
-                Engineson.print("opened pause menu");
-                isPaused = true;
+                pauseMenu.SetActive(false);
             }
+            else
+            {
+                pauseMenu.SetActive(true);
+            }
+            optionMenu.SetActive(false);
         }
 
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            redThirstManager.AddBiblePages(1);
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            redThirstManager.AddRedThirstPoint(1);
+        }
     }
-    
 }

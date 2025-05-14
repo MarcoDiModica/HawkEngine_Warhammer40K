@@ -277,19 +277,12 @@ public class Railgun : BaseWeapon
 
     public override void UseAbility1()
     {
-        toggleMode.TriggerAbility();
+        //toggleMode.TriggerAbility();
+        energyBall.TriggerAbility();
     }
 
     public override void UseAbility2()
     {
-        if (railgunMode == RailgunMode.AUTOMATIC)
-        {
-            laserBeam.TriggerAbility();
-        }
-        else
-        {
-            energyBall.TriggerAbility();
-        }
     }
 
     public override void CleanBullets()

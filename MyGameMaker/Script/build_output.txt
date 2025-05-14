@@ -1,9 +1,9 @@
-  Determining projects to restore...
-  Nothing to do. None of the projects specified contain packages to restore.
-  C#Assembly -> C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine_Warhammer40K\MyGameMaker\Script\obj\Script.dll
+  Determinando los proyectos que se van a restaurar...
+  No hay nada que hacer. Ninguno de los proyectos especificados contiene paquetes para restaurar.
+  C#Assembly -> C:\Users\Ivo\Desktop\Unityprojects\Some projects\HawkEngine_Warhammer40K\MyGameMaker\Script\obj\Script.dll
 
-Build succeeded.
-    0 Warning(s)
-    0 Error(s)
+Compilación correcta.
+    0 Advertencia(s)
+    0 Errores
 
-Time Elapsed 00:00:00.77
+Tiempo transcurrido 00:00:00.43

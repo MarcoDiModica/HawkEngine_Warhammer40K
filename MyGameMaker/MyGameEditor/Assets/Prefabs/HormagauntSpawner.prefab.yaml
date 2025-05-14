@@ -1,0 +1,79 @@
+name: HormagauntSpawner
+prefabPath: ""
+uuid: 14128388241849340981
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - -19.388656616210938
+      - 1.2221510410308838
+      - -93.521247863769531
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 0.0070132296532392502
+      - 0.0070132296532392502
+      - 0.0070132296532392502
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 7116761473177708742
+    material:
+      name: tyranid_mouth_lowpoly_DefaultMaterial_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+        - 1
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+Children:
+  - name: EmptyGameObject
+    prefabPath: ""
+    uuid: 9044036683575697810
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 5.9519403888079987
+          - 93.365098630909031
+          - -19.961097408133359
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 142.58765924457114
+          - 142.58765924457114
+          - 142.58765924457114
+      ScriptComponents:
+        Script0:
+          name: EnemySpawner
+          fields:
+            spawnTimer: 0
+            secondsBetweenSpawns: 10
+            currentEnemiesSpawned: 0
+            maxEnemiesToSpawn: 3
+            hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
+            spawnHormagaunt: true
+            spawnRanged: false
+            spawnStalker: false
+            spawnWarrior: false
+            spawnClimberHormagaunt: false
+    Children: ~

@@ -38,6 +38,7 @@ uniform float tonemapStrength;
 uniform int tileSize;
 uniform ivec2 screenSize;
 uniform int useForwardPlus;
+uniform int numLights;
 
 struct PointLight {
     vec4 position;
@@ -181,22 +182,23 @@ void main() {
     
     vec3 ambientLight = vec3(0.03) * albedo.rgb * ao;
     vec3 lighting = ambientLight + directLighting;
+    vec3 color = vec3(0.0);
     
-    if (useForwardPlus == 1) {
+      if (useForwardPlus == 1) {
         uvec2 lightRange = getLightGridInfo();
         uint startIndex = lightRange.x;
         uint lightCount = lightRange.y;
-        
-        for (uint i = 0; i < lightCount; i++) {
+   
+        for (uint i = 0; i < numLights; i++) {
             uint lightIndex = lightIndices[startIndex + i];
             PointLight light = pointLights[lightIndex];
-            
+          
             vec3 lightPos = light.position.xyz;
             float lightRadius = light.position.w;
             
             vec3 L = lightPos - fs_in.FragPos;
             float distance = length(L);
-            
+          
             if (distance < lightRadius) {
                 L = normalize(L);
                 H = normalize(V + L);
@@ -221,7 +223,7 @@ void main() {
                 
                 radiance = light.color.rgb * light.color.a * attenuation; // Using a component as intensity
                 
-                lighting += (kD * albedo.rgb / PI + specular) * radiance * NdotL;
+                lighting = (kD * albedo.rgb / PI + specular) * radiance * NdotL;
             }
         }
     }
@@ -231,7 +233,7 @@ void main() {
 // Ensure albedo.rgb is factored into the final color
 lighting = albedo.rgb * lighting / (lighting + vec3(1.0 - tonemapStrength));
 
-vec3 color = pow(lighting, vec3(1.0 / 2.2));
+color += pow(lighting, vec3(1.0 / 2.2));
 
 FragColor = vec4(color, albedo.a);
 }

@@ -63,26 +63,6 @@ bool ForwardPlusLighting::Initialize(int windowWidth, int windowHeight) {
 		//aqui no hay nada quizas si forward no va bien
 	}
 
-	GLuint pbrShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::PBR);
-	if (pbrShader != 0) {
-		glUseProgram(pbrShader);
-
-		GLuint pointLightBindingPoint = 3;
-		GLuint dirLightBindingPoint = 4;
-		GLuint lightGridBindingPoint = 5;
-		GLuint lightIndicesBindingPoint = 6;
-
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, pointLightBindingPoint, pointLightBuffer);
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, dirLightBindingPoint, directionalLightBuffer);
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, lightGridBindingPoint, lightGridBuffer);
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, lightIndicesBindingPoint, lightIndicesBuffer);
-
-		glUniform1i(glGetUniformLocation(pbrShader, "tileSize"), tileSize);
-		glUniform2i(glGetUniformLocation(pbrShader, "screenSize"), screenWidth, screenHeight);
-		glUniform1i(glGetUniformLocation(pbrShader, "useForwardPlus"), 1);
-
-		glUseProgram(0);
-	}
 	return true;
 }
 
@@ -180,6 +160,7 @@ void ForwardPlusLighting::UpdateLights() {
 
 void ForwardPlusLighting::PerformLightCulling(const glm::mat4& viewMatrix, const glm::mat4& projMatrix) {
 	if (!GLEW_ARB_compute_shader || !lightCullingShader || pointLights.empty()) {
+		glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT | GL_BUFFER_UPDATE_BARRIER_BIT);
 		// Si no podemos usar compute shaders o no hay luces, usamos el fallback
 		CPUFallbackCulling(viewMatrix, projMatrix);
 		return;
@@ -490,6 +471,18 @@ GPUPointLight ForwardPlusLighting::ConvertToGPULight(const LightComponent* light
 		0.0f
 	);
 
+	float radius = light->GetRadius();
+	if (radius <= 0.0f) {
+		float threshold = 0.01f; 
+		radius = (-light->GetLinear() +
+			sqrtf(light->GetLinear() * light->GetLinear() -
+				4 * light->GetQuadratic() *
+				(light->GetConstant() - (256.0f / threshold))))
+			/ (2 * light->GetQuadratic());
+	}
+	gpuLight.position.w = radius;
+	
+	
 	gpuLight.lightType = 0; // point light
 	gpuLight.castShadow = 0; // no shadows yet
 	gpuLight.shadowMapIndex = 0;

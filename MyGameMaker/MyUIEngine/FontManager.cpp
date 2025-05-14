@@ -158,30 +158,31 @@ void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& 
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
 
-    float startX = x;
     float maxWidth = boxSize.x;
+    float cursorX = x - maxWidth / 2.0f;  // Centrado horizontal
+    float cursorY = y;
     float lineHeight = 0.0f;
 
     std::istringstream stream(text);
     std::string word;
-
-    glm::vec2 measured = CalculateTextBoxSize(text, scale);
-    float centeredX = x + (boxSize.x - measured.x) / 2.0f;
-    float cursorX = centeredX;
-    float cursorY = y;
+    float spaceWidth = (Characters[' '].Advance >> 6) * scale;
 
     while (stream >> word) {
-        float wordWidth = 0;
+        float wordWidth = 0.0f;
+        float wordMaxHeight = 0.0f;
+
         for (char wc : word) {
             if (Characters.find(wc) == Characters.end()) continue;
-            wordWidth += (Characters[wc].Advance >> 6) * scale;
+            Character ch = Characters[wc];
+            wordWidth += (ch.Advance >> 6) * scale;
+            wordMaxHeight = std::max(wordMaxHeight, ch.Size.y * scale);
         }
-        wordWidth += (Characters[' '].Advance >> 6) * scale;
+        wordWidth += spaceWidth;
 
-        if ((cursorX + wordWidth - centeredX) > maxWidth) {
-            cursorX = centeredX;
+        if (cursorX + wordWidth > x + maxWidth / 2.0f) {
+            cursorX = x - maxWidth / 2.0f;
             cursorY -= lineHeight;
-            lineHeight = 0;
+            lineHeight = 0.0f;
         }
 
         for (char c : word) {
@@ -216,7 +217,7 @@ void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& 
             glDrawArrays(GL_TRIANGLES, 0, 6);
             cursorX += (ch.Advance >> 6) * scale;
         }
-        cursorX += (Characters[' '].Advance >> 6) * scale;
+        cursorX += spaceWidth;
     }
 
     glBindVertexArray(0);
@@ -228,6 +229,7 @@ void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& 
         std::cerr << "OpenGL Error: " << error << std::endl;
     }
 }
+
 
 glm::vec2 FontManager::CalculateTextBoxSize(const std::string& text, float scale) {
     float maxLineWidth = 0.0f;

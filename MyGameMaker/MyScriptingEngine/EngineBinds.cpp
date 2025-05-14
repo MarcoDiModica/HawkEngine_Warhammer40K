@@ -20,6 +20,7 @@
 #include "../MyUIEngine/UIButtonComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "../MyUIEngine/TextComponent.h"
 #include "../MyGameEngine/Tweening.h"
 
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
@@ -195,6 +196,9 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
 	}
+    else if (componentName == "HawkEngine.TextComponent") {
+		return GO->GetComponent<TextComponent>()->GetSharp();
+    }
 	else if (componentName == "HawkEngine.ParticleFX") {
 		return GO->GetComponent<ParticleFX>()->GetSharp();
 	}
@@ -235,6 +239,7 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break; 
     case 12: _component = static_cast<Component*>(go->AddComponent<CapsuleColliderComponent>(Application->physicsModule));
         break;
+	case 14: _component = static_cast<Component*>(go->AddComponent<TextComponent>());
 	case 13: _component = static_cast<Component*>(go->AddComponent<ParticleFX>());
 		break;
     default:
@@ -1325,7 +1330,7 @@ void EngineBinds::DOVec3(glm::vec3* value, glm::vec3 start, glm::vec3 target, fl
 void EngineBinds::SetText(MonoObject* textRef, MonoString* text)
 {
 	char* C_text = mono_string_to_utf8(text);
-	auto uiText = ConvertFromSharpComponent<UITextComponent>(textRef);
+	auto uiText = ConvertFromSharpComponent<TextComponent>(textRef);
 	if (uiText) {
 		uiText->SetText(C_text);
 	}
@@ -1333,17 +1338,17 @@ void EngineBinds::SetText(MonoObject* textRef, MonoString* text)
 
 void EngineBinds::SetTextColor(MonoObject* textRef, glm::vec4* color)
 {
-	auto uiText = ConvertFromSharpComponent<UITextComponent>(textRef);
+	auto uiText = ConvertFromSharpComponent<TextComponent>(textRef);
 	if (uiText) {
 		uiText->SetColor(*color);
 	}
 }
 
-void EngineBinds::SetTextSize(MonoObject* textRef, float size)
+void EngineBinds::SetTextSize(MonoObject* textRef, int size)
 {
-	auto uiText = ConvertFromSharpComponent<UITextComponent>(textRef);
+	auto uiText = ConvertFromSharpComponent<TextComponent>(textRef);
 	if (uiText) {
-		uiText->SetSize(size);
+		uiText->SetFontSize(size);
 	}
 }
 

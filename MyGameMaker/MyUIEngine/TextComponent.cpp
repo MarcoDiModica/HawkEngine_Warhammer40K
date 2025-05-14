@@ -7,7 +7,9 @@
 #include "../MyUIEngine/UITransformComponent.h"
 #include "../MyGameEngine/CameraComponent.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include "MyScriptingEngine/MonoManager.h"
 #include <glm/gtc/type_ptr.hpp>
+#include <mono/metadata/debug-helpers.h>
 
 TextComponent::TextComponent(GameObject* owner, const std::string& text, const glm::vec2& position, const glm::vec3& color, float fontSize)
     : Component(owner), m_text(text), m_position(position), m_color(color), m_fontSize(fontSize)
@@ -16,7 +18,35 @@ TextComponent::TextComponent(GameObject* owner, const std::string& text, const g
 }
 
 MonoObject* TextComponent::GetSharp() {
-    return CsharpReference;
+    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "TextComponent");
+    if (!klass) {
+        return nullptr;
+    }
+    MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+    if (!monoObject) {
+        return nullptr;
+    }
+    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.TextComponent:.ctor(uintptr,HawkEngine.GameObject)", true);
+    MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+    if (!method)
+    {
+        return nullptr;
+    }
+
+    uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+    MonoObject* ownerGo = owner->GetSharp();
+    if (!ownerGo)
+    {
+        return nullptr;
+    }
+
+    void* args[2];
+    args[0] = &componentPtr;
+    args[1] = ownerGo;
+
+    mono_runtime_invoke(method, monoObject, args, nullptr);
+
+    return monoObject;
 }
 
 void TextComponent::SetText(const std::string& text) {
@@ -153,3 +183,6 @@ void TextComponent::Update(float deltaTime) {
     }
     Render();
 }
+
+
+

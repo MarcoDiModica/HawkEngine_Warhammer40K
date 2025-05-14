@@ -25,9 +25,9 @@ public class EnemyControllerMelee : EnemyController
     private const string SFX_ATTACK = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav";
     private const string SFX_HIT = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav";
 
-    private float health = 100.0f;
-    private float clawDamage = 10.0f;
-    private float leapDamage = 15.0f;
+    private float health = 50.0f;
+    private float clawDamage = 5.0f;
+    private float leapDamage = 7.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
 
@@ -134,7 +134,7 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Update(float deltaTime)
     {
-        Engineson.print("Enemy update");
+       // Engineson.print("Enemy update");
         if (!pathInitialized && pathfinder != null && enemyTransform != null && playerTransform != null)
         {
             pathfinder.UpdateGridOrigin(enemyTransform.position);
@@ -487,7 +487,7 @@ public class EnemyControllerMelee : EnemyController
                 isFlashingColor = false;
             }
         }
-        Engineson.print("Enemy end update");
+       // Engineson.print("Enemy end update");
     }
 
     private Vector3 SmoothVelocity(Vector3 desiredVelocity, Vector3 currentVelocity, float deltaTime)

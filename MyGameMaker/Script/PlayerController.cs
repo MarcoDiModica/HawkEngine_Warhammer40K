@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection;
     private bool once = false;
 
-    public bool canMove = true;
 
 
     private float elapsedTime = 0f;
@@ -84,6 +83,8 @@ public class PlayerController : MonoBehaviour
         walkingFX = GameObject.Find("WalkingFX").GetComponent<ParticleFX>();
         capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
         transform = gameObject.GetComponent<Transform>();
+        aimLaser = gameObject.GetChild("AimLaser");
+        aimLaserEnd = gameObject.GetChild("AimLaserEnd");
 
         //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
     }
@@ -97,13 +98,6 @@ public class PlayerController : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        if (!canMove)
-        {
-            playerMovement.SetMoveDirection(Vector3.Zero);
-            StopFootsteps();
-            walkingFX.Stop();
-            return;
-        }
 
         
 
@@ -121,7 +115,7 @@ public class PlayerController : MonoBehaviour
                 if (playerData.GetHealth() <= 0)
                 {
                     playerAnimations.SetDeathAnimation();
-                    playerInput.BlockMovement();
+                    playerInput.BlockInput();
                     capsuleCollider.SetActive(false);
                     int audioDeath = Audio.PlayOneShot(DeathAudio);
                     SceneManager.LoadScene("LoseScene");
@@ -173,17 +167,17 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            SceneManager.LoadScene("Lvl2Alpha1Release");
+            SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl2");
         }
 
         if (Input.GetKeyDown(KeyCode.H))
         {
-            SceneManager.LoadScene("BossFight_Alpha1_Release");
+            SceneManager.LoadSceneFromCheckpoint("BossFight_Alpha1_Release");
         }
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            SceneManager.LoadScene("Lvl1Alpha1Release");
+            SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl1");
         }
 
         if (Input.GetKeyDown(KeyCode.N))
@@ -328,7 +322,7 @@ public class PlayerController : MonoBehaviour
             isDashing = true;
             playerDash.InitiateDash(moveDirection, elapsedTime);
             playerAnimations.SetDashAnimation();
-            playerInput.BlockMovement();
+            playerInput.BlockInput();
             //dashDelayTimer = dashDelayDuration;
             StopFootsteps();
 
@@ -340,7 +334,7 @@ public class PlayerController : MonoBehaviour
             dashEndTimer -= deltaTime;
             if (dashEndTimer <= 0f)
             {
-                playerInput.UnblockMovement();
+                playerInput.UnBlockInput();
                 TransitionFromDashState();
                 isDashing = false;
                 dashEndTimer = 0.25f; 
@@ -654,5 +648,18 @@ public class PlayerController : MonoBehaviour
             //}
         }
         
+    }
+
+    public void BlockMovement()
+    {
+        playerMovement.SetMoveDirection(Vector3.Zero);
+        StopFootsteps();
+        walkingFX.Stop();
+        playerInput.BlockMovement();
+        SetIdleState();
+    }
+    public void UnBlockMovement()
+    {
+        playerInput.UnBlockMovement();
     }
 }

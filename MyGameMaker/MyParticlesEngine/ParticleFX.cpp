@@ -529,36 +529,36 @@ namespace ParticlePresets {
 
 	const ParticlePreset RailGun_Semi = {
 	ParticleType::RAILGUN_SEMI,
-	true,						   // PlayOnAwake
-	5,						   // Duration (only if one-shot)
+	true,                           // PlayOnAwake
+	5,                           // Duration (only if one-shot)
 	glm::vec3(1,1,1),   // Start color (light gray)
 	glm::vec3(1,1,1),   // End color (dark gray)
-	0.8f,                          // Alpha start
+	1.0f,                          // Alpha start
 	1.0f,                          // Alpha end
-	0.3f,                          // Size start
-	0.4f,                          // Size end
+	2.5f,                          // Size start
+	2.5f,                          // Size end
 	3.5f,                          // Min lifetime
 	4.0f,                          // Max lifetime
 	0.0f,                          // Min speed
 	0.0f,                          // Max speed
-	0.0f,						   // End Speed
-	glm::vec3(0.0f,0.001f,1.2f),	   // Gravity (negative for upward)
+	0.0f,                           // End Speed
+	glm::vec3(0.0f,0.001f,1.2f),       // Gravity (negative for upward)
 	0,                          // Rotation speed
 	26,                         // Emission rate (particles per second)
 	EmitterShape::CONE,            // Shape
 	0.1f,                          // Cone base radius
 	1.0f,                          // Cone height
 	20.0f,                         // Cone angle in degrees
-	glm::vec2(641,361),			   // Sprite size
-	true,						   // Use animation
-	true,						   // Random animation Index
-	0.05f,						   // Animation speed
-	0.0f,						   // Start rotation
-	false,						   // Random rotation
-	1.0f,						   // Min scale
-	1.0f,						   // Max scale
+	glm::vec2(641,361),               // Sprite size
+	true,                           // Use animation
+	true,                           // Random animation Index
+	0.05f,                           // Animation speed
+	0.0f,                           // Start rotation
+	false,                           // Random rotation
+	2.5f,                           // Min scale
+	2.5f,                           // Max scale
 	"Assets/Textures/RailGunSemi.png", // Texture path
-	true						   // Is Local Space
+	true                           // Is Local Space
 	};
 
 	const ParticlePreset Environment_Dropplet = {

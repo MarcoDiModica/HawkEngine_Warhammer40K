@@ -21,6 +21,8 @@ public class Scene2ToScene3 : MonoBehaviour
     {
         if (changeScene)
         {
+            SceneManager.isLevel2 = false;
+            SceneManager.isBossFight = true;
             SceneManager.LoadScene("BetaRelease_Week1_Bossfight");
         }
     }

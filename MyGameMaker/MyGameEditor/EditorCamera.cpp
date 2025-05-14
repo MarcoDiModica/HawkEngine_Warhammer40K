@@ -16,7 +16,9 @@ EditorCamera::EditorCamera(App* app) : Module(app), CameraBase(), transform(Tran
 	/*listenerObject = new GameObject("EditorCameraObject");
 	listenerObject->AddComponent<AudioListener>();*/
 
-	transform.SetPosition(glm::dvec3(0, 7, 15));
+	transform.SetPosition(glm::dvec3(0, 7, 30));
+
+	//transform.SetLocalEulerAngles(glm::dvec3(0, 0, 0));
 
 	glm::dvec3 forward = transform.GetForward();
 	pitch = glm::degrees(asin(-forward.y));

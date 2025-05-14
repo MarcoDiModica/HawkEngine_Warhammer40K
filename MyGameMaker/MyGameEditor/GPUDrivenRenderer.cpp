@@ -292,7 +292,7 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
 
-	bindlessErrorDetected = false;
+	bindlessErrorDetected = true; //en unlit de momento usar no bindless
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
 		uint32_t meshIndex = batch.meshIndices[i];
 		uint32_t materialIndex = batch.materialIndices[i];

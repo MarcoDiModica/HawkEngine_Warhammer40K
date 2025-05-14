@@ -397,15 +397,13 @@ void BindlessManager::SetupGPUMaterial(GPUMaterial& gpuMaterial, const Material*
 		gpuMaterial.flags &= ~(1 << 16);
 	}
 
-	if (hasFallbackTextures) {
-		std::string reasons = "";
+	/*if (hasFallbackTextures) {
+		std::string reasons;
 		for (const auto& reason : fallbackReasons) {
 			if (!reasons.empty()) reasons += ", ";
 			reasons += reason;
 		}
-		LOG(LogType::LOG_WARNING, "Material '%p' usando texturas fucsia fallback: %s",
-			material, reasons.c_str());
-	}
+	}*/
 }
 
 uint32_t BindlessManager::RegisterMaterial(const Material* material) {
@@ -414,7 +412,6 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 	auto it = materialIndices.find(material);
 	if (it != materialIndices.end()) {
 		if (HasMaterialChanged(material)) {
-			LOG(LogType::LOG_INFO, "Material registrado ha cambiado, actualizando: Idx=%u", it->second);
 			UpdateMaterial(material);
 		}
 		return it->second;

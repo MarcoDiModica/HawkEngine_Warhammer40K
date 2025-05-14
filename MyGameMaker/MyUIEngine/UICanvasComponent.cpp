@@ -57,8 +57,8 @@ void UICanvasComponent::Update(float deltaTime)
 		static_cast<float>(height), 0.0f,
 		-1.0f, 1.0f);
 
-	for (size_t i = 0; i < owner->GetChildren().size(); ++i) {
-		GameObject* object = owner->GetChildren()[i].get();
+	for (const auto& i : owner->GetChildren()) {
+		GameObject* object = i.get();
 
 		if (!object->IsActive()) {
 			continue;
@@ -72,7 +72,6 @@ void UICanvasComponent::Update(float deltaTime)
 		{
 			auto imageComponent = object->GetComponent<UIImageComponent>();
 			imageComponent->SetProjection(projection);
-			imageComponent->Update(deltaTime);
 		}
 
 		if (object->HasComponent<UIButtonComponent>())
@@ -83,7 +82,6 @@ void UICanvasComponent::Update(float deltaTime)
 		if (object->HasComponent<UISliderComponent>())
 		{
 			object->GetComponent<UISliderComponent>()->SetProjection(projection);
-			object->GetComponent<UISliderComponent>()->Update(deltaTime);
 		}
 	}
 }

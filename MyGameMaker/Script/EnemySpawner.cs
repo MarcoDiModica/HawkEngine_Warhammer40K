@@ -13,6 +13,7 @@ public class EnemySpawner : MonoBehaviour
     public Prefab rangedEnemyPrefab;
     public Prefab stalkerEnemyPrefab;
     public Prefab warriorEnemyPrefab;
+    public Prefab climberHormagauntPrefab;
 
     // Cambiar los nombres a los enemigos si hace falta (no me los sé xd)
     public enum EnemyType
@@ -21,6 +22,7 @@ public class EnemySpawner : MonoBehaviour
         Ranged,
         Stalker,
         Warrior,
+        ClimberHormagaunt,
     }
 
     public EnemyType enemyTypeToSpawn;
@@ -62,6 +64,10 @@ public class EnemySpawner : MonoBehaviour
             case EnemyType.Warrior:
                 GameObject warriorEnemy = Instantiate(warriorEnemyPrefab, transform);
                 warriorEnemy.GetComponent<Collider>().SetPosition(transform.position);
+                break;
+            case EnemyType.ClimberHormagaunt:
+                GameObject climberHormagaunt = Instantiate(climberHormagauntPrefab, transform);
+                climberHormagaunt.GetComponent<Collider>().SetPosition(transform.position);
                 break;
 
         }

@@ -3,93 +3,113 @@
 public class TyranidTentacles : MonoBehaviour
 {
     private Collider tentacleCollider;
-    private bool playerInside = false;
     private GameObject player;
+    private PlayerController playerController;
+    private TyranidTentaclesAnim tentacleAnim;
 
-    private float exposureTime = 0f;
-    private bool trapTriggered = false;
-    private float immobilizeTimer = 0f;
-    private bool isPlayerImmobilized = false;
+    private const float activationRadius = 0.25f;
+    private const float exposureBeforeStun = 0.3f;
+    private const float stunDuration = 1.0f;
+
+    private float exposureTimer = 0f;
+    private float stunTimer = 0f;
+    private bool isPlayerExposed = false;
+    private bool isPlayerStunned = false;
+    private bool canInteractToEscape = false;
 
     public override void Start()
     {
         tentacleCollider = gameObject.GetComponent<Collider>();
         if (tentacleCollider == null)
-        {
-            Engineson.print("Error: Tentacle collider not found.");
-        }
+            Engineson.print("ERROR: Tentacle collider not found.");
+
+        tentacleAnim = gameObject.GetChild("TyranidTentacleMesh").GetComponent<TyranidTentaclesAnim>();
+        if (tentacleAnim == null)
+            Engineson.print("ERROR: TyranidTentaclesAnim script not found.");
     }
 
     public override void Update(float deltaTime)
     {
-        if (playerInside && player != null)
+        if (player == null || playerController == null)
+            return;
+
+        if (!isPlayerStunned)
         {
-            exposureTime += deltaTime;
+            exposureTimer += deltaTime;
 
-            if (!trapTriggered && exposureTime >= 0.4f)
+            if (exposureTimer >= exposureBeforeStun)
             {
-                PlayerController playerController = player.GetComponent<PlayerController>();
-                if (playerController != null && !playerController.playerData.GodMode)
-                {
-                    trapTriggered = true;
-                    isPlayerImmobilized = true;
-                    immobilizeTimer = 1f;
-
-                    playerController.canMove = false;
-
-                }
+                TriggerTrap();
             }
+        }
+        else
+        {
+            stunTimer += deltaTime;
 
-            if (isPlayerImmobilized)
+            if (stunTimer >= stunDuration)
             {
-                immobilizeTimer -= deltaTime;
-                if (immobilizeTimer <= 0f)
+                canInteractToEscape = true;
+
+                //Interact Button
+                if (Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B))
                 {
-                    PlayerController playerController = player.GetComponent<PlayerController>();
-                    if (playerController != null)
-                    {
-                        playerController.canMove = true;
-
-                    }
-
-                    isPlayerImmobilized = false;
+                    ReleasePlayer();
+                    ResetState();
                 }
             }
         }
+    }
+
+    private void TriggerTrap()
+    {
+        isPlayerStunned = true;
+        stunTimer = 0f;
+        canInteractToEscape = false;
+
+        if (!playerController.playerData.GodMode)
+            playerController.BlockMovement();
+
+        tentacleAnim?.PlayStunAnim();
+    }
+
+    private void ReleasePlayer()
+    {
+        playerController.UnBlockMovement();
+        tentacleAnim?.PlayHideAnim();
+
+        ResetState();
+    }
+
+    private void ResetState()
+    {
+        isPlayerExposed = false;
+        isPlayerStunned = false;
+        canInteractToEscape = false;
+        exposureTimer = 0f;
+        stunTimer = 0f;
+        player = null;
+        playerController = null;
     }
 
     public override void OnTriggerEnter(GameObject other)
     {
-        if (other.tag == "Player")
-        {
-            playerInside = true;
-            player = other;
-            exposureTime = 0f;
-            trapTriggered = false;
-            immobilizeTimer = 0f;
-            isPlayerImmobilized = false;
-        }
+        if (other.tag != "Player") return;
+
+        ResetState(); // ensure fresh start
+        player = other;
+        playerController = player.GetComponent<PlayerController>();
     }
 
     public override void OnTriggerExit(GameObject other)
     {
-        if (other.tag == "Player")
-        {
-            if (isPlayerImmobilized)
-            {
-                // Por si sale antes de terminar el timer
-                PlayerController playerController = player.GetComponent<PlayerController>();
-                if (playerController != null)
-                {
-                    playerController.canMove = true;
-                }
-            }
+        //if (other != player) return;
 
-            playerInside = false;
-            player = null;
-            exposureTime = 0f;
-            trapTriggered = false;
-            isPlayerImmobilized = false;
-        }
+        //if (isPlayerStunned)
+        //    playerController.UnBlockMovement();
+
+        //tentacleAnim?.PlayHideAnim();
+        //player = null;
+        //playerController = null;
+        //ResetState();
     }
 }

@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection;
     private bool once = false;
 
-    public bool canMove = true;
 
 
     private float elapsedTime = 0f;
@@ -99,13 +98,6 @@ public class PlayerController : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        if (!canMove)
-        {
-            playerMovement.SetMoveDirection(Vector3.Zero);
-            StopFootsteps();
-            walkingFX.Stop();
-            return;
-        }
 
         
 
@@ -123,7 +115,7 @@ public class PlayerController : MonoBehaviour
                 if (playerData.GetHealth() <= 0)
                 {
                     playerAnimations.SetDeathAnimation();
-                    playerInput.BlockMovement();
+                    playerInput.BlockInput();
                     capsuleCollider.SetActive(false);
                     int audioDeath = Audio.PlayOneShot(DeathAudio);
                     SceneManager.LoadScene("LoseScene");
@@ -330,7 +322,7 @@ public class PlayerController : MonoBehaviour
             isDashing = true;
             playerDash.InitiateDash(moveDirection, elapsedTime);
             playerAnimations.SetDashAnimation();
-            playerInput.BlockMovement();
+            playerInput.BlockInput();
             //dashDelayTimer = dashDelayDuration;
             StopFootsteps();
 
@@ -342,7 +334,7 @@ public class PlayerController : MonoBehaviour
             dashEndTimer -= deltaTime;
             if (dashEndTimer <= 0f)
             {
-                playerInput.UnblockMovement();
+                playerInput.UnBlockInput();
                 TransitionFromDashState();
                 isDashing = false;
                 dashEndTimer = 0.25f; 
@@ -656,5 +648,18 @@ public class PlayerController : MonoBehaviour
             //}
         }
         
+    }
+
+    public void BlockMovement()
+    {
+        playerMovement.SetMoveDirection(Vector3.Zero);
+        StopFootsteps();
+        walkingFX.Stop();
+        playerInput.BlockMovement();
+        SetIdleState();
+    }
+    public void UnBlockMovement()
+    {
+        playerInput.UnBlockMovement();
     }
 }

@@ -1,0 +1,184 @@
+name: TyranidTentacle
+prefabPath: Assets\Prefabs\TyranidTentacle.prefab.yaml
+uuid: 13490865222845660449
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0
+      - 3.6183874607086182
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  BoxColliderComponent:
+    size:
+      - 8.30000019
+      - 10
+      - 10.6000004
+    offset:
+      - -1.79999995
+      - 0
+      - 0
+    isTrigger: true
+  ScriptComponents:
+    Script0:
+      name: TyranidTentacles
+      fields: ~
+Children:
+  - name: TyranidTentacleMesh
+    prefabPath: ""
+    uuid: 712494115707971512
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - -5.6962137222290039
+          - -2.2999999523162842
+        localRotation:
+          - -8.5107767557322626e-14
+          - 6.4163903026031085e-29
+          - -1.9545783579094813e-28
+        localScale:
+          - 0.05000000074505806
+          - 0.05000000074505806
+          - 0.05000000074505806
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 14187302242716503069
+        material:
+          name: Tentacle_Low_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+      SkeletalAnimationComponent:
+        name: SkeletalAnimationComponent
+        enabled: true
+        bone_names:
+          - root.x
+          - c_tail_00.x
+          - c_tail_01.x
+          - c_tail_02.x
+        animation_file: skeletal_anim_TyranidTentacleMesh
+      ScriptComponents:
+        Script0:
+          name: TyranidTentaclesAnim
+          fields: ~
+    Children:
+      - name: root.x
+        prefabPath: ""
+        uuid: 18445769872184720967
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - -36.225044250488281
+              - -515.1790771484375
+              - 43.864803314208984
+            localRotation:
+              - 179.97003414299434
+              - 36.089075980373899
+              - 179.59711947239305
+            localScale:
+              - 100.00001525878906
+              - 100
+              - 99.999992370605469
+        Children:
+          - name: c_tail_00.x
+            prefabPath: ""
+            uuid: 10072455992975747695
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - 9.0426830468004482e-08
+                  - 0.39311957359313965
+                  - 1.6359834376089566e-08
+                localRotation:
+                  - -179.97133187251569
+                  - 0.24802002946064988
+                  - 179.52364029223438
+                localScale:
+                  - 1.0000001192092896
+                  - 0.99999982118606567
+                  - 1.0000001192092896
+            Children:
+              - name: c_tail_01.x
+                prefabPath: ""
+                uuid: 1035258719938936765
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - 1.4458737496170215e-07
+                      - 1.9455116987228394
+                      - 6.6100056983486866e-08
+                    localRotation:
+                      - 0.10079125295872869
+                      - 0.02177999004202559
+                      - 0.27250221722063578
+                    localScale:
+                      - 1.0000001192092896
+                      - 0.99999994039535522
+                      - 1.0000001192092896
+                Children:
+                  - name: c_tail_02.x
+                    prefabPath: ""
+                    uuid: 8374738970664642107
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - 0.00055042037274688482
+                          - 1.3972404003143311
+                          - -8.2108554124715738e-06
+                        localRotation:
+                          - 0.18831708031859129
+                          - -0.5038288831069877
+                          - -0.06304467750282565
+                        localScale:
+                          - 1
+                          - 1
+                          - 1
+                    Children: ~

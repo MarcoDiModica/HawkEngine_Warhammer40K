@@ -36,6 +36,8 @@ public:
 
 	void LoadMesh();
 
+	std::shared_ptr<Mesh> GetMesh() const { return mesh; }
+
 	void SetProjection(const glm::mat4& proj) { projection = proj; }
 
 	glm::vec2 GetImageSize() const { return glm::vec2(texture->width(), texture->height()); }

@@ -604,10 +604,6 @@ static void RenderEditor() {
 		if (object->IsActive()) {
 			object->Update(static_cast<float>(Application->GetDt()));
 
-			if (object->HasComponent<UICanvasComponent>()) {
-				continue;
-			}
-			
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
 
@@ -627,8 +623,6 @@ static void RenderEditor() {
 				return;
 			}
 
-			//DebugDrawBoundingBox(object);
-
 			glm::mat4 viewMatrix = Application->camera->view();
 			glm::mat4 projMatrix = Application->camera->projection();
 			CameraBase::Plane* frustumPlanes = Application->camera->GetPlanes();
@@ -636,9 +630,11 @@ static void RenderEditor() {
 		}
 	}
 	
-	Application->physicsModule->DrawDebugDrawer();
+	//hacer que solo se renderice el collider cuando tienes el game object seleccionad
+	//Application->physicsModule->DrawDebugDrawer();
 
 	objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
+
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
@@ -872,17 +868,10 @@ static void GameRelease() {
 
 	RenderManager::GetInstance().BeginFrame();
 
-	std::vector<std::shared_ptr<GameObject>> UI;
-	std::map<Material*, std::vector<GameObject*>> materialBatches;
 	auto activeScene = Application->root->GetActiveScene();
 
 	if (activeScene) {
 		for (auto& object : activeScene->children()) {
-			if (object->HasComponent<UICanvasComponent>()) {
-				UI.push_back(object);
-				continue;
-			}
-
 			if (object->IsActive()) {
 				object->Update(static_cast<float>(Application->GetDt()));
 
@@ -928,12 +917,6 @@ static void GameRelease() {
 			GL_COLOR_BUFFER_BIT, GL_NEAREST);
 	}
 
-	for (const auto& i : UI) {
-		if (i->IsActive()) {
-			i->Update(static_cast<float>(Application->GetDt()));
-		}
-	}
-
 	glUseProgram(lastProgram);
 	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
 	glViewport(lastViewport[0], lastViewport[1], lastViewport[2], lastViewport[3]);
@@ -951,7 +934,6 @@ static void Render(MyGUI* gui) {
 		OPTICK_CATEGORY("RenderEditor", Optick::Category::GameLogic);
 #endif // PROFILE
 
-		//estos 2 consumen casi lo mismo
 		RenderEditor();
 		if (Application->gui->UIGameViewPanel->IsRenderGameView() || SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 			RenderGameView();
@@ -960,7 +942,6 @@ static void Render(MyGUI* gui) {
 		OPTICK_CATEGORY("GUIRender", Optick::Category::GameLogic);
 #endif // PROFILE
 
-		//muchiiiiiissiiiiimo rendimiento
 		gui->Render();
 	}
 }

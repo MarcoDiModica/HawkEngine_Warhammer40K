@@ -2497,6 +2497,7 @@ private:
 			ImGui::EndPopup();
 		}
 
+		ImGui::BeginGroup();
 		const float windowWidth = ImGui::GetContentRegionAvail().x;
 		const float labelWidth = windowWidth * 0.4f;
 

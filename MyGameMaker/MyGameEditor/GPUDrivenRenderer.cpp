@@ -160,9 +160,6 @@ void GPUDrivenRenderer::ForceIncludeAllObjects() {
 	else {
 		LOG(LogType::LOG_WARNING, "No hay draw commands para generar");
 	}
-
-	LOG(LogType::LOG_INFO, "Procesando objetos filtrados por frustum: %zu objetos, %d instancias visibles",
-		drawCommands.size(), visibleInstanceCount);
 }
 
 void GPUDrivenRenderer::BatchCommandsByShaderType() {
@@ -208,19 +205,70 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
 
 	for (const auto& [shaderType, batch] : shaderBatches) {
-		switch (shaderType) {
-		case ShaderType::UNLIT:
-			RenderUnlitBatch(batch, viewMatrix, projMatrix);
-			break;
-		case ShaderType::PBR:
-			RenderPBRBatch(batch, viewMatrix, projMatrix, cameraPos);
-			break;
-		default:
-			LOG(LogType::LOG_WARNING, "Tipo de shader desconocido: %d", (int)shaderType);
-			break;
+		ShaderBatch normalBatch;
+		normalBatch.shaderType = batch.shaderType;
+
+		for (size_t i = 0; i < batch.commands.size(); i++) {
+			uint32_t baseInstance = batch.commands[i].baseInstance;
+			GPUInstance* instance = nullptr;
+
+			if (baseInstance < BindlessManager::GetInstance().GetInstanceCount()) {
+				instance = BindlessManager::GetInstance().GetInstanceData(baseInstance);
+			}
+
+			if (instance && !(instance->flags & (1 << 31))) {
+				normalBatch.commands.push_back(batch.commands[i]);
+				normalBatch.meshIndices.push_back(batch.meshIndices[i]);
+				normalBatch.materialIndices.push_back(batch.materialIndices[i]);
+			}
+		}
+
+		if (!normalBatch.commands.empty()) {
+			switch (shaderType) {
+			case ShaderType::UNLIT:
+				RenderUnlitBatch(normalBatch, viewMatrix, projMatrix);
+				break;
+			case ShaderType::PBR:
+				RenderPBRBatch(normalBatch, viewMatrix, projMatrix, cameraPos);
+				break;
+			}
 		}
 	}
 
+	glDisable(GL_DEPTH_TEST);
+
+	for (const auto& [shaderType, batch] : shaderBatches) {
+		ShaderBatch uiBatch;
+		uiBatch.shaderType = batch.shaderType;
+
+		for (size_t i = 0; i < batch.commands.size(); i++) {
+			uint32_t baseInstance = batch.commands[i].baseInstance;
+			GPUInstance* instance = nullptr;
+
+			if (baseInstance < BindlessManager::GetInstance().GetInstanceCount()) {
+				instance = BindlessManager::GetInstance().GetInstanceData(baseInstance);
+			}
+
+			if (instance && (instance->flags & (1 << 31))) { 
+				uiBatch.commands.push_back(batch.commands[i]);
+				uiBatch.meshIndices.push_back(batch.meshIndices[i]);
+				uiBatch.materialIndices.push_back(batch.materialIndices[i]);
+			}
+		}
+
+		if (!uiBatch.commands.empty()) {
+			switch (shaderType) {
+			case ShaderType::UNLIT:
+				RenderUnlitBatch(uiBatch, viewMatrix, projMatrix);
+				break;
+			case ShaderType::PBR:
+				RenderPBRBatch(uiBatch, viewMatrix, projMatrix, cameraPos);
+				break;
+			}
+		}
+	}
+
+	glEnable(GL_DEPTH_TEST); 
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
 }
 

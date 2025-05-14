@@ -48,12 +48,11 @@ glm::vec2 CalculateSpriteOffset(int index, const glm::vec2& sheetSize, const glm
 void UIImageComponent::Update(float deltaTime)
 {
 	if (!enabled) return;
-	if (shader == nullptr) return;
+	if (!texture) return;
 
 	auto uiTransform = owner->GetComponent<UITransformComponent>();
 
 	if (!uiTransform->GetResised() && uiTransform->GetCanvasSize().x > 0) {
-
 		float scaleX = 1.0f;
 		float scaleY = 1.0f;
 
@@ -70,15 +69,13 @@ void UIImageComponent::Update(float deltaTime)
 		uiTransform->SetResized(true);
 	}
 
-	shader->Bind();
-
 	if (useAnimation && sheetSize != glm::vec2(0, 0))
 	{
 		indexTimer += deltaTime;
 
 		if (indexTimer >= animSpeed)
 		{
-			if (animationNum == 0) 
+			if (animationNum == 0)
 			{
 				if (animIndex >= anim1IndexLimit - 1)
 				{
@@ -87,18 +84,17 @@ void UIImageComponent::Update(float deltaTime)
 				}
 				else
 				{
-					if (playAnimation) 
+					if (playAnimation)
 					{
 						animIndex++;
 					}
-					
 				}
 			}
 			else if (animationNum == 1)
 			{
 				if (animIndex >= CalculateMaxIndex(sheetSize, spriteSize))
 				{
-					animIndex = anim1IndexLimit+ 1;
+					animIndex = anim1IndexLimit + 1;
 					indexTimer = 0;
 				}
 				else
@@ -109,10 +105,9 @@ void UIImageComponent::Update(float deltaTime)
 					}
 				}
 			}
-			
+
 			indexTimer = 0.0f;
 			spriteOffset = CalculateSpriteOffset(animIndex, sheetSize, spriteSize);
-
 		}
 	}
 	else
@@ -120,52 +115,6 @@ void UIImageComponent::Update(float deltaTime)
 		spriteOffset = glm::vec2(0.0f, 0.0f);
 		spriteSize = sheetSize;
 	}
-
-	if (texture->image_path != "") {
-		texture->bind();
-		shader->SetUniform("u_HasTexture", true);
-		shader->SetUniform("texture1", 0);
-		shader->SetUniformVec2("SpriteSize", spriteSize);
-		shader->SetUniformVec2("SpriteOffset", spriteOffset);
-		shader->SetUniformVec2("SheetSize", sheetSize);
-	}
-	else {
-		shader->SetUniform("u_HasTexture", false);
-	}
-
-	glm::mat4 viewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
-
-	glm::vec3 scale = uiTransform->GetScale() * uiTransform->GetCanvasSize();
-	glm::vec3 translation = uiTransform->GetCanvasPosition() + (uiTransform->GetPosition() * uiTransform->GetCanvasSize());
-	glm::quat rotation = glm::quat(glm::vec3(glm::radians(0.0f), 0.0f, 0.0f));
-
-	translation -= uiTransform->GetPivotOffset() * scale;
-
-	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), translation) *
-		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f)) *
-		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) *
-		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
-		glm::scale(glm::mat4(1.0f), scale);
-
-	shader->SetUniformMat4("model", modelMatrix);
-	shader->SetUniformMat4("view", viewMatrix);
-	shader->SetUniformMat4("projection", projection);
-	shader->SetUniformVec4("modColor", color);
-
-	glBindVertexArray(mesh->getModel()->GetModelData().vA);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getModel()->GetModelData().iBID);
-
-	glDrawElements(GL_TRIANGLES, mesh->getModel()->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
-
-	shader->UnBind();
-
-	if (texture->image_path != "") {
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
-
 }
 
 void UIImageComponent::Destroy()
@@ -184,36 +133,14 @@ void UIImageComponent::SetTexture(std::string path)
 	texture->LoadTexture(path);
 	sheetSize = glm::vec2(texture->width(), texture->height());
 	shader = ShaderManager::GetInstance().GetShader(ShaderType::UNLIT);
+
 	LoadMesh();
 }
 
 void UIImageComponent::LoadMesh()
 {
-	std::shared_ptr<Model> model = std::make_shared<Model>();
-
-	model->GetModelData().vertexData = {
-		Vertex {vec3(0.0f, 0.0f, 0.0f)},
-		Vertex {vec3(1.0f, 0.0f, 0.0f)},
-		Vertex {vec3(1.0f, 1.0f, 0.0f)},
-		Vertex {vec3(0.0f, 1.0f, 0.0f)}
-	};
-
-	model->GetModelData().indexData = {
-		0, 2, 1, 0, 3, 2
-	};
-
-	model->GetModelData().vertex_texCoords = {
-		vec2(0.0f, 0.0f),
-		vec2(1.0f, 0.0f),
-		vec2(1.0f, 1.0f),
-		vec2(0.0f, 1.0f)
-	};
-
-	model->SetMeshName("Plane");
-
 	mesh = std::make_shared<Mesh>();
-	mesh->setModel(model);
-	mesh->loadToOpenGL();
+	mesh = Mesh::CreatePlane();
 }
 
 MonoObject* UIImageComponent::GetSharp()

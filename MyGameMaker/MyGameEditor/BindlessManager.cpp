@@ -437,6 +437,50 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 	return index;
 }
 
+uint32_t BindlessManager::RegisterUIImage(UIImageComponent* uiImage)
+{
+	if (!uiImage) return UINT32_MAX;
+
+	auto it = uiImages.find(uiImage);
+	if (it != uiImages.end()) {
+		return it->second.materialIndex;
+	}
+
+	UIImageData data;
+	data.component = uiImage;
+	data.textureHandle = 0;
+
+	if (uiImage->GetTexture() && uiImage->GetTexture()->id() != 0) {
+		BindlessHandle handle = CreateTextureHandle(uiImage->GetTexture()->id());
+		if (handle.isResident) {
+			data.textureHandle = handle.handle;
+		}
+	}
+
+	GPUMaterial uiMaterial;
+	uiMaterial.albedoColor = uiImage->GetColor();
+	uiMaterial.pbrParams = glm::vec4(0.0f);
+	uiMaterial.emissiveParams = glm::vec4(0.0f);
+	uiMaterial.shaderType = static_cast<uint32_t>(ShaderType::UNLIT);
+	uiMaterial.flags = 0;
+
+	if (data.textureHandle != 0) {
+		uiMaterial.albedoTexture = data.textureHandle;
+		uiMaterial.flags |= (1 << 0);
+	}
+	else {
+		uiMaterial.albedoTexture = fallbackTextureHandle.handle;
+	}
+
+	uint32_t materialIndex = static_cast<uint32_t>(materials.size());
+	materials.push_back(uiMaterial);
+
+	data.materialIndex = materialIndex;
+	uiImages[uiImage] = data;
+
+	return materialIndex;
+}
+
 bool BindlessManager::UpdateMaterial(const Material* material) {
 	if (!material) return false;
 
@@ -457,6 +501,37 @@ bool BindlessManager::UpdateMaterial(const Material* material) {
 	materialHashes[material] = CalculateMaterialHash(material);
 
 	return true;
+}
+
+bool BindlessManager::UpdateUIImage(UIImageComponent* uiImage) {
+	auto it = uiImages.find(uiImage);
+	if (it == uiImages.end()) {
+		return false;
+	}
+
+	bool needsUpdate = false;
+
+	if (materials[it->second.materialIndex].albedoColor != uiImage->GetColor()) {
+		materials[it->second.materialIndex].albedoColor = uiImage->GetColor();
+		needsUpdate = true;
+	}
+
+	if (uiImage->GetTexture() && uiImage->GetTexture()->id() != 0) {
+		auto textureID = uiImage->GetTexture()->id();
+		GLuint64 currentTextureHandle = materials[it->second.materialIndex].albedoTexture;
+
+		if (!GetTextureIDFromHandle(currentTextureHandle, textureID)) {
+			BindlessHandle handle = CreateTextureHandle(textureID);
+			if (handle.isResident) {
+				it->second.textureHandle = handle.handle;
+				materials[it->second.materialIndex].albedoTexture = handle.handle;
+				materials[it->second.materialIndex].flags |= (1 << 0); 
+				needsUpdate = true;
+			}
+		}
+	}
+
+	return needsUpdate;
 }
 
 uint32_t BindlessManager::AddInstance(const GPUInstance& instance) {
@@ -640,6 +715,11 @@ void BindlessManager::EndFrame() {
 
 void BindlessManager::ClearInstances() {
 	instances.clear();
+}
+
+void BindlessManager::CleanImages()
+{
+	//algun dia xd
 }
 
 GLuint BindlessManager::CreateStorageBuffer(size_t size, GLenum usage) {

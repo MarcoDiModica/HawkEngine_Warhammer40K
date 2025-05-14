@@ -9,6 +9,7 @@
 #include "Log.h"
 #include "MyGameEngine/Model.h"
 #include "../MyGameEngine/Shaders.h" 
+#include "MyUIEngine/UIImageComponent.h"
 
 class Mesh;
 class Material;
@@ -61,6 +62,12 @@ struct GPUInstance {
 	uint32_t flags;
 };
 
+struct UIImageData {
+	UIImageComponent* component;
+	GLuint64 textureHandle;
+	uint32_t materialIndex;
+};
+
 class BindlessManager {
 public:
 	static BindlessManager& GetInstance();
@@ -70,8 +77,10 @@ public:
 
 	uint32_t RegisterMesh(Mesh* mesh);
 	uint32_t RegisterMaterial(const Material* material);
+	uint32_t RegisterUIImage(UIImageComponent* uiImage);
 
 	bool UpdateMaterial(const Material* material);
+	bool UpdateUIImage(UIImageComponent* uiImage);
 
 	uint32_t AddInstance(const GPUInstance& instance);
 
@@ -97,6 +106,7 @@ public:
 	void UpdateBuffers();
 	void EndFrame();
 	void ClearInstances();
+	void CleanImages();
 
 	uint32_t GetMeshCount() const { return (uint32_t)meshes.size(); }
 	uint32_t GetMaterialCount() const { return (uint32_t)materials.size(); }
@@ -148,6 +158,7 @@ private:
 	std::unordered_map<const Mesh*, uint32_t> meshIndices;
 	std::unordered_map<const Material*, uint32_t> materialIndices;
 	std::unordered_map<GLuint, BindlessHandle> textureHandles;
+	std::unordered_map<UIImageComponent*, UIImageData> uiImages;
 
 	std::unordered_map<const Material*, uint64_t> materialHashes;
 
@@ -157,6 +168,7 @@ private:
 
 	GLuint fallbackTextureID = 0;
 	BindlessHandle fallbackTextureHandle;
+	uint32_t uiFallbackMaterialIndex = UINT32_MAX;
 
 	void CreateFallbackTexture() {
 		const unsigned char pixelData[] = {

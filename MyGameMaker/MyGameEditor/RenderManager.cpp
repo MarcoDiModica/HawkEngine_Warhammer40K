@@ -5,6 +5,10 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEngine/LightComponent.h"
 #include "../MyGameEngine/ShaderManager.h"
+#include "MyUIEngine/UICanvasComponent.h"
+#include "MyUIEngine/UIImageComponent.h"
+#include "MyUIEngine/UIButtonComponent.h"
+#include "MyUIEngine/UITransformComponent.h"
 
 RenderManager& RenderManager::GetInstance() {
 	static RenderManager instance;
@@ -102,13 +106,15 @@ void RenderManager::SubmitGameObject(GameObject* gameObject, const glm::mat4& vi
 
 	stats.totalGameObjects++;
 
+	bool isUI = gameObject->HasComponent<UICanvasComponent>() ||
+		gameObject->HasComponent<UIImageComponent>() ||
+		gameObject->HasComponent<UIButtonComponent>();
+
 	bool objectVisible = true;
 
-	if (frustumPlanes && gameObject->HasComponent<MeshRenderer>()) {
+	if (!isUI && frustumPlanes && gameObject->HasComponent<MeshRenderer>()) {
 		BoundingBox bbox = gameObject->boundingBox();
-
 		CameraBase::FrustumIntersection result = TestFrustumAABB(bbox.min, bbox.max, frustumPlanes);
-
 		if (result == CameraBase::FrustumIntersection::OUTSIDE) {
 			objectVisible = false;
 		}
@@ -223,6 +229,50 @@ bool RenderManager::InitializeShaders() {
 
 void RenderManager::ProcessGameObject(GameObject* gameObject) {
 	if (!gameObject || !gameObject->IsActive()) return;
+
+	if (gameObject->HasComponent<UICanvasComponent>()) {
+		return;
+	}
+
+	if (gameObject->HasComponent<UIImageComponent>() && gameObject->HasComponent<UITransformComponent>()) {
+		UIImageComponent* imageComp = gameObject->GetComponent<UIImageComponent>();
+		UITransformComponent* uiTransform = gameObject->GetComponent<UITransformComponent>();
+
+		if (gameObject->HasComponent<UIImageComponent>() && gameObject->HasComponent<UITransformComponent>()) {
+			UIImageComponent* imageComp = gameObject->GetComponent<UIImageComponent>();
+			UITransformComponent* uiTransform = gameObject->GetComponent<UITransformComponent>();
+
+			if (imageComp && imageComp->GetMesh() && uiTransform) {
+				uint32_t meshIndex = BindlessManager::GetInstance().RegisterMesh(imageComp->GetMesh().get());
+				uint32_t materialIndex = BindlessManager::GetInstance().RegisterUIImage(imageComp);
+
+				BindlessManager::GetInstance().UpdateUIImage(imageComp);
+
+				if (meshIndex != UINT32_MAX && materialIndex != UINT32_MAX) {
+					glm::vec3 scale = uiTransform->GetScale() * uiTransform->GetCanvasSize();
+					glm::vec3 translation = uiTransform->GetCanvasPosition() +
+						(uiTransform->GetPosition() * uiTransform->GetCanvasSize());
+					translation -= uiTransform->GetPivotOffset() * scale;
+
+					glm::mat4 uiModelMatrix = glm::translate(glm::mat4(1.0f), translation) *
+						glm::scale(glm::mat4(1.0f), scale);
+
+					GPUInstance uiInstance;
+					uiInstance.modelMatrix = uiModelMatrix;
+					uiInstance.prevModelMatrix = uiModelMatrix;
+					uiInstance.objectData = glm::vec4(1.0f);
+					uiInstance.meshIndex = meshIndex;
+					uiInstance.materialIndex = materialIndex;
+					uiInstance.objectId = gameObject->GetID().GetValue();
+					uiInstance.flags = (1 << 31);
+
+					MeshMaterialKey key{ meshIndex, materialIndex };
+					instanceGroups[key].push_back(uiInstance);
+				}
+			}
+			return;
+		}
+	}
 
 	if (gameObject->HasComponent<MeshRenderer>()) {
 		MeshRenderer* renderer = gameObject->GetComponent<MeshRenderer>();

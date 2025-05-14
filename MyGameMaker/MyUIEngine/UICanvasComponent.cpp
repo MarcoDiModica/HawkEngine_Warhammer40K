@@ -42,41 +42,37 @@ void UICanvasComponent::Update(float deltaTime)
 #else
 	int width = Application->window->width();
 	int height = Application->window->height();
-#endif // !_BUILD
-
-	
+#endif
 
 	glm::vec3 canvasPos(owner->GetComponent<UITransformComponent>()->GetPosition().x * width,
 		owner->GetComponent<UITransformComponent>()->GetPosition().y * height,
 		0.0f);
 
-	glm::vec3 canvasSize(width * owner->GetComponent<UITransformComponent>()->GetScale().x
-		, height * owner->GetComponent<UITransformComponent>()->GetScale().y
-		, 0.0f);
+	glm::vec3 canvasSize(width * owner->GetComponent<UITransformComponent>()->GetScale().x,
+		height * owner->GetComponent<UITransformComponent>()->GetScale().y,
+		0.0f);
 
 	glm::mat4 projection = glm::ortho(
 		0.0f, static_cast<float>(width),
 		static_cast<float>(height), 0.0f,
-		-1.0f, 1.0f);	
+		-1.0f, 1.0f);
 
-    glDisable(GL_DEPTH_TEST);
+	for (size_t i = 0; i < owner->GetChildren().size(); ++i) {
+		GameObject* object = owner->GetChildren()[i].get();
 
-    for (size_t i = 0; i < owner->GetChildren().size(); ++i) {
-        GameObject* object = owner->GetChildren()[i].get();
-
-		if(!object->IsActive()){
+		if (!object->IsActive()) {
 			continue;
 		}
 
 		auto rectTransform = object->GetComponent<UITransformComponent>();
-
 		rectTransform->SetCanvasPosition(canvasPos);
 		rectTransform->SetCanvasSize(canvasSize);
 
 		if (object->HasComponent<UIImageComponent>())
 		{
-			object->GetComponent<UIImageComponent>()->SetProjection(projection);
-			object->GetComponent<UIImageComponent>()->Update(deltaTime);
+			auto imageComponent = object->GetComponent<UIImageComponent>();
+			imageComponent->SetProjection(projection);
+			imageComponent->Update(deltaTime);
 		}
 
 		if (object->HasComponent<UIButtonComponent>())
@@ -89,10 +85,7 @@ void UICanvasComponent::Update(float deltaTime)
 			object->GetComponent<UISliderComponent>()->SetProjection(projection);
 			object->GetComponent<UISliderComponent>()->Update(deltaTime);
 		}
-
-    }
-
-    glEnable(GL_DEPTH_TEST);
+	}
 }
 
 void UICanvasComponent::Destroy()

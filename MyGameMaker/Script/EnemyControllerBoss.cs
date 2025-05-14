@@ -476,7 +476,7 @@ public class EnemyControllerBoss : EnemyController
     {
         if (metalSlideObject != null)
         {
-            Audio.PlayOneShot(MetalClip);
+           
             var transform = metalSlideObject.GetComponent<Transform>();
             Vector3 position = transform.position;
             position.Y -= metalSlideSpeed * deltaTime;

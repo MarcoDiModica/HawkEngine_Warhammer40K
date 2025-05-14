@@ -7,7 +7,7 @@ using HawkEngine;
 public class Shotgun : BaseWeapon
 {
 
-    private const string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
+    private const string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/shotgun_hit_enviroment.wav";
     private const string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
 
 

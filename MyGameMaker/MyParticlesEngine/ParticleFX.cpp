@@ -864,7 +864,7 @@ namespace ParticlePresets {
 		26.0f,                         // Min scale
 		26.0f,                          // Max scale
 		"Assets/Textures/MawlocSmokeSpritesheet.png", // Texture path
-		false						   // Is Local Space
+		true						   // Is Local Space
 	};
 
 	// use emit burst
@@ -899,7 +899,7 @@ namespace ParticlePresets {
 	4.0f,                         // Min scale
 	8.0f,                          // Max scale
 	"Assets/Textures/rock.png", // Texture path
-	false						   // Is Local Space
+	true						   // Is Local Space
 	};
 
 }

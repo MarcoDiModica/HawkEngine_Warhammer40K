@@ -260,14 +260,14 @@ std::vector<std::shared_ptr<Mesh>> createMeshesFromFBX(const aiScene& scene) {
 		meshes.push_back(std::make_shared<Mesh>());
 		meshes[i] = std::make_shared<Mesh>();
 		meshes[i]->setModel(models[i]);
-		//meshes[i]->loadToOpenGL();
-		if (Application->root->GetResourceManager()->GetMesh(meshes[i]->getModel()->GetID()) == nullptr) {
-			meshes[i]->loadToOpenGL();
-			meshes[i] = Application->root->GetResourceManager()->AddMesh(meshes[i]);
-		}
-		else {
-			meshes[i] = Application->root->GetResourceManager()->GetMesh(meshes[i]->getModel()->GetID());
-		}
+		meshes[i]->loadToOpenGL();
+		//if (Application->root->GetResourceManager()->GetMesh(meshes[i]->getModel()->GetID()) == nullptr) {
+		//	meshes[i]->loadToOpenGL();
+		//	meshes[i] = Application->root->GetResourceManager()->AddMesh(meshes[i]);
+		//}
+		//else {
+		//	meshes[i] = Application->root->GetResourceManager()->GetMesh(meshes[i]->getModel()->GetID());
+		//}
 		
 	}
 

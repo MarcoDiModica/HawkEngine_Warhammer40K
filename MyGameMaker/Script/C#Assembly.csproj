@@ -136,6 +136,7 @@
     <Compile Include="EnemyControllerStalker.cs" />
     <Compile Include="EnemyControllerBossTail.cs" />
     <Compile Include="EnemyControllerWarrior.cs" />
+    <Compile Include="EnemySpawner.cs" />
     <Compile Include="EnergyBall.cs" />
     <Compile Include="EnemyControllerMelee.cs" />
     <Compile Include="EnemyControllerRanged.cs" />

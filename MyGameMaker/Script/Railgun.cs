@@ -50,7 +50,7 @@ public class Railgun : BaseWeapon
     public override void Start()
     {
         damage = 100.0f;
-        shootCadence = 0.66f;
+        shootCadence = 0.16f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 0;

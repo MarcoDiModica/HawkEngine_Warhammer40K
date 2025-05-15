@@ -864,7 +864,7 @@ namespace ParticlePresets {
 		26.0f,                         // Min scale
 		26.0f,                          // Max scale
 		"Assets/Textures/MawlocSmokeSpritesheet.png", // Texture path
-		false						   // Is Local Space
+		true						   // Is Local Space
 	};
 
 	// use emit burst
@@ -899,7 +899,211 @@ namespace ParticlePresets {
 	4.0f,                         // Min scale
 	8.0f,                          // Max scale
 	"Assets/Textures/rock.png", // Texture path
+	true						   // Is Local Space
+	};
+
+	const ParticlePreset Lictor_leap = {
+	ParticleType::LICTOR_LEAP,
+	false,						   // PlayOnAwake
+	1,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   				   // Start color (white)
+	glm::vec3(1,1,1),   				   // End color (white)
+	1.0f,                          			   // Alpha start
+	1.0f,                          			   // Alpha end
+	0.8f,                          			   // Size start
+	15.0f,                          		   // Size end
+	1,                          			   // Min lifetime
+	1,                         			   // Max lifetime
+	0.0f,                          			   // Min speed
+	0.0f,                          			   // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+	0,                          			   // Rotation speed
+	1.f,                         			   // Emission rate (particles per second)
+	EmitterShape::POINT,            		   // Shape
+	0.2f,                          			   // Cone base radius
+	1.0f,                          			   // Cone height
+	20.0f,                         			   // Cone angle in degrees
+	glm::vec2(222,222),			   	   // Sprite size
+	true,						   // Use animation
+	false,						   // Random animation Index
+	0.1f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/VFX_lictor_leap.png", 		   // Texture path
+	false 						   // Is Local Space
+	};
+
+	const ParticlePreset Lictor_dodge = {
+	ParticleType::LICTOR_DODGE,
+	false,						   // PlayOnAwake
+	1,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   				   // Start color (white)
+	glm::vec3(1,1,1),   				   // End color (white)
+	1.0f,                          			   // Alpha start
+	1.0f,                          			   // Alpha end
+	0.8f,                          			   // Size start
+	15.0f,                          		   // Size end
+	1,                          			   // Min lifetime
+	1,                         			   // Max lifetime
+	0.0f,                          			   // Min speed
+	0.0f,                          			   // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+	0,                          			   // Rotation speed
+	1.f,                         			   // Emission rate (particles per second)
+	EmitterShape::POINT,            		   // Shape
+	0.2f,                          			   // Cone base radius
+	1.0f,                          			   // Cone height
+	20.0f,                         			   // Cone angle in degrees
+	glm::vec2(227,227),			   	   // Sprite size
+	true,						   // Use animation
+	false,						   // Random animation Index
+	0.1f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/VFX_lictor_dodge_cue.png", 	   // Texture path
+	false 						   // Is Local Space
+	};
+
+	const ParticlePreset Magnet_Area = {
+	ParticleType::MAGNET_AREA,
+	false,						   // PlayOnAwake
+	1,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   				   // Start color (white)
+	glm::vec3(1,1,1),   				   // End color (white)
+	1.0f,                          			   // Alpha start
+	1.0f,                          			   // Alpha end
+	0.8f,                          			   // Size start
+	15.0f,                          		   // Size end
+	1,                          			   // Min lifetime
+	1,                         			   // Max lifetime
+	0.0f,                          			   // Min speed
+	0.0f,                          			   // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+	0,                          			   // Rotation speed
+	1.f,                         			   // Emission rate (particles per second)
+	EmitterShape::POINT,            		   // Shape
+	0.2f,                          			   // Cone base radius
+	1.0f,                          			   // Cone height
+	20.0f,                         			   // Cone angle in degrees
+	glm::vec2(500,500),		   	   // Sprite size
+	true,						   // Use animation
+	false,						   // Random animation Index
+	0.1f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/Magnet_Area_animation_SpriteSheet_Yiwei.png", 	   // Texture path
+	false 						   // Is Local Space
+	};
+
+	const ParticlePreset Environment_Tree = {
+	ParticleType::ENVIRONMENT_TREE,
+	false,                         // PlayOnAwake
+	1.0f,                          // Duration (only if one-shot)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	46.0f,                          // Size start
+	46.0f,                          // Size end
+	5.0f,                          // Min lifetime
+	5.0f,                          // Max lifetime
+	0.0f,                         // Min speed
+	0.0f,                         // Max speed
+	0.0f,                         // End Speed
+	glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+	0.0f,                          // Rotation speed
+	0.2f,                         // Emission rate (particles per second)
+	EmitterShape::POINT,           // Shape
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	glm::vec2(480.0f , 270.0f),     // Sprite size
+	true,                         // Use animation
+	true,                         // Random animation Index
+	0.050f,                          // Animation speed
+	190.0f,                          // Start rotation
+	false,                          // Random rotation
+	46.0f,                         // Min scale
+	46.0f,                          // Max scale
+	"Assets/Textures/TreeSpritesheet.png", // Texture path
 	false						   // Is Local Space
+	};
+
+	const ParticlePreset Environment2_Tree = {
+ParticleType::ENVIRONMENT2_TREE,
+false,                         // PlayOnAwake
+1.0f,                          // Duration (only if one-shot)
+glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+1.0f,                          // Alpha start
+1.0f,                          // Alpha end
+36.0f,                          // Size start
+36.0f,                          // Size end
+5.0f,                          // Min lifetime
+5.0f,                          // Max lifetime
+0.0f,                         // Min speed
+0.0f,                         // Max speed
+0.0f,                         // End Speed
+glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+0.0f,                          // Rotation speed
+0.2f,                         // Emission rate (particles per second)
+EmitterShape::POINT,           // Shape
+0.0f,                          // Unused for point
+0.0f,                          // Unused for point
+0.0f,                          // Unused for point
+glm::vec2(480.0f , 270.0f),     // Sprite size
+true,                         // Use animation
+true,                         // Random animation Index
+0.050f,                          // Animation speed
+190.0f,                          // Start rotation
+false,                          // Random rotation
+36.0f,                         // Min scale
+36.0f,                          // Max scale
+"Assets/Textures/Tree2Spritesheet.png", // Texture path
+false						   // Is Local Space
+	};
+
+	const ParticlePreset Environment3_Tree = {
+ParticleType::ENVIRONMENT3_TREE,
+false,                         // PlayOnAwake
+1.0f,                          // Duration (only if one-shot)
+glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+1.0f,                          // Alpha start
+1.0f,                          // Alpha end
+36.0f,                          // Size start
+36.0f,                          // Size end
+5.0f,                          // Min lifetime
+5.0f,                          // Max lifetime
+0.0f,                         // Min speed
+0.0f,                         // Max speed
+0.0f,                         // End Speed
+glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+0.0f,                          // Rotation speed
+0.2f,                         // Emission rate (particles per second)
+EmitterShape::POINT,           // Shape
+0.0f,                          // Unused for point
+0.0f,                          // Unused for point
+0.0f,                          // Unused for point
+glm::vec2(480.0f , 270.0f),     // Sprite size
+true,                         // Use animation
+true,                         // Random animation Index
+0.050f,                          // Animation speed
+190.0f,                          // Start rotation
+false,                          // Random rotation
+36.0f,                         // Min scale
+36.0f,                          // Max scale
+"Assets/Textures/Tree3Spritesheet.png", // Texture path
+false						   // Is Local Space
 	};
 
 }
@@ -1433,6 +1637,30 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::MAWLOC_ROCKS :
 		preset = ParticlePresets::Mawloc_Rocks;
+		SetOneShot(false);
+		break;
+	case ParticleType::LICTOR_LEAP:
+		preset = ParticlePresets::Lictor_leap;
+		SetOneShot(false);
+		break;
+	case ParticleType::LICTOR_DODGE:
+		preset = ParticlePresets::Lictor_dodge;
+		SetOneShot(false);
+		break;
+	case ParticleType::MAGNET_AREA:
+		preset = ParticlePresets::Magnet_Area;
+		SetOneShot(false);
+		break;
+	case ParticleType::ENVIRONMENT_TREE:
+		preset = ParticlePresets::Environment_Tree;
+		SetOneShot(false);
+		break;
+	case ParticleType::ENVIRONMENT2_TREE:
+		preset = ParticlePresets::Environment2_Tree;
+		SetOneShot(false);
+		break;
+	case ParticleType::ENVIRONMENT3_TREE:
+		preset = ParticlePresets::Environment3_Tree;
 		SetOneShot(false);
 		break;
 	default:

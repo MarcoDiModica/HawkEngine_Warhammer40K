@@ -20,6 +20,9 @@ public class EnemyControllerBossTail : EnemyController
     private float shiftDuration = 5.0f;
     private float actionTimer = 0.0f;
 
+    private float stabDamage = 15.0f;
+    private float slashDamage = 10.0f;
+
     bool waitingToEmerge = false;
     float emergeTimer = 0f;
 
@@ -37,11 +40,16 @@ public class EnemyControllerBossTail : EnemyController
     private List<(GameObject, float)> activeHurtboxes = new List<(GameObject, float)>();
 
     private MawlocTailAnimation anim;
+    private PlayerController pc;
+
+    private GameObject slashHurtbox;
+    private GameObject stabHurtbox;
 
     public override void Awake()
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         playerVelocity = GameObject.Find("Player").GetComponent<Rigidbody>().GetVelocity();
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
@@ -132,6 +140,8 @@ public class EnemyControllerBossTail : EnemyController
                     emergeTimer = 2.0f;
                 }
             }
+
+            
         }
         
         if (isDead)
@@ -239,13 +249,55 @@ public class EnemyControllerBossTail : EnemyController
 
     }
 
+    private bool IsPlayerInCollider(GameObject hurtbox, Vector3 playerPos)
+    {
+        Transform transform = hurtbox.GetComponent<Transform>();
+        Vector3 center = transform.position;
+        Vector3 size = transform.localScale;
+        Vector3 halfSize = size * 0.5f;
+
+        return (playerPos.X >= center.X - halfSize.X && playerPos.X <= center.X + halfSize.X) &&
+               (playerPos.Y >= center.Y - halfSize.Y && playerPos.Y <= center.Y + halfSize.Y) &&
+               (playerPos.Z >= center.Z - halfSize.Z && playerPos.Z <= center.Z + halfSize.Z);
+    }
+
+    private void ApplyBossTailDamage(float amount)
+    {
+        if (pc.redThirstManager.redThirstBonus < amount)
+        {
+            pc.playerData.TakeDamage(amount - pc.redThirstManager.redThirstBonus);
+            pc.StartFlashColor(pc.flashColor, pc.flashDuration);
+        }
+        else
+        {
+            pc.playerData.TakeDamage(0.0f);
+        }
+    }
+
+    private void CheckBossTailHurtboxes()
+    {
+        if (pc == null || pc.playerData == null) return;
+
+        Vector3 playerPos = playerTransform.position;
+
+        if (slashHurtbox != null && IsPlayerInCollider(slashHurtbox, playerPos))
+        {
+            ApplyBossTailDamage(slashDamage);
+        }
+
+        if (stabHurtbox != null && IsPlayerInCollider(stabHurtbox, playerPos))
+        {
+            ApplyBossTailDamage(stabDamage);
+        }
+    }
+
     private void CreateTailSlashHurtbox()
     {
-        var hurtbox = Engineson.CreateGameObject("TailSlashHurtbox", null);
+        slashHurtbox = Engineson.CreateGameObject("TailSlashHurtbox", null);
         //hurtbox.AddComponent<MeshRenderer>();
-        hurtbox.AddComponent<BoxCollider>();
-        hurtbox.GetComponent<BoxCollider>().SetTrigger(true);
-        hurtbox.tag = "EnemyAttack";
+        slashHurtbox.AddComponent<BoxCollider>();
+        slashHurtbox.GetComponent<BoxCollider>().SetTrigger(true);
+        slashHurtbox.tag = "EnemyAttack";
 
         Vector3 direction = enemyTransform.forward;
         float range = 10f;
@@ -256,21 +308,21 @@ public class EnemyControllerBossTail : EnemyController
 
         Vector3 position = enemyTransform.position + direction * (range / 2f);
     
-        var hurtboxTransform = hurtbox.GetComponent<Transform>();
+        var hurtboxTransform = slashHurtbox.GetComponent<Transform>();
         hurtboxTransform.position = position;
         hurtboxTransform.SetScale(width, height, range);
         hurtboxTransform.SetRotationQuat(rotation);
 
-        activeHurtboxes.Add((hurtbox, 1.0f));
+        activeHurtboxes.Add((slashHurtbox, 1.0f));
     }
 
     private void CreateTailStabHurtbox()
     {
-        var hurtbox = Engineson.CreateGameObject("TailStabHurtbox", null);
+        stabHurtbox = Engineson.CreateGameObject("TailStabHurtbox", null);
         //hurtbox.AddComponent<MeshRenderer>();
-        hurtbox.AddComponent<BoxCollider>();
-        hurtbox.GetComponent<BoxCollider>().SetTrigger(true);
-        hurtbox.tag = "EnemyAttack";
+        stabHurtbox.AddComponent<BoxCollider>();
+        stabHurtbox.GetComponent<BoxCollider>().SetTrigger(true);
+        stabHurtbox.tag = "EnemyAttack";
 
         float ti = 0.0f;
         Vector3 predictedPosition = playerTransform.position + playerVelocity * ti;
@@ -283,12 +335,12 @@ public class EnemyControllerBossTail : EnemyController
         float width = 1f;
         Vector3 position = enemyTransform.position + direction * (length / 2f);
 
-        var hurtboxTransform = hurtbox.GetComponent<Transform>();
+        var hurtboxTransform = stabHurtbox.GetComponent<Transform>();
         hurtboxTransform.position = position;
         hurtboxTransform.SetScale(width, 2f, length);
         hurtboxTransform.SetRotationQuat(rotation);
 
-        activeHurtboxes.Add((hurtbox, 0.8f));
+        activeHurtboxes.Add((stabHurtbox, 0.8f));
     }
 
     private void UpdateHurtboxes(float deltaTime)
@@ -299,6 +351,7 @@ public class EnemyControllerBossTail : EnemyController
             timer -= deltaTime;
             if (timer <= 0f)
             {
+                //CheckBossTailHurtboxes();
                 Engineson.Destroy(hurtbox);
                 activeHurtboxes.RemoveAt(i);
             }

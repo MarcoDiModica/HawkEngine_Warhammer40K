@@ -12,7 +12,8 @@ using HawkEngine;
 public class EnemyControllerBoss : EnemyController
 {
     private float hurtboxDuration = 0.5f; 
-    private Vector3 slamHurtboxSize = new Vector3(3.0f, 1.0f, 10.0f); 
+    private Vector3 slamHurtboxSize = new Vector3(3.0f, 1.0f, 10.0f);
+    private Vector3 hurtboxOffset = new Vector3(4.0f, 0.0f, 0.0f);
     private GameObject slamHurtboxObject;
 
     private List<GameObject> clawHurtboxObjects = new List<GameObject>();
@@ -44,7 +45,7 @@ public class EnemyControllerBoss : EnemyController
     //stats
     bool isCombatMusicPlaying = false;
     private float health = 1500.0f;
-    private float damage = 25.0f;
+    private float contactDamage = 10.0f;
 
     // unburrowing attack stats
     private float unburrowingAttackCooldown = 5.0f;
@@ -52,13 +53,15 @@ public class EnemyControllerBoss : EnemyController
     private float restAfterThirdAttack = 4.0f;
     private float timer = 0.0f;
     private int attackCount = 0;
-    public bool isBuried = true;
+    public bool isBuried = true; 
 
     // phase 2 unburrowing/slam stats
     private float unburrowingAttackCooldownPhase2 = 5.0f;
     private float postAttackDelay = 2.0f;
     private float burrowTime = 2.0f;
     private bool isPreparingAttack = false;
+    private float slamDamage = 25.0f;
+    private float strikeDamage = 30.0f;
     //private Vector3[] fixedPositions = new Vector3[]
     //{
     //    new Vector3(10,-21.807f,1020),
@@ -87,11 +90,14 @@ public class EnemyControllerBoss : EnemyController
     private bool phase3Started = false;
     private bool hasTeleportedToCenter = false;
     private bool isPhase3Attacking = false;
+    private float metalSlideDamage = 30.0f;
+    private bool metalSlideDamageApplied = false;
 
     private EnemyControllerBossTail tailController;
     private bool hasUnburiedInPhase2 = false;
 
     private MawlocAnimation anim;
+    private PlayerController pc;
 
     private enum BossPhase
     {
@@ -111,6 +117,7 @@ public class EnemyControllerBoss : EnemyController
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
         rb.SetMass(1000.0f);
         tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
         tailController?.gameObject.SetActive(false);
@@ -145,7 +152,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 1500.0f;
+        currentHealth = 00.0f;
         gameObject.tag = "Boss";
         isDead = false;
 //         musicClip = new AudioClip(combatMusic, "BossMusic", true, false);
@@ -332,7 +339,8 @@ public class EnemyControllerBoss : EnemyController
                 }
 
                 UpdateMetalSlide(deltaTime);
-            }
+                CheckBossHurtboxes();
+        }
             if (isDead)
             {
                 collider.SetActive(false);
@@ -351,12 +359,74 @@ public class EnemyControllerBoss : EnemyController
     }
     override public void OnCollisionEnter(GameObject other)
     {
-
+        if (other.tag == "Player")
+        {
+            pc.playerData.TakeDamage(contactDamage);
+            pc.StartFlashColor(pc.flashColor, pc.flashDuration);
+        }
     }
 
     public override void Attack()
     {
 
+    }
+
+    private void CheckBossHurtboxes()
+    {
+        if (pc == null || pc.playerData == null) return;
+
+        Vector3 playerPos = playerTransform.position;
+
+        if (slamHurtboxObject != null && IsPlayerInCollider(slamHurtboxObject, playerPos))
+        {
+            ApplyBossDamage(slamDamage);
+        }
+
+        if (clawHurtboxObjects != null)
+        {
+            foreach (GameObject claw in clawHurtboxObjects)
+            {
+                if (claw != null && IsPlayerInCollider(claw, playerPos))
+                {
+                    ApplyBossDamage(strikeDamage);
+                    break;
+                }
+            }
+        }
+
+        if (metalSlideObject != null && IsPlayerInCollider(metalSlideObject, playerPos))
+        { 
+            if(!metalSlideDamageApplied)
+            {
+                ApplyBossDamage(metalSlideDamage);
+                metalSlideDamageApplied = true;
+            }
+        }
+    }
+
+    private bool IsPlayerInCollider(GameObject hurtbox, Vector3 playerPos)
+    {
+        Transform transform = hurtbox.GetComponent<Transform>();
+        Vector3 center = transform.position;
+        Vector3 size = transform.localScale;
+        Vector3 halfSize = size * 0.5f;
+
+        return (playerPos.X >= center.X - halfSize.X && playerPos.X <= center.X + halfSize.X) &&
+               (playerPos.Y >= center.Y - halfSize.Y && playerPos.Y <= center.Y + halfSize.Y) &&
+               (playerPos.Z >= center.Z - halfSize.Z && playerPos.Z <= center.Z + halfSize.Z);
+    }
+
+    private void ApplyBossDamage(float amount)
+    {
+        if (pc.redThirstManager.redThirstBonus < amount)
+        {
+            pc.playerData.TakeDamage(amount - pc.redThirstManager.redThirstBonus);
+            pc.StartFlashColor(pc.flashColor, pc.flashDuration);
+        }
+        else
+        {
+            pc.playerData.TakeDamage(0.0f);
+        }
     }
 
     public override void TakeDamage(float damage)
@@ -371,6 +441,7 @@ public class EnemyControllerBoss : EnemyController
         //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
         //sound?.Play();
     }
+
     private void UnburrowingAttack()
     {
         if (isDead == false)
@@ -447,6 +518,7 @@ public class EnemyControllerBoss : EnemyController
         }
     }
 
+
     private void MetalSlide()
     {
         if (isDead == false && playerTransform != null)
@@ -487,6 +559,7 @@ public class EnemyControllerBoss : EnemyController
             {
                 Engineson.Destroy(metalSlideObject);
                 metalSlideObject = null;
+                metalSlideDamageApplied = false;
             }
         }
     }
@@ -585,7 +658,7 @@ public class EnemyControllerBoss : EnemyController
         float halfLength = slamHurtboxSize.Z / 2.0f;
         float offset = 5.0f;
 
-        Vector3 hurtboxPosition = bossPosition + forward * (halfLength + offset) + new Vector3(0, 2, 0);
+        Vector3 hurtboxPosition = bossPosition + forward * (halfLength + offset) + new Vector3(0, 5, 0);
 
         var hurtboxTransform = slamHurtboxObject.GetComponent<Transform>();
         hurtboxTransform.position = hurtboxPosition;

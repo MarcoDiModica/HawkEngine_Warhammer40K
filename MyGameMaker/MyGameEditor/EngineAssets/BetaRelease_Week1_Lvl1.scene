@@ -3162,9 +3162,9 @@ GameObject8:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 1.09832203
+          floatSpeed: 0.728656948
           floatHeight: 0.5
-          rotationSpeed: 98.8804932
+          rotationSpeed: 83.0283813
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -3270,9 +3270,9 @@ GameObject9:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 1.18670535
+          floatSpeed: 0.562541962
           floatHeight: 0.5
-          rotationSpeed: 85.8298492
+          rotationSpeed: 45.3878021
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -33215,9 +33215,9 @@ GameObject24:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.55495727
+          floatSpeed: 1.94202816
           floatHeight: 0.5
-          rotationSpeed: 32.186039
+          rotationSpeed: 75.402916
   Children: ~
 GameObject25:
   name: BiblePagePickUp_Instance_1_Instance_Instance_Instance2
@@ -33300,9 +33300,9 @@ GameObject25:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.773882806
+          floatSpeed: 1.60920203
           floatHeight: 0.5
-          rotationSpeed: 38.7070274
+          rotationSpeed: 66.6483688
   Children: ~
 GameObject26:
   name: BiblePagePickUp_Instance_1_Instance_Instance_Instance3
@@ -33385,9 +33385,9 @@ GameObject26:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.17927492
+          floatSpeed: 0.583926976
           floatHeight: 0.5
-          rotationSpeed: 36.6893654
+          rotationSpeed: 39.1171875
   Children: ~
 GameObject27:
   name: VFX_Sparkle
@@ -189401,7 +189401,7 @@ GameObject77:
           currentMagazineAmmo: 0
           maxAmmo: 0
           currentTotalAmmo: 0
-          range: 30
+          range: 100
           timeToLerp: 0.100000001
   Children:
     - name: TyranidWarriorMesh

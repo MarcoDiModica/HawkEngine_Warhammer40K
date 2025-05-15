@@ -67,7 +67,7 @@ bool Root::Start()
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
 
-	auto env = CreateGameObjectWithPath("Assets/FBX/TyranidWarrior_low.fbx");
+	auto env = CreateGameObjectWithPath("Assets/FBX/Level2_Zone1.fbx");
 	env->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
 	CreateGameplayUI();

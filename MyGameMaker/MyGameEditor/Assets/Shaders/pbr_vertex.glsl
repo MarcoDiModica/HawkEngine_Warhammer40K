@@ -1,6 +1,4 @@
 #version 460 core
-#extension GL_ARB_bindless_texture : enable
-#extension GL_ARB_shader_storage_buffer_object : enable
 
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec2 texCoord;
@@ -48,9 +46,28 @@ void main() {
     
     vs_out.TexCoord = texCoord;
     
-    vs_out.Normal = normalize(normalMatrix * normal);
-    vs_out.Tangent = normalize(normalMatrix * tangent);
-    vs_out.Bitangent = normalize(normalMatrix * bitangent);
+    vec3 N = normalize(normalMatrix * normal);
+
+    vec3 T = vec3(0.0);
+    vec3 B = vec3(0.0);
+
+    if (length(tangent) > 0.0) {
+        T = normalize(normalMatrix * tangent);
+      
+        T = normalize(T - dot(T, N) * N);
+       
+        B = normalize(cross(N, T));
+    } else {
+      
+        T = normalize(cross(N, vec3(0.0, 1.0, 0.0)));
+        if (length(T) < 0.01) {
+            T = normalize(cross(N, vec3(1.0, 0.0, 0.0)));
+        }
+        B = normalize(cross(N, T));
+    }
+    vs_out.Normal = N;
+    vs_out.Tangent = T;
+    vs_out.Bitangent = B;
     vs_out.TBN = mat3(vs_out.Tangent, vs_out.Bitangent, vs_out.Normal);
 
     vs_out.CameraPos = cameraPos;

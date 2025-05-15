@@ -285,8 +285,8 @@ bool Root::Start()
 	//lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
 	//ParentGameObject(*lictorMesh, *lictor);
 	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
-
-	////Hormagaunt
+	//
+	//////Hormagaunt
 	//auto hormagaunt = CreateGameObject("Hormagaunt");
 	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
 	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
@@ -301,7 +301,7 @@ bool Root::Start()
 	//ParentGameObject(*hormagauntMesh, *hormagaunt);
 	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	//hormagaunt->SetTag("Enemy");
-	//
+	
 
 	////Termagaunt
 	//auto termagaunt = CreateGameObject("Termagaunt");

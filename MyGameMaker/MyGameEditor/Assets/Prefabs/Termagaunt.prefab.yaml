@@ -1,0 +1,1623 @@
+name: Termagaunt
+prefabPath: ""
+uuid: 15755223990846240506
+tag: Enemy
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0
+      - 0
+      - 10
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 2.2000000476837158
+      - 2.2000000476837158
+      - 2.2000000476837158
+  BoxColliderComponent:
+    size:
+      - 0.699999988
+      - 2
+      - 1.60000002
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: false
+  RigidbodyComponent:
+    mass: 1
+    isKinematic: false
+    isFreezed: true
+    friction: 0.5
+    gravity:
+      x: 0
+      y: -9.80000019
+      z: 0
+    damping:
+      linear: 0
+      angular: 0
+  ScriptComponents:
+    Script0:
+      name: EnemyControllerRanged
+      fields:
+        shootCooldown: 2
+        projectileSpeed: 90
+        projectileLifetime: 0.5
+        shootTimer: 0
+        magazineSize: 0
+        currentMagazineAmmo: 0
+        maxAmmo: 0
+        currentTotalAmmo: 0
+        range: 0
+        timeToLerp: 0
+Children:
+  - name: TermagauntMesh
+    prefabPath: ""
+    uuid: 11701280931362994644
+    tag: Untagged
+    active: false
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0.87002267044394355
+          - -0
+          - 0
+        localScale:
+          - 0.0099999997764825821
+          - 0.0099999997764825821
+          - 0.0099999997764825821
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 13846159158414948037
+        material:
+          name: Low_BSurfaceMesh_BaseColor1
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+      SkeletalAnimationComponent:
+        name: SkeletalAnimationComponent
+        enabled: true
+        bone_names:
+          - root.x
+          - spine_01.x
+          - spine_02.x
+          - spine_03.x
+          - c_subneck_1.x
+          - neck.x
+          - head.x
+          - c_eyebrow_full.l
+          - c_eyebrow_03.l
+          - c_eyebrow_02.l
+          - c_eyebrow_01.l
+          - c_eyebrow_01_end.l
+          - c_eyebrow_full.r
+          - c_eyebrow_03.r
+          - c_eyebrow_02.r
+          - c_eyebrow_01.r
+          - c_eyebrow_01_end.r
+          - c_jawbone.x
+          - c_lips_bot.l
+          - c_lips_bot.r
+          - c_lips_bot.x
+          - tong_01.x
+          - tong_02.x
+          - tong_03.x
+          - c_lips_top.x
+          - c_lips_top.l
+          - c_lips_top.r
+          - c_lips_smile.l
+          - c_lips_corner_mini.l
+          - c_lips_smile.r
+          - c_lips_corner_mini.r
+          - shoulder.l
+          - arm_stretch.l
+          - forearm_stretch.l
+          - hand.l
+          - shoulder.r
+          - arm_stretch.r
+          - forearm_stretch.r
+          - hand.r
+          - shoulder_dupli_001.l
+          - arm_stretch_dupli_001.l
+          - forearm_stretch_dupli_001.l
+          - hand_dupli_001.l
+          - shoulder_dupli_001.r
+          - arm_stretch_dupli_001.r
+          - forearm_stretch_dupli_001.r
+          - hand_dupli_001.r
+          - c_tail_00.x
+          - c_tail_01.x
+          - c_tail_02.x
+          - c_tail_03.x
+          - c_tail_04.x
+          - c_tail_05.x
+          - thigh_b_str.l
+          - thigh_stretch.l
+          - leg_stretch.l
+          - foot.l
+          - toes_01.l
+          - thigh_b_str.r
+          - thigh_stretch.r
+          - leg_stretch.r
+          - foot.r
+          - toes_01.r
+        animation_file: skeletal_anim_TermagauntMesh
+      ScriptComponents:
+        Script0:
+          name: TermagauntAnimation
+          fields:
+            isAnimFinished: false
+    Children:
+      - name: root.x
+        prefabPath: ""
+        uuid: 14924664721040810007
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0
+              - 0
+              - 0
+            localRotation:
+              - 0
+              - -0
+              - 0
+            localScale:
+              - 1
+              - 1
+              - 1
+        Children:
+          - name: spine_01.x
+            prefabPath: ""
+            uuid: 15610079935553578084
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - 0
+                  - 0
+                  - 0
+                localRotation:
+                  - 0
+                  - -0
+                  - 0
+                localScale:
+                  - 1
+                  - 1
+                  - 1
+            Children:
+              - name: spine_02.x
+                prefabPath: ""
+                uuid: 18338499856624609320
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - 0
+                      - 0
+                      - 0
+                    localRotation:
+                      - 0
+                      - -0
+                      - 0
+                    localScale:
+                      - 1
+                      - 1
+                      - 1
+                Children:
+                  - name: spine_03.x
+                    prefabPath: ""
+                    uuid: 755216548576134099
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - 0
+                          - 0
+                          - 0
+                        localRotation:
+                          - 0
+                          - -0
+                          - 0
+                        localScale:
+                          - 1
+                          - 1
+                          - 1
+                    Children:
+                      - name: c_subneck_1.x
+                        prefabPath: ""
+                        uuid: 3006236420204282589
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - 0
+                              - 0
+                              - 0
+                            localRotation:
+                              - 0
+                              - -0
+                              - 0
+                            localScale:
+                              - 1
+                              - 1
+                              - 1
+                        Children:
+                          - name: neck.x
+                            prefabPath: ""
+                            uuid: 14687617231480913817
+                            tag: Untagged
+                            active: true
+                            isStatic: false
+                            Components:
+                              Transform_Component:
+                                name: Transform_Component
+                                enabled: true
+                                localPosition:
+                                  - 0
+                                  - 0
+                                  - 0
+                                localRotation:
+                                  - 0
+                                  - -0
+                                  - 0
+                                localScale:
+                                  - 1
+                                  - 1
+                                  - 1
+                            Children:
+                              - name: head.x
+                                prefabPath: ""
+                                uuid: 14131219931572485065
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - 0
+                                      - 0
+                                      - 0
+                                    localRotation:
+                                      - 0
+                                      - -0
+                                      - 0
+                                    localScale:
+                                      - 1
+                                      - 1
+                                      - 1
+                                Children:
+                                  - name: c_eyebrow_full.l
+                                    prefabPath: ""
+                                    uuid: 12432559920495177876
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                    Children:
+                                      - name: c_eyebrow_03.l
+                                        prefabPath: ""
+                                        uuid: 13162633229183926312
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children: ~
+                                      - name: c_eyebrow_02.l
+                                        prefabPath: ""
+                                        uuid: 13141819980581321624
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children: ~
+                                      - name: c_eyebrow_01.l
+                                        prefabPath: ""
+                                        uuid: 11918339126081659567
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children: ~
+                                      - name: c_eyebrow_01_end.l
+                                        prefabPath: ""
+                                        uuid: 11309333665905028982
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children: ~
+                                  - name: c_eyebrow_full.r
+                                    prefabPath: ""
+                                    uuid: 17795562967584030664
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                    Children:
+                                      - name: c_eyebrow_03.r
+                                        prefabPath: ""
+                                        uuid: 11603178663018262469
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children: ~
+                                      - name: c_eyebrow_02.r
+                                        prefabPath: ""
+                                        uuid: 11340257204351466747
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children: ~
+                                      - name: c_eyebrow_01.r
+                                        prefabPath: ""
+                                        uuid: 8029325053021353923
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children: ~
+                                      - name: c_eyebrow_01_end.r
+                                        prefabPath: ""
+                                        uuid: 645121097090270292
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children: ~
+                                  - name: c_jawbone.x
+                                    prefabPath: ""
+                                    uuid: 17499637302219632205
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                    Children:
+                                      - name: c_lips_bot.l
+                                        prefabPath: ""
+                                        uuid: 3267308251647290337
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children: ~
+                                      - name: c_lips_bot.r
+                                        prefabPath: ""
+                                        uuid: 12751374053596386535
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children: ~
+                                      - name: c_lips_bot.x
+                                        prefabPath: ""
+                                        uuid: 12927284181989336046
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children: ~
+                                      - name: tong_01.x
+                                        prefabPath: ""
+                                        uuid: 4850024507644488026
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children:
+                                          - name: tong_02.x
+                                            prefabPath: ""
+                                            uuid: 11829192210641443653
+                                            tag: Untagged
+                                            active: true
+                                            isStatic: false
+                                            Components:
+                                              Transform_Component:
+                                                name: Transform_Component
+                                                enabled: true
+                                                localPosition:
+                                                  - 0
+                                                  - 0
+                                                  - 0
+                                                localRotation:
+                                                  - 0
+                                                  - -0
+                                                  - 0
+                                                localScale:
+                                                  - 1
+                                                  - 1
+                                                  - 1
+                                            Children:
+                                              - name: tong_03.x
+                                                prefabPath: ""
+                                                uuid: 17062866234115259383
+                                                tag: Untagged
+                                                active: true
+                                                isStatic: false
+                                                Components:
+                                                  Transform_Component:
+                                                    name: Transform_Component
+                                                    enabled: true
+                                                    localPosition:
+                                                      - 0
+                                                      - 0
+                                                      - 0
+                                                    localRotation:
+                                                      - 0
+                                                      - -0
+                                                      - 0
+                                                    localScale:
+                                                      - 1
+                                                      - 1
+                                                      - 1
+                                                Children: ~
+                                  - name: c_lips_top.x
+                                    prefabPath: ""
+                                    uuid: 12050877715038244323
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                    Children: ~
+                                  - name: c_lips_top.l
+                                    prefabPath: ""
+                                    uuid: 15071300758101111516
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                    Children: ~
+                                  - name: c_lips_top.r
+                                    prefabPath: ""
+                                    uuid: 5980339517382932279
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                    Children: ~
+                                  - name: c_lips_smile.l
+                                    prefabPath: ""
+                                    uuid: 11569747737178334049
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                    Children:
+                                      - name: c_lips_corner_mini.l
+                                        prefabPath: ""
+                                        uuid: 7376087599205724733
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children: ~
+                                  - name: c_lips_smile.r
+                                    prefabPath: ""
+                                    uuid: 13597498100330810624
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                    Children:
+                                      - name: c_lips_corner_mini.r
+                                        prefabPath: ""
+                                        uuid: 12165796402271870962
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                        Children: ~
+                      - name: shoulder.l
+                        prefabPath: ""
+                        uuid: 10277592958881438141
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - 0
+                              - 0
+                              - 0
+                            localRotation:
+                              - 0
+                              - -0
+                              - 0
+                            localScale:
+                              - 1
+                              - 1
+                              - 1
+                        Children:
+                          - name: arm_stretch.l
+                            prefabPath: ""
+                            uuid: 17212465338692808033
+                            tag: Untagged
+                            active: true
+                            isStatic: false
+                            Components:
+                              Transform_Component:
+                                name: Transform_Component
+                                enabled: true
+                                localPosition:
+                                  - 0
+                                  - 0
+                                  - 0
+                                localRotation:
+                                  - 0
+                                  - -0
+                                  - 0
+                                localScale:
+                                  - 1
+                                  - 1
+                                  - 1
+                            Children:
+                              - name: forearm_stretch.l
+                                prefabPath: ""
+                                uuid: 10989426629809445083
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - 0
+                                      - 0
+                                      - 0
+                                    localRotation:
+                                      - 0
+                                      - -0
+                                      - 0
+                                    localScale:
+                                      - 1
+                                      - 1
+                                      - 1
+                                Children:
+                                  - name: hand.l
+                                    prefabPath: ""
+                                    uuid: 11106609388603607082
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                    Children: ~
+                      - name: shoulder.r
+                        prefabPath: ""
+                        uuid: 5344089468376445475
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - 0
+                              - 0
+                              - 0
+                            localRotation:
+                              - 0
+                              - -0
+                              - 0
+                            localScale:
+                              - 1
+                              - 1
+                              - 1
+                        Children:
+                          - name: arm_stretch.r
+                            prefabPath: ""
+                            uuid: 5438989631890905785
+                            tag: Untagged
+                            active: true
+                            isStatic: false
+                            Components:
+                              Transform_Component:
+                                name: Transform_Component
+                                enabled: true
+                                localPosition:
+                                  - 0
+                                  - 0
+                                  - 0
+                                localRotation:
+                                  - 0
+                                  - -0
+                                  - 0
+                                localScale:
+                                  - 1
+                                  - 1
+                                  - 1
+                            Children:
+                              - name: forearm_stretch.r
+                                prefabPath: ""
+                                uuid: 16236585979814032716
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - 0
+                                      - 0
+                                      - 0
+                                    localRotation:
+                                      - 0
+                                      - -0
+                                      - 0
+                                    localScale:
+                                      - 1
+                                      - 1
+                                      - 1
+                                Children:
+                                  - name: hand.r
+                                    prefabPath: ""
+                                    uuid: 12844216524650788068
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                    Children: ~
+                  - name: shoulder_dupli_001.l
+                    prefabPath: ""
+                    uuid: 8137587927820006211
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - 0
+                          - 0
+                          - 0
+                        localRotation:
+                          - 0
+                          - -0
+                          - 0
+                        localScale:
+                          - 1
+                          - 1
+                          - 1
+                    Children:
+                      - name: arm_stretch_dupli_001.l
+                        prefabPath: ""
+                        uuid: 5177153103353959004
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - 0
+                              - 0
+                              - 0
+                            localRotation:
+                              - 0
+                              - -0
+                              - 0
+                            localScale:
+                              - 1
+                              - 1
+                              - 1
+                        Children:
+                          - name: forearm_stretch_dupli_001.l
+                            prefabPath: ""
+                            uuid: 14759117943283094229
+                            tag: Untagged
+                            active: true
+                            isStatic: false
+                            Components:
+                              Transform_Component:
+                                name: Transform_Component
+                                enabled: true
+                                localPosition:
+                                  - 0
+                                  - 0
+                                  - 0
+                                localRotation:
+                                  - 0
+                                  - -0
+                                  - 0
+                                localScale:
+                                  - 1
+                                  - 1
+                                  - 1
+                            Children:
+                              - name: hand_dupli_001.l
+                                prefabPath: ""
+                                uuid: 12447094568286730804
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - 0
+                                      - 0
+                                      - 0
+                                    localRotation:
+                                      - 0
+                                      - -0
+                                      - 0
+                                    localScale:
+                                      - 1
+                                      - 1
+                                      - 1
+                                Children: ~
+                  - name: shoulder_dupli_001.r
+                    prefabPath: ""
+                    uuid: 5535295047257864763
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - 0
+                          - 0
+                          - 0
+                        localRotation:
+                          - 0
+                          - -0
+                          - 0
+                        localScale:
+                          - 1
+                          - 1
+                          - 1
+                    Children:
+                      - name: arm_stretch_dupli_001.r
+                        prefabPath: ""
+                        uuid: 3993131575833058115
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - 0
+                              - 0
+                              - 0
+                            localRotation:
+                              - 0
+                              - -0
+                              - 0
+                            localScale:
+                              - 1
+                              - 1
+                              - 1
+                        Children:
+                          - name: forearm_stretch_dupli_001.r
+                            prefabPath: ""
+                            uuid: 10648488200219970564
+                            tag: Untagged
+                            active: true
+                            isStatic: false
+                            Components:
+                              Transform_Component:
+                                name: Transform_Component
+                                enabled: true
+                                localPosition:
+                                  - 0
+                                  - 0
+                                  - 0
+                                localRotation:
+                                  - 0
+                                  - -0
+                                  - 0
+                                localScale:
+                                  - 1
+                                  - 1
+                                  - 1
+                            Children:
+                              - name: hand_dupli_001.r
+                                prefabPath: ""
+                                uuid: 16044266270703594974
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - 0
+                                      - 0
+                                      - 0
+                                    localRotation:
+                                      - 0
+                                      - -0
+                                      - 0
+                                    localScale:
+                                      - 1
+                                      - 1
+                                      - 1
+                                Children: ~
+          - name: c_tail_00.x
+            prefabPath: ""
+            uuid: 11368956840801125335
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - 0
+                  - 0
+                  - 0
+                localRotation:
+                  - 0
+                  - -0
+                  - 0
+                localScale:
+                  - 1
+                  - 1
+                  - 1
+            Children:
+              - name: c_tail_01.x
+                prefabPath: ""
+                uuid: 3751805956595350512
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - 0
+                      - 0
+                      - 0
+                    localRotation:
+                      - 0
+                      - -0
+                      - 0
+                    localScale:
+                      - 1
+                      - 1
+                      - 1
+                Children:
+                  - name: c_tail_02.x
+                    prefabPath: ""
+                    uuid: 17480099179502775225
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - 0
+                          - 0
+                          - 0
+                        localRotation:
+                          - 0
+                          - -0
+                          - 0
+                        localScale:
+                          - 1
+                          - 1
+                          - 1
+                    Children:
+                      - name: c_tail_03.x
+                        prefabPath: ""
+                        uuid: 7784199350235825666
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - 0
+                              - 0
+                              - 0
+                            localRotation:
+                              - 0
+                              - -0
+                              - 0
+                            localScale:
+                              - 1
+                              - 1
+                              - 1
+                        Children:
+                          - name: c_tail_04.x
+                            prefabPath: ""
+                            uuid: 5586396501860161844
+                            tag: Untagged
+                            active: true
+                            isStatic: false
+                            Components:
+                              Transform_Component:
+                                name: Transform_Component
+                                enabled: true
+                                localPosition:
+                                  - 0
+                                  - 0
+                                  - 0
+                                localRotation:
+                                  - 0
+                                  - -0
+                                  - 0
+                                localScale:
+                                  - 1
+                                  - 1
+                                  - 1
+                            Children:
+                              - name: c_tail_05.x
+                                prefabPath: ""
+                                uuid: 1587046496454986850
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - 0
+                                      - 0
+                                      - 0
+                                    localRotation:
+                                      - 0
+                                      - -0
+                                      - 0
+                                    localScale:
+                                      - 1
+                                      - 1
+                                      - 1
+                                Children: ~
+          - name: thigh_b_str.l
+            prefabPath: ""
+            uuid: 7656942151098604585
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - 0
+                  - 0
+                  - 0
+                localRotation:
+                  - 0
+                  - -0
+                  - 0
+                localScale:
+                  - 1
+                  - 1
+                  - 1
+            Children:
+              - name: thigh_stretch.l
+                prefabPath: ""
+                uuid: 16414701164741179020
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - 0
+                      - 0
+                      - 0
+                    localRotation:
+                      - 0
+                      - -0
+                      - 0
+                    localScale:
+                      - 1
+                      - 1
+                      - 1
+                Children:
+                  - name: leg_stretch.l
+                    prefabPath: ""
+                    uuid: 17370653608336359408
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - 0
+                          - 0
+                          - 0
+                        localRotation:
+                          - 0
+                          - -0
+                          - 0
+                        localScale:
+                          - 1
+                          - 1
+                          - 1
+                    Children:
+                      - name: foot.l
+                        prefabPath: ""
+                        uuid: 6104398903947918961
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - 0
+                              - 0
+                              - 0
+                            localRotation:
+                              - 0
+                              - -0
+                              - 0
+                            localScale:
+                              - 1
+                              - 1
+                              - 1
+                        Children:
+                          - name: toes_01.l
+                            prefabPath: ""
+                            uuid: 17362898896452886592
+                            tag: Untagged
+                            active: true
+                            isStatic: false
+                            Components:
+                              Transform_Component:
+                                name: Transform_Component
+                                enabled: true
+                                localPosition:
+                                  - 0
+                                  - 0
+                                  - 0
+                                localRotation:
+                                  - 0
+                                  - -0
+                                  - 0
+                                localScale:
+                                  - 1
+                                  - 1
+                                  - 1
+                            Children: ~
+          - name: thigh_b_str.r
+            prefabPath: ""
+            uuid: 9153533122553547968
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - 0
+                  - 0
+                  - 0
+                localRotation:
+                  - 0
+                  - -0
+                  - 0
+                localScale:
+                  - 1
+                  - 1
+                  - 1
+            Children:
+              - name: thigh_stretch.r
+                prefabPath: ""
+                uuid: 15808992659438386498
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - 0
+                      - 0
+                      - 0
+                    localRotation:
+                      - 0
+                      - -0
+                      - 0
+                    localScale:
+                      - 1
+                      - 1
+                      - 1
+                Children:
+                  - name: leg_stretch.r
+                    prefabPath: ""
+                    uuid: 455678122658254613
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - 0
+                          - 0
+                          - 0
+                        localRotation:
+                          - 0
+                          - -0
+                          - 0
+                        localScale:
+                          - 1
+                          - 1
+                          - 1
+                    Children:
+                      - name: foot.r
+                        prefabPath: ""
+                        uuid: 58388400289962280
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - 0
+                              - 0
+                              - 0
+                            localRotation:
+                              - 0
+                              - -0
+                              - 0
+                            localScale:
+                              - 1
+                              - 1
+                              - 1
+                        Children:
+                          - name: toes_01.r
+                            prefabPath: ""
+                            uuid: 15802520131799185342
+                            tag: Untagged
+                            active: true
+                            isStatic: false
+                            Components:
+                              Transform_Component:
+                                name: Transform_Component
+                                enabled: true
+                                localPosition:
+                                  - 0
+                                  - 0
+                                  - 0
+                                localRotation:
+                                  - 0
+                                  - -0
+                                  - 0
+                                localScale:
+                                  - 1
+                                  - 1
+                                  - 1
+                            Children: ~

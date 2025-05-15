@@ -1,6 +1,6 @@
-name: wooden box_1_Instance_1_Instance
+name: wooden box_1_Instance_1_Instance_1_Instance9_1_Instance4_1_Instance2_1_Instance3_1_Instance8_1_Instance2_1_Instance2
 prefabPath: Assets\Prefabs\wooden box.prefab.yaml
-uuid: 13219430115322633186
+uuid: 6227291509727688335
 tag: Destroyable
 active: true
 isStatic: false
@@ -9,17 +9,17 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - -259.47540283203125
-      - 0.99932384490966797
-      - 117.02299499511719
+      - -279.98605346679688
+      - 0.87530571222305298
+      - -36.341411590576172
     localRotation:
-      - 89.999970480991038
-      - -88.880194479277904
-      - -179.99997621029144
+      - 89.999829779437434
+      - -88.880178837124888
+      - -179.99982355586778
     localScale:
-      - 1.250000549470953
-      - 1.2500005494709592
-      - 1.2500000000000062
+      - 1.2500009138376995
+      - 1.2500009138377044
+      - 1.24999988079072
   MeshRenderer:
     name: MeshRenderer
     enabled: true

@@ -1,0 +1,56 @@
+name: wooden box_1_Instance_1_Instance
+prefabPath: Assets\Prefabs\wooden box.prefab.yaml
+uuid: 13219430115322633186
+tag: Destroyable
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - -259.47540283203125
+      - 0.99932384490966797
+      - 117.02299499511719
+    localRotation:
+      - 89.999970480991038
+      - -88.880194479277904
+      - -179.99997621029144
+    localScale:
+      - 1.250000549470953
+      - 1.2500005494709592
+      - 1.2500000000000062
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 15390588685034517731
+    material:
+      name: wooden barrel and box low_DefaultMaterial_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+        - 1
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1.10000002
+      - 3
+    offset:
+      - -1.85000002
+      - 1
+      - -0.0500000007
+    isTrigger: false
+  ScriptComponents:
+    Script0:
+      name: DestroyEnviormentObject
+      fields: ~
+Children: ~

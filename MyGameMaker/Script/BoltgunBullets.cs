@@ -11,7 +11,7 @@ public class BoltgunBullets : PickUp
     public float floatSpeed = 1f;
     public float floatHeight = 0.5f;
     public float rotationSpeed = 50f;
-    public float lifeTime = 30f;
+    public float lifeTime = 10f;
     public bool isDetected = false;
 
     public override void Awake()
@@ -35,19 +35,17 @@ public class BoltgunBullets : PickUp
         PowerUpMovment(elapsedTime, deltaTime);
         if (elapsedTime >= lifeTime)
         {
-            //Destroy();
+            DestroyPickUp();
         }
         if (isDetected)
         {
             MoveTowardsPlayer(deltaTime);
         }
     }
-   // public void Destroy()
-   // {
-   //     GameObject player = GameObject.Find("Player");
-   //     Transform.position = new Vector3(0, -100, 0);
-   //     //player.GetComponent<PickUpManager>().DestroyPickUp(gameObject);
-   // }
+    public void DestroyPickUp()
+    {
+        Engineson.Destroy(this.gameObject);
+    }
     public void MoveTowardsPlayer(float deltaTime)
     {
         GameObject player = GameObject.Find("Player");

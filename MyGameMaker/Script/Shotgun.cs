@@ -37,13 +37,13 @@ public class Shotgun : BaseWeapon
     }
     public override void Start()
     {
-        damage = 12.0f;
-        shootCadence = 0.7f;
-        magazineSize = 4;
+        damage = 20.0f;
+        shootCadence = 0.4f;
+        magazineSize = 8;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 50;
-        currentTotalAmmo = 16;
-        reloadTime = 2.5f;
+        currentTotalAmmo = 24;
+        reloadTime = 0.75f;
         range = 20f;
         timeToLerp = 0.3f;
         ammoType = AmmoType.SHOTGUN;

@@ -12,6 +12,7 @@ public class EnemyControllerRanged : EnemyController
     protected float shootTimer = 0f;
     private PlayerController pc;
     private Transform transform;
+    private TermagauntAnimation anim;
     //stats
     private float health = 100.0f;
     private float damage = 20.0f;
@@ -68,6 +69,13 @@ public class EnemyControllerRanged : EnemyController
             return;
         }
 
+        anim = gameObject.GetChild("TermagauntMesh").GetComponent<TermagauntAnimation>();
+        if (anim == null)
+        {
+            Engineson.print("ERROR: Anim requires a TermagauntAnimation component!");
+            return;
+        }
+
         //         sound = gameObject.GetComponent<AudioSource>();
         //         if (sound == null)
         //         {
@@ -100,6 +108,7 @@ public class EnemyControllerRanged : EnemyController
             if (currentHealth <= 0)
             {
                 Engineson.print("This man is dead man.");
+                anim.SetDeathAnimation();
                 //Destroy(gameObject);
                 isDead = true;
             }
@@ -198,13 +207,14 @@ public class EnemyControllerRanged : EnemyController
 
                         Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
                         rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
-
+                        anim.SetRunningAnimation();
                         //enemyTransform.position += desiredVelocity * deltaTime;
                     }
                 }
                 else
                 {
                     rb.SetVelocity(Vector3.Zero);
+                    anim.SetStandardIdleAnimation();
                 }
 
                 if (moveDirection != Vector3.Zero)
@@ -291,6 +301,7 @@ public class EnemyControllerRanged : EnemyController
         projectile.GetComponent<ParticleFX>().ApplyPreset(14);
         projectile.GetComponent<ParticleFX>().EmitBurst(1);
 
+        anim.SetAttackAnimation();
 
         bulletsObjects.Add(projectile);
         bulletsPos.Add(bulletStart);
@@ -306,6 +317,7 @@ public class EnemyControllerRanged : EnemyController
         currentHealth -= damage;
         particles.ApplyPreset(19);
         particles.EmitBurst(1);
+        anim.SetHitAnimation();
         Engineson.print("Hit");
     }
     override public void OnCollisionEnter(GameObject other)

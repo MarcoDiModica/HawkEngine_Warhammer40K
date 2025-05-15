@@ -1,7 +1,7 @@
 using System;
 using HawkEngine;
 
-public class  TermagauntAnimation : MonoBehaviour
+public class TermagauntAnimation : MonoBehaviour
 {
     private SkeletalAnimation termagauntesk;
     int animIndex = 0;
@@ -33,7 +33,7 @@ public class  TermagauntAnimation : MonoBehaviour
             }
         }
 
-        if (termagauntesk?.GetAnimationIndex() != 10)
+        if (termagauntesk?.GetAnimationIndex() != 8)
         {
             if (termagauntesk?.GetAnimationTime() >= termagauntesk?.GetAnimationLength() - 1.0f && !isAnimFinished)
             {
@@ -46,9 +46,53 @@ public class  TermagauntAnimation : MonoBehaviour
     public void SetStandardIdleAnimation()
     {
         termagauntesk?.SetAnimationPlayState(true);
-        if (termagauntesk?.GetAnimationIndex() != 10)
+        if (termagauntesk?.GetAnimationIndex() != 8)
         {
-            termagauntesk?.SetAnimation(10);
+            termagauntesk?.SetAnimation(8);
+            termagauntesk?.SetAnimationSpeed(1.0f);
+            isAnimFinished = false;
+        }
+    }
+
+    public void SetAttackAnimation()
+    {
+        termagauntesk?.SetAnimationPlayState(true);
+        if (termagauntesk?.GetAnimationIndex() != 1)
+        {
+            termagauntesk?.SetAnimation(1);
+            termagauntesk?.SetAnimationSpeed(1.0f);
+            isAnimFinished = false;
+        }
+    }
+
+    public void SetDeathAnimation()
+    {
+        termagauntesk?.SetAnimationPlayState(true);
+        if (termagauntesk?.GetAnimationIndex() != 4)
+        {
+            termagauntesk?.SetAnimation(4);
+            termagauntesk?.SetAnimationSpeed(1.0f);
+            isAnimFinished = false;
+        }
+    }
+
+    public void SetRunningAnimation()
+    {
+        termagauntesk?.SetAnimationPlayState(true);
+        if (termagauntesk?.GetAnimationIndex() != 9)
+        {
+            termagauntesk?.SetAnimation(9);
+            termagauntesk?.SetAnimationSpeed(1.0f);
+            isAnimFinished = false;
+        }
+    }
+
+    public void SetHitAnimation()
+    {
+        termagauntesk?.SetAnimationPlayState(true);
+        if (termagauntesk?.GetAnimationIndex() != 5)
+        {
+            termagauntesk?.SetAnimation(5);
             termagauntesk?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
         }

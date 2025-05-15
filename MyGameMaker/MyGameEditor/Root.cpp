@@ -314,7 +314,7 @@ bool Root::Start()
 	//termagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//termagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//termagauntMesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
-	////termagauntMesh->AddComponent<ScriptComponent>()->LoadScript("TermagauntAnimation");
+	//termagauntMesh->AddComponent<ScriptComponent>()->LoadScript("TermagauntAnimation");
 	//ParentGameObject(*termagauntMesh, *termagaunt);
 	//termagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
 	//termagaunt->SetTag("Enemy");

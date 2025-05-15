@@ -120,6 +120,7 @@ public class EnemyControllerWarrior : EnemyController
                     // Attack
                     if (IsPlayerInHurtbox(playerTransform.position))
                     {
+                        rb.SetVelocity(Vector3.Zero);
                         currentState = EnemyState.ATTACK;
                         isAttacking = true;
                     }

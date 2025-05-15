@@ -93,7 +93,9 @@ public:
 			"Assets/Textures/VFX_lictor_leap.png",
 			"Assets/Textures/VFX_lictor_dodge_cue.png",
 			"Assets/Textures/Magnet_Area_animation_SpriteSheet_Yiwei.png",
-			"Assets/Textures/TreeSpritesheet.png"
+			"Assets/Textures/TreeSpritesheet.png",
+				"Assets/Textures/Tree2Spritesheet.png",
+				"Assets/Textures/Tree3Spritesheet.png"
 
 		};
 

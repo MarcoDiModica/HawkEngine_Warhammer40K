@@ -46,7 +46,7 @@ public class MawlocAnimation : MonoBehaviour
     public void SetBurrowingAnimation()
     {
         mawlocesk?.SetAnimationPlayState(true);
-        if (mawlocesk?.GetAnimationIndex() != 5)
+        if (mawlocesk?.GetAnimationIndex() != 6)
         {
             mawlocesk?.SetAnimation(5);
             mawlocesk?.SetAnimationSpeed(1.0f);
@@ -87,12 +87,22 @@ public class MawlocAnimation : MonoBehaviour
         }
     }
 
-    public void SetSlamAnimation()
+    public void SetRoarAnimation()
     {
         mawlocesk?.SetAnimationPlayState(true);
         if (mawlocesk?.GetAnimationIndex() != 4)
         {
             mawlocesk?.SetAnimation(4);
+            mawlocesk?.SetAnimationSpeed(1.0f);
+            isAnimFinished = false;
+        }
+    }
+    public void SetSlamAnimation()
+    {
+        mawlocesk?.SetAnimationPlayState(true);
+        if (mawlocesk?.GetAnimationIndex() != 5)
+        {
+            mawlocesk?.SetAnimation(5);
             mawlocesk?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
         }

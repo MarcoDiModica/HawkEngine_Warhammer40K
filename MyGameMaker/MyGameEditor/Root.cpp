@@ -62,7 +62,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	resourceManager->LoadResources(); // Esto no se mutea
+	//resourceManager->LoadResources(); // Esto no se mutea
 	resourceManager->CreateDefaultCube(); // Esto no se mutea
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
@@ -303,6 +303,24 @@ bool Root::Start()
 	//hormagaunt->SetTag("Enemy");
 	//
 
+	////Termagaunt
+	//auto termagaunt = CreateGameObject("Termagaunt");
+	//termagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
+	//termagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//termagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//termagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
+	//auto termagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Termagaunt.fbx");
+	//termagauntMesh->SetName("TermagauntMesh");
+	//termagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//termagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//termagauntMesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
+	//termagauntMesh->AddComponent<ScriptComponent>()->LoadScript("TermagauntAnimation");
+	//ParentGameObject(*termagauntMesh, *termagaunt);
+	//termagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
+	//termagaunt->SetTag("Enemy");
+
+
+
 	////Tyranid Warrior
 	//auto tyranidWarrior = CreateGameObject("Tyranid_Warrior");
 	//tyranidWarrior->SetTag("Enemy");
@@ -463,7 +481,7 @@ bool Root::Start()
 	//shotgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	//shotgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//ParentGameObject(*shotgunMesh, *shotgun);
-	//
+	////
 	//auto railgun = CreateGameObject("Railgun");
 	//railgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//auto railgunMesh = CreateGameObjectWithPath("Assets/railgun.fbx");

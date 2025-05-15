@@ -155,11 +155,11 @@ public class EnemyControllerMelee : EnemyController
             {
                 distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
-                if (Vector3.Distance(enemyTransform.position, lastPathfindingPosition) > pathUpdateDistance)
-                {
-                    pathfinder.UpdateGridOrigin(enemyTransform.position);
-                    lastPathfindingPosition = enemyTransform.position;
-                }
+                //if (Vector3.Distance(enemyTransform.position, lastPathfindingPosition) > pathUpdateDistance)
+                //{
+                //    pathfinder.UpdateGridOrigin(enemyTransform.position);
+                //    lastPathfindingPosition = enemyTransform.position;
+                //}
 
                 if (distanceToPlayer < distToChase)
                 {
@@ -343,33 +343,37 @@ public class EnemyControllerMelee : EnemyController
                 //}
                 //else if (chasePath == null || chasePath.Count == 0)
                 //{
-                Vector3 directDir = Vector3.Normalize(playerTransform.position - enemyTransform.position);
-                moveDirection = directDir;
+                if (collider.enabled)
+                {
+                    Vector3 directDir = Vector3.Normalize(playerTransform.position - enemyTransform.position);
+                    moveDirection = directDir;
 
-                Vector3 desiredVelocity = directDir * speedMovement;
-                Vector3 currentVelocity = rb.GetVelocity();
+                    Vector3 desiredVelocity = directDir * speedMovement;
+                    Vector3 currentVelocity = rb.GetVelocity();
 
-                Vector3 smoothedVel = SmoothVelocity(desiredVelocity, currentVelocity, deltaTime);
-                rb.SetVelocity(smoothedVel);
-                //}
+                    Vector3 smoothedVel = SmoothVelocity(desiredVelocity, currentVelocity, deltaTime);
 
-                currentRotationAngle = enemyTransform.eulerAngles.Y;
-                float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-                float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
+                    rb.SetVelocity(smoothedVel);
+                    //}
 
-                //while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-                //while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+                    currentRotationAngle = enemyTransform.eulerAngles.Y;
+                    float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                    float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
 
-                currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+                    //while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                    //while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
 
-                Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-                Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                    eulerRotation.Y * ((float)Math.PI / 180.0f),
-                    eulerRotation.X * ((float)Math.PI / 180.0f),
-                    eulerRotation.Z * ((float)Math.PI / 180.0f)
-                );
+                    currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
 
-                collider.SetRotation(newRotation);
+                    Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                    Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                        eulerRotation.Y * ((float)Math.PI / 180.0f),
+                        eulerRotation.X * ((float)Math.PI / 180.0f),
+                        eulerRotation.Z * ((float)Math.PI / 180.0f)
+                    );
+
+                    collider.SetRotation(newRotation);
+                }
 
                 anim.SetRunningAnimation();
                 //  }

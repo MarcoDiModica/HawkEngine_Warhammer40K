@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
+using static System.Net.Mime.MediaTypeNames;
 
 public class EnemyControllerWarrior : EnemyController
 {
@@ -33,6 +34,7 @@ public class EnemyControllerWarrior : EnemyController
     private float dodgeTimer = 0f;
     //private TyranidWarriorAnimation animation
     private PlayerController pc;
+    private Transform transform;
 
     // Audio
     bool isCombatMusicPlaying = false;
@@ -47,6 +49,22 @@ public class EnemyControllerWarrior : EnemyController
 
     private bool hasPlayedDeathSound = false;
     private WarriorAnimation anim;
+    private List<Vector3> bulletDirections = new List<Vector3>();
+    List<HashSet<GameObject>> bulletHitEnemies = new List<HashSet<GameObject>>();
+    private List<Vector3> bulletStartPositions = new List<Vector3>();
+    private List<float> bulletLifetimes = new List<float>();
+    public List<BulletData> bullets = new List<BulletData>();
+    public List<Vector3> bulletsPos = new List<Vector3>();
+    public List<Vector3> hitPoints = new List<Vector3>();
+    public List<string> collisionNames = new List<string>();
+    public List<GameObject> bulletsObjects = new List<GameObject>();
+    public List<float> bulletIntervals = new List<float>();
+    public int magazineSize;
+    public int currentMagazineAmmo;
+    public int maxAmmo;
+    public int currentTotalAmmo;
+    public float range;
+    public float timeToLerp = 0.1f;
     public override void Awake()
     {
         //music = gameObject.GetComponent<Audio>();
@@ -67,6 +85,12 @@ public class EnemyControllerWarrior : EnemyController
         if (collider == null)
         {
             Engineson.print("ERROR: Tyranid Warrior Collider not found!");
+            return;
+        }
+        transform = gameObject.GetComponent<Transform>();
+        if (transform == null)
+        {
+            Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
 
@@ -96,6 +120,9 @@ public class EnemyControllerWarrior : EnemyController
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Warrior";
+        projectileDamage = 20.0f;
+        range = 100f;
+        timeToLerp = 0.1f;
     }
 
     public override void Update(float deltaTime)
@@ -114,7 +141,69 @@ public class EnemyControllerWarrior : EnemyController
             if (currentState != EnemyState.STUNNED)
             {
                 distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+                for (int i = bulletsObjects.Count - 1; i >= 0; i--)
+                {
+                    bulletIntervals[i] += deltaTime;
+                    bulletLifetimes[i] += deltaTime;
 
+                    Vector3 currentPos = bulletsPos[i];
+                    Vector3 direction = bulletDirections[i];
+                    float speed = projectileRange / timeToLerp;
+                    Vector3 displacement = direction * speed * deltaTime;
+                    Vector3 newPos = currentPos + displacement;
+                    bool shouldDestroy = false;
+                    //Engineson.print("" + currentPos);
+                    //Engineson.print("" + direction);
+                    //Engineson.print("" + displacement.Length());
+                    GameObject hitObject = null;
+
+                    RayCast ray = new RayCast();
+                    ray.PerformRaycast(currentPos, direction, displacement.Length());
+
+                    if (ray.hit.isHit)
+                    {
+                        Engineson.print("Le di gente");
+                        hitObject = ray.hit.gameObject;
+                    }
+
+                    if (hitObject != null)
+                    {
+                        string tag = hitObject.tag;
+
+                        if (tag != "PowerUp" && tag != "Ammunition")
+                        {
+                            if (!bulletHitEnemies[i].Contains(hitObject))
+                            {
+                                bulletHitEnemies[i].Add(hitObject);
+                                Engineson.print("Le di otra vez");
+
+                                switch (tag)
+                                {
+                                    case "Player":
+                                        pc.playerData.TakeDamage(projectileDamage);
+                                        Engineson.print("Le redi gente");
+                                        break;
+                                }
+                            }
+                        }
+                        
+                    }
+
+                    bulletsPos[i] = newPos;
+                    bulletsObjects[i].GetComponent<Transform>().position = newPos;
+                    float distanceTraveled = Vector3.Distance(bulletStartPositions[i], newPos);
+                    if (distanceTraveled > projectileRange || shouldDestroy)
+                    {
+                        Engineson.Destroy(bulletsObjects[i]);
+                        bulletsObjects.RemoveAt(i);
+                        bulletsPos.RemoveAt(i);
+                        bulletDirections.RemoveAt(i);
+                        bulletIntervals.RemoveAt(i);
+                        bulletLifetimes.RemoveAt(i);
+                        bulletHitEnemies.RemoveAt(i);
+                        bulletStartPositions.RemoveAt(i);
+                    }
+                }
                 if (distanceToPlayer < distToChase)
                 {
                     // Attack
@@ -126,6 +215,7 @@ public class EnemyControllerWarrior : EnemyController
                     // Shooting
                     else if (distanceToPlayer < projectileRange)
                     {
+                        rb.SetVelocity(Vector3.Zero);
                         currentState = EnemyState.ATTACK;
                         isShooting = true;
                     }
@@ -334,40 +424,38 @@ public class EnemyControllerWarrior : EnemyController
         }
         else if (isShooting)
         {
-            try
-            {
-                Audio.PlayOneShot(RangedAttackSound);
-                GameObject projectile = Engineson.CreateGameObject("Projectile", null);
-                Engineson.print("Projectile created!" + enemyTransform.forward);
-                // TODO: add custom mesh to the projectile
-                projectile.AddComponent<MeshRenderer>();
-                projectile.AddComponent<BoxCollider>();
-                //sound?.Play();
-                projectile.tag = "EnemyAttack";
-                anim.SetShootAnimation();
-                if (projectile != null)
-                {
-                    Transform projTransform = projectile.GetComponent<Transform>();
-                    BoxCollider projectileCollider = projectile.GetComponent<BoxCollider>();
-                    if (projTransform != null)
-                    {
-                        Vector3 forward = moveDirection;
-                        Vector3 spawnPos = enemyTransform.position + forward * 1.0f;
-                        projTransform.position = spawnPos;
-                        projTransform.SetScale(0.1f, 0.1f, 0.1f);
+            Vector3 localOffset = new Vector3(0f, 0f, 0f); // Y = altura, Z = hacia adelante, X = lateral si se desea
 
-                        projectile.AddScript("BulletData");
-                        projectile.GetComponent<BulletData>().Init(projTransform, forward, gameObject);
-                        activeProjectiles.Add(projectile.GetComponent<BulletData>());
-                        projectileCollider.SetPosition(projTransform.position);
-                        Engineson.print("Projectile fired!");
-                    }
-                }
-            }
-            catch (System.Exception e)
-            {
-                Engineson.print($"Error creating projectile: {e.Message}");
-            }
+            Vector3 bulletStart = transform.position +
+                                  (transform.right * localOffset.X) +
+                                  (transform.up * localOffset.Y) +
+                                  (transform.forward * localOffset.Z);
+            bulletStart.Y += 0.5f;
+
+            Vector3 direction = Vector3.Normalize(transform.forward);
+
+            float yaw = (float)(Math.Atan2(direction.X, direction.Z) * (180.0 / Math.PI));
+            float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
+
+
+            GameObject projectile = Engineson.CreateGameObject("WarriorProjectile", null);
+            //projectile.AddComponent<MeshRenderer>();
+            projectile.transform.SetScale(0.25f, 0.25f, 0.25f);
+            projectile.transform.position = bulletStart;
+            projectile.transform.SetRotation(pitch, yaw, 0f);
+            projectile.AddComponent<ParticleFX>();
+            projectile.GetComponent<ParticleFX>().ApplyPreset(14);
+            projectile.GetComponent<ParticleFX>().EmitBurst(1);
+
+            anim.SetShootAnimation();
+
+            bulletsObjects.Add(projectile);
+            bulletsPos.Add(bulletStart);
+            bulletDirections.Add(direction);
+            bulletIntervals.Add(0);
+            bulletLifetimes.Add(0);
+            bulletHitEnemies.Add(new HashSet<GameObject>());
+            bulletStartPositions.Add(bulletStart);
         }
     }
 

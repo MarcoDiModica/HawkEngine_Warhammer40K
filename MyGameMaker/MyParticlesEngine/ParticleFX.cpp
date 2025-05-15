@@ -1003,6 +1003,40 @@ namespace ParticlePresets {
 	"Assets/Textures/Magnet_Area_animation_SpriteSheet_Yiwei.png", 	   // Texture path
 	false 						   // Is Local Space
 	};
+
+	const ParticlePreset Environment_Tree = {
+	ParticleType::ENVIRONMENT_TREE,
+	false,                         // PlayOnAwake
+	1.0f,                          // Duration (only if one-shot)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	46.0f,                          // Size start
+	46.0f,                          // Size end
+	5.0f,                          // Min lifetime
+	5.0f,                          // Max lifetime
+	0.0f,                         // Min speed
+	0.0f,                         // Max speed
+	0.0f,                         // End Speed
+	glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+	0.0f,                          // Rotation speed
+	0.2f,                         // Emission rate (particles per second)
+	EmitterShape::POINT,           // Shape
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	glm::vec2(480.0f , 270.0f),     // Sprite size
+	true,                         // Use animation
+	true,                         // Random animation Index
+	0.050f,                          // Animation speed
+	190.0f,                          // Start rotation
+	false,                          // Random rotation
+	46.0f,                         // Min scale
+	46.0f,                          // Max scale
+	"Assets/Textures/TreeSpritesheet.png", // Texture path
+	false						   // Is Local Space
+	};
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -1546,6 +1580,10 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::MAGNET_AREA:
 		preset = ParticlePresets::Magnet_Area;
+		SetOneShot(false);
+		break;
+	case ParticleType::ENVIRONMENT_TREE:
+		preset = ParticlePresets::Environment_Tree;
 		SetOneShot(false);
 		break;
 	default:

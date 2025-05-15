@@ -16,6 +16,7 @@ enum class ParticleType {
     ENVIRONMENT_EXPLOSION = 7,
     ENVIRONMENT_DROPPLET = 15,
     ENVIRONMENT_SPARK = 16,
+    ENVIRONMENT_TREE = 29,
     // Enemies
     ENEMY_DASH = 9,
     ACID_ATK = 10,

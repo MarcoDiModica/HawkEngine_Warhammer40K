@@ -164,14 +164,14 @@ public class PlayerShooting : MonoBehaviour
         switch (currentGun)
         {
             case GunType.BOLTGUN:
-                boltgun.GetCurrentAmmo();
-                break;
+                return boltgun.GetCurrentAmmo();
+                
             case GunType.SHOTGUN:
-                shotgun.GetCurrentAmmo();
-                break;
+                return shotgun.GetCurrentAmmo();
+                
             case GunType.RAILGUN:
-                railgun.GetCurrentAmmo();
-                break;
+                return railgun.GetCurrentAmmo();
+                
         }
         return 0;
     }
@@ -181,14 +181,14 @@ public class PlayerShooting : MonoBehaviour
         switch (currentGun)
         {
             case GunType.BOLTGUN:
-                boltgun.GetMaxAmmo();
-                break;
+                return boltgun.GetMaxAmmo();
+                
             case GunType.SHOTGUN:
-                shotgun.GetMaxAmmo();
-                break;
+                return shotgun.GetMaxAmmo();
+               
             case GunType.RAILGUN:
-                railgun.GetMaxAmmo();
-                break;
+                return railgun.GetMaxAmmo();
+                
         }
         return 0;
     }

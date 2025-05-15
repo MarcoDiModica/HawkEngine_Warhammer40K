@@ -10,6 +10,7 @@ public class PiercingBullets : PickUp
     public float floatSpeed = 1f;
     public float floatHeight = 0.5f;
     public float rotationSpeed = 50f;
+    public float lifeTime = 10f;
     public override void Awake()
     {
 
@@ -28,8 +29,15 @@ public class PiercingBullets : PickUp
     {
         elapsedTime += deltaTime;
         PowerUpMovment(elapsedTime, deltaTime);
+        if (elapsedTime >= lifeTime)
+        {
+            DestroyPickUp();
+        }
     }
-
+    public void DestroyPickUp()
+    {
+        Engineson.Destroy(this.gameObject);
+    }
     public void PowerUpMovment(float time, float dt)
     {
         float newY = startPos.Y + (float)Math.Sin(time * floatSpeed) * floatHeight;

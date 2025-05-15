@@ -41,12 +41,12 @@ public class Boltgun : BaseWeapon
     public override void Start()
     {
         damage = 20.0f; 
-        shootCadence = 0.1f;
+        shootCadence = 0.15f;
         magazineSize = 30;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 240;
-        currentTotalAmmo = 120;
-        reloadTime = 1.5f;
+        currentTotalAmmo = 180;
+        reloadTime = 0.5f;
         range = 30f;
         timeToLerp = 0.1f;
         ammoType = AmmoType.BOLTGUN;

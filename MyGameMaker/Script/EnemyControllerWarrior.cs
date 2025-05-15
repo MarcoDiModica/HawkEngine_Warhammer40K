@@ -342,6 +342,9 @@ public class EnemyControllerWarrior : EnemyController
                 // TODO: add custom mesh to the projectile
                 projectile.AddComponent<MeshRenderer>();
                 projectile.AddComponent<BoxCollider>();
+                projectile.AddComponent<ParticleFX>();
+                projectile.GetComponent<ParticleFX>().ApplyPreset(10);
+                projectile.GetComponent<ParticleFX>().EmitBurst(1);
                 //sound?.Play();
                 projectile.tag = "EnemyAttack";
                 anim.SetShootAnimation();

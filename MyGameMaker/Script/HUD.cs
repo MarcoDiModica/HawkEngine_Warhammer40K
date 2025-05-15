@@ -83,7 +83,7 @@ public class HUD : MonoBehaviour
     {
         float hp = playerData.GetHealth();
         float maxHp = playerData.GetMaxHealth();
-        float width = (hp / maxHp) * 0.2f;
+        float width = (hp / maxHp) * 0.3f;
         return width;
     }
 
@@ -91,7 +91,7 @@ public class HUD : MonoBehaviour
     {
         float hp = playerData.GetHealth();
         float maxHp = playerData.GetMaxHealth();
-        float pos = (hp / maxHp) * 0.2f + 0.043f;
+        float pos = (hp / maxHp) * 0.3f + 0.063f;
         return pos;
     }
 
@@ -99,7 +99,7 @@ public class HUD : MonoBehaviour
     {
         float hpTemp = playerData.GetHealthTemp();
         float maxHpTemp = playerData.GetMaxHealthTemp();
-        float width = (hpTemp / maxHpTemp) * 0.138f;
+        float width = (hpTemp / maxHpTemp) * 0.207f;
         return width;
     }
 
@@ -107,7 +107,7 @@ public class HUD : MonoBehaviour
     {
         float hpTemp = playerData.GetHealthTemp();
         float maxHpTemp = playerData.GetMaxHealthTemp();
-        float pos = (hpTemp / maxHpTemp) * 0.138f + 0.057f;
+        float pos = (hpTemp / maxHpTemp) * 0.207f + 0.085f;
         return pos;
     }
 
@@ -116,7 +116,7 @@ public class HUD : MonoBehaviour
     {
         float redThirst = redThirstManager.GetRedThirstPoints();
         float maxRedThirst = 5;
-        float height = (redThirst / maxRedThirst) * 0.08f;
+        float height = (redThirst / maxRedThirst) * 0.012f;
         return height;
     }
 
@@ -124,7 +124,7 @@ public class HUD : MonoBehaviour
     {
         float redThirst = redThirstManager.GetRedThirstPoints();
         float maxRedThirst = 5;
-        float pos = 0.961f - (redThirst / maxRedThirst) * 0.08f;
+        float pos = 0.934f - (redThirst / maxRedThirst) * 0.012f;
         return pos;
     }
 

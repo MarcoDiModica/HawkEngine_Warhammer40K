@@ -1,6 +1,6 @@
-name: wooden box_1_Instance_1_Instance_1_Instance9_1_Instance4_1_Instance2_1_Instance3_1_Instance8_1_Instance2_1_Instance2_Instance
-prefabPath: Assets\Prefabs\wooden box.prefab.yaml
-uuid: 1248851836406962354
+name: WoodenBox_Lvl1_prefab
+prefabPath: Assets/Prefabs/WoodenBox_Lvl1_prefab.prefab.yaml
+uuid: 11917533091187017491
 tag: Destroyable
 active: true
 isStatic: false
@@ -9,17 +9,17 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 36.796016693115234
-      - -0.74096572399139404
-      - -8.2703914642333984
+      - 40.205650329589844
+      - 0
+      - -1.3086915016174316
     localRotation:
-      - 89.999303833566231
-      - -88.880171944232956
-      - -179.99929764304383
+      - -90.000009334667638
+      - 0
+      - 0
     localScale:
-      - 1.2500010360092504
-      - 1.2500010360092215
-      - 1.2499998807907533
+      - 1.25
+      - 1.2500000000000167
+      - 1.2500000000000167
   MeshRenderer:
     name: MeshRenderer
     enabled: true
@@ -42,12 +42,12 @@ Components:
   BoxColliderComponent:
     size:
       - 1
-      - 1.10000002
-      - 3
-    offset:
-      - -1.85000002
       - 1
-      - -0.0500000007
+      - 3.5999999
+    offset:
+      - 0
+      - 1
+      - 1.89999998
     isTrigger: false
   ScriptComponents:
     Script0:

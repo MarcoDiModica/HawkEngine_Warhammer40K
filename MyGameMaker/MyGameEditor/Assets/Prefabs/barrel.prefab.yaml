@@ -1,6 +1,6 @@
-name: wooden barrel_1_Instance10_1_Instance5_1_Instance3
+name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance
 prefabPath: Assets\Prefabs\barrel.prefab.yaml
-uuid: 17322470246178443592
+uuid: 13231162411842666579
 tag: Destroyable
 active: true
 isStatic: false
@@ -9,17 +9,17 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - -287.51107788085938
-      - 1.0872172117233276
-      - 17.395532608032227
+      - 37.052631378173828
+      - -0.75836801528930664
+      - -2.1069872379302979
     localRotation:
-      - -90.000007698196228
+      - -90.000009659346318
       - 0
       - 0
     localScale:
       - 0.93927830457687378
-      - 0.93927812576294789
-      - 0.93927812576294789
+      - 0.9392780065536499
+      - 0.9392780065536499
   MeshRenderer:
     name: MeshRenderer
     enabled: true

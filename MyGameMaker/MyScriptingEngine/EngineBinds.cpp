@@ -212,7 +212,7 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
 	}
-    else if (componentName == "HawkEngine.TextComponent") {
+    else if (componentName == "HawkEngine.UIText") {
 		return GO->GetComponent<TextComponent>()->GetSharp();
     }
 	else if (componentName == "HawkEngine.ParticleFX") {
@@ -1422,10 +1422,11 @@ void EngineBinds::DOVec3(glm::vec3* value, glm::vec3 start, glm::vec3 target, fl
 
 void EngineBinds::SetText(MonoObject* textRef, MonoString* text)
 {
-	char* C_text = mono_string_to_utf8(text);
-	auto uiText = ConvertFromSharpComponent<TextComponent>(textRef);
+    auto uiText = ConvertFromSharpComponent<TextComponent>(textRef);
 	if (uiText) {
+		char* C_text = mono_string_to_utf8(text);
 		uiText->SetText(C_text);
+		mono_free(C_text);
 	}
 }
 
@@ -1757,6 +1758,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.UIText::SetText", (const void*)&EngineBinds::SetText);
 	mono_add_internal_call("HawkEngine.UIText::SetTextColor", (const void*)&EngineBinds::SetTextColor);
 	mono_add_internal_call("HawkEngine.UIText::SetTextSize", (const void*)&EngineBinds::SetTextSize);
+
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);
 	mono_add_internal_call("HawkEngine.SceneManager::SetSceneToPlay", (const void*)&EngineBinds::SetScenePlay);

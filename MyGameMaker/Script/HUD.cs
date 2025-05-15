@@ -313,6 +313,7 @@ public class HUD : MonoBehaviour
         transform_redThirstBar.SetScaleUI(new Vector3(0.037f, CalculateRedThirstBarHeight(), 1.0f));
         transform_redThirstBarAnim.DOMoveYUI(CalculateRedThirstBarAnimPos(), 0f, Modes.LINEAR);
 
+
         if (playerShootingScript.hasRailgun && railgunScript == null)
         {
             railgunScript = playerShootingScript.railgun;
@@ -500,6 +501,7 @@ public class HUD : MonoBehaviour
                 {
                     lockR.SetActive(true);
                 }
+
                 if (playerShootingScript.hasShotgun)
                 {
                     lockL.SetActive(false);
@@ -508,6 +510,7 @@ public class HUD : MonoBehaviour
                 {
                     lockL.SetActive(true);
                 }
+
                 break;
         }
 

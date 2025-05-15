@@ -56,6 +56,10 @@ namespace HawkEngine
             {
                 return 13;
             }
+            else if (type == typeof(UIText))
+            {
+                return 14;
+            }
 
             return -1;
         }

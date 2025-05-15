@@ -467,6 +467,8 @@ public class EnemyControllerMelee : EnemyController
                 hasLeap = false;
                 leapTimer += deltaTime;
                 rb.SetVelocity(leapDirection * 1.8f);
+                AddComponent<ParticleFX>().ApplyPreset(9);
+                GetComponent<ParticleFX>().EmitBurst(1);
                 if (leapTimer >= leapDuration)
                 {
                     isLeaping = false;

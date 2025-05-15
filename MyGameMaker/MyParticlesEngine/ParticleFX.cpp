@@ -422,7 +422,7 @@ namespace ParticlePresets {
 	10.0f,						   // Min scale
 	10.0f,						   // Max scale
 	"Assets/Textures/Acid_Splash.png", // Texture path
-	false						   // Is Local Space
+	true				   // Is Local Space
 	};
 
 	const ParticlePreset Acid_Puddle = {

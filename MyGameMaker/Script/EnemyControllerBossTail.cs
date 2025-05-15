@@ -165,6 +165,8 @@ public class EnemyControllerBossTail : EnemyController
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
             collider.SetPosition(enemyTransform.position);
             anim.SetBurrowingAnimation();
+            AddComponent<ParticleFX>().ApplyPreset(25);
+            GetComponent<ParticleFX>().EmitBurst(25);
             isBuried = true;
         }
     }
@@ -178,6 +180,8 @@ public class EnemyControllerBossTail : EnemyController
                 enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
                 collider.SetPosition(enemyTransform.position);
                 anim.SetUnburrowingAnimation();
+                AddComponent<ParticleFX>().ApplyPreset(25);
+                GetComponent<ParticleFX>().EmitBurst(25);
                 isBuried = false;
             }
         }

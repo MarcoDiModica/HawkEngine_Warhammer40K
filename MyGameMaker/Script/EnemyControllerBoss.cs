@@ -145,7 +145,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        //currentHealth = health;
+        currentHealth = 1500.0f;
         gameObject.tag = "Boss";
         isDead = false;
 //         musicClip = new AudioClip(combatMusic, "BossMusic", true, false);
@@ -380,6 +380,9 @@ public class EnemyControllerBoss : EnemyController
                 Engineson.print("Unburrowing Attack");
                 enemyTransform.position = playerTransform.position;
                 collider.SetPosition(playerTransform.position);
+                anim.SetUnburrowingAnimation();
+                AddComponent<ParticleFX>().ApplyPreset(25);
+                GetComponent<ParticleFX>().EmitBurst(25);
             }
             Audio.PlayOneShot(UnburrowClip);
             attackCount++;
@@ -397,6 +400,8 @@ public class EnemyControllerBoss : EnemyController
                 collider.SetPosition(enemyTransform.position);
                 Engineson.print("Unburrowing Attack Phase 2");
                 anim.SetUnburrowingAnimation();
+                AddComponent<ParticleFX>().ApplyPreset(25);
+                GetComponent<ParticleFX>().EmitBurst(25);
             }
             Audio.PlayOneShot(UnburrowClip);
             Engineson.print("PlaySound Attack Phase 2");
@@ -412,6 +417,8 @@ public class EnemyControllerBoss : EnemyController
             enemyTransform.position = fixedPositions[2];
             collider.SetPosition(enemyTransform.position);
             anim.SetUnburrowingAnimation();
+            AddComponent<ParticleFX>().ApplyPreset(25);
+            GetComponent<ParticleFX>().EmitBurst(25);
         }
         isBuried = false;
     }
@@ -448,6 +455,7 @@ public class EnemyControllerBoss : EnemyController
 
             Vector3 spawnPosition = playerTransform.position + metalSlideStartOffset;
 
+            anim.SetRoarAnimation();
             metalSlideObject = Engineson.CreateGameObject("MetalSlide", null);
             //metalSlideObject.AddComponent<MeshRenderer>();
             metalSlideObject.AddComponent<BoxCollider>();
@@ -542,6 +550,8 @@ public class EnemyControllerBoss : EnemyController
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
             collider.SetPosition(enemyTransform.position);
             anim.SetBurrowingAnimation();
+            AddComponent<ParticleFX>().ApplyPreset(25);
+            GetComponent<ParticleFX>().EmitBurst(25);
             isBuried = true;
         }
     }

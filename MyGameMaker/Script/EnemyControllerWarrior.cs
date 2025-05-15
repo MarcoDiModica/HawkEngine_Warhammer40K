@@ -424,30 +424,7 @@ public class EnemyControllerWarrior : EnemyController
         }
         else if (isShooting)
         {
-            try
-            {
-                Audio.PlayOneShot(RangedAttackSound);
-                GameObject projectile = Engineson.CreateGameObject("Projectile", null);
-                Engineson.print("Projectile created!" + enemyTransform.forward);
-                // TODO: add custom mesh to the projectile
-                projectile.AddComponent<MeshRenderer>();
-                projectile.AddComponent<BoxCollider>();
-                projectile.AddComponent<ParticleFX>();
-                projectile.GetComponent<ParticleFX>().ApplyPreset(10);
-                projectile.GetComponent<ParticleFX>().EmitBurst(1);
-                //sound?.Play();
-                projectile.tag = "EnemyAttack";
-                anim.SetShootAnimation();
-                if (projectile != null)
-                {
-                    Transform projTransform = projectile.GetComponent<Transform>();
-                    BoxCollider projectileCollider = projectile.GetComponent<BoxCollider>();
-                    if (projTransform != null)
-                    {
-                        Vector3 forward = moveDirection;
-                        Vector3 spawnPos = enemyTransform.position + forward * 1.0f;
-                        projTransform.position = spawnPos;
-                        projTransform.SetScale(0.1f, 0.1f, 0.1f);
+            Vector3 localOffset = new Vector3(0f, 0f, 0f); // Y = altura, Z = hacia adelante, X = lateral si se desea
 
             Vector3 bulletStart = transform.position +
                                   (transform.right * localOffset.X) +

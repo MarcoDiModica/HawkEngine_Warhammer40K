@@ -1735,8 +1735,8 @@ GameObject12:
             name: dieno zachael jetpack 2_DefaultMaterial_BaseColor
             color:
               - 1
-              - 1
-              - 1
+              - 0
+              - 0
               - 1
           color:
             - 1
@@ -10979,10 +10979,10 @@ GameObject25:
             - 1225
             - 40
           sprite_offset:
-            - 0
+            - 875
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 5
           anim_index_limit: 6
       Children: ~
     - name: red_thirst_bar
@@ -11097,10 +11097,10 @@ GameObject25:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 50
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 1
           anim_index_limit: 4
       Children: ~
     - name: blood_bar1
@@ -11215,10 +11215,10 @@ GameObject25:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 50
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 1
           anim_index_limit: 4
       Children: ~
     - name: blood_bar2

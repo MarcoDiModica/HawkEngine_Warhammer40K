@@ -39,7 +39,7 @@ FontManager::~FontManager() {
 }
 
 void FontManager::Start() {
-    const std::string defaultFontPath = "Assets/arial_narrow_7.ttf";
+    const std::string defaultFontPath = "Assets/Halvert-Solid.oft";
     int defaultFontSize = 4;
 
     if (!LoadFont(defaultFontPath, defaultFontSize)) {
@@ -147,7 +147,7 @@ bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
 
 void FontManager::RenderTextBoxedWithShader(Shaders* shader, const std::string& text, float x, float y, float scale, float spacing, const glm::vec2& boxSize) {
     if (!isFontLoaded) {
-        LoadFont("Assets/Arial.ttf", 16);
+        LoadFont("Assets/arial_narrow_7.ttf", 16);
         isFontLoaded = true;
     }
     if (Characters.empty()) return;

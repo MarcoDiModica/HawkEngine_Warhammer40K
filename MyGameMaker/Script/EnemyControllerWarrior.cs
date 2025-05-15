@@ -64,7 +64,7 @@ public class EnemyControllerWarrior : EnemyController
     public int maxAmmo;
     public int currentTotalAmmo;
     public float range;
-    public float timeToLerp;
+    public float timeToLerp = 0.1f;
     public override void Awake()
     {
         //music = gameObject.GetComponent<Audio>();
@@ -121,7 +121,7 @@ public class EnemyControllerWarrior : EnemyController
         currentHealth = maxHealth;
         gameObject.tag = "Warrior";
         projectileDamage = 20.0f;
-        range = 30f;
+        range = 100f;
         timeToLerp = 0.1f;
     }
 
@@ -152,9 +152,9 @@ public class EnemyControllerWarrior : EnemyController
                     Vector3 displacement = direction * speed * deltaTime;
                     Vector3 newPos = currentPos + displacement;
                     bool shouldDestroy = false;
-                    Engineson.print("" + currentPos);
-                    Engineson.print("" + direction);
-                    Engineson.print("" + displacement.Length());
+                    //Engineson.print("" + currentPos);
+                    //Engineson.print("" + direction);
+                    //Engineson.print("" + displacement.Length());
                     GameObject hitObject = null;
 
                     RayCast ray = new RayCast();
@@ -186,20 +186,22 @@ public class EnemyControllerWarrior : EnemyController
                                 }
                             }
                         }
-                        bulletsPos[i] = newPos;
-                        bulletsObjects[i].GetComponent<Transform>().position = newPos;
-                        float distanceTraveled = Vector3.Distance(bulletStartPositions[i], newPos);
-                        if (distanceTraveled > projectileRange || shouldDestroy)
-                        {
-                            Engineson.Destroy(bulletsObjects[i]);
-                            bulletsObjects.RemoveAt(i);
-                            bulletsPos.RemoveAt(i);
-                            bulletDirections.RemoveAt(i);
-                            bulletIntervals.RemoveAt(i);
-                            bulletLifetimes.RemoveAt(i);
-                            bulletHitEnemies.RemoveAt(i);
-                            bulletStartPositions.RemoveAt(i);
-                        }
+                        
+                    }
+
+                    bulletsPos[i] = newPos;
+                    bulletsObjects[i].GetComponent<Transform>().position = newPos;
+                    float distanceTraveled = Vector3.Distance(bulletStartPositions[i], newPos);
+                    if (distanceTraveled > projectileRange || shouldDestroy)
+                    {
+                        Engineson.Destroy(bulletsObjects[i]);
+                        bulletsObjects.RemoveAt(i);
+                        bulletsPos.RemoveAt(i);
+                        bulletDirections.RemoveAt(i);
+                        bulletIntervals.RemoveAt(i);
+                        bulletLifetimes.RemoveAt(i);
+                        bulletHitEnemies.RemoveAt(i);
+                        bulletStartPositions.RemoveAt(i);
                     }
                 }
                 if (distanceToPlayer < distToChase)
@@ -422,7 +424,7 @@ public class EnemyControllerWarrior : EnemyController
         }
         else if (isShooting)
         {
-            Vector3 localOffset = new Vector3(-0.9f, 2.5f, 0.5f); // Y = altura, Z = hacia adelante, X = lateral si se desea
+            Vector3 localOffset = new Vector3(0f, 0f, 0f); // Y = altura, Z = hacia adelante, X = lateral si se desea
 
             Vector3 bulletStart = transform.position +
                                   (transform.right * localOffset.X) +

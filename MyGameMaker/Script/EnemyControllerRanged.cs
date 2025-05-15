@@ -160,20 +160,21 @@ public class EnemyControllerRanged : EnemyController
                                 }
                             }
                         }
-                        bulletsPos[i] = newPos;
-                        bulletsObjects[i].GetComponent<Transform>().position = newPos;
-                        float distanceTraveled = Vector3.Distance(bulletStartPositions[i], newPos);
-                        if (distanceTraveled > range || shouldDestroy)
-                        {
-                            Engineson.Destroy(bulletsObjects[i]);
-                            bulletsObjects.RemoveAt(i);
-                            bulletsPos.RemoveAt(i);
-                            bulletDirections.RemoveAt(i);
-                            bulletIntervals.RemoveAt(i);
-                            bulletLifetimes.RemoveAt(i);
-                            bulletHitEnemies.RemoveAt(i);
-                            bulletStartPositions.RemoveAt(i);
-                        }
+                        
+                    }
+                    bulletsPos[i] = newPos;
+                    bulletsObjects[i].GetComponent<Transform>().position = newPos;
+                    float distanceTraveled = Vector3.Distance(bulletStartPositions[i], newPos);
+                    if (distanceTraveled > range || shouldDestroy)
+                    {
+                        Engineson.Destroy(bulletsObjects[i]);
+                        bulletsObjects.RemoveAt(i);
+                        bulletsPos.RemoveAt(i);
+                        bulletDirections.RemoveAt(i);
+                        bulletIntervals.RemoveAt(i);
+                        bulletLifetimes.RemoveAt(i);
+                        bulletHitEnemies.RemoveAt(i);
+                        bulletStartPositions.RemoveAt(i);
                     }
                 }
                 if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)

@@ -159,7 +159,39 @@ public class PlayerShooting : MonoBehaviour
 
     }
 
+    public int GetCurrentAmmo()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                boltgun.GetCurrentAmmo();
+                break;
+            case GunType.SHOTGUN:
+                shotgun.GetCurrentAmmo();
+                break;
+            case GunType.RAILGUN:
+                railgun.GetCurrentAmmo();
+                break;
+        }
+        return 0;
+    }
 
+    public int GetMaxAmmo()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                boltgun.GetMaxAmmo();
+                break;
+            case GunType.SHOTGUN:
+                shotgun.GetMaxAmmo();
+                break;
+            case GunType.RAILGUN:
+                railgun.GetMaxAmmo();
+                break;
+        }
+        return 0;
+    }
 
     public override void Update(float deltaTime)
     {

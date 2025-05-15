@@ -1,6 +1,6 @@
 name: Canvas_HUD
-prefabPath: ""
-uuid: 10765310342933103676
+prefabPath: Assets\Prefabs\Canvas_HUD.prefab.yaml
+uuid: 13571654134453421469
 tag: Untagged
 active: true
 isStatic: false
@@ -10,8 +10,8 @@ Components:
     enabled: true
     localPosition:
       - 0
-      - 0
-      - 0
+      - -1.3877787807814457e-17
+      - 2.8421709430404007e-14
     localRotation:
       - 0
       - -0
@@ -39,9 +39,6 @@ Components:
       - 0
       - 1
       - 0
-  SoundComponent:
-    name: SoundComponent
-    enabled: true
   UICanvasComponent:
     name: UICanvasComponent
     enabled: true
@@ -106,6 +103,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: blood_bg2
     prefabPath: ""
@@ -163,6 +162,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: healthbar_bg
     prefabPath: ""
@@ -220,6 +221,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: healthbar_empty
     prefabPath: ""
@@ -277,6 +280,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: boltgun_small_L
     prefabPath: ""
@@ -334,6 +339,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: railgun_small_L
     prefabPath: ""
@@ -391,6 +398,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: shotgun_small_L
     prefabPath: ""
@@ -448,6 +457,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: boltgun_small_R
     prefabPath: ""
@@ -505,6 +516,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: railgun_small_R
     prefabPath: ""
@@ -562,6 +575,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: shotgun_small_R
     prefabPath: ""
@@ -619,6 +634,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: railgun
     prefabPath: ""
@@ -676,6 +693,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: shotgun
     prefabPath: ""
@@ -733,6 +752,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: boltgun
     prefabPath: ""
@@ -790,6 +811,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: boltgun_ability_1
     prefabPath: ""
@@ -847,6 +870,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: boltgun_ability_2
     prefabPath: ""
@@ -904,6 +929,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: shotgun_ability_1
     prefabPath: ""
@@ -961,6 +988,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: shotgun_ability_2
     prefabPath: ""
@@ -1018,6 +1047,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: railgun_ability_1
     prefabPath: ""
@@ -1075,6 +1106,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: railgun_ability_2a
     prefabPath: ""
@@ -1132,6 +1165,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: railgun_ability_2b
     prefabPath: ""
@@ -1189,6 +1224,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: gun_small_frame
     prefabPath: ""
@@ -1246,6 +1283,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: frames
     prefabPath: ""
@@ -1303,6 +1342,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: lock_L
     prefabPath: ""
@@ -1360,6 +1401,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: lock_R
     prefabPath: ""
@@ -1417,6 +1460,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: nodash
     prefabPath: ""
@@ -1474,6 +1519,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: msup
     prefabPath: ""
@@ -1531,6 +1578,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: noreload
     prefabPath: ""
@@ -1588,6 +1637,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: defenseup
     prefabPath: ""
@@ -1645,6 +1696,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: asup
     prefabPath: ""
@@ -1702,6 +1755,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: attackup
     prefabPath: ""
@@ -1759,6 +1814,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: magnet
     prefabPath: ""
@@ -1816,6 +1873,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: thirst_animation
     prefabPath: ""
@@ -1873,6 +1932,8 @@ Children:
           - 0
           - 0
         anim_speed: 0.5
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: red_thirst_bar
     prefabPath: ""
@@ -1930,6 +1991,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: blood_animation_main
     prefabPath: ""
@@ -1987,6 +2050,8 @@ Children:
           - 0
           - 0
         anim_speed: 0.5
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: blood_bar1
     prefabPath: ""
@@ -2044,6 +2109,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: blood_animation_temp
     prefabPath: ""
@@ -2101,6 +2168,8 @@ Children:
           - 0
           - 0
         anim_speed: 0.5
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: blood_bar2
     prefabPath: ""
@@ -2158,6 +2227,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: healthframe
     prefabPath: ""
@@ -2215,6 +2286,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: canister0
     prefabPath: ""
@@ -2272,6 +2345,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: canister1
     prefabPath: ""
@@ -2329,6 +2404,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: canister2
     prefabPath: ""
@@ -2386,6 +2463,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: canister3
     prefabPath: ""
@@ -2443,6 +2522,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: canister4
     prefabPath: ""
@@ -2500,6 +2581,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: canister5
     prefabPath: ""
@@ -2557,6 +2640,8 @@ Children:
           - 0
           - 0
         anim_speed: 0.100000001
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: overheat_bg
     prefabPath: ""
@@ -2614,6 +2699,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: overheat_bar
     prefabPath: ""
@@ -2671,6 +2758,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: overheat_warning
     prefabPath: ""
@@ -2728,6 +2817,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: weapon_switcher_frame
     prefabPath: ""
@@ -2785,4 +2876,72 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+    Children: ~
+  - name: boltgun_ammo_text
+    prefabPath: ""
+    uuid: 16077833182184307540
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.425000012
+          - 0.187999994
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 1
+          - 1
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      TextComponent:
+        name: TextComponent
+        enabled: true
+        text: SAMPLE TEXT
+        position:
+          - 0
+          - 0
+        color:
+          - 1
+          - 1
+          - 1
+        fontSize: 16
+        boxSize:
+          - 166.399994
+          - 17.6000004
+        spriteSize:
+          - 0
+          - 0
+        sheetSize:
+          - 0
+          - 0
+        spriteOffset:
+          - 0
+          - 0
     Children: ~

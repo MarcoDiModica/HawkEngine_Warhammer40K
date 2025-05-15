@@ -211,6 +211,7 @@
     <Compile Include="SoundTrigger.cs" />
     <Compile Include="Test1.cs" />
     <Compile Include="Test2.cs" />
+    <Compile Include="TextComponent.cs" />
     <Compile Include="ToggleMode.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="Tweening.cs" />

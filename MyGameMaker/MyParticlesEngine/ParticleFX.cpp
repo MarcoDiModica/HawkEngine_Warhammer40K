@@ -1003,6 +1003,40 @@ namespace ParticlePresets {
 	"Assets/Textures/Magnet_Area_animation_SpriteSheet_Yiwei.png", 	   // Texture path
 	false 						   // Is Local Space
 	};
+
+	const ParticlePreset Environment_Viento = {
+	ParticleType::ENVIRONMENT_VIENTO,
+	false,						   // PlayOnAwake
+	1,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   				   // Start color (white)
+	glm::vec3(1,1,1),   				   // End color (white)
+	1.0f,                          			   // Alpha start
+	1.0f,                          			   // Alpha end
+	0.8f,                          			   // Size start
+	10.0f,                          		   // Size end
+	1.0f,                          			   // Min lifetime
+	2.0f,                         			   // Max lifetime
+	5.0f,                          			   // Min speed
+	7.0f,                          			   // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+	0,                          			   // Rotation speed
+	0.7f,                         			   // Emission rate (particles per second)
+	EmitterShape::CONE,            		   // Shape
+	0.2f,                          			   // Cone base radius
+	1.0f,                          			   // Cone height
+	20.0f,                         			   // Cone angle in degrees
+	glm::vec2(100,100),		   	   // Sprite size
+	true,						   // Use animation
+	false,						   // Random animation Index
+	0.1f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/Viento_vfx.png", // Texture path
+	false 						   // Is Local Space
+	};
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -1548,6 +1582,11 @@ void ParticleFX::ApplyPreset(int particleID) {
 		preset = ParticlePresets::Magnet_Area;
 		SetOneShot(false);
 		break;
+	case ParticleType::ENVIRONMENT_VIENTO:
+		preset = ParticlePresets::Environment_Viento;
+		SetOneShot(false);
+		break;
+
 	default:
 		preset = ParticlePresets::Medicae_Stim;
 		SetOneShot(false);

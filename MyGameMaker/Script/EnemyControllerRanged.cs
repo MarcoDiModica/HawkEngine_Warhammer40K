@@ -202,7 +202,7 @@ public class EnemyControllerRanged : EnemyController
                 if (projTransform != null)
                 {
                     Vector3 forward = moveDirection;
-                    Vector3 spawnPos = enemyTransform.position + forward * 1.0f;
+                    Vector3 spawnPos = enemyTransform.position + new Vector3(0,2.0f,0) + forward * 1.0f;
                     projTransform.position = spawnPos;
                     projTransform.SetScale(0.1f, 0.1f, 0.1f);
 

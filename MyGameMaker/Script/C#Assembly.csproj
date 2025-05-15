@@ -209,6 +209,7 @@
     <Compile Include="SkeletalAnimation.cs" />
     <Compile Include="SoundEnvironmentController.cs" />
     <Compile Include="SoundTrigger.cs" />
+    <Compile Include="TermagauntAnimation.cs" />
     <Compile Include="TyranidTentaclesAnim.cs" />
     <Compile Include="Test1.cs" />
     <Compile Include="Test2.cs" />

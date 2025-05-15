@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Diagnostics;
 using System.Numerics;
 using HawkEngine;
 
@@ -22,18 +23,36 @@ public class EnemySpawner : MonoBehaviour
     public bool spawnStalker;
     public bool spawnWarrior;
     public bool spawnClimberHormagaunt;
-  
+
+    public bool spawnerActive = false;
+    public float spawnRadius = 5f;
+
+    public GameObject player;
 
     public override void Start()
     {
         transform = GetComponent<Transform>();
+        player = GameObject.Find("Player");
     }
 
     public override void Update(float deltaTime)
     {
-        spawnTimer += deltaTime;
+        if (Vector3.Distance(transform.position, player.transform.position) < spawnRadius)
+        {
+            spawnerActive = true;
+        }
+        else
+        {
+            spawnerActive = false;
+            spawnTimer = 0;
+        }
 
-        if (spawnTimer >= secondsBetweenSpawns && currentEnemiesSpawned < maxEnemiesToSpawn)
+        if (spawnerActive)
+        {
+            spawnTimer += deltaTime;
+        }
+
+        if (spawnTimer >= secondsBetweenSpawns && currentEnemiesSpawned < maxEnemiesToSpawn && spawnerActive)
         {
             SpawnEnemy();
             currentEnemiesSpawned++;

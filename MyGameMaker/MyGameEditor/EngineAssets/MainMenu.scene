@@ -144,10 +144,10 @@ GameObject1:
             - 10253
             - 9612
           sprite_offset:
-            - 6835.33203
-            - 1922.40002
+            - 3417.66602
+            - 0
           anim_speed: 0.5
-          anim_index: 16
+          anim_index: 2
           anim_index_limit: 60
       Children: ~
     - name: title

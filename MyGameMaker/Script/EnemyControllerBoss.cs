@@ -340,7 +340,7 @@ public class EnemyControllerBoss : EnemyController
 
                 UpdateMetalSlide(deltaTime);
                 CheckBossHurtboxes();
-        }
+            }
             if (isDead)
             {
                 collider.SetActive(false);

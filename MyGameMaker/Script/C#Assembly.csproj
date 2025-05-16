@@ -147,6 +147,7 @@
     <Compile Include="EnemyControllerMelee.cs" />
     <Compile Include="EnemyControllerRanged.cs" />
     <Compile Include="Engineson.cs" />
+    <Compile Include="Explosion.cs" />
     <Compile Include="ExplosiveBarrel.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Grenade.cs" />

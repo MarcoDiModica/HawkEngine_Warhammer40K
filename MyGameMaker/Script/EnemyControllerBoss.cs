@@ -96,6 +96,8 @@ public class EnemyControllerBoss : EnemyController
     private EnemyControllerBossTail tailController;
     private bool hasUnburiedInPhase2 = false;
 
+    private float deathTimer = 0f;
+    private float deathCooldown = 5f;
     private MawlocAnimation anim;
     private PlayerController pc;
 
@@ -344,7 +346,18 @@ public class EnemyControllerBoss : EnemyController
             if (isDead)
             {
                 collider.SetActive(false);
-                Audio.Stop(BossTheme); 
+                Audio.Stop(BossTheme);
+            if (anim.isAnimFinished)
+            {
+                deathTimer += deltaTime;
+                if (deathTimer >= deathCooldown)
+                {
+                    Engineson.Destroy(gameObject);
+                    SceneManager.LoadScene("WinScene");
+                    return;
+                }
+            }
+
             //if (isCombatMusicPlaying == true)
             //{
             //    sound?.Stop();
@@ -636,7 +649,7 @@ public class EnemyControllerBoss : EnemyController
         isDead = true;
         Audio.PlayOneShot(DeathClip);
         anim.SetDeathAnimation();
-        SceneManager.LoadScene("WinScene");
+        //SceneManager.LoadScene("WinScene");
     }
 
     private void CreateSlamHurtbox()

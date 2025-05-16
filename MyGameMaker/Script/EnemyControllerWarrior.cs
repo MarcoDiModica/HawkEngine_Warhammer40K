@@ -65,6 +65,11 @@ public class EnemyControllerWarrior : EnemyController
     public int currentTotalAmmo;
     public float range;
     public float timeToLerp = 0.1f;
+
+
+    // Death
+    private float deathTimer = 0f;
+    private float deathCooldown = 2f;
     public override void Awake()
     {
         //music = gameObject.GetComponent<Audio>();
@@ -132,7 +137,7 @@ public class EnemyControllerWarrior : EnemyController
             if (currentHealth <= 0)
             {
                 currentState = EnemyState.DEAD;
-                //anim.SetDeathAnimation();
+                anim.SetDeathAnimation();
                 //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
                 //sound?.Play();
                 return;
@@ -354,7 +359,15 @@ public class EnemyControllerWarrior : EnemyController
                 {
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
                 }
-                anim.SetDeathAnimation();
+                if (anim.isAnimFinished)
+                {
+                    deathTimer += deltaTime;
+                    if (deathTimer >= deathCooldown)
+                    {
+                        Engineson.Destroy(gameObject);
+                        return;
+                    }
+                }
                 hasDropped = true;
                 collider.SetActive(false);
                 break;

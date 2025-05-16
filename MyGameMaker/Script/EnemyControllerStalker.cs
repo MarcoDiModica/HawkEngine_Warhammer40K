@@ -149,7 +149,7 @@ public class EnemyControllerStalker : EnemyController
             }
         }
 
-        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
+        //Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
 
         switch (currentState)
         {

@@ -36,9 +36,13 @@ public class EnemyControllerRanged : EnemyController
 
     //audio
     bool isCombatMusicPlaying = false;
-//     private AudioSource music;
-//     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
-//     private AudioClip combatSound;
+    //     private AudioSource music;
+    //     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+    //     private AudioClip combatSound;
+
+    // Death
+    private float deathTimer = 0f;
+    private float deathCooldown = 2f;
 
     public override void Awake()
     {
@@ -253,6 +257,15 @@ public class EnemyControllerRanged : EnemyController
             {
                 // Enemy Death
                 collider.SetActive(false);
+                if (anim.isAnimFinished)
+                {
+                    deathTimer += deltaTime;
+                    if (deathTimer >= deathCooldown)
+                    {
+                        Engineson.Destroy(gameObject);
+                        return;
+                    }
+                }
                 if (pc.playerData.isPiercing == true)
                 {
                     pc.playerData.AddHealth(5.0f);

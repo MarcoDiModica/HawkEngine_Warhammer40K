@@ -27,9 +27,10 @@ void HandleConsoleOutput(MonoString* message)
 	if (message == nullptr)
 		return;
 
-	char* msg = mono_string_to_utf8(message);
-	LOG(LogType::LOG_C_SHARP, msg);
-	mono_free(msg);
+	if (char* msg = mono_string_to_utf8(message)) {
+		LOG(LogType::LOG_C_SHARP, msg);
+		mono_free(msg);
+	}
 }
 
 std::string getExecutablePath() {
@@ -78,6 +79,8 @@ void MonoManager::CreateScriptDomain() {
 	}
 
 	mono_domain_set(scriptDomain, false);
+	if (!mono_thread_current())       // optionally check thread isn’t already attached
+		mono_thread_attach(scriptDomain);
 
 	domain = scriptDomain;
 
@@ -159,6 +162,7 @@ void MonoManager::UnloadScriptDomain() {
 
 	mono_gc_collect(mono_gc_max_generation());
 
+	mono_thread_detach(mono_thread_current());
 	mono_domain_unload(scriptDomain);
 	scriptDomain = nullptr;
 	domain = nullptr;

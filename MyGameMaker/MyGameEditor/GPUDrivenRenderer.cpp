@@ -6,6 +6,9 @@
 #include "MyGameEngine/ShaderManager.h"
 #include "MyGameEngine/CameraComponent.h"
 #include "ForwardPlus.h"
+#include "App.h"
+#include "MyGUI.h"
+#include "UIGameView.h"
 
 GPUDrivenRenderer& GPUDrivenRenderer::GetInstance() {
 	static GPUDrivenRenderer instance;
@@ -227,7 +230,7 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 		if (!normalBatch.commands.empty()) {
 			switch (shaderType) {
 			case ShaderType::UNLIT:
-				RenderUnlitBatch(normalBatch, viewMatrix, projMatrix);
+				RenderUnlitBatch(normalBatch, viewMatrix, projMatrix, false);
 				break;
 			case ShaderType::PBR:
 				RenderPBRBatch(normalBatch, viewMatrix, projMatrix, cameraPos);
@@ -260,7 +263,7 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 		if (!uiBatch.commands.empty()) {
 			switch (shaderType) {
 			case ShaderType::UNLIT:
-				RenderUnlitBatch(uiBatch, viewMatrix, projMatrix);
+				RenderUnlitBatch(uiBatch, viewMatrix, projMatrix, true);
 				break;
 			case ShaderType::PBR:
 				RenderPBRBatch(uiBatch, viewMatrix, projMatrix, cameraPos);
@@ -276,7 +279,8 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 void GPUDrivenRenderer::RenderUnlitBatch(
 	const ShaderBatch& batch,
 	const glm::mat4& viewMatrix,
-	const glm::mat4& projMatrix) {
+	const glm::mat4& projMatrix,
+	bool isUI) {
 
 	if (batch.commands.empty()) return;
 
@@ -287,12 +291,29 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	}
 
 	shader->Bind();
-	shader->SetUniformMat4("view", viewMatrix);
-	shader->SetUniformMat4("projection", projMatrix);
+	
+	if (isUI) {
+		float width = Application->gui->UIGameViewPanel->GetWidth();
+		float height = Application->gui->UIGameViewPanel->GetHeight();
+
+		glm::mat4 uiProjMatrix = glm::ortho(0.0f, width, height, 0.0f, -1.0f, 1.0f);
+
+		glm::mat4 uiViewMatrix = glm::mat4(1.0f);
+
+		shader->SetUniformMat4("view", uiViewMatrix);
+		shader->SetUniformMat4("projection", uiProjMatrix);
+
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_CULL_FACE);
+	}
+	else {
+		shader->SetUniformMat4("view", viewMatrix);
+		shader->SetUniformMat4("projection", projMatrix);
+	}
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
 
-	bindlessErrorDetected = true; //en unlit de momento usar no bindless
+	bindlessErrorDetected = false;
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
 		uint32_t meshIndex = batch.meshIndices[i];
 		uint32_t materialIndex = batch.materialIndices[i];
@@ -364,6 +385,11 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 				LOG(LogType::LOG_ERROR, "GL Error after draw: 0x%X", err);
 			}
 		}
+	}
+
+	if (isUI) {
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
 	}
 
 	glBindVertexArray(0);

@@ -25,7 +25,7 @@ public:
 
 	ComponentType GetType() const override { return ComponentType::CANVAS; }
 
-	float GetMonitorWidth() const { return monitorHeight; }
+	float GetMonitorWidth() const { return monitorWidth; }
 	float GetMonitorHeight() const { return monitorHeight; }
 
 	MonoObject* CsharpReference = nullptr;

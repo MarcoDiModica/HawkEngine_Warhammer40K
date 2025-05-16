@@ -243,40 +243,32 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 		UIImageComponent* imageComp = gameObject->GetComponent<UIImageComponent>();
 		UITransformComponent* uiTransform = gameObject->GetComponent<UITransformComponent>();
 
-		if (gameObject->HasComponent<UIImageComponent>() && gameObject->HasComponent<UITransformComponent>()) {
-			UIImageComponent* imageComp = gameObject->GetComponent<UIImageComponent>();
-			UITransformComponent* uiTransform = gameObject->GetComponent<UITransformComponent>();
+		if (imageComp && imageComp->GetMesh() && uiTransform) {
+			uint32_t meshIndex = BindlessManager::GetInstance().RegisterMesh(imageComp->GetMesh().get());
+			uint32_t materialIndex = BindlessManager::GetInstance().RegisterUIImage(imageComp);
 
-			if (imageComp && imageComp->GetMesh() && uiTransform) {
-				uint32_t meshIndex = BindlessManager::GetInstance().RegisterMesh(imageComp->GetMesh().get());
-				uint32_t materialIndex = BindlessManager::GetInstance().RegisterUIImage(imageComp);
+			BindlessManager::GetInstance().UpdateUIImage(imageComp);
 
-				BindlessManager::GetInstance().UpdateUIImage(imageComp);
+			if (meshIndex != UINT32_MAX && materialIndex != UINT32_MAX) {
+				
+				//identity
+				glm::mat4 uiModelMatrix = glm::mat4(1.0f);
 
-				if (meshIndex != UINT32_MAX && materialIndex != UINT32_MAX) {
-					glm::vec3 scale = uiTransform->GetScale() * uiTransform->GetCanvasSize();
-					glm::vec3 translation = uiTransform->GetCanvasPosition() +
-						(uiTransform->GetPosition() * uiTransform->GetCanvasSize());
-					translation -= uiTransform->GetPivotOffset() * scale;
+				GPUInstance uiInstance;
+				uiInstance.modelMatrix = uiModelMatrix;
+				uiInstance.prevModelMatrix = uiModelMatrix;
+				uiInstance.objectData = glm::vec4(1.0f);
+				uiInstance.meshIndex = meshIndex;
+				uiInstance.materialIndex = materialIndex;
+				uiInstance.objectId = gameObject->GetID().GetValue();
+				uiInstance.flags = (1 << 31);
 
-					glm::mat4 uiModelMatrix = glm::translate(glm::mat4(1.0f), translation) *
-						glm::scale(glm::mat4(1.0f), scale);
-
-					GPUInstance uiInstance;
-					uiInstance.modelMatrix = uiModelMatrix;
-					uiInstance.prevModelMatrix = uiModelMatrix;
-					uiInstance.objectData = glm::vec4(1.0f);
-					uiInstance.meshIndex = meshIndex;
-					uiInstance.materialIndex = materialIndex;
-					uiInstance.objectId = gameObject->GetID().GetValue();
-					uiInstance.flags = (1 << 31);
-
-					MeshMaterialKey key{ meshIndex, materialIndex };
-					instanceGroups[key].push_back(uiInstance);
-				}
+				MeshMaterialKey key{ meshIndex, materialIndex };
+				instanceGroups[key].push_back(uiInstance);
 			}
-			return;
 		}
+
+		return;
 	}
 
 	if (gameObject->HasComponent<MeshRenderer>()) {

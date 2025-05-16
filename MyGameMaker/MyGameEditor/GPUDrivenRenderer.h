@@ -70,7 +70,8 @@ private:
 
 	void RenderUnlitBatch(const ShaderBatch& batch,
 		const glm::mat4& viewMatrix,
-		const glm::mat4& projMatrix);
+		const glm::mat4& projMatrix,
+		bool isUI);
 
 	void RenderPBRBatch(
 		const ShaderBatch& batch,

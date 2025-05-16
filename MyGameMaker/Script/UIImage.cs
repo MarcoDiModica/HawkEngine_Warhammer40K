@@ -42,12 +42,12 @@ namespace HawkEngine
         {
             CplusplusInstance = nativeRigidbody;
             this.owner = owner;
-            Engineson.print("UIImage created");
+            //Engineson.print("UIImage created");
         }
 
         public UIImage()
         {
-            Engineson.print("UIImage default constructor");
+            //Engineson.print("UIImage default constructor");
         }
 
         public override void Awake() { }

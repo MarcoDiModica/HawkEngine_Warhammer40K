@@ -181,21 +181,17 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
 		return false;
 	}
 
-	MonoMethod* ctorMethod = mono_class_get_method_from_name(scriptClass, ".ctor", 0);
-	if (ctorMethod) {
-		MonoObject* ctorExc = nullptr;
-		mono_runtime_invoke(ctorMethod, monoScript, nullptr, &ctorExc);
-		if (ctorExc) {
-			HandleException(ctorExc, "Constructor");
-			return false;
-		}
+	MonoObject* exception = nullptr;
+	mono_runtime_object_init(monoScript);
+
+	if (exception) {
+		HandleException(exception, "Constructor");
+		return false;
 	}
 
 	if (MonoManager::GetInstance().scriptIDs.contains(scriptName) == false) {
 		MonoManager::GetInstance().scriptIDs.emplace(std::pair<std::string, int>(scriptName, MonoManager::GetInstance().GetNewScriptClassID()));
 	}
-
-
 
 	uintptr_t goPtr = reinterpret_cast<uintptr_t>(owner);
 	MonoClassField* field = mono_class_get_field_from_name(scriptClass, "CplusplusInstance");

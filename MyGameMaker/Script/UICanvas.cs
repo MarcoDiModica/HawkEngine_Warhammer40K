@@ -15,12 +15,12 @@ namespace HawkEngine
         {
             CplusplusInstance = nativeRigidbody;
             this.owner = owner;
-            Engineson.print("UICanvas created");
+            //Engineson.print("UICanvas created");
         }
 
         public UICanvas()
         {
-            Engineson.print("UICanvas default constructor");
+            //Engineson.print("UICanvas default constructor");
         }
         public override void Awake() { }
 

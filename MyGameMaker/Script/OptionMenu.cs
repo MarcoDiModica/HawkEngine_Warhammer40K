@@ -90,7 +90,7 @@ public class OptionMenu : MonoBehaviour
     }
     public override void Start()
     {
-        Engineson.print("OptionMenu Start");
+        //Engineson.print("OptionMenu Start");
         //sound = gameObject.GetComponent<Audio>();
         pauseMenu = GameObject.Find("Canvas_PauseMenu");
         resolutions.Add("1280x720");

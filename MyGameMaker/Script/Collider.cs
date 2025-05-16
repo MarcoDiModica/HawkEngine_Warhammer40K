@@ -45,12 +45,12 @@ namespace HawkEngine
         {
             CplusplusInstance = nativeCollider;
             this.owner = owner;
-            Engineson.print("Collider created");
+            //Engineson.print("Collider created");
         }
 
         public Collider()
         {
-            Engineson.print("Collider default constructor");
+            //Engineson.print("Collider default constructor");
         }
 
         public override void Awake() { }

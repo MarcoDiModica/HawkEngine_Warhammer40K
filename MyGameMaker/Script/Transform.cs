@@ -18,7 +18,7 @@ namespace HawkEngine
 
         public Transform()
         {
-            Engineson.print("transform created");
+            //Engineson.print("transform created");
         }
 
         public override void Awake() { }

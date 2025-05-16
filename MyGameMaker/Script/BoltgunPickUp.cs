@@ -37,13 +37,13 @@ public class BoltgunPickUp : PickUp
     {
         if (!playerController.playerShooting.hasBoltgun)
         {
-            Engineson.print("Boltgun Picked Up");
+            //Engineson.print("Boltgun Picked Up");
             playerController.playerShooting.hasBoltgun = true;
             playerController.playerData.hasBoltgun = true;
         }
         else
         {
-            Engineson.print("Player already has Boltgun");
+            //Engineson.print("Player already has Boltgun");
             
         }
     }

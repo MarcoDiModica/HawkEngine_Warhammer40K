@@ -46,13 +46,13 @@ public class Barrage : BaseAbilities
         if (!canThrow)
         {
             abilityTimer += deltaTime;
-            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
+            //Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
 
             if (abilityTimer >= abilityCooldown)
             {
                 canThrow = true;
                 abilityTimer = 0.0f;
-                Engineson.print("Cooldown terminado. Habilidad lista.");
+                //Engineson.print("Cooldown terminado. Habilidad lista.");
             }
         }
 
@@ -80,7 +80,7 @@ public class Barrage : BaseAbilities
     {
         if (canThrow)
         {
-            Engineson.print("Lanzando granada...");
+            //Engineson.print("Lanzando granada...");
             Audio.PlayOneShot(barrageShotAudio);
 
             grenade = Engineson.CreateGameObject("Barrage", null);
@@ -105,19 +105,19 @@ public class Barrage : BaseAbilities
         }
         else
         {
-            Engineson.print("Habilidad en cooldown. Espera...");
+            //Engineson.print("Habilidad en cooldown. Espera...");
         }
 
         if (!canThrow)
         {
             abilityTimer += time;
-            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
+            //Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
 
             if (abilityTimer >= abilityCooldown)
             {
                 canThrow = true;
                 abilityTimer = 0.0f;
-                Engineson.print("Cooldown terminado. Habilidad lista.");
+                //Engineson.print("Cooldown terminado. Habilidad lista.");
             }
         }
 

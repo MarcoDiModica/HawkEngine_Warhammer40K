@@ -99,12 +99,12 @@ public class Test1 : MonoBehaviour
         if (IsPlaying(backgroundMusicId))
         {
             Audio.Pause(backgroundMusicId);
-            Engineson.print("Music paused");
+            //Engineson.print("Music paused");
         }
         else
         {
             Audio.Resume(backgroundMusicId);
-            Engineson.print("Music resumed");
+            //Engineson.print("Music resumed");
         }
     }
 
@@ -131,7 +131,7 @@ public class Test1 : MonoBehaviour
     {
         Audio.StopMusic(MUSIC_BACKGROUND);
         backgroundMusicId = Audio.PlayMusic(MUSIC_BOSS);
-        Engineson.print("Switched to boss music!");
+        //Engineson.print("Switched to boss music!");
 
         Audio.SchedulePlay(MUSIC_BACKGROUND, 10.0f, loop: true);
     }

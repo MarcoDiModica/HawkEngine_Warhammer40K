@@ -55,12 +55,12 @@ namespace HawkEngine
         {
             CplusplusInstance = nativeRigidbody;
             this.owner = owner;
-            Engineson.print("Rigidbody created");
+            //Engineson.print("Rigidbody created");
         }
 
         public SkeletalAnimation()
         {
-            Engineson.print("Rigidbody default constructor");
+            //Engineson.print("Rigidbody default constructor");
         }
 
         public override void Awake() { }

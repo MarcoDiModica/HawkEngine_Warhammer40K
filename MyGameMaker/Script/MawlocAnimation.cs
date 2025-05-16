@@ -38,7 +38,7 @@ public class MawlocAnimation : MonoBehaviour
             {
                 mawlocesk?.SetAnimationPlayState(false);
                 isAnimFinished = true;
-                Engineson.print("Animation finished");
+                //Engineson.print("Animation finished");
             }
         }
     }

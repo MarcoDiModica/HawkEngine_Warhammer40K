@@ -32,7 +32,7 @@ public class DropManager : MonoBehaviour
 
     public void SpawnPrefab(EnemyController enemy)
     {
-        Engineson.print(enemy.gameObject.tag);
+        //Engineson.print(enemy.gameObject.tag);
         if (enemy.gameObject.tag == "Stalker")
         {
             Random randomGeneral = new Random();

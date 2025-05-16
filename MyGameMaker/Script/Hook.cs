@@ -21,7 +21,7 @@ public class Hook : MonoBehaviour
         player = GameObject.Find("Player");
         if(player == null)
         {
-            Engineson.print("No se ha encontrado el jugador.");
+            //Engineson.print("No se ha encontrado el jugador.");
         }       
     }
 
@@ -54,10 +54,10 @@ public class Hook : MonoBehaviour
                 {
                     Vector3 hookPosition = other.GetComponent<Transform>().GetPosition() - (gameObject.transform.forward * 5);
                     player.GetComponent<Collider>().SetPosition(hookPosition);
-                    Engineson.print("Jugador teletransportado a la posición del hook.");
+                    //Engineson.print("Jugador teletransportado a la posición del hook.");
                     Audio.PlayOneShot(hookTp);
                 }
-                Engineson.print("Colisión con " + other.name);
+                //Engineson.print("Colisión con " + other.name);
             }
             
         }

@@ -382,24 +382,24 @@ public class EnemyControllerStalker : EnemyController
             Audio.PlayOneShot(SFX_POUNCE);
             AddComponent<ParticleFX>().ApplyPreset(26);
             GetComponent<ParticleFX>().EmitBurst(1);
-            Engineson.print("Pouncing");
+            //Engineson.print("Pouncing");
             anim.SetLeapAnimation();
             rb.SetVelocity(rb.GetVelocity() * 120f);
         }
         else
         {
-            Engineson.print("Not Pouncung anymore");
+            //Engineson.print("Not Pouncung anymore");
             pounceTimer = 0f;
             isPouncing = false;
 
             if (hasMissed)
             {
-                Engineson.print("Missed");
+                //Engineson.print("Missed");
                 currentState = EnemyState.STUNNED;
             }
             else
             {
-                Engineson.print("Not Missed");
+                //Engineson.print("Not Missed");
             }
         }
     }
@@ -420,7 +420,7 @@ public class EnemyControllerStalker : EnemyController
         {
             hasMissed = false;
 
-            Engineson.print(other.tag + " hit with Pounce");
+            //Engineson.print(other.tag + " hit with Pounce");
             if (pc.redThirstManager.IsInBlackRage())
             {
                 if (pc.redThirstManager.redThirstBonus < pounceDamage)

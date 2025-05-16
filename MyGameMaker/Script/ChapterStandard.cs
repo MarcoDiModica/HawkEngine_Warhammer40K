@@ -54,7 +54,7 @@ public class ChapterStandard : PickUp
 
     public override void OnPickUp(PlayerController playerController)
     {
-        Engineson.print("ChapterStandard PowerUp applied");
+        //Engineson.print("ChapterStandard PowerUp applied");
        
         playerController.playerShooting.ResetAbilityCooldown();
         playerController.playerShooting.ResetAbilityCooldown();

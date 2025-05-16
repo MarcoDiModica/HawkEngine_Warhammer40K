@@ -55,7 +55,7 @@ public class BlackHeart : PickUp
     }
     public override void OnPickUp(PlayerController playerController)
     {
-        Engineson.print("BlackHeart PowerUp applied");
+        //Engineson.print("BlackHeart PowerUp applied");
         playerController.playerData.FullHealth();
         
     }

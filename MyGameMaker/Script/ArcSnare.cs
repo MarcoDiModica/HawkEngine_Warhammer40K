@@ -71,7 +71,7 @@ public class ArcSnare : BaseAbilities
     {
         if (canThrow)
         {
-            Engineson.print("Lanzando granada...");
+            //Engineson.print("Lanzando granada...");
             Audio.PlayOneShot(arcLaunch);
             grenade = Engineson.CreateGameObject("Arc", null);
 

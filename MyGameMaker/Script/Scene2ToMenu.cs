@@ -14,7 +14,7 @@ public class Scene2ToMenu : MonoBehaviour
         TriggerLevel = gameObject.GetComponent<Collider>();
         if (TriggerLevel == null)
         {
-            Engineson.print("Error");
+            //Engineson.print("Error");
         }
     }
     public override void Update(float deltaTime)
@@ -43,7 +43,7 @@ public class Scene2ToMenu : MonoBehaviour
         {
             if (other.name == "Player")
             {
-                Engineson.print("Enters the colider");
+                //Engineson.print("Enters the colider");
             }
         }
     }

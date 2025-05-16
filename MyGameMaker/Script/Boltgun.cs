@@ -231,21 +231,21 @@ public class Boltgun : BaseWeapon
                 currentTotalAmmo = 0;
             }
 
-            Engineson.print("Boltgun reloaded");
-            Engineson.print($"Current ammo: {currentTotalAmmo}");
+            //Engineson.print("Boltgun reloaded");
+            //Engineson.print($"Current ammo: {currentTotalAmmo}");
         }
     }
 
     public override void UseAbility1()
     {
 
-        Engineson.print("Boltgun ability 1 used");
+        //Engineson.print("Boltgun ability 1 used");
         grenadeLauncher.TriggerAbility();
     }
 
     public override void UseAbility2()
     {
-        Engineson.print("Boltgun ability 2 used");
+        //Engineson.print("Boltgun ability 2 used");
         arcSnare.TriggerAbility();
     }
 

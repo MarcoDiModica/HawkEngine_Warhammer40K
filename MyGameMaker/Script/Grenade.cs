@@ -52,7 +52,7 @@ public class Grenade : MonoBehaviour
                 {
                     Engineson.Destroy(explosion);
                     Engineson.Destroy(gameObject);
-                    Engineson.print("Destroyed");
+                    //Engineson.print("Destroyed");
                     isExploded = false;
                 }
             }

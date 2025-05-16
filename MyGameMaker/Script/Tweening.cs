@@ -22,7 +22,7 @@ namespace HawkEngine
 
         public Tweening()
         {
-            Engineson.print("Tweening default constructor");
+            //Engineson.print("Tweening default constructor");
         }
 
     }

@@ -22,7 +22,7 @@ namespace HawkEngine
 
         public MeshRenderer()
         {
-            Engineson.print("MeshRenderer created");
+            //Engineson.print("MeshRenderer created");
         }
 
         public override void Awake() { }

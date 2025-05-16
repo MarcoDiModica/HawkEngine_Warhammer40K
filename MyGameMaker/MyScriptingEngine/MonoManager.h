@@ -76,7 +76,10 @@ public:
 	std::vector<std::string> scriptNames;
 private:
 	MonoManager();
+	MonoImage* currentImage = nullptr;
 
+	// Keep track of threads we've attached
+	std::vector<MonoThread*> attachedThreads;
 	MonoDomain* domain;
 	MonoAssembly* assembly;
 	MonoImage* image;

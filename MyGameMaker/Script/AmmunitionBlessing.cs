@@ -57,7 +57,7 @@ public class AmmunitionBlessing : PickUp
 
     public override void OnPickUp(PlayerController playerController)
     {
-        Engineson.print("AmmunitionBlessing PowerUp applied");
+        //Engineson.print("AmmunitionBlessing PowerUp applied");
         playerController.playerData.infiniteBullets = true;
 
     }

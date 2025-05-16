@@ -169,7 +169,7 @@ public class EnemyControllerBossTail : EnemyController
     {
         if (isDead == false)
         {
-            Engineson.print("Burrowed");
+            //Engineson.print("Burrowed");
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
             collider.SetPosition(enemyTransform.position);
             anim.SetBurrowingAnimation();
@@ -263,7 +263,7 @@ public class EnemyControllerBossTail : EnemyController
         var bc = hurtbox.GetComponent<BoxCollider>();
         Vector3 halfSize = bc.GetSize() * 0.5f;    // <--- your engine’s getter for collider size
         Vector3 center = hurtbox.GetComponent<Transform>().position;
-        Engineson.print($"Checking {hurtbox.name}: center={center}, halfSize={halfSize}, playerPos={playerPos}");
+        //Engineson.print($"Checking {hurtbox.name}: center={center}, halfSize={halfSize}, playerPos={playerPos}");
 
         return (playerPos.X >= center.X - halfSize.X && playerPos.X <= center.X + halfSize.X) &&
                (playerPos.Y >= center.Y - halfSize.Y && playerPos.Y <= center.Y + halfSize.Y) &&
@@ -289,7 +289,7 @@ public class EnemyControllerBossTail : EnemyController
         if (pc == null || pc.playerData == null) return;
 
         Vector3 playerPos = playerTransform.position;
-        Engineson.print("" + playerPos);
+        //Engineson.print("" + playerPos);
         if (slashHurtbox != null && IsPlayerInCollider(slashHurtbox, playerPos))
         {
             ApplyBossTailDamage(slashDamage);
@@ -335,10 +335,10 @@ public class EnemyControllerBossTail : EnemyController
         t.position = spawnPos;
 
         activeHurtboxes.Add((hb, damage, duration));
-        Engineson.print(
-          $"[HURTBOX x4] {name} center={spawnPos} " +
-          $"halfSize=<{scaledSize.X / 2},{scaledSize.Y / 2},{scaledSize.Z / 2}>"
-        );
+        //Engineson.print(
+        //  $"[HURTBOX x4] {name} center={spawnPos} " +
+        //  $"halfSize=<{scaledSize.X / 2},{scaledSize.Y / 2},{scaledSize.Z / 2}>"
+        //);
     }
 
 
@@ -352,7 +352,7 @@ public class EnemyControllerBossTail : EnemyController
             {
                 if (IsPlayerInCollider(hb, playerTransform.position))
                 {
-                    Engineson.print("We're in");
+                    //Engineson.print("We're in");
                     ApplyBossTailDamage(dmg);
                 }
                 Engineson.Destroy(hb);

@@ -231,8 +231,6 @@ public class EnemyControllerWarrior : EnemyController
             }
         }
 
-        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
-
         switch (currentState)
         {
             case EnemyState.IDLE:

@@ -62,7 +62,7 @@ public class PlayerPowerUp : MonoBehaviour
                 hasMedicaeStimm = false;
                 medicaeStimmTimer = 0.0f;
                 playerController.playerData.movSpeed = playerController.playerData.stimmSpeed = 0;
-                Engineson.print("Medicae Stimm effect passed");
+                //Engineson.print("Medicae Stimm effect passed");
             }
         }
 
@@ -76,7 +76,7 @@ public class PlayerPowerUp : MonoBehaviour
                 hasAmmunitionBlessing = false;
                 ammunitionBlessingTimer = 0.0f;
                 playerController.playerData.infiniteBullets = false;
-                Engineson.print("Ammunition Blessing effect passed");
+                //Engineson.print("Ammunition Blessing effect passed");
             }
         }
 
@@ -88,7 +88,7 @@ public class PlayerPowerUp : MonoBehaviour
                 hasPiercingBullets = false;
                 piercingBulletsTimer = 0.0f;
                 playerController.playerData.isPiercing = false;
-                Engineson.print("Piercing Bullets effect passed");
+                //Engineson.print("Piercing Bullets effect passed");
             }
         }
 
@@ -103,7 +103,7 @@ public class PlayerPowerUp : MonoBehaviour
                 magnetTimer = 0.0f;
                 playerController.playerShooting.boltgun.shootCadence = playerController.playerShooting.boltgun.shootCadence * 1.5f;
                 playerController.playerShooting.shotgun.shootCadence = playerController.playerShooting.shotgun.shootCadence * 1.5f;
-                Engineson.print("Magnet effect passed");
+                //Engineson.print("Magnet effect passed");
             }
             else
             {
@@ -141,7 +141,7 @@ public class PlayerPowerUp : MonoBehaviour
     {
         if (other.tag == "PowerUp")
         {
-            Engineson.print("Player Collided with:" + other.tag);
+            //Engineson.print("Player Collided with:" + other.tag);
 
             if (other.GetComponent<BlackHeart>() != null)
             {
@@ -186,7 +186,7 @@ public class PlayerPowerUp : MonoBehaviour
 
         if(other.tag == "Ammunition")
         {
-            Engineson.print("Player Collided with:" + other.tag);
+            //Engineson.print("Player Collided with:" + other.tag);
 
             if (other.GetComponent<BoltgunBullets>() != null && playerController.playerShooting.boltgun.currentTotalAmmo < playerController.playerShooting.boltgun.maxAmmo)
             {
@@ -203,7 +203,7 @@ public class PlayerPowerUp : MonoBehaviour
         }
         if (other.tag == "Upgrade")
         {
-            Engineson.print("Player Collided with:" + other.tag);
+            //Engineson.print("Player Collided with:" + other.tag);
 
             if (other.GetComponent<BoltgunUpgradePickUp>() != null )
             {
@@ -223,7 +223,7 @@ public class PlayerPowerUp : MonoBehaviour
         }
         if (other.tag == "Weapon")
         {
-            Engineson.print("Player Collided with:" + other.tag);
+            //Engineson.print("Player Collided with:" + other.tag);
             if (other.GetComponent<ShotgunPickUp>() != null)
             {
                 other.GetComponent<ShotgunPickUp>().OnPickUp(playerController);
@@ -244,7 +244,7 @@ public class PlayerPowerUp : MonoBehaviour
 
         if (other.tag == "BiblePage")
         {
-            Engineson.print("Player Collided with:" + other.tag);
+            //Engineson.print("Player Collided with:" + other.tag);
             if (other.GetComponent<BiblePagePickUp>() != null)
             {
                 other.GetComponent<BiblePagePickUp>().OnPickUp(playerController);

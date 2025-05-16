@@ -66,7 +66,7 @@ public class ShotgunShells : PickUp
 
     public override void OnPickUp(PlayerController playerController)
     {
-        Engineson.print("MedicaeStimm PowerUp applied");
+        //Engineson.print("MedicaeStimm PowerUp applied");
 
         playerController.playerShooting.shotgun.currentTotalAmmo += 8;
     }

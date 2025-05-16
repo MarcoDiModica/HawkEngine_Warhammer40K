@@ -52,7 +52,7 @@ public class Magnet : PickUp
 
     public override void OnPickUp(PlayerController playerController)
     {
-        Engineson.print("Magnet PowerUp applied");
+        //Engineson.print("Magnet PowerUp applied");
         playerController.playerShooting.boltgun.shootCadence = playerController.playerShooting.boltgun.shootCadence / 2f;
         playerController.playerShooting.shotgun.shootCadence = playerController.playerShooting.shotgun.shootCadence * 2f;
        

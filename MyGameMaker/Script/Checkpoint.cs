@@ -60,30 +60,30 @@ public class Checkpoint : MonoBehaviour
         spawnPoint = GetComponent<Transform>().position;
         spawnPoint.Y = player.GetComponent<Transform>().position.Y;
 
-        Engineson.print(GameObject.FindGameObjectsWithTag("Melee").Length.ToString());
+        //Engineson.print(GameObject.FindGameObjectsWithTag("Melee").Length.ToString());
 
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Melee").Length; i++)
         {
             enemies.Add(GameObject.FindGameObjectsWithTag("Melee")[i]);
-            Engineson.print(enemies[i].name);
+            //Engineson.print(enemies[i].name);
         }
 
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Ranged").Length; i++)
         {
             enemies.Add(GameObject.FindGameObjectsWithTag("Ranged")[i]);
-            Engineson.print(enemies[i].name);
+            //Engineson.print(enemies[i].name);
         }
 
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Warrior").Length; i++)
         {
             enemies.Add(GameObject.FindGameObjectsWithTag("Warrior")[i]);
-            Engineson.print(enemies[i].name);
+            //Engineson.print(enemies[i].name);
         }
 
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Stalker").Length; i++)
         {
             enemies.Add(GameObject.FindGameObjectsWithTag("Stalker")[i]);
-            Engineson.print(enemies[i].name);
+            //Engineson.print(enemies[i].name);
         }
 
     }
@@ -206,7 +206,7 @@ public class Checkpoint : MonoBehaviour
         string json = JsonSerializer.Serialize<CheckpointData>(checkpointData);
         File.WriteAllText("Serialized/checkpointData.json", json);
 
-        Engineson.print(json);
+        //Engineson.print(json);
     }
 
     public void LoadCheckPointData()
@@ -287,7 +287,7 @@ public class Checkpoint : MonoBehaviour
             }
         }
 
-        Engineson.print(spawnPos.ToString());
+        //Engineson.print(spawnPos.ToString());
     }
 
     public override void OnTriggerEnter(GameObject other)
@@ -295,7 +295,7 @@ public class Checkpoint : MonoBehaviour
         if (other.tag == "Player")
         {
             SaveCheckpointData();
-            Engineson.print("PlayerDetected");
+            //Engineson.print("PlayerDetected");
         }
 
     }

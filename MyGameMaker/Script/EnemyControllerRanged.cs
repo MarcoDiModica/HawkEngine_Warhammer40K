@@ -107,7 +107,6 @@ public class EnemyControllerRanged : EnemyController
         {
             if (currentHealth <= 0)
             {
-                Engineson.print("This man is dead man.");
                 anim.SetDeathAnimation();
                 //Destroy(gameObject);
                 isDead = true;
@@ -126,9 +125,9 @@ public class EnemyControllerRanged : EnemyController
                     Vector3 displacement = direction * speed * deltaTime;
                     Vector3 newPos = currentPos + displacement;
                     bool shouldDestroy = false;
-                    Engineson.print(""+currentPos);
-                    Engineson.print(""+ direction);
-                    Engineson.print("" + displacement.Length());
+                    //Engineson.print(""+currentPos);
+                    //Engineson.print(""+ direction);
+                    //Engineson.print("" + displacement.Length());
                     GameObject hitObject = null;
 
                     RayCast ray = new RayCast();
@@ -136,7 +135,7 @@ public class EnemyControllerRanged : EnemyController
 
                     if (ray.hit.isHit)
                     {
-                        Engineson.print("Le di gente");
+                        //Engineson.print("Le di gente");
                         hitObject = ray.hit.gameObject;
                     }
 
@@ -149,13 +148,13 @@ public class EnemyControllerRanged : EnemyController
                             if (!bulletHitEnemies[i].Contains(hitObject))
                             {
                                 bulletHitEnemies[i].Add(hitObject);
-                                Engineson.print("Le di otra vez");
+                                //Engineson.print("Le di otra vez");
 
                                 switch (tag)
                                 {
                                     case "Player":
                                         pc.playerData.TakeDamage(damage);
-                                        Engineson.print("Le redi gente");
+                                        //Engineson.print("Le redi gente");
                                         break;
                                 }
                             }
@@ -319,7 +318,7 @@ public class EnemyControllerRanged : EnemyController
         particles.ApplyPreset(19);
         particles.EmitBurst(1);
         anim.SetHitAnimation();
-        Engineson.print("Hit");
+        //Engineson.print("Hit");
     }
     override public void OnCollisionEnter(GameObject other)
     {

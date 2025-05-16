@@ -80,7 +80,7 @@ public class PlayerAnimations : MonoBehaviour
     {
         if (esk.GetAnimationTime() >= esk.GetAnimationLength() - 0.2f)
         {
-            Engineson.print("Idle Random Animation");   
+            //Engineson.print("Idle Random Animation");   
             Random rand = new Random();
             int idleIndex = rand.Next(4, 5);
             esk.SetAnimation(idleIndex);

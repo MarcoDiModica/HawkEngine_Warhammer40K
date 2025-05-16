@@ -50,7 +50,7 @@ namespace HawkEngine
         //contructor
         public SceneManager()
         {
-            Engineson.print("SceneManager created");
+            //Engineson.print("SceneManager created");
         }
     }
 }

@@ -266,7 +266,7 @@ public class EnemyControllerBoss : EnemyController
                                 }
                                 else if (distanceToPlayer >= 35.0f)
                                 {
-                                    Engineson.print("ChangePositionToClosest");
+                                    //Engineson.print("ChangePositionToClosest");
                                     ChangePositionToClosest();
                                 }
                             }
@@ -448,7 +448,7 @@ public class EnemyControllerBoss : EnemyController
         {
             if (playerTransform != null)
             {      
-                Engineson.print("Unburrowing Attack");
+                //Engineson.print("Unburrowing Attack");
                 enemyTransform.position = playerTransform.position;
                 collider.SetPosition(playerTransform.position);
                 anim.SetUnburrowingAnimation();
@@ -469,13 +469,13 @@ public class EnemyControllerBoss : EnemyController
             {
                 enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
                 collider.SetPosition(enemyTransform.position);
-                Engineson.print("Unburrowing Attack Phase 2");
+                //Engineson.print("Unburrowing Attack Phase 2");
                 anim.SetUnburrowingAnimation();
                 AddComponent<ParticleFX>().ApplyPreset(25);
                 GetComponent<ParticleFX>().EmitBurst(25);
             }
             Audio.PlayOneShot(UnburrowClip);
-            Engineson.print("PlaySound Attack Phase 2");
+            //Engineson.print("PlaySound Attack Phase 2");
             isBuried = false;
         }
     }
@@ -617,8 +617,8 @@ public class EnemyControllerBoss : EnemyController
     {
         if (isDead == false)
         {
-            Engineson.print("Burrowed");
-            Engineson.print("PlaySound Burrowed");
+            //Engineson.print("Burrowed");
+            //Engineson.print("PlaySound Burrowed");
             Audio.PlayOneShot(BurrowClip);
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
             collider.SetPosition(enemyTransform.position);

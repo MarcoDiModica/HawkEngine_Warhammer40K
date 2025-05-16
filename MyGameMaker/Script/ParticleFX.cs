@@ -28,12 +28,12 @@ namespace HawkEngine
         {
             CplusplusInstance = nativeRigidbody;
             this.owner = owner;
-            Engineson.print("ParticleFX created");
+            //Engineson.print("ParticleFX created");
         }
 
         public ParticleFX()
         {
-            Engineson.print("ParticleFX default constructor");
+            //Engineson.print("ParticleFX default constructor");
         }
 
         public override void Awake() { }

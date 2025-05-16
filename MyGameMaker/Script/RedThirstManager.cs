@@ -138,7 +138,7 @@ public class RedThirstManager : MonoBehaviour
         {
             redThirstPoints = maxRedThirstPoints;
         }
-        Engineson.print($"Red Thirst Points: {redThirstPoints}");
+        //Engineson.print($"Red Thirst Points: {redThirstPoints}");
 
         if (redThirstPoints >= maxRedThirstPoints && isInBlackRage == false)
         {
@@ -159,7 +159,7 @@ public class RedThirstManager : MonoBehaviour
     {
         isInBlackRage = true;
         blackRageTimer = 0f;
-        Engineson.print("Black Rage Activated!");
+        //Engineson.print("Black Rage Activated!");
         playerController.playerData.blackRageSpeed = redThirstBonus;
         playerController.playerDash.canDash = false;
 
@@ -170,7 +170,7 @@ public class RedThirstManager : MonoBehaviour
         // Actualizar el HUD para mostrar que Black Rage ha terminado
         isInBlackRage = false;
         redThirstPoints = 0;
-        Engineson.print("Black Rage Deactivated");
+        //Engineson.print("Black Rage Deactivated");
         playerController.playerData.blackRageSpeed = 0f;
         playerController.playerDash.canDash = true;
     }

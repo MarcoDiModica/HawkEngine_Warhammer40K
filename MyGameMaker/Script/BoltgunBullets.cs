@@ -65,7 +65,7 @@ public class BoltgunBullets : PickUp
 
     public override void OnPickUp(PlayerController playerController)
     {
-        Engineson.print("MedicaeStimm PowerUp applied");
+        //Engineson.print("MedicaeStimm PowerUp applied");
       
         playerController.playerShooting.boltgun.currentTotalAmmo += 10;
     }

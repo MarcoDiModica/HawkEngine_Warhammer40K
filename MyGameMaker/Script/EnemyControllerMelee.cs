@@ -550,7 +550,7 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Attack()
     {
-        Engineson.print("Melee attack executed!");
+        //Engineson.print("Melee attack executed!");
         if (pc.redThirstManager.redThirstBonus < clawDamage)
         {
             pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
@@ -560,7 +560,7 @@ public class EnemyControllerMelee : EnemyController
         {
             pc.playerData.TakeDamage(0);
         }
-        Engineson.print("Player health: " + (pc.playerData.GetHealth()));
+        //Engineson.print("Player health: " + (pc.playerData.GetHealth()));
 
         Audio.PlayOneShot(SFX_ATTACK);
     }
@@ -592,7 +592,7 @@ public class EnemyControllerMelee : EnemyController
     {
         if (other.tag == "Player" && isLeaping)
         {
-            Engineson.print(other.tag + "hit with Leap");
+            //Engineson.print(other.tag + "hit with Leap");
             if (pc.redThirstManager.IsInBlackRage())
             {
                 if (pc.redThirstManager.redThirstBonus < leapDamage)
@@ -610,7 +610,7 @@ public class EnemyControllerMelee : EnemyController
                 pc.playerData.TakeDamage(leapDamage);
                 pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
-            Engineson.print(other.tag + " health: " + (pc.playerData.GetHealth()));
+            //Engineson.print(other.tag + " health: " + (pc.playerData.GetHealth()));
         }
     }
 

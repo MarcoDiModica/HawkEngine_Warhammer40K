@@ -115,17 +115,14 @@ public class PlayerShooting : MonoBehaviour
 
         if (shotgunMesh != null)
         {
-            Engineson.print("Fallo por las putas meshes.");
             shotgunMesh.SetActive(false);
         }
         if (railgunMesh != null)
         {
-            Engineson.print("Fallo por las putas meshes.");
             railgunMesh.SetActive(false);
         }
         if (boltgunMesh != null)
         {
-            Engineson.print("Fallo por las putas meshes.");
             boltgunMesh.SetActive(true);
         }
         playerController = gameObject.GetComponent<PlayerController>();
@@ -145,7 +142,7 @@ public class PlayerShooting : MonoBehaviour
             case GunType.BOLTGUN:
                 shootCooldown = 1f / boltgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
-                Engineson.print($"Shoot Cooldown: {shootCooldown}");
+                //Engineson.print($"Shoot Cooldown: {shootCooldown}");
                 break;
             case GunType.SHOTGUN:
                 shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
@@ -231,13 +228,13 @@ public class PlayerShooting : MonoBehaviour
 
         if (playerInput?.IsAbility1Pressed() == true)
         {
-            Engineson.print("Ability 1 pressed");
+            //Engineson.print("Ability 1 pressed");
             UseAbility1();
         }
 
         if (playerInput?.IsAbility2Pressed() == true)
         {
-            Engineson.print("Ability 2 pressed");
+            //Engineson.print("Ability 2 pressed");
             //UseAbility2();
         }
     }
@@ -372,7 +369,7 @@ public class PlayerShooting : MonoBehaviour
                 int audiooo = Audio.PlayOneShot(railgunEquiped);
                 break;
         }
-        Engineson.print("Changed weapon right");
+        //Engineson.print("Changed weapon right");
     }
 
     private void ChangeWeaponLeft()
@@ -433,7 +430,7 @@ public class PlayerShooting : MonoBehaviour
                 int audiooo = Audio.PlayOneShot(railgunEquiped);
                 break;
         }
-        Engineson.print("Changed weapon left");
+        //Engineson.print("Changed weapon left");
 
     }
 
@@ -531,8 +528,8 @@ public class PlayerShooting : MonoBehaviour
             {
                 target.GetComponent<EnemyControllerMelee>().isStunned = true;
             }
-            Engineson.print("Counter Attack to: " + target.name);
-            Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerMelee>().currentHealth);
+            //Engineson.print("Counter Attack to: " + target.name);
+            //Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerMelee>().currentHealth);
         }
         else if (target.GetComponent<EnemyControllerRanged>() != null)
         {
@@ -541,8 +538,8 @@ public class PlayerShooting : MonoBehaviour
             {
                 target.GetComponent<EnemyControllerRanged>().isStunned = true;
             }
-            Engineson.print("Counter Attack to: " + target.name);
-            Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerRanged>().currentHealth);
+            //Engineson.print("Counter Attack to: " + target.name);
+            //Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerRanged>().currentHealth);
         }
         else if (target.GetComponent<EnemyControllerStalker>() != null)
         {
@@ -551,8 +548,8 @@ public class PlayerShooting : MonoBehaviour
             {
                 target.GetComponent<EnemyControllerStalker>().isStunned = true;
             }
-            Engineson.print("Counter Attack to: " + target.name);
-            Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerStalker>().currentHealth);
+            //Engineson.print("Counter Attack to: " + target.name);
+            //Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerStalker>().currentHealth);
         }
     }
 

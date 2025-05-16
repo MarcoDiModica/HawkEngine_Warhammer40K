@@ -70,7 +70,7 @@ namespace HawkEngine
 
         public Camera()
         {
-            Engineson.print("Camera created");
+            //Engineson.print("Camera created");
         }
 
         public override void Awake() { }

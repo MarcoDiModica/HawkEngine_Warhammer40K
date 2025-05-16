@@ -13,6 +13,8 @@
 #include <Windows.h>
 #include <thread>
 #include <chrono>
+#include <fstream>
+#include <vector>
 
 #include "../MyGameEditor/Log.h"
 #include <mono/metadata/class.h>
@@ -66,6 +68,16 @@ void MonoManager::Initialize() {
 	CreateScriptDomain();
 }
 
+static std::vector<char> ReadAllBytes(const std::string& path) {
+	std::ifstream file(path, std::ios::binary | std::ios::ate);
+	if (!file) return {};
+	auto size = file.tellg();
+	std::vector<char> data(size);
+	file.seekg(0);
+	file.read(data.data(), size);
+	return data;
+}
+
 void MonoManager::CreateScriptDomain() {
 	if (scriptDomain) {
 		LOG(LogType::LOG_ERROR, "Script domain already exists, should be unloaded first");
@@ -80,7 +92,7 @@ void MonoManager::CreateScriptDomain() {
 
 	mono_domain_set(scriptDomain, false);
 	if (!mono_thread_current())       // optionally check thread isn’t already attached
-		mono_thread_attach(scriptDomain);
+		mono_jit_thread_attach(scriptDomain);
 
 	domain = scriptDomain;
 
@@ -140,7 +152,7 @@ void MonoManager::LoadUserClasses() {
 
 void MonoManager::Shutdown() {
 	if (scriptDomain) {
-		UnloadScriptDomain();
+		//UnloadScriptDomain();
 	}
 
 	if (rootDomain) {
@@ -150,22 +162,17 @@ void MonoManager::Shutdown() {
 }
 
 void MonoManager::UnloadScriptDomain() {
-	if (!scriptDomain) {
+	if (!scriptDomain)
 		return;
-	}
 
+	mono_domain_set(rootDomain, false);
+	mono_thread_detach(mono_thread_current());
 	user_classes.clear();
 	image = nullptr;
 	assembly = nullptr;
-
-	mono_domain_set(rootDomain, false);
-
 	mono_gc_collect(mono_gc_max_generation());
-
-	mono_thread_detach(mono_thread_current());
 	mono_domain_unload(scriptDomain);
 	scriptDomain = nullptr;
-	domain = nullptr;
 }
 
 MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::string& className) const {
@@ -177,15 +184,50 @@ MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::st
 }
 
 void MonoManager::ReloadAssembly(const std::string& newAssemblyPath) {
-	assemblyPath = newAssemblyPath;
+	// 1) Read updated DLL
+	auto bytes = ReadAllBytes(newAssemblyPath);
+	if (bytes.empty()) {
+		LOG(LogType::LOG_ERROR, "Failed to load bytes for: %s", newAssemblyPath.c_str());
+		return;
+	}
 
-	UnloadScriptDomain();
+	// 2) Open a fresh MonoImage from the raw data
+	MonoImageOpenStatus status;
+	MonoImage* newImage = mono_image_open_from_data_with_name(
+		reinterpret_cast<char*>(bytes.data()),
+		static_cast<uint32_t>(bytes.size()),
+		/*need_copy=*/true,
+		&status,
+		/*ref_only=*/false,
+		newAssemblyPath.c_str()
+	);
+	if (status != MONO_IMAGE_OK || !newImage) {
+		LOG(LogType::LOG_ERROR, "mono_image_open_from_data failed: %d", status);
+		return;
+	}
 
-	AddUnloadingDelay(100);
+	// 3) Load a new assembly from that image
+	MonoAssembly* newAssembly = mono_assembly_load_from_full(
+		newImage,
+		newAssemblyPath.c_str(),
+		&status,
+		/*ref_only=*/false
+	);
+	if (status != MONO_IMAGE_OK || !newAssembly) {
+		LOG(LogType::LOG_ERROR, "mono_assembly_load_from_full failed: %d", status);
+		mono_image_close(newImage);
+		return;
+	}
 
-	CreateScriptDomain();
+	// 4) Swap in the new image & rebuild your class list
+	assembly = newAssembly;
+	image = mono_assembly_get_image(newAssembly);
+	LoadUserClasses();  // rebuilds user_classes[] from the fresh image
 
+	// 5) Notify any ScriptComponents to re-instantiate
 	NotifyScriptComponentsToRefresh();
+
+	LOG(LogType::LOG_INFO, "Hot-reload completed for %s", newAssemblyPath.c_str());
 }
 
 void MonoManager::RefreshScriptComponentsRecursive(std::shared_ptr<GameObject> gameObject)
@@ -444,7 +486,20 @@ MonoObject* MonoManager::CreateGameObjectReference(GameObject* nativeGO) {
 		return nullptr;
 	}
 
-	MonoClass* goClass = mono_class_from_name(image, "HawkEngine", "GameObject");
+	// 1) Make sure our MonoDomain* is valid
+	if (!domain) {
+	LOG(LogType::LOG_ERROR, "Script domain is null in CreateGameObjectReference");
+	return nullptr;
+	
+	}
+	
+	    // 2) Make this domain current for the calling thread
+	mono_domain_set(domain, /*force=*/false);
+	
+	    // 3) Attach this native thread to Mono (so mono_string_new, etc. work)
+	mono_jit_thread_attach(domain);
+	
+	MonoClass * goClass = mono_class_from_name(image, "HawkEngine", "GameObject");
 	if (!goClass) {
 		LOG(LogType::LOG_ERROR, "Failed to find GameObject class in assembly");
 		return nullptr;
@@ -497,21 +552,48 @@ MonoObject* MonoManager::CreateGameObjectReference(GameObject* nativeGO) {
 	return managedGO;
 }
 
-MonoObject* MonoManager::CreatePrefabReference(const std::string& path) {  
-	MonoClass* prefabClass = mono_class_from_name(image, "HawkEngine", "Prefab");  
-	if (!prefabClass) {  
-		LOG(LogType::LOG_ERROR, "Failed to find PrefabObject class in assembly");  
-		return nullptr;  
-	}  
+MonoObject* MonoManager::CreatePrefabReference(const std::string& path) {
+	if (!domain) {
+		LOG(LogType::LOG_ERROR, "No script domain set when creating Prefab");
+		return nullptr;
+	}
+	mono_domain_set(domain, /*force=*/false);
+	mono_jit_thread_attach(domain);
 
-	MonoObject* instance = mono_object_new(domain, prefabClass);  
-	mono_runtime_object_init(instance);  
+	// 1) Obtén la clase Prefab
+	MonoClass* prefabClass = mono_class_from_name(image, "HawkEngine", "Prefab");
+	if (!prefabClass) {
+		LOG(LogType::LOG_ERROR, "Failed to find Prefab class in assembly");
+		return nullptr;
+	}
 
-	MonoClassField* pathField = mono_class_get_field_from_name(prefabClass, "path");  
-	if (pathField) {  
-		MonoString* pathStr = mono_string_new(domain, path.c_str());  
-		mono_field_set_value(instance, pathField, pathStr);  
-	}  
+	// 2) Crea la instancia
+	MonoObject* instance = mono_object_new(domain, prefabClass);
+	if (!instance) {
+		LOG(LogType::LOG_ERROR, "mono_object_new returned null for Prefab");
+		return nullptr;
+	}
 
-	return instance;  
+	// 3) Invoca explícitamente el constructor C# y captura excepciones
+	MonoMethod* ctorMethod = mono_class_get_method_from_name(prefabClass, ".ctor", 0);
+	if (ctorMethod) {
+		MonoObject* exception = nullptr;
+		mono_runtime_invoke(ctorMethod, instance, nullptr, &exception);
+		if (exception) {
+			MonoString* msgObj = mono_object_to_string(exception, nullptr);
+			char* msgCStr = mono_string_to_utf8(msgObj);
+			LOG(LogType::LOG_ERROR, "Prefab constructor failed: %s", msgCStr);
+			mono_free(msgCStr);
+			return nullptr;
+		}
+	}
+
+	// 4) Asigna el campo 'path'
+	MonoClassField* pathField = mono_class_get_field_from_name(prefabClass, "path");
+	if (pathField) {
+		MonoString* pathStr = mono_string_new(domain, path.c_str());
+		mono_field_set_value(instance, pathField, pathStr);
+	}
+
+	return instance;
 }

@@ -24,7 +24,7 @@ public class AreaTrigger : MonoBehaviour, IInteractable
     }
     public void Interact()
     {
-        Engineson.print("Interacting with AreaTrigger");
+        //Engineson.print("Interacting with AreaTrigger");
         Engineson.Destroy(gameObject);
     }
 }

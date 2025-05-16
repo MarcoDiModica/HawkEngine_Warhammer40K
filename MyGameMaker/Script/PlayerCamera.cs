@@ -298,11 +298,11 @@ public class PlayerCamera : MonoBehaviour
                 if (hitObject != null)
                 {
                     playerRef.GetComponent<Collider>().SetPosition(ray.hit.point + new Vector3(0, 2, 0));
-                    Engineson.print("Player spawned at: " + ray.hit.point);
+                    //Engineson.print("Player spawned at: " + ray.hit.point);
                 }
                 else
                 {
-                    Engineson.print("Raycast did not hit the floor.");
+                    //Engineson.print("Raycast did not hit the floor.");
                 }
             }
 

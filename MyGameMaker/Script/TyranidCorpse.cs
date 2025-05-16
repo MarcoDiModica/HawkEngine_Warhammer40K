@@ -36,7 +36,7 @@ public class TyranidCorpse : MonoBehaviour
                         float damage = 2f * (exposureTime * 0.3f + 1f);
                         data.TakeDamage(damage);
 
-                        Engineson.print($"Damage: {damage:F2} | Current Health: {data.GetHealth():F2}");
+                        //Engineson.print($"Damage: {damage:F2} | Current Health: {data.GetHealth():F2}");
 
                         timeSinceLastTick = 0f;
                     }

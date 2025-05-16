@@ -63,7 +63,7 @@ public class PlayerData
             health -= damage;
         }
 
-        Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
+        //Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
 
     }
 
@@ -79,7 +79,7 @@ public class PlayerData
             return;
         }
         this.health = health;
-        Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
+        //Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
     }
 
     public void SetTempHealth(float health)
@@ -115,7 +115,7 @@ public class PlayerData
                 this.health = maxHealth;
             }
         }
-        Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
+        //Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
 
     }
     public float GetHealth() { return health; }
@@ -123,7 +123,7 @@ public class PlayerData
     {
         health = maxHealth;
         healthTemp = maxHealthTemp;
-        Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
+        //Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
     }
     public float GetHealthTemp() { return healthTemp; }
 

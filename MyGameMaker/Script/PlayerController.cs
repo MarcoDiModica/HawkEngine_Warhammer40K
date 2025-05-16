@@ -275,7 +275,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Engineson.print(moveDirection.ToString());
             if (moveDirection == Vector3.Zero)
             {
                 StopFootsteps();
@@ -393,7 +392,7 @@ public class PlayerController : MonoBehaviour
         {
             if (isShootingStanding)
             {
-                Engineson.print("Idle");
+                //Engineson.print("Idle");
                 playerAnimations.SetShootingStandingToIdleAnimation();
             }
             else 

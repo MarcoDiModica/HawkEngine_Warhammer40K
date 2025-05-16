@@ -115,7 +115,6 @@ public class Shotgun : BaseWeapon
 
                         if (redThirstManager.IsInBlackRage())
                             finalDamage += redThirstManager.redThirstBonus;
-                        Engineson.print("Hit for this amount:" + finalDamage);
                         switch (tag)
                         {
                             case "Melee":
@@ -149,7 +148,7 @@ public class Shotgun : BaseWeapon
                 strongshotTimer += deltaTime;
                 if (strongshotTimer >= strongshotCooldown)
                 {
-                    Engineson.print("Damage reset");
+                    //Engineson.print("Damage reset");
                     damage = damage / 2;
                     strongShot = false;
                     strongshotTimer = 0.0f;
@@ -258,8 +257,8 @@ public class Shotgun : BaseWeapon
                 currentTotalAmmo = 0;
             }
 
-            Engineson.print("Shotgun reloaded");
-            Engineson.print($"Current ammo: {currentTotalAmmo}");
+            //Engineson.print("Shotgun reloaded");
+            //Engineson.print($"Current ammo: {currentTotalAmmo}");
         }
     }
 

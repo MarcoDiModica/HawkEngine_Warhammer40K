@@ -104,7 +104,7 @@ public class GrenadeLauncher : BaseAbilities
             return;
         }
 
-        Engineson.print("Lanzando granada...");
+        //Engineson.print("Lanzando granada...");
        // sound?.Play(launchFX);
         grenade = Engineson.CreateGameObject("Grenade", null);
 

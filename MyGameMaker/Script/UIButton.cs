@@ -17,12 +17,12 @@ namespace HawkEngine
         {
             CplusplusInstance = nativeRigidbody;
             this.owner = owner;
-            Engineson.print("UIButton created");
+            //Engineson.print("UIButton created");
         }
 
         public UIButton()
         {
-            Engineson.print("UIButton default constructor");
+            //Engineson.print("UIButton default constructor");
         }
 
         public override void Awake() { }

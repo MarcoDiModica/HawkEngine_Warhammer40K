@@ -328,19 +328,28 @@ void PhysicsModule::DrawDebugDrawer() {
 
 
 void PhysicsModule::CallMonoCollision(GameObject* obj, const std::string& methodName, GameObject* other) {
-    if (!obj || !other) return;
-    auto s = *other;
-    for (auto& script : obj->scriptComponents) {
-        if (script) {
-            script->InvokeMonoMethod(methodName, *other);
-        }
-    }
+	if (!obj || !other) return;
+
+	if (obj->IsDestroyed() || other->IsDestroyed()) return;
+
+	for (auto& script : obj->scriptComponents) {
+		if (script) {
+			try {
+				script->InvokeMonoMethod(methodName, *other);
+			}
+			catch (const std::exception& e) {
+				LOG(LogType::LOG_ERROR, "Exception in CallMonoCollision: %s", e.what());
+			}
+			catch (...) {
+				LOG(LogType::LOG_ERROR, "Unknown exception in CallMonoCollision");
+			}
+		}
+	}
 }
 
 void PhysicsModule::CheckCollisions() {
     static std::set<std::pair<GameObject*, GameObject*>> previousCollisions;
     std::set<std::pair<GameObject*, GameObject*>> currentCollisions;
-
 
     int numManifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
     for (int i = 0; i < numManifolds; i++) {

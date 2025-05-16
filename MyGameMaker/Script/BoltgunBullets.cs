@@ -22,10 +22,17 @@ public class BoltgunBullets : PickUp
     public override void Start()
     {
         Transform = gameObject.GetComponent<Transform>();
-        startPos = Transform.position;
+        if (Transform != null)
+        {
+            startPos = Transform.position;
+        }
+        else
+        {
+            Engineson.print("ERROR: Transform component not found on BoltgunBullets");
+            startPos = new Vector3(0, 0, 0);
+        }
 
         rotationSpeed = (float)(new Random().NextDouble() * (100.0f - 30.0f) + 30.0f);
-
         floatSpeed = (float)(new Random().NextDouble() * (2.0f - 0.5f) + 0.5f);
     }
 
@@ -42,31 +49,45 @@ public class BoltgunBullets : PickUp
             MoveTowardsPlayer(deltaTime);
         }
     }
+
     public void DestroyPickUp()
     {
         Engineson.Destroy(this.gameObject);
     }
+
     public void MoveTowardsPlayer(float deltaTime)
     {
         GameObject player = GameObject.Find("Player");
         if (player != null)
         {
-            Transform.position = Vector3.Lerp(Transform.position, player.GetComponent<Transform>().position, 0.1f);
+            Transform playerTransform = player.GetComponent<Transform>();
+            if (playerTransform != null && Transform != null)
+            {
+                Transform.position = Vector3.Lerp(Transform.position, playerTransform.position, 0.1f);
+            }
         }
     }
+
     public void PowerUpMovment(float time, float dt)
     {
+        if (Transform == null)
+            return;
+
         float newY = startPos.Y + (float)Math.Sin(time * floatSpeed) * floatHeight;
         Transform.position = new Vector3(Transform.position.X, newY, Transform.position.Z);
 
-        // Rotación del objeto
         Transform.Rotate((rotationSpeed * dt) * ((float)Math.PI / 180f), Vector3.UnitY);
     }
 
     public override void OnPickUp(PlayerController playerController)
     {
         Engineson.print("MedicaeStimm PowerUp applied");
-      
-        playerController.playerShooting.boltgun.currentTotalAmmo += 10;
+
+        if (playerController != null &&
+            playerController.playerShooting != null &&
+            playerController.playerShooting.boltgun != null)
+        {
+            playerController.playerShooting.boltgun.currentTotalAmmo += 10;
+        }
     }
 }

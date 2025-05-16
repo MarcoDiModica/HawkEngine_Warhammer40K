@@ -1841,33 +1841,53 @@ void ParticleFX::SetShapeParameters(float param1, float param2, float param3) {
 
 MonoObject* ParticleFX::GetSharp()
 {
-	if (CsharpReference) {
+	if (CsharpReference != nullptr) {
 		return CsharpReference;
 	}
+
 	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "ParticleFX");
 	if (!klass) {
 		return nullptr;
 	}
+
 	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
 	if (!monoObject) {
 		return nullptr;
 	}
+
 	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.ParticleFX:.ctor(uintptr,HawkEngine.GameObject)", true);
-	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
-	if (!method)
-	{
+	if (!constructorDesc) {
 		return nullptr;
 	}
+
+	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+	mono_method_desc_free(constructorDesc);
+
+	if (!method) {
+		return nullptr;
+	}
+
 	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
 	MonoObject* ownerGo = owner ? owner->GetSharp() : nullptr;
-	if (!ownerGo)
-	{
+	if (!ownerGo) {
 		return nullptr;
 	}
+
 	void* args[2];
 	args[0] = &componentPtr;
 	args[1] = ownerGo;
-	mono_runtime_invoke(method, monoObject, args, NULL);
+
+	MonoObject* exception = nullptr;
+	mono_runtime_invoke(method, monoObject, args, &exception);
+
+	if (exception) {
+		LOG(LogType::LOG_ERROR, "Exception creating C# object for %s %s", name, owner->GetName());
+		return nullptr;
+	}
+
 	CsharpReference = monoObject;
+
+	MonoManager::GetInstance().RegisterMonoObject(this, CsharpReference);
+
 	return CsharpReference;
 }

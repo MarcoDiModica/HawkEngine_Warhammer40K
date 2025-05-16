@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 using HawkEngine;
 
 public class Boltgun : BaseWeapon
@@ -36,11 +34,11 @@ public class Boltgun : BaseWeapon
     private float reloadTimer = 0.0f;
     public override void Awake()
     {
-        
+
     }
     public override void Start()
     {
-        damage = 20.0f; 
+        damage = 20.0f;
         shootCadence = 0.15f;
         magazineSize = 30;
         currentMagazineAmmo = magazineSize;
@@ -81,8 +79,25 @@ public class Boltgun : BaseWeapon
             }
         }
 
+        if (bulletsObjects.Count != bulletsPos.Count ||
+            bulletsObjects.Count != bulletDirections.Count ||
+            bulletsObjects.Count != bulletIntervals.Count ||
+            bulletsObjects.Count != bulletLifetimes.Count ||
+            bulletsObjects.Count != bulletHitEnemies.Count ||
+            bulletsObjects.Count != bulletStartPositions.Count)
+        {
+            CleanBullets();
+            return;
+        }
+
         for (int i = bulletsObjects.Count - 1; i >= 0; i--)
         {
+            if (bulletsObjects[i] == null)
+            {
+                RemoveBulletAtIndex(i);
+                continue;
+            }
+
             bulletIntervals[i] += deltaTime;
             bulletLifetimes[i] += deltaTime;
 
@@ -122,22 +137,28 @@ public class Boltgun : BaseWeapon
                         switch (tag)
                         {
                             case "Melee":
-                                hitObject.GetComponent<EnemyControllerMelee>()?.TakeDamage(finalDamage);
+                                if (hitObject.GetComponent<EnemyControllerMelee>() != null)
+                                    hitObject.GetComponent<EnemyControllerMelee>().TakeDamage(finalDamage);
                                 break;
                             case "Ranged":
-                                hitObject.GetComponent<EnemyControllerRanged>()?.TakeDamage(finalDamage);
+                                if (hitObject.GetComponent<EnemyControllerRanged>() != null)
+                                    hitObject.GetComponent<EnemyControllerRanged>().TakeDamage(finalDamage);
                                 break;
                             case "Stalker":
-                                hitObject.GetComponent<EnemyControllerStalker>()?.TakeDamage(finalDamage);
+                                if (hitObject.GetComponent<EnemyControllerStalker>() != null)
+                                    hitObject.GetComponent<EnemyControllerStalker>().TakeDamage(finalDamage);
                                 break;
                             case "Boss":
-                                hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
+                                if (hitObject.GetComponent<EnemyControllerBoss>() != null)
+                                    hitObject.GetComponent<EnemyControllerBoss>().TakeDamage(finalDamage);
                                 break;
                             case "Warrior":
-                                hitObject.GetComponent<EnemyControllerWarrior>()?.TakeDamage(finalDamage);
+                                if (hitObject.GetComponent<EnemyControllerWarrior>() != null)
+                                    hitObject.GetComponent<EnemyControllerWarrior>().TakeDamage(finalDamage);
                                 break;
                             case "Destroyable":
-                                hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
+                                if (hitObject.GetComponent<DestroyEnviormentObject>() != null)
+                                    hitObject.GetComponent<DestroyEnviormentObject>().DestroyObject();
                                 break;
                         }
                     }
@@ -150,24 +171,45 @@ public class Boltgun : BaseWeapon
             }
 
             bulletsPos[i] = newPos;
-            bulletsObjects[i].GetComponent<Transform>().position = newPos;
-            float distanceTraveled = Vector3.Distance(bulletStartPositions[i], newPos);
-            if (distanceTraveled > range || shouldDestroy)
+
+            if (bulletsObjects[i] != null)
             {
-                Engineson.Destroy(bulletsObjects[i]);
-                bulletsObjects.RemoveAt(i);
-                bulletsPos.RemoveAt(i);
-                bulletDirections.RemoveAt(i);
-                bulletIntervals.RemoveAt(i);
-                bulletLifetimes.RemoveAt(i);
-                bulletHitEnemies.RemoveAt(i);
-                bulletStartPositions.RemoveAt(i);
+                Transform bulletTransform = bulletsObjects[i].GetComponent<Transform>();
+                if (bulletTransform != null)
+                {
+                    bulletTransform.position = newPos;
+                }
+            }
+
+            float distanceTraveled = Vector3.Distance(bulletStartPositions[i], newPos);
+            if (distanceTraveled > range || shouldDestroy || bulletLifetimes[i] >= maxLifetime)
+            {
+                RemoveBulletAtIndex(i);
             }
         }
     }
+
+    private void RemoveBulletAtIndex(int index)
+    {
+        if (index < 0 || index >= bulletsObjects.Count)
+            return;
+
+        if (bulletsObjects[index] != null)
+        {
+            Engineson.Destroy(bulletsObjects[index]);
+        }
+
+        bulletsObjects.RemoveAt(index);
+        bulletsPos.RemoveAt(index);
+        bulletDirections.RemoveAt(index);
+        bulletIntervals.RemoveAt(index);
+        bulletLifetimes.RemoveAt(index);
+        bulletHitEnemies.RemoveAt(index);
+        bulletStartPositions.RemoveAt(index);
+    }
+
     public override void Shoot()
     {
-
         if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence && !isReloading)
         {
             //shakeManager.ApplyShake(shakeIntensity, shakeDuration, shakeSpeed);
@@ -177,30 +219,37 @@ public class Boltgun : BaseWeapon
                 currentMagazineAmmo--;
 
             int audio = Audio.PlayOneShot(boltgunShot);
-            Vector3 localOffset = new Vector3(-0.9f, 2.5f, 0.5f); // Y = altura, Z = hacia adelante, X = lateral si se desea
+            Vector3 localOffset = new Vector3(-0.9f, 2.5f, 0.5f);
 
             Vector3 bulletStart = transform.position +
                                   (transform.right * localOffset.X) +
                                   (transform.up * localOffset.Y) +
                                   (transform.forward * localOffset.Z);
             bulletStart.Y += 0.5f;
-            
+
             Vector3 direction = Vector3.Normalize(transform.forward);
 
-            // Calcular rotaci�n desde la direcci�n (LookAt-like)
             float yaw = (float)(Math.Atan2(direction.X, direction.Z) * (180.0 / Math.PI));
             float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
 
-
             GameObject projectile = Engineson.CreateGameObject("BoltgunProjectile", null);
+            if (projectile == null)
+            {
+                Engineson.print("ERROR: Failed to create bullet projectile");
+                return;
+            }
+
             //projectile.AddComponent<MeshRenderer>();
             projectile.transform.SetScale(0.25f, 0.25f, 0.25f);
             projectile.transform.position = bulletStart;
             projectile.transform.SetRotation(pitch, yaw, 0f);
             projectile.AddComponent<ParticleFX>();
-            projectile.GetComponent<ParticleFX>().ApplyPreset(14);
-            projectile.GetComponent<ParticleFX>().EmitBurst(1);
-            
+            ParticleFX particleFX = projectile.GetComponent<ParticleFX>();
+            if (particleFX != null)
+            {
+                particleFX.ApplyPreset(14);
+                particleFX.EmitBurst(1);
+            }
 
             bulletsObjects.Add(projectile);
             bulletsPos.Add(bulletStart);
@@ -209,9 +258,14 @@ public class Boltgun : BaseWeapon
             bulletLifetimes.Add(0);
             bulletHitEnemies.Add(new HashSet<GameObject>());
             bulletStartPositions.Add(bulletStart);
-            playerController.playerShooting.rifleShotFX.EmitBurst(1);
-        }
 
+            if (playerController != null &&
+                playerController.playerShooting != null &&
+                playerController.playerShooting.rifleShotFX != null)
+            {
+                playerController.playerShooting.rifleShotFX.EmitBurst(1);
+            }
+        }
     }
 
     public override void Reload()
@@ -238,26 +292,53 @@ public class Boltgun : BaseWeapon
 
     public override void UseAbility1()
     {
-
         Engineson.print("Boltgun ability 1 used");
-        grenadeLauncher.TriggerAbility();
+        if (grenadeLauncher != null)
+        {
+            grenadeLauncher.TriggerAbility();
+        }
     }
 
     public override void UseAbility2()
     {
         Engineson.print("Boltgun ability 2 used");
-        arcSnare.TriggerAbility();
+        if (arcSnare != null)
+        {
+            arcSnare.TriggerAbility();
+        }
     }
 
     public override void CleanBullets()
     {
-        
+        for (int i = 0; i < bulletsObjects.Count; i++)
+        {
+            if (bulletsObjects[i] != null)
+            {
+                Engineson.Destroy(bulletsObjects[i]);
+            }
+        }
+
+        bulletsObjects.Clear();
+        bulletsPos.Clear();
+        bulletDirections.Clear();
+        bulletIntervals.Clear();
+        bulletLifetimes.Clear();
+        bulletHitEnemies.Clear();
+        bulletStartPositions.Clear();
+
+        Engineson.print("Cleaned all bullets");
     }
 
     public override void ResetCooldowns()
     {
-        arcSnare.ResetCooldowns();
-        grenadeLauncher.ResetCooldowns();
-    }
+        if (arcSnare != null)
+        {
+            arcSnare.ResetCooldowns();
+        }
 
+        if (grenadeLauncher != null)
+        {
+            grenadeLauncher.ResetCooldowns();
+        }
+    }
 }

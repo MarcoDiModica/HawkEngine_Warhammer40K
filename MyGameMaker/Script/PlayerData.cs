@@ -123,7 +123,7 @@ public class PlayerData
     {
         health = maxHealth;
         healthTemp = maxHealthTemp;
-        Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
+        //Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
     }
     public float GetHealthTemp() { return healthTemp; }
 

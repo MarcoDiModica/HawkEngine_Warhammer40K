@@ -136,6 +136,9 @@ public class Shotgun : BaseWeapon
                             case "Destroyable":
                                 hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
                                 break;
+                            case "ExplosiveBarrel":
+                                hitObject.GetComponent<ExplosiveBarrel>()?.Explode();
+                                break;
                         }
                     }
 

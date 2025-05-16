@@ -152,7 +152,7 @@ void MonoManager::LoadUserClasses() {
 
 void MonoManager::Shutdown() {
 	if (scriptDomain) {
-		//UnloadScriptDomain();
+		UnloadScriptDomain();
 	}
 
 	if (rootDomain) {

@@ -152,9 +152,6 @@ public class EnemyControllerWarrior : EnemyController
                     Vector3 displacement = direction * speed * deltaTime;
                     Vector3 newPos = currentPos + displacement;
                     bool shouldDestroy = false;
-                    //Engineson.print("" + currentPos);
-                    //Engineson.print("" + direction);
-                    //Engineson.print("" + displacement.Length());
                     GameObject hitObject = null;
 
                     RayCast ray = new RayCast();
@@ -162,7 +159,6 @@ public class EnemyControllerWarrior : EnemyController
 
                     if (ray.hit.isHit)
                     {
-                        Engineson.print("Le di gente");
                         hitObject = ray.hit.gameObject;
                     }
 
@@ -175,13 +171,11 @@ public class EnemyControllerWarrior : EnemyController
                             if (!bulletHitEnemies[i].Contains(hitObject))
                             {
                                 bulletHitEnemies[i].Add(hitObject);
-                                Engineson.print("Le di otra vez");
 
                                 switch (tag)
                                 {
                                     case "Player":
                                         pc.playerData.TakeDamage(projectileDamage);
-                                        Engineson.print("Le redi gente");
                                         break;
                                 }
                             }
@@ -272,7 +266,7 @@ public class EnemyControllerWarrior : EnemyController
                 moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
                 Vector3 desiredVelocity = moveDirection * speedMovement;
 
-                //anim.SetRunningAnimation();
+                anim?.SetRunAnimation();
                 if (desiredVelocity.LengthSquared() > 0)
                 {
                     desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
@@ -297,7 +291,6 @@ public class EnemyControllerWarrior : EnemyController
                 );
 
                 collider.SetRotation(newRotation);
-                anim.SetRunAnimation();
                 break;
 
             case EnemyState.ATTACK:
@@ -310,8 +303,6 @@ public class EnemyControllerWarrior : EnemyController
                     }
                     if (hurtboxTimer >= hurtboxActivationTime)
                     {
-                        //CreateHurtbox();
-                        //anim.SetRandomAttackAnimation();
                         hurtboxTimer = 0f;
                         dodgeTimer = 0f;
                         dodgewindow = true;
@@ -320,7 +311,6 @@ public class EnemyControllerWarrior : EnemyController
                     {
                         Attack();
 
-                        //DestroyHurtbox();
                         hurtboxTimer = 0f;
                         dodgeTimer = 0f;
                         dodgewindow = false;
@@ -333,7 +323,6 @@ public class EnemyControllerWarrior : EnemyController
                     if (shootTimer >= shootCooldown)
                     {
                         Attack();
-                        //sound?.Play();
                         shootTimer = 0;
                     }
                 }

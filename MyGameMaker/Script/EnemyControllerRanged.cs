@@ -7,7 +7,7 @@ public class EnemyControllerRanged : EnemyController
 {
     private List<BulletData> activeProjectiles = new List<BulletData>();
     public float shootCooldown = 2.0f;
-    public float projectileSpeed = 90.0f;
+    public float projectileSpeed = 30.0f;
     public float projectileLifetime = 0.5f;
     protected float shootTimer = 0f;
     private PlayerController pc;
@@ -120,8 +120,8 @@ public class EnemyControllerRanged : EnemyController
             currentHealth = maxHealth;
             gameObject.tag = "Ranged";
             damage = 20.0f;
-            range = 30f;
-            timeToLerp = 0.1f;
+            range = 40f;
+            timeToLerp = 0.5f;
 
             componentsInitialized = true;
             Engineson.print("EnemyControllerRanged initialized successfully");
@@ -503,7 +503,7 @@ public class EnemyControllerRanged : EnemyController
             ParticleFX particleFX = projectile.AddComponent<ParticleFX>();
             if (particleFX != null)
             {
-                particleFX.ApplyPreset(14);
+                particleFX.ApplyPreset(10);
                 particleFX.EmitBurst(1);
             }
 

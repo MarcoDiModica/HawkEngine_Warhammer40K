@@ -46,7 +46,7 @@ public class Boltgun : BaseWeapon
         currentTotalAmmo = 180;
         reloadTime = 0.5f;
         range = 30f;
-        timeToLerp = 0.1f;
+        timeToLerp = 0.2f;
         ammoType = AmmoType.BOLTGUN;
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();

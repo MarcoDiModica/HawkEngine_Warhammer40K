@@ -116,7 +116,7 @@ public class HUD : MonoBehaviour
     {
         float redThirst = redThirstManager.GetRedThirstPoints();
         float maxRedThirst = 5;
-        float height = (redThirst / maxRedThirst) * 0.012f;
+        float height = (redThirst / maxRedThirst) * 0.12f;
         return height;
     }
 
@@ -124,7 +124,7 @@ public class HUD : MonoBehaviour
     {
         float redThirst = redThirstManager.GetRedThirstPoints();
         float maxRedThirst = 5;
-        float pos = 0.934f - (redThirst / maxRedThirst) * 0.012f;
+        float pos = 0.934f - (redThirst / maxRedThirst) * 0.12f;
         return pos;
     }
 
@@ -291,11 +291,11 @@ public class HUD : MonoBehaviour
     }
     public override void Update(float deltaTime)
     {
-        transform_hpBar.SetScaleUI(new Vector3(CalculateHPBarWidth(), 0.032f, 1.0f));
+        transform_hpBar.SetScaleUI(new Vector3(CalculateHPBarWidth(), 0.045f, 1.0f));
         transform_hpBarAnim.DOMoveXUI(CalculateHPBarAnimPos(), 0f, Modes.LINEAR);
-        transform_hpTempBar.SetScaleUI(new Vector3(CalculateHPTempBarWidth(), 0.018f, 1.0f));
+        transform_hpTempBar.SetScaleUI(new Vector3(CalculateHPTempBarWidth(), 0.027f, 1.0f));
         transform_hpTempBarAnim.DOMoveXUI(CalculateHPTempBarAnimPos(), 0f, Modes.LINEAR);
-        transform_redThirstBar.SetScaleUI(new Vector3(0.037f, CalculateRedThirstBarHeight(), 1.0f));
+        transform_redThirstBar.SetScaleUI(new Vector3(0.056f, CalculateRedThirstBarHeight(), 1.0f));
         transform_redThirstBarAnim.DOMoveYUI(CalculateRedThirstBarAnimPos(), 0f, Modes.LINEAR);
 
         if (playerShootingScript.hasRailgun && railgunScript == null)

@@ -40,6 +40,14 @@ uniform ivec2 screenSize;
 uniform int useForwardPlus;
 uniform int numLights;
 
+uniform samplerCube shadowCubeMap;
+uniform sampler2DArray directionalShadowMap;
+uniform float farPlane;
+uniform float shadowBias;
+uniform float shadowNormalBias;
+uniform int pcfKernelSize;
+uniform int useSoftShadows;
+
 struct PointLight {
     vec4 position;
     vec4 color;
@@ -122,6 +130,101 @@ vec3 FresnelSchlick(float cosTheta, vec3 F0) {
     return F0 + (1.0 - F0) * pow(max(1.0 - cosTheta, 0.0), 5.0);
 }
 
+float PointLightShadowCalculation(vec3 fragPos, vec3 lightPos, int shadowMapIndex) {
+    // Get vector between fragment position and light position
+    vec3 fragToLight = fragPos - lightPos;
+    // Use the light to fragment vector to sample from the depth map    
+    float closestDepth = texture(shadowCubeMap, fragToLight).r;
+    // It is currently in linear range between [0,1]. Re-transform back to original value
+    closestDepth *= farPlane;
+    // Now get current linear depth as the length between the fragment and light position
+    float currentDepth = length(fragToLight);
+    // Now test for shadows
+    float bias = shadowBias;
+    float shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;
+    
+    // PCF for softer shadows
+    if (useSoftShadows == 1) {
+        shadow = 0.0;
+        vec3 sampleOffsetDirections[20] = vec3[](
+           vec3(1, 1, 1), vec3(1, -1, 1), vec3(-1, -1, 1), vec3(-1, 1, 1), 
+           vec3(1, 1, -1), vec3(1, -1, -1), vec3(-1, -1, -1), vec3(-1, 1, -1),
+           vec3(1, 1, 0), vec3(1, -1, 0), vec3(-1, -1, 0), vec3(-1, 1, 0),
+           vec3(1, 0, 1), vec3(-1, 0, 1), vec3(1, 0, -1), vec3(-1, 0, -1),
+           vec3(0, 1, 1), vec3(0, -1, 1), vec3(0, -1, -1), vec3(0, 1, -1)
+        );
+        
+        int samples = pcfKernelSize * pcfKernelSize;
+        float diskRadius = 0.05;
+        for(int i = 0; i < samples; ++i) {
+            closestDepth = texture(shadowCubeMap, fragToLight + sampleOffsetDirections[i] * diskRadius).r;
+            closestDepth *= farPlane;
+            shadow += currentDepth - bias > closestDepth ? 1.0 : 0.0;
+        }
+        shadow /= float(samples);
+    }
+    
+    return shadow;
+}
+
+float DirectionalShadowCalculation(vec3 fragPos, vec3 normal, vec3 lightDir, int shadowMapIndex) {
+    // Calculate shadow cascade
+    vec4 fragPosViewSpace = vec4(fs_in.FragPos, 1.0);
+    float depthValue = abs(fragPosViewSpace.z);
+    
+    int layer = 0;
+    float cascadePlaneDistances[4]; // Should match maxCascades
+    // These should be set as uniforms based on your cascade splits
+    cascadePlaneDistances[0] = 5.0;
+    cascadePlaneDistances[1] = 15.0;
+    cascadePlaneDistances[2] = 50.0;
+    cascadePlaneDistances[3] = farPlane;
+    
+    for (int i = 0; i < 4; ++i) {
+        if (depthValue < cascadePlaneDistances[i]) {
+            layer = i;
+            break;
+        }
+    }
+    
+    // Get light space position
+    vec4 fragPosLightSpace = directionalLight.shadowMatrix * vec4(fragPos, 1.0);
+    // Perform perspective divide
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    // Transform to [0,1] range
+    projCoords = projCoords * 0.5 + 0.5;
+    
+    // Check if position is outside light frustum
+    if (projCoords.z > 1.0) {
+        return 0.0;
+    }
+    
+    // Calculate bias (based on depth map resolution and slope)
+    float bias = max(shadowBias * (1.0 - dot(normal, lightDir)), shadowNormalBias);
+    
+    // PCF for softer shadows
+    float shadow = 0.0;
+    vec2 texelSize = 1.0 / vec2(textureSize(directionalShadowMap, 0));
+    int halfKernel = pcfKernelSize / 2;
+    
+    for(int x = -halfKernel; x <= halfKernel; ++x) {
+        for(int y = -halfKernel; y <= halfKernel; ++y) {
+            float pcfDepth = texture(directionalShadowMap, vec3(projCoords.xy + vec2(x, y) * texelSize, layer)).r; 
+            shadow += projCoords.z - bias > pcfDepth ? 1.0 : 0.0;        
+        }    
+    }
+    
+    if (useSoftShadows == 1) {
+        shadow /= float(pcfKernelSize * pcfKernelSize);
+    } else {
+        float closestDepth = texture(directionalShadowMap, vec3(projCoords.xy, layer)).r;
+        shadow = projCoords.z - bias > closestDepth ? 1.0 : 0.0;
+    }
+    
+    return shadow;
+}
+
+
 void main() {
     vec4 albedo = albedoColor;
     if (u_HasAlbedoMap == 1) {
@@ -182,7 +285,13 @@ vec3 kS = F;
 vec3 kD = vec3(1.0) - kS;
 kD *= 1.0 - metallic; 
 
-vec3 directLighting = (kD * albedo.rgb / PI + specular) * radiance * NdotL;
+ float shadow = 0.0;
+    if (directionalLight.castShadow == 1) {
+        shadow = DirectionalShadowCalculation(fs_in.FragPos, N, lightDir, int(directionalLight.shadowMapIndex));
+    }
+
+  
+vec3 directLighting = (kD * albedo.rgb / PI + specular) * radiance * NdotL * (1.0 - shadow);
 lighting += directLighting;
 
  float attenuation = 0;
@@ -195,8 +304,8 @@ if (useForwardPlus == 1) {
     uint startIndex = lightRange.x;
     uint lightCount = lightRange.y;
 
-    for (uint i = 0; i < numLights; i++) {
-        uint lightIndex = lightIndices[startIndex + i];
+    for (int i = 0; i < numLights; i++) {
+        uint lightIndex = lightIndices[startIndex + uint(i)];
         PointLight light = pointLights[lightIndex];
 
         vec3 lightPos = light.position.xyz;
@@ -233,6 +342,11 @@ if (useForwardPlus == 1) {
         kD *= 1.0 - metallic;
         
         vec3 pointLighting = (kD * albedo.rgb / PI + specular) * radiance * NdotL;
+
+         float shadowPoint = PointLightShadowCalculation(fs_in.FragPos, lightPos, int(light.shadowMapIndex));
+                // Apply shadow to your point light calculation
+                pointLighting *= (1.0 - shadowPoint);
+
         lighting += pointLighting;
         }
     }

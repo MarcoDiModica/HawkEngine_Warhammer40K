@@ -14,23 +14,38 @@ Shaders::~Shaders() {
 	}
 }
 
-bool Shaders::LoadShaders(const std::string& vertexShaderFile, const std::string& fragmentShaderFile) {
+bool Shaders::LoadShaders(const std::string& vertexShaderFile,
+	const std::string& fragmentShaderFile,
+	const std::string& geometryShaderFile) {
 	vertexShaderPath = vertexShaderFile;
 	fragmentShaderPath = fragmentShaderFile;
+	geometryShaderPath = geometryShaderFile;
 
 	std::string vertexShaderSource = LoadShaderSource(vertexShaderFile);
 	std::string fragmentShaderSource = LoadShaderSource(fragmentShaderFile);
+	std::string geometryShaderSource = geometryShaderFile.empty() ? "" : LoadShaderSource(geometryShaderFile);
 
-	if (vertexShaderSource.empty() || fragmentShaderSource.empty()) {
-		LOG(LogType::LOG_ERROR, "Failed to load shader source files: %s, %s", vertexShaderFile.c_str(), fragmentShaderFile.c_str());
+	if (vertexShaderSource.empty() || fragmentShaderSource.empty() ||
+		(!geometryShaderFile.empty() && geometryShaderSource.empty())) {
+		LOG(LogType::LOG_ERROR, "Failed to load shader source files: %s, %s, %s",
+			vertexShaderFile.c_str(), fragmentShaderFile.c_str(), geometryShaderFile.c_str());
 		return false;
 	}
 
 	vertexShaderSource = PreprocessShader(vertexShaderSource);
 	fragmentShaderSource = PreprocessShader(fragmentShaderSource);
+	if (!geometryShaderSource.empty()) {
+		geometryShaderSource = PreprocessShader(geometryShaderSource);
+	}
 
 	GLuint vertexShader = CompileShader(vertexShaderSource, GL_VERTEX_SHADER);
 	GLuint fragmentShader = CompileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
+	GLuint geometryShader = 0;
+
+	if (!geometryShaderSource.empty()) {
+		geometryShader = CompileShader(geometryShaderSource, GL_GEOMETRY_SHADER);
+		if (geometryShader == 0) return false;
+	}
 
 	if (vertexShader == 0 || fragmentShader == 0) {
 		return false;
@@ -43,6 +58,9 @@ bool Shaders::LoadShaders(const std::string& vertexShaderFile, const std::string
 	_program = glCreateProgram();
 	glAttachShader(_program, vertexShader);
 	glAttachShader(_program, fragmentShader);
+	if (geometryShader != 0) {
+		glAttachShader(_program, geometryShader);
+	}
 	glLinkProgram(_program);
 
 	GLint success;
@@ -56,21 +74,32 @@ bool Shaders::LoadShaders(const std::string& vertexShaderFile, const std::string
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+	if (geometryShader != 0) {
+		glDeleteShader(geometryShader);
+	}
 
 	isComputeShader = false;
 
 	return true;
 }
 
-bool Shaders::LoadShadersFromSource(const std::string& vertexSource, const std::string& fragmentSource) {
+bool Shaders::LoadShadersFromSource(const std::string& vertexSource, const std::string& fragmentSource, const std::string& geometrySource) {
 	vertexShaderPath.clear();
 	fragmentShaderPath.clear();
+	geometryShaderPath.clear();
 
 	std::string processedVertexSource = PreprocessShader(vertexSource);
 	std::string processedFragmentSource = PreprocessShader(fragmentSource);
+	std::string processedGeometrySource = geometrySource.empty() ? "" : PreprocessShader(geometrySource);
 
 	GLuint vertexShader = CompileShader(processedVertexSource, GL_VERTEX_SHADER);
 	GLuint fragmentShader = CompileShader(processedFragmentSource, GL_FRAGMENT_SHADER);
+	GLuint geometryShader = 0;
+
+	if (!geometrySource.empty()) {
+		geometryShader = CompileShader(processedGeometrySource, GL_GEOMETRY_SHADER);
+		if (geometryShader == 0) return false;
+	}
 
 	if (vertexShader == 0 || fragmentShader == 0) {
 		return false;
@@ -83,6 +112,9 @@ bool Shaders::LoadShadersFromSource(const std::string& vertexSource, const std::
 	_program = glCreateProgram();
 	glAttachShader(_program, vertexShader);
 	glAttachShader(_program, fragmentShader);
+	if (geometryShader != 0) {
+		glAttachShader(_program, geometryShader);
+	}
 	glLinkProgram(_program);
 
 	GLint success;
@@ -96,6 +128,9 @@ bool Shaders::LoadShadersFromSource(const std::string& vertexSource, const std::
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+	if (geometryShader != 0) {
+		glDeleteShader(geometryShader);
+	}
 
 	isComputeShader = false;
 
@@ -498,4 +533,25 @@ CustomShader::CustomShader(const std::string& vertexFile, const std::string& fra
 
 bool CustomShader::Initialize() {
 	return LoadShaders(vertexFile, fragmentFile);
+}
+
+PointShadowShader::PointShadowShader() {
+}
+
+bool PointShadowShader::Initialize() {
+	return LoadShaders(
+		"Assets/Shaders/shadow_vertex.glsl",
+		"Assets/Shaders/point_shadow_fragment.glsl",
+		"Assets/Shaders/point_shadow_geometry.glsl"
+	);
+}
+
+DirectionalShadowShader::DirectionalShadowShader() {
+}
+
+bool DirectionalShadowShader::Initialize() {
+	return LoadShaders(
+		"Assets/Shaders/shadow_vertex.glsl",
+		"Assets/Shaders/dummy_fragment.glsl" // Can be empty for depth-only rendering
+	);
 }

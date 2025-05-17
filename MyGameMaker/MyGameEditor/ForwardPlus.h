@@ -17,6 +17,16 @@ struct GPUPointLight {
 	uint32_t padding;     // alineación
 };
 
+struct ShadowSettings {
+	int shadowMapSize = 2048;
+	float shadowBias = 0.005f;
+	float shadowNormalBias = 0.01f;
+	float shadowFarPlane = 100.0f;
+	int pcfKernelSize = 3;
+	bool softShadows = true;
+	float cascadeLambda = 0.5f;
+};
+
 struct GPUDirectionalLight {
 	glm::vec4 direction;  // xyz = dirección, w = intensidad
 	glm::vec4 color;      // rgb = color, a = no usado
@@ -54,11 +64,42 @@ public:
 	int GetTileSize() const { return tileSize; }
 	int GetMaxLightsPerTile() const { return maxLightsPerTile; }
 
+	GLuint GetShadowFBO() const { return shadowMapFBO; }
+	GLuint GetPointShadowMapArray() const { return pointShadowMapArray; }
+	GLuint GetDirectionalShadowMapArray() const { return directionalShadowMapArray; }
+	int GetShadowMapSize() const { return shadowMapSize; }
+	int GetMaxPointLightShadows() const { return maxPointLightShadows; }
+	int GetMaxDirectionalLightShadows() const { return maxDirectionalLightShadows; }
+	int GetMaxCascades() const { return maxCascades; }
+	GPUPointLight GetPointLight(int index) const { return pointLights[index]; }
+	const std::vector<GPUPointLight>& GetPointLights() const { return pointLights; }
+
 	int GetTotalLights() const { return (int)pointLights.size(); }
 	int GetVisibleLights() const { return visibleLightCount; }
 	int GetCulledLights() const { return GetTotalLights() - visibleLightCount; }
 
 	const GPUDirectionalLight& GetDirectionalLight() const { return directionalLight; }
+
+	void SetupShadowMaps();
+	void UpdateShadowSettings(const ShadowSettings& settings);
+	const ShadowSettings& GetShadowSettings() const { return shadowSettings; }
+
+	// For point lights
+	glm::mat4 CalculatePointLightMatrix(const glm::vec3& lightPos, int face);
+	std::vector<glm::mat4> CalculatePointLightMatrices(const glm::vec3& lightPos);
+
+	// For directional lights
+	std::vector<glm::mat4> CalculateDirectionalLightMatrices(const glm::vec3& lightDir,
+		const glm::vec3& cameraPos,
+		const glm::mat4& cameraView);
+
+	uint32_t AcquirePointShadowIndex();
+	void ReleasePointShadowIndex(uint32_t index);
+
+	uint32_t AcquireDirShadowIndex();
+	void ReleaseDirShadowIndex(uint32_t index);
+
+	void ResetShadowIndices();
 
 private:
 	ForwardPlusLighting() = default;
@@ -93,5 +134,23 @@ private:
 
 	int visibleLightCount = 0;
 
-	static constexpr int MAX_POINT_LIGHTS = 1024; 
+	static constexpr int MAX_POINT_LIGHTS = 1024;
+
+
+
+	//xadows
+
+	uint32_t nextPointShadowIndex = 0;
+	uint32_t nextDirShadowIndex = 0;
+	std::vector<uint32_t> availablePointShadowIndices;
+	std::vector<uint32_t> availableDirShadowIndices;
+
+	GLuint shadowMapFBO = 0;
+	GLuint pointShadowMapArray = 0;
+	GLuint directionalShadowMapArray = 0;
+	int shadowMapSize = 2048;
+	int maxPointLightShadows = 16;
+	int maxDirectionalLightShadows = 4;
+	int maxCascades = 4;
+	ShadowSettings shadowSettings;
 };

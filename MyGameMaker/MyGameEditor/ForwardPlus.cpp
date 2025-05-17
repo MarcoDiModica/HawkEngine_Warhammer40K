@@ -157,6 +157,8 @@ void ForwardPlusLighting::UpdateLights() {
 	glNamedBufferSubData(directionalLightBuffer, 0,
 		sizeof(GPUDirectionalLight),
 		&directionalLight);
+
+    UpdateShadowSettings(shadowSettings);
 }
 
 void ForwardPlusLighting::PerformLightCulling(const glm::mat4& viewMatrix, const glm::mat4& projMatrix) {
@@ -495,8 +497,8 @@ GPUPointLight ForwardPlusLighting::ConvertToGPULight(const LightComponent* light
 	
 	
 	gpuLight.lightType = 0; // point light
-	gpuLight.castShadow = 0; // no shadows yet
-	gpuLight.shadowMapIndex = 0;
+    gpuLight.castShadow = 1;
+    gpuLight.shadowMapIndex = gpuLight.castShadow ? AcquirePointShadowIndex() : 0;
 	gpuLight.padding = 0;
 
 	return gpuLight;
@@ -509,5 +511,289 @@ void ForwardPlusLighting::UpdateDirectionalLight(const LightComponent* light) {
 	glm::vec3 direction = light->GetDirection();
 	directionalLight.direction = glm::vec4(direction, light->GetIntensity());
 	directionalLight.color = glm::vec4(light->GetAmbient(), 1.0f);
-	directionalLight.castShadow = 0; // no shadows yet
+    directionalLight.castShadow = 1;
+    directionalLight.shadowMapIndex = directionalLight.castShadow ? AcquireDirShadowIndex() : 0;
+}
+
+void ForwardPlusLighting::SetupShadowMaps() {
+    if (shadowMapFBO == 0) {
+        glGenFramebuffers(1, &shadowMapFBO);
+    }
+
+    // Point light shadow maps (cubemap array)
+    if (pointShadowMapArray == 0) {
+        glGenTextures(1, &pointShadowMapArray);
+        glBindTexture(GL_TEXTURE_CUBE_MAP_ARRAY, pointShadowMapArray);
+        glTexImage3D(GL_TEXTURE_CUBE_MAP_ARRAY, 0, GL_DEPTH_COMPONENT32F,
+            shadowMapSize, shadowMapSize,
+            maxPointLightShadows * 6, // 6 faces per cubemap
+            0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+
+        glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+    }
+
+    // Directional light shadow maps (2D array)
+    if (directionalShadowMapArray == 0) {
+        glGenTextures(1, &directionalShadowMapArray);
+        glBindTexture(GL_TEXTURE_2D_ARRAY, directionalShadowMapArray);
+        glTexImage3D(GL_TEXTURE_2D_ARRAY, 0, GL_DEPTH_COMPONENT32F,
+            shadowMapSize, shadowMapSize,
+            maxDirectionalLightShadows * maxCascades,
+            0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+
+        float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+        glTexParameterfv(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_BORDER_COLOR, borderColor);
+    }
+
+    // Check FBO completeness
+    glBindFramebuffer(GL_FRAMEBUFFER, shadowMapFBO);
+
+    if (pointShadowMapArray != 0) {
+        glFramebufferTextureLayer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+            pointShadowMapArray, 0, 0); // Layer 0
+    }
+    else if (directionalShadowMapArray != 0) {
+        glFramebufferTextureLayer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+            directionalShadowMapArray, 0, 0); // Layer 0
+    }
+
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+
+
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        LOG(LogType::LOG_ERROR, "Shadow FBO not complete!");
+    }
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void ForwardPlusLighting::UpdateShadowSettings(const ShadowSettings& settings) {
+    shadowSettings = settings;
+    shadowMapSize = settings.shadowMapSize;
+
+    // Recreate textures if size changed
+    if (pointShadowMapArray != 0) {
+        glDeleteTextures(1, &pointShadowMapArray);
+        pointShadowMapArray = 0;
+    }
+    if (directionalShadowMapArray != 0) {
+        glDeleteTextures(1, &directionalShadowMapArray);
+        directionalShadowMapArray = 0;
+    }
+
+    SetupShadowMaps();
+}
+
+glm::mat4 ForwardPlusLighting::CalculatePointLightMatrix(const glm::vec3& lightPos, int face) {
+    glm::mat4 shadowProj = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, shadowSettings.shadowFarPlane);
+
+    glm::mat4 shadowView;
+    switch (face) {
+    case 0: // +X
+        shadowView = glm::lookAt(lightPos, lightPos + glm::vec3(1.0, 0.0, 0.0), glm::vec3(0.0, -1.0, 0.0));
+        break;
+    case 1: // -X
+        shadowView = glm::lookAt(lightPos, lightPos + glm::vec3(-1.0, 0.0, 0.0), glm::vec3(0.0, -1.0, 0.0));
+        break;
+    case 2: // +Y
+        shadowView = glm::lookAt(lightPos, lightPos + glm::vec3(0.0, 1.0, 0.0), glm::vec3(0.0, 0.0, 1.0));
+        break;
+    case 3: // -Y
+        shadowView = glm::lookAt(lightPos, lightPos + glm::vec3(0.0, -1.0, 0.0), glm::vec3(0.0, 0.0, -1.0));
+        break;
+    case 4: // +Z
+        shadowView = glm::lookAt(lightPos, lightPos + glm::vec3(0.0, 0.0, 1.0), glm::vec3(0.0, -1.0, 0.0));
+        break;
+    case 5: // -Z
+        shadowView = glm::lookAt(lightPos, lightPos + glm::vec3(0.0, 0.0, -1.0), glm::vec3(0.0, -1.0, 0.0));
+        break;
+    }
+
+    return shadowProj * shadowView;
+}
+
+std::vector<glm::mat4> ForwardPlusLighting::CalculatePointLightMatrices(const glm::vec3& lightPos) {
+    std::vector<glm::mat4> matrices(6);
+    for (int i = 0; i < 6; ++i) {
+        matrices[i] = CalculatePointLightMatrix(lightPos, i);
+    }
+    return matrices;
+}
+
+std::vector<glm::mat4> ForwardPlusLighting::CalculateDirectionalLightMatrices(
+    const glm::vec3& lightDir,
+    const glm::vec3& cameraPos,
+    const glm::mat4& cameraView) {
+
+    std::vector<glm::mat4> matrices;
+    matrices.reserve(maxCascades);
+
+    // Calculate cascade splits
+    float cascadeSplits[4]; // THIS HAS TO MATCH MAXCASCADES!!!!
+    float nearClip = 0.1f;
+    float farClip = shadowSettings.shadowFarPlane;
+    float clipRange = farClip - nearClip;
+
+    float minZ = nearClip;
+    float maxZ = nearClip + clipRange;
+
+    float range = maxZ - minZ;
+    float ratio = maxZ / minZ;
+
+    for (uint32_t i = 0; i < maxCascades; i++) {
+        float p = (i + 1) / static_cast<float>(maxCascades);
+        float log = minZ * std::pow(ratio, p);
+        float uniform = minZ + range * p;
+        float d = shadowSettings.cascadeLambda * (log - uniform) + uniform;
+        cascadeSplits[i] = (d - nearClip) / clipRange;
+    }
+
+    float lastSplitDist = 0.0;
+    for (uint32_t i = 0; i < maxCascades; i++) {
+        float splitDist = cascadeSplits[i];
+
+        glm::vec3 frustumCorners[8] = {
+            // Near plane
+            glm::vec3(-1.0f,  1.0f, -1.0f),
+            glm::vec3(1.0f,  1.0f, -1.0f),
+            glm::vec3(1.0f, -1.0f, -1.0f),
+            glm::vec3(-1.0f, -1.0f, -1.0f),
+            // Far plane
+            glm::vec3(-1.0f,  1.0f,  1.0f),
+            glm::vec3(1.0f,  1.0f,  1.0f),
+            glm::vec3(1.0f, -1.0f,  1.0f),
+            glm::vec3(-1.0f, -1.0f,  1.0f),
+        };
+
+        // Project frustum corners into world space
+        glm::mat4 invCam = glm::inverse(cameraView);
+        for (uint32_t i = 0; i < 8; i++) {
+            glm::vec4 invCorner = invCam * glm::vec4(frustumCorners[i], 1.0f);
+            frustumCorners[i] = invCorner / invCorner.w;
+        }
+
+        // Calculate frustum split corners
+        for (uint32_t i = 0; i < 4; i++) {
+            glm::vec3 dist = frustumCorners[i + 4] - frustumCorners[i];
+            frustumCorners[i + 4] = frustumCorners[i] + (dist * splitDist);
+            frustumCorners[i] = frustumCorners[i] + (dist * lastSplitDist);
+        }
+
+        // Calculate frustum centroid
+        glm::vec3 frustumCenter = glm::vec3(0.0f);
+        for (uint32_t i = 0; i < 8; i++) {
+            frustumCenter += frustumCorners[i];
+        }
+        frustumCenter /= 8.0f;
+
+        // Calculate light view matrix
+        glm::mat4 lightView = glm::lookAt(
+            frustumCenter - glm::normalize(lightDir) * 10.0f, // Move back a bit
+            frustumCenter,
+            glm::vec3(0.0f, 1.0f, 0.0f));
+
+        // Calculate frustum bounds in light space
+        float minX = std::numeric_limits<float>::max();
+        float maxX = std::numeric_limits<float>::lowest();
+        float minY = std::numeric_limits<float>::max();
+        float maxY = std::numeric_limits<float>::lowest();
+        float minZ = std::numeric_limits<float>::max();
+        float maxZ = std::numeric_limits<float>::lowest();
+
+        for (uint32_t i = 0; i < 8; i++) {
+            glm::vec4 trf = lightView * glm::vec4(frustumCorners[i], 1.0f);
+            minX = std::min(minX, trf.x);
+            maxX = std::max(maxX, trf.x);
+            minY = std::min(minY, trf.y);
+            maxY = std::max(maxY, trf.y);
+            minZ = std::min(minZ, trf.z);
+            maxZ = std::max(maxZ, trf.z);
+        }
+
+        // Stabilize the shadow map by snapping to texel increments
+        float worldUnitsPerTexel = (maxX - minX) / shadowMapSize;
+        glm::mat4 lightProjection = glm::ortho(
+            minX, maxX,
+            minY, maxY,
+            -maxZ, -minZ);
+
+        glm::vec4 shadowOrigin = lightProjection * lightView * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+        shadowOrigin *= shadowMapSize / 2.0f;
+
+        glm::vec2 roundedOrigin = glm::round(glm::vec2(shadowOrigin.x, shadowOrigin.y));
+        glm::vec2 roundOffset = roundedOrigin - glm::vec2(shadowOrigin.x, shadowOrigin.y);
+        roundOffset *= 2.0f / shadowMapSize;
+
+        lightProjection[3][0] += roundOffset.x;
+        lightProjection[3][1] += roundOffset.y;
+
+        matrices.push_back(lightProjection * lightView);
+        lastSplitDist = cascadeSplits[i];
+    }
+
+    return matrices;
+}
+
+uint32_t ForwardPlusLighting::AcquirePointShadowIndex() {
+    if (!availablePointShadowIndices.empty()) {
+        uint32_t index = availablePointShadowIndices.back();
+        availablePointShadowIndices.pop_back();
+        return index;
+    }
+
+    if (nextPointShadowIndex >= maxPointLightShadows) {
+        LOG(LogType::LOG_WARNING, "Exceeded maximum point light shadow maps (%d)", maxPointLightShadows);
+        return 0; // Fallback to first index
+    }
+
+    return nextPointShadowIndex++;
+}
+
+void ForwardPlusLighting::ReleasePointShadowIndex(uint32_t index) {
+    if (index < maxPointLightShadows) {
+        availablePointShadowIndices.push_back(index);
+    }
+}
+
+uint32_t ForwardPlusLighting::AcquireDirShadowIndex() {
+    if (!availableDirShadowIndices.empty()) {
+        uint32_t index = availableDirShadowIndices.back();
+        availableDirShadowIndices.pop_back();
+        return index;
+    }
+
+    if (nextDirShadowIndex >= maxDirectionalLightShadows) {
+        LOG(LogType::LOG_WARNING, "Exceeded maximum directional light shadow maps (%d)", maxDirectionalLightShadows);
+        return 0; // Fallback to first index
+    }
+
+    return nextDirShadowIndex++;
+}
+
+void ForwardPlusLighting::ReleaseDirShadowIndex(uint32_t index) {
+    if (index < maxDirectionalLightShadows) {
+        availableDirShadowIndices.push_back(index);
+    }
+}
+
+void ForwardPlusLighting::ResetShadowIndices() {
+    nextPointShadowIndex = 0;
+    nextDirShadowIndex = 0;
+    availablePointShadowIndices.clear();
+    availableDirShadowIndices.clear();
 }

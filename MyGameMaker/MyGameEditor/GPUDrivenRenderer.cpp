@@ -75,7 +75,7 @@ void GPUDrivenRenderer::BeginFrame() {
 	shaderBatches.clear();
 	currentInstanceOffset = 0;
 	visibleInstanceCount = 0;
-
+	ForwardPlusLighting::GetInstance().ResetShadowIndices();
 	GLuint zero = 0;
 	glNamedBufferSubData(visibleCountBuffer, 0, sizeof(GLuint), &zero);
 }
@@ -259,6 +259,10 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 				uiBatch.materialIndices.push_back(batch.materialIndices[i]);
 			}
 		}
+		GLenum err = glGetError();
+		if (err != GL_NO_ERROR) {
+			LOG(LogType::LOG_ERROR, "GL Error BEFORE PBR draw: 0x%X", err);
+		}
 
 		if (!uiBatch.commands.empty()) {
 			switch (shaderType) {
@@ -439,7 +443,7 @@ void GPUDrivenRenderer::RenderPBRBatch(
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
 
-	bindlessErrorDetected = true;
+	//bindlessErrorDetected = true;
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
 		uint32_t meshIndex = batch.meshIndices[i];
 		uint32_t materialIndex = batch.materialIndices[i];
@@ -461,6 +465,7 @@ void GPUDrivenRenderer::RenderPBRBatch(
 		shader->SetUniform("heightScale", materialData->heightScale);
 
 		if (GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64 && !bindlessErrorDetected) {
+			bindlessErrorDetected = false;
 			HandleTextureBindings(shader, "albedoMap", "u_HasAlbedoMap", materialData->albedoTexture);
 			HandleTextureBindings(shader, "normalMap", "u_HasNormalMap", materialData->normalTexture);
 			HandleTextureBindings(shader, "metallicMap", "u_HasMetallicMap", materialData->metallicTexture);
@@ -711,4 +716,171 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 
 	LOG(LogType::LOG_INFO, "=== Fin de información de GPUMesh ===");
 }
+
+void GPUDrivenRenderer::RenderShadowMaps(const glm::mat4& viewMatrix, const glm::vec3& cameraPos) {
+	ForwardPlusLighting& forwardPlus = ForwardPlusLighting::GetInstance();
+	const ShadowSettings& shadowSettings = forwardPlus.GetShadowSettings();
+
+
+
+	// Store current viewport
+	GLint viewport[4];
+	glGetIntegerv(GL_VIEWPORT, viewport);
+
+	// Setup shadow pass
+	glViewport(0, 0, shadowSettings.shadowMapSize, shadowSettings.shadowMapSize);
+	glBindFramebuffer(GL_FRAMEBUFFER, forwardPlus.GetShadowFBO());
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT); // Use front face culling to reduce shadow acne
+
+	// Get shadow shaders
+	Shaders* pointShadowShader = ShaderManager::GetInstance().GetShader(ShaderType::POINT_SHADOW);
+	Shaders* directionalShadowShader = ShaderManager::GetInstance().GetShader(ShaderType::DIRECTIONAL_SHADOW);
+
+	if (!pointShadowShader || !directionalShadowShader) {
+		LOG(LogType::LOG_ERROR, "Failed to get required shadow shaders");
+		return;
+	}
+
+	// Render directional light shadows
+	if (forwardPlus.GetDirectionalLight().castShadow) {
+		GPUDirectionalLight dirLight = forwardPlus.GetDirectionalLight();
+		std::vector<glm::mat4> lightMatrices = forwardPlus.CalculateDirectionalLightMatrices(
+			glm::vec3(dirLight.direction), cameraPos, viewMatrix);
+
+		// Validate we have enough cascades
+		if (lightMatrices.size() > forwardPlus.GetMaxCascades()) {
+			LOG(LogType::LOG_WARNING, "More cascades calculated than supported");
+			lightMatrices.resize(forwardPlus.GetMaxCascades());
+		}
+
+		directionalShadowShader->Bind();
+
+		// Render for each cascade
+		for (int cascade = 0; cascade < lightMatrices.size(); cascade++) {
+			// Attach the correct cascade layer
+			glFramebufferTextureLayer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+				forwardPlus.GetDirectionalShadowMapArray(), 0,
+				dirLight.shadowMapIndex * forwardPlus.GetMaxCascades() + cascade);
+
+			// Clear depth buffer
+			glClear(GL_DEPTH_BUFFER_BIT);
+
+			// Set light space matrix for this cascade
+			directionalShadowShader->SetUniformMat4("lightSpaceMatrix", lightMatrices[cascade]);
+
+			// Render all objects that cast shadows
+			for (const auto& [shaderType, batch] : shaderBatches) {
+				for (size_t i = 0; i < batch.commands.size(); i++) {
+					uint32_t meshIndex = batch.meshIndices[i];
+					GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+					if (!meshData) continue;
+
+					// Set instance transform
+					const DrawElementsCommand& cmd = batch.commands[i];
+					GPUInstance* instance = BindlessManager::GetInstance().GetInstanceData(cmd.baseInstance);
+					if (instance) {
+						directionalShadowShader->SetUniformMat4("modelMatrix", instance->modelMatrix);
+					}
+
+					glBindVertexArray(meshData->vertexArray);
+					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+					glDrawElementsInstanced(
+						GL_TRIANGLES,
+						cmd.count,
+						GL_UNSIGNED_INT,
+						nullptr,
+						cmd.instanceCount
+					);
+
+					GLenum err = glGetError();
+					if (err != GL_NO_ERROR) {
+						LOG(LogType::LOG_ERROR, "GL Error after Dir light draw: 0x%X", err);
+					}
+				}
+			}
+		}
+	}
+
+	// Render point light shadows
+	const std::vector<GPUPointLight>& pointLights = forwardPlus.GetPointLights();
+	for (int lightIdx = 0; lightIdx < pointLights.size(); lightIdx++) {
+		const GPUPointLight& light = pointLights[lightIdx];
+		if (light.castShadow == 0) continue;
+
+		// Calculate light matrices
+		glm::vec3 lightPos = glm::vec3(light.position.x, light.position.y, light.position.z);
+		std::vector<glm::mat4> shadowMatrices = forwardPlus.CalculatePointLightMatrices(lightPos);
+
+		// Attach the correct cubemap layer
+		glFramebufferTextureLayer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+			forwardPlus.GetPointShadowMapArray(), 0,
+			light.shadowMapIndex);
+
+		
+
+		// Clear depth buffer
+		glClear(GL_DEPTH_BUFFER_BIT);
+
+		pointShadowShader->Bind();
+		pointShadowShader->SetUniformVec3("lightPos", lightPos);
+		pointShadowShader->SetUniform("farPlane", shadowSettings.shadowFarPlane);
+
+		// Set all 6 light space matrices
+		for (int i = 0; i < 6; i++) {
+			pointShadowShader->SetUniformMat4("shadowMatrices[" + std::to_string(i) + "]", shadowMatrices[i]);
+		}
+
+		// Render all objects that cast shadows
+		for (const auto& [shaderType, batch] : shaderBatches) {
+			for (size_t i = 0; i < batch.commands.size(); i++) {
+				uint32_t meshIndex = batch.meshIndices[i];
+				GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+				if (!meshData) continue;
+
+				// Set instance transform
+				const DrawElementsCommand& cmd = batch.commands[i];
+				GPUInstance* instance = BindlessManager::GetInstance().GetInstanceData(cmd.baseInstance);
+				if (instance) {
+					pointShadowShader->SetUniformMat4("modelMatrix", instance->modelMatrix);
+				}
+
+				glBindVertexArray(meshData->vertexArray);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+				glDrawElementsInstanced(
+					GL_TRIANGLES,
+					cmd.count,
+					GL_UNSIGNED_INT,
+					nullptr,
+					cmd.instanceCount
+				);
+
+				GLenum err = glGetError();
+				if (err != GL_NO_ERROR) {
+					LOG(LogType::LOG_ERROR, "GL Error after point light draw: 0x%X", err);
+				}
+			}
+		}
+	}
+	glTexParameteri(GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_COMPARE_MODE, GL_NONE);
+
+	// Restore state
+	glCullFace(GL_BACK);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+
+	for (int i = 0; i < 8; ++i) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+	}
+	glActiveTexture(GL_TEXTURE0); // Reset to default
+}
+
+
 #pragma endregion

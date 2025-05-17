@@ -59,6 +59,8 @@ public:
 	int GetVisibleInstanceCount() const { return visibleInstanceCount; }
 	int GetTotalDrawCommands() const { return (int)cullData.size(); }
 
+	void RenderShadowMaps(const glm::mat4& viewMatrix, const glm::vec3& cameraPos);
+
 private:
 	GPUDrivenRenderer() = default;
 	~GPUDrivenRenderer() = default;

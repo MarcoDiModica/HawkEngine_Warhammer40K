@@ -182,6 +182,8 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 
 	GPUDrivenRenderer::GetInstance().PrepareDrawCommands();
 
+	GPUDrivenRenderer::GetInstance().RenderShadowMaps(viewMatrix, cameraPos);
+
 	GPUDrivenRenderer::GetInstance().RenderAll(viewMatrix, projMatrix, cameraPos);
 
 	stats.visibleGameObjects = GPUDrivenRenderer::GetInstance().GetVisibleInstanceCount();

@@ -26,6 +26,10 @@ bool ShaderManager::Initialize() {
 	success &= RegisterCustomShader("debug", "Assets/Shaders/debug_vertex.glsl",
 		"Assets/Shaders/debug_fragment.glsl", ShaderType::DEBUG);
 
+	success &= RegisterShader<PointShadowShader>();
+
+	success &= RegisterShader<DirectionalShadowShader>();
+
 	if (!success) {
 		LOG(LogType::LOG_ERROR, "ShaderManager: Failed to initialize one or more shaders");
 	}

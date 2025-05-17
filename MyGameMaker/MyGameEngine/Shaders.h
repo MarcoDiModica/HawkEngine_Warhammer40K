@@ -7,15 +7,27 @@
 #include <glm/glm.hpp>
 #include "types.h"
 
+enum class ShaderStage {
+    VERTEX,
+    FRAGMENT,
+    GEOMETRY,
+    COMPUTE
+};
+
+
 class Shaders {
 public:
     Shaders();
 
     virtual ~Shaders();
 
-    bool LoadShaders(const std::string& vertexShaderFile, const std::string& fragmentShaderFile);
+    bool LoadShaders(const std::string& vertexShaderFile,
+        const std::string& fragmentShaderFile,
+        const std::string& geometryShaderFile = "");
 
-    bool LoadShadersFromSource(const std::string& vertexSource, const std::string& fragmentSource);
+    bool LoadShadersFromSource(const std::string& vertexSource,
+        const std::string& fragmentSource,
+        const std::string& geometrySource = "");
 
     bool LoadComputeShader(const std::string& computeShaderFile);
 
@@ -72,6 +84,8 @@ protected:
     std::string LoadShaderSource(const std::string& shaderFile);
     virtual std::string PreprocessShader(const std::string& source);
 
+    std::string geometryShaderPath;
+
     GLuint _program;
 
     bool isComputeShader;
@@ -119,6 +133,20 @@ class ForwardPlusComputeShader : public Shaders {
 public:
     ForwardPlusComputeShader();
     ShaderType GetShaderType() const override { return ShaderType::FORWARD_PLUS_COMPUTE; }
+    bool Initialize() override;
+};
+
+class PointShadowShader : public Shaders {
+public:
+    PointShadowShader();
+    ShaderType GetShaderType() const override { return ShaderType::POINT_SHADOW; }
+    bool Initialize() override;
+};
+
+class DirectionalShadowShader : public Shaders {
+public:
+    DirectionalShadowShader();
+    ShaderType GetShaderType() const override { return ShaderType::DIRECTIONAL_SHADOW; }
     bool Initialize() override;
 };
 

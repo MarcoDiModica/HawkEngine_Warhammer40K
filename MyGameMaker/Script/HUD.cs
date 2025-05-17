@@ -57,6 +57,9 @@ public class HUD : MonoBehaviour
     private GameObject canister4;
     private GameObject canister5;
 
+    private GameObject boltgunAmmoTextGO;
+    private UIText boltgunAmmoText;
+
     private PlayerPowerUp playerPowerUp;
 
     private GameObject pauseMenu;
@@ -288,6 +291,18 @@ public class HUD : MonoBehaviour
         redThirstBarAnimImage.SetImageSpriteSize(175, 40);
         redThirstBarAnimImage.SetImageAnimationSpeed(0.5f);
         redThirstBarAnimImage.SetImageAnimationIndexLimit(6);
+
+        boltgunAmmoTextGO = GameObject.Find("boltgun_ammo_text");
+        if (boltgunAmmoTextGO != null)
+        {
+            boltgunAmmoText = boltgunAmmoTextGO.GetComponent<UIText>();
+            if (boltgunAmmoText == null)
+                Engineson.print("ERROR: TextComponent not found on boltgun_ammo_text");
+        }
+        else
+        {
+            Engineson.print("ERROR: boltgun_ammo_text GameObject not found");
+        }
     }
     public override void Update(float deltaTime)
     {
@@ -297,6 +312,7 @@ public class HUD : MonoBehaviour
         transform_hpTempBarAnim.DOMoveXUI(CalculateHPTempBarAnimPos(), 0f, Modes.LINEAR);
         transform_redThirstBar.SetScaleUI(new Vector3(0.056f, CalculateRedThirstBarHeight(), 1.0f));
         transform_redThirstBarAnim.DOMoveYUI(CalculateRedThirstBarAnimPos(), 0f, Modes.LINEAR);
+
 
         if (playerShootingScript.hasRailgun && railgunScript == null)
         {
@@ -485,6 +501,7 @@ public class HUD : MonoBehaviour
                 {
                     lockR.SetActive(true);
                 }
+
                 if (playerShootingScript.hasShotgun)
                 {
                     lockL.SetActive(false);
@@ -493,6 +510,7 @@ public class HUD : MonoBehaviour
                 {
                     lockL.SetActive(true);
                 }
+
                 break;
         }
 
@@ -558,6 +576,22 @@ public class HUD : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             redThirstManager.AddRedThirstPoint(1);
+        }
+
+        UpdateBoltgunAmmoUI();
+    }
+
+    private void UpdateBoltgunAmmoUI()
+    {
+        if (boltgunAmmoText != null)
+        {
+            int currentAmmo = playerShootingScript.GetCurrentAmmo();
+            int maxAmmo = playerShootingScript.GetMaxAmmo();
+            boltgunAmmoText.SetText(currentAmmo + "/" + maxAmmo);
+        }
+        else
+        {
+            Engineson.print("ERROR: boltgunAmmoText is null");
         }
     }
 }

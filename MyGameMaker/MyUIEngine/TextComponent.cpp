@@ -18,7 +18,7 @@ TextComponent::TextComponent(GameObject* owner, const std::string& text, const g
 }
 
 MonoObject* TextComponent::GetSharp() {
-    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "TextComponent");
+    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "UIText");
     if (!klass) {
         return nullptr;
     }
@@ -26,7 +26,7 @@ MonoObject* TextComponent::GetSharp() {
     if (!monoObject) {
         return nullptr;
     }
-    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.TextComponent:.ctor(uintptr,HawkEngine.GameObject)", true);
+    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.UIText:.ctor(uintptr,HawkEngine.GameObject)", true);
     MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
     if (!method)
     {

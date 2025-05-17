@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace HawkEngine
 {
-    public class TextComponent : Component
+    public class UIText : Component
     {
         //funciones
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -19,14 +19,14 @@ namespace HawkEngine
 
         private GameObject owner;
 
-        public TextComponent(UIntPtr nativeRigidbody, GameObject owner)
+        public UIText(UIntPtr nativeRigidbody, GameObject owner)
         {
             CplusplusInstance = nativeRigidbody;
             this.owner = owner;
             Engineson.print("TextComponent created");
         }
 
-        public TextComponent()
+        public UIText()
         {
             Engineson.print("TextComponent default constructor");
         }

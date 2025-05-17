@@ -171,6 +171,17 @@ public class Boltgun : BaseWeapon
             }
         }
     }
+
+    public int GetCurrentAmmo()
+    {
+       return currentMagazineAmmo;
+    }
+
+    public int GetMaxAmmo()
+    {
+        return maxAmmo;
+    }
+
     public override void Shoot()
     {
 

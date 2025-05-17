@@ -10,6 +10,7 @@
 #include "MyGameEngine/Model.h"
 #include "../MyGameEngine/Shaders.h" 
 #include "MyUIEngine/UIImageComponent.h"
+#include "MyParticlesEngine/ParticleFX.h"
 
 class Mesh;
 class Material;
@@ -78,7 +79,8 @@ public:
 	uint32_t RegisterMesh(Mesh* mesh);
 	uint32_t RegisterMaterial(const Material* material);
 	uint32_t RegisterUIImage(UIImageComponent* uiImage);
-
+	uint32_t RegisterCustomVAO(GLuint vao, GLuint ebo, uint32_t indexCount);
+	
 	bool UpdateMaterial(const Material* material);
 	bool UpdateUIImage(UIImageComponent* uiImage);
 
@@ -200,6 +202,8 @@ private:
 	GLuint fallbackIBO = 0;
 	uint32_t fallbackIndexCount = 0;
 	GPUMesh fallbackMesh;
+
+	uint32_t nextMeshId = 1;
 
 	uint32_t GetFallbackMeshIndex() {
 		if (meshes.empty()) {

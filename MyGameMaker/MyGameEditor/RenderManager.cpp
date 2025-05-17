@@ -271,6 +271,43 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 		return;
 	}
 
+	if (gameObject->HasComponent<ParticleFX>()) {
+		ParticleFX* particleFX = gameObject->GetComponent<ParticleFX>();
+		if (particleFX && particleFX->IsPlaying()) {
+			const ParticleInstancedRenderer* renderer = particleFX->GetRenderer();
+
+			if (renderer && renderer->GetActiveParticleCount() > 0) {
+				GPUInstance particleInstance;
+				particleInstance.modelMatrix = gameObject->GetTransform()->GetMatrix();
+				particleInstance.prevModelMatrix = particleInstance.modelMatrix;
+				particleInstance.objectData = glm::vec4(
+					renderer->GetActiveParticleCount(),
+					static_cast<float>(particleFX->GetBillboardType()),
+					particleFX->GetSoftness(),  
+					static_cast<float>(particleFX->GetParticleType()) 
+				);
+
+				particleInstance.flags = (1 << 30);
+
+				uint32_t materialIndex = BindlessManager::GetInstance().RegisterMaterial(particleFX->GetParticleMaterial().get());
+
+				uint32_t particleVAO = particleFX->GetRenderer()->vao;
+				uint32_t meshIndex = BindlessManager::GetInstance().RegisterCustomVAO(particleVAO, particleFX->GetRenderer()->ebo, 6);
+
+				if (meshIndex != UINT32_MAX && materialIndex != UINT32_MAX) {
+					particleInstance.meshIndex = meshIndex;
+					particleInstance.materialIndex = materialIndex;
+					particleInstance.objectId = gameObject->GetID().GetValue();
+
+					MeshMaterialKey key{ meshIndex, materialIndex };
+					instanceGroups[key].push_back(particleInstance);
+				}
+			}
+		}
+
+		return;
+	}
+
 	if (gameObject->HasComponent<MeshRenderer>()) {
 		MeshRenderer* renderer = gameObject->GetComponent<MeshRenderer>();
 

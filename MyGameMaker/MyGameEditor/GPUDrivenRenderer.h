@@ -86,6 +86,12 @@ private:
 		const glm::mat4& projMatrix,
 		const glm::vec3& cameraPos);
 
+	void RenderParticleBatch(
+		const ShaderBatch& batch,
+		const glm::mat4& viewMatrix,
+		const glm::mat4& projMatrix,
+		const glm::vec3& cameraPos);
+
 	void HandleTextureBindings(Shaders* shader, const char* textureName, const char* hasTextureName, GLuint64 textureHandle);
 	void BindRegularTextures(Shaders* shader, GPUMaterial* materialData);
 

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
 #include <functional> 
+#include "MyParticlesEngine/ParticleFX.h"
 
 BindlessManager& BindlessManager::GetInstance() {
 	static BindlessManager instance;
@@ -476,6 +477,35 @@ uint32_t BindlessManager::RegisterUIImage(UIImageComponent* uiImage)
 	uiImages[uiImage] = data;
 
 	return materialIndex;
+}
+
+uint32_t BindlessManager::RegisterCustomVAO(GLuint vao, GLuint ebo, uint32_t indexCount) {
+	if (!glIsVertexArray(vao) || !glIsBuffer(ebo)) {
+		return UINT32_MAX;
+	}
+
+	LOG(LogType::LOG_INFO, "RegisterCustomVAO - VAO: %u, EBO: %u, IndexCount: %u",
+		vao, ebo, indexCount);
+
+	for (size_t i = 0; i < meshes.size(); i++) {
+		if (meshes[i].vertexArray == vao) {
+			return static_cast<uint32_t>(i);
+		}
+	}
+
+	GPUMesh gpuMesh;
+	gpuMesh.vertexArray = vao;
+	gpuMesh.indexBuffer = ebo;
+	gpuMesh.indexCount = indexCount;
+	gpuMesh.vertexCount = 4; 
+	gpuMesh.meshId = nextMeshId++;
+
+	gpuMesh.attributeFlags = (1 << 0) | (1 << 1);
+
+	uint32_t index = static_cast<uint32_t>(meshes.size());
+	meshes.push_back(gpuMesh);
+
+	return index;
 }
 
 bool BindlessManager::UpdateMaterial(const Material* material) {

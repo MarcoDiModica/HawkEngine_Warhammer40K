@@ -1,39 +1,37 @@
 #version 450 core
 
-// Vertex attributes
-layout(location = 0) in vec3 aPos;
-layout(location = 1) in vec2 aTexCoord;
-layout(location = 2) in vec3 aOffset;    // Instance position
-layout(location = 3) in vec4 aColor;      // Instance color (with alpha)
-layout(location = 4) in vec2 aSize;       // Instance size (x, y)
-layout(location = 5) in float aRotation;  // Instance rotation in radians
-layout(location = 6) in float aLifetime;  // Current lifetime fraction (0-1)
-layout(location = 7) in vec4 endColor;    // End color for gradient
-layout(location = 8) in vec2 aEndSize;    // End size (x, y) for gradient
-layout(location = 9) in vec2 spriteOffset;  // Index of the sprite in the spritesheet
-layout(location = 10) in vec2 spriteSize; // Size of each sprite in the spritesheet (normalized)
-layout(location = 11) in vec2 sheetSize;  // Dimensions of the spritesheet (columns, rows)
-
-
-// Outputs to fragment shader
-out vec2 TexCoord;
-out vec4 ParticleColor;
-out float Lifetime;
-out vec4 EndColor;  // End color for gradient
-
-out vec2 SpriteOffset;  
-out vec2 SpriteSize; 
-out vec2 SheetSize;
-// Uniforms
 uniform mat4 projection;
 uniform mat4 view;
-uniform int billboardType;  // 0: screen-aligned, 1: world-aligned, 2: axis-aligned
+uniform int billboardType;
+uniform int particleType;
+uniform int instanceOffset;
 uniform vec3 cameraPosition;
 uniform vec3 cameraUp;
 uniform vec3 billboardAxis;
 
+layout(location = 0) in vec3 aPos;
+layout(location = 1) in vec2 aTexCoord;
+layout(location = 2) in vec3 aOffset;
+layout(location = 3) in vec4 aColor;
+layout(location = 4) in vec2 aSize;
+layout(location = 5) in float aRotation;
+layout(location = 6) in float aLifetime;
+layout(location = 7) in vec4 endColor;
+layout(location = 8) in vec2 aEndSize;
+layout(location = 9) in vec2 spriteOffset;
+layout(location = 10) in vec2 spriteSize;
+layout(location = 11) in vec2 sheetSize;
+
+out vec2 TexCoord;
+out vec4 ParticleColor;
+out float Lifetime;
+out vec4 EndColor;
+
+out vec2 SpriteOffset;  
+out vec2 SpriteSize; 
+out vec2 SheetSize;
+
 mat4 calculateBillboardMatrix(vec3 position) {
-    // Screen-aligned billboard
     if (billboardType == 0) {
         vec3 look = normalize(cameraPosition - position);
         vec3 right = normalize(cross(cameraUp, look));
@@ -46,7 +44,6 @@ mat4 calculateBillboardMatrix(vec3 position) {
             vec4(position, 1.0)
         );
     }
-    // World-aligned billboard (vertical Y axis)
     else if (billboardType == 1) {
         vec3 look = normalize(cameraPosition - position);
         look.y = 0.0;
@@ -62,7 +59,6 @@ mat4 calculateBillboardMatrix(vec3 position) {
             vec4(position, 1.0)
         );
     }
-    // Axis-aligned billboard
     else {
         vec3 forward = normalize(cameraPosition - position);
         vec3 right = normalize(cross(billboardAxis, forward));
@@ -78,35 +74,23 @@ mat4 calculateBillboardMatrix(vec3 position) {
 }
 
 void main() {
-    // Apply billboard orientation and position
     mat4 billboardMatrix = calculateBillboardMatrix(aOffset);
     
-    // Apply rotation around the billboard's Z axis
     float c = cos(aRotation);
     float s = sin(aRotation);
     mat2 rotationMatrix = mat2(c, -s, s, c);
     
-    // Apply size and rotation to the quad vertex
-
     vec2 totalSize = mix(aSize, aEndSize, aLifetime);
     vec2 rotatedPos = rotationMatrix * (aPos.xy * totalSize);
     
-    // Final position
     vec4 worldPos = billboardMatrix * vec4(rotatedPos.x, rotatedPos.y, 0.0, 1.0);
     gl_Position = projection * view * worldPos;
     
-    //spriteSize = new vec21(,)
-    //int column = 1 % int(534);  // Column of the sprite
-    //int row = 1 / int(175);     // Row of the sprite
-    //vec2 spriteOffset = vec2(column, row) * spriteSize;
-    //TexCoord = aTexCoord * spriteSize + spriteOffset;
     TexCoord = aTexCoord;
-    // Pass values to fragment shader
     ParticleColor = aColor;
     Lifetime = aLifetime;
     EndColor = endColor;  
     SpriteOffset = spriteOffset;
     SpriteSize = spriteSize;
     SheetSize = sheetSize;
-
 }

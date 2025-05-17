@@ -166,13 +166,13 @@ public:
 	//void ConfigureExplosion();
 	//void ConfigureDust();
 
-
 	MonoObject* CsharpReference = nullptr;
 	MonoObject* GetSharp() override;
 
 	int particleID = 0;
 
-	// Player VFX
+	const ParticleInstancedRenderer* GetRenderer() const { return renderer.get(); }
+	const std::shared_ptr<ParticleMaterial> GetParticleMaterial() const { return material; }
 
 
 private:

@@ -11,6 +11,10 @@ public:
 		return LoadShaders("Assets/Shaders/particle_vertex.glsl", "Assets/Shaders/particle_fragment.glsl");
 	}
 
+	void Bind() {
+		Shaders::Bind();
+	}
+
 	void SetBillboardType(int type) {
 		SetUniform("billboardType", type);
 	}
@@ -25,6 +29,10 @@ public:
 
 	void SetBillboardAxis(const glm::vec3& axis) {
 		SetUniformVec3("billboardAxis", axis);
+	}
+
+	void SetInstanceOffset(int offset) {
+		SetUniform("instanceOffset", offset);
 	}
 
 	void SetParticleType(int type) {

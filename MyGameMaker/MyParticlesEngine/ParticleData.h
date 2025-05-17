@@ -346,6 +346,8 @@ public:
 		return maxParticles;
 	}
 
+	GLuint vao, vbo, ebo, instanceVBO;
+
 private:
 	struct InstanceData {
 		bool playOnAwake;
@@ -367,7 +369,6 @@ private:
 		int animIndex;
 	};
 
-	GLuint vao, vbo, ebo, instanceVBO;
 	std::vector<ParticleData> particleData;
 	size_t maxParticles;
 	size_t activeParticles;

@@ -9,6 +9,7 @@
 #include "App.h"
 #include "MyGUI.h"
 #include "UIGameView.h"
+#include "MyParticlesEngine/ParticleShader.h"
 
 GPUDrivenRenderer& GPUDrivenRenderer::GetInstance() {
 	static GPUDrivenRenderer instance;
@@ -194,7 +195,7 @@ void GPUDrivenRenderer::BatchCommandsByRenderPass() {
 				passType = RenderPassType::UI;
 			}
 
-			auto PARTICLE_FLAG = 1 << 30; //or other
+			auto PARTICLE_FLAG = 1 << 30;
 			if (instance && (instance->flags & PARTICLE_FLAG)) {
 				passType = RenderPassType::PARTICLES;
 			}
@@ -236,20 +237,19 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 		}
 	}
 
-	//if (batchesByPass.find(RenderPassType::PARTICLES) != batchesByPass.end()) {
-	//	glDepthMask(GL_FALSE);  // Don't write to depth buffer
-	//	glEnable(GL_BLEND);
-	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	if (batchesByPass.find(RenderPassType::PARTICLES) != batchesByPass.end()) {
+		glDepthMask(GL_FALSE);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	//	const auto& particleBatches = batchesByPass[RenderPassType::PARTICLES];
-	//	for (const auto& [shaderType, batch] : particleBatches) {
-	//		// Future: Call specialized particle rendering function
-	//		// RenderParticleBatch(batch, viewMatrix, projMatrix);
-	//	}
+		const auto& particleBatches = batchesByPass[RenderPassType::PARTICLES];
+		for (const auto& [shaderType, batch] : particleBatches) {
+			RenderParticleBatch(batch, viewMatrix, projMatrix, cameraPos);
+		}
 
-	//	glDepthMask(GL_TRUE);
-	//	glDisable(GL_BLEND);
-	//}
+		glDepthMask(GL_TRUE);
+		glDisable(GL_BLEND);
+	}
 
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
@@ -491,6 +491,111 @@ void GPUDrivenRenderer::RenderPBRBatch(
 			}
 		}
 	}
+
+	glBindVertexArray(0);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	shader->UnBind();
+}
+
+void GPUDrivenRenderer::RenderParticleBatch(
+	const ShaderBatch& batch,
+	const glm::mat4& viewMatrix,
+	const glm::mat4& projMatrix,
+	const glm::vec3& cameraPos) {
+
+	if (batch.commands.empty()) return;
+
+	LOG(LogType::LOG_INFO, "RenderParticleBatch - Commands: %zu, Meshes: %zu, Materials: %zu",
+		batch.commands.size(), batch.meshIndices.size(), batch.materialIndices.size());
+
+	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::PARTICLE);
+	if (!shader) {
+		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader PARTICLE");
+		return;
+	}
+
+	shader->Bind();
+	shader->SetUniformMat4("view", viewMatrix);
+	shader->SetUniformMat4("projection", projMatrix);
+
+	shader->SetUniformVec3("cameraPosition", cameraPos);
+	shader->SetUniformVec3("cameraUp", glm::vec3(0.0f, 1.0f, 0.0f));
+
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDepthMask(GL_FALSE);
+
+	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
+		uint32_t meshIndex = batch.meshIndices[i];
+		uint32_t materialIndex = batch.materialIndices[i];
+
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
+
+		if (!meshData || !materialData) continue;
+
+		shader->SetUniform("particleType", materialData->flags & 0xFF);
+		shader->SetUniform("billboardType", (materialData->flags >> 8) & 0x7);
+		shader->SetUniform("softness", materialData->pbrParams.w);
+
+		if (materialData->flags & (1 << 0)) {
+			GLuint textureID = 0;
+			if (BindlessManager::GetInstance().GetTextureIDFromHandle(materialData->albedoTexture, textureID)) {
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, textureID);
+				shader->SetUniform("particleTexture", 0);
+			}
+		}
+
+		if (materialData->flags & (1 << 7)) {
+			GLuint gradientID = 0;
+			if (BindlessManager::GetInstance().GetTextureIDFromHandle(materialData->normalTexture, gradientID)) {
+				glActiveTexture(GL_TEXTURE1);
+				glBindTexture(GL_TEXTURE_2D, gradientID);
+				shader->SetUniform("useColorGradient", 1);
+				shader->SetUniform("colorGradient", 1);
+			}
+			else {
+				shader->SetUniform("useColorGradient", 0);
+			}
+		}
+		else {
+			shader->SetUniform("useColorGradient", 0);
+		}
+
+		glBindVertexArray(meshData->vertexArray);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+		GLenum error = glGetError();
+		if (error != GL_NO_ERROR) {
+			LOG(LogType::LOG_ERROR, "GL Error before particle draw: 0x%X", error);
+		}
+
+		if (i < batch.commands.size()) {
+			const DrawElementsCommand& cmd = batch.commands[i];
+			shader->SetUniform("instanceOffset", (int)cmd.baseInstance);
+
+			glDrawElementsInstanced(
+				GL_TRIANGLES,
+				cmd.count,
+				GL_UNSIGNED_INT,
+				nullptr,
+				cmd.instanceCount
+			);
+		}
+
+		error = glGetError();
+		if (error != GL_NO_ERROR) {
+			LOG(LogType::LOG_ERROR, "GL Error after particle draw: 0x%X", error);
+		}
+	}
+
+	glDepthMask(GL_TRUE);
+	glDisable(GL_BLEND);
 
 	glBindVertexArray(0);
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);

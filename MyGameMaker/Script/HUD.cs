@@ -60,6 +60,12 @@ public class HUD : MonoBehaviour
     private GameObject boltgunAmmoTextGO;
     private UIText boltgunAmmoText;
 
+    private GameObject shotgunAmmoTextGO;
+    private UIText shotgunAmmoText;
+
+    private GameObject railgunAmmoTextGO;
+    private UIText railtgunAmmoText;
+
     private PlayerPowerUp playerPowerUp;
 
     private GameObject pauseMenu;
@@ -310,6 +316,28 @@ public class HUD : MonoBehaviour
         {
             Engineson.print("ERROR: boltgun_ammo_text GameObject not found");
         }
+        shotgunAmmoTextGO = GameObject.Find("shotgun_ammo_text");
+        if (shotgunAmmoTextGO != null)
+        {
+            shotgunAmmoText = shotgunAmmoTextGO.GetComponent<UIText>();
+            if (shotgunAmmoText == null)
+                Engineson.print("ERROR: TextComponent not found on shotgun_ammo_text");
+        }
+        else
+        {
+            Engineson.print("ERROR: shotgun_ammo_text GameObject not found");
+        }
+        railgunAmmoTextGO = GameObject.Find("railgun_ammo_text");
+        if (railgunAmmoTextGO != null)
+        {
+            railtgunAmmoText = railgunAmmoTextGO.GetComponent<UIText>();
+            if (railtgunAmmoText == null)
+                Engineson.print("ERROR: TextComponent not found on railgun_ammo_text");
+        }
+        else
+        {
+            Engineson.print("ERROR: railgun_ammo_text GameObject not found");
+        }
     }
     public override void Update(float deltaTime)
     {
@@ -421,6 +449,9 @@ public class HUD : MonoBehaviour
                 {
                     lockL.SetActive(true);
                 }
+                boltgunAmmoTextGO.SetActive(true);
+                shotgunAmmoTextGO.SetActive(false);
+                railgunAmmoTextGO.SetActive(false);
                 UpdateBoltgunAmmoUI();
 
                 break;
@@ -464,6 +495,10 @@ public class HUD : MonoBehaviour
                 {
                     lockL.SetActive(true);
                 }
+                shotgunAmmoTextGO.SetActive(true);
+                boltgunAmmoTextGO.SetActive(false);
+                railgunAmmoTextGO.SetActive(false);
+                UptateShotgunAmmoUI();
                 break;
             case 2:
                 //Railgun equipped
@@ -519,6 +554,10 @@ public class HUD : MonoBehaviour
                     lockL.SetActive(true);
                 }
 
+                railgunAmmoTextGO.SetActive(true);
+                boltgunAmmoTextGO.SetActive(false);
+                shotgunAmmoTextGO.SetActive(false);
+                UpdateRailgunAmmoUI();
                 break;
         }
 
@@ -600,5 +639,26 @@ public class HUD : MonoBehaviour
         {
             Engineson.print("ERROR: boltgunAmmoText is null");
         }
+    }
+
+    private void UptateShotgunAmmoUI()
+    {
+        if (shotgunAmmoText != null)
+        {
+            int currentAmmo = playerShootingScript.GetCurrentAmmo();
+            int maxAmmo = playerShootingScript.GetMaxAmmo();
+            shotgunAmmoText.SetText(currentAmmo + "/" + maxAmmo);
+        }
+        else
+        {
+            Engineson.print("ERROR: shotgunAmmoText is null");
+        }
+    }
+
+    private void UpdateRailgunAmmoUI()
+    {
+
+            railtgunAmmoText.SetText( "-/-" );
+
     }
 }

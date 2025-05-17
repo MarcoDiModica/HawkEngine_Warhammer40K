@@ -719,6 +719,12 @@ public class EnemyControllerMelee : EnemyController
     {
         try
         {
+            if (particles != null)
+            {
+                AddComponent<ParticleFX>().ApplyPreset(19);
+                GetComponent<ParticleFX>().EmitBurst(1);
+            }
+
             if (currentHealth <= 0)
                 return;
 
@@ -729,12 +735,6 @@ public class EnemyControllerMelee : EnemyController
             if (anim != null)
             {
                 anim.SetHitAnimation();
-            }
-
-            if (particles != null)
-            {
-                //particles.ApplyPreset(19);
-                //particles.EmitBurst(1);
             }
 
             Audio.PlayOneShot(SFX_HIT);

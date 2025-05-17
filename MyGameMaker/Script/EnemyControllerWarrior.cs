@@ -135,6 +135,12 @@ public class EnemyControllerWarrior : EnemyController
                 return;
             }
 
+            particles = gameObject.AddComponent<ParticleFX>();
+            if (particles != null)
+            {
+                particles.ApplyPreset(19);
+            }
+
             maxHealth = health;
             currentHealth = maxHealth;
             gameObject.tag = "Warrior";
@@ -713,6 +719,13 @@ public class EnemyControllerWarrior : EnemyController
     {
         try
         {
+
+            if (particles != null)
+            {
+                AddComponent<ParticleFX>().ApplyPreset(19);
+                GetComponent<ParticleFX>().EmitBurst(1);
+            }
+
             if (currentHealth <= 0)
                 return;
 

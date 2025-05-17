@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour
         if (!componentsInitialized || playerData == null)
             return;
 
-        playerData.FullHealth();
+        //playerData.FullHealth();
 
         if (playerData.isHit)
         {

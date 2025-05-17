@@ -56,7 +56,7 @@ public class EnemyControllerWarrior : EnemyController
     public int maxAmmo;
     public int currentTotalAmmo;
     public float range;
-    public float timeToLerp = 0.1f;
+    public float timeToLerp = 0.4f;
 
     private bool componentsInitialized = false;
 
@@ -683,7 +683,7 @@ public class EnemyControllerWarrior : EnemyController
                 ParticleFX particleFX = projectile.AddComponent<ParticleFX>();
                 if (particleFX != null)
                 {
-                    particleFX.ApplyPreset(14);
+                    particleFX.ApplyPreset(10);
                     particleFX.EmitBurst(1);
                 }
 

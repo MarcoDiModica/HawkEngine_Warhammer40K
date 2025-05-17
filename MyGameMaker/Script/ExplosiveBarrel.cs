@@ -16,6 +16,7 @@ public class ExplosiveBarrel : MonoBehaviour
     public void Explode()
     {
         explosionScript.Explode();
+        Engineson.Destroy(gameObject);
     }
 
 

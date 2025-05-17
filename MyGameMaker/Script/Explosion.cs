@@ -92,6 +92,10 @@ public class Explosion : MonoBehaviour
             {
                 other.GetComponent<EnemyControllerBoss>().TakeDamage(60);
             }
+            if (other.tag == "DestructibleWall")
+            {
+                Engineson.Destroy(other);
+            }
         }
 
     }

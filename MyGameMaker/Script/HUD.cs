@@ -69,6 +69,9 @@ public class HUD : MonoBehaviour
     private UIImage hpTempBarAnimImage;
     private UIImage redThirstBarAnimImage;
 
+    private GameObject Text;
+    private UIText text;
+
     private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
 
 
@@ -137,6 +140,10 @@ public class HUD : MonoBehaviour
     }
     public override void Start()
     {
+
+        Text = GameObject.Find("HelloWorld");
+        text = Text.GetComponent<UIText>();
+        text.SetText("Hello World");
         hpBar = GameObject.Find("blood_bar1");
         hpTempBar = GameObject.Find("blood_bar2");
         if (hpBar == null || hpTempBar == null)
@@ -414,6 +421,7 @@ public class HUD : MonoBehaviour
                 {
                     lockL.SetActive(true);
                 }
+                UpdateBoltgunAmmoUI();
 
                 break;
             case 1:
@@ -578,7 +586,6 @@ public class HUD : MonoBehaviour
             redThirstManager.AddRedThirstPoint(1);
         }
 
-        UpdateBoltgunAmmoUI();
     }
 
     private void UpdateBoltgunAmmoUI()

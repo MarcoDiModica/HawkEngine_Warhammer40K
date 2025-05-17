@@ -8,29 +8,35 @@
 #include "BindlessManager.h"
 #include "../MyGameEngine/Shaders.h"
 #include "MyGameEngine/CameraBase.h"
-//#include "../MyGameEngine/Frustum.h" //que?
 
 struct DrawElementsCommand {
-	GLuint count;         // Número de índices
-	GLuint instanceCount; // Número de instancias
-	GLuint firstIndex;    // Primer índice
-	GLint baseVertex;     // Base para indexación de vértices
-	GLuint baseInstance;  // Base para indexación de instancias
+	GLuint count;
+	GLuint instanceCount;
+	GLuint firstIndex;
+	GLint baseVertex;
+	GLuint baseInstance;
 };
 
 struct CullData {
-	uint32_t drawID;           // ID del comando de dibujado
-	uint32_t meshIndex;        // Índice de la malla
-	uint32_t instanceOffset;   // Offset en el buffer de instancias
-	uint32_t instanceCount;    // Número de instancias
-	uint32_t materialIndex;    // Índice del material (añadido para agrupar por material)
+	uint32_t drawID;
+	uint32_t meshIndex;
+	uint32_t instanceOffset;
+	uint32_t instanceCount;
+	uint32_t materialIndex;
+};
+
+enum class RenderPassType {
+	NORMAL,   
+	UI,       
+	PARTICLES 
 };
 
 struct ShaderBatch {
-	ShaderType shaderType;                    // Tipo de shader para este batch
-	std::vector<DrawElementsCommand> commands; // Comandos de dibujo para este shader
-	std::vector<uint32_t> meshIndices;        // Índices de malla correspondientes
-	std::vector<uint32_t> materialIndices;    // Índices de material correspondientes
+	ShaderType shaderType;                    
+	RenderPassType passType;                  
+	std::vector<DrawElementsCommand> commands;
+	std::vector<uint32_t> meshIndices;        
+	std::vector<uint32_t> materialIndices;    
 };
 
 class GPUDrivenRenderer {
@@ -50,6 +56,7 @@ public:
 	void PrepareDrawCommands();	
 	void ForceIncludeAllObjects();
 	
+
 	void RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
 
 	void SetUseGPUCulling(bool enabled) { useGPUCulling = enabled; }
@@ -66,7 +73,7 @@ private:
 	GPUDrivenRenderer& operator=(const GPUDrivenRenderer&) = delete;
 
 	void DebugMeshInfo(uint32_t meshIndex);
-	void BatchCommandsByShaderType();
+	void BatchCommandsByRenderPass();
 
 	void RenderUnlitBatch(const ShaderBatch& batch,
 		const glm::mat4& viewMatrix,
@@ -91,7 +98,7 @@ private:
 	std::vector<CullData> cullData;
 	std::vector<DrawElementsCommand> drawCommands;
 
-	std::map<ShaderType, ShaderBatch> shaderBatches;
+	std::map<RenderPassType, std::map<ShaderType, ShaderBatch>> batchesByPass;
 
 	uint32_t currentInstanceOffset = 0;
 	int visibleInstanceCount = 0;

@@ -66,13 +66,13 @@ void GPUDrivenRenderer::Shutdown() {
 
 	cullData.clear();
 	drawCommands.clear();
-	shaderBatches.clear();
+	batchesByPass.clear();
 }
 
 void GPUDrivenRenderer::BeginFrame() {
 	cullData.clear();
 	drawCommands.clear();
-	shaderBatches.clear();
+	batchesByPass.clear();
 	currentInstanceOffset = 0;
 	visibleInstanceCount = 0;
 
@@ -131,7 +131,7 @@ void GPUDrivenRenderer::PrepareDrawCommands() {
 
 	ForceIncludeAllObjects();
 
-	BatchCommandsByShaderType();
+	BatchCommandsByRenderPass();
 }
 
 void GPUDrivenRenderer::ForceIncludeAllObjects() {
@@ -166,22 +166,42 @@ void GPUDrivenRenderer::ForceIncludeAllObjects() {
 	}
 }
 
-void GPUDrivenRenderer::BatchCommandsByShaderType() {
-	shaderBatches.clear();
+void GPUDrivenRenderer::BatchCommandsByRenderPass() {
+	batchesByPass.clear();
 
 	for (size_t i = 0; i < cullData.size(); i++) {
 		const CullData& cullItem = cullData[i];
 
 		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(cullItem.materialIndex);
 		if (!materialData) {
-			LOG(LogType::LOG_WARNING, "Material invalido en índice %u, omitiendo", cullItem.materialIndex);
+			LOG(LogType::LOG_WARNING, "Material inválido en índice %u, omitiendo", cullItem.materialIndex);
 			continue;
 		}
 
 		ShaderType shaderType = static_cast<ShaderType>(materialData->shaderType);
 
-		ShaderBatch& batch = shaderBatches[shaderType];
+		RenderPassType passType = RenderPassType::NORMAL;
+
+		if (i < drawCommands.size()) {
+			uint32_t baseInstance = drawCommands[i].baseInstance;
+			GPUInstance* instance = nullptr;
+
+			if (baseInstance < BindlessManager::GetInstance().GetInstanceCount()) {
+				instance = BindlessManager::GetInstance().GetInstanceData(baseInstance);
+			}
+
+			if (instance && (instance->flags & (1 << 31))) {
+				passType = RenderPassType::UI;
+			}
+
+			auto PARTICLE_FLAG = 1 << 30; //or other
+			if (instance && (instance->flags & PARTICLE_FLAG)) {
+				passType = RenderPassType::PARTICLES;
+			}
+		}
+		ShaderBatch& batch = batchesByPass[passType][shaderType];
 		batch.shaderType = shaderType;
+		batch.passType = passType;
 
 		if (i < drawCommands.size()) {
 			batch.commands.push_back(drawCommands[i]);
@@ -189,90 +209,67 @@ void GPUDrivenRenderer::BatchCommandsByShaderType() {
 			batch.materialIndices.push_back(cullItem.materialIndex);
 		}
 	}
-
-	for (const auto& [type, batch] : shaderBatches) {
-		std::string shaderName;
-		switch (type) {
-		case ShaderType::PBR: shaderName = "PBR"; break;
-		case ShaderType::UNLIT: shaderName = "UNLIT"; break;
-		default: shaderName = "DESCONOCIDO";
-		}
-	}
 }
 
 void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
-	if (shaderBatches.empty()) {
+	if (batchesByPass.empty()) {
 		LOG(LogType::LOG_INFO, "No hay objetos para renderizar");
 		return;
 	}
 
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
 
-	for (const auto& [shaderType, batch] : shaderBatches) {
-		ShaderBatch normalBatch;
-		normalBatch.shaderType = batch.shaderType;
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 
-		for (size_t i = 0; i < batch.commands.size(); i++) {
-			uint32_t baseInstance = batch.commands[i].baseInstance;
-			GPUInstance* instance = nullptr;
-
-			if (baseInstance < BindlessManager::GetInstance().GetInstanceCount()) {
-				instance = BindlessManager::GetInstance().GetInstanceData(baseInstance);
-			}
-
-			if (instance && !(instance->flags & (1 << 31))) {
-				normalBatch.commands.push_back(batch.commands[i]);
-				normalBatch.meshIndices.push_back(batch.meshIndices[i]);
-				normalBatch.materialIndices.push_back(batch.materialIndices[i]);
-			}
-		}
-
-		if (!normalBatch.commands.empty()) {
+	if (batchesByPass.find(RenderPassType::NORMAL) != batchesByPass.end()) {
+		const auto& normalBatches = batchesByPass[RenderPassType::NORMAL];
+		for (const auto& [shaderType, batch] : normalBatches) {
 			switch (shaderType) {
 			case ShaderType::UNLIT:
-				RenderUnlitBatch(normalBatch, viewMatrix, projMatrix, false);
+				RenderUnlitBatch(batch, viewMatrix, projMatrix, false);
 				break;
 			case ShaderType::PBR:
-				RenderPBRBatch(normalBatch, viewMatrix, projMatrix, cameraPos);
+				RenderPBRBatch(batch, viewMatrix, projMatrix, cameraPos);
 				break;
 			}
 		}
 	}
+
+	//if (batchesByPass.find(RenderPassType::PARTICLES) != batchesByPass.end()) {
+	//	glDepthMask(GL_FALSE);  // Don't write to depth buffer
+	//	glEnable(GL_BLEND);
+	//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	//	const auto& particleBatches = batchesByPass[RenderPassType::PARTICLES];
+	//	for (const auto& [shaderType, batch] : particleBatches) {
+	//		// Future: Call specialized particle rendering function
+	//		// RenderParticleBatch(batch, viewMatrix, projMatrix);
+	//	}
+
+	//	glDepthMask(GL_TRUE);
+	//	glDisable(GL_BLEND);
+	//}
 
 	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
 
-	for (const auto& [shaderType, batch] : shaderBatches) {
-		ShaderBatch uiBatch;
-		uiBatch.shaderType = batch.shaderType;
-
-		for (size_t i = 0; i < batch.commands.size(); i++) {
-			uint32_t baseInstance = batch.commands[i].baseInstance;
-			GPUInstance* instance = nullptr;
-
-			if (baseInstance < BindlessManager::GetInstance().GetInstanceCount()) {
-				instance = BindlessManager::GetInstance().GetInstanceData(baseInstance);
-			}
-
-			if (instance && (instance->flags & (1 << 31))) { 
-				uiBatch.commands.push_back(batch.commands[i]);
-				uiBatch.meshIndices.push_back(batch.meshIndices[i]);
-				uiBatch.materialIndices.push_back(batch.materialIndices[i]);
-			}
-		}
-
-		if (!uiBatch.commands.empty()) {
+	if (batchesByPass.find(RenderPassType::UI) != batchesByPass.end()) {
+		const auto& uiBatches = batchesByPass[RenderPassType::UI];
+		for (const auto& [shaderType, batch] : uiBatches) {
 			switch (shaderType) {
 			case ShaderType::UNLIT:
-				RenderUnlitBatch(uiBatch, viewMatrix, projMatrix, true);
+				RenderUnlitBatch(batch, viewMatrix, projMatrix, true);
 				break;
 			case ShaderType::PBR:
-				RenderPBRBatch(uiBatch, viewMatrix, projMatrix, cameraPos);
+				RenderPBRBatch(batch, viewMatrix, projMatrix, cameraPos);
 				break;
 			}
 		}
 	}
 
-	glEnable(GL_DEPTH_TEST); 
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
 }
 

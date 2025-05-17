@@ -48,6 +48,17 @@ bool GPUDrivenRenderer::Initialize() {
 	GLuint zero = 0;
 	glNamedBufferSubData(visibleCountBuffer, 0, sizeof(GLuint), &zero);
 
+	// Initialize shadow map
+	if (!shadowMap.Initialize(2048, 2048)) {
+		LOG(LogType::LOG_ERROR, "Failed to initialize shadow map");
+		return false;
+	}
+
+	/*if (!depthShader) {
+		LOG(LogType::LOG_ERROR, "Failed to load depth shader");
+		return false;
+	}*/
+
 	return true;
 }
 
@@ -216,6 +227,7 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 		LOG(LogType::LOG_INFO, "No hay objetos para renderizar");
 		return;
 	}
+	RenderDepthPass();
 
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
 
@@ -414,6 +426,11 @@ void GPUDrivenRenderer::RenderPBRBatch(
 	shader->SetUniformMat4("view", viewMatrix);
 	shader->SetUniformMat4("projection", projMatrix);
 	shader->SetUniformVec3("cameraPos", cameraPos);
+
+	shadowMap.BindForReading(GL_TEXTURE7);
+	shader->SetUniform("shadowMap", 7);
+	shader->SetUniformMat4("depthMVP", shadowMap.GetLightSpaceMatrix());
+	shader->SetUniform("useShadows", 1);
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, ForwardPlusLighting::GetInstance().GetPointLightBuffer());
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4, ForwardPlusLighting::GetInstance().GetDirectionalLightBuffer());
@@ -708,4 +725,57 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 
 	LOG(LogType::LOG_INFO, "=== Fin de información de GPUMesh ===");
 }
+
+void GPUDrivenRenderer::RenderDepthPass() {
+	shadowMap.BindForWriting();
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+
+	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::PBR);
+	if (!shader) {
+		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader PBR");
+		return;
+	}
+
+	shader->Bind();
+
+	// Calculate light space matrix (example - should be based on your light)
+	glm::vec3 lightPos = glm::vec3(10, 20, 10);
+	glm::mat4 depthProjectionMatrix = glm::ortho<float>(-10, 10, -10, 10, -10, 20);
+	glm::mat4 depthViewMatrix = glm::lookAt(lightPos, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	glm::mat4 depthMVP = depthProjectionMatrix * depthViewMatrix;
+	shadowMap.SetLightSpaceMatrix(depthMVP);
+
+	shader->SetUniformMat4("depthMVP", depthMVP);
+
+	// Render all shadow-casting objects
+	for (size_t i = 0; i < cullData.size(); i++) {
+		const CullData& cullItem = cullData[i];
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(cullItem.meshIndex);
+
+		if (!meshData) continue;
+
+		glBindVertexArray(meshData->vertexArray);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+		if (i < drawCommands.size()) {
+			const DrawElementsCommand& cmd = drawCommands[i];
+			glDrawElementsInstanced(
+				GL_TRIANGLES,
+				cmd.count,
+				GL_UNSIGNED_INT,
+				nullptr,
+				cmd.instanceCount
+			);
+
+			GLenum err = glGetError();
+			if (err != GL_NO_ERROR) {
+				LOG(LogType::LOG_ERROR, "GL Error after depth pass draw: 0x%X", err);
+			}
+		}
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
 #pragma endregion

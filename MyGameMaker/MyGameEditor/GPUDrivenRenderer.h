@@ -8,6 +8,7 @@
 #include "BindlessManager.h"
 #include "../MyGameEngine/Shaders.h"
 #include "MyGameEngine/CameraBase.h"
+#include "ShadowMap.h"
 
 struct DrawElementsCommand {
 	GLuint count;
@@ -86,6 +87,8 @@ private:
 		const glm::mat4& projMatrix,
 		const glm::vec3& cameraPos);
 
+	void RenderDepthPass();
+
 	void HandleTextureBindings(Shaders* shader, const char* textureName, const char* hasTextureName, GLuint64 textureHandle);
 	void BindRegularTextures(Shaders* shader, GPUMaterial* materialData);
 
@@ -110,5 +113,10 @@ private:
 
 	static constexpr int MAX_DRAW_COMMANDS = 10000;
 	bool bindlessErrorDetected;
+
+	ShadowMap shadowMap;
+	Shaders* depthShader = nullptr;
+
+	
 
 };

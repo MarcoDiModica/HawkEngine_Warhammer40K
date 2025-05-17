@@ -168,6 +168,7 @@
     <ClCompile Include="RenderStats.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="SceneSerializer.cpp" />
+    <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="UIAudioTest.cpp" />
     <ClCompile Include="UIConsole.cpp" />
     <ClCompile Include="UIGameView.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="RenderStats.h" />
     <ClInclude Include="Root.h" />
     <ClInclude Include="SceneSerializer.h" />
+    <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="UIAudioTest.h" />
     <ClInclude Include="UIConsole.h" />
     <ClInclude Include="UIElement.h" />

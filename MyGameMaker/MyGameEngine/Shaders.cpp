@@ -470,6 +470,10 @@ bool PBRShader::Initialize() {
 	return LoadShaders("Assets/Shaders/pbr_vertex.glsl", "Assets/Shaders/pbr_fragment.glsl");
 }
 
+bool DepthShader::Initialize() {
+	return LoadShaders("Assets/Shaders/depth_vertex.glsl", "Assets/Shaders/depth_fragment.glsl");
+}
+
 ForwardPlusComputeShader::ForwardPlusComputeShader() {
 }
 

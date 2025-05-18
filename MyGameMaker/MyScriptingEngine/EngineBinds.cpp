@@ -1617,11 +1617,11 @@ void EngineBinds::SetTextSize(MonoObject* textRef, int size)
 	}
 }
 
-void EngineBinds::SetBoxSize(MonoObject* textRef, glm::vec2& size)
+void EngineBinds::SetTextBoxSize(MonoObject* textRef, float sizex, float sizey)
 {
 	auto uiText = ConvertFromSharpComponent<TextComponent>(textRef);
 	if (uiText) {
-		uiText->SetBoxSize(size);
+		uiText->SetBoxSize(sizex, sizey);
 	}
 }
 
@@ -1966,7 +1966,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.UIText::SetText", (const void*)&EngineBinds::SetText);
 	mono_add_internal_call("HawkEngine.UIText::SetTextColor", (const void*)&EngineBinds::SetTextColor);
 	mono_add_internal_call("HawkEngine.UIText::SetTextSize", (const void*)&EngineBinds::SetTextSize);
-	mono_add_internal_call("HawkEngine.UIText::SetBoxSize", (const void*)&EngineBinds::SetBoxSize);
+	mono_add_internal_call("HawkEngine.UIText::SetBoxSize", (const void*)&EngineBinds::SetTextBoxSize);
 
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);

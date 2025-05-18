@@ -160,9 +160,10 @@ void TextComponent::Render() const {
         << " tamaño fuente " << m_fontSize << std::endl;
 }
 
-void TextComponent::SetBoxSize(const glm::vec2& size) {
-    m_boxSize = size;
-    m_overrideBoxSize = true;
+void TextComponent::SetBoxSize(float x, float y) {
+    m_boxSize.x = x;
+	m_boxSize.y = y;
+    /*m_overrideBoxSize = true;*/
 }
 
 

@@ -18,7 +18,7 @@ namespace HawkEngine
         public extern void SetTextSize(int size);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SetBoxSize(Vector2 size);
+        public extern void SetBoxSize(float x, float y);
 
         private GameObject owner;
 

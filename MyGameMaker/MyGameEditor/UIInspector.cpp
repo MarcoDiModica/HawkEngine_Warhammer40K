@@ -2652,7 +2652,7 @@ private:
 		ImGui::SameLine(labelWidth);
 		ImGui::PushItemWidth(-1);
 		if (ImGui::DragFloat2("##BoxSize", Boxsize, 0.1f, 0.1f, 100.0f)) {
-			textComponent->SetBoxSize(glm::vec2(Boxsize[0], Boxsize[1]));
+			textComponent->SetBoxSize(Boxsize[0], Boxsize[1]);
 		}
 		static std::unordered_map<TextComponent*, bool> drawBoxState;
 		if (drawBoxState.find(textComponent) == drawBoxState.end()) {

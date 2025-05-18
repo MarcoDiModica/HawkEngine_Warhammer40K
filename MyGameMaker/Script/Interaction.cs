@@ -87,8 +87,8 @@ public class Interaction : MonoBehaviour
         choice2Hover = GameObject.Find("Choice2Hover");
         choice2TextGO = GameObject.Find("Choice2Text");
         choice2Text = choice2TextGO.GetComponent<UIText>();
-         
-        //dialogueText.SetBoxSize(new Vector2(1200f, 200f));
+
+        dialogueText.SetBoxSize(1200f, 200f);
 
 
         Box.SetActive(false);

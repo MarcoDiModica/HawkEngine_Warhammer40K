@@ -14,8 +14,8 @@ public class EnemyControllerRanged : EnemyController
     private Transform transform;
     private TermagauntAnimation anim;
 
-    private float health = 100.0f;
-    private float damage = 20.0f;
+    private float health = 50.0f;
+    private float damage = 10.0f;
 
     private List<Vector3> bulletDirections = new List<Vector3>();
     private List<HashSet<GameObject>> bulletHitEnemies = new List<HashSet<GameObject>>();

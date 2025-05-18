@@ -26,7 +26,7 @@ public class EnemyControllerMelee : EnemyController
     private const string SFX_LEAP = "Assets/Audio/SFX/Enemies/Hormagaunt/Hormagaunt_Leap_Atack.wav";
 
     private float health = 50.0f;
-    private float clawDamage = 5.0f;
+    private float clawDamage = 7.0f;
     private float leapDamage = 7.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;

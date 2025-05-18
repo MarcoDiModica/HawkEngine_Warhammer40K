@@ -28,12 +28,12 @@ public class Interaction : MonoBehaviour
         if(condition)
         {
             Box.SetActive(true);
-            Text.SetActive(true);
+            dialogueTextGo.SetActive(true);
         }
         else
         {
             Box.SetActive(false);
-            Text.SetActive(false);
+            dialogueTextGo.SetActive(false);
         }
     }
     
@@ -87,6 +87,17 @@ public class Interaction : MonoBehaviour
         choice2Hover = GameObject.Find("Choice2Hover");
         choice2TextGO = GameObject.Find("Choice2Text");
         choice2Text = choice2TextGO.GetComponent<UIText>();
+
+        Box.SetActive(false);
+        Text.SetActive(false);
+        dialogueTextGo.SetActive(false);
+        interactText.SetActive(false);
+        choice1.SetActive(false);
+        choice1TextGO.SetActive(false);
+        choice2.SetActive(false);
+        choice2TextGO.SetActive(false);
+        choice1Hover.SetActive(false);
+        choice2Hover.SetActive(false);
 
     }
 
@@ -147,6 +158,6 @@ public class Interaction : MonoBehaviour
 
     public bool isCanvasActive()
     {
-        return Box != null && Text != null && Box.IsActive() && Text.IsActive();
+        return Box != null && dialogueTextGo != null && Box.IsActive() && dialogueTextGo.IsActive();
     }
 }

@@ -19,6 +19,10 @@ uniform float aoFactor;
 uniform vec3 emissiveColor;
 uniform float emissiveIntensity;
 
+uniform sampler2D shadowMap;
+uniform mat4 depthMVP;
+uniform int useShadows;
+
 uniform sampler2D albedoMap;
 uniform sampler2D normalMap;
 uniform sampler2D metallicMap;
@@ -58,6 +62,7 @@ struct DirectionalLight {
     uint shadowMapIndex;
     uint useCascades;
     uint numCascades;
+    float darknessfallback; 
 };
 
 layout (std430, binding = 3) readonly buffer PointLightBuffer {
@@ -122,6 +127,44 @@ vec3 FresnelSchlick(float cosTheta, vec3 F0) {
     return F0 + (1.0 - F0) * pow(max(1.0 - cosTheta, 0.0), 5.0);
 }
 
+float ShadowCalculation(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir) {
+    // Perform perspective divide
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    
+    // Transform to [0,1] range
+    projCoords = projCoords * 0.5 + 0.5;
+    
+    // Get closest depth value from light's perspective
+    float closestDepth = texture(shadowMap, projCoords.xy).r;
+    
+    // Get depth of current fragment from light's perspective
+    float currentDepth = projCoords.z;
+    
+    // Calculate bias (based on depth map resolution and slope)
+    float bias = max(0.005 * (1.0 - dot(normal, lightDir)), 0.001);
+    
+    // Check whether current frag pos is in shadow
+    // float shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;
+    
+    // PCF filtering
+    float shadow = 0.0;
+    vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+    for(int x = -1; x <= 1; ++x) {
+        for(int y = -1; y <= 1; ++y) {
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
+        }
+    }
+    shadow /= 9.0;
+    
+    // Keep the shadow at 0.0 when outside the far plane region of the light's frustum.
+    if(projCoords.z > 1.0)
+        shadow = 0.0;
+        
+    return shadow;
+}
+
+
 void main() {
     vec4 albedo = albedoColor;
     if (u_HasAlbedoMap == 1) {
@@ -149,91 +192,119 @@ void main() {
     }
     
     vec3 N = normalize(fs_in.Normal);
-    if (u_HasNormalMap == 1) {
+    if (u_HasNormalMap == 5) {
         vec3 normalFromMap = texture(normalMap, fs_in.TexCoord).rgb * 2.0 - 1.0;
         N = normalize(fs_in.TBN * normalFromMap);
     }
     
     vec3 V = normalize(fs_in.CameraPos - fs_in.FragPos);
-    
+    float NdotV = max(dot(N, V), 0.0); 
+
     vec3 F0 = vec3(0.04);
     F0 = mix(F0, albedo.rgb, metallic);
     
-    vec3 lightDir = normalize(-directionalLight.direction.xyz);
-    vec3 H = normalize(V + lightDir);
-    
-    float NdotL = max(dot(N, lightDir), 0.0);
-    float NdotV = max(dot(N, V), 0.0);
-    
-    float NDF = DistributionGGX(N, H, roughness);   
-    float G = GeometrySmith(N, V, lightDir, roughness);    
-    vec3 F = FresnelSchlick(max(dot(H, V), 0.0), F0);
-    
-    vec3 numerator = NDF * G * F;
-    float denominator = 4.0 * NdotV * NdotL + 0.0001; 
-    vec3 specular = numerator / denominator;
-    
-    vec3 kS = F;
-    vec3 kD = vec3(1.0) - kS;
-    kD *= 1.0 - metallic; 
-    
-    vec3 radiance = directionalLight.color.rgb * directionalLight.direction.w;
-    vec3 directLighting = (kD * albedo.rgb / PI + specular) * radiance * NdotL;
-    
-    vec3 ambientLight = vec3(0.03) * albedo.rgb * ao;
-    vec3 lighting = ambientLight + directLighting;
+    vec3 lighting = vec3(0.0);
     vec3 color = vec3(0.0);
+
     
-      if (useForwardPlus == 1) {
-        uvec2 lightRange = getLightGridInfo();
-        uint startIndex = lightRange.x;
-        uint lightCount = lightRange.y;
-   
-        for (uint i = 0; i < numLights; i++) {
-            uint lightIndex = lightIndices[startIndex + i];
-            PointLight light = pointLights[lightIndex];
-          
-            vec3 lightPos = light.position.xyz;
-            float lightRadius = light.position.w;
-            
-            vec3 L = lightPos - fs_in.FragPos;
-            float distance = length(L);
-          
-            if (distance < lightRadius) {
-                L = normalize(L);
-                H = normalize(V + L);
-                NdotL = max(dot(N, L), 0.0);
-                
-                float constant = light.attenuation.x;
-                float linear = light.attenuation.y;
-                float quadratic = light.attenuation.z;
-                float attenuation = 1.0 / (constant + linear * distance + quadratic * (distance * distance));
-                
-                NDF = DistributionGGX(N, H, roughness);
-                G = GeometrySmith(N, V, L, roughness);
-                F = FresnelSchlick(max(dot(H, V), 0.0), F0);
-                
-                numerator = NDF * G * F;
-                denominator = 4.0 * NdotV * NdotL + 0.0001;
-                specular = numerator / denominator;
-                
-                kS = F;
-                kD = vec3(1.0) - kS;
-                kD *= 1.0 - metallic;
-                
-                radiance = light.color.rgb * light.color.a * attenuation; // Using a component as intensity
-                
-                lighting = (kD * albedo.rgb / PI + specular) * radiance * NdotL;
-            }
-        }
+  vec3 lightDir = normalize(-directionalLight.direction.xyz);
+float directionalLightIntensity = max(directionalLight.direction.w, 0.0); 
+vec3 radiance = directionalLight.color.rgb * directionalLightIntensity;
+
+vec3 H = normalize(V + lightDir);
+float NdotL = max(dot(N, lightDir), 0.0);
+float NDF = DistributionGGX(N, H, roughness);   
+float G = GeometrySmith(N, V, lightDir, roughness);    
+vec3 F = FresnelSchlick(max(dot(H, V), 0.0), F0);
+
+vec3 numerator = NDF * G * F;
+float denominator = 4.0 * NdotV * NdotL + 0.0001; 
+vec3 specular = numerator / denominator;
+
+vec3 kS = F;
+vec3 kD = vec3(1.0) - kS;
+kD *= 1.0 - metallic; 
+
+vec3 directLighting = (kD * albedo.rgb / PI + specular) * radiance * NdotL;
+
+float shadow = 0.0;
+    if (useShadows == 1) {
+        vec4 fragPosLightSpace = depthMVP * vec4(fs_in.FragPos, 1.0);
+        shadow = ShadowCalculation(fragPosLightSpace, N, lightDir);
     }
     
-  lighting += emission;
+    // Apply shadow to lighting
+    directLighting *= (1.0 - shadow);
+
+lighting += directLighting;
+
+ float attenuation = 0;
+ float constant = 0;
+ uint lightCount = 0;
+ float lightIntensity = 0;
+
+if (useForwardPlus == 1) {
+    uvec2 lightRange = getLightGridInfo();
+    uint startIndex = lightRange.x;
+    uint lightCount = lightRange.y;
+
+    for (uint i = 0; i < numLights; i++) {
+        uint lightIndex = lightIndices[startIndex + i];
+        PointLight light = pointLights[lightIndex];
+
+        vec3 lightPos = light.position.xyz;
+        float lightRadius = light.position.w;
+
+        vec3 L = lightPos - fs_in.FragPos;
+        float distance = length(L);
+
+        if (distance < lightRadius) 
+        {
+        L = normalize(L);
+        H = normalize(V + L);
+        NdotL = max(dot(N, L), 0.0);
+
+        constant = light.attenuation.x;
+        float linear = light.attenuation.y;
+        float quadratic = light.attenuation.z;
+        attenuation = 1.0 / max(constant + linear * distance + quadratic * (distance * distance), 0.001);
+
+        vec3 lightColor = light.color.rgb;
+        lightIntensity = max(light.color.a, 0.01);
+        vec3 radiance = lightColor * lightIntensity * attenuation;
+
+        NDF = DistributionGGX(N, H, roughness);
+        G = GeometrySmith(N, V, L, roughness);
+        F = FresnelSchlick(max(dot(H, V), 0.0), F0);
+
+        numerator = NDF * G * F;
+        denominator = 4.0 * NdotV * NdotL + 0.0001;
+        specular = numerator / denominator;
+
+        kS = F;
+        kD = vec3(1.0) - kS;
+        kD *= 1.0 - metallic;
+        
+        vec3 pointLighting = (kD * albedo.rgb / PI + specular) * radiance * NdotL;
+        lighting += pointLighting;
+        }
+    }
+}
+    
+lighting += emission;
+
+vec3 ambientFallback = vec3(directionalLight.darknessfallback) * albedo.rgb;
+lighting += ambientFallback;
 
 // Ensure albedo.rgb is factored into the final color
-lighting = albedo.rgb * lighting / (lighting + vec3(1.0 - tonemapStrength));
+lighting = albedo.rgb * lighting / (lighting + vec3(1.0 - tonemapStrength) + 0.001);
 
 color += pow(lighting, vec3(1.0 / 2.2));
 
 FragColor = vec4(color, albedo.a);
+//FragColor = vec4(N * 0.5 + 0.5, 1.0);
+//FragColor = vec4(fs_in.TBN[0] * 0.5 + 0.5, 1.0); 
+//FragColor = vec4(fs_in.TBN[1] * 0.5 + 0.5, 1.0); 
+//FragColor = vec4(fs_in.TBN[2] * 0.5 + 0.5, 1.0); 
+//FragColor = vec4(N * 0.5 + 0.5, 1.0); 
 }

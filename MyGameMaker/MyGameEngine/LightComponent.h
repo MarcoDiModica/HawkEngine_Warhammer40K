@@ -58,6 +58,7 @@ public:
     float GetQuadratic() const;
     float GetRadius() const;
     float GetIntensity() const;
+	float GetDarknessFallback() const;
 
 
   
@@ -69,6 +70,7 @@ public:
     void SetQuadratic(float quadratic);
     void SetRadius(float radius);
     void SetIntensity(float intensity);
+	void SetDarknessFallback(float darknessFallback);
 
 private:
     void UpdatePointLight();
@@ -87,6 +89,7 @@ private:
     float radius = 1.0f;
     float intensity = 3.0f;
     glm::vec3 direction = { -1.0f, -1.0f, 0.0f };
+	float darknessFallback = 0.00001f;
 
 protected:
 

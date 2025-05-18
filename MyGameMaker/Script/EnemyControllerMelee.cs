@@ -23,6 +23,7 @@ public class EnemyControllerMelee : EnemyController
     private const string SFX_FOOTSTEP = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav";
     private const string SFX_ATTACK = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav";
     private const string SFX_HIT = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav";
+    private const string SFX_LEAP = "Assets/Audio/SFX/Enemies/Hormagaunt/Hormagaunt_Leap_Atack.wav";
 
     private float health = 50.0f;
     private float clawDamage = 5.0f;
@@ -483,32 +484,39 @@ public class EnemyControllerMelee : EnemyController
                 hasDropped = true;
             }
 
-            if (isFootstepPlaying)
-            {
-                Audio.Stop(SFX_FOOTSTEP);
-                Audio.Stop(MUSIC_COMBAT);
-                isFootstepPlaying = false;
-            }
 
-            if (anim != null && anim.isAnimFinished)
+
+
+            if (isFlashingColor)
             {
-                bool once = false;
-                if (enemyTransform != null && !once)
+                flashTimer -= deltaTime;
+                if (isFootstepPlaying)
                 {
-                    enemyTransform.DOScale(Vector3.Zero, 0.1f, Modes.EASE_OUT);
-                    once = true;
+                    Audio.Stop(SFX_FOOTSTEP);
+                    Audio.Stop(MUSIC_COMBAT);
+                    isFootstepPlaying = false;
                 }
 
-                deathTimer += deltaTime;
-                if (deathTimer >= deathCooldown)
+                if (anim != null && anim.isAnimFinished)
                 {
-                    Engineson.Destroy(gameObject);
-                }
-            }
+                    bool once = false;
+                    if (enemyTransform != null && !once)
+                    {
+                        enemyTransform.DOScale(Vector3.Zero, 0.1f, Modes.EASE_OUT);
+                        once = true;
+                    }
 
-            if (collider != null)
-            {
-                collider.SetActive(false);
+                    deathTimer += deltaTime;
+                    if (deathTimer >= deathCooldown)
+                    {
+                        Engineson.Destroy(gameObject);
+                    }
+                }
+
+                if (collider != null)
+                {
+                    collider.SetActive(false);
+                }
             }
         }
         catch (Exception e)

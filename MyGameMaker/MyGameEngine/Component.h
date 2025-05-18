@@ -37,6 +37,7 @@ enum class ComponentType {
 	IMAGE,
 	BUTTON,
 	SLIDER,
+	TEXT,
 	BONE
 };
 

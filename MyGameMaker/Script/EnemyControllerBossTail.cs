@@ -23,6 +23,11 @@ public class EnemyControllerBossTail : EnemyController
 
     private float stabDamage = 10.0f;
     private float slashDamage = 10.0f;
+    private string hitStab = "Assets/Audio/Mawloc_Tail_Stab_2.wav";
+    private string hitSlash = "Assets/Audio/Mawloc_Tail_Slash.wav";
+    private const string BurrowClip = "Assets/Audio/Mawloc_Underground_move.wav";
+    private const string UnburrowClip = "Assets/Audio/Mawloc_Underground_Attack.wav";
+    private const string MoveUndergroundClip = "Assets/Audio/Mawloc_Rumble_Underground.wav";
 
     bool waitingToEmerge = false;
     float emergeTimer = 0f;
@@ -169,6 +174,7 @@ public class EnemyControllerBossTail : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(BurrowClip);
             Engineson.print("Burrowed");
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
             collider.SetPosition(enemyTransform.position);
@@ -183,6 +189,7 @@ public class EnemyControllerBossTail : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(UnburrowClip);
             if (playerTransform != null)
             {
                 enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
@@ -202,6 +209,7 @@ public class EnemyControllerBossTail : EnemyController
 
         if (isDead == false)
         {
+            Audio.PlayOneShot(MoveUndergroundClip);
             for (int i = 0; i < fixedPositions.Length; i++)
             {
                 float distance = Vector3.Distance(playerTransform.position, fixedPositions[i]);
@@ -220,6 +228,7 @@ public class EnemyControllerBossTail : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(hitSlash);
             actionTimer = 1.5f;
             anim.SetSlashAnimation();
             // note: pass in your desired width/height/length and duration
@@ -236,6 +245,7 @@ public class EnemyControllerBossTail : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(hitStab);
             actionTimer = 1.5f;
             anim.SetStabAnimation();
             Vector3 dir = Vector3.Normalize(playerTransform.position - enemyTransform.position);
@@ -261,7 +271,7 @@ public class EnemyControllerBossTail : EnemyController
     private bool IsPlayerInCollider(GameObject hurtbox, Vector3 playerPos)
     {
         var bc = hurtbox.GetComponent<BoxCollider>();
-        Vector3 halfSize = bc.GetSize() * 0.5f;    // <--- your engine’s getter for collider size
+        Vector3 halfSize = bc.GetSize() * 0.5f;    // <--- your engineï¿½s getter for collider size
         Vector3 center = hurtbox.GetComponent<Transform>().position;
         Engineson.print($"Checking {hurtbox.name}: center={center}, halfSize={halfSize}, playerPos={playerPos}");
 

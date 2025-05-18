@@ -261,7 +261,42 @@ public class PlayerController : MonoBehaviour
             playerMovement.SetLookDirection(lookDirection);
         }
 
-        elapsedTime += deltaTime;
+        if (playerInput.IsReloading())
+        {
+            if (playerShooting.GetCurrentGun() == 0)
+            {
+
+                if (isIdle)
+                {
+                    playerAnimations.ReloadBoltgunWhileIdleAnimation();
+                }
+                else if (isRunning)
+                {
+                    playerAnimations.ReloadBoltgunWhileRunningAnimation();
+                }
+                else if (isWalking)
+                {
+                    if (moveDirection == lookDirection)
+                    {
+                        playerAnimations.ReloadBoltgunWhileWalkingForwardAnimation();
+                    }
+                    else if (moveDirection == -lookDirection)
+                    {
+                        playerAnimations.ReloadBoltgunWhileWalkingBackwardsAnimation();
+                    }
+                    else if (moveDirection == lookDirection + new Vector3(1, 0, 0))
+                    {
+                        playerAnimations.ReloadBoltgunWhileWalkingRightAnimation();
+                    }
+                    else if (moveDirection == lookDirection - new Vector3(1, 0, 0))
+                    {
+                        playerAnimations.ReloadBoltgunWhileWalkingLeftAnimation();
+                    }
+                }
+            }
+        }
+
+                    elapsedTime += deltaTime;
 
         UpdateAimLaser();
 
@@ -368,7 +403,7 @@ public class PlayerController : MonoBehaviour
                 isShootingStanding = false;
                 isShootingRunning = false;
 
-                playerAnimations?.SetRunAnimation();
+                playerAnimations?.IdleToRunAnimation();
                 isRunning = true;
                 isMoving = true;
                 transitionTimer = 0f;
@@ -380,7 +415,7 @@ public class PlayerController : MonoBehaviour
                 isShootingStanding = false;
                 isShootingRunning = false;
 
-                playerAnimations?.SetWalkAnimation();
+                playerAnimations?.IdleToWalkingAnimation();
                 isWalking = true;
                 isMoving = true;
                 transitionTimer = 0f; 
@@ -535,7 +570,7 @@ public class PlayerController : MonoBehaviour
         {
             if (isShootingStanding)
             {
-                playerAnimations.SetShootingStandingToIdleAnimation();
+                playerAnimations.ShootingStillToIdleAnimation();
             }
             else
             {
@@ -570,7 +605,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (isShootingRunning && !isShootInput)
         {
-            playerAnimations.SetShootingRunningToRunAnimation();
+            playerAnimations.ShootingWalkingStraightToRunAnimation();
             isRunning = false;
             isWalking = false;
             isIdle = false;
@@ -582,7 +617,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (transitionTimer <= 0f && !isWalking)
         {
-            playerAnimations.SetWalkAnimation();
+            playerAnimations.IdleToWalkingAnimation();
             isRunning = false;
             isWalking = true;
             isIdle = false;
@@ -604,7 +639,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (isShootingRunning && !isShootInput)
         {
-            playerAnimations.SetShootingRunningToRunAnimation();
+            playerAnimations.ShootingWalkingStraightToRunAnimation();
             isRunning = false;
             isWalking = false;
             isIdle = false;
@@ -616,7 +651,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (transitionTimer <= 0f && !isRunning)
         {
-            playerAnimations.SetRunAnimation();
+            playerAnimations.IdleToRunAnimation();
             isRunning = true;
             isWalking = false;
             isShootingStanding = false;
@@ -633,7 +668,7 @@ public class PlayerController : MonoBehaviour
 
         if (moveDirection != Vector3.Zero && !isShootingRunning)
         {
-            playerAnimations.SetRunningToShootRunningAnimation();
+            playerAnimations.RunningToShootingWalkingStraightAnimation();
             isShootingStanding = false;
             isShootingRunning = true;
             isFootstepPlaying = false;
@@ -643,7 +678,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (!isShootingStanding && moveDirection == Vector3.Zero)
         {
-            playerAnimations.SetShootingStandingAnimation();
+            playerAnimations.IdleToShootingStillAnimation();
             isShootingStanding = true;
             isShootingRunning = false;
             isFootstepPlaying = false;
@@ -654,7 +689,7 @@ public class PlayerController : MonoBehaviour
 
         if (isShootingStanding && moveDirection != Vector3.Zero)
         {
-            playerAnimations.SetShootingStandingToShootingRunAnimation();
+            playerAnimations.ShootingStandingToShootingWalkingStraightAnimation();
             isShootingStanding = false;
             isShootingRunning = true;
         }
@@ -667,7 +702,7 @@ public class PlayerController : MonoBehaviour
 
         if (isWalking)
         {
-            playerAnimations.SetWalkingToIdleAnimation();
+            playerAnimations.WalkingToIdleAnimation();
             isWalking = false;
             isIdle = true;
             isRunning = false;
@@ -686,7 +721,7 @@ public class PlayerController : MonoBehaviour
 
         if (isRunning)
         {
-            playerAnimations.SetRunningToIdleAnimation();
+            playerAnimations.RunToIdleAnimation();
             isRunning = false;
             isWalking = false;
             isIdle = true;
@@ -703,7 +738,7 @@ public class PlayerController : MonoBehaviour
         if (playerAnimations == null)
             return;
 
-        playerAnimations.SetShootingStandingToShootingRunAnimation();
+        playerAnimations.ShootingStandingToShootingWalkingStraightAnimation();
         isShootingRunning = true;
         isShootingStanding = false;
         isTransitioning = true;

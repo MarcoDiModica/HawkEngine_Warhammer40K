@@ -126,6 +126,70 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
+    public void IdleToWalkingAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(11, 41, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
+    public void IdleToShootingStillAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(11, 33, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
+    public void WalkingToIdleAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(41, 11, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
+    public void RunToIdleAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(32, 11, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
     public void SetDashAnimation()
     {
         if (!componentsInitialized || esk == null)
@@ -166,6 +230,22 @@ public class PlayerAnimations : MonoBehaviour
         try
         {
             esk.TransitionAnimations(11, 32, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void ShootingStillToIdleAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(33, 11, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2008,7 +2088,7 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(32, 20, 0.1f);
+            esk.PlayAnimOnce(20, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2024,7 +2104,7 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(11, 21, 0.1f);
+            esk.PlayAnimOnce(21, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2398,85 +2478,85 @@ public class PlayerAnimations : MonoBehaviour
 
     ////-----------DASHING ANIMATION----------------//
 
-    //public void SetDashToRunningAnimation()
-    //{
-    //    if (!componentsInitialized || esk == null)
-    //        return;
+    public void SetDashToRunningAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
 
-    //    try
-    //    {
-    //        esk.TransitionAnimations(0, 6, 0.1f);
-    //        esk.SetAnimationSpeed(2.0f);
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        Engineson.print($"ERROR in SetDashToRunningAnimation: {e.Message}");
-    //    }
-    //}
+        try
+        {
+            esk.TransitionAnimations(6, 32, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetDashToRunningAnimation: {e.Message}");
+        }
+    }
 
-    //public void SetDashToShootingRunningAnimation()
-    //{
-    //    if (!componentsInitialized || esk == null)
-    //        return;
+    public void SetDashToShootingRunningAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
 
-    //    try
-    //    {
-    //        esk.TransitionAnimations(0, 8, 0.1f);
-    //        esk.SetAnimationSpeed(1.5f);
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        Engineson.print($"ERROR in SetDashToShootingRunningAnimation: {e.Message}");
-    //    }
-    //}
+        try
+        {
+            esk.TransitionAnimations(6, 37, 0.1f);
+            esk.SetAnimationSpeed(1.5f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetDashToShootingRunningAnimation: {e.Message}");
+        }
+    }
 
-    //public void SetDashToShootingStandingAnimation()
-    //{
-    //    if (!componentsInitialized || esk == null)
-    //        return;
+    public void SetDashToShootingStandingAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
 
-    //    try
-    //    {
-    //        esk.TransitionAnimations(0, 7, 0.1f);
-    //        esk.SetAnimationSpeed(1.5f);
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        Engineson.print($"ERROR in SetDashToShootingStandingAnimation: {e.Message}");
-    //    }
-    //}
+        try
+        {
+            esk.TransitionAnimations(6, 33, 0.1f);
+            esk.SetAnimationSpeed(1.5f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetDashToShootingStandingAnimation: {e.Message}");
+        }
+    }
 
-    //public void SetDashToWalkingAnimation()
-    //{
-    //    if (!componentsInitialized || esk == null)
-    //        return;
+    public void SetDashToWalkingAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
 
-    //    try
-    //    {
-    //        esk.TransitionAnimations(0, 9, 0.1f);
-    //        esk.SetAnimationSpeed(1.5f);
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        Engineson.print($"ERROR in SetDashToWalkingAnimation: {e.Message}");
-    //    }
-    //}
+        try
+        {
+            esk.TransitionAnimations(6, 41, 0.1f);
+            esk.SetAnimationSpeed(1.5f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetDashToWalkingAnimation: {e.Message}");
+        }
+    }
 
-    //public void SetDashToIdleAnimation()
-    //{
-    //    if (!componentsInitialized || esk == null)
-    //        return;
+    public void SetDashToIdleAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
 
-    //    try
-    //    {
-    //        esk.TransitionAnimations(0, 5, 0.1f);
-    //        esk.SetAnimationSpeed(1.5f);
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        Engineson.print($"ERROR in SetDashToIdleAnimation: {e.Message}");
-    //    }
-    //}
+        try
+        {
+            esk.TransitionAnimations(6, 11, 0.1f);
+            esk.SetAnimationSpeed(1.5f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetDashToIdleAnimation: {e.Message}");
+        }
+    }
 
     //public void SetShootingStandingToIdleAnimation()
     //{

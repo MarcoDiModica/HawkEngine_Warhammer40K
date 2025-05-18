@@ -67,6 +67,7 @@ public class MawlocAnimation : MonoBehaviour
 
     public void SetDeathAnimation()
     {
+        mawlocesk?.SetAnimationPlayState(true);
         if (mawlocesk?.GetAnimationIndex() != 2)
         {
             mawlocesk?.SetAnimationPlayState(true);

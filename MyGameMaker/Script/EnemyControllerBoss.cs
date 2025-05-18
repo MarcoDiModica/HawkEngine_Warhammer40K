@@ -12,7 +12,7 @@ using HawkEngine;
 public class EnemyControllerBoss : EnemyController
 {
     private float hurtboxDuration = 0.5f; 
-    private Vector3 slamHurtboxSize = new Vector3(3.0f, 1.0f, 10.0f);
+    private Vector3 slamHurtboxSize = new Vector3(3.0f, 1.0f, 15.0f);
     private Vector3 hurtboxOffset = new Vector3(4.0f, 0.0f, 0.0f);
     private GameObject slamHurtboxObject;
 
@@ -60,8 +60,8 @@ public class EnemyControllerBoss : EnemyController
     private float postAttackDelay = 2.0f;
     private float burrowTime = 2.0f;
     private bool isPreparingAttack = false;
-    private float slamDamage = 25.0f;
-    private float strikeDamage = 30.0f;
+    private float slamDamage = 10.0f;
+    private float strikeDamage = 15.0f;
     //private Vector3[] fixedPositions = new Vector3[]
     //{
     //    new Vector3(10,-21.807f,1020),
@@ -90,7 +90,7 @@ public class EnemyControllerBoss : EnemyController
     private bool phase3Started = false;
     private bool hasTeleportedToCenter = false;
     private bool isPhase3Attacking = false;
-    private float metalSlideDamage = 30.0f;
+    private float metalSlideDamage = 8.0f;
     private bool metalSlideDamageApplied = false;
 
     private EnemyControllerBossTail tailController;
@@ -152,7 +152,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 1500.0f;
+        currentHealth = 500.0f;
         gameObject.tag = "Boss";
         isDead = false;
 //         musicClip = new AudioClip(combatMusic, "BossMusic", true, false);
@@ -631,12 +631,12 @@ public class EnemyControllerBoss : EnemyController
 
     private void Die()
     {
+        anim.SetDeathAnimation();
         tailController.Die();
-        Engineson.Destroy(GetGameObject());
+        //Engineson.Destroy(GetGameObject());
         isDead = true;
         Audio.PlayOneShot(DeathClip);
-        anim.SetDeathAnimation();
-        SceneManager.LoadScene("WinScene");
+        //SceneManager.LoadScene("WinScene");
     }
 
     private void CreateSlamHurtbox()

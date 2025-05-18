@@ -21,7 +21,7 @@ public class EnemyControllerBossTail : EnemyController
     private float shiftDuration = 5.0f;
     private float actionTimer = 0.0f;
 
-    private float stabDamage = 15.0f;
+    private float stabDamage = 10.0f;
     private float slashDamage = 10.0f;
 
     bool waitingToEmerge = false;
@@ -244,7 +244,7 @@ public class EnemyControllerBossTail : EnemyController
                           direction: dir,
                           damage: stabDamage,
                           duration: hurtboxDuration,
-                          forwardOffset: 5f);
+                          forwardOffset: 0f);
         }
     }
 

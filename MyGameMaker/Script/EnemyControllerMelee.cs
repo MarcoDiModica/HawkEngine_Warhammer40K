@@ -446,54 +446,39 @@ public class EnemyControllerMelee : EnemyController
                 hasDropped = true;
             }
 
-            
-            case EnemyState.LEAP:
-                
-                hasLeap = false;
-                leapTimer += deltaTime;
-                Audio.PlayOneShot(SFX_LEAP);
-                rb.SetVelocity(leapDirection * 1.8f);
-                if (leapTimer >= leapDuration)
-                {
-                    isLeaping = false;
-                    hasLeap = true;
-                    //currentState = EnemyState.CHASE;
-                    lastLeap = 0f;
-                }
-                
-                break;
-            default:
-                break;
-        }
-        if (isFlashingColor)
-        {
-            flashTimer -= deltaTime;
-            if (isFootstepPlaying)
-            {
-                Audio.Stop(SFX_FOOTSTEP);
-                Audio.Stop(MUSIC_COMBAT);
-                isFootstepPlaying = false;
-            }
 
-            if (anim != null && anim.isAnimFinished)
+
+
+            if (isFlashingColor)
             {
-                bool once = false;
-                if (enemyTransform != null && !once)
+                flashTimer -= deltaTime;
+                if (isFootstepPlaying)
                 {
-                    enemyTransform.DOScale(Vector3.Zero, 0.1f, Modes.EASE_OUT);
-                    once = true;
+                    Audio.Stop(SFX_FOOTSTEP);
+                    Audio.Stop(MUSIC_COMBAT);
+                    isFootstepPlaying = false;
                 }
 
-                deathTimer += deltaTime;
-                if (deathTimer >= deathCooldown)
+                if (anim != null && anim.isAnimFinished)
                 {
-                    Engineson.Destroy(gameObject);
-                }
-            }
+                    bool once = false;
+                    if (enemyTransform != null && !once)
+                    {
+                        enemyTransform.DOScale(Vector3.Zero, 0.1f, Modes.EASE_OUT);
+                        once = true;
+                    }
 
-            if (collider != null)
-            {
-                collider.SetActive(false);
+                    deathTimer += deltaTime;
+                    if (deathTimer >= deathCooldown)
+                    {
+                        Engineson.Destroy(gameObject);
+                    }
+                }
+
+                if (collider != null)
+                {
+                    collider.SetActive(false);
+                }
             }
         }
         catch (Exception e)

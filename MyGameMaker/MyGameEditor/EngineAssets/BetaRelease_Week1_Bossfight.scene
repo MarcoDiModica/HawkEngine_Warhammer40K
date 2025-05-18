@@ -1129,9 +1129,9 @@ GameObject10:
             - -11.527710914611816
             - 144.69508361816406
           localRotation:
-            - 90.000038965520773
-            - 81.889368191963001
-            - -179.9999182386461
+            - 90.000064822657791
+            - 81.889364768289568
+            - -179.99989580517573
           localScale:
             - 4.3183484077453613
             - 6.8110980987548828
@@ -1423,9 +1423,9 @@ GameObject10:
             - -35.877773284912109
             - 3.1861171722412109
           localRotation:
-            - -90.000006947022655
-            - -68.954342120760089
-            - -6.9470226572472448e-06
+            - -89.99999966693828
+            - -68.954355277239088
+            - -9.0168396474099158e-06
           localScale:
             - 6.9018840789794922
             - 6.9018840789794922
@@ -2844,9 +2844,9 @@ GameObject12:
                                         - 0.33082675933837891
                                         - -0.016137417405843735
                                       localRotation:
-                                        - 95.392028456151138
-                                        - -0.34400503316542513
-                                        - 9.8380003677473891
+                                        - 95.392028376594425
+                                        - -0.34400594862029304
+                                        - 9.8380006259592285
                                       localScale:
                                         - 0.0015799992252141237
                                         - 0.0015800002729520202
@@ -4184,17 +4184,17 @@ GameObject12:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -0.079975326896772003
-            - 2.9135308457230957
-            - -0.55468838994362102
+            - -0.079975329339504242
+            - 2.9135308265686035
+            - -0.55468839406967163
           localRotation:
-            - 179.99999499104382
-            - -44.988994989144501
-            - 179.99999499104368
+            - 179.99999499104374
+            - -44.988995082685193
+            - 179.99999499104374
           localScale:
-            - 0.99999999836678966
-            - 1.0000000000000044
-            - 0.99999999836679287
+            - 1
+            - 1
+            - 1
         ParticleFX:
           name: ParticleFX
           enabled: true
@@ -5377,9 +5377,9 @@ GameObject13:
             - 95.477737426757812
             - 23.753135681152344
           localRotation:
-            - -167.41258212287215
-            - 71.109365028548382
-            - 17.939052012175409
+            - -167.41258130102136
+            - 71.109352680562111
+            - 17.939051839919511
           localScale:
             - 45.338405609130859
             - 45.338409423828125
@@ -5629,9 +5629,9 @@ GameObject13:
             - 103.88833618164062
             - 27.61555290222168
           localRotation:
-            - 154.03238771110878
-            - 36.583666102970376
-            - -3.9603732516500609
+            - 154.03238899785882
+            - 36.583661324181435
+            - -3.9603750975654677
           localScale:
             - 63.569477081298828
             - 63.569473266601562
@@ -6091,9 +6091,9 @@ GameObject13:
             - 24.198019027709961
             - 139.26609802246094
           localRotation:
-            - -146.79528526806237
-            - 87.995591332083734
-            - 17.006648726237277
+            - -146.79532277832485
+            - 87.995772170272517
+            - 17.006614885401092
           localScale:
             - 51.601947784423828
             - 51.601947784423828
@@ -6175,9 +6175,9 @@ GameObject13:
             - 30.123611450195312
             - 142.57989501953125
           localRotation:
-            - 37.038556023585137
-            - 81.597358072489413
-            - -128.79313486306245
+            - 37.038524587267879
+            - 81.597344872965522
+            - -128.7931687022386
           localScale:
             - 45.338413238525391
             - 45.338409423828125
@@ -6217,9 +6217,9 @@ GameObject13:
             - 12.570405006408691
             - 129.93734741210938
           localRotation:
-            - -146.79497760818958
-            - 87.994659958847649
-            - 17.006918312258129
+            - -146.79490933509152
+            - 87.994593373749439
+            - 17.007001014811376
           localScale:
             - 51.601955413818359
             - 51.601959228515625
@@ -6301,9 +6301,9 @@ GameObject13:
             - 11.215756416320801
             - 130.21820068359375
           localRotation:
-            - -83.578404080323892
-            - 75.542990518518096
-            - 111.51303821066358
+            - -83.57843159407463
+            - 75.542960808151392
+            - 111.51301438861816
           localScale:
             - 45.338409423828125
             - 45.338405609130859
@@ -11661,248 +11661,6 @@ GameObject24:
           state: 1
       Children: ~
 GameObject25:
-  name: Canvas_Interaction
-  prefabPath: Assets\Prefabs\Canvas_Interaction.prefab.yaml
-  uuid: 15539872200045749534
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    UITransformComponent:
-      name: UITransformComponent
-      enabled: true
-      position:
-        - 0
-        - 0
-        - 0
-      rotation:
-        - 0
-        - 0
-        - 0
-      scale:
-        - 1
-        - 1
-        - 1
-      pivot_offset:
-        - 0
-        - 1
-        - 0
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
-    ScriptComponents:
-      Script0:
-        name: Interaction
-        fields: ~
-  Children:
-    - name: Box
-      prefabPath: ""
-      uuid: 13130904076925775302
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.882000029
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.666999996
-            - 0.264999956
-            - 1
-          pivot_offset:
-            - 0.5
-            - 1
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library\Textures\UI\dialogue_box.png
-          use_animation: false
-          sprite_size:
-            - 1482
-            - 392
-          sheet_size:
-            - 1482
-            - 392
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: Text
-      prefabPath: ""
-      uuid: 9142295323120274569
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.882000029
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.666999996
-            - 0.264999986
-            - 1
-          pivot_offset:
-            - 0.5
-            - 1
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library\Textures\UI\dialogue_text.png
-          use_animation: false
-          sprite_size:
-            - 1482
-            - 392
-          sheet_size:
-            - 1482
-            - 392
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: InteractText
-      prefabPath: ""
-      uuid: 6428904762128253018
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.717999995
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.5
-            - 1
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library\Textures\PressE.png
-          use_animation: false
-          sprite_size:
-            - 433
-            - 577
-          sheet_size:
-            - 433
-            - 577
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-GameObject26:
   name: Canvas_TitleBoT
   prefabPath: Assets\Prefabs\Canvas_TitleBoT.prefab.yaml
   uuid: 10699595856064252445
@@ -12016,10 +11774,10 @@ GameObject26:
             - 1
             - 1
       Children: ~
-GameObject27:
+GameObject26:
   name: Canvas_HUD
   prefabPath: Assets\Prefabs\Canvas_HUD.prefab.yaml
-  uuid: 14795525889963718800
+  uuid: 8130023804441661030
   tag: Untagged
   active: true
   isStatic: false
@@ -12028,9 +11786,9 @@ GameObject27:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 1.1682476997375488
         - 0
-        - 0
+        - -1.3877787807814457e-17
+        - 2.8421709430404007e-14
       localRotation:
         - 0
         - -0
@@ -12092,16 +11850,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.0560000017
-            - 0.887000024
+            - 0.0850000009
+            - 0.834999979
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.200000003
-            - 0.0299999993
+            - 0.300000012
+            - 0.0450000055
             - 1
           pivot_offset:
             - 0
@@ -12156,16 +11914,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.064000003
-            - 0.92900002
+            - 0.0970000029
+            - 0.897000015
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.137999997
-            - 0.0199999996
+            - 0.207000002
+            - 0.0299999993
             - 1
           pivot_offset:
             - 0
@@ -12220,16 +11978,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.0170000009
-            - 0.85799998
+            - 0.0209999997
+            - 0.786000013
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0430000015
-            - 0.0949999988
+            - 0.0649999976
+            - 0.143000007
             - 1
           pivot_offset:
             - 0
@@ -13628,16 +13386,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.0659999996
-            - 0.861999989
+            - 0.105999999
+            - 0.800000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0149999997
-            - 0.0199999996
+            - 0.0229999982
+            - 0.0299999993
             - 1
           pivot_offset:
             - 0
@@ -13649,8 +13407,8 @@ GameObject27:
           texture_path: Library/Textures/UI/status_nodash.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 51
+            - 40
           sheet_size:
             - 51
             - 40
@@ -13692,16 +13450,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.0829999968
-            - 0.861999989
+            - 0.133000001
+            - 0.800000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0149999997
-            - 0.0199999996
+            - 0.0229999982
+            - 0.0299999993
             - 1
           pivot_offset:
             - 0
@@ -13756,16 +13514,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.133000001
-            - 0.861999989
+            - 0.153999999
+            - 0.800000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0149999997
-            - 0.0199999996
+            - 0.0229999982
+            - 0.0299999993
             - 1
           pivot_offset:
             - 0
@@ -13777,8 +13535,8 @@ GameObject27:
           texture_path: Library\Textures\UI\powerup_bullets.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 100
+            - 87
           sheet_size:
             - 100
             - 87
@@ -13820,16 +13578,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.0989999995
-            - 0.861999989
+            - 0.173999995
+            - 0.800000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0149999997
-            - 0.0199999996
+            - 0.0229999982
+            - 0.0299999993
             - 1
           pivot_offset:
             - 0
@@ -13841,8 +13599,8 @@ GameObject27:
           texture_path: Library\Textures\UI\powerup_shield.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 99
+            - 81
           sheet_size:
             - 99
             - 81
@@ -13884,16 +13642,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.149000004
-            - 0.861999989
+            - 0.196999997
+            - 0.800000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0149999997
-            - 0.0199999996
+            - 0.0229999982
+            - 0.0299999993
             - 1
           pivot_offset:
             - 0
@@ -13905,8 +13663,8 @@ GameObject27:
           texture_path: Library\Textures\UI\powerup_cadence.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 99
+            - 69
           sheet_size:
             - 99
             - 69
@@ -13948,16 +13706,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.115999997
-            - 0.861999989
+            - 0.222000003
+            - 0.800000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0149999997
-            - 0.0199999996
+            - 0.0229999982
+            - 0.0299999993
             - 1
           pivot_offset:
             - 0
@@ -13969,8 +13727,8 @@ GameObject27:
           texture_path: Library\Textures\UI\powerup_damage.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 98
+            - 80
           sheet_size:
             - 98
             - 80
@@ -14012,16 +13770,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.167999998
-            - 0.861999989
+            - 0.248999998
+            - 0.800000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0149999997
-            - 0.0199999996
+            - 0.0229999982
+            - 0.0299999993
             - 1
           pivot_offset:
             - 0
@@ -14033,8 +13791,8 @@ GameObject27:
           texture_path: Library\Textures\UI\powerup_magnet.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 98
+            - 87
           sheet_size:
             - 98
             - 87
@@ -14076,16 +13834,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.0189999994
-            - 0.880999982
+            - 0.0260000005
+            - 0.81400001
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0370000005
-            - 0.0179999992
+            - 0.0560000017
+            - 0.0270000007
             - 1
           pivot_offset:
             - 0
@@ -14140,16 +13898,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.0189999994
-            - 0.948000014
+            - 0.0260000005
+            - 0.927999973
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0370000005
-            - 0.0799999982
+            - 0.0560000017
+            - 0.119999997
             - 1
           pivot_offset:
             - 0
@@ -14158,7 +13916,7 @@ GameObject27:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library\Textures\UI\healthbar_blood.png
+          texture_path: Library\Textures\UI\healthbarThirst.png
           use_animation: false
           sprite_size:
             - 265
@@ -14204,16 +13962,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.243000001
-            - 0.887000024
+            - 0.363000005
+            - 0.839999974
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0170000009
-            - 0.0299999993
+            - 0.0260000005
+            - 0.0450000055
             - 1
           pivot_offset:
             - 0
@@ -14231,10 +13989,10 @@ GameObject27:
             - 250
             - 80
           sprite_offset:
-            - 150
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 3
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 1
@@ -14268,16 +14026,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.0560000017
-            - 0.887000024
+            - 0.0850000009
+            - 0.839999974
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.200000003
-            - 0.0299999993
+            - 0.300000012
+            - 0.0450000055
             - 1
           pivot_offset:
             - 0
@@ -14332,16 +14090,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.197999999
-            - 0.930999994
+            - 0.291999996
+            - 0.897000015
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.00899999961
-            - 0.0179999992
+            - 0.0140000004
+            - 0.0270000007
             - 1
           pivot_offset:
             - 0
@@ -14359,10 +14117,10 @@ GameObject27:
             - 250
             - 80
           sprite_offset:
-            - 150
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 3
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 1
@@ -14396,16 +14154,16 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.064000003
-            - 0.930999994
+            - 0.0970000029
+            - 0.897000015
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.137999997
-            - 0.0179999992
+            - 0.207000002
+            - 0.0270000007
             - 1
           pivot_offset:
             - 0
@@ -14460,20 +14218,20 @@ GameObject27:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.0460000001
-            - 0.916999996
+            - 0.0680000037
+            - 0.785000026
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.223000005
-            - 0.120999999
+            - 0.335000008
+            - 0.181999996
             - 1
           pivot_offset:
             - 0
-            - 0.5
+            - 0
             - 0
         UIImageComponent:
           name: UIImageComponent
@@ -14525,15 +14283,15 @@ GameObject27:
           enabled: true
           position:
             - 0.00700000022
-            - 0.850000024
+            - 0.774999976
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0659999996
-            - 0.134000003
+            - 0.100000001
+            - 0.200000003
             - 1
           pivot_offset:
             - 0
@@ -14589,15 +14347,15 @@ GameObject27:
           enabled: true
           position:
             - 0.00700000022
-            - 0.850000024
+            - 0.774999976
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0659999996
-            - 0.134000003
+            - 0.100000001
+            - 0.200000003
             - 1
           pivot_offset:
             - 0
@@ -14653,15 +14411,15 @@ GameObject27:
           enabled: true
           position:
             - 0.00700000022
-            - 0.850000024
+            - 0.774999976
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0659999996
-            - 0.134000003
+            - 0.100000001
+            - 0.200000003
             - 1
           pivot_offset:
             - 0
@@ -14717,15 +14475,15 @@ GameObject27:
           enabled: true
           position:
             - 0.00700000022
-            - 0.850000024
+            - 0.774999976
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0659999996
-            - 0.134000003
+            - 0.100000001
+            - 0.200000003
             - 1
           pivot_offset:
             - 0
@@ -14781,15 +14539,15 @@ GameObject27:
           enabled: true
           position:
             - 0.00700000022
-            - 0.850000024
+            - 0.774999976
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0659999996
-            - 0.134000003
+            - 0.100000001
+            - 0.200000003
             - 1
           pivot_offset:
             - 0
@@ -14845,15 +14603,15 @@ GameObject27:
           enabled: true
           position:
             - 0.00700000022
-            - 0.850000024
+            - 0.774999976
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0659999996
-            - 0.134000003
+            - 0.100000001
+            - 0.200000003
             - 1
           pivot_offset:
             - 0
@@ -15137,4 +14895,972 @@ GameObject27:
             - 1
             - 1
             - 1
+      Children: ~
+    - name: HelloWorld
+      prefabPath: ""
+      uuid: 6010016200549436751
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.201000005
+            - 0.377999991
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        TextComponent:
+          name: TextComponent
+          enabled: true
+          text: Hello World
+          position:
+            - 0
+            - 0
+          color:
+            - 1
+            - 0
+            - 0
+          fontSize: 29.6000004
+          boxSize:
+            - 195.359985
+            - 32.5600014
+          spriteSize:
+            - 0
+            - 0
+          sheetSize:
+            - 0
+            - 0
+          spriteOffset:
+            - 0
+            - 0
+      Children: ~
+    - name: boltgun_ammo_text
+      prefabPath: ""
+      uuid: 826374165276294085
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.961000025
+            - 0.0719999969
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        TextComponent:
+          name: TextComponent
+          enabled: true
+          text: hola
+          position:
+            - 0
+            - 0
+          color:
+            - 0.664203882
+            - 0.797665358
+            - 0
+          fontSize: 12.5
+          boxSize:
+            - 53.75
+            - 13.75
+          spriteSize:
+            - 0
+            - 0
+          sheetSize:
+            - 0
+            - 0
+          spriteOffset:
+            - 0
+            - 0
+      Children: ~
+    - name: railgun_ammo_text
+      prefabPath: ""
+      uuid: 5301556514370340203
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.961000025
+            - 0.0719999969
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        TextComponent:
+          name: TextComponent
+          enabled: true
+          text: HOLA
+          position:
+            - 0
+            - 0
+          color:
+            - 0
+            - 0.304168224
+            - 0.797665358
+          fontSize: 12.5
+          boxSize:
+            - 53.75
+            - 13.75
+          spriteSize:
+            - 0
+            - 0
+          sheetSize:
+            - 0
+            - 0
+          spriteOffset:
+            - 0
+            - 0
+      Children: ~
+    - name: shotgun_ammo_text
+      prefabPath: ""
+      uuid: 7024519402473138880
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.961000025
+            - 0.0719999969
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        TextComponent:
+          name: TextComponent
+          enabled: true
+          text: HOLA
+          position:
+            - 0
+            - 0
+          color:
+            - 1
+            - 0
+            - 0
+          fontSize: 12.5
+          boxSize:
+            - 53.75
+            - 13.75
+          spriteSize:
+            - 0
+            - 0
+          sheetSize:
+            - 0
+            - 0
+          spriteOffset:
+            - 0
+            - 0
+      Children: ~
+GameObject27:
+  name: Canvas_Interaction
+  prefabPath: Assets\Prefabs\Canvas_Interaction_Level1.prefab.yaml
+  uuid: 17684752866458610521
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: Interaction
+        fields: ~
+  Children:
+    - name: Box
+      prefabPath: ""
+      uuid: 13130904076925775302
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.5
+            - 0.882000029
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.666999996
+            - 0.264999956
+            - 1
+          pivot_offset:
+            - 0.5
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue_box.png
+          use_animation: false
+          sprite_size:
+            - 1482
+            - 392
+          sheet_size:
+            - 1482
+            - 392
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+      Children: ~
+    - name: Text
+      prefabPath: ""
+      uuid: 9142295323120274569
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.5
+            - 0.882000029
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.666999996
+            - 0.264999986
+            - 1
+          pivot_offset:
+            - 0.5
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue_text.png
+          use_animation: false
+          sprite_size:
+            - 1482
+            - 392
+          sheet_size:
+            - 1482
+            - 392
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+      Children: ~
+    - name: InteractText
+      prefabPath: ""
+      uuid: 360648717206256169
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.5
+            - 0.76700002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.5
+            - 1
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\PressE.png
+          use_animation: false
+          sprite_size:
+            - 433
+            - 577
+          sheet_size:
+            - 433
+            - 577
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+      Children: ~
+    - name: DialogueText
+      prefabPath: ""
+      uuid: 10956309997784768477
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.493000001
+            - 0.317000002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        TextComponent:
+          name: TextComponent
+          enabled: true
+          text: Rex, Rex tremendae majestatis, qui salvandos salvas gratis, salva me, fons pietatis.
+          position:
+            - 0
+            - 0
+          color:
+            - 0
+            - 0.13611114
+            - 0.564202309
+          fontSize: 31.7999992
+          boxSize:
+            - 1200
+            - 200
+          spriteSize:
+            - 0
+            - 0
+          sheetSize:
+            - 0
+            - 0
+          spriteOffset:
+            - 0
+            - 0
+      Children: ~
+    - name: Choice1
+      prefabPath: ""
+      uuid: 15346485695273935848
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.64200002
+            - 0.481999993
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.184999987
+            - 0.0719999969
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue_box.png
+          use_animation: false
+          sprite_size:
+            - 1482
+            - 392
+          sheet_size:
+            - 1482
+            - 392
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: Choice1Hover
+      prefabPath: ""
+      uuid: 17300986230180643534
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.64200002
+            - 0.481999993
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.185000002
+            - 0.0719999969
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue_hover.png
+          use_animation: false
+          sprite_size:
+            - 1482
+            - 392
+          sheet_size:
+            - 1482
+            - 392
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+      Children: ~
+    - name: Choice1Text
+      prefabPath: ""
+      uuid: 3167637819058028581
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.734000027
+            - 0.474000007
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        TextComponent:
+          name: TextComponent
+          enabled: true
+          text: That's from mozart(cringe)
+          position:
+            - 0
+            - 0
+          color:
+            - 0
+            - 0.137254909
+            - 0.564705908
+          fontSize: 15
+          boxSize:
+            - 322.5
+            - 19.5
+          spriteSize:
+            - 0
+            - 0
+          sheetSize:
+            - 0
+            - 0
+          spriteOffset:
+            - 0
+            - 0
+      Children: ~
+    - name: Choice2
+      prefabPath: ""
+      uuid: 1107335598865238639
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.64200002
+            - 0.550000012
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.185000002
+            - 0.0719999969
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue_box.png
+          use_animation: false
+          sprite_size:
+            - 1482
+            - 392
+          sheet_size:
+            - 1482
+            - 392
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: Choice2Hover
+      prefabPath: ""
+      uuid: 10939971732139258591
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.64200002
+            - 0.550000012
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.185000002
+            - 0.0719999969
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue_hover.png
+          use_animation: false
+          sprite_size:
+            - 1482
+            - 392
+          sheet_size:
+            - 1482
+            - 392
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+      Children: ~
+    - name: Choice2Text
+      prefabPath: ""
+      uuid: 4040656339884535183
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.734000027
+            - 0.405000001
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        TextComponent:
+          name: TextComponent
+          enabled: true
+          text: That's from AC4(Based)
+          position:
+            - 0
+            - 0
+          color:
+            - 0
+            - 0.137254909
+            - 0.564705908
+          fontSize: 15
+          boxSize:
+            - 280.5
+            - 19.5
+          spriteSize:
+            - 0
+            - 0
+          sheetSize:
+            - 0
+            - 0
+          spriteOffset:
+            - 0
+            - 0
       Children: ~

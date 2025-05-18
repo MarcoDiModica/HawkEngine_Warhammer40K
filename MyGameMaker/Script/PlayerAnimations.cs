@@ -2440,7 +2440,7 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(32, 42, 0.1f);
+            esk.PlayAnimOnce(42, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2456,7 +2456,7 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(11, 43, 0.1f);
+            esk.PlayAnimOnce(43, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2472,7 +2472,7 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(38, 44, 0.1f);
+            esk.PlayAnimOnce(44, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2488,7 +2488,7 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(41, 45, 0.1f);
+            esk.PlayAnimOnce(45, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2504,7 +2504,7 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(40, 46, 0.1f);
+            esk.PlayAnimOnce(46, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2520,7 +2520,7 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(41, 47, 0.1f);
+            esk.PlayAnimOnce(47, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2529,7 +2529,85 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
+    public void WeaponSwapIdleToIdleAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
 
+        try
+        {
+            esk.TransitionAnimations(43, 11, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void WeaponSwapShootingToShootingAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(43, 33, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void WeaponSwapRunningToRunningAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(42, 32, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void WeaponSwapWalkingToWalkingAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(47, 41, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void WeaponSwapWalkingShootingToWalkingShootingAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(47, 37, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
 
 
     //public void SetHitAnimation()

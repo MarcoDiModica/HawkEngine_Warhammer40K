@@ -67,6 +67,10 @@ public class PlayerController : MonoBehaviour
     private bool isReloadingRunning = false;
     private bool isReloadingWalking = false;
 
+    private bool isChangingWeaponIdle = false;
+    private bool isChangingWeaponRunning = false;
+    private bool isChangingWeaponWalking = false;
+
     public override void Awake()
     {
         playerInput = gameObject.GetComponent<PlayerInput>();
@@ -287,6 +291,24 @@ public class PlayerController : MonoBehaviour
                     playerAnimations.ReloadBoltgunWhileWalkingForwardAnimation();
                 }
             }
+            else if (playerShooting.GetCurrentGun() == 1)
+            {
+                if (isIdle || isShootInput && !isShootingRunning)
+                {
+                    isReloadingIdle = true;
+                    playerAnimations.ReloadShotgunWhileIdleAnimation();
+                }
+                else if (isRunning)
+                {
+                    isReloadingRunning = true;
+                    playerAnimations.ReloadShotgunWhileRunningAnimation();
+                }
+                else if (isWalking || isShootingRunning)
+                {
+                    isReloadingWalking = true;
+                    playerAnimations.ReloadShotgunWhileWalkingForwardAnimation();
+                }
+            }
         }
 
         if(isReloadingIdle)
@@ -304,7 +326,34 @@ public class PlayerController : MonoBehaviour
 
         if (playerInput.IsChangingWeaponLeft() || playerInput.IsChangingWeaponRight())
         {
+            if (isIdle || isShootInput && !isShootingRunning)
+            {
+                isChangingWeaponIdle = true;
+                playerAnimations.WeaponSwapWhileIdleAnimation();
+            }
+            else if (isRunning)
+            {
+                isChangingWeaponRunning = true;
+                playerAnimations.WeaponSwapWhileRunningAnimation();
+            }
+            else if (isWalking || isShootingRunning)
+            {
+                isChangingWeaponWalking = true;
+                playerAnimations.WeaponSwapWhileWalkingStraightAnimation();
+            }
+        }
 
+        if (isChangingWeaponIdle)
+        {
+            WeaponSwapIdleAnimationFinished();
+        }
+        else if (isChangingWeaponRunning)
+        {
+            WeaponSwapRunningAnimationFinished();
+        }
+        else if (isChangingWeaponWalking)
+        {
+            WeaponSwapWalkingAnimationFinished();
         }
 
         elapsedTime += deltaTime;
@@ -425,6 +474,54 @@ public class PlayerController : MonoBehaviour
                 }
             }
             
+
+        }
+    }
+
+    private void WeaponSwapIdleAnimationFinished()
+    {
+
+
+        if (playerAnimations.esk.IsAnimationFinished())
+        {
+            isChangingWeaponIdle = false;
+            if (playerInput.IsShooting())
+            {
+                playerAnimations.WeaponSwapShootingToShootingAnimation();
+            }
+            else
+            {
+                playerAnimations.WeaponSwapIdleToIdleAnimation();
+            }
+
+        }
+    }
+
+    private void WeaponSwapRunningAnimationFinished()
+    {
+        if (playerAnimations.esk.IsAnimationFinished())
+        {
+            
+            isChangingWeaponRunning = false;
+            playerAnimations.WeaponSwapRunningToRunningAnimation();
+
+        }
+    }
+
+    private void WeaponSwapWalkingAnimationFinished()
+    {
+        if (playerAnimations.esk.IsAnimationFinished())
+        {
+            isChangingWeaponWalking = false;
+            if (playerInput.IsShooting())
+            {
+                playerAnimations.WeaponSwapWalkingShootingToWalkingShootingAnimation();
+            }
+            else
+            {
+                playerAnimations.WeaponSwapWalkingToWalkingAnimation();
+            }
+
 
         }
     }

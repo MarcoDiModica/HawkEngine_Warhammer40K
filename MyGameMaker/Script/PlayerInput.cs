@@ -237,6 +237,7 @@ public class PlayerInput : MonoBehaviour
 
     public void BlockInput()
     {
+        BlockMovement();
         isInputBlocked = true;
         isDashPressed = false;
         isShootPressed = false;
@@ -254,6 +255,7 @@ public class PlayerInput : MonoBehaviour
     public void UnBlockInput()
     {
         isInputBlocked = false;
+        UnBlockMovement();
     } 
     public void BlockMovement()
     {

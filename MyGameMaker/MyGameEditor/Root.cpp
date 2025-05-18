@@ -66,8 +66,8 @@ bool Root::Start()
 	//resourceManager->CreateDefaultCube(); // Esto no se mutea
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
-	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
-	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");
 
 	//-------------------SHAKE MANAGER COLOCAR EN TODAS LAS ESCENAS -------------------//
@@ -509,7 +509,19 @@ bool Root::Start()
 	//interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	//interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
 	////
-	////
+	// FADE CONTROLLER
+	/*auto canvas = CreateGameObject("CanvasFade");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
+	
+	auto interactText = CreateGameObject("FadeController");
+	Application->root->ParentGameObject(*interactText, *canvas);
+	interactText->AddComponent<UIImageComponent>();
+	interactText->AddComponent<UIImageComponent>()->SetColor(glm::vec4(0, 0, 0, 0));
+	interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/FadeToBlackImage.png");
+	interactText->AddComponent<ScriptComponent>()->LoadScript("FadeController");
+	interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0, 1, 0), glm::vec3(1, 1, 1));*/
+
 	//auto areaText = CreateGameObject("dialogueText");
 	//Application->root->ParentGameObject(*areaText, *canvas);
 	//areaText->AddComponent<UIImageComponent>();

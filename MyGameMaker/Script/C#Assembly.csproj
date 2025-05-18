@@ -119,13 +119,19 @@
     <Compile Include="BoltgunBullets.cs" />
     <Compile Include="BoltgunPickUp.cs" />
     <Compile Include="BoltgunUpgradePickUp.cs" />
-    <Compile Include="BoxCollider.cs" />
+    <Compile Include="BoxCollider.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="BulletData.cs" />
-    <Compile Include="Camera.cs" />
+    <Compile Include="Camera.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CapsuleCollider.cs" />
     <Compile Include="ChapterStandard.cs" />
     <Compile Include="Checkpoint.cs" />
-    <Compile Include="Collider.cs" />
+    <Compile Include="Collider.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Component.cs" />
     <Compile Include="Coroutine.cs" />
     <Compile Include="CoroutineManager.cs" />
@@ -141,6 +147,8 @@
     <Compile Include="EnemyControllerMelee.cs" />
     <Compile Include="EnemyControllerRanged.cs" />
     <Compile Include="Engineson.cs" />
+    <Compile Include="Explosion.cs" />
+    <Compile Include="ExplosiveBarrel.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Grenade.cs" />
     <Compile Include="GrenadeLauncher.cs" />
@@ -169,8 +177,12 @@
     <Compile Include="InteractionSystem.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="MenuButtons.cs" />
-    <Compile Include="MeshCollider.cs" />
-    <Compile Include="MeshRenderer.cs" />
+    <Compile Include="MeshCollider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MeshRenderer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="BaseAbilities.cs" />
     <Compile Include="OptionMenu.cs" />
@@ -196,7 +208,9 @@
     <Compile Include="RailgunUpgradePickUp.cs" />
     <Compile Include="RedThirstManager.cs" />
     <Compile Include="RayCast.cs" />
-    <Compile Include="Rigidbody.cs" />
+    <Compile Include="Rigidbody.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Scene1ToScene2.cs" />
     <Compile Include="Scene2ToMenu.cs" />
     <Compile Include="Scene2ToScene3.cs" />
@@ -215,15 +229,21 @@
     <Compile Include="Test1.cs" />
     <Compile Include="Test2.cs" />
     <Compile Include="ToggleMode.cs" />
-    <Compile Include="Transform.cs" />
+    <Compile Include="Transform.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Tweening.cs" />
     <Compile Include="TyranidCorpse.cs" />
     <Compile Include="TyranidTentacles.cs" />
     <Compile Include="UIButton.cs" />
-    <Compile Include="UICanvas.cs" />
+    <Compile Include="UICanvas.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UIGameplay.cs" />
     <Compile Include="UIImage.cs" />
-    <Compile Include="UITransform.cs" />
+    <Compile Include="UITransform.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WaitForSeconds.cs" />
     <Compile Include="WarriorAnimation.cs" />
     <Compile Include="WinScreen.cs" />

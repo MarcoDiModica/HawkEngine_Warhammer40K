@@ -160,6 +160,9 @@ public class Boltgun : BaseWeapon
                                 if (hitObject.GetComponent<DestroyEnviormentObject>() != null)
                                     hitObject.GetComponent<DestroyEnviormentObject>().DestroyObject();
                                 break;
+                            case "ExplosiveBarrel":
+                                hitObject.GetComponent<ExplosiveBarrel>()?.Explode();
+                                break;
                         }
                     }
 

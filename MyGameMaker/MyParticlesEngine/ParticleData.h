@@ -346,7 +346,56 @@ public:
 		return maxParticles;
 	}
 
-private:
+	void UpdateParticles(float deltaTime) {
+		for (size_t i = 0; i < particleData.size(); ++i) {
+			if (!particleData[i].active) {
+				continue;
+			}
+
+			particleData[i].velocity += particleData[i].gravity * deltaTime;
+			particleData[i].age += deltaTime;
+			particleData[i].position += particleData[i].velocity * deltaTime;
+
+			if (particleData[i].age >= particleData[i].maxLifetime) {
+				particleData[i].active = false;
+				activeParticles--;
+				continue;
+			}
+
+			float lifetimeFraction = particleData[i].age / particleData[i].maxLifetime;
+
+			if (glm::length(particleData[i].gravity) == 0.0f) {
+				particleData[i].velocity = glm::mix(particleData[i].velocity, particleData[i].endVelocity, lifetimeFraction);
+			}
+
+			particleData[i].rotation += particleData[i].rotationSpeed / 360.0f;
+
+			if (particleData[i].useAnimation && particleData[i].sheetSize != glm::vec2(0, 0)) {
+				particleData[i].indexTimer += deltaTime;
+
+				if (particleData[i].indexTimer >= particleData[i].animSpeed) {
+					if (particleData[i].animIndex >= CalculateMaxIndex(particleData[i].sheetSize, particleData[i].spriteSize)) {
+						particleData[i].indexTimer = 0;
+						particleData[i].animIndex = 0;
+					}
+					else {
+						particleData[i].animIndex++;
+					}
+					particleData[i].indexTimer = 0.0f;
+					particleData[i].spriteOffset = CalculateSpriteOffset(particleData[i].animIndex, particleData[i].sheetSize, particleData[i].spriteSize);
+				}
+			}
+			else {
+				particleData[i].spriteOffset = glm::vec2(0.0f, 0.0f);
+				particleData[i].spriteSize = particleData[i].sheetSize;
+			}
+		}
+	}
+
+	const std::vector<ParticleData>& GetParticleData() const { return particleData; }
+	GLuint GetVAO() const { return vao; }
+	GLuint GetInstanceVBO() const { return instanceVBO; }
+
 	struct InstanceData {
 		bool playOnAwake;
 		float duration;
@@ -366,6 +415,8 @@ private:
 		float indexTimer;
 		int animIndex;
 	};
+
+private:
 
 	GLuint vao, vbo, ebo, instanceVBO;
 	std::vector<ParticleData> particleData;

@@ -160,7 +160,9 @@ bool Root::Start()
 	//ParentGameObject(*walkingFX, *player);
 	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 
-	
+	auto walkingFX = CreateGameObject("WalkingFX");
+	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 	
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");

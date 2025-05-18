@@ -515,6 +515,19 @@ static void DebugDrawBoundingBox(GameObject* object, const glm::vec4& color = gl
 	}
 }
 
+void RenderParticleSystems(const std::vector<GameObject*>& objects,
+	const glm::mat4& viewMatrix,
+	const glm::mat4& projMatrix,
+	const glm::vec3& cameraPos,
+	const glm::vec3& cameraUp) {
+	for (auto* obj : objects) {
+		if (obj && obj->IsActive() && obj->HasComponent<ParticleFX>()) {
+			auto* fx = obj->GetComponent<ParticleFX>();
+			fx->RenderWithExternalMatrices(viewMatrix, projMatrix, cameraPos, cameraUp);
+		}
+	}
+}
+
 static void RenderEditor() {
 	GLint lastProgram = 0;
 	GLint lastFBO = 0;
@@ -607,7 +620,7 @@ static void RenderEditor() {
 			if (object->HasComponent<UICanvasComponent>()) {
 				continue;
 			}
-			
+
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
 
@@ -627,27 +640,29 @@ static void RenderEditor() {
 				return;
 			}
 
-			//DebugDrawBoundingBox(object);
-
 			glm::mat4 viewMatrix = Application->camera->view();
 			glm::mat4 projMatrix = Application->camera->projection();
 			CameraBase::Plane* frustumPlanes = Application->camera->GetPlanes();
 			RenderManager::GetInstance().SubmitGameObject(object, viewMatrix, projMatrix, frustumPlanes);
 		}
 	}
-	
-	Application->physicsModule->DrawDebugDrawer();
+
+	//Application->physicsModule->DrawDebugDrawer();
 
 	objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
 
-	RenderManager::GetInstance().RenderScene(
-		Application->camera->view(), 
-		Application->camera->projection(), 
-		Application->camera->GetTransform().GetPosition(), 
-		Application->camera->GetPlanes());
+	glm::mat4 viewMatrix = Application->camera->view();
+	glm::mat4 projMatrix = Application->camera->projection();
+	glm::vec3 cameraPos = Application->camera->GetTransform().GetPosition();
+	glm::vec3 cameraUp = Application->camera->GetTransform().GetUp();
+	CameraBase::Plane* frustumPlanes = Application->camera->GetPlanes();
+
+	RenderManager::GetInstance().RenderScene(viewMatrix, projMatrix, cameraPos, frustumPlanes);
+
+	RenderParticleSystems(objects, viewMatrix, projMatrix, cameraPos, cameraUp);
 
 	RenderManager::GetInstance().EndFrame();
 
@@ -677,13 +692,9 @@ static void RenderEditor() {
 }
 
 static void RenderGameView() {
-#ifdef PROFILE
-	OPTICK_EVENT();
-#endif // PROFILE
-
 	if (Application->root->mainCamera == nullptr) {
 		return;
-}
+	}
 
 	CameraComponent* gameCamera = Application->root->mainCamera->GetComponent<CameraComponent>();
 	if (!gameCamera) {
@@ -727,10 +738,12 @@ static void RenderGameView() {
 
 	RenderManager::GetInstance().BeginFrame();
 
+	std::vector<GameObject*> objects;
 	auto activeScene = Application->root->GetActiveScene();
 	if (activeScene) {
 		for (auto& object : activeScene->children()) {
 			if (object && object->IsActive()) {
+				objects.push_back(object.get());
 				glm::mat4 viewMatrix = gameCamera->view();
 				glm::mat4 projMatrix = gameCamera->projection();
 				CameraBase::Plane* frustumPlanes = gameCamera->GetPlanes();
@@ -739,7 +752,14 @@ static void RenderGameView() {
 		}
 	}
 
+	glm::mat4 viewMatrix = gameCamera->view();
+	glm::mat4 projMatrix = gameCamera->projection();
+	glm::vec3 cameraPos = gameCamera->GetOwner()->GetTransform()->GetPosition();
+	glm::vec3 cameraUp = gameCamera->GetOwner()->GetTransform()->GetUp();
+
 	RenderManager::GetInstance().RenderFromCamera(gameCamera);
+
+	RenderParticleSystems(objects, viewMatrix, projMatrix, cameraPos, cameraUp);
 
 	RenderManager::GetInstance().EndFrame();
 
@@ -760,13 +780,9 @@ static void RenderGameView() {
 }
 
 static void GameRelease() {
-#ifdef PROFILE
-	OPTICK_CATEGORY("GameRelease", Optick::Category::GameLogic);
-#endif // PROFILE
-
 	if (Application->root->mainCamera == nullptr) {
 		return;
-	}
+}
 
 	CameraComponent* gameCamera = Application->root->mainCamera->GetComponent<CameraComponent>();
 	if (!gameCamera) {
@@ -797,7 +813,7 @@ static void GameRelease() {
 	glGetIntegerv(GL_BLEND_DST_ALPHA, &lastBlendDstAlpha);
 	glGetFloatv(GL_COLOR_CLEAR_VALUE, lastClearColor);
 
-	static const int msaaSamples = 4; 
+	static const int msaaSamples = 4;
 	static GLuint msaaFBO = 0;
 	static GLuint msaaColorRBO = 0;
 	static GLuint msaaDepthRBO = 0;
@@ -873,7 +889,7 @@ static void GameRelease() {
 	RenderManager::GetInstance().BeginFrame();
 
 	std::vector<std::shared_ptr<GameObject>> UI;
-	std::map<Material*, std::vector<GameObject*>> materialBatches;
+	std::vector<GameObject*> objects;
 	auto activeScene = Application->root->GetActiveScene();
 
 	if (activeScene) {
@@ -884,6 +900,7 @@ static void GameRelease() {
 			}
 
 			if (object->IsActive()) {
+				objects.push_back(object.get());
 				object->Update(static_cast<float>(Application->GetDt()));
 
 				if (Application->hasChangedScene) {
@@ -916,7 +933,14 @@ static void GameRelease() {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
 
+	glm::mat4 viewMatrix = gameCamera->view();
+	glm::mat4 projMatrix = gameCamera->projection();
+	glm::vec3 cameraPos = gameCamera->GetOwner()->GetTransform()->GetPosition();
+	glm::vec3 cameraUp = gameCamera->GetOwner()->GetTransform()->GetUp();
+
 	RenderManager::GetInstance().RenderFromCamera(gameCamera);
+
+	RenderParticleSystems(objects, viewMatrix, projMatrix, cameraPos, cameraUp);
 
 	RenderManager::GetInstance().EndFrame();
 
@@ -951,16 +975,16 @@ static void Render(MyGUI* gui) {
 		OPTICK_CATEGORY("RenderEditor", Optick::Category::GameLogic);
 #endif // PROFILE
 
-		//estos 2 consumen casi lo mismo
 		RenderEditor();
+
 		if (Application->gui->UIGameViewPanel->IsRenderGameView() || SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 			RenderGameView();
 		}
+
 #ifdef PROFILE
 		OPTICK_CATEGORY("GUIRender", Optick::Category::GameLogic);
 #endif // PROFILE
 
-		//muchiiiiiissiiiiimo rendimiento
 		gui->Render();
 	}
 }

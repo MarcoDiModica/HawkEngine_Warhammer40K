@@ -8,6 +8,7 @@
 #include <mono/metadata/debug-helpers.h>
 #include "../MyGameEngine/CameraComponent.h"
 #include "../MyGameEngine/CameraComponent.h"
+#include "ParticleData.h"
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -861,22 +862,6 @@ void ParticleFX::Start() {
 }
 
 void ParticleFX::Update(float deltaTime) {
-	GLint lastProgram;
-	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
-
-	GLint lastVAO;
-	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &lastVAO);
-
-	GLint lastTexture;
-	glActiveTexture(GL_TEXTURE0);
-	glGetIntegerv(GL_TEXTURE_BINDING_2D, &lastTexture);
-
-	GLboolean lastDepthTest = glIsEnabled(GL_DEPTH_TEST);
-	GLboolean lastBlend = glIsEnabled(GL_BLEND);
-	GLint lastBlendSrc, lastBlendDst;
-	glGetIntegerv(GL_BLEND_SRC_ALPHA, &lastBlendSrc);
-	glGetIntegerv(GL_BLEND_DST_ALPHA, &lastBlendDst);
-
 	if (owner->GetTransform()) {
 		position = owner->GetTransform()->GetPosition();
 	}
@@ -887,60 +872,19 @@ void ParticleFX::Update(float deltaTime) {
 	while (timeSinceLastEmit >= emitInterval && isPlaying && !isPaused) {
 		EmitParticle();
 		timeSinceLastEmit -= emitInterval;
-		if (durationTrack >= duration && isOneShot) 
-		{
+		if (durationTrack >= duration && isOneShot) {
 			Pause();
 			durationTrack = 0.0f;
 		}
 	}
 
-#ifndef _BUILD
-	glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition();
-	glm::vec3 cameraUp = Application->camera->GetTransform().GetUp();
-
-	glm::mat4 modelMatrix = owner->GetTransform()->GetMatrix();
-	glm::mat4 viewMatrix = Application->camera->view();
-	glm::mat4 projMatrix = Application->camera->projection();
-
-#else
-	glm::vec3 cameraPosition = Application->root->mainCamera->GetTransform()->GetPosition();
-	glm::vec3 cameraUp = Application->root->mainCamera->GetTransform()->GetUp();
-
-	glm::mat4 modelMatrix = owner->GetTransform()->GetMatrix();
-	glm::mat4 viewMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->view();
-	glm::mat4 projMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->projection();
-#endif // !
-
-	material->ApplyShader(modelMatrix, viewMatrix, projMatrix);
-
-	if (material) {
-		ParticleShader* particleShader = static_cast<ParticleShader*>(
-			ShaderManager::GetInstance().GetShader(material->GetShaderType()));
-
-		if (particleShader) {
-			particleShader->SetCameraPosition(cameraPosition);
-			particleShader->SetCameraUp(cameraUp);
-		}
-	}
-
-	renderer->UpdateAndRender(deltaTime);
-
-	glUseProgram(lastProgram);
-	glBindVertexArray(lastVAO);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, lastTexture);
-
-	if (lastDepthTest) glEnable(GL_DEPTH_TEST);
-	else glDisable(GL_DEPTH_TEST);
-
-	if (lastBlend) glEnable(GL_BLEND);
-	else glDisable(GL_BLEND);
-
-	glBlendFunc(lastBlendSrc, lastBlendDst);
+	renderer->UpdateParticles(deltaTime);
 }
 
-void ParticleFX::RenderGameView() {
+void ParticleFX::RenderWithExternalMatrices(const glm::mat4& viewMatrix,
+	const glm::mat4& projMatrix,
+	const glm::vec3& cameraPos,
+	const glm::vec3& cameraUp) {
 	GLint lastProgram;
 	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
 
@@ -957,13 +901,11 @@ void ParticleFX::RenderGameView() {
 	glGetIntegerv(GL_BLEND_SRC_ALPHA, &lastBlendSrc);
 	glGetIntegerv(GL_BLEND_DST_ALPHA, &lastBlendDst);
 
-	glm::vec3 cameraPosition = Application->root->mainCamera->GetTransform()->GetPosition();
-	glm::vec3 cameraUp = Application->root->mainCamera->GetTransform()->GetUp();
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDepthMask(GL_FALSE);
 
 	glm::mat4 modelMatrix = owner->GetTransform()->GetMatrix();
-	glm::mat4 viewMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->view();
-	glm::mat4 projMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->projection();
-
 	material->ApplyShader(modelMatrix, viewMatrix, projMatrix);
 
 	if (material) {
@@ -971,12 +913,60 @@ void ParticleFX::RenderGameView() {
 			ShaderManager::GetInstance().GetShader(material->GetShaderType()));
 
 		if (particleShader) {
-			particleShader->SetCameraPosition(cameraPosition);
+			particleShader->SetCameraPosition(cameraPos);
 			particleShader->SetCameraUp(cameraUp);
 		}
 	}
+	std::vector<ParticleInstancedRenderer::InstanceData> instances;
+	instances.reserve(renderer->GetActiveParticleCount());
 
-	renderer->UpdateAndRender(0.0f);
+	for (size_t i = 0; i < renderer->GetMaxParticles(); ++i) {
+		if (!renderer->GetParticleData()[i].active) {
+			continue;
+		}
+
+		const ParticleData& particle = renderer->GetParticleData()[i];
+		float lifetimeFraction = particle.age / particle.maxLifetime;
+
+		ParticleInstancedRenderer::InstanceData instance;
+		instance.playOnAwake = particle.playOnAwake;
+		instance.duration = particle.duration;
+
+		if (particle.isLocalSpace) {
+			instance.position = particle.position + (glm::vec3)particle.parent->GetTransform()->GetPosition();
+		}
+		else {
+			instance.position = particle.position;
+		}
+
+		instance.color = particle.color;
+		instance.endColor = particle.endColor;
+		instance.size = particle.size;
+		instance.endSize = particle.endSize;
+		instance.gravity = particle.gravity;
+		instance.rotation = particle.rotation;
+		instance.endSpeed = particle.endVelocity;
+		instance.lifetime = lifetimeFraction;
+		instance.spriteOffset = particle.spriteOffset;
+		instance.spriteSize = particle.spriteSize;
+		instance.sheetSize = particle.sheetSize;
+		instance.useAnimation = particle.useAnimation;
+		instance.indexTimer = particle.indexTimer;
+		instance.animIndex = particle.animIndex;
+
+		instances.push_back(instance);
+	}
+
+	if (!instances.empty() && glIsBuffer(renderer->GetInstanceVBO()) && glIsVertexArray(renderer->GetVAO())) {
+		glBindBuffer(GL_ARRAY_BUFFER, renderer->GetInstanceVBO());
+		glBufferSubData(GL_ARRAY_BUFFER, 0, instances.size() * sizeof(ParticleInstancedRenderer::InstanceData), instances.data());
+
+		glBindVertexArray(renderer->GetVAO());
+		glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, static_cast<GLsizei>(instances.size()));
+		glBindVertexArray(0);
+	}
+
+	glDepthMask(GL_TRUE);
 
 	glUseProgram(lastProgram);
 	glBindVertexArray(lastVAO);
@@ -1065,7 +1055,6 @@ void ParticleFX::EmitParticle() {
 	else {
 		particle.position = position + GenerateRandomPosition();
 	}
-
 
 	particle.velocity = GenerateRandomVelocity();
 

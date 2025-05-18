@@ -52,8 +52,8 @@ void UIImageComponent::Update(float deltaTime)
 
 	auto uiTransform = owner->GetComponent<UITransformComponent>();
 
-	if (!uiTransform->GetResised() && uiTransform->GetCanvasSize().x > 0) {
-
+	if (!uiTransform->GetResised() && uiTransform->GetCanvasSize().x > 0) 
+	{
 		float scaleX = 1.0f;
 		float scaleY = 1.0f;
 
@@ -121,7 +121,7 @@ void UIImageComponent::Update(float deltaTime)
 		spriteSize = sheetSize;
 	}
 
-	if (texture->image_path != "") {
+	if (!texture->image_path.empty()) {
 		texture->bind();
 		shader->SetUniform("u_HasTexture", true);
 		shader->SetUniform("texture1", 0);
@@ -159,7 +159,7 @@ void UIImageComponent::Update(float deltaTime)
 
 	shader->UnBind();
 
-	if (texture->image_path != "") {
+	if (!texture->image_path.empty()) {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 

@@ -72,7 +72,7 @@ public:
 	void Update(float deltaTime) override;
 	void Destroy() override;
 
-	void RenderGameView();
+	void RenderWithExternalMatrices(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos, const glm::vec3& cameraUp);
 
 	std::unique_ptr<Component> Clone(GameObject* owner) override;
 	ComponentType GetType() const override { return ComponentType::PARTICLEFX; }

@@ -34,7 +34,6 @@ void UISliderComponent::Update(float deltaTime)
 		uiButtonTransform->setPos(glm::vec3(uiSliderTransform->GetPosition().x + (uiSliderTransform->GetPosition().x * uiSliderTransform->GetScale().x),
 			uiSliderTransform->GetPosition().y, uiSliderTransform->GetPosition().z));
 
-		
 		auto uiImage = sliderButton->GetComponent<UIImageComponent>();
 
 		uiImage->SetProjection(projection);
@@ -61,29 +60,5 @@ void UISliderComponent::SetTexture(std::string path)
 
 void UISliderComponent::LoadMesh()
 {
-	std::shared_ptr<Model> model = std::make_shared<Model>();
-
-	model->GetModelData().vertexData = {
-		Vertex {vec3(0.0f, 0.0f, 0.0f)},
-		Vertex {vec3(1.0f, 0.0f, 0.0f)},
-		Vertex {vec3(1.0f, 1.0f, 0.0f)},
-		Vertex {vec3(0.0f, 1.0f, 0.0f)}
-	};
-
-	model->GetModelData().indexData = {
-		0, 2, 1, 0, 3, 2
-	};
-
-	model->GetModelData().vertex_texCoords = {
-		vec2(0.0f, 0.0f),
-		vec2(1.0f, 0.0f),
-		vec2(1.0f, 1.0f),
-		vec2(0.0f, 1.0f)
-	};
-
-	model->SetMeshName("Plane");
-
-	mesh = std::make_shared<Mesh>();
-	mesh->setModel(model);
-	mesh->loadToOpenGL();
+	mesh = Mesh::CreatePlane();
 }

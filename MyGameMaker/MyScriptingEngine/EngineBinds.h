@@ -228,6 +228,7 @@ namespace EngineBinds {
 	void SetText(MonoObject* textRef, MonoString* text);
 	void SetTextColor(MonoObject* textRef, glm::vec4* color);
 	void SetTextSize(MonoObject* textRef, int size);
+	void SetBoxSize(MonoObject* textRef, glm::vec2& size);
 
     //SceneManagement
     bool LoadScene(MonoString* sceneName);

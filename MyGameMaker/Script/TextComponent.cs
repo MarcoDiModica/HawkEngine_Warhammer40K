@@ -17,6 +17,9 @@ namespace HawkEngine
 
         public extern void SetTextSize(int size);
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetBoxSize(Vector2 size);
+
         private GameObject owner;
 
         public UIText(UIntPtr nativeRigidbody, GameObject owner)

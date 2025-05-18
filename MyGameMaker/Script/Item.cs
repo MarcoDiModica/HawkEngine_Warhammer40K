@@ -8,7 +8,6 @@ public class Item : MonoBehaviour, IInteractable
 
     private GameObject itemTextMessage;
     public bool isTextVisible = false;
-    public string text= "hola";
 
     public override void Start()
     {

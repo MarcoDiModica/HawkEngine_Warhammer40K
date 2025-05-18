@@ -531,7 +531,7 @@ public class PlayerController : MonoBehaviour
         if (transform == null || aimLaser == null || aimLaserEnd == null)
             return;
 
-        Vector3 localOffset = new Vector3(-0.18f, 2.5f, 0.5f);
+        Vector3 localOffset = new Vector3(-0.18f, 2.5f, 3.5f);
         Vector3 bulletStart = transform.position +
                               (transform.right * localOffset.X) +
                               (transform.up * localOffset.Y) +

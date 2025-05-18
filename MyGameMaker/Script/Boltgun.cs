@@ -233,7 +233,7 @@ public class Boltgun : BaseWeapon
                 currentMagazineAmmo--;
 
             int audio = Audio.PlayOneShot(boltgunShot);
-            Vector3 localOffset = new Vector3(-0.9f, 2.5f, 0.5f);
+            Vector3 localOffset = new Vector3(-0.18f, 2.5f, 0.5f);
 
             Vector3 bulletStart = transform.position +
                                   (transform.right * localOffset.X) +

@@ -224,6 +224,11 @@ namespace EngineBinds {
     void DOValue(float* value, float start, float target, float duration, Modes mode);
     void CleanAllTweens();
 
+    //Text
+	void SetText(MonoObject* textRef, MonoString* text);
+	void SetTextColor(MonoObject* textRef, glm::vec4* color);
+	void SetTextSize(MonoObject* textRef, int size);
+
     //SceneManagement
     bool LoadScene(MonoString* sceneName);
     void SetScenePlay();

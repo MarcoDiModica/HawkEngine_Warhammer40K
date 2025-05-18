@@ -282,6 +282,15 @@ public class Shotgun : BaseWeapon
         }
     }
 
+    public int GetCurrentAmmo()
+    {
+        return currentMagazineAmmo;
+    }
+
+    public int GetMaxAmmo()
+    {
+        return maxAmmo;
+    }
     public override void Shoot()
     {
         if (!componentsInitialized)

@@ -23,6 +23,7 @@ public class EnemyControllerMelee : EnemyController
     private const string SFX_FOOTSTEP = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav";
     private const string SFX_ATTACK = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav";
     private const string SFX_HIT = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav";
+    private const string SFX_LEAP = "Assets/Audio/SFX/Enemies/Hormagaunt/Hormagaunt_Leap_Atack.wav";
 
     private float health = 50.0f;
     private float clawDamage = 5.0f;
@@ -445,6 +446,28 @@ public class EnemyControllerMelee : EnemyController
                 hasDropped = true;
             }
 
+            
+            case EnemyState.LEAP:
+                
+                hasLeap = false;
+                leapTimer += deltaTime;
+                Audio.PlayOneShot(SFX_LEAP);
+                rb.SetVelocity(leapDirection * 1.8f);
+                if (leapTimer >= leapDuration)
+                {
+                    isLeaping = false;
+                    hasLeap = true;
+                    //currentState = EnemyState.CHASE;
+                    lastLeap = 0f;
+                }
+                
+                break;
+            default:
+                break;
+        }
+        if (isFlashingColor)
+        {
+            flashTimer -= deltaTime;
             if (isFootstepPlaying)
             {
                 Audio.Stop(SFX_FOOTSTEP);

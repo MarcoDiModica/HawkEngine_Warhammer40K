@@ -68,6 +68,7 @@ public class MenuButtons : MonoBehaviour
         continueButton = GameObject.Find("continue_button");
         optionsButton = GameObject.Find("options_button");
         quitButton = GameObject.Find("exit_button");
+        creditsButton = GameObject.Find("credits_button");
         optionsCanvas = GameObject.Find("Canvas_OptionsMenu");
        // sound = gameObject.GetComponent<AudioSource>();
 
@@ -75,14 +76,16 @@ public class MenuButtons : MonoBehaviour
         button_continueButton = continueButton.GetComponent<UIButton>();
         button_optionsButton = optionsButton.GetComponent<UIButton>();
         button_quitButton = quitButton.GetComponent<UIButton>();
+        button_creditsButton = creditsButton.GetComponent<UIButton>();
 
         transform_newGameButton = newGameButton.GetComponent<UITransform>();
         transform_continueButton = continueButton.GetComponent<UITransform>();
         transform_optionsButton = optionsButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
+        transform_creditsButton = creditsButton.GetComponent<UITransform>();
 
-        buttons = new UIButton[] { button_newGameButton, button_continueButton, button_optionsButton, button_quitButton };
-        transforms = new UITransform[] { transform_newGameButton, transform_continueButton, transform_optionsButton, transform_quitButton };
+        buttons = new UIButton[] { button_newGameButton, button_continueButton, button_optionsButton, button_creditsButton, button_quitButton };
+        transforms = new UITransform[] { transform_newGameButton, transform_continueButton, transform_optionsButton, transform_creditsButton, transform_quitButton };
 
         hasPlayedHoverSound = new bool[buttons.Length];
 

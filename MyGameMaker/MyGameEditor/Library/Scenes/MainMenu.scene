@@ -145,10 +145,15 @@ GameObject1:
             - 9612
           sprite_offset:
             - 3417.66602
-            - 4806
+            - 7689.6001
           anim_speed: 0.5
-          anim_index: 32
+          anim_index: 50
           anim_index_limit: 60
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: title
       prefabPath: ""
@@ -208,6 +213,11 @@ GameObject1:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: new_game_button
       prefabPath: ""
@@ -267,6 +277,11 @@ GameObject1:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
@@ -330,6 +345,11 @@ GameObject1:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
@@ -393,6 +413,11 @@ GameObject1:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
@@ -425,7 +450,7 @@ GameObject1:
           enabled: true
           position:
             - 0.266000003
-            - 0.723999977
+            - 0.824999988
             - 0
           rotation:
             - 0
@@ -456,10 +481,83 @@ GameObject1:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
           state: 1
+      Children: ~
+    - name: credits_button
+      prefabPath: ""
+      uuid: 5583414161430186459
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.266000003
+            - 0.725000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.181999996
+            - 0.0700000003
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\menu_credits.png
+          use_animation: false
+          sprite_size:
+            - 469
+            - 103
+          sheet_size:
+            - 469
+            - 103
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
 GameObject2:
   name: Canvas_OptionsMenu
@@ -570,6 +668,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_1280x720
       prefabPath: ""
@@ -629,6 +732,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_1920x1080
       prefabPath: ""
@@ -688,6 +796,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_2560x1440
       prefabPath: ""
@@ -747,6 +860,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_3840x2160
       prefabPath: ""
@@ -806,6 +924,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_left
       prefabPath: ""
@@ -869,6 +992,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_right
       prefabPath: ""
@@ -932,6 +1060,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_lefthover
       prefabPath: ""
@@ -991,6 +1124,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_righthover
       prefabPath: ""
@@ -1050,6 +1188,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Fullscreen_checkbox
       prefabPath: ""
@@ -1113,6 +1256,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Fullscreen_checkboxhover
       prefabPath: ""
@@ -1172,6 +1320,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Fullscreen_tick
       prefabPath: ""
@@ -1231,6 +1384,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Master_bar
       prefabPath: ""
@@ -1290,6 +1448,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Master_slider
       prefabPath: ""
@@ -1349,6 +1512,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Master_left
       prefabPath: ""
@@ -1412,6 +1580,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Master_right
       prefabPath: ""
@@ -1475,6 +1648,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Master_lefthover
       prefabPath: ""
@@ -1534,6 +1712,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Master_righthover
       prefabPath: ""
@@ -1593,6 +1776,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: BGM_bar
       prefabPath: ""
@@ -1652,6 +1840,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: BGM_slider
       prefabPath: ""
@@ -1711,6 +1904,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: BGM_left
       prefabPath: ""
@@ -1774,6 +1972,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: BGM_right
       prefabPath: ""
@@ -1837,6 +2040,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: BGM_lefthover
       prefabPath: ""
@@ -1896,6 +2104,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: BGM_righthover
       prefabPath: ""
@@ -1955,6 +2168,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: SFX_bar
       prefabPath: ""
@@ -2014,6 +2232,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: SFX_slider
       prefabPath: ""
@@ -2073,6 +2296,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: SFX_left
       prefabPath: ""
@@ -2136,6 +2364,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: SFX_right
       prefabPath: ""
@@ -2199,6 +2432,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: SFX_lefthover
       prefabPath: ""
@@ -2258,6 +2496,11 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: SFX_righthover
       prefabPath: ""
@@ -2317,4 +2560,9 @@ GameObject2:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~

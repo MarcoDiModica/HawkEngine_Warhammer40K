@@ -511,3 +511,55 @@ MonoObject* MonoManager::CreatePrefabReference(const std::string& path) {
 
 	return instance;  
 }
+
+void MonoManager::RegisterMonoObject(void* nativePtr, MonoObject* monoObject) {
+	if (!nativePtr || !monoObject) {
+		LOG(LogType::LOG_WARNING, "Attempting to register null native pointer or mono object");
+		return;
+	}
+
+	std::lock_guard<std::mutex> lock(monoMapMutex);
+
+	auto it = nativeToGCHandleMap.find(nativePtr);
+	if (it != nativeToGCHandleMap.end()) {
+		mono_gchandle_free(it->second);
+		LOG(LogType::LOG_WARNING, "Overwriting existing mono object registration for native pointer %p", nativePtr);
+	}
+
+	uint32_t gcHandle = mono_gchandle_new(monoObject, false);
+
+	nativeToGCHandleMap[nativePtr] = gcHandle;
+}
+
+void MonoManager::UnregisterMonoObject(void* nativePtr) {
+	if (!nativePtr) {
+		LOG(LogType::LOG_WARNING, "Attempting to unregister null native pointer");
+		return;
+	}
+
+	std::lock_guard<std::mutex> lock(monoMapMutex);
+
+	auto it = nativeToGCHandleMap.find(nativePtr);
+	if (it != nativeToGCHandleMap.end()) {
+		mono_gchandle_free(it->second);
+		nativeToGCHandleMap.erase(it);
+	}
+	else {
+		LOG(LogType::LOG_WARNING, "Attempted to unregister native pointer %p that was not registered", nativePtr);
+	}
+}
+
+MonoObject* MonoManager::GetMonoObjectForNative(void* nativePtr) {
+	if (!nativePtr) {
+		return nullptr;
+	}
+
+	std::lock_guard<std::mutex> lock(monoMapMutex);
+
+	auto it = nativeToGCHandleMap.find(nativePtr);
+	if (it != nativeToGCHandleMap.end()) {
+		return mono_gchandle_get_target(it->second);
+	}
+
+	return nullptr;
+}

@@ -36,13 +36,31 @@ MonoObject* EngineBinds::GetGameObject(MonoObject* ref) {
 }
 
 MonoString* EngineBinds::GameObjectGetName(MonoObject* sharpRef) {
-    std::string name = ConvertFromSharp(sharpRef)->GetName();
-    return mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
+	if (!sharpRef) {
+		LOG(LogType::LOG_ERROR, "Null reference passed to GameObjectGetName");
+		return nullptr;
+	}
+	GameObject* go = ConvertFromSharp(sharpRef);
+	if (!go) {
+		LOG(LogType::LOG_ERROR, "Failed to convert sharp reference to GameObject");
+		return nullptr;
+	}
+	std::string name = go->GetName();
+	return mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
 }
 
 MonoString* EngineBinds::GameObjectGetTag(MonoObject* sharpRef) {
-    std::string name = ConvertFromSharp(sharpRef)->GetTag();
-    return mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
+	if (!sharpRef) {
+		LOG(LogType::LOG_ERROR, "Null reference passed to GameObjectGetTag");
+		return nullptr;
+	}
+	GameObject* go = ConvertFromSharp(sharpRef);
+	if (!go) {
+		LOG(LogType::LOG_ERROR, "Failed to convert sharp reference to GameObject");
+		return nullptr;
+	}
+	std::string tag = go->GetTag();
+	return mono_string_new(MonoManager::GetInstance().GetDomain(), tag.c_str());
 }
 
 GameObject* EngineBinds::ConvertFromSharp(MonoObject* sharpObj) {
@@ -57,31 +75,69 @@ GameObject* EngineBinds::ConvertFromSharp(MonoObject* sharpObj) {
 }
 
 MonoObject* EngineBinds::CreateGameObjectSharp(MonoString* name, GameObject* Cgo) {
-    char* C_name = mono_string_to_utf8(name);
+	char* C_name = mono_string_to_utf8(name);
+	if (!C_name) {
+		LOG(LogType::LOG_ERROR, "Failed to convert string to UTF8");
+		return nullptr;
+	}
 
-    if (Cgo == nullptr) {
-        auto go = SceneManagement->CreateGameObject(C_name); 
-        Cgo = go.get();
-    }
+	if (Cgo == nullptr) {
+		auto go = SceneManagement->CreateGameObject(C_name);
+		Cgo = go.get();
+	}
 
+	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+	if (!klass) {
+		mono_free(C_name);
+		LOG(LogType::LOG_ERROR, "Failed to get GameObject class");
+		return nullptr;
+	}
 
-    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
-    MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+	if (!monoObject) {
+		mono_free(C_name);
+		LOG(LogType::LOG_ERROR, "Failed to create GameObject mono object");
+		return nullptr;
+	}
 
-    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.GameObject:.ctor(string,uintptr)", true);
-    MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
-    // assign to C#object its ptr to C++ object
-    uintptr_t goPtr = reinterpret_cast<uintptr_t>(Cgo);
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.GameObject:.ctor(string,uintptr)", true);
+	if (!constructorDesc) {
+		mono_free(C_name);
+		LOG(LogType::LOG_ERROR, "Failed to create constructor descriptor");
+		return nullptr;
+	}
 
-    void* args[2];
-    args[0] = mono_string_new(MonoManager::GetInstance().GetDomain(), Cgo->GetName().c_str());
-    args[1] = &goPtr;
+	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+	mono_method_desc_free(constructorDesc);
 
-    mono_runtime_invoke(method, monoObject, args, NULL);
+	if (!method) {
+		mono_free(C_name);
+		LOG(LogType::LOG_ERROR, "Failed to find constructor method");
+		return nullptr;
+	}
 
-    Cgo->CsharpReference = monoObject; // store ref to C#ref to call lifecycle functions
+	uintptr_t goPtr = reinterpret_cast<uintptr_t>(Cgo);
 
-    return monoObject;
+	void* args[2];
+	args[0] = mono_string_new(MonoManager::GetInstance().GetDomain(), Cgo->GetName().c_str());
+	args[1] = &goPtr;
+
+	MonoObject* exception = nullptr;
+	mono_runtime_invoke(method, monoObject, args, &exception);
+
+	if (exception) {
+		char* exMsg = mono_string_to_utf8(mono_object_to_string(exception, nullptr));
+		LOG(LogType::LOG_ERROR, "Exception in CreateGameObjectSharp: %s", exMsg);
+		mono_free(exMsg);
+		mono_free(C_name);
+		return nullptr;
+	}
+
+	Cgo->CsharpReference = monoObject;
+	MonoManager::GetInstance().RegisterMonoObject(Cgo, monoObject);
+
+	mono_free(C_name);
+	return monoObject;
 }
 
 GameObject* EngineBinds::GetScriptOwner(MonoObject* ref) {
@@ -95,22 +151,34 @@ GameObject* EngineBinds::GetScriptOwner(MonoObject* ref) {
     return reinterpret_cast<GameObject*>(Cptr);
 }
 
-MonoObject* EngineBinds::GameObjectFindChild(MonoObject* parentRef, MonoString* name)
-{
-    char* cName = mono_string_to_utf8(name);
-    std::string target(cName);
-    mono_free(cName);
+MonoObject* EngineBinds::GameObjectFindChild(MonoObject* parentRef, MonoString* name) {
+	if (!parentRef || !name) {
+		LOG(LogType::LOG_ERROR, "Null reference passed to GameObjectFindChild");
+		return nullptr;
+	}
 
-    GameObject* parentGO = ConvertFromSharp(parentRef);
-    if (!parentGO) return nullptr;
+	char* cName = mono_string_to_utf8(name);
+	if (!cName) {
+		LOG(LogType::LOG_ERROR, "Failed to convert string to UTF8");
+		return nullptr;
+	}
 
-    for (auto& child : parentGO->GetChildren()) {
-        if (child->GetName() == target) {
-            return child->GetSharp();
-        }
-    }
+	std::string target(cName);
+	mono_free(cName);
 
-    return nullptr;
+	GameObject* parentGO = ConvertFromSharp(parentRef);
+	if (!parentGO) {
+		LOG(LogType::LOG_ERROR, "Failed to convert parent reference to GameObject");
+		return nullptr;
+	}
+
+	for (auto& child : parentGO->GetChildren()) {
+		if (child->GetName() == target) {
+			return child->GetSharp();
+		}
+	}
+
+	return nullptr;
 }
 
 void EngineBinds::GameObjectAddChild(MonoObject* parent, MonoObject* child) {
@@ -137,88 +205,130 @@ void EngineBinds::Destroy(MonoObject* object_to_destroy) {
 
 MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* component_name)
 {
-    char* C_name = mono_string_to_utf8(component_name);
-    auto GO = ConvertFromSharp(ref);
+	if (!ref || !component_name) {
+		LOG(LogType::LOG_ERROR, "Null reference passed to GetSharpComponent");
+		return nullptr;
+	}
 
-    std::string componentName = std::string(C_name);
+	char* C_name = mono_string_to_utf8(component_name);
+	if (!C_name) {
+		LOG(LogType::LOG_ERROR, "Failed to convert string to UTF8");
+		return nullptr;
+	}
 
-    for (const auto& scriptComponent : GO->scriptComponents)
-    {
-        MonoObject* monoScript = scriptComponent->GetSharpObject();
-        if (!monoScript) continue;
+	auto GO = ConvertFromSharp(ref);
+	if (!GO) {
+		mono_free(C_name);
+		LOG(LogType::LOG_ERROR, "Failed to convert reference to GameObject");
+		return nullptr;
+	}
 
-        MonoClass* scriptClass = mono_object_get_class(monoScript);
+	std::string componentName = std::string(C_name);
+	mono_free(C_name);
 
-        MonoClass* targetClass = mono_class_from_name_case(
-            MonoManager::GetInstance().GetImage(),
-            "", // Namespace vac�o (se puede mejorar)
-            C_name
-        );
+	for (const auto& scriptComponent : GO->scriptComponents) {
+		MonoObject* monoScript = scriptComponent->GetSharpObject();
+		if (!monoScript) continue;
 
-        if (!targetClass) continue;
+		MonoClass* scriptClass = mono_object_get_class(monoScript);
+		if (!scriptClass) continue;
 
-        if (mono_class_is_subclass_of(scriptClass, targetClass, true)) {
-            return monoScript;
-        }
-    }
+		MonoClass* targetClass = mono_class_from_name_case(
+			MonoManager::GetInstance().GetImage(),
+			"",
+			componentName.c_str()
+		);
 
-    if (componentName == "HawkEngine.Transform") {
-        return GO->GetTransform()->GetSharp();
+		if (!targetClass) continue;
+
+		if (mono_class_is_subclass_of(scriptClass, targetClass, true)) {
+			return monoScript;
+		}
+	}
+
+	if (componentName == "HawkEngine.Transform") {
+		return GO->GetTransform()->GetSharp();
 	}
 	else if (componentName == "HawkEngine.MeshRenderer") {
-		return GO->GetComponent<MeshRenderer>()->GetSharp();
+		auto comp = GO->GetComponent<MeshRenderer>();
+		return comp ? comp->GetSharp() : nullptr;
 	}
 	else if (componentName == "HawkEngine.Camera") {
-		return GO->GetComponent<CameraComponent>()->GetSharp();
+		auto comp = GO->GetComponent<CameraComponent>();
+		return comp ? comp->GetSharp() : nullptr;
 	}
     else if (componentName == "HawkEngine.Collider") {
         if (auto boxCollider = GO->GetComponent<BoxColliderComponent>()) {
-            return boxCollider->GetSharp();
-        }
-        else if (auto capsuleCollider = GO->GetComponent<CapsuleColliderComponent>()) {
-            return capsuleCollider->GetSharp();
-        }
-        else if (auto meshCollider = GO->GetComponent<MeshColliderComponent>()) {
-            return meshCollider->GetSharp();
-        }
+			return boxCollider->GetSharp();
+		}
+		else if (auto capsuleCollider = GO->GetComponent<CapsuleColliderComponent>()) {
+			return capsuleCollider->GetSharp();
+		}
+		else if (auto meshCollider = GO->GetComponent<MeshColliderComponent>()) {
+			return meshCollider->GetSharp();
+		}
+
+        return nullptr; // No collider found
 	}
     else if (componentName == "HawkEngine.BoxCollider") {
-		return GO->GetComponent<BoxColliderComponent>()->GetSharp();
+        auto comp = GO->GetComponent<BoxColliderComponent>();
+        return comp ? comp->GetSharp() : nullptr;
 	}
     else if (componentName == "HawkEngine.CapsuleCollider") {
-		return GO->GetComponent<CapsuleColliderComponent>()->GetSharp();
+		auto comp = GO->GetComponent<CapsuleColliderComponent>();
+        return comp ? comp->GetSharp() : nullptr;
 	}
     else if (componentName == "HawkEngine.MeshCollider") {
-		return GO->GetComponent<MeshColliderComponent>()->GetSharp();
+		auto comp = GO->GetComponent<MeshColliderComponent>();
+		return comp ? comp->GetSharp() : nullptr;
 	}
     else if (componentName == "HawkEngine.Rigidbody") {
-		return GO->GetComponent<RigidbodyComponent>()->GetSharp();
+		auto comp = GO->GetComponent<RigidbodyComponent>();
+        return comp ? comp->GetSharp() : nullptr;
 	}
     else if (componentName == "HawkEngine.UIImage") {
-        return GO->GetComponent<UIImageComponent>()->GetSharp();
+        auto comp = GO->GetComponent<UIImageComponent>();
+        return comp ? comp->GetSharp() : nullptr;
     }
 	else if (componentName == "HawkEngine.SkeletalAnimation") {
-		return GO->GetComponent<SkeletalAnimationComponent>()->GetSharp();
+		auto comp = GO->GetComponent<SkeletalAnimationComponent>();
+        return comp ? comp->GetSharp() : nullptr;
 	}
 	else if (componentName == "HawkEngine.UIButton") {
-		return GO->GetComponent<UIButtonComponent>()->GetSharp();
+		auto comp = GO->GetComponent<UIButtonComponent>();
+        return comp ? comp->GetSharp() : nullptr;
 	}
 	else if (componentName == "HawkEngine.UICanvas") {
-		return GO->GetComponent<UICanvasComponent>()->GetSharp();
+		auto comp = GO->GetComponent<UICanvasComponent>();
+		return comp ? comp->GetSharp() : nullptr;
 	}
     else if (componentName == "HawkEngine.UITransform") {
-        return GO->GetComponent<UITransformComponent>()->GetSharp();
+        auto comp = GO->GetComponent<UITransformComponent>();
+        return comp ? comp->GetSharp() : nullptr;
     }
 	else if (componentName == "HawkEngine.ScriptComponent") {
-		return GO->GetComponent<ScriptComponent>()->GetSharp();
+		auto comp = GO->GetComponent<ScriptComponent>();
+        if (comp) {
+			return comp->GetSharpObject();
+		}
+		else {
+			LOG(LogType::LOG_ERROR, "ScriptComponent not found");
+			return nullptr;
+		}
 	}
     else if (componentName == "HawkEngine.UIText") {
 		return GO->GetComponent<TextComponent>()->GetSharp();
     }
 	else if (componentName == "HawkEngine.ParticleFX") {
-		return GO->GetComponent<ParticleFX>()->GetSharp();
+		auto comp = GO->GetComponent<ParticleFX>();
+        if (comp) {
+			return comp->GetSharp();
+		}
+		else {
+			LOG(LogType::LOG_ERROR, "ParticleFX not found");
+			return nullptr;
+		}
 	}
-
 
     return nullptr;
 }
@@ -283,9 +393,26 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
 }
 
 void EngineBinds::AddScript(MonoObject* ref, MonoString* scriptName) {
+	if (!ref || !scriptName) {
+		LOG(LogType::LOG_ERROR, "Null reference passed to AddScript");
+		return;
+	}
+
 	char* C_name = mono_string_to_utf8(scriptName);
+	if (!C_name) {
+		LOG(LogType::LOG_ERROR, "Failed to convert string to UTF8");
+		return;
+	}
+
 	auto go = ConvertFromSharp(ref);
+	if (!go) {
+		mono_free(C_name);
+		LOG(LogType::LOG_ERROR, "Failed to convert reference to GameObject");
+		return;
+	}
+
 	go->AddComponent<ScriptComponent>()->LoadScript(C_name);
+	mono_free(C_name);
 }
 
 void EngineBinds::SetActive(MonoObject* ref, bool active) {
@@ -298,14 +425,49 @@ bool EngineBinds::GameObjectIsActive(MonoObject* ref) {
 
 
 void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
+	if (!ref || !sharpName) {
+		LOG(LogType::LOG_ERROR, "Null reference passed to SetName");
+		return;
+	}
 
-    char* C_name = mono_string_to_utf8(sharpName);
-    ConvertFromSharp(ref)->SetName(std::string(C_name));
+	char* C_name = mono_string_to_utf8(sharpName);
+	if (!C_name) {
+		LOG(LogType::LOG_ERROR, "Failed to convert string to UTF8");
+		return;
+	}
+
+	auto go = ConvertFromSharp(ref);
+	if (!go) {
+		mono_free(C_name);
+		LOG(LogType::LOG_ERROR, "Failed to convert reference to GameObject");
+		return;
+	}
+
+	go->SetName(std::string(C_name));
+	mono_free(C_name);
 }
-void EngineBinds::SetTag(MonoObject* ref, MonoString* sharpName) {
 
-    char* C_name = mono_string_to_utf8(sharpName);
-    ConvertFromSharp(ref)->SetTag(std::string(C_name));
+void EngineBinds::SetTag(MonoObject* ref, MonoString* sharpName) {
+	if (!ref || !sharpName) {
+		LOG(LogType::LOG_ERROR, "Null reference passed to SetTag");
+		return;
+	}
+
+	char* C_name = mono_string_to_utf8(sharpName);
+	if (!C_name) {
+		LOG(LogType::LOG_ERROR, "Failed to convert string to UTF8");
+		return;
+	}
+
+	auto go = ConvertFromSharp(ref);
+	if (!go) {
+		mono_free(C_name);
+		LOG(LogType::LOG_ERROR, "Failed to convert reference to GameObject");
+		return;
+	}
+
+	go->SetTag(std::string(C_name));
+	mono_free(C_name);
 }
 
 void EngineBinds::GameObjectSetActive(MonoObject* ref, bool active) {
@@ -317,13 +479,22 @@ MonoString* EngineBinds::GetTag(MonoObject* ref) {
 	return mono_string_new(MonoManager::GetInstance().GetDomain(), ConvertFromSharp(ref)->GetTag().c_str());
 }
 
+MonoObject* EngineBinds::GetGameObjectByName(MonoString* name) {
+	if (!name) {
+		LOG(LogType::LOG_ERROR, "Null name passed to GetGameObjectByName");
+		return nullptr;
+	}
 
+	char* C_name = mono_string_to_utf8(name);
+	if (!C_name) {
+		LOG(LogType::LOG_ERROR, "Failed to convert string to UTF8");
+		return nullptr;
+	}
 
-MonoObject* EngineBinds::GetGameObjectByName(MonoString* name)
-{
-    char* C_name = mono_string_to_utf8(name);
 	GameObject* go = SceneManagement->FindGOByName(std::string(C_name)).get();
-    return go ? go->GetSharp() : nullptr;
+	mono_free(C_name);
+
+	return go ? go->GetSharp() : nullptr;
 }
 
 MonoArray* EngineBinds::GetGameObjectsByTag(MonoString* tag) {
@@ -1505,56 +1676,85 @@ void EngineBinds::EmitBurst(MonoObject* particleRef, int burstCount)
 		particle->EmitBurst(burstCount);
 	}
 }
-MonoObject* EngineBinds::InstantiatePrefab(MonoObject* prefabObj, MonoObject* parentTransformObj, bool worldPositionStays)  
-{  
-  if (!prefabObj) return nullptr;  
 
-  MonoClass* prefabClass = mono_object_get_class(prefabObj);  
-  MonoClassField* pathField = mono_class_get_field_from_name(prefabClass, "path");  
+MonoObject* EngineBinds::InstantiatePrefab(MonoObject* prefabObj, MonoObject* parentTransformObj, bool worldPositionStays) {
+	if (!prefabObj) {
+		LOG(LogType::LOG_ERROR, "Null prefab object passed to InstantiatePrefab");
+		return nullptr;
+	}
 
-  MonoString* pathString = nullptr;  
-  mono_field_get_value(prefabObj, pathField, &pathString);  
+	MonoClass* prefabClass = mono_object_get_class(prefabObj);
+	if (!prefabClass) {
+		LOG(LogType::LOG_ERROR, "Failed to get class from prefab object");
+		return nullptr;
+	}
 
-  if (!pathString) return nullptr;  
+	MonoClassField* pathField = mono_class_get_field_from_name(prefabClass, "path");
+	if (!pathField) {
+		LOG(LogType::LOG_ERROR, "Failed to find path field in prefab class");
+		return nullptr;
+	}
 
-  char* cStr = mono_string_to_utf8(pathString);  
-  std::string prefabPath(cStr);  
-  mono_free(cStr);  
+	MonoString* pathString = nullptr;
+	mono_field_get_value(prefabObj, pathField, &pathString);
 
-  std::shared_ptr<GameObject> newGO = PrefabManager::LoadPrefab(prefabPath);
+	if (!pathString) {
+		LOG(LogType::LOG_ERROR, "Null path string in prefab object");
+		return nullptr;
+	}
 
-  if (!newGO) return nullptr;  
+	char* cStr = mono_string_to_utf8(pathString);
+	if (!cStr) {
+		LOG(LogType::LOG_ERROR, "Failed to convert path string to UTF8");
+		return nullptr;
+	}
 
-  // Handle parenting  
-  if (parentTransformObj) {
-      MonoClass* transformClass = mono_object_get_class(parentTransformObj);
-      MonoClassField* cppInstanceField = mono_class_get_field_from_name(transformClass, "CplusplusInstance");
+	std::string prefabPath(cStr);
+	mono_free(cStr);
 
-      if (cppInstanceField) {
-          uintptr_t cppInstance = 0;
-          mono_field_get_value(parentTransformObj, cppInstanceField, &cppInstance);
-          Transform_Component* parentTransform = reinterpret_cast<Transform_Component*>(cppInstance);
+	std::shared_ptr<GameObject> newGO = PrefabManager::LoadPrefab(prefabPath);
+	if (!newGO) {
+		LOG(LogType::LOG_ERROR, "Failed to load prefab from path: %s", prefabPath.c_str());
+		return nullptr;
+	}
 
-          if (parentTransform) {
-              GameObject* parentGO = parentTransform->GetOwner();
-              if (parentGO) {
-                  if (worldPositionStays)
-                      Application->root->ParentGameObjectPreserve(*newGO, *parentGO);
-                  else
-                      Application->root->ParentGameObject(*newGO, *parentGO);
-              }
-          }
-      }
-  }
-   newGO->TraverseHierarchy([](GameObject* go) {  
-       go->Awake();  
-   });  
+	if (parentTransformObj) {
+		MonoClass* transformClass = mono_object_get_class(parentTransformObj);
+		if (!transformClass) {
+			LOG(LogType::LOG_ERROR, "Failed to get class from transform object");
+			return nullptr;
+		}
 
-   newGO->TraverseHierarchy([](GameObject* go) {  
-       go->Start();  
-   });
+		MonoClassField* cppInstanceField = mono_class_get_field_from_name(transformClass, "CplusplusInstance");
+		if (!cppInstanceField) {
+			LOG(LogType::LOG_ERROR, "Failed to find CplusplusInstance field in transform class");
+			return nullptr;
+		}
 
-  return MonoManager::GetInstance().CreateGameObjectReference(newGO.get());
+		uintptr_t cppInstance = 0;
+		mono_field_get_value(parentTransformObj, cppInstanceField, &cppInstance);
+		Transform_Component* parentTransform = reinterpret_cast<Transform_Component*>(cppInstance);
+
+		if (parentTransform) {
+			GameObject* parentGO = parentTransform->GetOwner();
+			if (parentGO) {
+				if (worldPositionStays)
+					Application->root->ParentGameObjectPreserve(*newGO, *parentGO);
+				else
+					Application->root->ParentGameObject(*newGO, *parentGO);
+			}
+		}
+	}
+
+	newGO->TraverseHierarchy([](GameObject* go) {
+		go->Awake();
+		});
+
+	newGO->TraverseHierarchy([](GameObject* go) {
+		go->Start();
+		});
+
+	return MonoManager::GetInstance().CreateGameObjectReference(newGO.get());
 }
 
 void EngineBinds::BindEngine() {

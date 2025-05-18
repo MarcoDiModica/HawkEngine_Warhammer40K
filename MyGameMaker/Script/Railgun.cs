@@ -50,7 +50,7 @@ public class Railgun : BaseWeapon
     public override void Start()
     {
         damage = 100.0f;
-        shootCadence = 0.66f;
+        shootCadence = 0.16f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 0;
@@ -286,19 +286,12 @@ public class Railgun : BaseWeapon
 
     public override void UseAbility1()
     {
-        toggleMode.TriggerAbility();
+        //toggleMode.TriggerAbility();
+        energyBall.TriggerAbility();
     }
 
     public override void UseAbility2()
     {
-        if (railgunMode == RailgunMode.AUTOMATIC)
-        {
-            laserBeam.TriggerAbility();
-        }
-        else
-        {
-            energyBall.TriggerAbility();
-        }
     }
 
     public override void CleanBullets()

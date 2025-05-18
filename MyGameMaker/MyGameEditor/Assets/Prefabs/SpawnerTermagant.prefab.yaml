@@ -1,0 +1,39 @@
+name: SpawnerTermagant
+prefabPath: ""
+uuid: 5348050195500039992
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 587.3240966796875
+      - 0
+      - -35.014080047607422
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  ScriptComponents:
+    Script0:
+      name: EnemySpawner
+      fields:
+        spawnTimer: 0
+        secondsBetweenSpawns: 9
+        currentEnemiesSpawned: 0
+        maxEnemiesToSpawn: 1
+        rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
+        spawnHormagaunt: false
+        spawnRanged: true
+        spawnStalker: false
+        spawnWarrior: false
+        spawnClimberHormagaunt: false
+        spawnerActive: false
+        spawnRadius: 15
+Children: ~

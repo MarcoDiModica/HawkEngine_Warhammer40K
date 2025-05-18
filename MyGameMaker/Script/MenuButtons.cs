@@ -155,7 +155,7 @@ public class MenuButtons : MonoBehaviour
             currentInputMethod = InputMethod.None;
         }
 
-        // Detectar si el ratón está sobre un botón
+        // Detectar si el ratï¿½n estï¿½ sobre un botï¿½n
         for (int i = 0; i < buttons.Length; i++)
         {
             if (buttons[i] == null)
@@ -196,7 +196,7 @@ public class MenuButtons : MonoBehaviour
             }
         }
 
-        // Detectar clic del ratón
+        // Detectar clic del ratï¿½n
         if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1)|| Input.GetControllerButtonDown(ControllerButton.A))
         {
             UIButton selectedButton = buttons[selectedButtonIndex];
@@ -210,9 +210,26 @@ public class MenuButtons : MonoBehaviour
             }
             else if (selectedButton == button_continueButton)
             {
-                Audio.PlayOneShot(ConfirmSFX);
-                Audio.Stop(MainMenuMusic);
-                SceneManager.LoadScene("BetaRelease_Week1_Lvl2");
+                //sound?.Play(buttonStartGameFX);
+                if (SceneManager.isLevel2)
+                {
+                    Audio.PlayOneShot(ConfirmSFX);
+                    Audio.Stop(MainMenuMusic);
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl2");
+                }
+                else if (SceneManager.isBossFight)
+                {
+                    Audio.PlayOneShot(ConfirmSFX);
+                    Audio.Stop(MainMenuMusic);
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Bossfight");
+                }
+                else
+                {
+                    Audio.PlayOneShot(ConfirmSFX);
+                    Audio.Stop(MainMenuMusic);
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl1");
+                }
+                
             }
             else if (selectedButton == button_optionsButton)
             {

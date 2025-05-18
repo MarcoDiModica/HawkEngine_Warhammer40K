@@ -15,6 +15,11 @@ CapsuleColliderComponent::CapsuleColliderComponent(GameObject* owner, PhysicsMod
 
 CapsuleColliderComponent::~CapsuleColliderComponent() {
     Destroy();
+
+    if (CsharpReference != nullptr) {
+		MonoManager::GetInstance().UnregisterMonoObject(this);
+		CsharpReference = nullptr;
+	}
 }
 
 void CapsuleColliderComponent::Awake() {
@@ -41,6 +46,10 @@ std::unique_ptr<Component> CapsuleColliderComponent::Clone(GameObject* new_owner
 
 MonoObject* CapsuleColliderComponent::GetSharp()
 {
+    if (CsharpReference != nullptr) {
+        return CsharpReference;
+    }
+
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Collider");
     if (!klass) {
         MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "CapsuleCollider");
@@ -55,26 +64,40 @@ MonoObject* CapsuleColliderComponent::GetSharp()
     }
 
     MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Collider:.ctor(uintptr,HawkEngine.GameObject)", true);
+    if (!constructorDesc) {
+        return nullptr;
+    }
+
     MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
-    if (!method)
-    {
+    mono_method_desc_free(constructorDesc);
+
+    if (!method) {
         return nullptr;
     }
 
     uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
-    MonoObject* ownerGo = owner->GetSharp();
-    if (!ownerGo)
-    {
+    MonoObject* ownerGo = owner ? owner->GetSharp() : nullptr;
+    if (!ownerGo) {
         return nullptr;
     }
 
-    void* args[2]{};
+    void* args[2];
     args[0] = &componentPtr;
     args[1] = ownerGo;
 
-    mono_runtime_invoke(method, monoObject, args, nullptr);
+    MonoObject* exception = nullptr;
+    mono_runtime_invoke(method, monoObject, args, &exception);
 
-    return monoObject;
+    if (exception) {
+        LOG(LogType::LOG_ERROR, "Exception creating C# object for %s %s", name, owner->GetName());
+        return nullptr;
+    }
+
+    CsharpReference = monoObject;
+
+    MonoManager::GetInstance().RegisterMonoObject(this, CsharpReference);
+
+    return CsharpReference;
 }
 
 void CapsuleColliderComponent::CreateCollider() {

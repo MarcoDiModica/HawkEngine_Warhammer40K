@@ -7,8 +7,8 @@ public class EnemyControllerStalker : EnemyController
 {
     // Enemy Stats
     private float health = 350.0f;
-    private float clawDamage = 25.0f;
-    private float pounceDamage = 35.0f;
+    private float clawDamage = 8.0f;
+    private float pounceDamage = 10.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
 
@@ -53,6 +53,7 @@ public class EnemyControllerStalker : EnemyController
     // Death
     private float deathTimer = 0f;
     private float deathCooldown = 2f;
+
     public override void Awake()
     {
         startPosition = gameObject.GetComponent<Transform>().position;
@@ -347,6 +348,8 @@ public class EnemyControllerStalker : EnemyController
         }
 
         Audio.PlayOneShot(SFX_ATTACK);
+        AddComponent<ParticleFX>().ApplyPreset(27);
+        GetComponent<ParticleFX>().EmitBurst(1);
     }
 
     public override void TakeDamage(float damage)
@@ -379,6 +382,8 @@ public class EnemyControllerStalker : EnemyController
             hasPounce = false;
             isPouncing = true;
             Audio.PlayOneShot(SFX_POUNCE);
+            AddComponent<ParticleFX>().ApplyPreset(26);
+            GetComponent<ParticleFX>().EmitBurst(1);
             Engineson.print("Pouncing");
             anim.SetLeapAnimation();
             rb.SetVelocity(rb.GetVelocity() * 120f);

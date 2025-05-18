@@ -270,7 +270,7 @@ public class PlayerShooting : MonoBehaviour
         if (playerInput?.IsAbility2Pressed() == true)
         {
             Engineson.print("Ability 2 pressed");
-            UseAbility2();
+            //UseAbility2();
         }
     }
 
@@ -474,23 +474,36 @@ public class PlayerShooting : MonoBehaviour
         switch (currentGun)
         {
             case GunType.BOLTGUN:
-                if (boltgun.grenadeLauncher.canThrow)
+                if(playerData.BoltgunUpgraded == true)
                 {
-                    redThirstManager.OnAbilityUsed();
+                    if (boltgun.grenadeLauncher.canThrow)
+                    {
+                        redThirstManager.OnAbilityUsed();
+                    }
+                    boltgun?.UseAbility1();
                 }
-                boltgun?.UseAbility1();
+              
 
                 break;
             case GunType.SHOTGUN:
-                if(shotgun.hookShot.canThrow)
+                if(playerData.ShotgunUpgraded == true)
                 {
-                    redThirstManager.OnAbilityUsed();
-                    redThirstManager.AddRedThirstPoint(1);
+                    if (shotgun.hookShot.canThrow)
+                    {
+                        redThirstManager.OnAbilityUsed();
+                        redThirstManager.AddRedThirstPoint(1);
+                    }
+                    shotgun?.UseAbility1();
                 }
-                shotgun?.UseAbility1();
+               
                 break;
             case GunType.RAILGUN:
-                railgun?.UseAbility1();
+                if(playerData.RailgunUpgraded == true)
+                {
+                    railgun?.UseAbility1();
+                    redThirstManager.OnAbilityUsed();
+                }
+            
                 break;
         }
     }

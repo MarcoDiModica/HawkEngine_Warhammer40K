@@ -103,6 +103,7 @@ protected:
        node["anim_speed"] = animSpeed; 
 	   node["anim_index"] = animIndex;
 	   node["anim_index_limit"] = anim1IndexLimit;
+       node["color"] = std::vector<float>{color.r, color.g, color.b, color.a};
 
        /*node["shader"] = shader;*/  
        /*node["mesh"] = mesh;*/  
@@ -136,6 +137,11 @@ protected:
 
 	   if (node["anim_index_limit"]) {
 		   anim1IndexLimit = node["anim_index_limit"].as<int>();
+	   }
+
+	   if (node["color"]) {
+		   auto colorVec = node["color"].as<std::vector<float>>();
+		   color = glm::vec4(colorVec[0], colorVec[1], colorVec[2], colorVec[3]);
 	   }
 
        /*shader = node["shader"].as<Shaders*>();*/  

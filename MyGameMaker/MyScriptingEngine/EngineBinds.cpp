@@ -1266,6 +1266,15 @@ void EngineBinds::SetImageAnimIndex(MonoObject* uiImageRef, int index) {
 	}
 }
 
+void EngineBinds::SetImageColor(MonoObject* uiImageRef, float r, float g, float b, float a)
+{
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage)
+	{
+		uiImage->SetColor(glm::vec4(r, g, b, a));
+	}
+}
+
 void EngineBinds::PlayStopAnimation(MonoObject* uiImageRef, bool play) {
 	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
 	if (uiImage) {
@@ -1872,6 +1881,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.UIImage::SetImageSpriteSize", (const void*)&EngineBinds::SetImageSpriteSize);
 	mono_add_internal_call("HawkEngine.UIImage::SetImageAnimIndex", (const void*)&EngineBinds::SetImageAnimIndex);
 	mono_add_internal_call("HawkEngine.UIImage::PlayStopAnimation", (const void*)&EngineBinds::PlayStopAnimation);
+	mono_add_internal_call("HawkEngine.UIImage::SetImageColor", (const void*)&EngineBinds::SetImageColor);
 
 	// UI Button
 	mono_add_internal_call("HawkEngine.UIButton::GetState", (const void*)&EngineBinds::GetState);

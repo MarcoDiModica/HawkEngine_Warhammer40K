@@ -96,7 +96,8 @@ public:
 			"Assets/Textures/TreeSpritesheet.png",
 			"Assets/Textures/Tree2Spritesheet.png",
 			"Assets/Textures/Tree3Spritesheet.png",
-			"Assets/Textures/Red_Thirst_Sprite_sheet.png"
+			"Assets/Textures/Red_Thirst_Sprite_sheet.png",
+			"Assets/Textures/niebla30Frames.png"
 
 		};
 

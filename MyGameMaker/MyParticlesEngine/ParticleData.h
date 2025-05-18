@@ -50,7 +50,7 @@ struct ParticleData {
 		, gravity(0.0f, 0.0f, 0.0f)
 		, age(0.0f)
 		, active(false)
-		, spriteOffset(1.0f,1.0f)
+		, spriteOffset(0.0f,0.0f)
 		, spriteSize(1.0f, 1.0f)
 		, sheetSize(1.0f, 1.0f)
 		, useAnimation(false)
@@ -253,7 +253,7 @@ public:
 				particleData[i].velocity = glm::mix(particleData[i].velocity, particleData[i].endVelocity, lifetimeFraction);
 			}
 			
-		    particleData[i].rotation += particleData[i].rotationSpeed/360.0f;		
+			particleData[i].rotation += particleData[i].rotationSpeed * deltaTime;
 
 			if (particleData[i].useAnimation && particleData[i].sheetSize != glm::vec2(0, 0))
 			{
@@ -261,9 +261,8 @@ public:
 
 				if (particleData[i].indexTimer >= particleData[i].animSpeed )
 				{
-					if (particleData[i].indexTimer >= CalculateMaxIndex(particleData[i].sheetSize, particleData[i].spriteSize))
+					if (particleData[i].animIndex >= CalculateMaxIndex(particleData[i].sheetSize, particleData[i].spriteSize))
 					{
-						particleData[i].indexTimer = 0;
 						particleData[i].animIndex = 0;
 					}
 					else

@@ -143,4 +143,5 @@ void LightComponent::UpdateDirectionalLight() {
 	dirLight.diffuse = diffuse;
 	dirLight.specular = specular;
 	dirLight.intensity = intensity;
+    dirLight.darknessFallback = darknessFallback;
 }

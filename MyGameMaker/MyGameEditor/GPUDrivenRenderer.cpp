@@ -227,7 +227,24 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 		LOG(LogType::LOG_INFO, "No hay objetos para renderizar");
 		return;
 	}
-	RenderDepthPass();
+
+	if (batchesByPass.find(RenderPassType::NORMAL) != batchesByPass.end()) {
+		const auto& uiBatches = batchesByPass[RenderPassType::NORMAL];
+		for (const auto& [shaderType, batch] : uiBatches) {
+			switch (shaderType) {
+			case ShaderType::UNLIT:
+							break;
+			case ShaderType::PBR:
+				RenderDepthPass(batch);
+				break;
+			}
+		}
+	}
+	//check opengl error
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "GL Error before rendering pbr and unlit: 0x%X", error);
+	}
 
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
 
@@ -266,19 +283,19 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 
-	if (batchesByPass.find(RenderPassType::UI) != batchesByPass.end()) {
-		const auto& uiBatches = batchesByPass[RenderPassType::UI];
-		for (const auto& [shaderType, batch] : uiBatches) {
-			switch (shaderType) {
-			case ShaderType::UNLIT:
-				RenderUnlitBatch(batch, viewMatrix, projMatrix, true);
-				break;
-			case ShaderType::PBR:
-				RenderPBRBatch(batch, viewMatrix, projMatrix, cameraPos);
-				break;
-			}
-		}
-	}
+	//if (batchesByPass.find(RenderPassType::UI) != batchesByPass.end()) {
+	//	const auto& uiBatches = batchesByPass[RenderPassType::UI];
+	//	for (const auto& [shaderType, batch] : uiBatches) {
+	//		switch (shaderType) {
+	//		case ShaderType::UNLIT:
+	//			RenderUnlitBatch(batch, viewMatrix, projMatrix, true);
+	//			break;
+	//		case ShaderType::PBR:
+	//			RenderPBRBatch(batch, viewMatrix, projMatrix, cameraPos);
+	//			break;
+	//		}
+	//	}
+	//}
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
@@ -415,7 +432,7 @@ void GPUDrivenRenderer::RenderPBRBatch(
 	const glm::vec3& cameraPos) {
 
 	if (batch.commands.empty()) return;
-
+	glClear(GL_DEPTH_BUFFER_BIT);
 	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::PBR);
 	if (!shader) {
 		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader PBR");
@@ -432,10 +449,20 @@ void GPUDrivenRenderer::RenderPBRBatch(
 	shader->SetUniformMat4("depthMVP", shadowMap.GetLightSpaceMatrix());
 	shader->SetUniform("useShadows", 1);
 
+	GLenum error3 = glGetError();
+	if (error3 != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "GL Error after shadow uniforms in pbr: 0x%X", error3);
+	}
+
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, ForwardPlusLighting::GetInstance().GetPointLightBuffer());
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4, ForwardPlusLighting::GetInstance().GetDirectionalLightBuffer());
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 5, ForwardPlusLighting::GetInstance().GetLightGridBuffer());
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 6, ForwardPlusLighting::GetInstance().GetLightIndicesBuffer());
+
+	GLenum error8 = glGetError();
+	if (error8 != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "GL Error after binding buffers in pbr: 0x%X", error8);
+	}
 
 	// Update Forward+ uniforms every frame
 	shader->SetUniform("useForwardPlus", 1);
@@ -447,11 +474,26 @@ void GPUDrivenRenderer::RenderPBRBatch(
 	shader->SetUniform("numLights", ForwardPlusLighting::GetInstance().GetTotalLights());
 	shader->SetUniform("maxLightsPerTile", ForwardPlusLighting::GetInstance().GetMaxLightsPerTile());
 
+	GLenum error7 = glGetError();
+	if (error7 != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "GL Error after forward+ uniforms in pbr: 0x%X", error7);
+	}
+
 	GLint uniformCheck;
 	glGetUniformiv(shader->GetProgram(), glGetUniformLocation(shader->GetProgram(), "useForwardPlus"), &uniformCheck);
 	LOG(LogType::LOG_INFO, "Forward+ Uniform State: %d", uniformCheck);
 
+	GLenum error9 = glGetError();
+	if (error9 != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "GL Error after unform check in pbr: 0x%X", error9);
+	}
+
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
+
+	GLenum error4 = glGetError();
+	if (error4 != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "GL Error before batch loop in pbr: 0x%X", error4);
+	}
 
 	bindlessErrorDetected = true;
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
@@ -474,6 +516,11 @@ void GPUDrivenRenderer::RenderPBRBatch(
 
 		shader->SetUniform("heightScale", materialData->heightScale);
 
+		GLenum error5 = glGetError();
+		if (error5 != GL_NO_ERROR) {
+			LOG(LogType::LOG_ERROR, "GL Error before bindless in pbr: 0x%X", error5);
+		}
+
 		if (GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64 && !bindlessErrorDetected) {
 			HandleTextureBindings(shader, "albedoMap", "u_HasAlbedoMap", materialData->albedoTexture);
 			HandleTextureBindings(shader, "normalMap", "u_HasNormalMap", materialData->normalTexture);
@@ -486,9 +533,18 @@ void GPUDrivenRenderer::RenderPBRBatch(
 		else {
 			BindRegularTextures(shader, materialData);
 		}
+		GLenum error2 = glGetError();
+		if (error2 != GL_NO_ERROR) {
+			LOG(LogType::LOG_ERROR, "GL Error after bindless in pbr: 0x%X", error2);
+		}
 
 		glBindVertexArray(meshData->vertexArray);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+		GLenum error = glGetError();
+		if (error != GL_NO_ERROR) {
+			LOG(LogType::LOG_ERROR, "GL Error before rendering pbr: 0x%X", error);
+		}
 
 		if (i < batch.commands.size()) {
 			const DrawElementsCommand& cmd = batch.commands[i];
@@ -726,14 +782,15 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 	LOG(LogType::LOG_INFO, "=== Fin de información de GPUMesh ===");
 }
 
-void GPUDrivenRenderer::RenderDepthPass() {
+void GPUDrivenRenderer::RenderDepthPass(const ShaderBatch& batch) {
 	shadowMap.BindForWriting();
+	glViewport(0, 0, shadowMap.GetWidth(), shadowMap.GetHeight()); // Ensure correct dimensions
 	glClear(GL_DEPTH_BUFFER_BIT);
+	
 
-
-	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::PBR);
+	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::DEPTH);
 	if (!shader) {
-		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader PBR");
+		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader DEPTH");
 		return;
 	}
 
@@ -742,24 +799,29 @@ void GPUDrivenRenderer::RenderDepthPass() {
 	// Calculate light space matrix (example - should be based on your light)
 	glm::vec3 lightPos = glm::vec3(10, 20, 10);
 	glm::mat4 depthProjectionMatrix = glm::ortho<float>(-10, 10, -10, 10, -10, 20);
-	glm::mat4 depthViewMatrix = glm::lookAt(lightPos, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	glm::mat4 depthViewMatrix = glm::lookAt(lightPos, glm::vec3(0, -1, 0), glm::vec3(0, 1, 0));
 	glm::mat4 depthMVP = depthProjectionMatrix * depthViewMatrix;
 	shadowMap.SetLightSpaceMatrix(depthMVP);
 
 	shader->SetUniformMat4("depthMVP", depthMVP);
 
 	// Render all shadow-casting objects
-	for (size_t i = 0; i < cullData.size(); i++) {
-		const CullData& cullItem = cullData[i];
-		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(cullItem.meshIndex);
+	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
+		uint32_t meshIndex = batch.meshIndices[i];
+		uint32_t materialIndex = batch.materialIndices[i];
 
-		if (!meshData) continue;
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
+
+		if (!meshData || !materialData) continue;
 
 		glBindVertexArray(meshData->vertexArray);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
 
-		if (i < drawCommands.size()) {
-			const DrawElementsCommand& cmd = drawCommands[i];
+		if (i < batch.commands.size()) {
+			const DrawElementsCommand& cmd = batch.commands[i];
+			shader->SetUniform("instanceOffset", (int)cmd.baseInstance);
+
 			glDrawElementsInstanced(
 				GL_TRIANGLES,
 				cmd.count,
@@ -770,7 +832,7 @@ void GPUDrivenRenderer::RenderDepthPass() {
 
 			GLenum err = glGetError();
 			if (err != GL_NO_ERROR) {
-				LOG(LogType::LOG_ERROR, "GL Error after depth pass draw: 0x%X", err);
+				LOG(LogType::LOG_ERROR, "GL Error after depth draw: 0x%X", err);
 			}
 		}
 	}

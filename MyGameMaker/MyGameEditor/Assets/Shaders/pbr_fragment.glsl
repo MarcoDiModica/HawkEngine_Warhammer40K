@@ -62,6 +62,7 @@ struct DirectionalLight {
     uint shadowMapIndex;
     uint useCascades;
     uint numCascades;
+    float darknessfallback; 
 };
 
 layout (std430, binding = 3) readonly buffer PointLightBuffer {
@@ -291,6 +292,9 @@ if (useForwardPlus == 1) {
 }
     
 lighting += emission;
+
+vec3 ambientFallback = vec3(directionalLight.darknessfallback) * albedo.rgb;
+lighting += ambientFallback;
 
 // Ensure albedo.rgb is factored into the final color
 lighting = albedo.rgb * lighting / (lighting + vec3(1.0 - tonemapStrength) + 0.001);

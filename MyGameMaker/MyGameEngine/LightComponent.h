@@ -29,6 +29,7 @@ struct DirLight {
     vec3 diffuse;
     vec3 specular;
     float intensity;
+	float darknessFallback;
 };
 
 class LightComponent : public Component {
@@ -58,7 +59,8 @@ public:
     float GetQuadratic() const;
     float GetRadius() const;
     float GetIntensity() const;
-
+	float GetDarknessFallback() const { return darknessFallback; }
+	void SetDarknessFallback(float darkness) { darknessFallback = darkness; }
 
   
     void SetAmbient(const vec3& ambient);
@@ -87,6 +89,7 @@ private:
     float radius = 1.0f;
     float intensity = 3.0f;
     glm::vec3 direction = { -1.0f, -1.0f, 0.0f };
+	float darknessFallback = 0.00001f; // Fallback darkness value for the light
 
 protected:
 

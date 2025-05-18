@@ -144,6 +144,7 @@ void ForwardPlusLighting::CollectLights(const std::vector<GameObject*>& gameObje
 		directionalLight.shadowMapIndex = 0;
 		directionalLight.useCascades = 0;
 		directionalLight.numCascades = 0;
+		directionalLight.darknessFallback = 0.00001f;
 	}
 }
 
@@ -510,4 +511,5 @@ void ForwardPlusLighting::UpdateDirectionalLight(const LightComponent* light) {
 	directionalLight.direction = glm::vec4(direction, light->GetIntensity());
 	directionalLight.color = glm::vec4(light->GetAmbient(), 1.0f);
 	directionalLight.castShadow = 0; // no shadows yet
+	directionalLight.darknessFallback = light->GetDarknessFallback();
 }

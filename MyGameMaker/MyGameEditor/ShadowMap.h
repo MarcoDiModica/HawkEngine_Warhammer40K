@@ -17,6 +17,14 @@ public:
     GLuint GetFBO() const { return fbo; }
     GLuint GetTexture() const { return shadowMap; }
 
+	int GetWidth() const { return width; }
+	int GetHeight() const { return height; }
+
+	void SetSize(int width, int height) {
+		this->width = width;
+		this->height = height;
+	}
+
 private:
     GLuint fbo;
     GLuint shadowMap;

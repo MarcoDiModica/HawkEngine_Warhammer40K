@@ -20,6 +20,7 @@
 #include "MyUIEngine/UITransformComponent.h"
 #include "MyUIEngine/UIImageComponent.h"
 #include "MyUIEngine/UIButtonComponent.h"
+#include "MyUIEngine/TextComponent.h"
 #include "MyParticlesEngine/ParticleFX.h"
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
 #include <MyScriptingEngine/MonoManager.h>
@@ -340,6 +341,10 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			auto button = gameObject->AddComponent<UIButtonComponent>();
 			button->decode(componentData);
 		}
+		else if (componentName == "TextComponent") {
+			auto text = gameObject->AddComponent<TextComponent>();
+			text->decode(componentData);
+		}
 		else if (componentName == "ParticleFX") {
 			auto particle = gameObject->AddComponent<ParticleFX>();
 			particle->decode(componentData);
@@ -438,6 +443,7 @@ std::string SceneSerializer::GetComponentTypeName(ComponentType type) {
 	case ComponentType::CANVAS: return "UICanvasComponent";
 	case ComponentType::IMAGE: return "UIImageComponent";
 	case ComponentType::BUTTON: return "UIButtonComponent";
+	case ComponentType::TEXT: return "TextComponent";
 	//mas casos/componentes
 	default: return "Unknown";
 	}
@@ -457,6 +463,7 @@ ComponentType SceneSerializer::GetComponentTypeFromName(const std::string& name)
 	if (name == "UICanvasComponent") return ComponentType::CANVAS;
 	if (name == "UIImageComponent") return ComponentType::IMAGE;
 	if (name == "UIButtonComponent") return ComponentType::BUTTON;
+	if (name == "TextComponent") return ComponentType::TEXT;
 	//mas mapeos aqui
 	return ComponentType::NONE;
 }

@@ -13,6 +13,7 @@
 #include "../MyUIEngine/UITransformComponent.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
+#include "MyUIEngine/TextComponent.h"
 
 ComponentMapper::ComponentMapper() {
     AddMapping(std::type_index(typeid(Transform_Component)), "Transform");
@@ -29,6 +30,7 @@ ComponentMapper::ComponentMapper() {
 	AddMapping(std::type_index(typeid(UITransformComponent)), "UITransform");
 	AddMapping(std::type_index(typeid(SkeletalAnimationComponent)), "SkeletalAnimation");
 	AddMapping(std::type_index(typeid(ParticleFX)), "ParticleFX");
+    AddMapping(std::type_index(typeid(TextComponent)), "UIText");
     // mas components
 }
 

@@ -19,8 +19,8 @@ public class Railgun : BaseWeapon
 
     private RedThirstManager redThirstManager;
 
-    private const string  railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
-    private const string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
+    private const string  railgunReload = "Assets/Audio/SFX/Weapons/Railgun/Energy_Ball_dissapear.wav";
+    private const string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/Energy_ball_hit.wav";
 
     private float timeSinceLastShot = 0.0f;
 
@@ -199,6 +199,15 @@ public class Railgun : BaseWeapon
         };
     }
 
+    public int GetCurrentAmmo()
+    {
+        return currentMagazineAmmo;
+    }
+
+    public int GetMaxAmmo()
+    {
+        return maxAmmo;
+    }
     public override void Shoot()
     {
         isReloading = false;

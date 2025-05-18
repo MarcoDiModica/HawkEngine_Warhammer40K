@@ -38,6 +38,8 @@ public class EnemyControllerRanged : EnemyController
     private bool isCombatMusicPlaying = false;
 
     private bool componentsInitialized = false;
+    private float deathTimer = 0f;
+    private float deathCooldown = 2f;
 
     public override void Awake()
     {
@@ -159,6 +161,16 @@ public class EnemyControllerRanged : EnemyController
                     collider.SetActive(false);
                 }
 
+                if (anim.isAnimFinished)
+                {
+                    deathTimer += deltaTime;
+                    if (deathTimer >= deathCooldown)
+                    {
+                        Engineson.Destroy(gameObject);
+                        return;
+                    }
+                }
+
                 if (pc != null && pc.playerData != null && pc.playerData.isPiercing)
                 {
                     pc.playerData.AddHealth(5.0f);
@@ -182,6 +194,11 @@ public class EnemyControllerRanged : EnemyController
                 }
 
                 return;
+            }
+
+            if (isSlowed)
+            {
+                HandleSlowedState(deltaTime);
             }
 
             UpdateBullets(deltaTime);
@@ -215,7 +232,15 @@ public class EnemyControllerRanged : EnemyController
                         if (rb != null)
                         {
                             Vector3 currentVelocity = rb.GetVelocity();
-                            Vector3 desiredVelocity = moveDirection * speedMovement;
+                            Vector3 desiredVelocity;
+                            if (isSlowed)
+                            {
+                                desiredVelocity = moveDirection * slowedSpeed;
+                            }
+                            else
+                            {
+                                desiredVelocity = moveDirection * speedMovement;
+                            }
 
                             if (desiredVelocity.LengthSquared() > 0)
                             {
@@ -377,7 +402,22 @@ public class EnemyControllerRanged : EnemyController
             CleanBullets();
         }
     }
-
+    private void HandleSlowedState(float deltaTime)
+    {
+        try
+        {
+            slowedTimer += deltaTime;
+            if (slowedTimer >= slowedDuration)
+            {
+                isSlowed = false;
+                slowedTimer = 0.0f;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"Error in HandleSlowedState: {e.Message}");
+        }
+    }
     private void CleanBullets()
     {
         try

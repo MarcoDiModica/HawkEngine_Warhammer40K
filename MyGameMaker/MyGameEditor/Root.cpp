@@ -286,6 +286,22 @@ bool Root::Start()
 	//ParentGameObject(*lictorMesh, *lictor);
 	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
 	//
+	////Climbing Hormagaunt
+	auto hormagaunt = CreateGameObject("Hormagaunt");
+	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
+	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	hormagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
+	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/HormagauntClimb.fbx");
+	hormagauntMesh->SetName("HormagauntMesh");
+	hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	hormagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	hormagauntMesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
+	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	ParentGameObject(*hormagauntMesh, *hormagaunt);
+	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	hormagaunt->SetTag("Enemy");
+	
 	//////Hormagaunt
 	//auto hormagaunt = CreateGameObject("Hormagaunt");
 	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
@@ -302,7 +318,6 @@ bool Root::Start()
 	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	//hormagaunt->SetTag("Enemy");
 	
-
 	////Termagaunt
 	//auto termagaunt = CreateGameObject("Termagaunt");
 	//termagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
@@ -509,7 +524,19 @@ bool Root::Start()
 	//interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	//interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
 	////
-	////
+	// FADE CONTROLLER
+	/*auto canvas = CreateGameObject("CanvasFade");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
+	
+	auto interactText = CreateGameObject("FadeController");
+	Application->root->ParentGameObject(*interactText, *canvas);
+	interactText->AddComponent<UIImageComponent>();
+	interactText->AddComponent<UIImageComponent>()->SetColor(glm::vec4(0, 0, 0, 0));
+	interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/FadeToBlackImage.png");
+	interactText->AddComponent<ScriptComponent>()->LoadScript("FadeController");
+	interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0, 1, 0), glm::vec3(1, 1, 1));*/
+
 	//auto areaText = CreateGameObject("dialogueText");
 	//Application->root->ParentGameObject(*areaText, *canvas);
 	//areaText->AddComponent<UIImageComponent>();

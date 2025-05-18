@@ -58,7 +58,10 @@ public class EnemyControllerWarrior : EnemyController
     public float range;
     public float timeToLerp = 0.4f;
 
-    private bool componentsInitialized = false;
+    private bool componentsInitialized = false;    
+    // Death
+    private float deathTimer = 0f;
+    private float deathCooldown = 2f;
 
     public override void Awake()
     {
@@ -165,7 +168,7 @@ public class EnemyControllerWarrior : EnemyController
         {
             if (currentState == EnemyState.DEAD)
             {
-                HandleDeadState();
+                HandleDeadState(deltaTime);
                 return;
             }
 
@@ -179,6 +182,11 @@ public class EnemyControllerWarrior : EnemyController
             {
                 HandleStunnedState(deltaTime);
                 return;
+            }
+
+            if (isSlowed)
+            {
+                HandleSlowedState(deltaTime);
             }
 
             UpdateBullets(deltaTime);
@@ -245,7 +253,15 @@ public class EnemyControllerWarrior : EnemyController
 
             Vector3 currentVelocity = rb.GetVelocity();
             moveDirection = Vector3.Normalize(playerTransform.position - transform.position);
-            Vector3 desiredVelocity = moveDirection * speedMovement;
+            Vector3 desiredVelocity;
+            if (isSlowed)
+            {
+                desiredVelocity = moveDirection * slowedSpeed;
+            }
+            else
+            {
+                desiredVelocity = moveDirection * speedMovement;
+            }
 
             if (anim != null)
             {
@@ -331,7 +347,7 @@ public class EnemyControllerWarrior : EnemyController
         }
     }
 
-    private void HandleDeadState()
+    private void HandleDeadState(float deltaTime)
     {
         try
         {
@@ -363,6 +379,16 @@ public class EnemyControllerWarrior : EnemyController
             if (collider != null)
             {
                 collider.SetActive(false);
+            }
+
+            if (anim.isAnimFinished)
+            {
+                deathTimer += deltaTime;
+                if (deathTimer >= deathCooldown)
+                {
+                    Engineson.Destroy(gameObject);
+                    return;
+                }
             }
 
             isDead = true;
@@ -403,7 +429,22 @@ public class EnemyControllerWarrior : EnemyController
             Engineson.print($"ERROR in UpdateRotation: {e.Message}");
         }
     }
-
+    private void HandleSlowedState(float deltaTime)
+    {
+        try
+        {
+            slowedTimer += deltaTime;
+            if (slowedTimer >= slowedDuration)
+            {
+                isSlowed = false;
+                slowedTimer = 0.0f;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"Error in HandleSlowedState: {e.Message}");
+        }
+    }
     private void UpdatePlayerDetection()
     {
         try

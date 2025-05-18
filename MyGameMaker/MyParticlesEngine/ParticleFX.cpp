@@ -1039,71 +1039,71 @@ namespace ParticlePresets {
 	};
 
 	const ParticlePreset Environment2_Tree = {
-ParticleType::ENVIRONMENT2_TREE,
-false,                         // PlayOnAwake
-1.0f,                          // Duration (only if one-shot)
-glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
-glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
-1.0f,                          // Alpha start
-1.0f,                          // Alpha end
-36.0f,                          // Size start
-36.0f,                          // Size end
-5.0f,                          // Min lifetime
-5.0f,                          // Max lifetime
-0.0f,                         // Min speed
-0.0f,                         // Max speed
-0.0f,                         // End Speed
-glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
-0.0f,                          // Rotation speed
-0.2f,                         // Emission rate (particles per second)
-EmitterShape::POINT,           // Shape
-0.0f,                          // Unused for point
-0.0f,                          // Unused for point
-0.0f,                          // Unused for point
-glm::vec2(480.0f , 270.0f),     // Sprite size
-true,                         // Use animation
-true,                         // Random animation Index
-0.050f,                          // Animation speed
-190.0f,                          // Start rotation
-false,                          // Random rotation
-36.0f,                         // Min scale
-36.0f,                          // Max scale
-"Assets/Textures/Tree2Spritesheet.png", // Texture path
-false						   // Is Local Space
+	ParticleType::ENVIRONMENT2_TREE,
+	false,                         // PlayOnAwake
+	1.0f,                          // Duration (only if one-shot)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	36.0f,                          // Size start
+	36.0f,                          // Size end
+	5.0f,                          // Min lifetime
+	5.0f,                          // Max lifetime
+	0.0f,                         // Min speed
+	0.0f,                         // Max speed
+	0.0f,                         // End Speed
+		glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+	0.0f,                          // Rotation speed
+	0.2f,                         // Emission rate (particles per second)
+	EmitterShape::POINT,           // Shape
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	glm::vec2(480.0f , 270.0f),     // Sprite size
+	true,                         // Use animation
+	true,                         // Random animation Index
+	0.050f,                          // Animation speed
+	190.0f,                          // Start rotation
+	false,                          // Random rotation
+	36.0f,                         // Min scale
+	36.0f,                          // Max scale
+	"Assets/Textures/Tree2Spritesheet.png", // Texture path
+	false						   // Is Local Space
 	};
 
-const ParticlePreset Environment3_Tree = {
-ParticleType::ENVIRONMENT3_TREE,
-false,                         // PlayOnAwake
-1.0f,                          // Duration (only if one-shot)
-glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
-glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
-1.0f,                          // Alpha start
-1.0f,                          // Alpha end
-36.0f,                          // Size start
-36.0f,                          // Size end
-5.0f,                          // Min lifetime
-5.0f,                          // Max lifetime
-0.0f,                         // Min speed
-0.0f,                         // Max speed
-0.0f,                         // End Speed
-glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
-0.0f,                          // Rotation speed
-0.2f,                         // Emission rate (particles per second)
-EmitterShape::POINT,           // Shape
-0.0f,                          // Unused for point
-0.0f,                          // Unused for point
-0.0f,                          // Unused for point
-glm::vec2(480.0f , 270.0f),     // Sprite size
-true,                         // Use animation
-true,                         // Random animation Index
-0.050f,                          // Animation speed
-190.0f,                          // Start rotation
-false,                          // Random rotation
-36.0f,                         // Min scale
-36.0f,                          // Max scale
-"Assets/Textures/Tree3Spritesheet.png", // Texture path
-false						   // Is Local Space
+	const ParticlePreset Environment3_Tree = {
+	ParticleType::ENVIRONMENT3_TREE,
+	false,                         // PlayOnAwake
+	1.0f,                          // Duration (only if one-shot)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	36.0f,                          // Size start
+	36.0f,                          // Size end
+	5.0f,                          // Min lifetime
+	5.0f,                          // Max lifetime
+	0.0f,                         // Min speed
+	0.0f,                         // Max speed
+	0.0f,                         // End Speed
+	glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+	0.0f,                          // Rotation speed
+	0.2f,                         // Emission rate (particles per second)
+	EmitterShape::POINT,           // Shape
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	glm::vec2(480.0f , 270.0f),     // Sprite size
+	true,                         // Use animation
+	true,                         // Random animation Index
+	0.050f,                          // Animation speed
+	190.0f,                          // Start rotation
+	false,                          // Random rotation
+	36.0f,                         // Min scale
+	36.0f,                          // Max scale
+	"Assets/Textures/Tree3Spritesheet.png", // Texture path
+	false						   // Is Local Space
 	};
 
 	const ParticlePreset Red_Thirst = {
@@ -1115,7 +1115,7 @@ false						   // Is Local Space
 	1.0f,                          			   // Alpha start
 	1.0f,                          			   // Alpha end
 	0.8f,                          			   // Size start
-	15.0f,                          		   // Size end
+	5.0f,                          		   // Size end
 	1,                          			   // Min lifetime
 	1,                         			   // Max lifetime
 	0.0f,                          			   // Min speed
@@ -1123,7 +1123,7 @@ false						   // Is Local Space
 	0.0f,						   // End Speed
 	glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
 	0,                          			   // Rotation speed
-	1.f,                         			   // Emission rate (particles per second)
+	1.0f,                         			   // Emission rate (particles per second)
 	EmitterShape::POINT,            		   // Shape
 	0.2f,                          			   // Cone base radius
 	1.0f,                          			   // Cone height
@@ -1134,10 +1134,44 @@ false						   // Is Local Space
 	0.1f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
-	1.0f,						   // Min scale
-	1.0f,						   // Max scale
+	5.0f,						   // Min scale
+	5.0f,						   // Max scale
 	"Assets/Textures/Red_Thirst_Sprite_sheet.png", 	   // Texture path
-	false 						   // Is Local Space
+	true 						   // Is Local Space
+	};
+
+	const ParticlePreset Envitoment_Fog ={
+	ParticleType::EnVIRONMENT_Fog,
+	true,									   // PlayOnAwake
+	1,										   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   					   // Start color (white)
+	glm::vec3(1,1,1),   					   // End color (white)
+	0.23f,                          		   // Alpha start
+	0.23f,                          		   // Alpha end
+	150.0f,                          		   // Size start
+	150.0f,                          		   // Size end
+	5,                          			   // Min lifetime
+	5,                         				   // Max lifetime
+	0.0f,                          			   // Min speed
+	0.0f,                          			   // Max speed
+	0.0f,									   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+	0,                          			   // Rotation speed
+	1.f,                         			   // Emission rate (particles per second)
+	EmitterShape::POINT,            		   // Shape
+	0.2f,                          			   // Cone base radius
+	1.0f,                          			   // Cone height
+	20.0f,                         			   // Cone angle in degrees
+	glm::vec2(256,256),		   				   // Sprite size
+	true,									   // Use animation
+	false,									   // Random animation Index
+	7.2f,									   // Animation speed
+	0.0f,									   // Start rotation
+	true,									   // Random rotation
+	1.0f,									   // Min scale
+	1.0f,									   // Max scale
+	"Assets/Textures/niebla30Frames.png", 	   // Texture path
+	false 									   // Is Local Space
 	};
 
 }
@@ -1699,6 +1733,10 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::RED_THIRST:
 		preset = ParticlePresets::Red_Thirst;
+		SetOneShot(false);
+		break;
+	case ParticleType::EnVIRONMENT_Fog:
+		preset = ParticlePresets::Envitoment_Fog;
 		SetOneShot(false);
 		break;
 

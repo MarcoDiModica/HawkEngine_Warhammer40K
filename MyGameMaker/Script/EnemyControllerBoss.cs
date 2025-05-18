@@ -39,7 +39,7 @@ public class EnemyControllerBoss : EnemyController
     private const string ClawClip = "Assets/Audio/Mawloc_Claw_Attack.wav";
     private const string AcidClip = "Assets/Audio/Mawloc_Acid_Attack.wav";
     private const string DeathClip = "Assets/Audio/Mawloc_Death.wav";
-    private const string BossTheme = "Assets/Audio/Music/MainTheme_BetaBuild2.ogg";
+    private const string BossTheme = "Assets/Audio/Music/Warhammer_Level2BossThemeBossFight.ogg";
 
     private bool isBossMusicPlaying = false;
     //stats
@@ -98,6 +98,8 @@ public class EnemyControllerBoss : EnemyController
 
     private MawlocAnimation anim;
     private PlayerController pc;
+    private float deathTimer = 0f;
+    private float deathCoolodown = 5f;
 
     private enum BossPhase
     {
@@ -341,15 +343,19 @@ public class EnemyControllerBoss : EnemyController
                 UpdateMetalSlide(deltaTime);
                 CheckBossHurtboxes();
             }
-            if (isDead)
+        if (isDead)
+        {
+            collider.SetActive(false);
+            Audio.Stop(BossTheme); 
+            if (anim.isAnimFinished)
             {
-                collider.SetActive(false);
-                Audio.Stop(BossTheme); 
-            //if (isCombatMusicPlaying == true)
-            //{
-            //    sound?.Stop();
-            //    isCombatMusicPlaying = false;
-            //}
+                deathTimer += deltaTime;
+                if (deathTimer >= deathCoolodown)
+                {
+                    Audio.Stop(BossTheme);
+                    Engineson.Destroy(gameObject);
+                }
+            }
         }
     }
 

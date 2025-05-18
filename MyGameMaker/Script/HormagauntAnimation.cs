@@ -172,4 +172,14 @@ public class HormagauntAnimation : MonoBehaviour
                 break;
         }
     }
+
+    public void SetClimbingAnimation()
+    {
+        hormagauntesk?.SetAnimationPlayState(true);
+        if (hormagauntesk?.GetAnimationIndex() != 3) {
+            hormagauntesk?.SetAnimation(3);
+            hormagauntesk?.SetAnimationSpeed(1.0f);
+            isAnimFinished = false;
+        }
+    }
 }

@@ -19,8 +19,8 @@ public class Railgun : BaseWeapon
 
     private RedThirstManager redThirstManager;
 
-    private const string  railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
-    private const string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
+    private const string  railgunReload = "Assets/Audio/SFX/Weapons/Railgun/Energy_Ball_dissapear.wav";
+    private const string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/Energy_ball_hit.wav";
 
     private float timeSinceLastShot = 0.0f;
 
@@ -169,6 +169,9 @@ public class Railgun : BaseWeapon
                             case "Destroyable":
                                 hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
                                 break;
+                            case "ExplosiveBarrel":
+                                hitObject.GetComponent<ExplosiveBarrel>()?.Explode();
+                                break;
                         }
                     }
 
@@ -196,6 +199,15 @@ public class Railgun : BaseWeapon
         };
     }
 
+    public int GetCurrentAmmo()
+    {
+        return currentMagazineAmmo;
+    }
+
+    public int GetMaxAmmo()
+    {
+        return currentTotalAmmo;
+    }
     public override void Shoot()
     {
         isReloading = false;
@@ -277,12 +289,19 @@ public class Railgun : BaseWeapon
 
     public override void UseAbility1()
     {
-        //toggleMode.TriggerAbility();
-        energyBall.TriggerAbility();
+        toggleMode.TriggerAbility();
     }
 
     public override void UseAbility2()
     {
+        if (railgunMode == RailgunMode.SEMIAUTOMATIC)
+        {
+            energyBall.TriggerAbility();
+        } 
+        else
+        {
+            laserBeam.TriggerAbility();
+        }
     }
 
     public override void CleanBullets()

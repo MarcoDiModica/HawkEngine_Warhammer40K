@@ -10,7 +10,8 @@ public class Boltgun : BaseWeapon
     private PlayerController playerController;
     public PlayerData playerData;
 
-    private const string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
+    private const string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/Boltgun_hit_enviroment.wav";
+    private const string boltgunShotEnemy = "Assets/Audio/SFX/Weapons/Boltgun/Boltgun_hit_enemy.wav";
     private const string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
     GameObject projectile;
     private RedThirstManager redThirstManager;
@@ -160,6 +161,9 @@ public class Boltgun : BaseWeapon
                                 if (hitObject.GetComponent<DestroyEnviormentObject>() != null)
                                     hitObject.GetComponent<DestroyEnviormentObject>().DestroyObject();
                                 break;
+                            case "ExplosiveBarrel":
+                                hitObject.GetComponent<ExplosiveBarrel>()?.Explode();
+                                break;
                         }
                     }
 
@@ -206,6 +210,16 @@ public class Boltgun : BaseWeapon
         bulletLifetimes.RemoveAt(index);
         bulletHitEnemies.RemoveAt(index);
         bulletStartPositions.RemoveAt(index);
+    }
+    
+    public int GetCurrentAmmo()
+    {
+       return currentMagazineAmmo;
+    }
+
+    public int GetMaxAmmo()
+    {
+        return currentTotalAmmo;
     }
 
     public override void Shoot()

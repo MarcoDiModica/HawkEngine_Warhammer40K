@@ -196,14 +196,17 @@ public class Shotgun : BaseWeapon
                                     case "Melee":
                                         EnemyControllerMelee melee = hitObject.GetComponent<EnemyControllerMelee>();
                                         if (melee != null) melee.TakeDamage(finalDamage);
+                                        if (strongShot) melee.getStunned();
                                         break;
                                     case "Ranged":
                                         EnemyControllerRanged ranged = hitObject.GetComponent<EnemyControllerRanged>();
                                         if (ranged != null) ranged.TakeDamage(finalDamage);
+                                        if (strongShot) ranged.getStunned();
                                         break;
                                     case "Stalker":
                                         EnemyControllerStalker stalker = hitObject.GetComponent<EnemyControllerStalker>();
                                         if (stalker != null) stalker.TakeDamage(finalDamage);
+                                        if (strongShot) stalker.getStunned();
                                         break;
                                     case "Boss":
                                         EnemyControllerBoss boss = hitObject.GetComponent<EnemyControllerBoss>();
@@ -212,6 +215,7 @@ public class Shotgun : BaseWeapon
                                     case "Warrior":
                                         EnemyControllerWarrior warrior = hitObject.GetComponent<EnemyControllerWarrior>();
                                         if (warrior != null) warrior.TakeDamage(finalDamage);
+                                        if (strongShot) warrior.getStunned();
                                         break;
                                     case "Destroyable":
                                         DestroyEnviormentObject destroyable = hitObject.GetComponent<DestroyEnviormentObject>();
@@ -282,6 +286,15 @@ public class Shotgun : BaseWeapon
         }
     }
 
+    public int GetCurrentAmmo()
+    {
+        return currentMagazineAmmo;
+    }
+
+    public int GetMaxAmmo()
+    {
+        return currentTotalAmmo;
+    }
     public override void Shoot()
     {
         if (!componentsInitialized)
@@ -426,6 +439,7 @@ public class Shotgun : BaseWeapon
 
     public override void UseAbility2()
     {
+        hookShot.TriggerAbility();
     }
 
     public override void CleanBullets()

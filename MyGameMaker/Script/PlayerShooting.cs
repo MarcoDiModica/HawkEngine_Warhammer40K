@@ -159,7 +159,39 @@ public class PlayerShooting : MonoBehaviour
 
     }
 
+    public int GetCurrentAmmo()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                return boltgun.GetCurrentAmmo();
+                
+            case GunType.SHOTGUN:
+                return shotgun.GetCurrentAmmo();
+                
+            case GunType.RAILGUN:
+                return railgun.GetCurrentAmmo();
+                
+        }
+        return 0;
+    }
 
+    public int GetMaxAmmo()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                return boltgun.GetMaxAmmo();
+                
+            case GunType.SHOTGUN:
+                return shotgun.GetMaxAmmo();
+               
+            case GunType.RAILGUN:
+                return railgun.GetMaxAmmo();
+                
+        }
+        return 0;
+    }
 
     public override void Update(float deltaTime)
     {
@@ -238,7 +270,7 @@ public class PlayerShooting : MonoBehaviour
         if (playerInput?.IsAbility2Pressed() == true)
         {
             Engineson.print("Ability 2 pressed");
-            //UseAbility2();
+            UseAbility2();
         }
     }
 

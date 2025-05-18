@@ -19,11 +19,11 @@ public class PlayerData
     public float blackRageSpeed = 0f;
     public float stimmSpeed = 0f;
     public bool hasBoltgun = true;
-    public bool hasShotgun = false;
-    public bool hasRailgun = false;
-    public bool BoltgunUpgraded = false;
-    public bool ShotgunUpgraded = false;
-    public bool RailgunUpgraded = false;
+    public bool hasShotgun = true;
+    public bool hasRailgun = true;
+    public bool BoltgunUpgraded = true;
+    public bool ShotgunUpgraded = true;
+    public bool RailgunUpgraded = true;
     private string HealthSFX = "Assets/Audio/UI/Lose_Temporary_heart_2.wav";
 
     private PlayerData()
@@ -63,7 +63,7 @@ public class PlayerData
             health -= damage;
         }
 
-        Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
+        //Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
 
     }
 
@@ -79,7 +79,7 @@ public class PlayerData
             return;
         }
         this.health = health;
-        Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
+        //Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
     }
 
     public void SetTempHealth(float health)

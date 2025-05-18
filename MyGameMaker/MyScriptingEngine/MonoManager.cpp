@@ -523,7 +523,7 @@ void MonoManager::RegisterMonoObject(void* nativePtr, MonoObject* monoObject) {
 	auto it = nativeToGCHandleMap.find(nativePtr);
 	if (it != nativeToGCHandleMap.end()) {
 		mono_gchandle_free(it->second);
-		LOG(LogType::LOG_WARNING, "Overwriting existing mono object registration for native pointer %p", nativePtr);
+		//LOG(LogType::LOG_WARNING, "Overwriting existing mono object registration for native pointer %p", nativePtr);
 	}
 
 	uint32_t gcHandle = mono_gchandle_new(monoObject, false);

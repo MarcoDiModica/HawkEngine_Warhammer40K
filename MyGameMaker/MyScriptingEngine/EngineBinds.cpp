@@ -17,6 +17,7 @@
 #include "../MyUIEngine/UIButtonComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "../MyUIEngine/TextComponent.h"
 #include "../MyGameEngine/Tweening.h"
 
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
@@ -315,6 +316,9 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 			return nullptr;
 		}
 	}
+    else if (componentName == "HawkEngine.UIText") {
+		return GO->GetComponent<TextComponent>()->GetSharp();
+    }
 	else if (componentName == "HawkEngine.ParticleFX") {
 		auto comp = GO->GetComponent<ParticleFX>();
         if (comp) {
@@ -359,6 +363,7 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break; 
     case 12: _component = static_cast<Component*>(go->AddComponent<CapsuleColliderComponent>(Application->physicsModule));
         break;
+	case 14: _component = static_cast<Component*>(go->AddComponent<TextComponent>());
 	case 13: _component = static_cast<Component*>(go->AddComponent<ParticleFX>());
 		break;
     default:
@@ -1266,6 +1271,15 @@ void EngineBinds::SetImageAnimIndex(MonoObject* uiImageRef, int index) {
 	}
 }
 
+void EngineBinds::SetImageColor(MonoObject* uiImageRef, float r, float g, float b, float a)
+{
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage)
+	{
+		uiImage->SetColor(glm::vec4(r, g, b, a));
+	}
+}
+
 void EngineBinds::PlayStopAnimation(MonoObject* uiImageRef, bool play) {
 	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
 	if (uiImage) {
@@ -1583,7 +1597,43 @@ void EngineBinds::DOVec3(glm::vec3* value, glm::vec3 start, glm::vec3 target, fl
 {
 	Tweening::TweenVec3(value, start, target, duration, mode);
 }
-    
+
+//Text
+
+void EngineBinds::SetText(MonoObject* textRef, MonoString* text)
+{
+    auto uiText = ConvertFromSharpComponent<TextComponent>(textRef);
+	if (uiText) {
+		char* C_text = mono_string_to_utf8(text);
+		uiText->SetText(C_text);
+		mono_free(C_text);
+	}
+}
+
+void EngineBinds::SetTextColor(MonoObject* textRef, glm::vec4* color)
+{
+	auto uiText = ConvertFromSharpComponent<TextComponent>(textRef);
+	if (uiText) {
+		uiText->SetColor(*color);
+	}
+}
+
+void EngineBinds::SetTextSize(MonoObject* textRef, int size)
+{
+	auto uiText = ConvertFromSharpComponent<TextComponent>(textRef);
+	if (uiText) {
+		uiText->SetFontSize(size);
+	}
+}
+
+void EngineBinds::SetTextBoxSize(MonoObject* textRef, float sizex, float sizey)
+{
+	auto uiText = ConvertFromSharpComponent<TextComponent>(textRef);
+	if (uiText) {
+		uiText->SetBoxSize(sizex, sizey);
+	}
+}
+
 bool EngineBinds::LoadScene(MonoString* sceneName)
 {
     char* C_sceneName = mono_string_to_utf8(sceneName);
@@ -1872,6 +1922,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.UIImage::SetImageSpriteSize", (const void*)&EngineBinds::SetImageSpriteSize);
 	mono_add_internal_call("HawkEngine.UIImage::SetImageAnimIndex", (const void*)&EngineBinds::SetImageAnimIndex);
 	mono_add_internal_call("HawkEngine.UIImage::PlayStopAnimation", (const void*)&EngineBinds::PlayStopAnimation);
+	mono_add_internal_call("HawkEngine.UIImage::SetImageColor", (const void*)&EngineBinds::SetImageColor);
 
 	// UI Button
 	mono_add_internal_call("HawkEngine.UIButton::GetState", (const void*)&EngineBinds::GetState);
@@ -1920,6 +1971,12 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.Tweening::DOValue", (const void*)&EngineBinds::DOValue);
 	mono_add_internal_call("HawkEngine.Tweening::DOVector3", (const void*)&EngineBinds::DOVec3);
     mono_add_internal_call("HawkEngine.Tweening::CleanTweens", (const void*)&EngineBinds::CleanAllTweens);
+
+	// Text
+	mono_add_internal_call("HawkEngine.UIText::SetText", (const void*)&EngineBinds::SetText);
+	mono_add_internal_call("HawkEngine.UIText::SetTextColor", (const void*)&EngineBinds::SetTextColor);
+	mono_add_internal_call("HawkEngine.UIText::SetTextSize", (const void*)&EngineBinds::SetTextSize);
+	mono_add_internal_call("HawkEngine.UIText::SetBoxSize", (const void*)&EngineBinds::SetTextBoxSize);
 
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);

@@ -123,6 +123,12 @@ public class EnemyControllerStalker : EnemyController
             {
                 distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
+
+                if (isSlowed)
+                {
+                    HandleSlowedState(deltaTime);
+                }
+
                 if (distanceToPlayer < distToChase)
                 {
                     // Attack
@@ -149,7 +155,7 @@ public class EnemyControllerStalker : EnemyController
             }
         }
 
-        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
+        //Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
 
         switch (currentState)
         {
@@ -177,7 +183,15 @@ public class EnemyControllerStalker : EnemyController
 
                 Vector3 currentVelocity = rb.GetVelocity();
                 moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
-                Vector3 desiredVelocity = moveDirection * speedMovement;
+                Vector3 desiredVelocity;
+                if (isSlowed)
+                {
+                    desiredVelocity = moveDirection * slowedSpeed;
+                }
+                else
+                {
+                    desiredVelocity = moveDirection * speedMovement;
+                }
 
                 anim.SetWalkToPlayerAnimation();
                 if (desiredVelocity.LengthSquared() > 0)
@@ -325,6 +339,23 @@ public class EnemyControllerStalker : EnemyController
             gameObject.GetComponent<Collider>().SetPosition(startPosition);
         }
         
+    }
+
+    private void HandleSlowedState(float deltaTime)
+    {
+        try
+        {
+            slowedTimer += deltaTime;
+            if (slowedTimer >= slowedDuration)
+            {
+                isSlowed = false;
+                slowedTimer = 0.0f;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"Error in HandleSlowedState: {e.Message}");
+        }
     }
     public override void Attack()
     {

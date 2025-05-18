@@ -145,10 +145,10 @@ public class PlayerPowerUp : MonoBehaviour
                 if (playerController.playerShooting != null)
                 {
                     if (playerController.playerShooting.boltgun != null)
-                        playerController.playerShooting.boltgun.shootCadence *= 1.5f;
+                        playerController.playerShooting.boltgun.shootCadence *= 2f;
 
                     if (playerController.playerShooting.shotgun != null)
-                        playerController.playerShooting.shotgun.shootCadence *= 1.5f;
+                        playerController.playerShooting.shotgun.shootCadence *= 2f;
                 }
 
                 Engineson.print("Magnet effect passed");
@@ -237,9 +237,17 @@ public class PlayerPowerUp : MonoBehaviour
                             Magnet magnet = other.GetComponent<Magnet>();
                             if (magnet != null)
                             {
-                                magnet.OnPickUp(playerController);
-                                hasMagnet = true;
-                                int audioMagnet = Audio.PlayOneShot(MagnetEffect);
+                                if(hasMagnet == true)
+                                {
+                                    magnetTimer = 0.0f;
+                                }
+                                else
+                                {
+                                    magnet.OnPickUp(playerController);
+                                    hasMagnet = true;
+                                    int audioMagnet = Audio.PlayOneShot(MagnetEffect);
+                                }
+                               
                             }
                             else
                             {

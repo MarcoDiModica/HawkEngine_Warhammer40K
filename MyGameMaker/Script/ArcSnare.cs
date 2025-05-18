@@ -75,8 +75,9 @@ public class ArcSnare : BaseAbilities
             Audio.PlayOneShot(arcLaunch);
             grenade = Engineson.CreateGameObject("Arc", null);
 
-            if (arcSnare == null)
+            if (grenade == null)
             {
+                Engineson.print("Error snare");
                 return;
             }
 

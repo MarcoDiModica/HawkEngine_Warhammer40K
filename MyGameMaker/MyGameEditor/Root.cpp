@@ -374,8 +374,8 @@ bool Root::Start()
 	//mainCamera = objMainCamera;
 	//UpdateCameraPriority();
 	
-	////PLAYER BUENO CON TODOS LOS SCRIPTS PORFA NO LO BORREIS
-	//
+	//PLAYER BUENO CON TODOS LOS SCRIPTS PORFA NO LO BORREIS
+	
 	//auto player = CreateGameObject("Player");
 	//player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
@@ -398,7 +398,7 @@ bool Root::Start()
 	//
 	////player->AddComponent<SoundComponent>()->LoadSound("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true, false);
 	//
-	//auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
+	//auto playerMesh = CreateGameObjectWithPath("Assets/FBX/dieno zachael.fbx");
 	//playerMesh->SetName("playerMesh");
 	//playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
 	//playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
@@ -461,7 +461,7 @@ bool Root::Start()
 	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	//ParentGameObject(*walkingFX, *player);
 	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
-	//
+	
 	////ARMAS NO TOCAR
 	//
 	//auto boltgun = CreateGameObject("Boltgun");

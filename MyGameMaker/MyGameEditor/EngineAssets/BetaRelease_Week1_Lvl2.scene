@@ -56465,9 +56465,9 @@ GameObject87:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.13326478
+          floatSpeed: 0.83829695
           floatHeight: 0.5
-          rotationSpeed: 47.9656677
+          rotationSpeed: 98.7154541
   Children: ~
 GameObject88:
   name: RailgunUpgrade_Instance
@@ -56531,9 +56531,9 @@ GameObject88:
       Script0:
         name: RailgunUpgradePickUp
         fields:
-          floatSpeed: 1.22205055
+          floatSpeed: 1.93386722
           floatHeight: 0.5
-          rotationSpeed: 56.5612946
+          rotationSpeed: 64.9956741
   Children:
     - name: railgunMesh
       prefabPath: ""
@@ -101296,6 +101296,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_1280x720
       prefabPath: ""
@@ -101355,6 +101360,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_1920x1080
       prefabPath: ""
@@ -101414,6 +101424,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_2560x1440
       prefabPath: ""
@@ -101473,6 +101488,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_3840x2160
       prefabPath: ""
@@ -101532,6 +101552,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_left
       prefabPath: ""
@@ -101595,6 +101620,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_right
       prefabPath: ""
@@ -101658,6 +101688,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_lefthover
       prefabPath: ""
@@ -101717,6 +101752,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resolution_righthover
       prefabPath: ""
@@ -101776,6 +101816,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Fullscreen_checkbox
       prefabPath: ""
@@ -101839,6 +101884,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Fullscreen_checkboxhover
       prefabPath: ""
@@ -101898,6 +101948,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Fullscreen_tick
       prefabPath: ""
@@ -101957,6 +102012,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Master_bar
       prefabPath: ""
@@ -102016,6 +102076,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Master_slider
       prefabPath: ""
@@ -102075,6 +102140,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Master_left
       prefabPath: ""
@@ -102138,6 +102208,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Master_right
       prefabPath: ""
@@ -102201,6 +102276,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Master_lefthover
       prefabPath: ""
@@ -102260,6 +102340,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Master_righthover
       prefabPath: ""
@@ -102319,6 +102404,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: BGM_bar
       prefabPath: ""
@@ -102378,6 +102468,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: BGM_slider
       prefabPath: ""
@@ -102437,6 +102532,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: BGM_left
       prefabPath: ""
@@ -102500,6 +102600,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: BGM_right
       prefabPath: ""
@@ -102563,6 +102668,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: BGM_lefthover
       prefabPath: ""
@@ -102622,6 +102732,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: BGM_righthover
       prefabPath: ""
@@ -102681,6 +102796,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: SFX_bar
       prefabPath: ""
@@ -102740,6 +102860,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: SFX_slider
       prefabPath: ""
@@ -102799,6 +102924,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: SFX_left
       prefabPath: ""
@@ -102862,6 +102992,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: SFX_right
       prefabPath: ""
@@ -102925,6 +103060,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: SFX_lefthover
       prefabPath: ""
@@ -102984,6 +103124,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: SFX_righthover
       prefabPath: ""
@@ -103043,6 +103188,11 @@ GameObject177:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
 GameObject178:
   name: Canvas_PauseMenu
@@ -103152,6 +103302,11 @@ GameObject178:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Resume_Button
       prefabPath: ""
@@ -103211,6 +103366,11 @@ GameObject178:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
@@ -103274,6 +103434,11 @@ GameObject178:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
@@ -103337,6 +103502,11 @@ GameObject178:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
@@ -103400,6 +103570,11 @@ GameObject178:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
@@ -103513,6 +103688,11 @@ GameObject179:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Text
       prefabPath: ""
@@ -103572,6 +103752,11 @@ GameObject179:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: InteractText
       prefabPath: ""
@@ -103631,6 +103816,11 @@ GameObject179:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
 GameObject180:
   name: Canvas_TitleBoT
@@ -103740,6 +103930,11 @@ GameObject180:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
 GameObject181:
   name: Canvas_HUD
@@ -103849,6 +104044,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: blood_bg2
       prefabPath: ""
@@ -103908,6 +104108,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: healthbar_bg
       prefabPath: ""
@@ -103967,6 +104172,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: healthbar_empty
       prefabPath: ""
@@ -104026,6 +104236,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: boltgun_small_L
       prefabPath: ""
@@ -104085,6 +104300,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: railgun_small_L
       prefabPath: ""
@@ -104144,6 +104364,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: shotgun_small_L
       prefabPath: ""
@@ -104203,6 +104428,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: boltgun_small_R
       prefabPath: ""
@@ -104262,6 +104492,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: railgun_small_R
       prefabPath: ""
@@ -104321,6 +104556,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: shotgun_small_R
       prefabPath: ""
@@ -104380,6 +104620,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: railgun
       prefabPath: ""
@@ -104439,6 +104684,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: shotgun
       prefabPath: ""
@@ -104498,6 +104748,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: boltgun
       prefabPath: ""
@@ -104557,6 +104812,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: boltgun_ability_1
       prefabPath: ""
@@ -104616,6 +104876,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: boltgun_ability_2
       prefabPath: ""
@@ -104675,6 +104940,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: shotgun_ability_1
       prefabPath: ""
@@ -104734,6 +105004,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: shotgun_ability_2
       prefabPath: ""
@@ -104793,6 +105068,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: railgun_ability_1
       prefabPath: ""
@@ -104852,6 +105132,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: railgun_ability_2a
       prefabPath: ""
@@ -104911,6 +105196,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: railgun_ability_2b
       prefabPath: ""
@@ -104970,6 +105260,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: gun_small_frame
       prefabPath: ""
@@ -105029,6 +105324,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: frames
       prefabPath: ""
@@ -105088,6 +105388,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: lock_L
       prefabPath: ""
@@ -105147,6 +105452,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: lock_R
       prefabPath: ""
@@ -105206,6 +105516,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: nodash
       prefabPath: ""
@@ -105265,6 +105580,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: msup
       prefabPath: ""
@@ -105324,6 +105644,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: noreload
       prefabPath: ""
@@ -105383,6 +105708,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: defenseup
       prefabPath: ""
@@ -105442,6 +105772,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: asup
       prefabPath: ""
@@ -105501,6 +105836,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: attackup
       prefabPath: ""
@@ -105560,6 +105900,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: magnet
       prefabPath: ""
@@ -105619,6 +105964,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: thirst_animation
       prefabPath: ""
@@ -105673,11 +106023,16 @@ GameObject181:
             - 1225
             - 40
           sprite_offset:
-            - 525
+            - 175
             - 0
           anim_speed: 0.5
-          anim_index: 3
+          anim_index: 1
           anim_index_limit: 6
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: red_thirst_bar
       prefabPath: ""
@@ -105737,6 +106092,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: blood_animation_main
       prefabPath: ""
@@ -105791,11 +106151,16 @@ GameObject181:
             - 250
             - 80
           sprite_offset:
-            - 150
+            - 50
             - 0
           anim_speed: 0.5
-          anim_index: 3
+          anim_index: 1
           anim_index_limit: 4
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: blood_bar1
       prefabPath: ""
@@ -105855,6 +106220,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: blood_animation_temp
       prefabPath: ""
@@ -105909,11 +106279,16 @@ GameObject181:
             - 250
             - 80
           sprite_offset:
-            - 150
+            - 50
             - 0
           anim_speed: 0.5
-          anim_index: 3
+          anim_index: 1
           anim_index_limit: 4
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: blood_bar2
       prefabPath: ""
@@ -105973,6 +106348,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: healthframe
       prefabPath: ""
@@ -106032,6 +106412,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: canister0
       prefabPath: ""
@@ -106091,6 +106476,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: canister1
       prefabPath: ""
@@ -106150,6 +106540,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: canister2
       prefabPath: ""
@@ -106209,6 +106604,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: canister3
       prefabPath: ""
@@ -106268,6 +106668,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: canister4
       prefabPath: ""
@@ -106327,6 +106732,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: canister5
       prefabPath: ""
@@ -106386,6 +106796,11 @@ GameObject181:
           anim_speed: 0.100000001
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: overheat_bg
       prefabPath: ""
@@ -106445,6 +106860,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: overheat_bar
       prefabPath: ""
@@ -106504,6 +106924,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: overheat_warning
       prefabPath: ""
@@ -106563,6 +106988,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: weapon_switcher_frame
       prefabPath: ""
@@ -106622,6 +107052,11 @@ GameObject181:
           anim_speed: 0
           anim_index: 0
           anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
 GameObject182:
   name: TyranidTentacle_Instance_Instance_1_Instance3
@@ -107256,3 +107691,117 @@ GameObject186:
         - 0
       isTrigger: true
   Children: ~
+GameObject187:
+  name: CanvasFade_Instance
+  prefabPath: Assets\Prefabs\CanvasFadelvl2.prefab.yaml
+  uuid: 10019912346715129312
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+  Children:
+    - name: FadeController
+      prefabPath: ""
+      uuid: 16477882791968875065
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 1
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/FadeToBlackImage.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 0
+            - 0
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 0
+            - 0
+            - 0
+            - 0
+        ScriptComponents:
+          Script0:
+            name: FadeController
+            fields: ~
+      Children: ~

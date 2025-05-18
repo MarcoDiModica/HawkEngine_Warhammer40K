@@ -38,6 +38,8 @@ public class EnemyControllerRanged : EnemyController
     private bool isCombatMusicPlaying = false;
 
     private bool componentsInitialized = false;
+    private float deathTimer = 0f;
+    private float deathCooldown = 2f;
 
     public override void Awake()
     {
@@ -157,6 +159,16 @@ public class EnemyControllerRanged : EnemyController
                 if (collider != null)
                 {
                     collider.SetActive(false);
+                }
+
+                if (anim.isAnimFinished)
+                {
+                    deathTimer += deltaTime;
+                    if (deathTimer >= deathCooldown)
+                    {
+                        Engineson.Destroy(gameObject);
+                        return;
+                    }
                 }
 
                 if (pc != null && pc.playerData != null && pc.playerData.isPiercing)

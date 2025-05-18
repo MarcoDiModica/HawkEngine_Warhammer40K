@@ -98,6 +98,8 @@ public class EnemyControllerBoss : EnemyController
 
     private MawlocAnimation anim;
     private PlayerController pc;
+    private float deathTimer = 0f;
+    private float deathCoolodown = 5f;
 
     private enum BossPhase
     {
@@ -341,15 +343,19 @@ public class EnemyControllerBoss : EnemyController
                 UpdateMetalSlide(deltaTime);
                 CheckBossHurtboxes();
             }
-            if (isDead)
+        if (isDead)
+        {
+            collider.SetActive(false);
+            Audio.Stop(BossTheme); 
+            if (anim.isAnimFinished)
             {
-                collider.SetActive(false);
-                Audio.Stop(BossTheme); 
-            //if (isCombatMusicPlaying == true)
-            //{
-            //    sound?.Stop();
-            //    isCombatMusicPlaying = false;
-            //}
+                deathTimer += deltaTime;
+                if (deathTimer >= deathCoolodown)
+                {
+                    Audio.Stop(BossTheme);
+                    Engineson.Destroy(gameObject);
+                }
+            }
         }
     }
 

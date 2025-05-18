@@ -64,6 +64,8 @@ public class EnemyControllerMelee : EnemyController
 
     private bool componentsInitialized = false;
     public bool isSpawning = false;
+    public float spawnTimer = 0.0f;
+    public float spawnDuration = 4.0f;
 
     private Vector3 GetDodgeDirection(Vector3 forward)
     {
@@ -212,6 +214,7 @@ public class EnemyControllerMelee : EnemyController
             if (isSpawning)
             {
                 HandleSpawnState(deltaTime);
+                return;
             }
 
             if (isSlowed)
@@ -406,7 +409,20 @@ public class EnemyControllerMelee : EnemyController
 
     private void HandleSpawnState(float deltaTime)
     {
-
+        try
+        {
+            spawnTimer += deltaTime;
+            anim.SetClimbingAnimation();
+            if (spawnTimer >= spawnDuration)
+            {
+                isSpawning = false;
+                spawnTimer = 0;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in HandleLeapState: {e.Message}");
+        }
     }
     private void HandleLeapState(float deltaTime)
     {

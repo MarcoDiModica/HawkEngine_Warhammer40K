@@ -58,7 +58,10 @@ public class EnemyControllerWarrior : EnemyController
     public float range;
     public float timeToLerp = 0.4f;
 
-    private bool componentsInitialized = false;
+    private bool componentsInitialized = false;    
+    // Death
+    private float deathTimer = 0f;
+    private float deathCooldown = 2f;
 
     public override void Awake()
     {
@@ -165,7 +168,7 @@ public class EnemyControllerWarrior : EnemyController
         {
             if (currentState == EnemyState.DEAD)
             {
-                HandleDeadState();
+                HandleDeadState(deltaTime);
                 return;
             }
 
@@ -344,7 +347,7 @@ public class EnemyControllerWarrior : EnemyController
         }
     }
 
-    private void HandleDeadState()
+    private void HandleDeadState(float deltaTime)
     {
         try
         {
@@ -376,6 +379,16 @@ public class EnemyControllerWarrior : EnemyController
             if (collider != null)
             {
                 collider.SetActive(false);
+            }
+
+            if (anim.isAnimFinished)
+            {
+                deathTimer += deltaTime;
+                if (deathTimer >= deathCooldown)
+                {
+                    Engineson.Destroy(gameObject);
+                    return;
+                }
             }
 
             isDead = true;

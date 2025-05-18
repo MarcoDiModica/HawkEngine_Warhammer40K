@@ -206,7 +206,7 @@ public class Railgun : BaseWeapon
 
     public int GetMaxAmmo()
     {
-        return maxAmmo;
+        return currentTotalAmmo;
     }
     public override void Shoot()
     {

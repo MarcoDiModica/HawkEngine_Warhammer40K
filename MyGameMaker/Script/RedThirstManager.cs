@@ -30,9 +30,17 @@ public class RedThirstManager : MonoBehaviour
     private bool boltgunUsed = false;
     private bool shotgunUsed = false;
     private bool railgunUsed = false;
+
+    private ParticleFX Angy;
+    
     public override void Awake()
     {
         playerController = gameObject.GetComponent<PlayerController>();
+        Angy = GameObject.Find("RedThirstFX").GetComponent<ParticleFX>();
+        if (Angy != null)
+        {
+            Angy.ApplyPreset(32);
+        }
     }
 
     public override void Start()
@@ -162,7 +170,7 @@ public class RedThirstManager : MonoBehaviour
         Engineson.print("Black Rage Activated!");
         playerController.playerData.blackRageSpeed = redThirstBonus;
         playerController.playerDash.canDash = false;
-
+        Angy.Play();
 
     }
     private void DeactivateBlackRage()

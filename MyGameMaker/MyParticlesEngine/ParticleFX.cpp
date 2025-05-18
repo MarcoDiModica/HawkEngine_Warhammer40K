@@ -1115,7 +1115,7 @@ namespace ParticlePresets {
 	1.0f,                          			   // Alpha start
 	1.0f,                          			   // Alpha end
 	0.8f,                          			   // Size start
-	15.0f,                          		   // Size end
+	5.0f,                          		   // Size end
 	1,                          			   // Min lifetime
 	1,                         			   // Max lifetime
 	0.0f,                          			   // Min speed
@@ -1123,7 +1123,7 @@ namespace ParticlePresets {
 	0.0f,						   // End Speed
 	glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
 	0,                          			   // Rotation speed
-	1.f,                         			   // Emission rate (particles per second)
+	1.0f,                         			   // Emission rate (particles per second)
 	EmitterShape::POINT,            		   // Shape
 	0.2f,                          			   // Cone base radius
 	1.0f,                          			   // Cone height
@@ -1134,10 +1134,10 @@ namespace ParticlePresets {
 	0.1f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
-	1.0f,						   // Min scale
-	1.0f,						   // Max scale
+	5.0f,						   // Min scale
+	5.0f,						   // Max scale
 	"Assets/Textures/Red_Thirst_Sprite_sheet.png", 	   // Texture path
-	false 						   // Is Local Space
+	true 						   // Is Local Space
 	};
 
 	const ParticlePreset Envitoment_Fog ={

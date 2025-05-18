@@ -124,6 +124,12 @@ void LightComponent::SetDirection(const glm::vec3& direction) {
 void LightComponent::SetIntensity(float intensity) {
     this->intensity = intensity;
 }
+float LightComponent::GetDarknessFallback() const {
+	return darknessFallback;
+}
+void LightComponent::SetDarknessFallback(float darknessFallback) {
+	this->darknessFallback = darknessFallback;
+}
 
 void LightComponent::UpdatePointLight() {
     pointLight.position = owner->GetComponent<Transform_Component>()->GetPosition();

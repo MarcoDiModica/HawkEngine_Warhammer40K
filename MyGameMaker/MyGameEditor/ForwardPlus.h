@@ -25,6 +25,7 @@ struct GPUDirectionalLight {
 	uint32_t shadowMapIndex; // índice a shadowmap (si usa sombras)
 	uint32_t useCascades; // 0 = no, 1 = yes (futuro)
 	uint32_t numCascades; // número de cascadas (futuro)
+	float darknessFallback;
 };
 
 class ForwardPlusLighting {

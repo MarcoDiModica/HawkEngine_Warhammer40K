@@ -2,6 +2,7 @@
 #include <iostream>
 #include <algorithm>
 #include <glm/gtc/type_ptr.hpp>
+
 #include "../MyGameEngine/Shaders.h"
 #include "../MyGameEngine/ShaderManager.h"
 
@@ -143,6 +144,7 @@ void ForwardPlusLighting::CollectLights(const std::vector<GameObject*>& gameObje
 		directionalLight.shadowMapIndex = 0;
 		directionalLight.useCascades = 0;
 		directionalLight.numCascades = 0;
+		directionalLight.darknessFallback = 0.00001f;
 	}
 }
 
@@ -473,16 +475,26 @@ GPUPointLight ForwardPlusLighting::ConvertToGPULight(const LightComponent* light
 
 	float radius = light->GetRadius();
 	if (radius <= 0.0f) {
-		float threshold = 0.01f; 
-		radius = (-light->GetLinear() +
-			sqrtf(light->GetLinear() * light->GetLinear() -
-				4 * light->GetQuadratic() *
-				(light->GetConstant() - (256.0f / threshold))))
-			/ (2 * light->GetQuadratic());
+		float threshold = 0.001f; // Lower threshold for smoother falloff
+		float linear = light->GetLinear();
+		float quadratic = light->GetQuadratic();
+		float constant = light->GetConstant();
+
+		// Ensure quadratic is not zero to avoid division by zero
+		if (quadratic > 0.0f) {
+			radius = (-linear + sqrtf(linear * linear - 4 * quadratic * (constant - (256.0f / threshold)))) / (2 * quadratic);
+		}
+		else {
+			// Fallback to linear attenuation if quadratic is zero
+			radius = 256.0f / (linear + threshold);
+		}
+
+		// Clamp the radius to a minimum value
+		radius = std::max(radius, 1.0f); // Minimum radius of 1.0
 	}
 	gpuLight.position.w = radius;
-	
-	
+
+
 	gpuLight.lightType = 0; // point light
 	gpuLight.castShadow = 0; // no shadows yet
 	gpuLight.shadowMapIndex = 0;
@@ -495,8 +507,9 @@ GPUPointLight ForwardPlusLighting::ConvertToGPULight(const LightComponent* light
 void ForwardPlusLighting::UpdateDirectionalLight(const LightComponent* light) {
 	if (!light) return;
 
-	glm::vec3 direction = light->owner->GetTransform()->GetForward();
+	glm::vec3 direction = light->GetDirection();
 	directionalLight.direction = glm::vec4(direction, light->GetIntensity());
 	directionalLight.color = glm::vec4(light->GetAmbient(), 1.0f);
 	directionalLight.castShadow = 0; // no shadows yet
+	directionalLight.darknessFallback = light->GetDarknessFallback();
 }

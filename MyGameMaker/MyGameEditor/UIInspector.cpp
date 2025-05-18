@@ -917,6 +917,18 @@ private:
 			}
 			ImGui::PopItemWidth();
 
+			// Darkness Fallback
+			float darkness = light->GetDarknessFallback();
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Darkness Fallback (VERY LOW VALUES PLS)");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##DarknessFallback", &darkness, 0.000001f, 0.0f, 1.0f, "%.10f")) {
+				light->SetDarknessFallback(darkness);
+			}
+			ImGui::PopItemWidth();
+
+
 			ImGui::EndGroup();
 		}
 

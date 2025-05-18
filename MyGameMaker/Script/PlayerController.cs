@@ -271,7 +271,7 @@ public class PlayerController : MonoBehaviour
             if (playerShooting.GetCurrentGun() == 0)
             {
 
-                if (isIdle || isShootInput)
+                if (isIdle || isShootInput && !isShootingRunning)
                 {
                     isReloadingIdle = true;
                     playerAnimations.ReloadBoltgunWhileIdleAnimation();
@@ -300,6 +300,11 @@ public class PlayerController : MonoBehaviour
         else if (isReloadingWalking)
         {
             ReloadingWalkingAnimationFinished();
+        }
+
+        if (playerInput.IsChangingWeaponLeft() || playerInput.IsChangingWeaponRight())
+        {
+
         }
 
         elapsedTime += deltaTime;

@@ -34,6 +34,15 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void PlayStopAnimation(bool play);
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetImageColor(float r, float g, float b, float a);
+
+        // Helper para Vector4
+        public void SetImageColor(Vector4 color)
+        {
+            SetImageColor(color.X, color.Y, color.Z, color.W);
+        }
+
 
         //contructor
         private GameObject owner;

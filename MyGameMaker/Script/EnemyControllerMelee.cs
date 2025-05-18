@@ -62,6 +62,7 @@ public class EnemyControllerMelee : EnemyController
     private float deathCooldown = 2f;
 
     private bool componentsInitialized = false;
+    public bool isSpawning = false;
 
     private Vector3 GetDodgeDirection(Vector3 forward)
     {
@@ -207,6 +208,16 @@ public class EnemyControllerMelee : EnemyController
                 pathInitialized = true;
             }
 
+            if (isSpawning)
+            {
+                HandleSpawnState(deltaTime);
+            }
+
+            if (isSlowed)
+            {
+                HandleSlowedState(deltaTime);
+            }
+
             if (currentState == EnemyState.DEAD)
             {
                 HandleDeadState(deltaTime);
@@ -300,8 +311,14 @@ public class EnemyControllerMelee : EnemyController
             {
                 Vector3 directDir = Vector3.Normalize(playerTransform.position - enemyTransform.position);
                 moveDirection = directDir;
-
-                Vector3 desiredVelocity = directDir * speedMovement;
+                Vector3 desiredVelocity;
+                if (isSlowed)
+                {
+                    desiredVelocity = directDir * slowedSpeed;
+                } else
+                {
+                    desiredVelocity = directDir * speedMovement;
+                }
                 Vector3 currentVelocity = rb.GetVelocity();
                 Vector3 smoothedVel = SmoothVelocity(desiredVelocity, currentVelocity, deltaTime);
                 rb.SetVelocity(smoothedVel);
@@ -386,6 +403,10 @@ public class EnemyControllerMelee : EnemyController
         }
     }
 
+    private void HandleSpawnState(float deltaTime)
+    {
+
+    }
     private void HandleLeapState(float deltaTime)
     {
         try
@@ -424,6 +445,23 @@ public class EnemyControllerMelee : EnemyController
         catch (Exception e)
         {
             Engineson.print($"ERROR in HandleLeapState: {e.Message}");
+        }
+    }
+
+    private void HandleSlowedState(float deltaTime)
+    {
+        try
+        {
+            slowedTimer += deltaTime;
+            if (slowedTimer >= slowedDuration)
+            {
+                isSlowed = false;
+                slowedTimer = 0.0f;
+            }
+        } 
+        catch (Exception e)
+        {
+            Engineson.print($"Error in HandleSlowedState: {e.Message}");
         }
     }
 

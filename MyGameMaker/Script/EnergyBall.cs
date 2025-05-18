@@ -46,7 +46,6 @@ public class EnergyBall : BaseAbilities
         if (!canThrow)
         {
             abilityTimer += deltaTime;
-            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
 
             if (abilityTimer >= abilityCooldown)
             {

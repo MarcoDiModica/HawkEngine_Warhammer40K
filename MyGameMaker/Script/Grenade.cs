@@ -29,7 +29,7 @@ public class Grenade : MonoBehaviour
 
     public void Init(Vector3 pos, Vector3 dir)
     {
-        AddComponent<MeshRenderer>();      
+        //AddComponent<MeshRenderer>();      
         GetComponent<Transform>().position = pos + dir * 4.0f + new Vector3(0, 2, 0);
         GetComponent<Transform>().SetScale(0.25f, 0.25f, 0.25f);
         AddComponent<CapsuleCollider>();

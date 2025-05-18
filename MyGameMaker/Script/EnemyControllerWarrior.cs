@@ -181,6 +181,11 @@ public class EnemyControllerWarrior : EnemyController
                 return;
             }
 
+            if (isSlowed)
+            {
+                HandleSlowedState(deltaTime);
+            }
+
             UpdateBullets(deltaTime);
             UpdatePlayerDetection();
 
@@ -245,7 +250,15 @@ public class EnemyControllerWarrior : EnemyController
 
             Vector3 currentVelocity = rb.GetVelocity();
             moveDirection = Vector3.Normalize(playerTransform.position - transform.position);
-            Vector3 desiredVelocity = moveDirection * speedMovement;
+            Vector3 desiredVelocity;
+            if (isSlowed)
+            {
+                desiredVelocity = moveDirection * slowedSpeed;
+            }
+            else
+            {
+                desiredVelocity = moveDirection * speedMovement;
+            }
 
             if (anim != null)
             {
@@ -403,7 +416,22 @@ public class EnemyControllerWarrior : EnemyController
             Engineson.print($"ERROR in UpdateRotation: {e.Message}");
         }
     }
-
+    private void HandleSlowedState(float deltaTime)
+    {
+        try
+        {
+            slowedTimer += deltaTime;
+            if (slowedTimer >= slowedDuration)
+            {
+                isSlowed = false;
+                slowedTimer = 0.0f;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"Error in HandleSlowedState: {e.Message}");
+        }
+    }
     private void UpdatePlayerDetection()
     {
         try

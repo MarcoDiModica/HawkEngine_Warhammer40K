@@ -1,1 +1,1 @@
-Código de salida: -2147450735
+Código de salida: 0

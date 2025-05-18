@@ -1,6 +1,6 @@
-name: ShotgunUpgrade_Instance
-prefabPath: Assets\Prefabs\ShotgunUpgrade.prefab.yaml
-uuid: 10856747983184288736
+name: ShotgunUpgrade
+prefabPath: ""
+uuid: 10321435392643010858
 tag: Upgrade
 active: true
 isStatic: false
@@ -9,16 +9,16 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 738.51513671875
-      - 1.7701622247695923
-      - -43.398029327392578
+      - 2.6523244380950928
+      - 2
+      - -5.9547619819641113
     localRotation:
       - 0
       - 0
-      - -31.820664007031404
+      - -31.820662858287644
     localScale:
-      - 2.3799991306004213
-      - 2.3799991306004213
+      - 2.3799991607666016
+      - 2.3799991607666016
       - 2.380000114440918
   BoxColliderComponent:
     size:
@@ -30,31 +30,6 @@ Components:
       - 0
       - 0
     isTrigger: true
-  LightComponent:
-    name: LightComponent
-    enabled: true
-    light_type: 1
-    ambient:
-      - 0.20000000298023224
-      - 0.20000000298023224
-      - 0.20000000298023224
-    diffuse:
-      - 0.5
-      - 0.5
-      - 0.5
-    specular:
-      - -0.20000000298023224
-      - -1
-      - -0.30000001192092896
-    constant: 1
-    linear: 0.0900000036
-    quadratic: 0.0320000015
-    radius: 4.19999981
-    intensity: 3
-    direction:
-      - -1
-      - -1
-      - 0
   ScriptComponents:
     Script0:
       name: ShotgunUpgradePickUp
@@ -115,11 +90,6 @@ Children:
               name: 12445246452344068261
             material:
               name: shotgun_DefaultMaterial_BaseColor
-              color:
-                - 1
-                - 1
-                - 1
-                - 1
             color:
               - 1
               - 1
@@ -157,11 +127,6 @@ Children:
               name: 5508932554690171827
             material:
               name: ""
-              color:
-                - 1
-                - 0
-                - 0
-                - 1
             color:
               - 1
               - 1

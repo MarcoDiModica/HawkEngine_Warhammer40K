@@ -20,8 +20,6 @@ public class Scene1ToScene2 : MonoBehaviour
     public override void Update(float deltaTime)
     {
         if (changeScene) {
-            SceneManager.isLevel2 = true;
-            SceneManager.isBossFight = false;
             SceneManager.LoadScene("BetaRelease_Week1_Lvl2");
         }
     }

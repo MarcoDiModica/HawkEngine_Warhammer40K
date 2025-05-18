@@ -57,7 +57,7 @@ public class BarrageBullet : MonoBehaviour
             if (deathTimerPrevention >= deathtimer)
             {
                 // En vez de destruir, se mueve 100 unidades hacia abajo
-                Engineson.Destroy(gameObject);
+                GetComponent<Collider>().SetPosition(new Vector3(0, -100, 0));
                 needsDestroy = false; // Para que no siga moviéndose constantemente
             }
         }
@@ -77,11 +77,7 @@ public class BarrageBullet : MonoBehaviour
             }
             if (enemy.tag == "Stalker")
             {
-                enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
-            }
-            if (enemy.tag == "Warrior")
-            {
-                enemy.GetComponent<EnemyControllerWarrior>().TakeDamage(damage); //placeholder damage
+                //enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
             }
             if (enemy.tag == "Boss")
             {

@@ -24,7 +24,7 @@ public class HormagauntAnimation : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-      //  Engineson.print("Hormagaunt Anim");
+        Engineson.print("Hormagaunt Anim");
         if (hormagauntesk != null)
         {
             float length = hormagauntesk.GetAnimationLength();
@@ -42,7 +42,7 @@ public class HormagauntAnimation : MonoBehaviour
                 isAnimFinished = true;
             }
         }
-     //   Engineson.print("Hormagaunt end Anim");
+        Engineson.print("Hormagaunt end Anim");
     }
 
     public void SetStandardIdleAnimation()

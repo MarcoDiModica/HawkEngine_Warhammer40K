@@ -73,12 +73,6 @@ public:
 
 	MonoObject* CreatePrefabReference(const std::string& path);
 
-	void RegisterMonoObject(void* nativePtr, MonoObject* monoObject);
-
-	void UnregisterMonoObject(void* nativePtr);
-
-	MonoObject* GetMonoObjectForNative(void* nativePtr);
-
 	std::vector<std::string> scriptNames;
 private:
 	MonoManager();
@@ -93,9 +87,6 @@ private:
 	std::string assemblyPath;
 
 	int userScriptID = 0;
-
-	std::unordered_map<void*, uint32_t> nativeToGCHandleMap;
-	std::mutex monoMapMutex;
 };
 
 template <typename T>

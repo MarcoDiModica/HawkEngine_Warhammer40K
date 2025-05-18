@@ -46,10 +46,13 @@ bool Root::Awake()
 	Application->root->CreateScene("DefaultScene");
 	Application->root->SetActiveScene("DefaultScene");
 	
+	
 	ShaderManager::GetInstance().Initialize();
 	MonoManager::GetInstance().EnableHotReloading();
 
+
 	//CreateMainMenuUI();
+	
 	
     return true;
 }
@@ -62,13 +65,10 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	//resourceManager->LoadResources(); // Esto no se mutea
-	//resourceManager->CreateDefaultCube(); // Esto no se mutea
+	resourceManager->LoadResources(); // Esto no se mutea
+	resourceManager->CreateCube(); // Esto no se mutea
 
-	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
-	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
-	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
-	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");
+	/*Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");*/
 
 	//-------------------SHAKE MANAGER COLOCAR EN TODAS LAS ESCENAS -------------------//
 	/*auto shakeManager = CreateGameObject("ShakeManager");
@@ -270,7 +270,7 @@ bool Root::Start()
 	//BoltgunBullets->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BoltgunBulletsBaseColor);
 	//BoltgunBullets->AddComponent<ScriptComponent>()->LoadScript("BoltgunBullets");
 	//BoltgunBullets->SetTag("Ammunition");
-	//
+	
 	////Lictor
 	//auto lictor = CreateGameObject("Lictor");
 	//lictor->SetTag("Enemy");
@@ -285,58 +285,39 @@ bool Root::Start()
 	//lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
 	//ParentGameObject(*lictorMesh, *lictor);
 	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
-	//
-	//////Hormagaunt
-	//auto hormagaunt = CreateGameObject("Hormagaunt");
-	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
-	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	//hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//hormagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
-	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagauntMesh->SetName("HormagauntMesh");
-	//hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	//hormagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//hormagauntMesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
-	//hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
-	//ParentGameObject(*hormagauntMesh, *hormagaunt);
-	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
-	//hormagaunt->SetTag("Enemy");
-	
 
-	////Termagaunt
-	//auto termagaunt = CreateGameObject("Termagaunt");
-	//termagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
-	//termagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	//termagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//termagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
-	//auto termagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Termagaunt.fbx");
-	//termagauntMesh->SetName("TermagauntMesh");
-	//termagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	//termagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//termagauntMesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
-	//termagauntMesh->AddComponent<ScriptComponent>()->LoadScript("TermagauntAnimation");
-	//ParentGameObject(*termagauntMesh, *termagaunt);
-	//termagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
-	//termagaunt->SetTag("Enemy");
-
-
+	//Hormagaunt
+	//for (int i = 0; i < 20; i++) {
+	//	auto hormagaunt = CreateGameObject("Hormagaunt");
+	//	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
+	//	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//	hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//	hormagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
+	//	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	//	hormagauntMesh->SetName("HormagauntMesh");
+	//	hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//	hormagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//	hormagauntMesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
+	//	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	//	ParentGameObject(*hormagauntMesh, *hormagaunt);
+	//	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	//	hormagaunt->SetTag("Enemy");
+	//}
 
 	////Tyranid Warrior
-	//auto tyranidWarrior = CreateGameObject("Tyranid_Warrior");
-	//tyranidWarrior->SetTag("Enemy");
-	//tyranidWarrior->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 0));
-	//tyranidWarrior->GetComponent<Transform_Component>()->SetScale(glm::vec3(1, 1, 1));
-	//tyranidWarrior->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//tyranidWarrior->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.1, 0));
-	//tyranidWarrior->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(1.6,3.7,1.8));
-	//auto tyranidWarriorMesh = CreateGameObjectWithPath("Assets/Meshes/superTyranid.fbx");
-	//tyranidWarriorMesh->SetName("TyranidWarriorMesh");
-	//tyranidWarriorMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	//tyranidWarriorMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//tyranidWarriorMesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
-	//tyranidWarriorMesh->AddComponent<ScriptComponent>()->LoadScript("WarriorAnimation");	
-	//ParentGameObject(*tyranidWarriorMesh, *tyranidWarrior);
-	//tyranidWarrior->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerWarrior");
+	/*auto tyranidWarrior = CreateGameObject("Tyranid_Warrior");
+	tyranidWarrior->SetTag("Enemy");
+	tyranidWarrior->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
+	tyranidWarrior->GetComponent<Transform_Component>()->SetScale(glm::vec3(1, 1, 1));
+	tyranidWarrior->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	tyranidWarrior->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.1, 0));
+	tyranidWarrior->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(1.6,3.7,1.8));
+	auto tyranidWarriorMesh = CreateGameObjectWithPath("Assets/Meshes/TyranidWarriorCollapsed.fbx");
+	tyranidWarriorMesh->SetName("TyranidWarriorMesh");
+	tyranidWarriorMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	tyranidWarriorMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	ParentGameObject(*tyranidWarriorMesh, *tyranidWarrior);
+	tyranidWarrior->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerWarrior");*/
 
 	//auto mawloc = CreateGameObject("Mawloc");
 	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-76, 40, -2));
@@ -373,7 +354,7 @@ bool Root::Start()
 	//objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
 	//mainCamera = objMainCamera;
 	//UpdateCameraPriority();
-	
+	//
 	////PLAYER BUENO CON TODOS LOS SCRIPTS PORFA NO LO BORREIS
 	//
 	//auto player = CreateGameObject("Player");
@@ -481,7 +462,7 @@ bool Root::Start()
 	//shotgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	//shotgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//ParentGameObject(*shotgunMesh, *shotgun);
-	////
+	//
 	//auto railgun = CreateGameObject("Railgun");
 	//railgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//auto railgunMesh = CreateGameObjectWithPath("Assets/railgun.fbx");
@@ -652,7 +633,6 @@ bool Root::Update(double dt)
 
 	//LOG(LogType::LOG_INFO, "ResourceManager Meshes: %d", resourceManager->GetMeshCount());
 	//LOG(LogType::LOG_INFO, "ResourceManager Materials: %d", resourceManager->GetMaterialCount());
-	//LOG(LogType::LOG_INFO, "ResourceManager Textures: %d", resourceManager->GetImageCount());
 
 	//if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
 	//	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");

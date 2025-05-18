@@ -525,14 +525,27 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 	}
 
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
+
 	glm::vec3 rayDirection = Application->input->getMousePickRay();
 
 	if (rayDirection == glm::vec3(0, 0, -1) && Application->input->GetMouseButton(1) != KEY_DOWN) {
 		return;
 	}
 
+	bool selecting = false;
+	bool isMultiSelect = Application->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT ||
+		Application->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT;
 	bool isCtrlHeld = Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT ||
 		Application->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_REPEAT;
+
+	static Uint32 lastClickTime = 0;
+	static glm::vec2 lastClickPos(0, 0);
+	static int cyclicIndex = -1;
+
+	glm::vec2 currentMousePos(Application->input->GetMouseX(), Application->input->GetMouseY());
+	Uint32 currentTime = SDL_GetTicks();
+	bool isSamePosition = glm::distance(currentMousePos, lastClickPos) < 5.0f;
+	bool isDoubleClick = (currentTime - lastClickTime < 500) && isSamePosition;
 
 	std::vector<std::pair<GameObject*, float>> objectsHit;
 
@@ -542,40 +555,49 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 			return;
 		}
 
-		objectsHit.clear();
-
-		
-		for (auto& object : objects)
-		{
-			if (object->HasComponent<MeshRenderer>() && object->IsActive())
-			{
-				BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
-				bbox = object->GetTransform()->GetMatrix() * bbox;
-				glm::vec3 collisionPoint;
-
-				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
-				{
-					float distance = glm::distance(rayOrigin, collisionPoint);
-					objectsHit.emplace_back(object, distance);
-				}
-			}
+		if (!isSamePosition) {
+			cyclicIndex = -1;
+			objectsHit.clear();
 		}
 
-	
-		std::sort(objectsHit.begin(), objectsHit.end(),
-			[](const auto& a, const auto& b) {
-				return a.second < b.second;
-			});
+		lastClickTime = currentTime;
+		lastClickPos = currentMousePos;
 
-		if (!objectsHit.empty()) {
-			GameObject* selectedObject = objectsHit[0].first;
+		selecting = true;
 
+		if (isDoubleClick && !objectsHit.empty()) {
+			cyclicIndex = (cyclicIndex + 1) % objectsHit.size();
+		}
+		else {
+			objectsHit.clear();
+			cyclicIndex = 0;
 
-			if (Application->input->IsGameObjectSelected(selectedObject) && objectsHit.size() > 1) {
-				selectedObject = objectsHit[1].first;
+			for (auto & object : objects)
+			{
+				if (object->HasComponent<MeshRenderer>() && object->IsActive())
+				{
+					BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+					bbox = object->GetTransform()->GetMatrix() * bbox;
+					glm::vec3 collisionPoint;
+
+					if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
+					{
+						float distance = glm::distance(rayOrigin, collisionPoint);
+						objectsHit.emplace_back(object, distance);
+					}
+				}
 			}
 
-			if (!isCtrlHeld) {
+			std::sort(objectsHit.begin(), objectsHit.end(),
+				[](const auto& a, const auto& b) {
+					return a.second < b.second;
+				});
+		}
+
+		if (!objectsHit.empty()) {
+			GameObject* selectedObject = objectsHit[cyclicIndex].first;
+
+			if (!isMultiSelect && !isCtrlHeld) {
 				Application->input->ClearSelection();
 			}
 
@@ -587,7 +609,7 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 				Application->input->AddToSelection(selectedObject);
 			}
 		}
-		else if (!isCtrlHeld) {
+		else if (!isMultiSelect && !isCtrlHeld) {
 			Application->input->ClearSelection();
 		}
 	}

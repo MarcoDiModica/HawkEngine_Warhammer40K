@@ -19,6 +19,7 @@ public class PlayerPowerUp : MonoBehaviour
     private float piercingBulletsDuration = 5.0f;
     private float piercingBulletsTimer = 0.0f;
 
+   // private AudioSource sound;
     private const string AmmunitionBlessingActivated = "Assets/Audio/PowerUps/AmmoBless2.wav";
     private const string BlackHeartActivated = "Assets/Audio/PowerUps/Black_Heart.wav";
     private const string ChapterStandardActivated = "Assets/Audio/SFX/PickUps/PowerUps/ChapterStandard/ChapterStandardActivated.wav";
@@ -31,66 +32,36 @@ public class PlayerPowerUp : MonoBehaviour
     private const string RailgunObtained = "Assets/Audio/SFX/Weapons/Railgun/RailGunEquipped.wav";
     private const string PowerUpDown = "Assets/Audio/PowerUps/PowerUpDown.wav";
 
-    private ParticleFX medicaeStimmSpeed;
-    private ParticleFX ammunitionBlessing;
-    private bool particleEffectsFound = false;
+    private ParticleFX MedicaeStimmSpeed;
+    private ParticleFX AmmunitionBlessing;
+
 
     public override void Awake()
     {
+
     }
 
     public override void Start()
     {
         playerController = gameObject.GetComponent<PlayerController>();
-
-        GameObject speedBoostObj = GameObject.Find("SpeedBoostFX");
-        GameObject ammoBoostObj = GameObject.Find("AmmunitionBlessingFX");
-
-        if (speedBoostObj != null && ammoBoostObj != null)
-        {
-            medicaeStimmSpeed = speedBoostObj.GetComponent<ParticleFX>();
-            ammunitionBlessing = ammoBoostObj.GetComponent<ParticleFX>();
-
-            if (medicaeStimmSpeed != null && ammunitionBlessing != null)
-            {
-                particleEffectsFound = true;
-                ammunitionBlessing.Stop();
-                medicaeStimmSpeed.Stop();
-            }
-            else
-            {
-                Engineson.print("ERROR: Could not find particle effects components");
-            }
-        }
-        else
-        {
-            Engineson.print("ERROR: Could not find particle effect objects");
-        }
+        MedicaeStimmSpeed = GameObject.Find("SpeedBoostFX").GetComponent<ParticleFX>();
+        AmmunitionBlessing = GameObject.Find("AmmunitionBlessingFX").GetComponent<ParticleFX>();
+        AmmunitionBlessing.Stop();
+        MedicaeStimmSpeed.Stop();
     }
 
     public override void Update(float deltatime)
     {
-        if (playerController == null)
-            return;
-
         if (hasMedicaeStimm)
         {
             medicaeStimmTimer += deltatime;
-
-            if (particleEffectsFound)
-                medicaeStimmSpeed.Play();
-
+            MedicaeStimmSpeed.Play();
             if (medicaeStimmTimer >= medicaeStimmDuration)
             {
-                if (particleEffectsFound)
-                    medicaeStimmSpeed.Stop();
-
+                MedicaeStimmSpeed.Stop();
                 hasMedicaeStimm = false;
                 medicaeStimmTimer = 0.0f;
-
-                if (playerController.playerData != null)
-                    playerController.playerData.movSpeed = playerController.playerData.stimmSpeed = 0;
-
+                playerController.playerData.movSpeed = playerController.playerData.stimmSpeed = 0;
                 Engineson.print("Medicae Stimm effect passed");
             }
         }
@@ -98,21 +69,13 @@ public class PlayerPowerUp : MonoBehaviour
         if (hasAmmunitionBlessing)
         {
             ammunitionBlessingTimer += deltatime;
-
-            if (particleEffectsFound)
-                ammunitionBlessing.Play();
-
+            AmmunitionBlessing.Play();
             if (ammunitionBlessingTimer >= ammunitionBlessingDuration)
             {
-                if (particleEffectsFound)
-                    ammunitionBlessing.Stop();
-
+                AmmunitionBlessing.Stop();
                 hasAmmunitionBlessing = false;
                 ammunitionBlessingTimer = 0.0f;
-
-                if (playerController.playerData != null)
-                    playerController.playerData.infiniteBullets = false;
-
+                playerController.playerData.infiniteBullets = false;
                 Engineson.print("Ammunition Blessing effect passed");
             }
         }
@@ -124,10 +87,7 @@ public class PlayerPowerUp : MonoBehaviour
             {
                 hasPiercingBullets = false;
                 piercingBulletsTimer = 0.0f;
-
-                if (playerController.playerData != null)
-                    playerController.playerData.isPiercing = false;
-
+                playerController.playerData.isPiercing = false;
                 Engineson.print("Piercing Bullets effect passed");
             }
         }
@@ -141,50 +101,36 @@ public class PlayerPowerUp : MonoBehaviour
                 hasMagnet = false;
                 Audio.Stop(MagnetEffect);
                 magnetTimer = 0.0f;
-
-                if (playerController.playerShooting != null)
-                {
-                    if (playerController.playerShooting.boltgun != null)
-                        playerController.playerShooting.boltgun.shootCadence *= 1.5f;
-
-                    if (playerController.playerShooting.shotgun != null)
-                        playerController.playerShooting.shotgun.shootCadence *= 1.5f;
-                }
-
+                playerController.playerShooting.boltgun.shootCadence = playerController.playerShooting.boltgun.shootCadence * 1.5f;
+                playerController.playerShooting.shotgun.shootCadence = playerController.playerShooting.shotgun.shootCadence * 1.5f;
                 Engineson.print("Magnet effect passed");
             }
             else
             {
-                Transform playerTransform = null;
-                if (playerController != null && playerController.gameObject != null)
-                {
-                    playerTransform = playerController.gameObject.GetComponent<Transform>();
-                }
+                GameObject[] Ammunition = Physics.OverlapSphere(playerController.gameObject.GetComponent<Transform>().position, 20f, "Ammunition");
 
-                if (playerTransform != null)
+                foreach (GameObject obj in Ammunition)
                 {
-                    GameObject[] ammunition = Physics.OverlapSphere(playerTransform.position, 20f, "Ammunition");
-
-                    if (ammunition != null)
+                    if (obj != null && obj.tag == "Ammunition")
                     {
-                        foreach (GameObject obj in ammunition)
-                        {
-                            if (obj != null && obj.tag == "Ammunition")
-                            {
-                                BoltgunBullets boltgunBullets = obj.GetComponent<BoltgunBullets>();
-                                if (boltgunBullets != null)
-                                {
-                                    boltgunBullets.isDetected = true;
-                                    continue;
-                                }
 
-                                ShotgunShells shotgunShells = obj.GetComponent<ShotgunShells>();
-                                if (shotgunShells != null)
-                                {
-                                    shotgunShells.isDetected = true;
-                                }
+                        if (obj != null && obj.tag == "Ammunition")
+                        {
+
+                            if (obj.GetComponent<ShotgunShells>() != null)
+                            {
+                                obj.GetComponent<ShotgunShells>().isDetected = true;
+
                             }
+                            else if (obj.GetComponent<BoltgunBullets>() != null)
+                            {
+                                obj.GetComponent<BoltgunBullets>().isDetected = true;
+                            }
+
+
                         }
+
+
                     }
                 }
             }
@@ -193,158 +139,120 @@ public class PlayerPowerUp : MonoBehaviour
 
     public override void OnTriggerEnter(GameObject other)
     {
-        if (other == null || playerController == null)
-            return;
-
         if (other.tag == "PowerUp")
         {
             Engineson.print("Player Collided with:" + other.tag);
 
-            BlackHeart blackHeart = other.GetComponent<BlackHeart>();
-            if (blackHeart != null)
+            if (other.GetComponent<BlackHeart>() != null)
             {
-                blackHeart.OnPickUp(playerController);
+                other.GetComponent<BlackHeart>().OnPickUp(playerController);
                 int audioBlackHeart = Audio.PlayOneShot(BlackHeartActivated);
+
             }
-            else
+            else if (other.GetComponent<MedicaeStimm>() != null)
             {
-                MedicaeStimm medicaeStimm = other.GetComponent<MedicaeStimm>();
-                if (medicaeStimm != null)
-                {
-                    medicaeStimm.OnPickUp(playerController);
-                    hasMedicaeStimm = true;
-                    int audioMedicaeStimm = Audio.PlayOneShot(MedicaeStimmActivated);
-                }
-                else
-                {
-                    ChapterStandard chapterStandard = other.GetComponent<ChapterStandard>();
-                    if (chapterStandard != null)
-                    {
-                        chapterStandard.OnPickUp(playerController);
-                        int audioChapterStandard = Audio.PlayOneShot(ChapterStandardActivated);
-                    }
-                    else
-                    {
-                        AmmunitionBlessing ammoBlessing = other.GetComponent<AmmunitionBlessing>();
-                        if (ammoBlessing != null)
-                        {
-                            ammoBlessing.OnPickUp(playerController);
-                            hasAmmunitionBlessing = true;
-                            int audioAmmunitionBlessing = Audio.PlayOneShot(AmmunitionBlessingActivated);
-                        }
-                        else
-                        {
-                            Magnet magnet = other.GetComponent<Magnet>();
-                            if (magnet != null)
-                            {
-                                magnet.OnPickUp(playerController);
-                                hasMagnet = true;
-                                int audioMagnet = Audio.PlayOneShot(MagnetEffect);
-                            }
-                            else
-                            {
-                                PiercingBullets piercingBullets = other.GetComponent<PiercingBullets>();
-                                if (piercingBullets != null)
-                                {
-                                    piercingBullets.OnPickUp(playerController);
-                                    hasPiercingBullets = true;
-                                    int audioPiercingBullets = Audio.PlayOneShot(PiercingBulletsPicked);
-                                }
-                            }
-                        }
-                    }
-                }
+                other.GetComponent<MedicaeStimm>().OnPickUp(playerController);
+                hasMedicaeStimm = true;
+                int audioMedicaeStimm = Audio.PlayOneShot(MedicaeStimmActivated);
             }
+            else if (other.GetComponent<ChapterStandard>() != null)
+            {
+                other.GetComponent<ChapterStandard>().OnPickUp(playerController);
+                int audioChapterStandard = Audio.PlayOneShot(ChapterStandardActivated);
+
+            }
+            else if (other.GetComponent<AmmunitionBlessing>() != null)
+            {
+                other.GetComponent<AmmunitionBlessing>().OnPickUp(playerController);
+                hasAmmunitionBlessing = true;
+                int audioAmmunitionBlessing = Audio.PlayOneShot(AmmunitionBlessingActivated);
+            }
+            else if (other.GetComponent<Magnet>() != null)
+            {
+                other.GetComponent<Magnet>().OnPickUp(playerController);
+                hasMagnet = true;
+                int audioMagnet = Audio.PlayOneShot(MagnetEffect);
+            }
+            else if(other.GetComponent<PiercingBullets>() != null)
+            {
+                other.GetComponent<PiercingBullets>().OnPickUp(playerController);
+                hasPiercingBullets = true;
+                int audioPiercingBullets = Audio.PlayOneShot(PiercingBulletsPicked);
+            }
+
 
             Engineson.Destroy(other);
         }
-        else if (other.tag == "Ammunition")
+
+        if(other.tag == "Ammunition")
         {
             Engineson.print("Player Collided with:" + other.tag);
 
-            BoltgunBullets boltgunBullets = other.GetComponent<BoltgunBullets>();
-            if (boltgunBullets != null && playerController.playerShooting != null &&
-                playerController.playerShooting.boltgun != null &&
-                playerController.playerShooting.boltgun.currentTotalAmmo < playerController.playerShooting.boltgun.maxAmmo)
+            if (other.GetComponent<BoltgunBullets>() != null && playerController.playerShooting.boltgun.currentTotalAmmo < playerController.playerShooting.boltgun.maxAmmo)
             {
-                boltgunBullets.OnPickUp(playerController);
+                other.GetComponent<BoltgunBullets>().OnPickUp(playerController);
                 int audioBoltgun = Audio.PlayOneShot(BoltgunBulletsPicked);
                 Engineson.Destroy(other);
             }
-            else
+            else if (other.GetComponent<ShotgunShells>() != null && playerController.playerShooting.shotgun.currentTotalAmmo < playerController.playerShooting.shotgun.maxAmmo)
             {
-                ShotgunShells shotgunShells = other.GetComponent<ShotgunShells>();
-                if (shotgunShells != null && playerController.playerShooting != null &&
-                    playerController.playerShooting.shotgun != null &&
-                    playerController.playerShooting.shotgun.currentTotalAmmo < playerController.playerShooting.shotgun.maxAmmo)
-                {
-                    shotgunShells.OnPickUp(playerController);
-                    int audioShotgunShells = Audio.PlayOneShot(ShotgunShellsPicked);
-                    Engineson.Destroy(other);
-                }
-            }
-        }
-        else if (other.tag == "Upgrade")
-        {
-            Engineson.print("Player Collided with:" + other.tag);
-
-            BoltgunUpgradePickUp boltgunUpgrade = other.GetComponent<BoltgunUpgradePickUp>();
-            if (boltgunUpgrade != null)
-            {
-                boltgunUpgrade.OnPickUp(playerController);
+                other.GetComponent<ShotgunShells>().OnPickUp(playerController);
+                int audioShotgunShells = Audio.PlayOneShot(ShotgunShellsPicked);
                 Engineson.Destroy(other);
             }
-            else
-            {
-                ShotgunUpgradePickUp shotgunUpgrade = other.GetComponent<ShotgunUpgradePickUp>();
-                if (shotgunUpgrade != null)
-                {
-                    shotgunUpgrade.OnPickUp(playerController);
-                    Engineson.Destroy(other);
-                }
-                else
-                {
-                    RailgunUpgradePickUp railgunUpgrade = other.GetComponent<RailgunUpgradePickUp>();
-                    if (railgunUpgrade != null)
-                    {
-                        railgunUpgrade.OnPickUp(playerController);
-                        Engineson.Destroy(other);
-                    }
-                }
-            }
         }
-        else if (other.tag == "Weapon")
+        if (other.tag == "Upgrade")
         {
             Engineson.print("Player Collided with:" + other.tag);
 
-            ShotgunPickUp shotgunPickUp = other.GetComponent<ShotgunPickUp>();
-            if (shotgunPickUp != null)
+            if (other.GetComponent<BoltgunUpgradePickUp>() != null )
             {
-                shotgunPickUp.OnPickUp(playerController);
+                other.GetComponent<BoltgunUpgradePickUp>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+            }
+            else if (other.GetComponent<ShotgunUpgradePickUp>() != null)
+            {
+              other.GetComponent<ShotgunUpgradePickUp>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+            }
+            else if (other.GetComponent<RailgunUpgradePickUp>() != null)
+            {
+                other.GetComponent<RailgunUpgradePickUp>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+            }
+        }
+        if (other.tag == "Weapon")
+        {
+            Engineson.print("Player Collided with:" + other.tag);
+            if (other.GetComponent<ShotgunPickUp>() != null)
+            {
+                other.GetComponent<ShotgunPickUp>().OnPickUp(playerController);
                 int audioShotgun = Audio.PlayOneShot(ShotgunObtained);
                 Engineson.Destroy(other);
+
             }
-            else
+            else if (other.GetComponent<RailgunPickUp>() != null)
             {
-                RailgunPickUp railgunPickUp = other.GetComponent<RailgunPickUp>();
-                if (railgunPickUp != null)
-                {
-                    railgunPickUp.OnPickUp(playerController);
-                    int audioRailgun = Audio.PlayOneShot(RailgunObtained);
-                    Engineson.Destroy(other);
-                }
+                other.GetComponent<RailgunPickUp>().OnPickUp(playerController);
+                int audioRailgun = Audio.PlayOneShot(RailgunObtained);
+                Engineson.Destroy(other);
+
             }
+
+
         }
-        else if (other.tag == "BiblePage")
+
+        if (other.tag == "BiblePage")
         {
             Engineson.print("Player Collided with:" + other.tag);
-
-            BiblePagePickUp biblePagePickUp = other.GetComponent<BiblePagePickUp>();
-            if (biblePagePickUp != null)
+            if (other.GetComponent<BiblePagePickUp>() != null)
             {
-                biblePagePickUp.OnPickUp(playerController);
+                other.GetComponent<BiblePagePickUp>().OnPickUp(playerController);
                 Engineson.Destroy(other);
+
             }
+
+
         }
     }
 
@@ -352,12 +260,10 @@ public class PlayerPowerUp : MonoBehaviour
     {
         return hasMedicaeStimm;
     }
-
     public bool GetHasAmmunitionBlessing()
     {
         return hasAmmunitionBlessing;
     }
-
     public bool GetHasMagnet()
     {
         return hasMagnet;

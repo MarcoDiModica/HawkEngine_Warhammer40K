@@ -2,8 +2,7 @@ SceneMetadata:
   SceneName: LoseScene
 GameObject0:
   name: MainCamera
-  prefabPath: ""
-  uuid: 11994153665731370442
+  uuid: 7525649668309052071
   tag: Untagged
   active: true
   isStatic: false
@@ -32,19 +31,14 @@ GameObject0:
       near_plane: 0.10000000000000001
       far_plane: 500
       priority: 1
+    AudioListener: ~
     ScriptComponents:
       Script0:
         name: PlayerCamera
-        fields:
-          smoothness: 19
-          maxOffsetDistance: 3.5999999
-          offsetSmoothness: 5
-          returnDelay: 0.200000003
   Children: ~
 GameObject1:
   name: Canvas_lose_screen
-  prefabPath: Assets\Prefabs\Canvas_lose_screen.prefab.yaml
-  uuid: 7249198707028092111
+  uuid: 10258367190667472575
   tag: Untagged
   active: true
   isStatic: false
@@ -64,6 +58,15 @@ GameObject1:
         - 1
         - 1
         - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -89,11 +92,9 @@ GameObject1:
     ScriptComponents:
       Script0:
         name: LoseScreen
-        fields: ~
   Children:
-    - name: Menu_Image_1
-      prefabPath: ""
-      uuid: 13095701923999628115
+    - name: Menu_Image
+      uuid: 4854024235521768203
       tag: Untagged
       active: true
       isStatic: false
@@ -136,23 +137,9 @@ GameObject1:
           name: UIImageComponent
           enabled: true
           texture_path: Library/Textures/UI/GAME_OVER_screen.png
-          use_animation: false
-          sprite_size:
-            - 2560
-            - 1440
-          sheet_size:
-            - 2560
-            - 1440
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
       Children: ~
     - name: MM_button
-      prefabPath: ""
-      uuid: 8988015620361234835
+      uuid: 6278785819675010331
       tag: Untagged
       active: true
       isStatic: false
@@ -195,27 +182,13 @@ GameObject1:
           name: UIImageComponent
           enabled: true
           texture_path: Library/Textures/UI/game_over_MM.png
-          use_animation: false
-          sprite_size:
-            - 440
-            - 86
-          sheet_size:
-            - 440
-            - 86
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
           state: 1
       Children: ~
     - name: QUIT_button
-      prefabPath: ""
-      uuid: 3532270866259177256
+      uuid: 3237053725642521312
       tag: Untagged
       active: true
       isStatic: false
@@ -258,27 +231,13 @@ GameObject1:
           name: UIImageComponent
           enabled: true
           texture_path: Library/Textures/UI/game_over_quit.png
-          use_animation: false
-          sprite_size:
-            - 440
-            - 86
-          sheet_size:
-            - 440
-            - 86
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
           state: 1
       Children: ~
     - name: LLC_button
-      prefabPath: ""
-      uuid: 9050611164900548700
+      uuid: 9821946548477749381
       tag: Untagged
       active: true
       isStatic: false
@@ -321,19 +280,6 @@ GameObject1:
           name: UIImageComponent
           enabled: true
           texture_path: Library/Textures/UI/game_over_LLC.png
-          use_animation: false
-          sprite_size:
-            - 668
-            - 86
-          sheet_size:
-            - 668
-            - 86
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true

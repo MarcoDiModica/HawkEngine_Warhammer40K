@@ -11,7 +11,7 @@ public class ShotgunShells : PickUp
     public float floatSpeed = 1f;
     public float floatHeight = 0.5f;
     public float rotationSpeed = 50f;
-    public float lifeTime = 10f;
+    public float lifeTime = 30f;
     public bool isDetected = false;
 
     public override void Awake()
@@ -39,7 +39,7 @@ public class ShotgunShells : PickUp
         }
         if (elapsedTime >= lifeTime)
         {
-            DestroyPickUp();
+            //Destroy();
         }
     }
     public void MoveTowardsPlayer(float deltaTime)
@@ -50,10 +50,12 @@ public class ShotgunShells : PickUp
             Transform.position = Vector3.Lerp(Transform.position, player.GetComponent<Transform>().position, 0.1f);
         }
     }
-    public void DestroyPickUp()
-    {
-        Engineson.Destroy(this.gameObject);
-    }
+   // public void Destroy()
+   // {
+   //     GameObject player = GameObject.Find("Player");
+   //     Transform.position = new Vector3(0, -100, 0);
+   //     //player.GetComponent<PickUpManager>().DestroyPickUp(gameObject);
+   // }
 
     public void PowerUpMovment(float time, float dt)
     {
@@ -68,6 +70,6 @@ public class ShotgunShells : PickUp
     {
         Engineson.print("MedicaeStimm PowerUp applied");
 
-        playerController.playerShooting.shotgun.currentTotalAmmo += 8;
+        playerController.playerShooting.shotgun.currentTotalAmmo += 4;
     }
 }

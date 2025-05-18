@@ -29,7 +29,7 @@ ScriptHotReloader::~ScriptHotReloader() {
 		TryDeleteFile(m_ScriptFolder + "\\build_errors.txt");
 		TryDeleteFile(m_ScriptFolder + "\\process_output.log");
 
-		/*if (!m_StagingDirectory.empty() && std::filesystem::exists(m_StagingDirectory)) {
+		if (!m_StagingDirectory.empty() && std::filesystem::exists(m_StagingDirectory)) {
 			try {
 				std::filesystem::remove_all(m_StagingDirectory);
 				std::filesystem::create_directories(m_StagingDirectory);
@@ -54,7 +54,7 @@ ScriptHotReloader::~ScriptHotReloader() {
 		}
 		catch (const std::filesystem::filesystem_error& e) {
 			LOG(LogType::LOG_ERROR, "Error cleaning build directories: %s", e.what());
-		}*/
+		}
 	}
 }
 

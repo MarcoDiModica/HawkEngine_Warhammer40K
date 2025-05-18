@@ -13,10 +13,6 @@ namespace HawkEngine
 
         private static extern void SetSceneToPlay();
 
-        public static bool isLoadedFromCheckpoint = false;
-        public static bool isLevel2 = false;
-        public static bool isBossFight = false;
-
         //funciones
         public static void LoadScene(string sceneName)
         {
@@ -25,21 +21,6 @@ namespace HawkEngine
             if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
             {
                SetSceneToPlay();
-            }
-            else
-            {
-                Engineson.print("Scene not found");
-            }
-        }
-
-        public static void LoadSceneFromCheckpoint(string sceneName)
-        {
-            Tweening.CleanTweens();
-
-            if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
-            {
-                isLoadedFromCheckpoint = true;
-                SetSceneToPlay();
             }
             else
             {

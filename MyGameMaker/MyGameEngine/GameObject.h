@@ -115,7 +115,6 @@ public:
     void setBoundingBox(const BoundingBox& bbox) { _boundingBox = bbox; }
 
     void SelfDestroy();
-    bool IsDestroyed() const { return destroyed; }
 
     const std::string& GetPrefabSourcePath() const { return prefabSourcePath; }
     void SetPrefabSourcePath(const std::string& path) { prefabSourcePath = path; }

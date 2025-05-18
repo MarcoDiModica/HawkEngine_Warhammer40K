@@ -51,37 +51,18 @@ void ScriptComponent::Start() {
 void ScriptComponent::Update(float deltaTime) {
 	if (!monoScript || hasErrors) return;
 
-	try {
-		MonoClass* scriptClass = mono_object_get_class(monoScript);
-		if (!scriptClass) {
-			LOG(LogType::LOG_ERROR, "Failed to get class for script %s", GetTypeName().c_str());
-			hasErrors = true;
-			return;
-		}
+	MonoClass* scriptClass = mono_object_get_class(monoScript);
+	MonoMethod* updateMethod = mono_class_get_method_from_name(scriptClass, "Update", 1);
 
-		MonoMethod* updateMethod = mono_class_get_method_from_name(scriptClass, "Update", 1);
-		if (!updateMethod) {
-			return;
-		}
+	if (!updateMethod) return;
 
-		void* args[1];
-		args[0] = &deltaTime;
+	void* args[1];
+	args[0] = &deltaTime;
 
-		MonoObject* exception = nullptr;
-		mono_runtime_invoke(updateMethod, monoScript, args, &exception);
+	MonoObject* exception = nullptr;
+	mono_runtime_invoke(updateMethod, monoScript, args, &exception);
 
-		HandleException(exception, "Update");
-	}
-	catch (const std::exception& e) {
-		LOG(LogType::LOG_ERROR, "C++ Exception in Update: %s - Script: %s",
-			e.what(), GetTypeName().c_str());
-		hasErrors = true;
-	}
-	catch (...) {
-		LOG(LogType::LOG_ERROR, "Unknown C++ exception in Update - Script: %s",
-			GetTypeName().c_str());
-		hasErrors = true;
-	}
+	HandleException(exception, "Update");
 }
 
 void ScriptComponent::Destroy()
@@ -253,80 +234,53 @@ std::string ScriptComponent::GetTypeName() const
 
 MonoObject* GetMonoObjectFromGameObject(GameObject* gameObject) {
 	if (!gameObject) return nullptr;
-	if (gameObject->IsDestroyed()) return nullptr;
 
-	MonoObject* registeredObject = MonoManager::GetInstance().GetMonoObjectForNative(gameObject);
-	if (registeredObject) return registeredObject;
-
-	try {
-		MonoObject* monoObject = gameObject->GetSharp();
-		if (monoObject) {
-			MonoManager::GetInstance().RegisterMonoObject(gameObject, monoObject);
-			return monoObject;
-		}
-	}
-	catch (...) {
-		LOG(LogType::LOG_ERROR, "Exception creating Mono object for GameObject %s",
-			gameObject->GetName().c_str());
+	MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+	if (!gameObjectClass) {
+		return nullptr;
 	}
 
-	return nullptr;
+	MonoObject* monoGameObject = mono_object_new(mono_domain_get(), gameObjectClass);
+	if (!monoGameObject) {
+		return nullptr;
+	}
+
+	MonoClassField* nativePtrField = mono_class_get_field_from_name(gameObjectClass, "CplusplusInstance");
+	if (!nativePtrField) {
+		return nullptr;
+	}
+
+	uintptr_t nativePtr = reinterpret_cast<uintptr_t>(gameObject);
+	mono_field_set_value(monoGameObject, nativePtrField, &nativePtr);
+
+	return monoGameObject;
 }
+
+
 
 void ScriptComponent::InvokeMonoMethod(const std::string& methodName, GameObject& other) {
 	if (!monoScript || hasErrors) return;
-	if (owner && owner->IsDestroyed()) return;
-	if (other.IsDestroyed()) return;
 
-	//evita que monoScript sea recolectado por GC
-	MonoManager::GetInstance().RegisterMonoObject(this, monoScript);
+	MonoClass* klass = mono_object_get_class(monoScript);
+	MonoMethod* method = mono_class_get_method_from_name(klass, methodName.c_str(), 1);
 
-	MonoClass* klass = nullptr;
+	if (!method) return;
 
-	try {
-		klass = mono_object_get_class(monoScript);
-		if (!klass) {
-			LOG(LogType::LOG_ERROR, "Failed to get mono class for script %s", GetTypeName().c_str());
-			return;
-		}
+	MonoObject* monoOther = GetMonoObjectFromGameObject(&other);
 
-		MonoMethod* method = mono_class_get_method_from_name(klass, methodName.c_str(), 1);
-		if (!method) {
-			return;
-		}
-
-		MonoObject* monoOther = nullptr;
-
-		if (MonoManager::GetInstance().GetMonoObjectForNative(&other)) {
-			monoOther = MonoManager::GetInstance().GetMonoObjectForNative(&other);
-		}
-		else {
-			monoOther = other.GetSharp();
-			if (!monoOther) {
-				LOG(LogType::LOG_ERROR, "Failed to get C# reference for GameObject %s", other.GetName().c_str());
-				return;
-			}
-		}
-
-		void* args[1];
-		args[0] = monoOther;
-
-		MonoObject* exception = nullptr;
-		mono_runtime_invoke(method, monoScript, args, &exception);
-
-		HandleException(exception, methodName);
+	if (!monoOther) {
+		return;
 	}
-	catch (const std::exception& e) {
-		LOG(LogType::LOG_ERROR, "C++ Exception in InvokeMonoMethod: %s - Script: %s, Method: %s",
-			e.what(), GetTypeName().c_str(), methodName.c_str());
-		hasErrors = true;
-	}
-	catch (...) {
-		LOG(LogType::LOG_ERROR, "Unknown C++ exception in InvokeMonoMethod - Script: %s, Method: %s",
-			GetTypeName().c_str(), methodName.c_str());
-		hasErrors = true;
-	}
+
+	void* args[1];
+	args[0] = monoOther;
+
+	MonoObject* exception = nullptr;
+	mono_runtime_invoke(method, monoScript, args, &exception);
+
+	HandleException(exception, methodName);
 }
+
 
 YAML::Node ScriptComponent::encode()
 {

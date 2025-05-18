@@ -6,15 +6,13 @@ using static System.Net.Mime.MediaTypeNames;
 
 public class Ball : MonoBehaviour
 {
-    private Collider collider;
     public float value = 0.0f;
     private Rigidbody rigidbody;
-    private float deathtimer = 5.0f;
-    public bool needsDestroy = false;
+    private float deathtimer = 0.2f;
+    private bool needsDestroy = false;
     private float deathTimerPrevention = 0;
     public List<string> collisionNames = new List<string>();
     private float damage = 100.0f; // Placeholder damage value
-    private string energyBallAudio = "Assets/Audio/SFX/Weapons/Railgun/EnergyBallMoving.wav";
     public override void Awake(){ }
 
     public override void Start() 
@@ -33,8 +31,6 @@ public class Ball : MonoBehaviour
         rigidbody.SetGravity(new Vector3(0.0f, 0.0f, 0.0f) * 20);
         rigidbody.AddForce(dir * 20);
         rigidbody.SetFriction(0.5f);
-        collider = GetComponent<BoxCollider>();
-        collider.SetTrigger(true);
         var energyBallFX = Engineson.CreateGameObject("ExplosionFX", null);
         gameObject.AddChild(energyBallFX);
         energyBallFX.AddComponent<ParticleFX>().ApplyPreset(12);
@@ -49,36 +45,39 @@ public class Ball : MonoBehaviour
             deathTimerPrevention += deltaTime;
             if (deathTimerPrevention >= deathtimer)
             {
-                Engineson.Destroy(gameObject);
-                Audio.Stop(energyBallAudio);
+                GetComponent<Transform>().position -= new Vector3(0, 100, 0);
                 needsDestroy = false;
             }
         }
         
 
     }
-    public override void OnTriggerEnter(GameObject other)
+
+    public override void OnCollisionEnter(GameObject other)
     {
-        switch (other.tag)
+        for (int i = 0; i < collisionNames.Count; i++)
         {
-            case "Melee":
-                other.GetComponent<EnemyControllerMelee>()?.TakeDamage(damage);
-                break;
-            case "Ranged":
-                other.GetComponent<EnemyControllerRanged>()?.TakeDamage(damage);
-                break;
-            case "Stalker":
-                other.GetComponent<EnemyControllerStalker>()?.TakeDamage(damage);
-                break;
-            case "Boss":
-                other.GetComponent<EnemyControllerBoss>()?.TakeDamage(damage);
-                break;
-            case "Warrior":
-                other.GetComponent<EnemyControllerWarrior>()?.TakeDamage(damage);
-                break;
-            case "Destroyable":
-                other.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
-                break;
+            var enemy = GameObject.Find(collisionNames[i]);
+            if (enemy.tag == "Melee")
+            {
+                enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Ranged")
+            {
+                enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Stalker")
+            {
+                //enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Boss")
+            {
+                enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Destroyable")
+            {
+                enemy.GetComponent<DestroyEnviormentObject>().DestroyObject();
+            }
         }
     }
 

@@ -123,7 +123,7 @@ public class EnemyControllerBoss : EnemyController
         rb.SetMass(1000.0f);
         tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
         tailController?.gameObject.SetActive(false);
-        currentHealth = maxHealth;
+        currentHealth = 1500.0f;
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");

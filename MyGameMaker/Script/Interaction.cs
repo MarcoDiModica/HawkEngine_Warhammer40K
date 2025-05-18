@@ -52,6 +52,7 @@ public class Interaction : MonoBehaviour
     public void SetDialogueText(string text)
     {
         dialogueText.SetText(text);
+        dialogueText.SetBoxSize(1200f, 200f);
     }
 
     public void SetChoice1Text(string text)

@@ -7,3 +7,4 @@ Checkpoint
 Enemy
 Melee
 ExplosiveBarrel
+DestructibleWall

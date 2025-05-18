@@ -94,8 +94,9 @@ public:
 			"Assets/Textures/VFX_lictor_dodge_cue.png",
 			"Assets/Textures/Magnet_Area_animation_SpriteSheet_Yiwei.png",
 			"Assets/Textures/TreeSpritesheet.png",
-				"Assets/Textures/Tree2Spritesheet.png",
-				"Assets/Textures/Tree3Spritesheet.png"
+			"Assets/Textures/Tree2Spritesheet.png",
+			"Assets/Textures/Tree3Spritesheet.png",
+			"Assets/Textures/Red_Thirst_Sprite_sheet.png"
 
 		};
 

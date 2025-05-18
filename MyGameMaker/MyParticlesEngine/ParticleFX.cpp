@@ -1072,7 +1072,7 @@ false,                          // Random rotation
 false						   // Is Local Space
 	};
 
-	const ParticlePreset Environment3_Tree = {
+const ParticlePreset Environment3_Tree = {
 ParticleType::ENVIRONMENT3_TREE,
 false,                         // PlayOnAwake
 1.0f,                          // Duration (only if one-shot)
@@ -1104,6 +1104,40 @@ false,                          // Random rotation
 36.0f,                          // Max scale
 "Assets/Textures/Tree3Spritesheet.png", // Texture path
 false						   // Is Local Space
+	};
+
+	const ParticlePreset Red_Thirst = {
+	ParticleType::RED_THIRST,
+	false,						   // PlayOnAwake
+	1,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   				   // Start color (white)
+	glm::vec3(1,1,1),   				   // End color (white)
+	1.0f,                          			   // Alpha start
+	1.0f,                          			   // Alpha end
+	0.8f,                          			   // Size start
+	15.0f,                          		   // Size end
+	1,                          			   // Min lifetime
+	1,                         			   // Max lifetime
+	0.0f,                          			   // Min speed
+	0.0f,                          			   // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+	0,                          			   // Rotation speed
+	1.f,                         			   // Emission rate (particles per second)
+	EmitterShape::POINT,            		   // Shape
+	0.2f,                          			   // Cone base radius
+	1.0f,                          			   // Cone height
+	20.0f,                         			   // Cone angle in degrees
+	glm::vec2(640,360),		   	   // Sprite size
+	true,						   // Use animation
+	false,						   // Random animation Index
+	0.1f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/Red_Thirst_Sprite_sheet.png", 	   // Texture path
+	false 						   // Is Local Space
 	};
 
 }
@@ -1663,6 +1697,11 @@ void ParticleFX::ApplyPreset(int particleID) {
 		preset = ParticlePresets::Environment3_Tree;
 		SetOneShot(false);
 		break;
+	case ParticleType::RED_THIRST:
+		preset = ParticlePresets::Red_Thirst;
+		SetOneShot(false);
+		break;
+
 	default:
 		preset = ParticlePresets::Medicae_Stim;
 		SetOneShot(false);

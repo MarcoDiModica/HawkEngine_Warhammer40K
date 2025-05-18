@@ -40,6 +40,7 @@ enum class ParticleType {
     BLOOD_SPLASH = 19,
     SHOTGUN_SHOT = 20,
     MEDICAE_STIM_SPEED = 21,
+    RED_THIRST = 32,
 
     // PowerUps
     AMMUNITION_BLESSING = 22,

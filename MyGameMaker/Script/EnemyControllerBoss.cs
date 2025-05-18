@@ -123,7 +123,7 @@ public class EnemyControllerBoss : EnemyController
         rb.SetMass(1000.0f);
         tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
         tailController?.gameObject.SetActive(false);
-        currentHealth = maxHealth;
+        currentHealth = 1500.0f;
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
@@ -154,7 +154,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 500.0f;
+        currentHealth = 1500.0f;
         gameObject.tag = "Boss";
         isDead = false;
 //         musicClip = new AudioClip(combatMusic, "BossMusic", true, false);
@@ -354,6 +354,7 @@ public class EnemyControllerBoss : EnemyController
                 {
                     Audio.Stop(BossTheme);
                     Engineson.Destroy(gameObject);
+                    SceneManager.LoadSceneWithFade("WinScene", 0.5f);
                 }
             }
         }

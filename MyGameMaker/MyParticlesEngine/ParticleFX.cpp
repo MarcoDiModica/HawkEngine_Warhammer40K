@@ -967,7 +967,7 @@ namespace ParticlePresets {
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
 	"Assets/Textures/VFX_lictor_dodge_cue.png", 	   // Texture path
-	false 						   // Is Local Space
+	true						   // Is Local Space
 	};
 
 	const ParticlePreset Magnet_Area = {

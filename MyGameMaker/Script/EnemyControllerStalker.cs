@@ -7,8 +7,8 @@ public class EnemyControllerStalker : EnemyController
 {
     // Enemy Stats
     private float health = 350.0f;
-    private float clawDamage = 25.0f;
-    private float pounceDamage = 35.0f;
+    private float clawDamage = 8.0f;
+    private float pounceDamage = 10.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
 
@@ -348,6 +348,8 @@ public class EnemyControllerStalker : EnemyController
         }
 
         Audio.PlayOneShot(SFX_ATTACK);
+        AddComponent<ParticleFX>().ApplyPreset(27);
+        GetComponent<ParticleFX>().EmitBurst(1);
     }
 
     public override void TakeDamage(float damage)

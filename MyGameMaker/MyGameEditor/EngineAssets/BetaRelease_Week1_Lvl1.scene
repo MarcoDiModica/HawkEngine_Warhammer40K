@@ -144,17 +144,17 @@ GameObject3:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 668.213623046875
-        - 153.04563903808594
-        - 53.142322540283203
+        - 153.79510498046875
+        - 950
+        - 13.897197723388672
       localRotation:
-        - 92.203911159274327
-        - 6.3565933724271657
-        - -2.7193370787228766
+        - 92.203908949835395
+        - 6.3565934286382157
+        - -2.7193370632145846
       localScale:
-        - 0.99999983765252243
-        - 0.94270752655665435
-        - 1.000000043669768
+        - 0.99999982118606567
+        - 0.94270765781402588
+        - 1
     CameraComponent:
       name: CameraComponent
       enabled: true
@@ -162,7 +162,7 @@ GameObject3:
       fov: 1.0471975803375244
       size: 0
       near_plane: 0.10000000000000001
-      far_plane: 500
+      far_plane: 1000
       priority: 1
   Children: ~
 GameObject4:
@@ -3235,9 +3235,9 @@ GameObject8:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 1.64155555
+          floatSpeed: 1.73453414
           floatHeight: 0.5
-          rotationSpeed: 93.4259796
+          rotationSpeed: 92.8897629
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -3343,9 +3343,9 @@ GameObject9:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 1.87011027
+          floatSpeed: 0.508803904
           floatHeight: 0.5
-          rotationSpeed: 38.9241104
+          rotationSpeed: 56.0096054
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -6346,7 +6346,7 @@ GameObject21:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.910383027740565
+            - 89.895896651452134
             - 0
           localScale:
             - 208.60295104980469
@@ -6388,7 +6388,7 @@ GameObject21:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.910383027740565
+            - 89.895896651452134
             - 0
           localScale:
             - 208.60295104980469
@@ -6430,7 +6430,7 @@ GameObject21:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.910383027740565
+            - 89.895896651452134
             - 0
           localScale:
             - 208.60295104980469
@@ -6472,7 +6472,7 @@ GameObject21:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.910383027740565
+            - 89.895896651452134
             - 0
           localScale:
             - 208.60295104980469
@@ -6514,7 +6514,7 @@ GameObject21:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.910383027740565
+            - 89.895896651452134
             - 0
           localScale:
             - 208.60295104980469
@@ -6556,7 +6556,7 @@ GameObject21:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.910383027740565
+            - 89.895896651452134
             - 0
           localScale:
             - 208.60295104980469
@@ -6598,7 +6598,7 @@ GameObject21:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.910383027740565
+            - 89.895896651452134
             - 0
           localScale:
             - 208.60295104980469
@@ -6640,7 +6640,7 @@ GameObject21:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.910383027740565
+            - 89.895896651452134
             - 0
           localScale:
             - 208.60295104980469
@@ -6682,7 +6682,7 @@ GameObject21:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.910383027740565
+            - 89.895896651452134
             - 0
           localScale:
             - 208.60295104980469
@@ -6933,9 +6933,9 @@ GameObject21:
             - 164.68646240234375
             - 1182.335205078125
           localRotation:
-            - -90.000006841531359
-            - 83.400708063154056
-            - 6.8415313589204022e-06
+            - -90.000038218417956
+            - 83.400708653284127
+            - -2.1114590061434899e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -6975,9 +6975,9 @@ GameObject21:
             - 158.47599792480469
             - 1306.6678466796875
           localRotation:
-            - -90.000022329887898
-            - -76.296840882286389
-            - 2.0610058463586403e-05
+            - -90.000022329904013
+            - -76.296831728460759
+            - 2.0610074528317326e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -7941,9 +7941,9 @@ GameObject21:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.99324933289887
-            - 89.848759413905256
-            - 179.99245190761221
+            - 89.993614090501495
+            - 89.841023957163998
+            - 179.99280300475198
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -7983,9 +7983,9 @@ GameObject21:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.99324933289887
-            - 89.848759413905256
-            - 179.99245190761221
+            - 89.993614090501495
+            - 89.841023957163998
+            - 179.99280300475198
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -8025,9 +8025,9 @@ GameObject21:
             - 54.029090881347656
             - -3545.785888671875
           localRotation:
-            - -90.000010910579675
-            - 41.425534951456129
-            - -1.5438391430641762e-06
+            - -90.000009771516233
+            - 41.425536495295006
+            - 1.4685718556198884e-06
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -9033,9 +9033,9 @@ GameObject21:
             - 201.60006713867188
             - -701.08270263671875
           localRotation:
-            - -90.000019554685608
-            - 80.78974638732339
-            - -2.2980840868634173e-05
+            - -90.000009777344786
+            - 80.789757877741891
+            - -1.1490422395121572e-05
           localScale:
             - 56
             - 56
@@ -9159,9 +9159,9 @@ GameObject21:
             - 109.05261993408203
             - 3582.95361328125
           localRotation:
-            - -8.5567687024641774
-            - -57.209904152680842
-            - -138.90945258387796
+            - -8.5567701040473878
+            - -57.209905254181926
+            - -138.90944816177014
           localScale:
             - 1
             - 1
@@ -9495,9 +9495,9 @@ GameObject21:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360479206519
-            - 52.153761099889579
-            - -35.460576025032005
+            - 178.33360391534552
+            - 52.153760491639723
+            - -35.460575201138177
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -9537,9 +9537,9 @@ GameObject21:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360479206519
-            - 52.153761099889579
-            - -35.460576025032005
+            - 178.33360391534552
+            - 52.153760491639723
+            - -35.460575201138177
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -9579,9 +9579,9 @@ GameObject21:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360479206519
-            - 52.153761099889579
-            - -35.460576025032005
+            - 178.33360391534552
+            - 52.153760491639723
+            - -35.460575201138177
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -10923,9 +10923,9 @@ GameObject21:
             - 48.267116546630859
             - -1413.0146484375
           localRotation:
-            - 90.000054427585894
-            - 66.46946325622973
-            - -179.99998743299042
+            - 90.000051112517212
+            - 66.469458196973463
+            - -179.99999249225044
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -11049,9 +11049,9 @@ GameObject21:
             - 48.267116546630859
             - 1095.0556640625
           localRotation:
-            - 90.000009067532091
-            - -53.451692655642894
-            - 179.99999273070574
+            - 90.000014487692511
+            - -53.451699924936648
+            - 179.99999270525839
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -15027,9 +15027,9 @@ GameObject24:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.99979783065146
-            - 81.207711224038363
-            - 179.99991257390278
+            - 89.999787549172481
+            - 81.207685528697723
+            - 179.99990057983965
           localScale:
             - 41.956031799316406
             - 53.921905517578125
@@ -15195,9 +15195,9 @@ GameObject24:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.97980502076517
-            - -89.875561340422024
-            - -179.97068159002669
+            - 89.98104212556261
+            - -89.881278025420968
+            - -179.9719562616996
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -15709,9 +15709,9 @@ GameObject24:
             - 72.816131591796875
             - 381.2847900390625
           localRotation:
-            - -90.000181498260375
-            - -82.523170442382707
-            - 1.8234699104566091e-06
+            - -90.000193737143292
+            - -82.523212292504823
+            - 1.5773549266366961e-05
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -16087,9 +16087,9 @@ GameObject24:
             - 22.607597351074219
             - -2101.2529296875
           localRotation:
-            - -179.99999134858152
-            - 84.241650511540783
-            - 2.1271351066091105e-05
+            - -179.99999134857288
+            - 84.241575839430283
+            - 2.1271352770344651e-05
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -16129,9 +16129,9 @@ GameObject24:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.1000398505668889
-            - -81.281069142238891
-            - -179.99999182730545
+            - 1.1000440685401862
+            - -81.281069421925139
+            - -179.99999158021058
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -16675,9 +16675,9 @@ GameObject24:
             - 72.838882446289062
             - 742.7088623046875
           localRotation:
-            - -90.000097898345174
-            - -82.668049938671061
-            - 8.9238238549415334e-06
+            - -90.000041065164922
+            - -82.668028366222771
+            - -4.1065164911799115e-05
           localScale:
             - 59.934871673583984
             - 59.934871673583984
@@ -17221,9 +17221,9 @@ GameObject24:
             - 72.816177368164062
             - 17.716598510742188
           localRotation:
-            - -90.000181498260375
-            - -82.523170442382707
-            - 1.8234699104566091e-06
+            - -90.000193737143292
+            - -82.523212292504823
+            - 1.5773549266366961e-05
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -17557,9 +17557,9 @@ GameObject24:
             - 84.565017700195312
             - -2966.651611328125
           localRotation:
-            - -90.006555122519231
-            - -89.736453118106255
-            - 0.0038537755379123672
+            - -90.008824059553362
+            - -89.739580907069026
+            - 0.006146618536919727
           localScale:
             - 43.324676513671875
             - 43.324676513671875
@@ -17599,9 +17599,9 @@ GameObject24:
             - 60.107398986816406
             - 545.6107177734375
           localRotation:
-            - -10.799293464279856
-            - 6.8374148506403252
-            - -1.3541885033724943
+            - -10.799293536236101
+            - 6.837420445280495
+            - -1.3541886050677907
           localScale:
             - 24.36241340637207
             - 24.36241340637207
@@ -17641,9 +17641,9 @@ GameObject24:
             - 47.50750732421875
             - 561.61212158203125
           localRotation:
-            - 178.20561862077827
-            - 0.51393303890409037
-            - 3.0764941759025346
+            - 178.20561863229051
+            - 0.51393307593834681
+            - 3.0764965227215213
           localScale:
             - 24.362417221069336
             - 24.36241340637207
@@ -17767,9 +17767,9 @@ GameObject24:
             - 148.99980163574219
             - 222.72898864746094
           localRotation:
-            - -15.158006721752129
-            - -65.712729558661451
-            - -74.316805664969777
+            - -15.158003019171982
+            - -65.712734709883506
+            - -74.316807628942172
           localScale:
             - 24.540990829467773
             - 24.540992736816406
@@ -18061,9 +18061,9 @@ GameObject24:
             - 27.166694641113281
             - -2728.593017578125
           localRotation:
-            - 89.999976515916089
-            - -71.216269084915822
-            - -179.99999209264232
+            - 89.99999398205162
+            - -71.216263813345734
+            - 179.99998351823203
           localScale:
             - 110.40802001953125
             - 110.40802001953125
@@ -18103,9 +18103,9 @@ GameObject24:
             - 27.166694641113281
             - -1073.0118408203125
           localRotation:
-            - 89.999970568143496
-            - -66.052898862926241
-            - -179.99996358604818
+            - 89.99997381074671
+            - -66.052893874802578
+            - -179.99996857417514
           localScale:
             - 49.639827728271484
             - 49.63983154296875
@@ -18187,9 +18187,9 @@ GameObject24:
             - 27.166694641113281
             - 109.11194610595703
           localRotation:
-            - -89.999494596934341
-            - 85.725840891330961
-            - 0.00050198559414298268
+            - -89.999358980596071
+            - 85.725503950436348
+            - 0.00064101940393245448
           localScale:
             - 49.63983154296875
             - 49.63983154296875
@@ -19891,9 +19891,9 @@ GameObject25:
             - 451.7078857421875
             - 9679.166015625
           localRotation:
-            - 89.999995057496349
-            - 73.086982798943836
-            - 179.99999333118021
+            - 89.999974814588398
+            - 73.086972913931362
+            - 179.99999035143418
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -23470,7 +23470,7 @@ GameObject28:
             - 57.399997711181641
           localRotation:
             - 0
-            - 82.875088708094054
+            - 82.875066781348494
             - 0
           localScale:
             - 20.007547378540039
@@ -24492,9 +24492,9 @@ GameObject28:
             - 3.1512765884399414
             - 3.5392885208129883
           localRotation:
-            - 179.84665361490838
-            - -57.00485317998195
-            - -179.9722471271356
+            - 179.84665361175115
+            - -57.004986217304896
+            - -179.97224712192536
           localScale:
             - 4.1512908935546875
             - 8.0131254196166992
@@ -26851,7 +26851,7 @@ GameObject30:
             - -160.05094909667969
           localRotation:
             - 0
-            - 63.749234821424913
+            - 63.749226666872545
             - 0
           localScale:
             - 24.358108520507812
@@ -27049,7 +27049,7 @@ GameObject30:
             - -72.031135559082031
           localRotation:
             - 0
-            - -69.383034145159527
+            - -69.383029236251048
             - 0
           localScale:
             - 12.133749961853027
@@ -31129,9 +31129,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.5232178
+          floatSpeed: 1.82750607
           floatHeight: 0.5
-          rotationSpeed: 65.3602524
+          rotationSpeed: 58.3879318
   Children: ~
 GameObject35:
   name: BiblePage_Pueblo
@@ -31214,9 +31214,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.547521949
+          floatSpeed: 1.28646171
           floatHeight: 0.5
-          rotationSpeed: 98.0832291
+          rotationSpeed: 43.5934067
   Children: ~
 GameObject36:
   name: BiblePage_Pasillo_Zona3
@@ -31299,9 +31299,9 @@ GameObject36:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.07313657
+          floatSpeed: 1.03066266
           floatHeight: 0.5
-          rotationSpeed: 35.5619202
+          rotationSpeed: 32.5476608
   Children: ~
 GameObject37:
   name: BiblePage_Ciudad
@@ -31384,9 +31384,9 @@ GameObject37:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.79709649
+          floatSpeed: 0.552286744
           floatHeight: 0.5
-          rotationSpeed: 43.4809532
+          rotationSpeed: 86.5931702
   Children: ~
 GameObject38:
   name: Barril_Ciudad1
@@ -97710,9 +97710,9 @@ GameObject135:
             - 0
             - -25.443840026855469
           localRotation:
-            - 89.988807855435468
-            - 89.871205520178236
-            - 179.99002021477185
+            - 89.990128445260311
+            - 89.872601061499466
+            - 179.99132372911311
           localScale:
             - 86.512344360351562
             - 99.999984741210938
@@ -97752,9 +97752,9 @@ GameObject135:
             - 341.29437255859375
             - 124.93968963623047
           localRotation:
-            - 89.994417160906082
-            - 89.883769068555793
-            - 179.99405003805765
+            - 89.992682297275493
+            - 89.882778542800722
+            - 179.99231858951251
           localScale:
             - 96.124794006347656
             - 99.999984741210938
@@ -98173,7 +98173,7 @@ GameObject135:
             - -869.0504150390625
           localRotation:
             - 90
-            - 89.915033268009893
+            - 89.913667657617651
             - 0
           localScale:
             - 100
@@ -98886,9 +98886,9 @@ GameObject135:
             - 19.999998092651367
             - -924.02191162109375
           localRotation:
-            - -90.000024148367501
-            - 0.061901421204796317
-            - -1.2535545188220391e-09
+            - -90.000024148366222
+            - 0.061901508459678463
+            - 1.1046667295505907e-09
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -99306,9 +99306,9 @@ GameObject135:
             - 0
             - -443.06002807617188
           localRotation:
-            - 89.999992274080967
-            - 78.583651658540646
-            - 179.99999055802445
+            - 89.999981116036011
+            - 78.583664532628461
+            - 179.99998454814906
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -99348,9 +99348,9 @@ GameObject135:
             - 0
             - -346.2620849609375
           localRotation:
-            - 90.000011830234257
-            - -74.941221082198908
-            - -179.99993604471325
+            - 90.000032238327037
+            - -74.941239767902985
+            - -179.99995473041133
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -99600,9 +99600,9 @@ GameObject135:
             - 0
             - -469.199462890625
           localRotation:
-            - -90.000059268101438
-            - 65.587229349345165
-            - -2.9568355432569616e-05
+            - -90.000056103600002
+            - 65.587224437805361
+            - -2.4656809638720077e-05
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -100524,9 +100524,9 @@ GameObject135:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075478576823292e-05
-            - -79.275294712142454
-            - -90.000097096965987
+            - 5.90687453246757e-05
+            - -79.275337818401084
+            - -90.000105375176148
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -100566,9 +100566,9 @@ GameObject135:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075478576823292e-05
-            - -79.275294712142454
-            - -90.000097096965987
+            - 5.90687453246757e-05
+            - -79.275337818401084
+            - -90.000105375176148
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -101698,9 +101698,9 @@ GameObject154:
         - -0.76705443859100342
         - 11.704938888549805
       localRotation:
-        - -110.03496560065869
-        - -71.515199086493794
-        - -5.6573297079392946
+        - -110.03498350290769
+        - -71.515161760696671
+        - -5.6573107401130107
       localScale:
         - 0.35897165536880493
         - 0.35897156596183777
@@ -101730,7 +101730,7 @@ GameObject155:
   prefabPath: Assets\Prefabs\CanvasFadeLvl1.prefab.yaml
   uuid: 11279144625943510511
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -101844,7 +101844,7 @@ GameObject156:
   prefabPath: Assets\Prefabs\Canvas_Interaction_Level1.prefab.yaml
   uuid: 6591346108623782193
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -104630,10 +104630,10 @@ GameObject157:
             - 1225
             - 40
           sprite_offset:
-            - 0
+            - 175
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 1
           anim_index_limit: 6
           color:
             - 1
@@ -104758,10 +104758,10 @@ GameObject157:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 1
@@ -104886,10 +104886,10 @@ GameObject157:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 1
@@ -105669,7 +105669,7 @@ GameObject157:
       prefabPath: ""
       uuid: 6010016200549436751
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -105967,7 +105967,7 @@ GameObject158:
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 45
+          spawnRadius: 50
           player: Player
   Children: ~
 GameObject159:
@@ -106008,7 +106008,7 @@ GameObject159:
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 45
+          spawnRadius: 50
           player: Player
   Children: ~
 GameObject160:
@@ -106049,7 +106049,7 @@ GameObject160:
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 45
+          spawnRadius: 50
           player: Player
   Children: ~
 GameObject161:
@@ -106090,7 +106090,7 @@ GameObject161:
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 45
+          spawnRadius: 50
           player: Player
   Children: ~
 GameObject162:
@@ -106131,7 +106131,7 @@ GameObject162:
           spawnWarrior: true
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 45
+          spawnRadius: 50
           player: Player
   Children: ~
 GameObject163:
@@ -106172,7 +106172,7 @@ GameObject163:
           spawnWarrior: true
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 45
+          spawnRadius: 50
           player: Player
   Children: ~
 GameObject164:
@@ -106187,9 +106187,419 @@ GameObject164:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 619.1683349609375
+        - 593.21307373046875
         - 0
-        - -14.831037521362305
+        - -13.070464134216309
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: EnemySpawner
+        fields:
+          spawnTimer: 0
+          secondsBetweenSpawns: 20
+          currentEnemiesSpawned: 0
+          maxEnemiesToSpawn: 1
+          stalkerEnemyPrefab: Assets\Prefabs\Lictor.prefab.yaml
+          spawnHormagaunt: false
+          spawnRanged: false
+          spawnStalker: true
+          spawnWarrior: false
+          spawnClimberHormagaunt: false
+          spawnerActive: false
+          spawnRadius: 50
+          player: Player
+  Children: ~
+GameObject165:
+  name: SpawnerHormagaunt_Instance3
+  prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
+  uuid: 16580966163423364833
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 847.66265869140625
+        - 1.3477418422698975
+        - -202.222412109375
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: EnemySpawner
+        fields:
+          spawnTimer: 0
+          secondsBetweenSpawns: 5
+          currentEnemiesSpawned: 0
+          maxEnemiesToSpawn: 2
+          hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
+          spawnHormagaunt: true
+          spawnRanged: false
+          spawnStalker: false
+          spawnWarrior: false
+          spawnClimberHormagaunt: false
+          spawnerActive: false
+          spawnRadius: 50
+          player: Player
+  Children: ~
+GameObject166:
+  name: SpawnerHormagaunt_Instance5
+  prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
+  uuid: 5901448414540169129
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 882.88385009765625
+        - 0.24191081523895264
+        - -165.04924011230469
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: EnemySpawner
+        fields:
+          spawnTimer: 0
+          secondsBetweenSpawns: 5
+          currentEnemiesSpawned: 0
+          maxEnemiesToSpawn: 2
+          hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
+          spawnHormagaunt: true
+          spawnRanged: false
+          spawnStalker: false
+          spawnWarrior: false
+          spawnClimberHormagaunt: false
+          spawnerActive: false
+          spawnRadius: 50
+          player: Player
+  Children: ~
+GameObject167:
+  name: SpawnerHormagaunt_Instance6
+  prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
+  uuid: 10231391297256788343
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 846.56256103515625
+        - 0.90037298202514648
+        - -148.39356994628906
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: EnemySpawner
+        fields:
+          spawnTimer: 0
+          secondsBetweenSpawns: 5
+          currentEnemiesSpawned: 0
+          maxEnemiesToSpawn: 2
+          hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
+          spawnHormagaunt: true
+          spawnRanged: false
+          spawnStalker: false
+          spawnWarrior: false
+          spawnClimberHormagaunt: false
+          spawnerActive: false
+          spawnRadius: 50
+          player: Player
+  Children: ~
+GameObject168:
+  name: SpawnerTermagant_Instance4
+  prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
+  uuid: 18111165282557653429
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 846.40631103515625
+        - 0
+        - -149.42034912109375
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: EnemySpawner
+        fields:
+          spawnTimer: 0
+          secondsBetweenSpawns: 15
+          currentEnemiesSpawned: 0
+          maxEnemiesToSpawn: 1
+          rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
+          spawnHormagaunt: false
+          spawnRanged: true
+          spawnStalker: false
+          spawnWarrior: false
+          spawnClimberHormagaunt: false
+          spawnerActive: false
+          spawnRadius: 50
+          player: Player
+  Children: ~
+GameObject169:
+  name: SpawnerTermagant_Instance5
+  prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
+  uuid: 10954002349267036451
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 882.60357666015625
+        - 0
+        - -164.78123474121094
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: EnemySpawner
+        fields:
+          spawnTimer: 0
+          secondsBetweenSpawns: 15
+          currentEnemiesSpawned: 0
+          maxEnemiesToSpawn: 1
+          rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
+          spawnHormagaunt: false
+          spawnRanged: true
+          spawnStalker: false
+          spawnWarrior: false
+          spawnClimberHormagaunt: false
+          spawnerActive: false
+          spawnRadius: 50
+          player: Player
+  Children: ~
+GameObject170:
+  name: SpawnerTermagant_Instance6
+  prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
+  uuid: 9597066908695249242
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 847.99755859375
+        - 0
+        - -203.17662048339844
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: EnemySpawner
+        fields:
+          spawnTimer: 0
+          secondsBetweenSpawns: 15
+          currentEnemiesSpawned: 0
+          maxEnemiesToSpawn: 1
+          rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
+          spawnHormagaunt: false
+          spawnRanged: true
+          spawnStalker: false
+          spawnWarrior: false
+          spawnClimberHormagaunt: false
+          spawnerActive: false
+          spawnRadius: 50
+          player: Player
+  Children: ~
+GameObject171:
+  name: SpawnerTermagant_Instance3
+  prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
+  uuid: 12024279504145694481
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 887.0146484375
+        - 0
+        - -200.03021240234375
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: EnemySpawner
+        fields:
+          spawnTimer: 0
+          secondsBetweenSpawns: 15
+          currentEnemiesSpawned: 0
+          maxEnemiesToSpawn: 1
+          rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
+          spawnHormagaunt: false
+          spawnRanged: true
+          spawnStalker: false
+          spawnWarrior: false
+          spawnClimberHormagaunt: false
+          spawnerActive: false
+          spawnRadius: 50
+          player: Player
+  Children: ~
+GameObject172:
+  name: SpawnerTyranidWarrior_Instance4
+  prefabPath: Assets\Prefabs\SpawnerTyranidWarrior.prefab.yaml
+  uuid: 2665088459853920409
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 846.53009033203125
+        - 0
+        - -149.27969360351562
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: EnemySpawner
+        fields:
+          spawnTimer: 0
+          secondsBetweenSpawns: 10
+          currentEnemiesSpawned: 0
+          maxEnemiesToSpawn: 1
+          warriorEnemyPrefab: Assets\Prefabs\Tyranid_Warrior.prefab.yaml
+          spawnHormagaunt: false
+          spawnRanged: false
+          spawnStalker: false
+          spawnWarrior: true
+          spawnClimberHormagaunt: false
+          spawnerActive: false
+          spawnRadius: 50
+          player: Player
+  Children: ~
+GameObject173:
+  name: SpawnerTyranidWarrior_Instance6
+  prefabPath: Assets\Prefabs\SpawnerTyranidWarrior.prefab.yaml
+  uuid: 7656923810244698155
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 882.3050537109375
+        - 0
+        - -164.9227294921875
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: EnemySpawner
+        fields:
+          spawnTimer: 0
+          secondsBetweenSpawns: 10
+          currentEnemiesSpawned: 0
+          maxEnemiesToSpawn: 1
+          warriorEnemyPrefab: Assets\Prefabs\Tyranid_Warrior.prefab.yaml
+          spawnHormagaunt: false
+          spawnRanged: false
+          spawnStalker: false
+          spawnWarrior: true
+          spawnClimberHormagaunt: false
+          spawnerActive: false
+          spawnRadius: 50
+          player: Player
+  Children: ~
+GameObject174:
+  name: SpawnerLictor_Instance2
+  prefabPath: Assets\Prefabs\SpawnerLictor.prefab.yaml
+  uuid: 14876423971544103617
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 856.87432861328125
+        - 0.27412497997283936
+        - -181.73942565917969
       localRotation:
         - 0
         - -0
@@ -106213,6 +106623,168 @@ GameObject164:
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 45
+          spawnRadius: 50
           player: Player
+  Children: ~
+GameObject175:
+  name: SpawnerLictor_Instance3
+  prefabPath: Assets\Prefabs\SpawnerLictor.prefab.yaml
+  uuid: 8647882437215167394
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 866.5985107421875
+        - 0
+        - -183.24667358398438
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: EnemySpawner
+        fields:
+          spawnTimer: 0
+          secondsBetweenSpawns: 25
+          currentEnemiesSpawned: 0
+          maxEnemiesToSpawn: 1
+          stalkerEnemyPrefab: Assets\Prefabs\Lictor.prefab.yaml
+          spawnHormagaunt: false
+          spawnRanged: false
+          spawnStalker: true
+          spawnWarrior: false
+          spawnClimberHormagaunt: false
+          spawnerActive: false
+          spawnRadius: 50
+          player: Player
+  Children: ~
+GameObject176:
+  name: SpawnerHormagaunt_Instance4
+  prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
+  uuid: 8262494591601837887
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 886.971435546875
+        - 0.58655059337615967
+        - -200.19464111328125
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: EnemySpawner
+        fields:
+          spawnTimer: 0
+          secondsBetweenSpawns: 5
+          currentEnemiesSpawned: 0
+          maxEnemiesToSpawn: 2
+          hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
+          spawnHormagaunt: true
+          spawnRanged: false
+          spawnStalker: false
+          spawnWarrior: false
+          spawnClimberHormagaunt: false
+          spawnerActive: false
+          spawnRadius: 50
+          player: Player
+  Children: ~
+GameObject177:
+  name: Statue ISE
+  prefabPath: ""
+  uuid: 13473198104926902521
+  tag: Interactable
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 121
+        - 5.8180956840515137
+        - 10
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 25
+        - 25
+        - 25
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: Item
+        fields:
+          isTextVisible: false
+          text: A magnificent statue
+  Children: ~
+GameObject178:
+  name: ClawsISE
+  prefabPath: ""
+  uuid: 5818929705644964628
+  tag: Interactable
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 541.5216064453125
+        - 0
+        - 11.025110244750977
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 10
+        - 10
+        - 10
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: Item
+        fields:
+          isTextVisible: false
+          text: The marks of a creature's attack.
   Children: ~

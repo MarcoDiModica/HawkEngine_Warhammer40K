@@ -1,6 +1,6 @@
 name: CanvasFade
 prefabPath: ""
-uuid: 8779471530644978163
+uuid: 8904848286942898641
 tag: Untagged
 active: true
 isStatic: false
@@ -20,6 +20,9 @@ Components:
       - 1
       - 1
       - 1
+  UICanvasComponent:
+    name: UICanvasComponent
+    enabled: true
   UITransformComponent:
     name: UITransformComponent
     enabled: true
@@ -39,13 +42,10 @@ Components:
       - 0
       - 1
       - 0
-  UICanvasComponent:
-    name: UICanvasComponent
-    enabled: true
 Children:
   - name: FadeController
     prefabPath: ""
-    uuid: 15786543660717237488
+    uuid: 16477882791968875065
     tag: Untagged
     active: true
     isStatic: false
@@ -101,6 +101,11 @@ Children:
         anim_speed: 0
         anim_index: 0
         anim_index_limit: 0
+        color:
+          - 0
+          - 0
+          - 0
+          - 0
       ScriptComponents:
         Script0:
           name: FadeController

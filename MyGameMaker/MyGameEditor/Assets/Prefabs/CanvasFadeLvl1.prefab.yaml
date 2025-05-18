@@ -1,6 +1,6 @@
 name: CanvasFade
 prefabPath: ""
-uuid: 13520569302828689279
+uuid: 14787682087647468676
 tag: Untagged
 active: true
 isStatic: false
@@ -45,7 +45,7 @@ Components:
 Children:
   - name: FadeController
     prefabPath: ""
-    uuid: 12500227344715407138
+    uuid: 1303577912882477015
     tag: Untagged
     active: true
     isStatic: false
@@ -101,6 +101,11 @@ Children:
         anim_speed: 0
         anim_index: 0
         anim_index_limit: 0
+        color:
+          - 0
+          - 0
+          - 0
+          - 0
       ScriptComponents:
         Script0:
           name: FadeController

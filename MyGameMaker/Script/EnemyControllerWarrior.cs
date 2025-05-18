@@ -7,7 +7,7 @@ public class EnemyControllerWarrior : EnemyController
 {
     private float health = 100.0f;
     private float projectileDamage = 15.0f;
-    private float swordDamage = 25.0f;
+    private float swordDamage = 15.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
 

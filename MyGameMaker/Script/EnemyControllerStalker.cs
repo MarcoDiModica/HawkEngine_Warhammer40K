@@ -6,7 +6,7 @@ using HawkEngine;
 public class EnemyControllerStalker : EnemyController
 {
     // Enemy Stats
-    private float health = 350.0f;
+    private float health = 250.0f;
     private float clawDamage = 8.0f;
     private float pounceDamage = 10.0f;
     private float distanceToPlayer;
@@ -336,7 +336,7 @@ public class EnemyControllerStalker : EnemyController
             lictorMesh.SetActive(true);
             
 
-            gameObject.GetComponent<Collider>().SetPosition(startPosition);
+            //gameObject.GetComponent<Collider>().SetPosition(startPosition);
         }
         
     }

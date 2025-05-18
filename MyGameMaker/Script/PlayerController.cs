@@ -63,6 +63,10 @@ public class PlayerController : MonoBehaviour
     private bool componentsInitialized = false;
     private bool effectsInitialized = false;
 
+    private bool isReloadingIdle = false;
+    private bool isReloadingRunning = false;
+    private bool isReloadingWalking = false;
+
     public override void Awake()
     {
         playerInput = gameObject.GetComponent<PlayerInput>();
@@ -263,40 +267,42 @@ public class PlayerController : MonoBehaviour
 
         if (playerInput.IsReloading())
         {
+            
             if (playerShooting.GetCurrentGun() == 0)
             {
 
-                if (isIdle)
+                if (isIdle || isShootInput)
                 {
+                    isReloadingIdle = true;
                     playerAnimations.ReloadBoltgunWhileIdleAnimation();
                 }
                 else if (isRunning)
                 {
+                    isReloadingRunning = true;
                     playerAnimations.ReloadBoltgunWhileRunningAnimation();
                 }
-                else if (isWalking)
+                else if (isWalking || isShootingRunning)
                 {
-                    if (moveDirection == lookDirection)
-                    {
-                        playerAnimations.ReloadBoltgunWhileWalkingForwardAnimation();
-                    }
-                    else if (moveDirection == -lookDirection)
-                    {
-                        playerAnimations.ReloadBoltgunWhileWalkingBackwardsAnimation();
-                    }
-                    else if (moveDirection == lookDirection + new Vector3(1, 0, 0))
-                    {
-                        playerAnimations.ReloadBoltgunWhileWalkingRightAnimation();
-                    }
-                    else if (moveDirection == lookDirection - new Vector3(1, 0, 0))
-                    {
-                        playerAnimations.ReloadBoltgunWhileWalkingLeftAnimation();
-                    }
+                    isReloadingWalking = true;
+                    playerAnimations.ReloadBoltgunWhileWalkingForwardAnimation();
                 }
             }
         }
 
-                    elapsedTime += deltaTime;
+        if(isReloadingIdle)
+        {
+            ReloadingIdleAnimationFinished();
+        }
+        else if (isReloadingRunning)
+        {
+            ReloadingRunningAnimationFinished();
+        }
+        else if (isReloadingWalking)
+        {
+            ReloadingWalkingAnimationFinished();
+        }
+
+        elapsedTime += deltaTime;
 
         UpdateAimLaser();
 
@@ -330,6 +336,91 @@ public class PlayerController : MonoBehaviour
             }
 
             StopFootsteps();
+        }
+    }
+
+    private void ReloadingIdleAnimationFinished()
+    {
+
+        
+        if (playerAnimations.esk.IsAnimationFinished())
+        {
+            Engineson.print("Reloading animation finished");
+            isReloadingIdle = false;
+            if (playerInput.IsShooting())
+            {
+                if (playerShooting.GetCurrentGun() == 0)
+                {
+                    playerAnimations.ReloadBoltgunIdleToShootingStandingAnim();
+                }
+                else if (playerShooting.GetCurrentGun() == 1)
+                {
+                    playerAnimations.ReloadShotgunIdleToShootingStandingAnim();
+                }
+            }
+            else
+            {
+                if (playerShooting.GetCurrentGun() == 0)
+                {
+                    playerAnimations.ReloadBoltgunIdleToIdleAnim();
+                }
+                else if (playerShooting.GetCurrentGun() == 1)
+                {
+                    playerAnimations.ReloadShotgunIdleToIdleAnim();
+                }
+            }
+            
+        }
+    }
+
+    private void ReloadingRunningAnimationFinished()
+    {
+        if (playerAnimations.esk.IsAnimationFinished())
+        {
+            Engineson.print("Reloading animation finished");
+            isReloadingRunning = false;
+            if (playerShooting.GetCurrentGun() == 0)
+            {
+                playerAnimations.ReloadBoltgunRunningToRunningAnimation();
+            }
+            else if (playerShooting.GetCurrentGun() == 1)
+            {
+                playerAnimations.ReloadShotgunRunningToRunningAnimation();
+            }
+            
+        }
+    }
+
+    private void ReloadingWalkingAnimationFinished()
+    {
+        if (playerAnimations.esk.IsAnimationFinished())
+        {
+            Engineson.print("Reloading animation finished");
+            isReloadingWalking = false;
+            if (playerInput.IsShooting())
+            {
+                if (playerShooting.GetCurrentGun() == 0)
+                {
+                    playerAnimations.ReloadBoltgunWalkingToShootingWalkingAnimation();
+                }
+                else if (playerShooting.GetCurrentGun() == 1)
+                {
+                    playerAnimations.ReloadShotgunWalkingToShootingWalkingAnimation();
+                }
+            }
+            else
+            {
+                if (playerShooting.GetCurrentGun() == 0)
+                {
+                    playerAnimations.ReloadBoltgunWalkingToWalkingAnimation();
+                }
+                else if (playerShooting.GetCurrentGun() == 1)
+                {
+                    playerAnimations.ReloadShotgunWalkingToWalkingAnimation();
+                }
+            }
+            
+
         }
     }
 

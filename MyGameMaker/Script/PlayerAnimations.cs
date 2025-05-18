@@ -158,6 +158,166 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
+    public void ReloadBoltgunIdleToIdleAnim()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(21, 11, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
+    public void ReloadBoltgunIdleToShootingStandingAnim()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(21, 33, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
+    public void ReloadBoltgunRunningToRunningAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(20, 32, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
+    public void ReloadBoltgunWalkingToWalkingAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(23, 41, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
+    public void ReloadBoltgunWalkingToShootingWalkingAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(23, 37, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
+    public void ReloadShotgunIdleToIdleAnim()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(27, 11, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
+    public void ReloadShotgunIdleToShootingStandingAnim()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(27, 33, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
+    public void ReloadShotgunRunningToRunningAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(21, 32, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
+    public void ReloadShotgunWalkingToWalkingAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(29, 41, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
+    public void ReloadShotgunWalkingToShootingWalkingAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(29, 37, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
     public void WalkingToIdleAnimation()
     {
         if (!componentsInitialized || esk == null)
@@ -2136,7 +2296,7 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(41, 23, 0.1f);
+            esk.PlayAnimOnce(23, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)

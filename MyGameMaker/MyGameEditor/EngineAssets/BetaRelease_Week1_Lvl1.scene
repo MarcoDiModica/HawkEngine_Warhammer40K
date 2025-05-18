@@ -481,9 +481,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 1.51912796
+          floatSpeed: 1.26289999
           floatHeight: 0.5
-          rotationSpeed: 44.8775978
+          rotationSpeed: 82.7209702
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -589,9 +589,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 1.64332855
+          floatSpeed: 0.55178535
           floatHeight: 0.5
-          rotationSpeed: 77.9717026
+          rotationSpeed: 32.9237785
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -3592,7 +3592,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.913667657617651
             - 0
           localScale:
             - 208.60295104980469
@@ -3634,7 +3634,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.913667657617651
             - 0
           localScale:
             - 208.60295104980469
@@ -3676,7 +3676,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.913667657617651
             - 0
           localScale:
             - 208.60295104980469
@@ -3718,7 +3718,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.913667657617651
             - 0
           localScale:
             - 208.60295104980469
@@ -3760,7 +3760,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.913667657617651
             - 0
           localScale:
             - 208.60295104980469
@@ -3802,7 +3802,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.913667657617651
             - 0
           localScale:
             - 208.60295104980469
@@ -3844,7 +3844,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.913667657617651
             - 0
           localScale:
             - 208.60295104980469
@@ -3886,7 +3886,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.913667657617651
             - 0
           localScale:
             - 208.60295104980469
@@ -3928,7 +3928,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.913667657617651
             - 0
           localScale:
             - 208.60295104980469
@@ -4179,9 +4179,9 @@ GameObject20:
             - 164.68646240234375
             - 1182.335205078125
           localRotation:
-            - -90.000034797714122
-            - 83.400656161786358
-            - -2.4535416775231011e-05
+            - -90.000006841530947
+            - 83.400736609575972
+            - 6.8415309504562106e-06
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -4221,9 +4221,9 @@ GameObject20:
             - 158.47599792480469
             - 1306.6678466796875
           localRotation:
-            - -90.000032066307597
-            - -76.296852338521205
-            - 2.5186989974818382e-05
+            - -90.000032066250384
+            - -76.296838579876479
+            - 2.5186932764085601e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -5187,9 +5187,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5229,9 +5229,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.992813332482925
-            - 89.845968887463798
-            - 179.99202102983085
+            - 89.99272602454667
+            - 89.849463751692667
+            - 179.99192689174697
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5271,9 +5271,9 @@ GameObject20:
             - 54.029090881347656
             - -3545.785888671875
           localRotation:
-            - -90.000010910579675
-            - 41.425534951456129
-            - -1.5438391430641762e-06
+            - -90.000010910578467
+            - 41.425539507705125
+            - -1.5438385469118765e-06
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5733,9 +5733,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999996775941923
-            - 66.695713392354193
-            - 179.99998631507907
+            - 89.99999664449409
+            - 66.695725202350346
+            - 179.99999490101703
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5775,9 +5775,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999996775941923
-            - 66.695713392354193
-            - 179.99998631507907
+            - 89.99999664449409
+            - 66.695725202350346
+            - 179.99999490101703
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5817,9 +5817,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999996775941923
-            - 66.695713392354193
-            - 179.99998631507907
+            - 89.99999664449409
+            - 66.695725202350346
+            - 179.99999490101703
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -6279,9 +6279,9 @@ GameObject20:
             - 201.60006713867188
             - -701.08270263671875
           localRotation:
-            - -90.000019554685608
-            - 80.78974638732339
-            - -2.2980840868634173e-05
+            - -89.99999657384474
+            - 80.78974981347659
+            - -3.4261552652453462e-06
           localScale:
             - 56
             - 56
@@ -6405,9 +6405,9 @@ GameObject20:
             - 109.05261993408203
             - 3582.95361328125
           localRotation:
-            - -8.5567687024641774
-            - -57.209904152680842
-            - -138.90945258387796
+            - -8.5567713767149858
+            - -57.209904822524862
+            - -138.90944749320749
           localScale:
             - 1
             - 1
@@ -6741,9 +6741,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.3336032357864
-            - 52.153765872309769
-            - -35.460576839329157
+            - 178.33360241669106
+            - 52.153760355639683
+            - -35.460577179108597
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6783,9 +6783,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.3336032357864
-            - 52.153765872309769
-            - -35.460576839329157
+            - 178.33360241669106
+            - 52.153760355639683
+            - -35.460577179108597
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6825,9 +6825,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.3336032357864
-            - 52.153765872309769
-            - -35.460576839329157
+            - 178.33360241669106
+            - 52.153760355639683
+            - -35.460577179108597
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -8169,9 +8169,9 @@ GameObject20:
             - 48.267116546630859
             - -1413.0146484375
           localRotation:
-            - 90.000037852256185
-            - 66.469444936717551
-            - 179.99998727072264
+            - 90.000047624140635
+            - 66.469451566834678
+            - -179.99998900386532
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -8295,9 +8295,9 @@ GameObject20:
             - 48.267116546630859
             - 1095.0556640625
           localRotation:
-            - 90.000012613111224
-            - -53.451699950386711
-            - -179.99999283249653
+            - 90.000007192950903
+            - -53.451699924938005
+            - -179.9999928070491
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -12273,9 +12273,9 @@ GameObject23:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.999814963114346
-            - 81.207651251098838
-            - 179.99991771827246
+            - 89.999787549172481
+            - 81.207685528697723
+            - 179.99990057983965
           localScale:
             - 41.956031799316406
             - 53.921905517578125
@@ -12441,9 +12441,9 @@ GameObject23:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.980708457243637
-            - -89.884551983739144
-            - -179.97157819685606
+            - 89.980142273032357
+            - -89.877488931503635
+            - -179.97102054997811
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -12955,9 +12955,9 @@ GameObject23:
             - 72.816131591796875
             - 381.2847900390625
           localRotation:
-            - -90.000181498260375
-            - -82.523170442382707
-            - 1.8234699104566091e-06
+            - -90.000181498723933
+            - -82.523163076591089
+            - 1.8239280906533197e-06
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -13333,9 +13333,9 @@ GameObject23:
             - 22.607597351074219
             - -2101.2529296875
           localRotation:
-            - -179.99999134856591
-            - 84.241571003659956
-            - 2.1271364354931249e-05
+            - -179.9999913485772
+            - 84.241636004164036
+            - 2.1271356554776735e-05
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -13375,9 +13375,9 @@ GameObject23:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.1000384438348696
-            - -81.281069059395222
-            - -179.99999174495804
+            - 1.1000393942694031
+            - -81.281069116212663
+            - -179.99999178724312
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -13921,9 +13921,9 @@ GameObject23:
             - 72.838882446289062
             - 742.7088623046875
           localRotation:
-            - -90.000069481541559
-            - -82.668047556250855
-            - -1.607088024267079e-05
+            - -90.00006948186774
+            - -82.668038632501023
+            - -1.6070559165231286e-05
           localScale:
             - 59.934871673583984
             - 59.934871673583984
@@ -14467,9 +14467,9 @@ GameObject23:
             - 72.816177368164062
             - 17.716598510742188
           localRotation:
-            - -90.000181498260375
-            - -82.523170442382707
-            - 1.8234699104566091e-06
+            - -90.000181498723933
+            - -82.523163076591089
+            - 1.8239280906533197e-06
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -14803,9 +14803,9 @@ GameObject23:
             - 84.565017700195312
             - -2966.651611328125
           localRotation:
-            - -90.006211315235433
-            - -89.738303625490815
-            - 0.003508260823133845
+            - -90.006211695841614
+            - -89.736822659180987
+            - 0.0035086412682105456
           localScale:
             - 43.324676513671875
             - 43.324676513671875
@@ -14845,9 +14845,9 @@ GameObject23:
             - 60.107398986816406
             - 545.6107177734375
           localRotation:
-            - -10.799293437563803
-            - 6.8374131365353152
-            - -1.3541883940324368
+            - -10.799293456818161
+            - 6.837414423366643
+            - -1.3541884626869589
           localScale:
             - 24.36241340637207
             - 24.36241340637207
@@ -14887,9 +14887,9 @@ GameObject23:
             - 47.50750732421875
             - 561.61212158203125
           localRotation:
-            - 178.20561861906711
-            - 0.51393308214042899
-            - 3.0764935350321521
+            - 178.20561861973169
+            - 0.51393303553733982
+            - 3.0764939625553538
           localScale:
             - 24.362417221069336
             - 24.36241340637207
@@ -15013,9 +15013,9 @@ GameObject23:
             - 148.99980163574219
             - 222.72898864746094
           localRotation:
-            - -15.158006721752129
-            - -65.712729558661451
-            - -74.316805664969777
+            - -15.158007319902184
+            - -65.712721843277919
+            - -74.31680329619185
           localScale:
             - 24.540990829467773
             - 24.540992736816406
@@ -15307,9 +15307,9 @@ GameObject23:
             - 27.166694641113281
             - -2728.593017578125
           localRotation:
-            - 89.999983438891221
-            - -71.21628820247453
-            - -179.99998516963853
+            - 89.99999398205162
+            - -71.216263813345734
+            - 179.99998351823203
           localScale:
             - 110.40802001953125
             - 110.40802001953125
@@ -15349,9 +15349,9 @@ GameObject23:
             - 27.166694641113281
             - -1073.0118408203125
           localRotation:
-            - 89.999970568143496
-            - -66.052898862926241
-            - -179.99996358604818
+            - 89.999980544396763
+            - -66.052905348130082
+            - -179.99997007125407
           localScale:
             - 49.639827728271484
             - 49.63983154296875
@@ -15433,9 +15433,9 @@ GameObject23:
             - 27.166694641113281
             - 109.11194610595703
           localRotation:
-            - -89.999611632444825
-            - 85.72583764653173
-            - 0.00039007629096570568
+            - -89.999520053121415
+            - 85.72582739415698
+            - 0.00048165561438020654
           localScale:
             - 49.63983154296875
             - 49.63983154296875
@@ -17137,9 +17137,9 @@ GameObject24:
             - 451.7078857421875
             - 9679.166015625
           localRotation:
-            - 89.99999458460762
-            - 73.086972913935568
-            - -179.99998297328179
+            - 89.999993094735103
+            - 73.08696969774131
+            - -179.99999309473512
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -20716,7 +20716,7 @@ GameObject27:
             - 57.399997711181641
           localRotation:
             - 0
-            - 82.875088708094054
+            - 82.875057103326867
             - 0
           localScale:
             - 20.007547378540039
@@ -21738,9 +21738,9 @@ GameObject27:
             - 3.1512765884399414
             - 3.5392885208129883
           localRotation:
-            - 179.84665361139227
-            - -57.004815550314554
-            - -179.97224712266421
+            - 179.84665361923683
+            - -57.004836646636804
+            - -179.97224712990706
           localScale:
             - 4.1512908935546875
             - 8.0131254196166992
@@ -24097,7 +24097,7 @@ GameObject29:
             - -160.05094909667969
           localRotation:
             - 0
-            - 63.749234821424913
+            - 63.749229862193133
             - 0
           localScale:
             - 24.358108520507812
@@ -24295,7 +24295,7 @@ GameObject29:
             - -72.031135559082031
           localRotation:
             - 0
-            - -69.383034145159527
+            - -69.383040276432098
             - 0
           localScale:
             - 12.133749961853027
@@ -25185,9 +25185,9 @@ GameObject29:
             - 3.0124197006225586
             - -194.1514892578125
           localRotation:
-            - -179.99999499104624
-            - 87.96954795149837
-            - -179.99999499104624
+            - -179.99999499104948
+            - 87.96957693443774
+            - -179.99999499104948
           localScale:
             - 12.215158462524414
             - 7.4319052696228027
@@ -28375,9 +28375,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.54556489
+          floatSpeed: 1.86801434
           floatHeight: 0.5
-          rotationSpeed: 47.3865089
+          rotationSpeed: 77.2376099
   Children: ~
 GameObject34:
   name: BiblePage_Pueblo
@@ -28460,9 +28460,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.75003219
+          floatSpeed: 0.740129292
           floatHeight: 0.5
-          rotationSpeed: 46.3225441
+          rotationSpeed: 34.1025848
   Children: ~
 GameObject35:
   name: BiblePage_Pasillo_Zona3
@@ -28545,9 +28545,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.579978049
+          floatSpeed: 1.22962677
           floatHeight: 0.5
-          rotationSpeed: 83.7010574
+          rotationSpeed: 53.0224152
   Children: ~
 GameObject36:
   name: BiblePage_Ciudad
@@ -28630,9 +28630,9 @@ GameObject36:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.45243692
+          floatSpeed: 1.40514803
           floatHeight: 0.5
-          rotationSpeed: 40.5038071
+          rotationSpeed: 53.0878601
   Children: ~
 GameObject37:
   name: Barril_Ciudad1
@@ -95482,10 +95482,10 @@ GameObject135:
             - 1225
             - 40
           sprite_offset:
-            - 700
+            - 875
             - 0
           anim_speed: 0.5
-          anim_index: 4
+          anim_index: 5
           anim_index_limit: 6
       Children: ~
     - name: red_thirst_bar
@@ -95600,10 +95600,10 @@ GameObject135:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 150
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 3
           anim_index_limit: 4
       Children: ~
     - name: blood_bar1
@@ -95718,10 +95718,10 @@ GameObject135:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 150
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 3
           anim_index_limit: 4
       Children: ~
     - name: blood_bar2
@@ -97857,9 +97857,9 @@ GameObject136:
             - 0
             - -25.443840026855469
           localRotation:
-            - 89.990467132423191
-            - 89.870092771291041
-            - 179.99168973704974
+            - 89.988903107242706
+            - 89.870614096898422
+            - 179.99011546657911
           localScale:
             - 86.512344360351562
             - 99.999984741210938
@@ -97899,9 +97899,9 @@ GameObject136:
             - 341.29437255859375
             - 124.93968963623047
           localRotation:
-            - 89.99465994186906
-            - 89.879401170803291
-            - 179.99429964920242
+            - 89.994335086729549
+            - 89.881240691934423
+            - 179.99397479405218
           localScale:
             - 96.124794006347656
             - 99.999984741210938
@@ -98320,7 +98320,7 @@ GameObject136:
             - -869.0504150390625
           localRotation:
             - 90
-            - 89.927078428586213
+            - 89.918682505717186
             - 0
           localScale:
             - 100
@@ -99034,8 +99034,8 @@ GameObject136:
             - -924.02191162109375
           localRotation:
             - -90.000024148366222
-            - 0.061901395264156327
-            - 1.1046905837193109e-09
+            - 0.06190141413007668
+            - 1.104686608024524e-09
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -99453,9 +99453,9 @@ GameObject136:
             - 0
             - -443.06002807617188
           localRotation:
-            - 90.000004293803471
-            - 78.583667110382748
-            - -179.999987125914
+            - 90.00000429381106
+            - 78.583655090653039
+            - -179.99998712590619
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -99495,9 +99495,9 @@ GameObject136:
             - 0
             - -346.2620849609375
           localRotation:
-            - 90.000011830234257
-            - -74.941221082198908
-            - -179.99993604471325
+            - 90.000032238323755
+            - -74.941231903828864
+            - -179.99995473040573
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -99747,9 +99747,9 @@ GameObject136:
             - 0
             - -469.199462890625
           localRotation:
-            - -90.000052939103796
-            - 65.587229349348618
-            - -1.974527001603451e-05
+            - -90.000062432597062
+            - 65.587224437801908
+            - -3.4479894512716319e-05
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -100671,9 +100671,9 @@ GameObject136:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075526628513449e-05
-            - -79.275334685310682
-            - -90.000097097011164
+            - 4.9075433400077898e-05
+            - -79.275327825096156
+            - -90.000097096917941
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -100713,9 +100713,9 @@ GameObject136:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075526628513449e-05
-            - -79.275334685310682
-            - -90.000097097011164
+            - 4.9075433400077898e-05
+            - -79.275327825096156
+            - -90.000097096917941
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -101832,7 +101832,7 @@ GameObject154:
 GameObject155:
   name: Player
   prefabPath: ""
-  uuid: 17207768689812634033
+  uuid: 6243083332511866002
   tag: Player
   active: true
   isStatic: false
@@ -102038,7 +102038,7 @@ GameObject155:
   Children:
     - name: playerMesh
       prefabPath: ""
-      uuid: 4513071182329972042
+      uuid: 6750679036182856212
       tag: Untagged
       active: true
       isStatic: false
@@ -102151,7 +102151,7 @@ GameObject155:
       Children:
         - name: ROOT
           prefabPath: ""
-          uuid: 9894186909234631228
+          uuid: 10113169538028761331
           tag: Untagged
           active: true
           isStatic: false
@@ -102174,7 +102174,7 @@ GameObject155:
           Children:
             - name: HIP.L
               prefabPath: ""
-              uuid: 7626999301864858656
+              uuid: 3156624587977171851
               tag: Untagged
               active: true
               isStatic: false
@@ -102197,7 +102197,7 @@ GameObject155:
               Children:
                 - name: THIGH.L
                   prefabPath: ""
-                  uuid: 6460819289315192196
+                  uuid: 6877586695856108032
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -102220,7 +102220,7 @@ GameObject155:
                   Children:
                     - name: TIBIA.L
                       prefabPath: ""
-                      uuid: 18131946577554456313
+                      uuid: 10316998445145394230
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -102243,7 +102243,7 @@ GameObject155:
                       Children:
                         - name: FOOT.L
                           prefabPath: ""
-                          uuid: 8420986250753457557
+                          uuid: 15384496158003795675
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -102266,7 +102266,7 @@ GameObject155:
                           Children:
                             - name: TOE.L
                               prefabPath: ""
-                              uuid: 15884008168412761748
+                              uuid: 10288735638162264893
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -102289,7 +102289,7 @@ GameObject155:
                               Children: ~
             - name: SPINE
               prefabPath: ""
-              uuid: 12723970392888335952
+              uuid: 2144969792448596446
               tag: Untagged
               active: true
               isStatic: false
@@ -102312,7 +102312,7 @@ GameObject155:
               Children:
                 - name: SHOULDER.L
                   prefabPath: ""
-                  uuid: 2645752338568187930
+                  uuid: 9691985083647430659
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -102335,7 +102335,7 @@ GameObject155:
                   Children:
                     - name: ARM.L
                       prefabPath: ""
-                      uuid: 8099270176498467309
+                      uuid: 17470226890906816650
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -102358,7 +102358,7 @@ GameObject155:
                       Children:
                         - name: FOREARM.L
                           prefabPath: ""
-                          uuid: 10010106733343284522
+                          uuid: 8492826620697960909
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -102381,7 +102381,7 @@ GameObject155:
                           Children:
                             - name: HAND.L
                               prefabPath: ""
-                              uuid: 1865884344443318894
+                              uuid: 10385561072221028108
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -102404,7 +102404,7 @@ GameObject155:
                               Children:
                                 - name: INDEX1.L
                                   prefabPath: ""
-                                  uuid: 13326501334657656039
+                                  uuid: 14594350558659141476
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -102427,7 +102427,7 @@ GameObject155:
                                   Children:
                                     - name: INDEX2.L
                                       prefabPath: ""
-                                      uuid: 2913957082276979056
+                                      uuid: 4529766853618576382
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -102450,7 +102450,7 @@ GameObject155:
                                       Children:
                                         - name: INDEX3.L
                                           prefabPath: ""
-                                          uuid: 15283146491766748309
+                                          uuid: 6348260914454938153
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -102473,7 +102473,7 @@ GameObject155:
                                           Children: ~
                                 - name: MIDDLE1.L
                                   prefabPath: ""
-                                  uuid: 8964756258964161220
+                                  uuid: 6417338958803182298
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -102496,7 +102496,7 @@ GameObject155:
                                   Children:
                                     - name: MIDDLE2.L
                                       prefabPath: ""
-                                      uuid: 7798234753626324287
+                                      uuid: 10543789561204641926
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -102519,7 +102519,7 @@ GameObject155:
                                       Children:
                                         - name: MIDDLE3.L
                                           prefabPath: ""
-                                          uuid: 7910572532972850022
+                                          uuid: 15465006651493419690
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -102542,7 +102542,7 @@ GameObject155:
                                           Children: ~
                                 - name: RING1.L
                                   prefabPath: ""
-                                  uuid: 1352817307742415649
+                                  uuid: 13873981978607872926
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -102565,7 +102565,7 @@ GameObject155:
                                   Children:
                                     - name: RING2.L
                                       prefabPath: ""
-                                      uuid: 15315323214443928345
+                                      uuid: 14820667649073915463
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -102588,7 +102588,7 @@ GameObject155:
                                       Children:
                                         - name: RING3.L
                                           prefabPath: ""
-                                          uuid: 16216395584976542845
+                                          uuid: 14037960794601485651
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -102611,7 +102611,7 @@ GameObject155:
                                           Children: ~
                                 - name: PINKY1.L
                                   prefabPath: ""
-                                  uuid: 17061410391469514778
+                                  uuid: 12967980681692481437
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -102634,7 +102634,7 @@ GameObject155:
                                   Children:
                                     - name: PINKY2.L
                                       prefabPath: ""
-                                      uuid: 9937365248621645256
+                                      uuid: 7437004183588441344
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -102657,7 +102657,7 @@ GameObject155:
                                       Children:
                                         - name: PINKY3.L
                                           prefabPath: ""
-                                          uuid: 6651352496490913684
+                                          uuid: 420171487449772032
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -102680,7 +102680,7 @@ GameObject155:
                                           Children: ~
                                 - name: THUMB1.L
                                   prefabPath: ""
-                                  uuid: 8671063683518004891
+                                  uuid: 4325481147945660690
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -102703,7 +102703,7 @@ GameObject155:
                                   Children:
                                     - name: THUMB2.L
                                       prefabPath: ""
-                                      uuid: 121709642317943464
+                                      uuid: 14569656333985465270
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -102726,7 +102726,7 @@ GameObject155:
                                       Children: ~
                 - name: HEAD
                   prefabPath: ""
-                  uuid: 13029839489976461195
+                  uuid: 3477311253914090104
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -102749,7 +102749,7 @@ GameObject155:
                   Children: ~
                 - name: SHOULDER.R
                   prefabPath: ""
-                  uuid: 12725272954718667244
+                  uuid: 12994046613348546701
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -102772,7 +102772,7 @@ GameObject155:
                   Children:
                     - name: ARM.R
                       prefabPath: ""
-                      uuid: 9389315136375973528
+                      uuid: 2754853089285750014
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -102795,7 +102795,7 @@ GameObject155:
                       Children:
                         - name: FOREARM.R
                           prefabPath: ""
-                          uuid: 4171214574085535764
+                          uuid: 104534122190133057
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -102818,7 +102818,7 @@ GameObject155:
                           Children:
                             - name: HAND.R
                               prefabPath: ""
-                              uuid: 11889270840474844206
+                              uuid: 6681000239068496482
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -102841,7 +102841,7 @@ GameObject155:
                               Children:
                                 - name: INDEX1.R
                                   prefabPath: ""
-                                  uuid: 8008535857513363298
+                                  uuid: 13128905051247094694
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -102864,7 +102864,7 @@ GameObject155:
                                   Children:
                                     - name: INDEX2.R
                                       prefabPath: ""
-                                      uuid: 15729901690087432508
+                                      uuid: 2838562906774380026
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -102887,7 +102887,7 @@ GameObject155:
                                       Children:
                                         - name: INDEX3.R
                                           prefabPath: ""
-                                          uuid: 62807695957675073
+                                          uuid: 9115763084248012752
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -102910,7 +102910,7 @@ GameObject155:
                                           Children: ~
                                 - name: MIDDLE1.R
                                   prefabPath: ""
-                                  uuid: 14663530879934430762
+                                  uuid: 7655077195702485031
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -102933,7 +102933,7 @@ GameObject155:
                                   Children:
                                     - name: MIDDLE2.R
                                       prefabPath: ""
-                                      uuid: 13284382106744998808
+                                      uuid: 214141663458486254
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -102956,7 +102956,7 @@ GameObject155:
                                       Children:
                                         - name: MIDDLE3.R
                                           prefabPath: ""
-                                          uuid: 4510701441645286164
+                                          uuid: 12332491915787534252
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -102979,7 +102979,7 @@ GameObject155:
                                           Children: ~
                                 - name: RING1.R
                                   prefabPath: ""
-                                  uuid: 9287571136731852445
+                                  uuid: 1274072906690663667
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -103002,7 +103002,7 @@ GameObject155:
                                   Children:
                                     - name: RING2.R
                                       prefabPath: ""
-                                      uuid: 925530126053697183
+                                      uuid: 15294440181811279781
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -103025,7 +103025,7 @@ GameObject155:
                                       Children:
                                         - name: RING3.R
                                           prefabPath: ""
-                                          uuid: 17525140404994803566
+                                          uuid: 3028940331105245720
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -103048,7 +103048,7 @@ GameObject155:
                                           Children: ~
                                 - name: PINKY1.R
                                   prefabPath: ""
-                                  uuid: 13680742751842545114
+                                  uuid: 13277471907816666673
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -103071,7 +103071,7 @@ GameObject155:
                                   Children:
                                     - name: PINKY2.R
                                       prefabPath: ""
-                                      uuid: 3488594312191623967
+                                      uuid: 13197690459644379234
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -103094,7 +103094,7 @@ GameObject155:
                                       Children:
                                         - name: PINKY3.R
                                           prefabPath: ""
-                                          uuid: 690720786238234907
+                                          uuid: 15905209439765703799
                                           tag: Untagged
                                           active: true
                                           isStatic: false
@@ -103117,7 +103117,7 @@ GameObject155:
                                           Children: ~
                                 - name: THUMB1.R
                                   prefabPath: ""
-                                  uuid: 13212871740411068137
+                                  uuid: 4490903796316417442
                                   tag: Untagged
                                   active: true
                                   isStatic: false
@@ -103140,7 +103140,7 @@ GameObject155:
                                   Children:
                                     - name: THUMB2.R
                                       prefabPath: ""
-                                      uuid: 7476272001163198789
+                                      uuid: 15588389799091472329
                                       tag: Untagged
                                       active: true
                                       isStatic: false
@@ -103163,7 +103163,7 @@ GameObject155:
                                       Children: ~
             - name: HIP.R
               prefabPath: ""
-              uuid: 14819891700075943864
+              uuid: 16967034121257847038
               tag: Untagged
               active: true
               isStatic: false
@@ -103186,7 +103186,7 @@ GameObject155:
               Children:
                 - name: THIGH.R
                   prefabPath: ""
-                  uuid: 5455648016654461479
+                  uuid: 5190758825952743899
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -103209,7 +103209,7 @@ GameObject155:
                   Children:
                     - name: TIBIA.R
                       prefabPath: ""
-                      uuid: 11201950159252100492
+                      uuid: 5467062127366173075
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -103232,7 +103232,7 @@ GameObject155:
                       Children:
                         - name: FOOT.R
                           prefabPath: ""
-                          uuid: 13564944451729979326
+                          uuid: 6761037819746592853
                           tag: Untagged
                           active: true
                           isStatic: false
@@ -103255,7 +103255,7 @@ GameObject155:
                           Children:
                             - name: TOE.R
                               prefabPath: ""
-                              uuid: 13004497093202834656
+                              uuid: 8156061614326245088
                               tag: Untagged
                               active: true
                               isStatic: false
@@ -103278,7 +103278,7 @@ GameObject155:
                               Children: ~
         - name: KNEE.L
           prefabPath: ""
-          uuid: 6516952881188788449
+          uuid: 16332621324094840062
           tag: Untagged
           active: true
           isStatic: false
@@ -103301,7 +103301,7 @@ GameObject155:
           Children: ~
         - name: FOOT.R.002
           prefabPath: ""
-          uuid: 17696085375293939366
+          uuid: 14688360011884523231
           tag: Untagged
           active: true
           isStatic: false
@@ -103324,7 +103324,7 @@ GameObject155:
           Children: ~
         - name: TOE.R.001
           prefabPath: ""
-          uuid: 10943699959136143571
+          uuid: 3736908212671299135
           tag: Untagged
           active: true
           isStatic: false
@@ -103347,7 +103347,7 @@ GameObject155:
           Children: ~
         - name: PIVOTHEEL.L
           prefabPath: ""
-          uuid: 14026524286421352623
+          uuid: 18001881121663308859
           tag: Untagged
           active: true
           isStatic: false
@@ -103370,7 +103370,7 @@ GameObject155:
           Children:
             - name: PIVOTTOE.L
               prefabPath: ""
-              uuid: 9077021069201346827
+              uuid: 1137174505224802902
               tag: Untagged
               active: true
               isStatic: false
@@ -103393,7 +103393,7 @@ GameObject155:
               Children:
                 - name: FOOT.L.001
                   prefabPath: ""
-                  uuid: 13940453919749637404
+                  uuid: 8262652712401560516
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -103416,7 +103416,7 @@ GameObject155:
                   Children:
                     - name: IKLEG.L
                       prefabPath: ""
-                      uuid: 3696561513606372382
+                      uuid: 16359009426242598453
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -103439,7 +103439,7 @@ GameObject155:
                       Children: ~
         - name: KNEE.R
           prefabPath: ""
-          uuid: 14240486229663959768
+          uuid: 134082721932436883
           tag: Untagged
           active: true
           isStatic: false
@@ -103462,7 +103462,7 @@ GameObject155:
           Children: ~
         - name: PIVOTHEEL.R
           prefabPath: ""
-          uuid: 12017050905101559341
+          uuid: 6569471362236790935
           tag: Untagged
           active: true
           isStatic: false
@@ -103485,7 +103485,7 @@ GameObject155:
           Children:
             - name: PIVOTTOE.R
               prefabPath: ""
-              uuid: 7078610758491022120
+              uuid: 11166269694806070737
               tag: Untagged
               active: true
               isStatic: false
@@ -103508,7 +103508,7 @@ GameObject155:
               Children:
                 - name: FOOT.R.001
                   prefabPath: ""
-                  uuid: 15687513733451387975
+                  uuid: 1420539834031010919
                   tag: Untagged
                   active: true
                   isStatic: false
@@ -103531,7 +103531,7 @@ GameObject155:
                   Children:
                     - name: IKLEG.R
                       prefabPath: ""
-                      uuid: 17089971255294819779
+                      uuid: 15513381364896826670
                       tag: Untagged
                       active: true
                       isStatic: false
@@ -103554,7 +103554,7 @@ GameObject155:
                       Children: ~
     - name: RiffleShotFX
       prefabPath: ""
-      uuid: 16583277859649760981
+      uuid: 13642003620504256543
       tag: Untagged
       active: true
       isStatic: false
@@ -103627,7 +103627,7 @@ GameObject155:
       Children: ~
     - name: ShotgunShotFX
       prefabPath: ""
-      uuid: 986259311977935020
+      uuid: 8047293535795612007
       tag: Untagged
       active: true
       isStatic: false
@@ -103700,7 +103700,7 @@ GameObject155:
       Children: ~
     - name: SpeedBoostFX
       prefabPath: ""
-      uuid: 5886973522537805636
+      uuid: 1591318300580864618
       tag: Untagged
       active: true
       isStatic: false
@@ -103773,7 +103773,7 @@ GameObject155:
       Children: ~
     - name: AmmunitionBlessingFX
       prefabPath: ""
-      uuid: 10448765208621607128
+      uuid: 3471292115440822736
       tag: Untagged
       active: true
       isStatic: false
@@ -103846,7 +103846,7 @@ GameObject155:
       Children: ~
     - name: RailgunShotAutoFX
       prefabPath: ""
-      uuid: 7920291248008126923
+      uuid: 2197138691374676647
       tag: Untagged
       active: true
       isStatic: false
@@ -103919,7 +103919,7 @@ GameObject155:
       Children: ~
     - name: RailgunShotSemiFX
       prefabPath: ""
-      uuid: 8941135985652347527
+      uuid: 14148320861147348496
       tag: Untagged
       active: true
       isStatic: false
@@ -103992,7 +103992,7 @@ GameObject155:
       Children: ~
     - name: InactiveDashFX
       prefabPath: ""
-      uuid: 16401084980048940173
+      uuid: 14843278576861869286
       tag: Untagged
       active: true
       isStatic: false
@@ -104065,7 +104065,7 @@ GameObject155:
       Children: ~
     - name: WalkingFX
       prefabPath: ""
-      uuid: 9495897170355844066
+      uuid: 11814766232687384232
       tag: Untagged
       active: true
       isStatic: false
@@ -104138,7 +104138,7 @@ GameObject155:
       Children: ~
     - name: AimLaser
       prefabPath: ""
-      uuid: 7016839228024946199
+      uuid: 9455378644202122856
       tag: Untagged
       active: true
       isStatic: false
@@ -104161,7 +104161,7 @@ GameObject155:
       Children: ~
     - name: AimLaserEnd
       prefabPath: ""
-      uuid: 8806832895183860170
+      uuid: 1938234868609460992
       tag: Untagged
       active: true
       isStatic: false

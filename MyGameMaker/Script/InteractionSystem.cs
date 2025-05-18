@@ -97,6 +97,7 @@ public class InteractionSystem : MonoBehaviour
                 interactable.Interact();
                 Audio.PlayOneShot(TextSFX);
                 interaction?.SpawnDialogueText(true);
+                interaction?.SetDialogueText(interactable.text);
                 interactionTimer = 0.0f; 
             }
             else if (interactionTimer > interactionCooldown)

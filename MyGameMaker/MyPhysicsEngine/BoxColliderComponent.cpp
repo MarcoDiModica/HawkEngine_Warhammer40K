@@ -84,55 +84,57 @@ MonoObject* BoxColliderComponent::GetSharp()
 }
 
 void BoxColliderComponent::CreateCollider() {
-   
-        if (!owner) return;
+    if (collider) {
+		Destroy();
+	}
 
-        Transform_Component* transform = owner->GetTransform();
-        if (!transform) return;
+    if (!owner) return;
 
-        BoundingBox bbox = owner->localBoundingBox();
-        auto localSize = bbox.size();
+    Transform_Component* transform = owner->GetTransform();
+    if (!transform) return;
 
-        if (localSize.x == 0.0f && localSize.y == 0.0f && localSize.z == 0.0f) {
-            localSize = glm::vec3(1.0f, 1.0f, 1.0f);
-        }
+    BoundingBox bbox = owner->localBoundingBox();
+    auto localSize = bbox.size();
 
-        glm::vec3 bboxCenter = owner->boundingBox().center();
-
-        btCollisionShape* shape;
-        btTransform startTransform;
-        startTransform.setIdentity();
-
-        bboxCenter = transform->GetLocalPosition();
-
-        shape = new btBoxShape(btVector3(localSize.x * 0.5f, localSize.y * 0.5f, localSize.z * 0.5f));
-        glm::vec3 localPosition = transform->GetLocalPosition();
-        startTransform.setOrigin(btVector3(bboxCenter.x + offset.x, bboxCenter.y + offset.y, bboxCenter.z + offset.z));
-        glm::dquat localRot = transform->GetRotation();
-        btQuaternion btRot(
-            static_cast<btScalar>(localRot.x),
-            static_cast<btScalar>(localRot.y),
-            static_cast<btScalar>(localRot.z),
-            static_cast<btScalar>(localRot.w)
-        );
-        startTransform.setRotation(btRot);
-        glm::vec3 scale = transform->GetScale();
-        glm::vec3 parentScale(1.0f);
-        if (owner->GetParent()) {
-            parentScale = owner->GetParent()->GetTransform()->GetScale();
-        }
-        glm::vec3 finalScale = scale * parentScale;
-        shape->setLocalScaling(btVector3(finalScale.x, finalScale.y, finalScale.z));
-
-        btVector3 localInertia(0, 0, 0);
-
-        btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
-        btRigidBody::btRigidBodyConstructionInfo rbInfo(0, motionState, shape, localInertia);
-        collider = new btRigidBody(rbInfo);
-        btVector3 btSize = shape->getLocalScaling();
-
-        // Add the collider to the physics world
-        physics->dynamicsWorld->addRigidBody(collider);
-        physics->gameObjectRigidBodyMap[owner] = collider;
+    if (localSize.x == 0.0f && localSize.y == 0.0f && localSize.z == 0.0f) {
+        localSize = glm::vec3(1.0f, 1.0f, 1.0f);
     }
+
+    glm::vec3 bboxCenter = owner->boundingBox().center();
+
+    btCollisionShape* shape;
+    btTransform startTransform;
+    startTransform.setIdentity();
+
+    bboxCenter = transform->GetLocalPosition();
+
+    shape = new btBoxShape(btVector3(localSize.x * 0.5f, localSize.y * 0.5f, localSize.z * 0.5f));
+    glm::vec3 localPosition = transform->GetLocalPosition();
+    startTransform.setOrigin(btVector3(bboxCenter.x + offset.x, bboxCenter.y + offset.y, bboxCenter.z + offset.z));
+    glm::dquat localRot = transform->GetRotation();
+    btQuaternion btRot(
+        static_cast<btScalar>(localRot.x),
+        static_cast<btScalar>(localRot.y),
+        static_cast<btScalar>(localRot.z),
+        static_cast<btScalar>(localRot.w)
+    );
+    startTransform.setRotation(btRot);
+    glm::vec3 scale = transform->GetScale();
+    glm::vec3 parentScale(1.0f);
+    if (owner->GetParent()) {
+        parentScale = owner->GetParent()->GetTransform()->GetScale();
+    }
+    glm::vec3 finalScale = scale * parentScale;
+    shape->setLocalScaling(btVector3(finalScale.x, finalScale.y, finalScale.z));
+
+    btVector3 localInertia(0, 0, 0);
+
+    btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
+    btRigidBody::btRigidBodyConstructionInfo rbInfo(0, motionState, shape, localInertia);
+    collider = new btRigidBody(rbInfo);
+    btVector3 btSize = shape->getLocalScaling();
+
+    physics->dynamicsWorld->addRigidBody(collider);
+    physics->gameObjectRigidBodyMap[owner] = collider;
+}
 

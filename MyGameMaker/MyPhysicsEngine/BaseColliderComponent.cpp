@@ -31,16 +31,27 @@ void BaseColliderComponent::Update(float deltaTime) {
 }
 
 void BaseColliderComponent::Destroy() {
-    if (collider) {
-        physics->dynamicsWorld->removeRigidBody(collider);
-        delete collider->getMotionState();
-        delete collider;
-        collider = nullptr;
-        if (physics->gameObjectRigidBodyMap.find(owner) != physics->gameObjectRigidBodyMap.end()) {
-            physics->gameObjectRigidBodyMap.erase(owner);
-        }
-    }
-    
+	if (collider) {
+		if (physics && physics->dynamicsWorld) {
+			physics->dynamicsWorld->removeRigidBody(collider);
+		}
+
+		if (collider->getMotionState()) {
+			delete collider->getMotionState();
+			collider->setMotionState(nullptr);
+		}
+
+		if (collider->getCollisionShape()) {
+			delete collider->getCollisionShape();
+		}
+
+		delete collider;
+		collider = nullptr;
+
+		if (physics && physics->gameObjectRigidBodyMap.find(owner) != physics->gameObjectRigidBodyMap.end()) {
+			physics->gameObjectRigidBodyMap.erase(owner);
+		}
+	}
 }
 
 //OnCollisions y triggers 

@@ -249,7 +249,7 @@ if (useForwardPlus == 1) {
     uint lightCount = lightRange.y;
 
     for (uint i = 0; i < numLights; i++) {
-        uint lightIndex = lightIndices[startIndex + i];
+        uint lightIndex = lightIndices[0 + i];
         PointLight light = pointLights[lightIndex];
 
         vec3 lightPos = light.position.xyz;
@@ -268,6 +268,9 @@ if (useForwardPlus == 1) {
         float linear = light.attenuation.y;
         float quadratic = light.attenuation.z;
         attenuation = 1.0 / max(constant + linear * distance + quadratic * (distance * distance), 0.001);
+
+        float fade = clamp(1.0 - distance / lightRadius, 0.0, 1.0);
+        attenuation *= fade;
 
         vec3 lightColor = light.color.rgb;
         lightIntensity = max(light.color.a, 0.01);

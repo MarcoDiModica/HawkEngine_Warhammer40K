@@ -25,7 +25,9 @@ public:
 
 	ComponentType GetType() const override { return ComponentType::CANVAS; }
 
-	float GetMonitorWidth() const { return monitorHeight; }
+	void RenderCanvas(int viewportWidth, int viewportHeight);
+
+	float GetMonitorWidth() const { return monitorWidth; }
 	float GetMonitorHeight() const { return monitorHeight; }
 
 	MonoObject* CsharpReference = nullptr;
@@ -35,30 +37,29 @@ private:
 	float monitorWidth;
 	float monitorHeight;
 
-	float width;
-	float height;
+	void SetupUIRendering(int viewportWidth, int viewportHeight);
+	void RestoreRenderingState();
+	void RenderUIElement(GameObject* element, const glm::mat4& projection, const glm::mat4& view);
+
+	GLint lastProgram;
+	GLboolean lastDepthTest;
+	GLboolean lastCullFace;
+	GLboolean lastBlend;
+	GLint lastBlendSrcRGB;
+	GLint lastBlendDstRGB;
+	GLint lastBlendSrcAlpha;
+	GLint lastBlendDstAlpha;
 
 protected:
-
 	friend class SceneSerializer;
 
 	YAML::Node encode() override {
-
 		YAML::Node node = Component::encode();
-
-		/*node["width"] = width;
-		node["height"] = height;*/
-
 		return node;
 	}
 
 	bool decode(const YAML::Node& node) override {
-
 		Component::decode(node);
-
-		/*height = node["height"].as<float>();
-		width = node["width"].as<float>();*/
-		
 		return true;
 	}
 };

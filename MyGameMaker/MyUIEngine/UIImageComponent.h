@@ -67,6 +67,9 @@ public:
 
 	void SetAnimationIndex(int index) { animIndex = index; }
 
+	void RenderUI(const glm::mat4& projection, const glm::mat4& view);
+	void UpdateAnimationLogic(float deltaTime);
+
 private:
 	//texture
 	std::string texturePath;

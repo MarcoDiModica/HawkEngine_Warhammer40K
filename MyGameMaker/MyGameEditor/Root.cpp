@@ -67,8 +67,10 @@ bool Root::Start()
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
 
-	auto env = CreateGameObjectWithPath("Assets/FBX/Level2_Zone1.fbx");
-	env->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
+	//auto env = CreateGameObjectWithPath("Assets/FBX/Level2_Zone1.fbx");
+	//env->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
+
+	//CreateMainMenuUI();
 
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
 	//auto scenezone23 = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2area2&3.fbx");

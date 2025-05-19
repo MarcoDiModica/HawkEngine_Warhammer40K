@@ -17,6 +17,8 @@ bool ShaderManager::Initialize() {
 
 	success &= RegisterShader<PBRShader>();
 
+	success &= RegisterShader<UIShader>();
+
 	success &= RegisterShader<ParticleShader>();
 
 	success &= RegisterShader<ForwardPlusComputeShader>();

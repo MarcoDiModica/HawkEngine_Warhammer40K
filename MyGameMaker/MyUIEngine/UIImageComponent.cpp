@@ -48,11 +48,11 @@ glm::vec2 CalculateSpriteOffset(int index, const glm::vec2& sheetSize, const glm
 void UIImageComponent::Update(float deltaTime)
 {
 	if (!enabled) return;
-	if (shader == nullptr) return;
 
 	auto uiTransform = owner->GetComponent<UITransformComponent>();
+	if (!uiTransform) return;
 
-	if (!uiTransform->GetResised() && uiTransform->GetCanvasSize().x > 0) 
+	if (!uiTransform->GetResised() && uiTransform->GetCanvasSize().x > 0 && texture)
 	{
 		float scaleX = 1.0f;
 		float scaleY = 1.0f;
@@ -70,15 +70,18 @@ void UIImageComponent::Update(float deltaTime)
 		uiTransform->SetResized(true);
 	}
 
-	shader->Bind();
+	UpdateAnimationLogic(deltaTime);
+}
 
+void UIImageComponent::UpdateAnimationLogic(float deltaTime)
+{
 	if (useAnimation && sheetSize != glm::vec2(0, 0))
 	{
 		indexTimer += deltaTime;
 
 		if (indexTimer >= animSpeed)
 		{
-			if (animationNum == 0) 
+			if (animationNum == 0)
 			{
 				if (animIndex >= anim1IndexLimit - 1)
 				{
@@ -87,18 +90,17 @@ void UIImageComponent::Update(float deltaTime)
 				}
 				else
 				{
-					if (playAnimation) 
+					if (playAnimation)
 					{
 						animIndex++;
 					}
-					
 				}
 			}
 			else if (animationNum == 1)
 			{
 				if (animIndex >= CalculateMaxIndex(sheetSize, spriteSize))
 				{
-					animIndex = anim1IndexLimit+ 1;
+					animIndex = anim1IndexLimit + 1;
 					indexTimer = 0;
 				}
 				else
@@ -109,10 +111,9 @@ void UIImageComponent::Update(float deltaTime)
 					}
 				}
 			}
-			
+
 			indexTimer = 0.0f;
 			spriteOffset = CalculateSpriteOffset(animIndex, sheetSize, spriteSize);
-
 		}
 	}
 	else
@@ -120,52 +121,106 @@ void UIImageComponent::Update(float deltaTime)
 		spriteOffset = glm::vec2(0.0f, 0.0f);
 		spriteSize = sheetSize;
 	}
+}
 
-	if (!texture->image_path.empty()) {
+void UIImageComponent::RenderUI(const glm::mat4& projection, const glm::mat4& view)
+{
+	std::cout << "=== RenderUI Debug ===" << std::endl;
+
+	if (!enabled) {
+		std::cout << "Image component disabled" << std::endl;
+		return;
+	}
+
+	if (!owner) {
+		std::cout << "No owner" << std::endl;
+		return;
+	}
+
+	auto uiTransform = owner->GetComponent<UITransformComponent>();
+	if (!uiTransform) {
+		std::cout << "No UITransform component" << std::endl;
+		return;
+	}
+
+	// Debug transform values
+	glm::vec3 canvasPos = uiTransform->GetCanvasPosition();
+	glm::vec3 canvasSize = uiTransform->GetCanvasSize();
+	glm::vec3 position = uiTransform->GetPosition();
+	glm::vec3 scale = uiTransform->GetScale();
+
+	std::cout << "Canvas pos: " << canvasPos.x << ", " << canvasPos.y << std::endl;
+	std::cout << "Canvas size: " << canvasSize.x << ", " << canvasSize.y << std::endl;
+	std::cout << "Position: " << position.x << ", " << position.y << std::endl;
+	std::cout << "Scale: " << scale.x << ", " << scale.y << std::endl;
+
+	Shaders* uiShader = ShaderManager::GetInstance().GetShader(ShaderType::UI);
+	if (!uiShader) {
+		std::cout << "ERROR: No UI Shader found!" << std::endl;
+		return;
+	}
+
+	std::cout << "Shader found, binding..." << std::endl;
+	uiShader->Bind();
+
+	// Check if mesh exists
+	if (!mesh) {
+		std::cout << "ERROR: No mesh!" << std::endl;
+		uiShader->UnBind();
+		return;
+	}
+
+	std::cout << "Mesh exists" << std::endl;
+
+	// Check texture
+	if (texture && !texture->image_path.empty()) {
+		std::cout << "Has texture: " << texture->image_path << std::endl;
 		texture->bind();
-		shader->SetUniform("u_HasTexture", true);
-		shader->SetUniform("texture1", 0);
-		shader->SetUniformVec2("SpriteSize", spriteSize);
-		shader->SetUniformVec2("SpriteOffset", spriteOffset);
-		shader->SetUniformVec2("SheetSize", sheetSize);
+		uiShader->SetUniform("u_HasTexture", true);
+		uiShader->SetUniform("texture1", 0);
+		uiShader->SetUniformVec2("SpriteSize", spriteSize);
+		uiShader->SetUniformVec2("SpriteOffset", spriteOffset);
+		uiShader->SetUniformVec2("SheetSize", sheetSize);
 	}
 	else {
-		shader->SetUniform("u_HasTexture", false);
+		std::cout << "No texture" << std::endl;
+		uiShader->SetUniform("u_HasTexture", false);
 	}
 
-	glm::mat4 viewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
+	glm::vec3 finalScale = scale * canvasSize;
+	glm::vec3 translation = canvasPos + (position * canvasSize);
+	translation -= uiTransform->GetPivotOffset() * finalScale;
 
-	glm::vec3 scale = uiTransform->GetScale() * uiTransform->GetCanvasSize();
-	glm::vec3 translation = uiTransform->GetCanvasPosition() + (uiTransform->GetPosition() * uiTransform->GetCanvasSize());
-	glm::quat rotation = glm::quat(glm::vec3(glm::radians(0.0f), 0.0f, 0.0f));
-
-	translation -= uiTransform->GetPivotOffset() * scale;
+	std::cout << "Final scale: " << finalScale.x << ", " << finalScale.y << std::endl;
+	std::cout << "Translation: " << translation.x << ", " << translation.y << std::endl;
 
 	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), translation) *
-		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f)) *
-		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) *
-		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
-		glm::scale(glm::mat4(1.0f), scale);
+		glm::scale(glm::mat4(1.0f), finalScale);
 
-	shader->SetUniformMat4("model", modelMatrix);
-	shader->SetUniformMat4("view", viewMatrix);
-	shader->SetUniformMat4("projection", projection);
-	shader->SetUniformVec4("modColor", color);
+	uiShader->SetUniformMat4("model", modelMatrix);
+	uiShader->SetUniformMat4("view", view);
+	uiShader->SetUniformMat4("projection", projection);
+	uiShader->SetUniformVec4("modColor", color);
 
+	std::cout << "Color: " << color.r << ", " << color.g << ", " << color.b << ", " << color.a << std::endl;
+
+	// Render
+	std::cout << "Drawing..." << std::endl;
 	glBindVertexArray(mesh->getModel()->GetModelData().vA);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getModel()->GetModelData().iBID);
-
 	glDrawElements(GL_TRIANGLES, mesh->getModel()->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
-
-	shader->UnBind();
-
-	if (!texture->image_path.empty()) {
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
+	std::cout << "Draw call finished" << std::endl;
+
+	uiShader->UnBind();
+
+	if (texture && !texture->image_path.empty()) {
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	std::cout << "=== End RenderUI Debug ===" << std::endl;
 }
 
 void UIImageComponent::Destroy()

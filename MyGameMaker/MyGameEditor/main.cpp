@@ -528,6 +528,15 @@ void RenderParticleSystems(const std::vector<GameObject*>& objects,
 	}
 }
 
+void RenderUIElements(const std::vector<GameObject*>& objects, int viewportWidth, int viewportHeight) {
+	for (auto* obj : objects) {
+		if (obj && obj->IsActive() && obj->HasComponent<UICanvasComponent>()) {
+			auto* canvas = obj->GetComponent<UICanvasComponent>();
+			canvas->RenderCanvas(viewportWidth, viewportHeight);
+		}
+	}
+}
+
 static void RenderEditor() {
 	GLint lastProgram = 0;
 	GLint lastFBO = 0;
@@ -616,10 +625,6 @@ static void RenderEditor() {
 
 		if (object->IsActive()) {
 			object->Update(static_cast<float>(Application->GetDt()));
-
-			if (object->HasComponent<UICanvasComponent>()) {
-				continue;
-			}
 
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
@@ -760,6 +765,9 @@ static void RenderGameView() {
 	RenderManager::GetInstance().RenderFromCamera(gameCamera);
 
 	RenderParticleSystems(objects, viewMatrix, projMatrix, cameraPos, cameraUp);
+	int width = Application->window->width();
+	int height = Application->window->height();
+	RenderUIElements(objects, width, height);
 
 	RenderManager::GetInstance().EndFrame();
 
@@ -888,17 +896,11 @@ static void GameRelease() {
 
 	RenderManager::GetInstance().BeginFrame();
 
-	std::vector<std::shared_ptr<GameObject>> UI;
 	std::vector<GameObject*> objects;
 	auto activeScene = Application->root->GetActiveScene();
 
 	if (activeScene) {
 		for (auto& object : activeScene->children()) {
-			if (object->HasComponent<UICanvasComponent>()) {
-				UI.push_back(object);
-				continue;
-			}
-
 			if (object->IsActive()) {
 				objects.push_back(object.get());
 				object->Update(static_cast<float>(Application->GetDt()));
@@ -941,6 +943,7 @@ static void GameRelease() {
 	RenderManager::GetInstance().RenderFromCamera(gameCamera);
 
 	RenderParticleSystems(objects, viewMatrix, projMatrix, cameraPos, cameraUp);
+	RenderUIElements(objects, currentWidth, currentHeight);
 
 	RenderManager::GetInstance().EndFrame();
 
@@ -950,12 +953,6 @@ static void GameRelease() {
 		glBlitFramebuffer(0, 0, currentWidth, currentHeight,
 			0, 0, currentWidth, currentHeight,
 			GL_COLOR_BUFFER_BIT, GL_NEAREST);
-	}
-
-	for (const auto& i : UI) {
-		if (i->IsActive()) {
-			i->Update(static_cast<float>(Application->GetDt()));
-		}
 	}
 
 	glUseProgram(lastProgram);

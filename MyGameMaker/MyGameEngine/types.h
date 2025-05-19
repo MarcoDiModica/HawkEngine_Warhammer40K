@@ -54,15 +54,13 @@ enum class ShaderType {
 	UNLIT = 0,
 	PBR = 1,
 	PARTICLE = 2,
-	BINDLESS_PBR = 3,
-	BINDLESS_UNLIT = 4,
-	FORWARD_PLUS_COMPUTE = 5,
-	CULLING_COMPUTE = 6,
-	DEBUG = 7,
-	UTILITY = 8,
-	CUSTOM = 9
+    UI = 3,
+	FORWARD_PLUS_COMPUTE = 4,
+	CULLING_COMPUTE = 5,
+	DEBUG = 6,
+	UTILITY = 7,
+	CUSTOM = 8
 };
-
 
 namespace YAML {
     template<>

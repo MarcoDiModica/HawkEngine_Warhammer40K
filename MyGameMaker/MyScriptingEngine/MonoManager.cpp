@@ -526,7 +526,7 @@ void MonoManager::RegisterMonoObject(void* nativePtr, MonoObject* monoObject) {
 		//LOG(LogType::LOG_WARNING, "Overwriting existing mono object registration for native pointer %p", nativePtr);
 	}
 
-	uint32_t gcHandle = mono_gchandle_new(monoObject, false);
+	uint32_t gcHandle = mono_gchandle_new(monoObject, true);
 
 	nativeToGCHandleMap[nativePtr] = gcHandle;
 }

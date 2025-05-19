@@ -215,7 +215,7 @@ public class PlayerShooting : MonoBehaviour
         {
             if (!firstShotReady)
             {
-
+                firstShotTimer += deltaTime; 
                 if (firstShotTimer >= firstShotDelay)
                 {
                     firstShotReady = true;
@@ -223,9 +223,7 @@ public class PlayerShooting : MonoBehaviour
                 }
             }
 
-            
-                Shoot();
-            
+            Shoot();
         }
         else
         {

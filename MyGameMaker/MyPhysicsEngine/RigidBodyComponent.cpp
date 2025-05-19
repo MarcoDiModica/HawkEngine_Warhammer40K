@@ -16,8 +16,6 @@ RigidbodyComponent::RigidbodyComponent(GameObject* owner, PhysicsModule* physics
 }
 
 RigidbodyComponent::~RigidbodyComponent() {
-    Destroy();
-
     if (CsharpReference != nullptr) {
         MonoManager::GetInstance().UnregisterMonoObject(this);
         CsharpReference = nullptr;
@@ -75,8 +73,6 @@ void RigidbodyComponent::Update(float deltaTime)
 }
 
 void RigidbodyComponent::Destroy() {}
-
-
 
 void RigidbodyComponent::SetMass(float newMass) {
     mass = newMass;

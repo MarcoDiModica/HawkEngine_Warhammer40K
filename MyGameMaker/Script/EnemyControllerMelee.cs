@@ -409,14 +409,19 @@ public class EnemyControllerMelee : EnemyController
 
     private void HandleSpawnState(float deltaTime)
     {
+        collider.SetActive(false);
         try
         {
+ 
             spawnTimer += deltaTime;
             anim.SetClimbingAnimation();
+
+
             if (spawnTimer >= spawnDuration)
             {
                 isSpawning = false;
                 spawnTimer = 0;
+                collider.SetActive(true);
             }
         }
         catch (Exception e)

@@ -65,8 +65,8 @@ bool Root::Start()
 	//resourceManager->LoadResources(); // Esto no se mutea
 	//resourceManager->CreateDefaultCube(); // Esto no se mutea
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
-	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");
 
@@ -286,13 +286,13 @@ bool Root::Start()
 	//ParentGameObject(*lictorMesh, *lictor);
 	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
 	//
-	////Climbing Hormagaunt
+	//Climbing Hormagaunt
 	//auto hormagaunt = CreateGameObject("Hormagaunt");
 	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
 	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
 	//hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	//hormagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(1.3f, 2.0f, 1.6));
-	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/HormagauntClimb.fbx");
 	//hormagauntMesh->SetName("HormagauntMesh");
 	//hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//hormagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));

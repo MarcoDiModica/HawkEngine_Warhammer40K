@@ -7,8 +7,10 @@ public class EnemySpawner : MonoBehaviour
 {
     public float spawnTimer = 0;
     public float secondsBetweenSpawns;
+    public float firstSpawnTime;
     public int currentEnemiesSpawned = 0;
     public int maxEnemiesToSpawn;
+    public bool hasSpawnedFirst = false;
 
     private Transform transform;
 
@@ -52,12 +54,21 @@ public class EnemySpawner : MonoBehaviour
             spawnTimer += deltaTime;
         }
 
-        if (spawnTimer >= secondsBetweenSpawns && currentEnemiesSpawned < maxEnemiesToSpawn && spawnerActive)
+        if(!hasSpawnedFirst && spawnTimer >= firstSpawnTime && spawnerActive)
+        {
+            SpawnEnemy();
+            currentEnemiesSpawned++;
+            hasSpawnedFirst = true;
+            spawnTimer = 0;
+        }
+        else if (hasSpawnedFirst && spawnTimer >= secondsBetweenSpawns && currentEnemiesSpawned < maxEnemiesToSpawn && spawnerActive)
         {
             SpawnEnemy();
             currentEnemiesSpawned++;
             spawnTimer = 0;
         }
+
+
     }
 
     public void SpawnEnemy()

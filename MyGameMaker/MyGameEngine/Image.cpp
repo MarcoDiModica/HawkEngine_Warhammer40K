@@ -6,6 +6,8 @@
 #include <fstream>
 #include <zlib.h>
 #include <unordered_map>
+#include "../MyGameEditor/App.h"
+#include "ResourceManager.h"
 
 namespace fs = std::filesystem;
 
@@ -280,6 +282,11 @@ std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
 
 	std::string fullPath = "Library/Images/" + filename + ".image";
 
+	if (Application->root->GetResourceManager()->GetImage(filename) != nullptr)
+	{
+		return Application->root->GetResourceManager()->GetImage(filename);
+	}
+
 	std::ifstream fin(fullPath, std::ios::binary);
 	if (!fin.is_open()) {
 		LOG(LogType::LOG_ERROR, "Failed to open file for reading: %s", fullPath.c_str());
@@ -364,6 +371,8 @@ std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
 
 	LOG(LogType::LOG_INFO, "Successfully loaded image: %s (%dx%d, %d channels)",
 		fullPath.c_str(), img->_width, img->_height, img->_channels);
+
+	Application->root->GetResourceManager()->AddImage(img);
 
 	return img;
 }

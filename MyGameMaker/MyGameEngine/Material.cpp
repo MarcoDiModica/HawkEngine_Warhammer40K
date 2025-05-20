@@ -275,3 +275,8 @@ std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
 	LOG(LogType::LOG_INFO, "Material loaded successfully: %s", fullPath.c_str());
 	return mat;
 }
+
+std::shared_ptr<Image> Material::CheckImageResource(const std::string& name) {
+	auto it = Application->root->GetResourceManager()->GetImage(name);
+	return it;
+}

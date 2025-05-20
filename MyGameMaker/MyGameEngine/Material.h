@@ -76,6 +76,8 @@ public:
 
 	std::string matName = "";
 
+	std::shared_ptr<Image> CheckImageResource(const std::string& path);
+
 protected:
 	static unsigned int next_id;
 	
@@ -139,7 +141,12 @@ protected:
 			std::string texturePath(pathLen, '\0');
 			fin.read(&texturePath[0], pathLen);
 
-			std::shared_ptr<Image> img = Image::LoadBinary(texturePath);
+			std::shared_ptr<Image> img = CheckImageResource(texturePath);
+
+			if (img == nullptr)
+			{
+				img = Image::LoadBinary(texturePath);
+			}
 
 			if (strcmp(type, "IMG") == 0) {
 				setImage(img);

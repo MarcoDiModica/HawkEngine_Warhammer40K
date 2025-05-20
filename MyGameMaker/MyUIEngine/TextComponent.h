@@ -14,7 +14,7 @@ public:
     void SetPosition(const glm::vec2& position);
     void SetColor(const glm::vec3& color);
     void SetFontSize(float fontSize);
-    void SetBoxSize(const glm::vec2& size);
+    void SetBoxSize(float x, float y);
 	void SetSpaceWidth(float spaceWidth) { m_spaceWidth = spaceWidth; }
     void SetDebugDrawBox(bool enabled) { m_debugDrawBox = enabled; }
 

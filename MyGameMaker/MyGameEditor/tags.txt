@@ -6,3 +6,5 @@ Destroyable
 Checkpoint
 Enemy
 Melee
+ExplosiveBarrel
+DestructibleWall

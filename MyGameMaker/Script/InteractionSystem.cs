@@ -93,10 +93,11 @@ public class InteractionSystem : MonoBehaviour
                 isInteracting = true;
                 ShowInteractionMessage(false);
                 currentInteractable = interactable.gameObject;
-                playerInput.BlockMovement();
+                playerInput.BlockInput();
                 interactable.Interact();
                 Audio.PlayOneShot(TextSFX);
                 interaction?.SpawnDialogueText(true);
+                interaction?.SetDialogueText(interactable.text);
                 interactionTimer = 0.0f; 
             }
             else if (interactionTimer > interactionCooldown)
@@ -106,7 +107,7 @@ public class InteractionSystem : MonoBehaviour
                     Audio.PlayOneShot(TextSFX);
                     isInteracting = false;
                     interaction?.SpawnDialogueText(false);
-                    playerInput.UnblockMovement();
+                    playerInput.UnBlockInput();
                 }     
             }
         }

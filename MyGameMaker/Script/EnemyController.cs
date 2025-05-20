@@ -32,10 +32,14 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected bool isShooting = false;
     protected bool isFootstepPlaying = false;
     protected bool hasStoppedFootsteps = false;
+    public bool isSlowed = false;
+    public float slowedTimer = 0.0f;
+    public float slowedDuration = 3.0f;
 
     public float distToChase = 50.0f;
     public float minDistToChase = 10.0f;
     public float speedMovement = 25.0f;
+    public float slowedSpeed = 20.0f;
     public float acceleration = 40.0f;
     public float rotationSpeed = 300.0f;
     protected Vector3 moveDirection;
@@ -55,6 +59,14 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     public abstract void ResetEnemyCheckPoint();
     public abstract void Attack();
     public abstract void TakeDamage(float damage);
+    public virtual void getSlowed()
+    {
+        isSlowed = true;
+    }
+    public virtual void getStunned()
+    {
+        isStunned = true;
+    }
     public float Lerp(float start, float end, float t)
     {
         return start + (end - start) * Math.Min(1, Math.Max(0, t));

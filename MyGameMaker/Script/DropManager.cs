@@ -14,6 +14,7 @@ public class DropManager : MonoBehaviour
     public Prefab BoltgunBulletsPrefab; 
     public Prefab MedicaeStimmPrefab;
     public Prefab PiercingBulletsPrefab;
+    private PlayerController playerController;
     public override void Awake()
     {
 
@@ -21,7 +22,7 @@ public class DropManager : MonoBehaviour
 
     public override void Start()
     {
-
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     public override void Update(float deltaTime)
@@ -98,15 +99,28 @@ public class DropManager : MonoBehaviour
 
             Random Bullets = new Random();
             int randomValueBullets = Bullets.Next(0, 100);
-            if (randomValueBullets < 50) // 50 chance
+            if (randomValueBullets < 75) // 75% de probabilidad de soltar munición
             {
-                    var shotgunShells = Instantiate(ShotgunShellsPrefab);
-                    shotgunShells.transform.position = new Vector3(enemy.gameObject.transform.position.X + 3, enemy.gameObject.transform.position.Y, enemy.gameObject.transform.position.Z  + 3);
-            }
-            else // 50 chance
-            {
+                if (playerController.playerData.hasShotgun)
+                {
+                    int ammoTypeChance = Bullets.Next(0, 100);
+                    if (ammoTypeChance < 50) // 50% escopeta
+                    {
+                        var shotgunShells = Instantiate(ShotgunShellsPrefab);
+                        shotgunShells.transform.position = new Vector3(enemy.gameObject.transform.position.X + 3, enemy.gameObject.transform.position.Y, enemy.gameObject.transform.position.Z + 3);
+                    }
+                    else // 50% boltgun
+                    {
+                        var boltgunBullets = Instantiate(BoltgunBulletsPrefab);
+                        boltgunBullets.transform.position = new Vector3(enemy.gameObject.transform.position.X - 3, enemy.gameObject.transform.position.Y, enemy.gameObject.transform.position.Z - 3);
+                    }
+                }
+                else
+                {
+                    // Solo boltgun si no tiene escopeta
                     var boltgunBullets = Instantiate(BoltgunBulletsPrefab);
                     boltgunBullets.transform.position = new Vector3(enemy.gameObject.transform.position.X - 3, enemy.gameObject.transform.position.Y, enemy.gameObject.transform.position.Z - 3);
+                }
             }
         }
 
@@ -141,15 +155,23 @@ public class DropManager : MonoBehaviour
             }
             Random Bullets = new Random();
             int randomValueBullets = Bullets.Next(0, 100);
-            if (randomValueBullets < 25) // 50 chance
+            if (randomValueBullets < 75) // 50 chance
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    var shotgunShells = Instantiate(ShotgunShellsPrefab);
-                    shotgunShells.transform.position = new Vector3(enemy.gameObject.transform.position.X, enemy.gameObject.transform.position.Y, enemy.gameObject.transform.position.Z - i + 3);
+                    if (playerController.playerData.hasShotgun)
+                    {
+                        var shotgunShells = Instantiate(ShotgunShellsPrefab);
+                        shotgunShells.transform.position = new Vector3(enemy.gameObject.transform.position.X, enemy.gameObject.transform.position.Y, enemy.gameObject.transform.position.Z - i + 3);
+                    }
+                    else
+                    {
+                        var boltgunBullets = Instantiate(BoltgunBulletsPrefab);
+                        boltgunBullets.transform.position = new Vector3(enemy.gameObject.transform.position.X, enemy.gameObject.transform.position.Y, enemy.gameObject.transform.position.Z - i + 3);
+                    }
                 }
             }
-            else if(randomValueBullets < 75)// 25 chance
+            else if (randomValueBullets < 75) // 25 chance (aunque esta condición no se cumple nunca: ya está cubierta por la anterior)
             {
                 for (int i = 0; i < 2; i++)
                 {
@@ -159,8 +181,17 @@ public class DropManager : MonoBehaviour
             }
             else // 50 chance
             {
-                var shotgunShells = Instantiate(ShotgunShellsPrefab);
-                shotgunShells.transform.position = new Vector3(enemy.gameObject.transform.position.X, enemy.gameObject.transform.position.Y, enemy.gameObject.transform.position.Z + 3);
+                if (playerController.playerData.hasShotgun)
+                {
+                    var shotgunShells = Instantiate(ShotgunShellsPrefab);
+                    shotgunShells.transform.position = new Vector3(enemy.gameObject.transform.position.X, enemy.gameObject.transform.position.Y, enemy.gameObject.transform.position.Z + 3);
+                }
+                else
+                {
+                    var boltgunBulletsExtra = Instantiate(BoltgunBulletsPrefab);
+                    boltgunBulletsExtra.transform.position = new Vector3(enemy.gameObject.transform.position.X, enemy.gameObject.transform.position.Y, enemy.gameObject.transform.position.Z + 3);
+                }
+
                 var boltgunBullets = Instantiate(BoltgunBulletsPrefab);
                 boltgunBullets.transform.position = new Vector3(enemy.gameObject.transform.position.X - 3, enemy.gameObject.transform.position.Y, enemy.gameObject.transform.position.Z - 3);
             }

@@ -1,25 +1,25 @@
-name: BiblePagePickUp_Instance_1_Instance
+name: BiblePagePickUp_Instance_1_Instance_Instance
 prefabPath: Assets\Prefabs\BiblePagePickUp.prefab.yaml
-uuid: 17109756904425925512
+uuid: 2428129195032936125
 tag: BiblePage
-active: false
+active: true
 isStatic: false
 Components:
   Transform_Component:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 160.11109924316406
-      - 0.60818320512771606
-      - -218.51683044433594
+      - -173.69943237304688
+      - 2.8828797340393066
+      - 54.834514617919922
     localRotation:
-      - -38.566066439696179
-      - -32.943470226505525
-      - -8.1470754774771523e-07
+      - -38.566063220541864
+      - -32.943467975201102
+      - -1.1417434401897204e-06
     localScale:
-      - 1.0121674537658691
-      - 1.0121674537658691
-      - 1.0121673345565796
+      - 1.0121674811729389
+      - 1.0121674613953686
+      - 1.0121673042598605
   MeshRenderer:
     name: MeshRenderer
     enabled: true
@@ -44,6 +44,31 @@ Components:
       - 0
       - 0
     isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.91828793287277222
+      - 0.46807670593261719
+      - 0.46807670593261719
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - -0.20000000298023224
+      - -1
+      - -0.30000001192092896
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 3.29999995
+    intensity: 8.80000019
+    direction:
+      - -1
+      - -1
+      - 0
   ScriptComponents:
     Script0:
       name: BiblePagePickUp

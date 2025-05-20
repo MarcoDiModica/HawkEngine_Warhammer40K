@@ -7,7 +7,7 @@ public class PlayerData
 
     float health;
     float healthTemp;
-    float maxHealth = 100000;
+    float maxHealth = 100;
     float maxHealthTemp = 50;
     public bool isHit = false;
     public float movSpeed = 10;
@@ -25,8 +25,6 @@ public class PlayerData
     public bool ShotgunUpgraded = false;
     public bool RailgunUpgraded = false;
     private string HealthSFX = "Assets/Audio/UI/Lose_Temporary_heart_2.wav";
-
-
 
     private PlayerData()
     {
@@ -65,7 +63,7 @@ public class PlayerData
             health -= damage;
         }
 
-        Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
+        //Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
 
     }
 
@@ -81,7 +79,7 @@ public class PlayerData
             return;
         }
         this.health = health;
-        Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
+        //Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
     }
 
     public void SetTempHealth(float health)
@@ -125,7 +123,7 @@ public class PlayerData
     {
         health = maxHealth;
         healthTemp = maxHealthTemp;
-        Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
+        //Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
     }
     public float GetHealthTemp() { return healthTemp; }
 

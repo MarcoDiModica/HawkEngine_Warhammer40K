@@ -324,6 +324,11 @@ void GameObject::Destroy()
 
 	destroyed = true;
 
+	if (CsharpReference != nullptr) {
+		MonoManager::GetInstance().UnregisterMonoObject(this);
+		CsharpReference = nullptr;
+	}
+
 	for (auto& component : components) {
 		component.second->Destroy();
 	}
@@ -616,11 +621,16 @@ void GameObject::RemoveChild(GameObject* child)
 
 
 MonoObject* GameObject::GetSharp() {
-    //Obtenemos el nombre del GO, creamos el string en mono y llamamos a la funcion que crea el GO
-    MonoString* monoString = mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
-    CsharpReference = EngineBinds::CreateGameObjectSharp(monoString, this);
+	if (CsharpReference != nullptr) {
+		return CsharpReference;
+	}
 
-    return CsharpReference;
+	CsharpReference = EngineBinds::CreateGameObjectSharp(
+		mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str()),
+		this
+	);
+
+	return CsharpReference;
 }
 
 

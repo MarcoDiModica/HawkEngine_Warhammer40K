@@ -11,7 +11,7 @@ public class AudioLevel2 : MonoBehaviour
     {
         if (!hasStartedMusic)
         {
-            Audio.Play(Lvl2Music, true);
+            //Audio.Play(Lvl2Music, true);
             hasStartedMusic = true;
         }
 

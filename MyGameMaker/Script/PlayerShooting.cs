@@ -159,7 +159,39 @@ public class PlayerShooting : MonoBehaviour
 
     }
 
+    public int GetCurrentAmmo()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                return boltgun.GetCurrentAmmo();
+                
+            case GunType.SHOTGUN:
+                return shotgun.GetCurrentAmmo();
+                
+            case GunType.RAILGUN:
+                return railgun.GetCurrentAmmo();
+                
+        }
+        return 0;
+    }
 
+    public int GetMaxAmmo()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                return boltgun.GetMaxAmmo();
+                
+            case GunType.SHOTGUN:
+                return shotgun.GetMaxAmmo();
+               
+            case GunType.RAILGUN:
+                return railgun.GetMaxAmmo();
+                
+        }
+        return 0;
+    }
 
     public override void Update(float deltaTime)
     {
@@ -183,7 +215,7 @@ public class PlayerShooting : MonoBehaviour
         {
             if (!firstShotReady)
             {
-
+                firstShotTimer += deltaTime; 
                 if (firstShotTimer >= firstShotDelay)
                 {
                     firstShotReady = true;
@@ -191,9 +223,7 @@ public class PlayerShooting : MonoBehaviour
                 }
             }
 
-            
-                Shoot();
-            
+            Shoot();
         }
         else
         {
@@ -442,23 +472,33 @@ public class PlayerShooting : MonoBehaviour
         switch (currentGun)
         {
             case GunType.BOLTGUN:
-                if (boltgun.grenadeLauncher.canThrow)
-                {
-                    redThirstManager.OnAbilityUsed();
-                }
-                boltgun?.UseAbility1();
+
+                    if (boltgun.grenadeLauncher.canThrow)
+                    {
+                        redThirstManager.OnAbilityUsed();
+                    }
+                    boltgun?.UseAbility1();
+
+              
 
                 break;
             case GunType.SHOTGUN:
-                if(shotgun.hookShot.canThrow)
-                {
-                    redThirstManager.OnAbilityUsed();
-                    redThirstManager.AddRedThirstPoint(1);
-                }
-                shotgun?.UseAbility1();
+
+                    if (shotgun.hookShot.canThrow)
+                    {
+                        redThirstManager.OnAbilityUsed();
+                        redThirstManager.AddRedThirstPoint(1);
+                    }
+                    shotgun?.UseAbility1();
+
+               
                 break;
             case GunType.RAILGUN:
-                railgun?.UseAbility1();
+
+                    railgun?.UseAbility1();
+                    redThirstManager.OnAbilityUsed();
+
+            
                 break;
         }
     }

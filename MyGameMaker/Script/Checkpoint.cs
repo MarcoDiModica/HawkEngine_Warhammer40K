@@ -16,6 +16,7 @@ public class Checkpoint : MonoBehaviour
     private Vector3 spawnPoint;
     private bool isCheckpointActive = false;
     public List<GameObject> enemies = new List<GameObject>();
+    private int loadSceneContinueTimer = 0;
 
     [Serializable]
     public class CheckpointData
@@ -90,11 +91,24 @@ public class Checkpoint : MonoBehaviour
     
     public override void Start()
     {
-    
+        
     }
 
     public override void Update(float deltatime)
     {
+
+        if (SceneManager.isLoadedFromCheckpoint == true)
+        {
+            loadSceneContinueTimer++;
+            if (loadSceneContinueTimer >= 3)
+            {
+                LoadCheckPointData();
+                SceneManager.isLoadedFromCheckpoint = false;
+                loadSceneContinueTimer = 0;
+            }
+            
+        }
+
         if (playerData.GetHealth() <= 0)
         {
             LoadCheckPointData();

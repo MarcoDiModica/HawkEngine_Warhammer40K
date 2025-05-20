@@ -24,7 +24,7 @@ public class HormagauntAnimation : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        Engineson.print("Hormagaunt Anim");
+      //  Engineson.print("Hormagaunt Anim");
         if (hormagauntesk != null)
         {
             float length = hormagauntesk.GetAnimationLength();
@@ -42,7 +42,7 @@ public class HormagauntAnimation : MonoBehaviour
                 isAnimFinished = true;
             }
         }
-        Engineson.print("Hormagaunt end Anim");
+     //   Engineson.print("Hormagaunt end Anim");
     }
 
     public void SetStandardIdleAnimation()
@@ -170,6 +170,16 @@ public class HormagauntAnimation : MonoBehaviour
                 //hormagauntesk?.TransitionAnimations(15, 3, 0.1f);
                 hormagauntesk?.SetAnimationSpeed(1.0f);
                 break;
+        }
+    }
+
+    public void SetClimbingAnimation()
+    {
+        hormagauntesk?.SetAnimationPlayState(true);
+        if (hormagauntesk?.GetAnimationIndex() != 3) {
+            hormagauntesk?.SetAnimation(3);
+            hormagauntesk?.SetAnimationSpeed(1.0f);
+            isAnimFinished = false;
         }
     }
 }

@@ -1,6 +1,6 @@
 name: Canvas_Interaction
-prefabPath: Assets\Prefabs\Canvas_Interaction.prefab.yaml
-uuid: 15859792916520655335
+prefabPath: Assets\Prefabs\Canvas_Interaction_Level1.prefab.yaml
+uuid: 1136688395884097080
 tag: Untagged
 active: true
 isStatic: false
@@ -51,7 +51,7 @@ Children:
     prefabPath: ""
     uuid: 13130904076925775302
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
     Components:
       Transform_Component:
@@ -103,6 +103,8 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: Text
     prefabPath: ""
@@ -160,12 +162,14 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
     Children: ~
   - name: InteractText
     prefabPath: ""
     uuid: 360648717206256169
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     Components:
       Transform_Component:
@@ -217,4 +221,448 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+    Children: ~
+  - name: DialogueText
+    prefabPath: ""
+    uuid: 10956309997784768477
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.493000001
+          - 0.317000002
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 1
+          - 1
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      TextComponent:
+        name: TextComponent
+        enabled: true
+        text: Rex, Rex tremendae majestatis, qui salvandos salvas gratis, salva me, fons pietatis.
+        position:
+          - 0
+          - 0
+        color:
+          - 0
+          - 0.13611114
+          - 0.564202309
+        fontSize: 31.7999992
+        boxSize:
+          - 515.159973
+          - 178.079987
+        spriteSize:
+          - 0
+          - 0
+        sheetSize:
+          - 0
+          - 0
+        spriteOffset:
+          - 0
+          - 0
+    Children: ~
+  - name: Choice1
+    prefabPath: ""
+    uuid: 15346485695273935848
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.64200002
+          - 0.481999993
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.184999987
+          - 0.0719999969
+          - 1
+        pivot_offset:
+          - 0
+          - 0
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\dialogue_box.png
+        use_animation: false
+        sprite_size:
+          - 1482
+          - 392
+        sheet_size:
+          - 1482
+          - 392
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~
+  - name: Choice1Hover
+    prefabPath: ""
+    uuid: 17300986230180643534
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.64200002
+          - 0.481999993
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.185000002
+          - 0.0719999969
+          - 1
+        pivot_offset:
+          - 0
+          - 0
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\dialogue_hover.png
+        use_animation: false
+        sprite_size:
+          - 1482
+          - 392
+        sheet_size:
+          - 1482
+          - 392
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+    Children: ~
+  - name: Choice1Text
+    prefabPath: ""
+    uuid: 3167637819058028581
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.734000027
+          - 0.474000007
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 1
+          - 1
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      TextComponent:
+        name: TextComponent
+        enabled: true
+        text: That's from mozart(cringe)
+        position:
+          - 0
+          - 0
+        color:
+          - 0
+          - 0.137254909
+          - 0.564705908
+        fontSize: 15
+        boxSize:
+          - 322.5
+          - 19.5
+        spriteSize:
+          - 0
+          - 0
+        sheetSize:
+          - 0
+          - 0
+        spriteOffset:
+          - 0
+          - 0
+    Children: ~
+  - name: Choice2
+    prefabPath: ""
+    uuid: 1107335598865238639
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.64200002
+          - 0.550000012
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.185000002
+          - 0.0719999969
+          - 1
+        pivot_offset:
+          - 0
+          - 0
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\dialogue_box.png
+        use_animation: false
+        sprite_size:
+          - 1482
+          - 392
+        sheet_size:
+          - 1482
+          - 392
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~
+  - name: Choice2Hover
+    prefabPath: ""
+    uuid: 10939971732139258591
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.64200002
+          - 0.550000012
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.185000002
+          - 0.0719999969
+          - 1
+        pivot_offset:
+          - 0
+          - 0
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\dialogue_hover.png
+        use_animation: false
+        sprite_size:
+          - 1482
+          - 392
+        sheet_size:
+          - 1482
+          - 392
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+    Children: ~
+  - name: Choice2Text
+    prefabPath: ""
+    uuid: 4040656339884535183
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.734000027
+          - 0.405000001
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 1
+          - 1
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      TextComponent:
+        name: TextComponent
+        enabled: true
+        text: That's from AC4(Based)
+        position:
+          - 0
+          - 0
+        color:
+          - 0
+          - 0.137254909
+          - 0.564705908
+        fontSize: 15
+        boxSize:
+          - 280.5
+          - 19.5
+        spriteSize:
+          - 0
+          - 0
+        sheetSize:
+          - 0
+          - 0
+        spriteOffset:
+          - 0
+          - 0
     Children: ~

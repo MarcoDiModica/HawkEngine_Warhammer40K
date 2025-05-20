@@ -126,10 +126,20 @@ public:
 	std::shared_ptr<Mesh> Cube;
 	std::shared_ptr<Material> DefaultMaterial;
 
-	void CreateCube() {
+	std::shared_ptr<Material> GetDefaultMaterial();
+
+	void CreateDefaultCube() {
 		Cube = Mesh::CreateCube();
-		DefaultMaterial = materials[0];
+		if (materials.size() > 0) {
+			DefaultMaterial = materials[0];
+		}
+		else {
+			DefaultMaterial = GetDefaultMaterial();
+		}
 	}
+
+	void DeleteAllUselessResources();
+	void UpdateTextures();
 
 private:
 	//meshes
@@ -141,7 +151,5 @@ private:
 	//images
 	std::unordered_map<std::string, size_t> imageIndex;
 	std::vector<std::shared_ptr<Image>> images;
-
-
 };
 

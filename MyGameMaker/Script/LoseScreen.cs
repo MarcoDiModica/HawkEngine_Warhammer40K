@@ -175,7 +175,7 @@ public class LoseScreen : MonoBehaviour
 
         }
 
-        // Detectar clic del ratón
+        // Detectar clic del ratï¿½n
         if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1) || Input.GetControllerButtonDown(ControllerButton.A))
         {
             UIButton selectedButton = buttons[selectedButtonIndex];
@@ -184,7 +184,7 @@ public class LoseScreen : MonoBehaviour
             if (selectedButton == button_loadLastCheckpoint)
             {
                 Audio.PlayOneShot(ConfirmSFX);
-                SceneManager.LoadScene("SpaceShip");
+                SceneManager.LoadScene("BetaRelease_Week1_Lvl2");
             }
             else if (selectedButton == button_mainMenuButton)
             {
@@ -194,7 +194,7 @@ public class LoseScreen : MonoBehaviour
             else if (selectedButton == button_quitButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
-                // Aquí puedes agregar la lógica para salir del juego
+                // Aquï¿½ puedes agregar la lï¿½gica para salir del juego
             }
         }
     }

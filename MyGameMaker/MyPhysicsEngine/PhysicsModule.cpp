@@ -328,19 +328,28 @@ void PhysicsModule::DrawDebugDrawer() {
 
 
 void PhysicsModule::CallMonoCollision(GameObject* obj, const std::string& methodName, GameObject* other) {
-    if (!obj || !other) return;
-    auto s = *other;
-    for (auto& script : obj->scriptComponents) {
-        if (script) {
-            script->InvokeMonoMethod(methodName, *other);
-        }
-    }
+	if (!obj || !other) return;
+
+	if (obj->IsDestroyed() || other->IsDestroyed()) return;
+
+	for (auto& script : obj->scriptComponents) {
+		if (script) {
+			try {
+				script->InvokeMonoMethod(methodName, *other);
+			}
+			catch (const std::exception& e) {
+				LOG(LogType::LOG_ERROR, "Exception in CallMonoCollision: %s", e.what());
+			}
+			catch (...) {
+				LOG(LogType::LOG_ERROR, "Unknown exception in CallMonoCollision");
+			}
+		}
+	}
 }
 
 void PhysicsModule::CheckCollisions() {
     static std::set<std::pair<GameObject*, GameObject*>> previousCollisions;
     std::set<std::pair<GameObject*, GameObject*>> currentCollisions;
-
 
     int numManifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
     for (int i = 0; i < numManifolds; i++) {
@@ -523,21 +532,85 @@ void PhysicsModule::AddForceToCollider(GameObject& go, const glm::vec3& force) {
 }
 
 bool PhysicsModule::CleanUp() {
-    for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
-        dynamicsWorld->removeRigidBody(rigidBody);
-        delete rigidBody->getMotionState();
-        delete rigidBody;
-    }
-    gameObjectRigidBodyMap.clear();
+	for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+		if (rigidBody) {
+			if (dynamicsWorld) {
+				dynamicsWorld->removeRigidBody(rigidBody);
+			}
 
-    delete dynamicsWorld;
-    delete solver;
-    delete dispatcher;
-    delete collisionConfiguration;
-    delete broadphase;
-    delete cubeShape;
+			if (rigidBody->getMotionState()) {
+				delete rigidBody->getMotionState();
+			}
 
-    return true;
+			if (rigidBody->getCollisionShape()) {
+				delete rigidBody->getCollisionShape();
+			}
+
+			delete rigidBody;
+		}
+	}
+	gameObjectRigidBodyMap.clear();
+
+	p2List_item<btTypedConstraint*>* constraintItem = constraints.getFirst();
+	while (constraintItem != nullptr) {
+		btTypedConstraint* constraint = constraintItem->data;
+		if (constraint && dynamicsWorld) {
+			dynamicsWorld->removeConstraint(constraint);
+		}
+		delete constraint;
+		constraintItem = constraintItem->next;
+	}
+	constraints.clear();
+
+	p2List_item<btCollisionShape*>* shapeItem = shapes.getFirst();
+	while (shapeItem != nullptr) {
+		btCollisionShape* shape = shapeItem->data;
+		delete shape;
+		shapeItem = shapeItem->next;
+	}
+	shapes.clear();
+
+	if (debugDrawer) {
+		delete debugDrawer;
+		debugDrawer = nullptr;
+	}
+
+	if (vehicle_raycaster) {
+		delete vehicle_raycaster;
+		vehicle_raycaster = nullptr;
+	}
+
+	if (cubeShape) {
+		delete cubeShape;
+		cubeShape = nullptr;
+	}
+
+	if (dynamicsWorld) {
+		delete dynamicsWorld;
+		dynamicsWorld = nullptr;
+	}
+
+	if (solver) {
+		delete solver;
+		solver = nullptr;
+	}
+
+	if (dispatcher) {
+		delete dispatcher;
+		dispatcher = nullptr;
+	}
+
+	if (collisionConfiguration) {
+		delete collisionConfiguration;
+		collisionConfiguration = nullptr;
+	}
+
+	if (broadphase) {
+		delete broadphase;
+		broadphase = nullptr;
+	}
+
+	return true;
 }
 
 void PhysicsModule::SetGlobalRestitution(float restitutionValue) {

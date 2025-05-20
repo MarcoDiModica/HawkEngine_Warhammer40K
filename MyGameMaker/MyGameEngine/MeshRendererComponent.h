@@ -107,19 +107,12 @@ protected:
             std::shared_ptr<Material> loadedMaterial;
 			YAML::Node matnode = node["material"];
             std::string name = matnode["name"].as<std::string>();
-            if (Application->root->GetResourceManager()->GetMaterial(name) != nullptr)
-            {
-                SetMaterial(Application->root->GetResourceManager()->GetMaterial(name));
-			}
-            else
-            {
-                loadedMaterial = std::make_shared<Material>();
-                if (!loadedMaterial->decode(node["material"])) {
-                    LOG(LogType::LOG_ERROR, "Failed to decode material in MeshRenderer");
-                    return false;
-                } 
-                SetMaterial(Application->root->GetResourceManager()->AddMaterial(loadedMaterial));
-            }
+            loadedMaterial = std::make_shared<Material>();
+            if (!loadedMaterial->decode(node["material"])) {
+                LOG(LogType::LOG_ERROR, "Failed to decode material in MeshRenderer");
+                return false;
+            } 
+            SetMaterial(loadedMaterial);
         }
 
         if (node["color"] && node["color"].IsSequence() && node["color"].size() == 3) {

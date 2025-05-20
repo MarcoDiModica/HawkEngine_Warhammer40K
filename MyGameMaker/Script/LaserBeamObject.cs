@@ -7,7 +7,6 @@ using static System.Net.Mime.MediaTypeNames;
 public class LaserBeamObject : MonoBehaviour
 {
     float damage = 50;
-    public List<string> collisionNames = new List<string>();
 
 
     public override void Awake()
@@ -25,30 +24,30 @@ public class LaserBeamObject : MonoBehaviour
 
     public override void OnCollisionEnter(GameObject other)
     {
-        for (int i = 0; i < collisionNames.Count; i++)
-        {
-            var enemy = GameObject.Find(collisionNames[i]);
-            if (enemy.tag == "Melee")
+            if (other.tag == "Melee")
             {
-                enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+                other.GetComponent<EnemyControllerMelee>().TakeDamage(damage); 
             }
-            if (enemy.tag == "Ranged")
+            if (other.tag == "Ranged")
             {
-                enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+                other.GetComponent<EnemyControllerRanged>().TakeDamage(damage);
             }
-            if (enemy.tag == "Stalker")
+            if (other.tag == "Stalker")
             {
-                //enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
+                other.GetComponent<EnemyControllerStalker>().TakeDamage(damage);
             }
-            if (enemy.tag == "Boss")
+            if (other.tag == "Warrior")
             {
-                enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+                other.GetComponent<EnemyControllerWarrior>().TakeDamage(damage);
             }
-            if (enemy.tag == "Destroyable")
+            if (other.tag == "Boss")
             {
-                enemy.GetComponent<DestroyEnviormentObject>().DestroyObject();
+                other.GetComponent<EnemyControllerBoss>().TakeDamage(damage);
             }
-        }
+            if (other.tag == "Destroyable")
+            {
+                other.GetComponent<DestroyEnviormentObject>().DestroyObject();
+            }
     }
 
 

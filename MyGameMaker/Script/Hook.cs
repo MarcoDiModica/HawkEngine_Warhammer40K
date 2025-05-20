@@ -25,11 +25,17 @@ public class Hook : MonoBehaviour
         }       
     }
 
-    public override void Update(float deltaTime) { }
+    public override void Update(float deltaTime) 
+    { 
+        if (needsDestroy)
+        {
+            Engineson.Destroy(gameObject);
+        }
+    }
 
     public void Init(Vector3 pos, Vector3 dir)
     {
-        AddComponent<MeshRenderer>();
+        //AddComponent<MeshRenderer>();
         GetComponent<Transform>().position = pos + dir * 3.0f + new Vector3(0, 2, 0);
         GetComponent<Transform>().SetScale(0.25f, 0.25f, 0.25f);
         AddComponent<BoxCollider>();
@@ -44,25 +50,19 @@ public class Hook : MonoBehaviour
 
     public override void OnCollisionEnter(GameObject other)
     {
-
-        for (int i = 0; i < collisionNames.Count; i++)
+        if (other.tag == "Melee" || other.tag == "Ranged" || other.tag == "Stalker" || other.tag == "Boss" || other.tag == "Warrior")
         {
-            var enemy = GameObject.Find(collisionNames[i]);
-            if (enemy.tag == "Melee" && enemy.tag == "Ranged" && enemy.tag == "Stalker" && enemy.tag == "Boss" && enemy.tag == "Warrior")
+            if (player != null)
             {
-                if (player != null)
-                {
-                    Vector3 hookPosition = other.GetComponent<Transform>().GetPosition() - (gameObject.transform.forward * 5);
-                    player.GetComponent<Collider>().SetPosition(hookPosition);
-                    Engineson.print("Jugador teletransportado a la posición del hook.");
-                    Audio.PlayOneShot(hookTp);
-                }
-                Engineson.print("Colisión con " + other.name);
+                Vector3 hookPosition = other.GetComponent<Transform>().GetPosition() - (gameObject.transform.forward * 5);
+                player.GetComponent<Collider>().SetPosition(hookPosition);
+                Engineson.print("Jugador teletransportado a la posición del hook.");
+                Audio.PlayOneShot(hookTp);
             }
-            
+            Engineson.print("Colisión con " + other.name);
         }
         GetComponent<Collider>().SetPosition(new Vector3(0, -100, 0));
-        needsDestroy = false;
+        needsDestroy = true;
     }
 
 }

@@ -46,6 +46,7 @@ public class LaserBeam : BaseAbilities
             {
                 canThrow = true;
                 abilityTimer = 0.0f;
+                //Engineson.Destroy(laserBeam);
                 //Engineson.print("Cooldown terminado. Habilidad lista.");
             }
         }
@@ -83,9 +84,9 @@ public class LaserBeam : BaseAbilities
 
             laserBeam.AddScript("LaserBeamObject");
             gameObject.AddChild(laserBeam);
-            laserBeam.AddComponent<MeshRenderer>();
+            //laserBeam.AddComponent<MeshRenderer>();
             laserBeam.AddComponent<BoxCollider>();
-            laserBeam.GetComponent<Transform>().position = gameObject.transform.GetPosition() + gameObject.transform.forward * 20.0f + new Vector3(0, 3, 0);
+            laserBeam.GetComponent<Transform>().position = gameObject.transform.GetPosition() + gameObject.transform.forward + new Vector3(15, 3, 0);
             laserBeam.GetComponent<Transform>().SetScale(0.5f, 0.5f, 20.0f);
             laserActive = true;
             var energyBallFX = Engineson.CreateGameObject("LaserBeamFX", null);

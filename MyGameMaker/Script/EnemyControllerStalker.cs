@@ -6,9 +6,9 @@ using HawkEngine;
 public class EnemyControllerStalker : EnemyController
 {
     // Enemy Stats
-    private float health = 350.0f;
-    private float clawDamage = 25.0f;
-    private float pounceDamage = 35.0f;
+    private float health = 250.0f;
+    private float clawDamage = 8.0f;
+    private float pounceDamage = 10.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
 
@@ -53,6 +53,7 @@ public class EnemyControllerStalker : EnemyController
     // Death
     private float deathTimer = 0f;
     private float deathCooldown = 2f;
+
     public override void Awake()
     {
         startPosition = gameObject.GetComponent<Transform>().position;
@@ -122,6 +123,12 @@ public class EnemyControllerStalker : EnemyController
             {
                 distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
+
+                if (isSlowed)
+                {
+                    HandleSlowedState(deltaTime);
+                }
+
                 if (distanceToPlayer < distToChase)
                 {
                     // Attack
@@ -148,7 +155,7 @@ public class EnemyControllerStalker : EnemyController
             }
         }
 
-        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
+        //Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
 
         switch (currentState)
         {
@@ -176,7 +183,15 @@ public class EnemyControllerStalker : EnemyController
 
                 Vector3 currentVelocity = rb.GetVelocity();
                 moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
-                Vector3 desiredVelocity = moveDirection * speedMovement;
+                Vector3 desiredVelocity;
+                if (isSlowed)
+                {
+                    desiredVelocity = moveDirection * slowedSpeed;
+                }
+                else
+                {
+                    desiredVelocity = moveDirection * speedMovement;
+                }
 
                 anim.SetWalkToPlayerAnimation();
                 if (desiredVelocity.LengthSquared() > 0)
@@ -321,9 +336,26 @@ public class EnemyControllerStalker : EnemyController
             lictorMesh.SetActive(true);
             
 
-            gameObject.GetComponent<Collider>().SetPosition(startPosition);
+            //gameObject.GetComponent<Collider>().SetPosition(startPosition);
         }
         
+    }
+
+    private void HandleSlowedState(float deltaTime)
+    {
+        try
+        {
+            slowedTimer += deltaTime;
+            if (slowedTimer >= slowedDuration)
+            {
+                isSlowed = false;
+                slowedTimer = 0.0f;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"Error in HandleSlowedState: {e.Message}");
+        }
     }
     public override void Attack()
     {
@@ -347,6 +379,8 @@ public class EnemyControllerStalker : EnemyController
         }
 
         Audio.PlayOneShot(SFX_ATTACK);
+        AddComponent<ParticleFX>().ApplyPreset(27);
+        GetComponent<ParticleFX>().EmitBurst(1);
     }
 
     public override void TakeDamage(float damage)
@@ -379,6 +413,8 @@ public class EnemyControllerStalker : EnemyController
             hasPounce = false;
             isPouncing = true;
             Audio.PlayOneShot(SFX_POUNCE);
+            AddComponent<ParticleFX>().ApplyPreset(26);
+            GetComponent<ParticleFX>().EmitBurst(1);
             Engineson.print("Pouncing");
             anim.SetLeapAnimation();
             rb.SetVelocity(rb.GetVelocity() * 120f);

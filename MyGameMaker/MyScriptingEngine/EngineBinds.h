@@ -173,6 +173,7 @@ namespace EngineBinds {
 	void SetImageAnimation(MonoObject* uiImageRef, int index);
 	void SetImageSpriteSize(MonoObject* uiImageRef, float width, float height);
 	void SetImageAnimIndex(MonoObject* uiImageRef, int index);
+    void SetImageColor(MonoObject* uiImageRef, float r, float g, float b, float a);
 	void PlayStopAnimation(MonoObject* uiImageRef, bool play);
 
 	//UIButton
@@ -228,6 +229,7 @@ namespace EngineBinds {
 	void SetText(MonoObject* textRef, MonoString* text);
 	void SetTextColor(MonoObject* textRef, glm::vec4* color);
 	void SetTextSize(MonoObject* textRef, int size);
+	void SetTextBoxSize(MonoObject* textRef, float sizex, float sizey);
 
     //SceneManagement
     bool LoadScene(MonoString* sceneName);

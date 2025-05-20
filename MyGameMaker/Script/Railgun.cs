@@ -50,7 +50,7 @@ public class Railgun : BaseWeapon
     public override void Start()
     {
         damage = 100.0f;
-        shootCadence = 0.66f;
+        shootCadence = 0.16f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 0;
@@ -169,6 +169,9 @@ public class Railgun : BaseWeapon
                             case "Destroyable":
                                 hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
                                 break;
+                            case "ExplosiveBarrel":
+                                hitObject.GetComponent<ExplosiveBarrel>()?.Explode();
+                                break;
                         }
                     }
 
@@ -196,6 +199,15 @@ public class Railgun : BaseWeapon
         };
     }
 
+    public int GetCurrentAmmo()
+    {
+        return currentMagazineAmmo;
+    }
+
+    public int GetMaxAmmo()
+    {
+        return currentTotalAmmo;
+    }
     public override void Shoot()
     {
         isReloading = false;
@@ -210,7 +222,7 @@ public class Railgun : BaseWeapon
 
             int audio = Audio.PlayOneShot(railgunShot);
 
-            Vector3 localOffset = new Vector3(-0.9f, 2.5f, 2f);
+            Vector3 localOffset = new Vector3(-0.18f, 2.5f, 2f);
             Vector3 bulletStart = transform.position +
                                   (transform.right * localOffset.X) +
                                   (transform.up * localOffset.Y) +
@@ -282,13 +294,13 @@ public class Railgun : BaseWeapon
 
     public override void UseAbility2()
     {
-        if (railgunMode == RailgunMode.AUTOMATIC)
-        {
-            laserBeam.TriggerAbility();
-        }
-        else
+        if (railgunMode == RailgunMode.SEMIAUTOMATIC)
         {
             energyBall.TriggerAbility();
+        } 
+        else
+        {
+            laserBeam.TriggerAbility();
         }
     }
 

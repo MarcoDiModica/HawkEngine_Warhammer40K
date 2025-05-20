@@ -46,7 +46,6 @@ public class EnergyBall : BaseAbilities
         if (!canThrow)
         {
             abilityTimer += deltaTime;
-            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
 
             if (abilityTimer >= abilityCooldown)
             {
@@ -64,7 +63,7 @@ public class EnergyBall : BaseAbilities
                 if (energyBall != null)
                 {
                     energyBallActive = false;
-                    Engineson.Destroy(energyBall);
+                    Engineson.Destroy(gameObject);
                     Audio.Stop(energyBallAudio);
                     deathTimerPrevention = 0.0f;
                 }
@@ -93,6 +92,7 @@ public class EnergyBall : BaseAbilities
             Audio.Play(energyBallAudio, true);
             canThrow = false;
             abilityTimer = 0.0f;
+            energyBall.GetComponent<Ball>().needsDestroy = true;
         }
         else
         {

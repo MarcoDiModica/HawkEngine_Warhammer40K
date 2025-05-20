@@ -7,6 +7,7 @@ public class DestroyEnviormentObject : MonoBehaviour
 {
 
     public DropManager dropManager;
+    public bool onlyMedicaeStimm = false;
 
     public void DestroyObject()
     {
@@ -14,7 +15,15 @@ public class DestroyEnviormentObject : MonoBehaviour
         //gameObject.GetComponent<Collider>().SetTrigger(true);
         if(dropManager != null)
         {
-            dropManager.SpawnPrefabFromDestroyableObject(gameObject.transform.position);
+            if (onlyMedicaeStimm)
+            {
+                dropManager.SpawnMedicaeStimm(gameObject.transform.position);
+            }
+            else
+            {
+                dropManager.SpawnPrefabFromDestroyableObject(gameObject.transform.position);
+            }
+            
         }
         else
         {

@@ -15,6 +15,7 @@ public class PlayerInput : MonoBehaviour
     private bool isKeyboardMoving = false;
     private Transform cameraTransform;
     private Vector3 directionAim = Vector3.Zero;
+    private bool isInputBlocked = false;
     private bool isMovementBlocked = false;
     public override void Awake()
     {
@@ -32,14 +33,17 @@ public class PlayerInput : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        if (!isMovementBlocked)
+        if (!isInputBlocked)
         {
             UpdateLookDirection();
-            UpdateMovementDirection();
+            if (!isMovementBlocked)
+            {
+                UpdateMovementDirection();
 
-            isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
+                isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
+            }
+
             isShootPressed = Input.GetKey(KeyCode.J) || Input.GetControllerAxis(0, 5) > 0.5f;
-            
             isInteractPressed = Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B);
             isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
             isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightShoulder);
@@ -231,9 +235,10 @@ public class PlayerInput : MonoBehaviour
         return Input.GetControllerButtonDown(ControllerButton.DPadDown) || Input.GetControllerButtonDown(ControllerButton.DPadUp);
     }
 
-    public void BlockMovement()
+    public void BlockInput()
     {
-        isMovementBlocked = true;
+        BlockMovement();
+        isInputBlocked = true;
         isDashPressed = false;
         isShootPressed = false;
         //isReloadPressed = false;
@@ -247,7 +252,18 @@ public class PlayerInput : MonoBehaviour
         //isKeyboardMoving = false;
     }
 
-    public void UnblockMovement()
+    public void UnBlockInput()
+    {
+        isInputBlocked = false;
+        UnBlockMovement();
+    } 
+    public void BlockMovement()
+    {
+        isMovementBlocked = true;
+        isDashPressed = false;
+        currentMoveDirection = Vector3.Zero;
+    }
+    public void UnBlockMovement()
     {
         isMovementBlocked = false;
     }

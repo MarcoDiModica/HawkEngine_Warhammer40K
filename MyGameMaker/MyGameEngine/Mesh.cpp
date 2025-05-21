@@ -1017,6 +1017,35 @@ std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 	return mesh;
 }
 
+size_t GenerateModelID(ModelData& model) {
+	std::hash<float> floatHasher;
+	std::hash<unsigned int> intHasher;
+
+	size_t hash = 0;
+
+	for (size_t i = 0; i < model.vertexData.size(); i++) {
+		// Posición
+		hash ^= floatHasher(model.vertexData.at(i).position.x) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertexData.at(i).position.y) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertexData.at(i).position.z) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+
+		// Normal
+		hash ^= floatHasher(model.vertex_normals.at(i).x) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertex_normals.at(i).y) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertex_normals.at(i).z) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+
+		// Texcoord
+		hash ^= floatHasher(model.vertex_texCoords.at(i).x) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertex_texCoords.at(i).y) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	}
+
+	for (unsigned int index : model.indexData) {
+		hash ^= intHasher(index) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	}
+
+	return hash;
+}
+
 void Mesh::loadToOpenGL()
 {
 	(glGenVertexArrays(1, &model->GetModelData().vA));
@@ -1100,6 +1129,11 @@ void Mesh::loadToOpenGL()
 		glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBBitangentsID);
 		glEnableVertexAttribArray(6);
 		glVertexAttribPointer(6, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+	}
+
+	if (model->GetID() == 0)
+	{
+		model->SetID(GenerateModelID(model->GetModelData()));
 	}
 
 	(glCreateBuffers(1, &model->GetModelData().iBID));

@@ -447,18 +447,17 @@ void GPUDrivenRenderer::RenderUIBatch(const ShaderBatch& batch, const glm::mat4&
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	shader->Bind();
-	glm::mat4 uiviewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
-	shader->SetUniformMat4("view", viewMatrix);
 
-	glm::mat4 uiProjMatrix = glm::ortho(0.0f, Application->gui->UIGameViewPanel->GetWidth(),
-		Application->gui->UIGameViewPanel->GetHeight(), 0.0f);
+	glm::mat4 uiViewMatrix = glm::mat4(1.0f);
+	shader->SetUniformMat4("view", uiViewMatrix);
 
-	glm::mat4 projection = glm::ortho(
-		0.0f, static_cast<float>(Application->gui->UIGameViewPanel->GetWidth()),
-		static_cast<float>(Application->gui->UIGameViewPanel->GetHeight()), 0.0f,
-		-1.0f, 1.0f);
+	glm::mat4 uiProjection = glm::ortho(
+		0.0f, Application->gui->UIGameViewPanel->GetWidth(),
+		-Application->gui->UIGameViewPanel->GetHeight(), 0.0f,
+		-1.0f, 1.0f
+	);
 	
-	shader->SetUniformMat4("projection", projection);
+	shader->SetUniformMat4("projection", uiProjection);
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
 

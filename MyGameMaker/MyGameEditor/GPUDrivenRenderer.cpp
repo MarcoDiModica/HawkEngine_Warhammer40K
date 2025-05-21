@@ -6,6 +6,9 @@
 #include "MyGameEngine/ShaderManager.h"
 #include "MyGameEngine/CameraComponent.h"
 #include "ForwardPlus.h"
+#include "App.h"
+#include "MyGUI.h"
+#include "UIGameView.h"
 
 GPUDrivenRenderer& GPUDrivenRenderer::GetInstance() {
 	static GPUDrivenRenderer instance;
@@ -191,6 +194,7 @@ void GPUDrivenRenderer::BatchCommandsByShaderType() {
 		switch (type) {
 		case ShaderType::PBR: shaderName = "PBR"; break;
 		case ShaderType::UNLIT: shaderName = "UNLIT"; break;
+		case ShaderType::UI: shaderName = "UI"; break;
 		default: shaderName = "DESCONOCIDO";
 		}
 	}
@@ -211,6 +215,9 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 			break;
 		case ShaderType::PBR:
 			RenderPBRBatch(batch, viewMatrix, projMatrix, cameraPos);
+			break;
+		case ShaderType::UI:
+			RenderUIBatch(batch, viewMatrix, projMatrix);
 			break;
 		default:
 			LOG(LogType::LOG_WARNING, "Tipo de shader desconocido: %d", (int)shaderType);
@@ -422,6 +429,75 @@ void GPUDrivenRenderer::RenderPBRBatch(
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	shader->UnBind();
+}
+
+void GPUDrivenRenderer::RenderUIBatch(const ShaderBatch& batch, const glm::mat4& viewMatrix, const glm::mat4& projMatrix)
+{
+	if (batch.commands.empty()) return;
+
+	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::UI);
+	if (!shader) {
+		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader UI");
+		return;
+	}
+
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	shader->Bind();
+	glm::mat4 uiviewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
+	shader->SetUniformMat4("view", viewMatrix);
+
+	glm::mat4 uiProjMatrix = glm::ortho(0.0f, Application->gui->UIGameViewPanel->GetWidth(),
+		Application->gui->UIGameViewPanel->GetHeight(), 0.0f);
+
+	glm::mat4 projection = glm::ortho(
+		0.0f, static_cast<float>(Application->gui->UIGameViewPanel->GetWidth()),
+		static_cast<float>(Application->gui->UIGameViewPanel->GetHeight()), 0.0f,
+		-1.0f, 1.0f);
+	
+	shader->SetUniformMat4("projection", projection);
+
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
+
+	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
+		uint32_t meshIndex = batch.meshIndices[i];
+		uint32_t materialIndex = batch.materialIndices[i];
+
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
+
+		if (!meshData || !materialData) continue;
+
+		shader->SetUniformVec4("modColor", materialData->albedoColor);
+
+		glBindVertexArray(meshData->vertexArray);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+		if (i < batch.commands.size()) {
+			const DrawElementsCommand& cmd = batch.commands[i];
+			shader->SetUniform("instanceOffset", (int)cmd.baseInstance);
+
+			glDrawElementsInstanced(
+				GL_TRIANGLES,
+				cmd.count,
+				GL_UNSIGNED_INT,
+				nullptr,
+				cmd.instanceCount
+			);
+		}
+	}
+
+	glBindVertexArray(0);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	shader->UnBind();
+
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
 }
 
 void GPUDrivenRenderer::HandleTextureBindings(Shaders* shader, const char* textureName, const char* hasTextureName, GLuint64 textureHandle) {

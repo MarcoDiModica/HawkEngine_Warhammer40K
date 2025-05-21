@@ -7,6 +7,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include <string>
+#include "MyGameEngine/Material.h"
 
 class UIImageComponent : public Component
 {
@@ -67,14 +68,21 @@ public:
 
 	void SetAnimationIndex(int index) { animIndex = index; }
 
+	glm::mat4 GetModelMatrix() const { return modelMatrix; }
+
+	std::shared_ptr<Mesh> GetMesh() const { return mesh; }
+	std::shared_ptr<Material> GetMaterial() const { return material; }
+
 private:
 	//texture
 	std::string texturePath;
+	std::shared_ptr<Material> material;
 	std::shared_ptr<Image> texture;
 	std::shared_ptr<Mesh> mesh;
 	glm::vec4 color = glm::vec4(1.0f);
 	Shaders * shader;
 	glm::mat4 projection;
+	glm::mat4 modelMatrix;
 
 	bool useAnimation = false;
 	glm::vec2 spriteSize = glm::vec2(0.0f, 0.0f);

@@ -29,7 +29,7 @@ uniform int instanceOffset;
 uniform float heightScale;
 uniform int u_HasHeightMap;
 uniform sampler2D heightMap;
-
+uniform mat4 lightSpaceMatrix;
 
 out VS_OUT {
     vec3 FragPos;
@@ -39,6 +39,7 @@ out VS_OUT {
     vec3 Bitangent;
     mat3 TBN;
     vec3 CameraPos;
+    vec4 FragPosLightSpace;
 } vs_out;
 
 void main() {
@@ -62,7 +63,7 @@ void main() {
         vec3 normal = normalize(normal);
         positionOffset += normal * (height * heightScale);
     }
-    
+    vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
     vs_out.FragPos = vec3(model * vec4(positionOffset, 1.0));
     
     gl_Position = projection * view * model * vec4(positionOffset, 1.0);

@@ -6,10 +6,39 @@
 #include "MyGameEngine/ShaderManager.h"
 #include "MyGameEngine/CameraComponent.h"
 #include "ForwardPlus.h"
+#include "App.h"
+#include "UISceneWindow.h"
+#include "MyGUI.h"
 
 GPUDrivenRenderer& GPUDrivenRenderer::GetInstance() {
 	static GPUDrivenRenderer instance;
 	return instance;
+}
+
+void GPUDrivenRenderer::InitializeShadows() 
+{
+	glGenFramebuffers(1, &depthMapFBO);
+
+	glGenTextures(1, &depthMap);
+	glBindTexture(GL_TEXTURE_2D, depthMap);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+		SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+	
+
+	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+	if (status != GL_FRAMEBUFFER_COMPLETE) {
+		LOG(LogType::LOG_ERROR, "Shadow Framebuffer is not complete! Status: 0x%x", status);
+	}
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 bool GPUDrivenRenderer::Initialize() {
@@ -45,6 +74,8 @@ bool GPUDrivenRenderer::Initialize() {
 	GLuint zero = 0;
 	glNamedBufferSubData(visibleCountBuffer, 0, sizeof(GLuint), &zero);
 
+	//InitializeShadows();
+
 	return true;
 }
 
@@ -54,6 +85,15 @@ void GPUDrivenRenderer::Shutdown() {
 	if (cullDataBuffer) glDeleteBuffers(1, &cullDataBuffer);
 	if (visibleCountBuffer) glDeleteBuffers(1, &visibleCountBuffer);
 	if (defaultVAO) glDeleteVertexArrays(1, &defaultVAO);
+	if (depthMapFBO) {
+		glDeleteFramebuffers(1, &depthMapFBO);
+		depthMapFBO = 0;
+	}
+	if (depthMap) {
+		glDeleteTextures(1, &depthMap);
+		depthMap = 0;
+	}
+
 
 	cullingShader = 0;
 	drawCommandBuffer = 0;
@@ -206,15 +246,30 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 		return;
 	}
 
-	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
 
+	float near_plane = 1.0f, far_plane = 7;
+	glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+
+	glm::mat4 lightView = glm::lookAt(glm::vec3(-2.0f, 4.0f, -1.0f),
+		glm::vec3(0.0f, 0.0f, 0.0f),
+		glm::vec3(0.0f, 1.0f, 0.0f));
+
+	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+
+	for (const auto& [shaderType, batch] : shaderBatches) {
+		if (shaderType == ShaderType::PBR) {
+			RenderShadowBatch(batch, lightSpaceMatrix);
+		}
+	}
+
+	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
 	for (const auto& [shaderType, batch] : shaderBatches) {
 		switch (shaderType) {
 		case ShaderType::UNLIT:
 			RenderUnlitBatch(batch, viewMatrix, projMatrix);
 			break;
 		case ShaderType::PBR:
-			RenderPBRBatch(batch, viewMatrix, projMatrix, cameraPos);
+			RenderPBRBatch(batch, viewMatrix, projMatrix, cameraPos, lightSpaceMatrix);
 			break;
 		default:
 			LOG(LogType::LOG_WARNING, "Tipo de shader desconocido: %d", (int)shaderType);
@@ -223,6 +278,73 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 	}
 
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
+}
+
+void GPUDrivenRenderer::RenderShadowBatch(const ShaderBatch& batch, glm::mat4 lightSpaceMatrix)
+{
+	if (batch.commands.empty()) return;
+
+	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::DEPTH);
+	if (!shader) {
+		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader SHADOW");
+		return;
+	}
+
+	shader->Bind();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+
+	glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+	shader->SetUniformMat4("lightSpaceMatrix", lightSpaceMatrix);
+
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
+
+	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
+		uint32_t meshIndex = batch.meshIndices[i];
+		uint32_t materialIndex = batch.materialIndices[i];
+
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
+
+		if (!meshData || !materialData) continue;
+
+		glBindVertexArray(meshData->vertexArray);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+		if (i < batch.commands.size()) {
+			const DrawElementsCommand& cmd = batch.commands[i];
+
+			shader->SetUniform("instanceOffset", (int)cmd.baseInstance);
+
+			glDrawElementsInstanced(
+				GL_TRIANGLES,
+				cmd.count,
+				GL_UNSIGNED_INT,
+				nullptr,
+				cmd.instanceCount
+			);
+		}
+	}
+
+	glBindVertexArray(0);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	bool useMSAA = Application->gui->UISceneWindowPanel->msaaSamples > 0;
+
+	if (useMSAA) {
+		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->multisampleFBO);
+	}
+	else {
+		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
+	}
+
+	shader->UnBind();
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void GPUDrivenRenderer::RenderUnlitBatch(
@@ -329,17 +451,19 @@ void GPUDrivenRenderer::RenderPBRBatch(
 	const ShaderBatch& batch,
 	const glm::mat4& viewMatrix,
 	const glm::mat4& projMatrix,
-	const glm::vec3& cameraPos) {
+	const glm::vec3& cameraPos,
+	const glm::mat4& lightSpaceMatrix) {
 
 	if (batch.commands.empty()) return;
 
 	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::PBR);
 	if (!shader) {
-		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader PBR");
+		LOG(LogType::LOG_ERROR, "Failed to retrieve PBR shader");
 		return;
 	}
 
 	shader->Bind();
+
 	shader->SetUniformMat4("view", viewMatrix);
 	shader->SetUniformMat4("projection", projMatrix);
 	shader->SetUniformVec3("cameraPos", cameraPos);
@@ -352,20 +476,18 @@ void GPUDrivenRenderer::RenderPBRBatch(
 	// Update Forward+ uniforms every frame
 	shader->SetUniform("useForwardPlus", 1);
 	shader->SetUniform("tileSize", ForwardPlusLighting::GetInstance().GetTileSize());
+
 	glm::vec2 tileSize = glm::vec2(
 		ForwardPlusLighting::GetInstance().GetTilesX() * ForwardPlusLighting::GetInstance().GetTileSize(),
 		ForwardPlusLighting::GetInstance().GetTilesY() * ForwardPlusLighting::GetInstance().GetTileSize());
 	shader->SetUniformVec2("screenSize", tileSize);
+
 	shader->SetUniform("numLights", ForwardPlusLighting::GetInstance().GetTotalLights());
 	shader->SetUniform("maxLightsPerTile", ForwardPlusLighting::GetInstance().GetMaxLightsPerTile());
-
-	GLint uniformCheck;
-	glGetUniformiv(shader->GetProgram(), glGetUniformLocation(shader->GetProgram(), "useForwardPlus"), &uniformCheck);
-	LOG(LogType::LOG_INFO, "Forward+ Uniform State: %d", uniformCheck);
+	shader->SetUniformMat4("lightSpaceMatrix", lightSpaceMatrix);
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
 
-	bindlessErrorDetected = true;
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
 		uint32_t meshIndex = batch.meshIndices[i];
 		uint32_t materialIndex = batch.materialIndices[i];
@@ -380,24 +502,9 @@ void GPUDrivenRenderer::RenderPBRBatch(
 		shader->SetUniform("roughnessFactor", materialData->pbrParams.y);
 		shader->SetUniform("aoFactor", materialData->pbrParams.z);
 		shader->SetUniform("tonemapStrength", materialData->pbrParams.w);
-
 		shader->SetUniformVec3("emissiveColor", glm::vec3(materialData->emissiveParams));
 		shader->SetUniform("emissiveIntensity", materialData->emissiveParams.w);
-
 		shader->SetUniform("heightScale", materialData->heightScale);
-
-		if (GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64 && !bindlessErrorDetected) {
-			HandleTextureBindings(shader, "albedoMap", "u_HasAlbedoMap", materialData->albedoTexture);
-			HandleTextureBindings(shader, "normalMap", "u_HasNormalMap", materialData->normalTexture);
-			HandleTextureBindings(shader, "metallicMap", "u_HasMetallicMap", materialData->metallicTexture);
-			HandleTextureBindings(shader, "roughnessMap", "u_HasRoughnessMap", materialData->roughnessTexture);
-			HandleTextureBindings(shader, "aoMap", "u_HasAoMap", materialData->aoTexture);
-			HandleTextureBindings(shader, "emissiveMap", "u_HasEmissiveMap", materialData->emissiveTexture);
-			HandleTextureBindings(shader, "heightMap", "u_HasHeightMap", materialData->heightTexture);
-		}
-		else {
-			BindRegularTextures(shader, materialData);
-		}
 
 		glBindVertexArray(meshData->vertexArray);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
@@ -413,11 +520,6 @@ void GPUDrivenRenderer::RenderPBRBatch(
 				nullptr,
 				cmd.instanceCount
 			);
-
-			GLenum err = glGetError();
-			if (err != GL_NO_ERROR) {
-				LOG(LogType::LOG_ERROR, "GL Error after PBR draw: 0x%X", err);
-			}
 		}
 	}
 

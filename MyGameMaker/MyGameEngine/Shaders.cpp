@@ -456,6 +456,13 @@ void Shaders::SetStorageBlockBinding(const std::string& name, GLuint bindingPoin
 	}
 }
 
+
+DepthShader::DepthShader() {
+}
+bool DepthShader::Initialize() {
+	return LoadShaders("Assets/Shaders/depth_vertex.glsl", "Assets/Shaders/depth_fragment.glsl");
+}
+
 UnlitShader::UnlitShader() {
 }
 

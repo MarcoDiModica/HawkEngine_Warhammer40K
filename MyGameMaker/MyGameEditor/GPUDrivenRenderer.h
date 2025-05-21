@@ -68,6 +68,8 @@ private:
 	void DebugMeshInfo(uint32_t meshIndex);
 	void BatchCommandsByShaderType();
 
+	void InitializeShadows();
+
 	void RenderUnlitBatch(const ShaderBatch& batch,
 		const glm::mat4& viewMatrix,
 		const glm::mat4& projMatrix);
@@ -76,7 +78,10 @@ private:
 		const ShaderBatch& batch,
 		const glm::mat4& viewMatrix,
 		const glm::mat4& projMatrix,
-		const glm::vec3& cameraPos);
+		const glm::vec3& cameraPos,
+		const glm::mat4& lightSpaceMatrix);
+
+	void RenderShadowBatch(const ShaderBatch& batch, glm::mat4 lightSpaceMatrix);
 
 	void HandleTextureBindings(Shaders* shader, const char* textureName, const char* hasTextureName, GLuint64 textureHandle);
 	void BindRegularTextures(Shaders* shader, GPUMaterial* materialData);
@@ -86,6 +91,12 @@ private:
 	GLuint cullDataBuffer = 0;
 	GLuint visibleCountBuffer = 0;
 	GLuint defaultVAO = 0;
+
+	const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
+
+	unsigned int depthMap;
+
+	unsigned int depthMapFBO;
 
 	std::vector<CullData> cullData;
 	std::vector<DrawElementsCommand> drawCommands;

@@ -23,6 +23,8 @@ bool ShaderManager::Initialize() {
 
 	success &= RegisterShader<CullingComputeShader>();
 
+	success &= RegisterShader<DepthShader>();
+
 	success &= RegisterCustomShader("debug", "Assets/Shaders/debug_vertex.glsl",
 		"Assets/Shaders/debug_fragment.glsl", ShaderType::DEBUG);
 

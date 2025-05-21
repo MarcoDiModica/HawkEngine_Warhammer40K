@@ -108,6 +108,13 @@ public:
     bool Initialize() override;
 };
 
+class DepthShader : public Shaders {
+public:
+	DepthShader();
+	ShaderType GetShaderType() const override { return ShaderType::DEPTH; }
+	bool Initialize() override;
+};
+
 class PBRShader : public Shaders {
 public:
     PBRShader();

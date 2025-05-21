@@ -60,7 +60,8 @@ enum class ShaderType {
 	CULLING_COMPUTE = 6,
 	DEBUG = 7,
 	UTILITY = 8,
-	CUSTOM = 9
+	DEPTH = 9,
+	CUSTOM = 10
 };
 
 

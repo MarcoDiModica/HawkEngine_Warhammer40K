@@ -10,6 +10,7 @@ in VS_OUT {
     vec3 Bitangent;
     mat3 TBN;
     vec3 CameraPos;
+    vec4 FragPosLightSpace;
 } fs_in;
 
 uniform vec4 albedoColor;
@@ -85,6 +86,22 @@ layout(location = 0) out vec4 FragColor;
 
 const float PI = 3.14159265359;
 
+float ShadowCalculation(vec4 fragPosLightSpace)
+{
+    // perform perspective divide
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
+    // transform to [0,1] range
+    projCoords = projCoords * 0.5 + 0.5;
+    // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
+    float closestDepth = texture(shadowMap, projCoords.xy).r; 
+    // get depth of current fragment from light's perspective
+    float currentDepth = projCoords.z;
+    // check whether current frag pos is in shadow
+    float shadow = currentDepth > closestDepth  ? 1.0 : 0.0;
+
+    return shadow;
+}  
+
 uvec2 getLightGridInfo() {
     ivec2 tileIndex = ivec2(gl_FragCoord.xy) / tileSize;
     uint tileOffset = tileIndex.y * (screenSize.x + tileSize - 1) / tileSize + tileIndex.x;
@@ -126,44 +143,6 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness) {
 vec3 FresnelSchlick(float cosTheta, vec3 F0) {
     return F0 + (1.0 - F0) * pow(max(1.0 - cosTheta, 0.0), 5.0);
 }
-
-float ShadowCalculation(vec4 fragPosLightSpace, vec3 normal, vec3 lightDir) {
-    // Perform perspective divide
-    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
-    
-    // Transform to [0,1] range
-    projCoords = projCoords * 0.5 + 0.5;
-    
-    // Get closest depth value from light's perspective
-    float closestDepth = texture(shadowMap, projCoords.xy).r;
-    
-    // Get depth of current fragment from light's perspective
-    float currentDepth = projCoords.z;
-    
-    // Calculate bias (based on depth map resolution and slope)
-    float bias = max(0.005 * (1.0 - dot(normal, lightDir)), 0.001);
-    
-    // Check whether current frag pos is in shadow
-    // float shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;
-    
-    // PCF filtering
-    float shadow = 0.0;
-    vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
-    for(int x = -1; x <= 1; ++x) {
-        for(int y = -1; y <= 1; ++y) {
-            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
-            shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
-        }
-    }
-    shadow /= 9.0;
-    
-    // Keep the shadow at 0.0 when outside the far plane region of the light's frustum.
-    if(projCoords.z > 1.0)
-        shadow = 0.0;
-        
-    return shadow;
-}
-
 
 void main() {
     vec4 albedo = albedoColor;
@@ -226,15 +205,6 @@ vec3 kD = vec3(1.0) - kS;
 kD *= 1.0 - metallic; 
 
 vec3 directLighting = (kD * albedo.rgb / PI + specular) * radiance * NdotL;
-
-float shadow = 0.0;
-    if (useShadows == 1) {
-        vec4 fragPosLightSpace = depthMVP * vec4(fs_in.FragPos, 1.0);
-        shadow = ShadowCalculation(fragPosLightSpace, N, lightDir);
-    }
-    
-    // Apply shadow to lighting
-    directLighting *= (1.0 - shadow);
 
 lighting += directLighting;
 
@@ -299,7 +269,9 @@ lighting += emission;
 vec3 ambientFallback = vec3(directionalLight.darknessfallback) * albedo.rgb;
 lighting += ambientFallback;
 
-// Ensure albedo.rgb is factored into the final color
+float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
+lighting *= (1.0 - shadow);
+
 lighting = albedo.rgb * lighting / (lighting + vec3(1.0 - tonemapStrength) + 0.001);
 
 color += pow(lighting, vec3(1.0 / 2.2));

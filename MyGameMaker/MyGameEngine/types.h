@@ -53,8 +53,9 @@ using color4 = glm::u8vec4;
 enum class ShaderType {
 	UNLIT = 0,
 	PBR = 1,
-	UI = 2,
-	PARTICLE = 3,
+	PARTICLE = 2,
+	BINDLESS_PBR = 3,
+	BINDLESS_UNLIT = 4,
 	FORWARD_PLUS_COMPUTE = 5,
 	CULLING_COMPUTE = 6,
 	DEBUG = 7,

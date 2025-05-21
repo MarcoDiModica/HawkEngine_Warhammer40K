@@ -67,8 +67,8 @@ bool Root::Start()
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
 
-	//auto env = CreateGameObjectWithPath("Assets/FBX/Level2_Zone1.fbx");
-	//env->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
+	auto env = CreateGameObjectWithPath("Assets/FBX/Level2_Zone1.fbx");
+	env->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
 	//auto scenezone23 = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2area2&3.fbx");
@@ -160,9 +160,9 @@ bool Root::Start()
 	//ParentGameObject(*walkingFX, *player);
 	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 
-	//auto walkingFX = CreateGameObject("WalkingFX");
-	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
-	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	auto walkingFX = CreateGameObject("WalkingFX");
+	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 	
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
@@ -327,18 +327,6 @@ bool Root::Start()
  	//objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
  	mainCamera = objMainCamera;
  	UpdateCameraPriority();
-	
-
-	//render simple UI element
-	auto canvas = CreateGameObject("Canvas");
-	canvas->AddComponent<UICanvasComponent>();
-
-	auto image = CreateGameObject("Image");
-	ParentGameObject(*image, *canvas);
-	image->AddComponent<UIImageComponent>();
-	image->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/blood.png");
-	image->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	image->GetTransform()->SetScale(glm::vec3(0.5, 0.5, 0.5));
 
 	//particle->ApplyPreset(Particle)
 

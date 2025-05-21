@@ -157,11 +157,6 @@ void UIImageComponent::Update(float deltaTime)
 
 	glDrawElements(GL_TRIANGLES, mesh->getModel()->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
 
-	GLenum error = glGetError();
-	if (error != GL_NO_ERROR) {
-		LOG(LogType::LOG_ERROR, "OpenGL Error: %d", error);
-	}
-
 	shader->UnBind();
 
 	if (!texture->image_path.empty()) {
@@ -188,14 +183,37 @@ void UIImageComponent::SetTexture(std::string path)
 	texture = std::make_shared<Image>();
 	texture->LoadTexture(path);
 	sheetSize = glm::vec2(texture->width(), texture->height());
-	shader = ShaderManager::GetInstance().GetShader(ShaderType::UI);
+	shader = ShaderManager::GetInstance().GetShader(ShaderType::UNLIT);
 	LoadMesh();
 }
 
 void UIImageComponent::LoadMesh()
 {
+	std::shared_ptr<Model> model = std::make_shared<Model>();
+
+	model->GetModelData().vertexData = {
+		Vertex {vec3(0.0f, 0.0f, 0.0f)},
+		Vertex {vec3(1.0f, 0.0f, 0.0f)},
+		Vertex {vec3(1.0f, 1.0f, 0.0f)},
+		Vertex {vec3(0.0f, 1.0f, 0.0f)}
+	};
+
+	model->GetModelData().indexData = {
+		0, 2, 1, 0, 3, 2
+	};
+
+	model->GetModelData().vertex_texCoords = {
+		vec2(0.0f, 0.0f),
+		vec2(1.0f, 0.0f),
+		vec2(1.0f, 1.0f),
+		vec2(0.0f, 1.0f)
+	};
+
+	model->SetMeshName("Plane");
+
 	mesh = std::make_shared<Mesh>();
-	mesh = Mesh::CreatePlane();
+	mesh->setModel(model);
+	mesh->loadToOpenGL();
 }
 
 MonoObject* UIImageComponent::GetSharp()

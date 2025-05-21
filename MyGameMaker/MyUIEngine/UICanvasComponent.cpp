@@ -20,11 +20,6 @@
 UICanvasComponent::UICanvasComponent(GameObject* owner)	: Component(owner)
 {
 	name = "UICanvasComponent";
-
-	if (owner->GetComponent<UITransformComponent>() == nullptr)
-	{
-		owner->AddComponent<UITransformComponent>();
-	}
 }
 
 void UICanvasComponent::Awake()

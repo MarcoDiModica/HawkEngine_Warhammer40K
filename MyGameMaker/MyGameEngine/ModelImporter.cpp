@@ -30,7 +30,6 @@
 #include "glm/gtx/matrix_decompose.hpp"
 // cosa ilegal
 #include "../MyGameEditor/Log.h"
-#include <type_traits>
 
 using namespace std;
 namespace fs = std::filesystem;

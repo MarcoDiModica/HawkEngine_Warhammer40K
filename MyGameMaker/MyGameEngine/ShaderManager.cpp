@@ -16,8 +16,6 @@ bool ShaderManager::Initialize() {
 	success &= RegisterShader<UnlitShader>();
 
 	success &= RegisterShader<PBRShader>();
-	
-	success &= RegisterShader<UIShader>();
 
 	success &= RegisterShader<ParticleShader>();
 

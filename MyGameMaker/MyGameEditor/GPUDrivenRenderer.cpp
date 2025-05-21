@@ -116,6 +116,7 @@ void GPUDrivenRenderer::AddInstanceGroup(
 
 void GPUDrivenRenderer::PrepareDrawCommands() {
 	if (cullData.empty()) {
+		LOG(LogType::LOG_INFO, "No hay datos de culling para procesar");
 		return;
 	}
 
@@ -160,6 +161,9 @@ void GPUDrivenRenderer::ForceIncludeAllObjects() {
 	else {
 		LOG(LogType::LOG_WARNING, "No hay draw commands para generar");
 	}
+
+	LOG(LogType::LOG_INFO, "Procesando objetos filtrados por frustum: %zu objetos, %d instancias visibles",
+		drawCommands.size(), visibleInstanceCount);
 }
 
 void GPUDrivenRenderer::BatchCommandsByShaderType() {

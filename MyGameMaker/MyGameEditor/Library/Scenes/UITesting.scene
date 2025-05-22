@@ -1,9 +1,48 @@
 SceneMetadata:
-  SceneName: DefaultScene
+  SceneName: UITesting
 GameObject0:
+  name: Kevin
+  prefabPath: ""
+  uuid: 7475339824886399718
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 3474915133386946841
+      material:
+        name: ""
+      color:
+        - 1
+        - 1
+        - 1
+      id: 640186649
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject1:
   name: MainCamera
   prefabPath: ""
-  uuid: 12115554565316147701
+  uuid: 15736853499604447315
   tag: Untagged
   active: true
   isStatic: false
@@ -33,10 +72,10 @@ GameObject0:
       far_plane: 500
       priority: 1
   Children: ~
-GameObject1:
+GameObject2:
   name: Canvas_LocationSM
   prefabPath: ""
-  uuid: 17789656206557061239
+  uuid: 7768154871578820984
   tag: Untagged
   active: true
   isStatic: false
@@ -81,7 +120,7 @@ GameObject1:
   Children:
     - name: Menu_Image
       prefabPath: ""
-      uuid: 15781019134261756153
+      uuid: 6687027307435464079
       tag: Untagged
       active: true
       isStatic: false

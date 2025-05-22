@@ -103,15 +103,12 @@ protected:
     YAML::Node encode() override {  
        YAML::Node node = Component::encode();  
 
-       node["texture_path"] = texture->image_path;  
+       node["texture_path"] = texturePath;
        node["use_animation"] = useAnimation;  
        node["sprite_size"] = std::vector<float>{spriteSize.x, spriteSize.y};  
        node["sheet_size"] = std::vector<float>{sheetSize.x, sheetSize.y};  
        node["sprite_offset"] = std::vector<float>{spriteOffset.x, spriteOffset.y};  
        node["anim_speed"] = animSpeed;  
-
-       /*node["shader"] = shader;*/  
-       /*node["mesh"] = mesh;*/  
 
        return node;  
     }  

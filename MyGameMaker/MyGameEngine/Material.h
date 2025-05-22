@@ -110,6 +110,7 @@ protected:
 protected:
 	friend class SceneSerializer;
 	friend class MeshRenderer;
+	friend class UIImageComponent;
 
     YAML::Node encode() const {
         YAML::Node node;

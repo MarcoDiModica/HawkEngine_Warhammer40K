@@ -78,21 +78,9 @@ void UICanvasComponent::Update(float deltaTime)
 		rectTransform->SetCanvasPosition(canvasPos);
 		rectTransform->SetCanvasSize(canvasSize);
 
-		if (object->HasComponent<UIImageComponent>())
-		{
-			object->GetComponent<UIImageComponent>()->SetProjection(projection);
-			object->GetComponent<UIImageComponent>()->Update(deltaTime);
-		}
-
-		if (object->HasComponent<UIButtonComponent>())
-		{
-			object->GetComponent<UIButtonComponent>()->Update(deltaTime);
-		}
-
 		if (object->HasComponent<UISliderComponent>())
 		{
 			object->GetComponent<UISliderComponent>()->SetProjection(projection);
-			object->GetComponent<UISliderComponent>()->Update(deltaTime);
 		}
 
     }

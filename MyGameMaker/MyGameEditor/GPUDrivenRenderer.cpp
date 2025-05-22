@@ -201,31 +201,35 @@ void GPUDrivenRenderer::BatchCommandsByShaderType() {
 }
 
 void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
-	if (shaderBatches.empty()) {
-		LOG(LogType::LOG_INFO, "No hay objetos para renderizar");
-		return;
-	}
+    if (shaderBatches.empty()) {
+        LOG(LogType::LOG_INFO, "No hay objetos para renderizar");
+        return;
+    }
 
-	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
+    glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
 
-	for (const auto& [shaderType, batch] : shaderBatches) {
-		switch (shaderType) {
-		case ShaderType::UNLIT:
-			RenderUnlitBatch(batch, viewMatrix, projMatrix);
-			break;
-		case ShaderType::PBR:
-			RenderPBRBatch(batch, viewMatrix, projMatrix, cameraPos);
-			break;
-		case ShaderType::UI:
-			RenderUIBatch(batch, viewMatrix, projMatrix);
-			break;
-		default:
-			LOG(LogType::LOG_WARNING, "Tipo de shader desconocido: %d", (int)shaderType);
-			break;
-		}
-	}
+    for (const auto& [shaderType, batch] : shaderBatches) {
+        if (shaderType == ShaderType::UI)
+            continue;
+        switch (shaderType) {
+        case ShaderType::UNLIT:
+            RenderUnlitBatch(batch, viewMatrix, projMatrix);
+            break;
+        case ShaderType::PBR:
+            RenderPBRBatch(batch, viewMatrix, projMatrix, cameraPos);
+            break;
+        default:
+            LOG(LogType::LOG_WARNING, "Tipo de shader desconocido: %d", (int)shaderType);
+            break;
+        }
+    }
 
-	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
+    auto it = shaderBatches.find(ShaderType::UI);
+    if (it != shaderBatches.end()) {
+        RenderUIBatch(it->second, viewMatrix, projMatrix);
+    }
+
+    glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
 }
 
 void GPUDrivenRenderer::RenderUnlitBatch(
@@ -451,11 +455,23 @@ void GPUDrivenRenderer::RenderUIBatch(const ShaderBatch& batch, const glm::mat4&
 	glm::mat4 uiViewMatrix = glm::mat4(1.0f);
 	shader->SetUniformMat4("view", uiViewMatrix);
 
-	glm::mat4 uiProjection = glm::ortho(
-		0.0f, Application->gui->UIGameViewPanel->GetWidth(),
-		-Application->gui->UIGameViewPanel->GetHeight(), 0.0f,
+	glm::mat4 uiProjection;
+	float width = 0, height = 0;
+
+#ifdef _BUILD
+	width = Application->window->width();
+	height = Application->window->height();
+#else
+	width = Application->gui->UIGameViewPanel->GetWidth();
+	height = Application->gui->UIGameViewPanel->GetHeight();
+#endif
+
+	uiProjection = glm::ortho(
+		0.0f, width,
+		height, 0.0f,
 		-1.0f, 1.0f
 	);
+
 	shader->SetUniformMat4("projection", uiProjection);
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());

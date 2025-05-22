@@ -68,6 +68,7 @@
 #include "ForwardPlus.h"
 #include "GPUDrivenRenderer.h"
 #include "MyAudioEngine/AudioManager.h"
+#include "MyUIEngine/UIImageComponent.h"
 
 using namespace std;
 
@@ -635,6 +636,11 @@ static void RenderEditor() {
 
 				return;
 			}
+
+			// omit UI elements from rendering on this framebuffer
+			/*if (object->HasComponent<UICanvasComponent>() || object->HasComponent<UIImageComponent>()) {
+				continue;
+			}*/
 
 			glm::mat4 viewMatrix = Application->camera->view();
 			glm::mat4 projMatrix = Application->camera->projection();

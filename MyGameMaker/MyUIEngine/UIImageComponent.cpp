@@ -45,7 +45,7 @@ glm::vec2 CalculateSpriteOffset(int index, const glm::vec2& sheetSize, const glm
 	float offsetX = currentColumn * spriteSize.x;
 	float offsetY = currentRow * spriteSize.y;
 
-	return glm::vec2(offsetX, offsetY);
+	return {offsetX, offsetY};
 }
 
 void UIImageComponent::Update(float deltaTime)
@@ -161,8 +161,38 @@ void UIImageComponent::SetTexture(std::string path)
 
 void UIImageComponent::LoadMesh()
 {
+	std::shared_ptr<Model> model = std::make_shared<Model>();
+
+	model->GetModelData().vertexData = {
+		Vertex {vec3(0.0f, 0.0f, 0.0f)},
+		Vertex {vec3(1.0f, 0.0f, 0.0f)},
+		Vertex {vec3(1.0f, 1.0f, 0.0f)},
+		Vertex {vec3(0.0f, 1.0f, 0.0f)}
+	};
+
+	model->GetModelData().indexData = {
+		0, 2, 1, 0, 3, 2
+	};
+
+	model->GetModelData().vertex_normals = {
+		vec3(0.0f, 0.0f, 1.0f),
+		vec3(0.0f, 0.0f, 1.0f),
+		vec3(0.0f, 0.0f, 1.0f),
+		vec3(0.0f, 0.0f, 1.0f)
+	};
+
+	model->GetModelData().vertex_texCoords = {
+		vec2(0.0f, 0.0f),
+		vec2(1.0f, 0.0f),
+		vec2(1.0f, 1.0f),
+		vec2(0.0f, 1.0f)
+	};
+
+	model->SetMeshName("Plane");
+
 	mesh = std::make_shared<Mesh>();
-	mesh = Mesh::CreatePlane();
+	mesh->setModel(model);
+	mesh->loadToOpenGL();
 }
 
 MonoObject* UIImageComponent::GetSharp()

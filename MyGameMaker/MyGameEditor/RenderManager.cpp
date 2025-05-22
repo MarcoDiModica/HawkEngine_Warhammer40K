@@ -276,12 +276,12 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 					instance.modelMatrix = modelMatrix;
 					instance.prevModelMatrix = modelMatrix;
 					instance.objectData = glm::vec4(1.0f);
-					instance.meshIndex = 0;
+					instance.meshIndex = meshIndex;
 					instance.materialIndex = materialIndex;
 					instance.objectId = gameObject->GetID().GetValue();
 					instance.flags = 0;
 
-					MeshMaterialKey key{ 0, materialIndex };
+					MeshMaterialKey key{ meshIndex, materialIndex };
 
 					instanceGroups[key].push_back(instance);
 				}

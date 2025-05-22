@@ -55,12 +55,6 @@ void UIImageComponent::Update(float deltaTime)
 		return;
 	}
 
-	shader = ShaderManager::GetInstance().GetShader(ShaderType::UI);
-	if (!shader) {
-		LOG(LogType::LOG_ERROR, "Failed to retrieve UI shader.");
-		return;
-	}
-
 	auto uiTransform = owner->GetComponent<UITransformComponent>();
 	if (!uiTransform) {
 		LOG(LogType::LOG_ERROR, "UITransformComponent not found on owner GameObject.");
@@ -84,8 +78,6 @@ void UIImageComponent::Update(float deltaTime)
 		uiTransform->Scale(glm::vec3(scale.x * scaleX, scale.y * scaleY, scale.z));
 		uiTransform->SetResized(true);
 	}
-
-	shader->Bind();
 
 	if (useAnimation && sheetSize != glm::vec2(0, 0))
 	{
@@ -134,20 +126,6 @@ void UIImageComponent::Update(float deltaTime)
 		spriteSize = sheetSize;
 	}
 
-	if (!material->imagePtr) {
-		material->imagePtr->bind();
-		shader->SetUniform("u_HasTexture", true);
-		shader->SetUniform("texture1", 0);
-		shader->SetUniformVec2("SpriteSize", spriteSize);
-		shader->SetUniformVec2("SpriteOffset", spriteOffset);
-		shader->SetUniformVec2("SheetSize", sheetSize);
-	}
-	else {
-		shader->SetUniform("u_HasTexture", false);
-	}
-
-	glm::mat4 viewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
-
 	glm::vec3 scale = uiTransform->GetScale() * uiTransform->GetCanvasSize();
 	glm::vec3 translation = uiTransform->GetCanvasPosition() + (uiTransform->GetPosition() * uiTransform->GetCanvasSize());
 	glm::quat rotation = glm::quat(glm::vec3(glm::radians(0.0f), 0.0f, 0.0f));
@@ -160,44 +138,6 @@ void UIImageComponent::Update(float deltaTime)
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
 		glm::scale(glm::mat4(1.0f), scale);
 
-	shader->SetUniformMat4("model", modelMatrix);
-	shader->SetUniformMat4("view", viewMatrix);
-	shader->SetUniformMat4("projection", projection);
-	shader->SetUniformVec4("modColor", color);
-
-	if (!mesh || !mesh->getModel()) {
-		LOG(LogType::LOG_ERROR, "Mesh or Model is null. Cannot render UI.");
-		shader->UnBind();
-		return;
-	}
-
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glBindVertexArray(mesh->getModel()->GetModelData().vA);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getModel()->GetModelData().iBID);
-
-	GLsizei indexCount = static_cast<GLsizei>(mesh->getModel()->GetModelData().indexData.size());
-	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
-
-	GLenum error = glGetError();
-	if (error != GL_NO_ERROR) {
-		LOG(LogType::LOG_ERROR, "OpenGL Error: %d", error);
-	}
-
-	shader->UnBind();
-
-	if (!material->imagePtr->image_path.empty()) {
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
 }
 
 void UIImageComponent::Destroy()
@@ -216,7 +156,6 @@ void UIImageComponent::SetTexture(std::string path)
 	texture->LoadTexture(path);
 	material->setImage(texture);
 	sheetSize = glm::vec2(texture->width(), texture->height());
-	shader = ShaderManager::GetInstance().GetShader(ShaderType::UI);
 	LoadMesh();
 }
 

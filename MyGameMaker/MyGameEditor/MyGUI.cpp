@@ -287,15 +287,15 @@ bool MyGUI::CleanUp() {
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 
-	for (auto& element : elements)
-	{
-		if (element)
-		{
-			delete element;
-			element = nullptr;
-		}
-	}
-	elements.clear();
+	//for (auto& element : elements)
+	//{
+	//	if (element)
+	//	{
+	//		delete element;
+	//		element = nullptr;
+	//	}
+	//}
+	//elements.clear();
 
 	return true;
 }

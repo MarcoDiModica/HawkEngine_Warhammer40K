@@ -456,7 +456,6 @@ void GPUDrivenRenderer::RenderUIBatch(const ShaderBatch& batch, const glm::mat4&
 		-Application->gui->UIGameViewPanel->GetHeight(), 0.0f,
 		-1.0f, 1.0f
 	);
-	
 	shader->SetUniformMat4("projection", uiProjection);
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
@@ -471,6 +470,23 @@ void GPUDrivenRenderer::RenderUIBatch(const ShaderBatch& batch, const glm::mat4&
 		if (!meshData || !materialData) continue;
 
 		shader->SetUniformVec4("modColor", materialData->albedoColor);
+
+		if (materialData->flags & (1 << 0)) {
+			shader->SetUniform("u_HasTexture", 1);
+			GLuint textureID = 0;
+			if (BindlessManager::GetInstance().GetTextureIDFromHandle(materialData->albedoTexture, textureID)) {
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, textureID);
+				shader->SetUniform("texture1", 0);
+			}
+		}
+		else {
+			shader->SetUniform("u_HasTexture", 0);
+		}
+
+		shader->SetUniformVec2("SpriteOffset", glm::vec2(0.0f));
+		shader->SetUniformVec2("SpriteSize", glm::vec2(1.0f));
+		shader->SetUniformVec2("SheetSize", glm::vec2(1.0f));
 
 		glBindVertexArray(meshData->vertexArray);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);

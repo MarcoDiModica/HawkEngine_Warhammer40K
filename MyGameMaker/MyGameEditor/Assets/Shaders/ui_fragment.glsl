@@ -1,4 +1,4 @@
-#version 450 core
+#version 460 core
 
 in vec2 TexCoord;
 out vec4 FragColor;
@@ -21,10 +21,8 @@ void main()
         vec4 texColor = texture(texture1, croppedTexCoords);
 
         if (texColor.rgb == vec3(1.0)) {
-            // Es un texto FreeType (blanco con alpha)
             FragColor = vec4(modColor.rgb, texColor.a * modColor.a);
         } else {
-            // Es un sprite normal
             FragColor = texColor * modColor;
         }
     } else {

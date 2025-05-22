@@ -105,12 +105,12 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 			return it->second;
 		}
 		else {
-			LOG(LogType::LOG_WARNING, "Warning: Índice de malla inválido en el mapa: %u", it->second);
+			LOG(LogType::LOG_WARNING, "Warning: ï¿½ndice de malla invï¿½lido en el mapa: %u", it->second);
 		}
 	}
 
 	if (meshes.size() >= MAX_MESHES) {
-		LOG(LogType::LOG_WARNING, "Warning: Alcanzado límite máximo de mallas registradas");
+		LOG(LogType::LOG_WARNING, "Warning: Alcanzado lï¿½mite mï¿½ximo de mallas registradas");
 		return UINT32_MAX;
 	}
 
@@ -122,7 +122,7 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 
 	uint32_t modelID = model->GetID();
 	if (modelID == 0) {
-		LOG(LogType::LOG_ERROR, "Error: El modelo no tiene un ID válido");
+		LOG(LogType::LOG_ERROR, "Error: El modelo no tiene un ID vï¿½lido");
 		return UINT32_MAX;
 	}
 
@@ -139,17 +139,17 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 	const auto& modelData = model->GetModelData();
 
 	if (modelData.vA == 0 || modelData.iBID == 0 || modelData.vBPosID == 0) {
-		LOG(LogType::LOG_ERROR, "Error: Buffers inválidos (VAO: %u, IBO: %u, VBO: %u) para malla '%s'",
+		LOG(LogType::LOG_ERROR, "Error: Buffers invï¿½lidos (VAO: %u, IBO: %u, VBO: %u) para malla '%s'",
 			modelData.vA, modelData.iBID, modelData.vBPosID, model->GetMeshName().c_str());
 		return UINT32_MAX;
 	}
 
 	if (!glIsVertexArray(modelData.vA) || !glIsBuffer(modelData.iBID) || !glIsBuffer(modelData.vBPosID)) {
-		LOG(LogType::LOG_ERROR, "Error: Buffers GL inválidos para malla '%s' (VAO válido: %s, IBO válido: %s, VBO válido: %s)",
+		LOG(LogType::LOG_ERROR, "Error: Buffers GL invï¿½lidos para malla '%s' (VAO vï¿½lido: %s, IBO vï¿½lido: %s, VBO vï¿½lido: %s)",
 			model->GetMeshName().c_str(),
-			glIsVertexArray(modelData.vA) ? "sí" : "NO",
-			glIsBuffer(modelData.iBID) ? "sí" : "NO",
-			glIsBuffer(modelData.vBPosID) ? "sí" : "NO");
+			glIsVertexArray(modelData.vA) ? "sï¿½" : "NO",
+			glIsBuffer(modelData.iBID) ? "sï¿½" : "NO",
+			glIsBuffer(modelData.vBPosID) ? "sï¿½" : "NO");
 
 		return GetFallbackMeshIndex();
 		//return UINT32_MAX;
@@ -421,7 +421,7 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 	}
 
 	if (materials.size() >= MAX_MATERIALS) {
-		LOG(LogType::LOG_WARNING, "Warning: Alcanzado límite máximo de materiales registrados");
+		LOG(LogType::LOG_WARNING, "Warning: Alcanzado lï¿½mite mï¿½ximo de materiales registrados");
 		return UINT32_MAX;
 	}
 
@@ -448,7 +448,7 @@ bool BindlessManager::UpdateMaterial(const Material* material) {
 
 	uint32_t materialIndex = it->second;
 	if (materialIndex >= materials.size()) {
-		LOG(LogType::LOG_ERROR, "UpdateMaterial: Índice de material fuera de rango: %u", materialIndex);
+		LOG(LogType::LOG_ERROR, "UpdateMaterial: ï¿½ndice de material fuera de rango: %u", materialIndex);
 		return false;
 	}
 
@@ -461,12 +461,12 @@ bool BindlessManager::UpdateMaterial(const Material* material) {
 
 uint32_t BindlessManager::AddInstance(const GPUInstance& instance) {
 	if (instances.size() >= MAX_INSTANCES) {
-		LOG(LogType::LOG_WARNING, "Warning: Alcanzado límite máximo de instancias registradas");
+		LOG(LogType::LOG_WARNING, "Warning: Alcanzado lï¿½mite mï¿½ximo de instancias registradas");
 		return UINT32_MAX;
 	}
 
 	if (instance.meshIndex >= meshes.size() || instance.materialIndex >= materials.size()) {
-		LOG(LogType::LOG_WARNING, "Warning: Índices de malla o material inválidos");
+		LOG(LogType::LOG_WARNING, "Warning: ï¿½ndices de malla o material invï¿½lidos");
 		return UINT32_MAX;
 	}
 
@@ -519,7 +519,7 @@ BindlessHandle BindlessManager::CreateTextureHandle(GLuint textureId) {
 
 	GLboolean isTexture = glIsTexture(textureId);
 	if (isTexture == GL_FALSE) {
-		LOG(LogType::LOG_ERROR, "CreateTextureHandle: ID de textura %u no es válido", textureId);
+		LOG(LogType::LOG_ERROR, "CreateTextureHandle: ID de textura %u no es vï¿½lido", textureId);
 		return fallbackTextureHandle;
 	}
 
@@ -553,7 +553,7 @@ BindlessHandle BindlessManager::CreateTextureHandle(GLuint textureId) {
 		std::string errorDesc;
 		switch (error) {
 		case GL_OUT_OF_MEMORY:
-			errorDesc = "GL_OUT_OF_MEMORY - Posible límite de GPU alcanzado";
+			errorDesc = "GL_OUT_OF_MEMORY - Posible lï¿½mite de GPU alcanzado";
 			break;
 		case GL_INVALID_OPERATION:
 			errorDesc = "GL_INVALID_OPERATION - Posible estado incorrecto de OpenGL";
@@ -644,7 +644,7 @@ void BindlessManager::ClearInstances() {
 
 GLuint BindlessManager::CreateStorageBuffer(size_t size, GLenum usage) {
 	if (size == 0) {
-		LOG(LogType::LOG_ERROR, "CreateStorageBuffer: Tamaño de buffer inválido (0)");
+		LOG(LogType::LOG_ERROR, "CreateStorageBuffer: Tamaï¿½o de buffer invï¿½lido (0)");
 		return 0;
 	}
 
@@ -652,7 +652,7 @@ GLuint BindlessManager::CreateStorageBuffer(size_t size, GLenum usage) {
 	glGetIntegerv(GL_MAX_SHADER_STORAGE_BLOCK_SIZE, &maxBufferSize);
 
 	if (size > static_cast<size_t>(maxBufferSize)) {
-		LOG(LogType::LOG_WARNING, "CreateStorageBuffer: Tamaño solicitado (%zu bytes) excede el máximo soportado (%d bytes), ajustando",
+		LOG(LogType::LOG_WARNING, "CreateStorageBuffer: Tamaï¿½o solicitado (%zu bytes) excede el mï¿½ximo soportado (%d bytes), ajustando",
 			size, maxBufferSize);
 		size = static_cast<size_t>(maxBufferSize);
 	}
@@ -676,10 +676,10 @@ GLuint BindlessManager::CreateStorageBuffer(size_t size, GLenum usage) {
 			errorMsg = "GL_OUT_OF_MEMORY - No hay memoria disponible";
 			break;
 		case GL_INVALID_VALUE:
-			errorMsg = "GL_INVALID_VALUE - Parámet	ro inválido";
+			errorMsg = "GL_INVALID_VALUE - Parï¿½met	ro invï¿½lido";
 			break;
 		case GL_INVALID_OPERATION:
-			errorMsg = "GL_INVALID_OPERATION - Operación inválida";
+			errorMsg = "GL_INVALID_OPERATION - Operaciï¿½n invï¿½lida";
 			break;
 		}
 
@@ -733,7 +733,7 @@ void BindlessManager::CreateFallbackCubeMesh() {
 		0.0f, 1.0f
 	};
 
-	// Índices para el cubo (6 caras, 2 triángulos por cara)
+	// ï¿½ndices para el cubo (6 caras, 2 triï¿½ngulos por cara)
 	const unsigned int indices[] = {
 		// Cara frontal
 		0, 1, 2,

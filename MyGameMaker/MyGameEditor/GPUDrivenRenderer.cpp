@@ -121,12 +121,12 @@ void GPUDrivenRenderer::AddInstanceGroup(
 	}
 
 	if (materialIndex >= BindlessManager::GetInstance().GetMaterialCount()) {
-		LOG(LogType::LOG_WARNING, "Warning: Índice de material inválido: %u", materialIndex);
+		LOG(LogType::LOG_WARNING, "Warning: ï¿½ndice de material invï¿½lido: %u", materialIndex);
 		return;
 	}
 
 	if (cullData.size() >= MAX_DRAW_COMMANDS) {
-		LOG(LogType::LOG_WARNING, "Warning: Alcanzado límite máximo de comandos de dibujo");
+		LOG(LogType::LOG_WARNING, "Warning: Alcanzado lï¿½mite mï¿½ximo de comandos de dibujo");
 		return;
 	}
 
@@ -205,7 +205,7 @@ void GPUDrivenRenderer::BatchCommandsByShaderType() {
 
 		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(cullItem.materialIndex);
 		if (!materialData) {
-			LOG(LogType::LOG_WARNING, "Material invalido en índice %u, omitiendo", cullItem.materialIndex);
+			LOG(LogType::LOG_WARNING, "Material invalido en ï¿½ndice %u, omitiendo", cullItem.materialIndex);
 			continue;
 		}
 
@@ -237,24 +237,24 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 		return;
 	}
 
-	float near_plane = 1.0f, far_plane = 7;
+	float near_plane = ForwardPlusLighting::GetInstance().dirNearPlane, far_plane = ForwardPlusLighting::GetInstance().dirFarPlane;
 
 	const auto& dirLight = ForwardPlusLighting::GetInstance().GetDirectionalLight();
 
-	// Define la posición de la luz lejos en la dirección opuesta a la luz
+	// Define la posiciï¿½n de la luz lejos en la direcciï¿½n opuesta a la luz
 	glm::vec3 lightDir = glm::normalize(dirLight.direction);
-	glm::vec3 sceneCenter = glm::vec3(0.0f); // O el centro de tu escena
-	float lightDistance = 20.0f; // Ajusta según el tamaño de tu escena
+	glm::vec3 sceneCenter = ForwardPlusLighting::GetInstance().dirLightPosition; // O el centro de tu escena
+	float lightDistance = ForwardPlusLighting::GetInstance().dirLightDistance; // Ajusta segï¿½n el tamaï¿½o de tu escena
 
 	glm::vec3 lightPos = sceneCenter - lightDir * lightDistance;
 
-	// Matriz de proyección ortográfica (ajusta los valores según tu escena)
+	// Matriz de proyecciï¿½n ortogrï¿½fica (ajusta los valores segï¿½n tu escena)
 	glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
 
 	// Matriz de vista de la luz
 	glm::mat4 lightView = glm::lookAt(
-		lightPos,           // Posición de la luz
-		sceneCenter,        // Hacia dónde mira (centro de la escena)
+		lightPos,           // Posiciï¿½n de la luz
+		sceneCenter,        // Hacia dï¿½nde mira (centro de la escena)
 		glm::vec3(0.0f, 1.0f, 0.0f) // Up vector
 	);
 
@@ -299,7 +299,7 @@ void GPUDrivenRenderer::RenderShadowBatch(const ShaderBatch& batch, glm::mat4 li
 
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 
-	glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+	//glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 
 	glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -675,52 +675,52 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 		return;
 	}
 
-	LOG(LogType::LOG_INFO, "=== Información detallada de GPUMesh %u ===", meshIndex);
+	LOG(LogType::LOG_INFO, "=== Informaciï¿½n detallada de GPUMesh %u ===", meshIndex);
 
 	// Verificar IDs de buffer
-	LOG(LogType::LOG_INFO, "VAO: %u (válido: %s)",
+	LOG(LogType::LOG_INFO, "VAO: %u (vï¿½lido: %s)",
 		meshData->vertexArray,
-		glIsVertexArray(meshData->vertexArray) ? "sí" : "NO");
+		glIsVertexArray(meshData->vertexArray) ? "sï¿½" : "NO");
 
-	LOG(LogType::LOG_INFO, "IBO: %u (válido: %s)",
+	LOG(LogType::LOG_INFO, "IBO: %u (vï¿½lido: %s)",
 		meshData->indexBuffer,
-		glIsBuffer(meshData->indexBuffer) ? "sí" : "NO");
+		glIsBuffer(meshData->indexBuffer) ? "sï¿½" : "NO");
 
-	LOG(LogType::LOG_INFO, "VBO Posición: %u (válido: %s)",
+	LOG(LogType::LOG_INFO, "VBO Posiciï¿½n: %u (vï¿½lido: %s)",
 		meshData->positionBuffer,
-		glIsBuffer(meshData->positionBuffer) ? "sí" : "NO");
+		glIsBuffer(meshData->positionBuffer) ? "sï¿½" : "NO");
 
-	LOG(LogType::LOG_INFO, "VBO TexCoord: %u (válido: %s)",
+	LOG(LogType::LOG_INFO, "VBO TexCoord: %u (vï¿½lido: %s)",
 		meshData->texCoordBuffer,
-		glIsBuffer(meshData->texCoordBuffer) ? "sí" : "NO");
+		glIsBuffer(meshData->texCoordBuffer) ? "sï¿½" : "NO");
 
-	LOG(LogType::LOG_INFO, "VBO Normal: %u (válido: %s)",
+	LOG(LogType::LOG_INFO, "VBO Normal: %u (vï¿½lido: %s)",
 		meshData->normalBuffer,
-		glIsBuffer(meshData->normalBuffer) ? "sí" : "NO");
+		glIsBuffer(meshData->normalBuffer) ? "sï¿½" : "NO");
 
-	// Información de conteo
-	LOG(LogType::LOG_INFO, "Índices: %u", meshData->indexCount);
-	LOG(LogType::LOG_INFO, "Vértices: %u", meshData->vertexCount);
+	// Informaciï¿½n de conteo
+	LOG(LogType::LOG_INFO, "ï¿½ndices: %u", meshData->indexCount);
+	LOG(LogType::LOG_INFO, "Vï¿½rtices: %u", meshData->vertexCount);
 	LOG(LogType::LOG_INFO, "ID de malla: %u", meshData->meshId);
 	LOG(LogType::LOG_INFO, "Flags de atributos: 0x%X", meshData->attributeFlags);
 
 	// Decodificar flags de atributos
 	LOG(LogType::LOG_INFO, "Atributos habilitados:");
-	if (meshData->attributeFlags & (1 << 0)) LOG(LogType::LOG_INFO, " - Posición");
+	if (meshData->attributeFlags & (1 << 0)) LOG(LogType::LOG_INFO, " - Posiciï¿½n");
 	if (meshData->attributeFlags & (1 << 1)) LOG(LogType::LOG_INFO, " - TexCoord");
 	if (meshData->attributeFlags & (1 << 2)) LOG(LogType::LOG_INFO, " - Normal");
 	if (meshData->attributeFlags & (1 << 3)) LOG(LogType::LOG_INFO, " - Tangente");
 	if (meshData->attributeFlags & (1 << 4)) LOG(LogType::LOG_INFO, " - Bitangente");
 	if (meshData->attributeFlags & (1 << 5)) LOG(LogType::LOG_INFO, " - Color");
 
-	// Verificar y mostrar posiciones de vértices
+	// Verificar y mostrar posiciones de vï¿½rtices
 	if (glIsBuffer(meshData->positionBuffer)) {
 		glBindBuffer(GL_ARRAY_BUFFER, meshData->positionBuffer);
 
 		GLint bufferSize = 0;
 		glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &bufferSize);
 
-		LOG(LogType::LOG_INFO, "Tamaño del buffer de posición: %d bytes", bufferSize);
+		LOG(LogType::LOG_INFO, "Tamaï¿½o del buffer de posiciï¿½n: %d bytes", bufferSize);
 
 		if (bufferSize > 0) {
 			// Leer los datos del buffer
@@ -728,12 +728,12 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 			if (positions) {
 				glGetBufferSubData(GL_ARRAY_BUFFER, 0, bufferSize, positions);
 
-				// Mostrar las primeras posiciones (hasta 5 vértices)
+				// Mostrar las primeras posiciones (hasta 5 vï¿½rtices)
 				int numVerts = std::min(5, (int)(bufferSize / (3 * sizeof(float))));
-				LOG(LogType::LOG_INFO, "Primeras %d posiciones de vértices:", numVerts);
+				LOG(LogType::LOG_INFO, "Primeras %d posiciones de vï¿½rtices:", numVerts);
 
 				for (int i = 0; i < numVerts; i++) {
-					LOG(LogType::LOG_INFO, " Vértice %d: (%f, %f, %f)",
+					LOG(LogType::LOG_INFO, " Vï¿½rtice %d: (%f, %f, %f)",
 						i, positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
 				}
 
@@ -744,14 +744,14 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	// Verificar y mostrar índices
+	// Verificar y mostrar ï¿½ndices
 	if (glIsBuffer(meshData->indexBuffer)) {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
 
 		GLint bufferSize = 0;
 		glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &bufferSize);
 
-		LOG(LogType::LOG_INFO, "Tamaño del buffer de índices: %d bytes", bufferSize);
+		LOG(LogType::LOG_INFO, "Tamaï¿½o del buffer de ï¿½ndices: %d bytes", bufferSize);
 
 		if (bufferSize > 0) {
 			// Leer los datos del buffer
@@ -759,13 +759,13 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 			if (indices) {
 				glGetBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, bufferSize, indices);
 
-				// Mostrar los primeros índices (hasta 15 índices, o 5 triángulos)
+				// Mostrar los primeros ï¿½ndices (hasta 15 ï¿½ndices, o 5 triï¿½ngulos)
 				int numIndices = std::min(15, (int)(bufferSize / sizeof(unsigned int)));
-				LOG(LogType::LOG_INFO, "Primeros %d índices:", numIndices);
+				LOG(LogType::LOG_INFO, "Primeros %d ï¿½ndices:", numIndices);
 
 				for (int i = 0; i < numIndices; i += 3) {
 					if (i + 2 < numIndices) {
-						LOG(LogType::LOG_INFO, " Triángulo %d: %u, %u, %u",
+						LOG(LogType::LOG_INFO, " Triï¿½ngulo %d: %u, %u, %u",
 							i / 3, indices[i], indices[i + 1], indices[i + 2]);
 					}
 				}
@@ -777,6 +777,6 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-	LOG(LogType::LOG_INFO, "=== Fin de información de GPUMesh ===");
+	LOG(LogType::LOG_INFO, "=== Fin de informaciï¿½n de GPUMesh ===");
 }
 #pragma endregion

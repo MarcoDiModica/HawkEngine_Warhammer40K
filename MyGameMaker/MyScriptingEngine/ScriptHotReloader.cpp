@@ -549,7 +549,7 @@ bool ScriptHotReloader::CompileExistingProject() {
 
 	std::ofstream resultFile(m_ScriptFolder + "\\build_result.txt");
 	if (resultFile.is_open()) {
-		resultFile << "Código de salida: " << exitCode;
+		resultFile << "Cï¿½digo de salida: " << exitCode;
 		resultFile.close();
 	}
 
@@ -975,7 +975,7 @@ bool ScriptHotReloader::CompileWithMSBuild() {
 
 	std::ofstream resultFile(m_ScriptFolder + "\\build_result.txt");
 	if (resultFile.is_open()) {
-		resultFile << "Código de salida: " << exitCode;
+		resultFile << "Cï¿½digo de salida: " << exitCode;
 		resultFile.close();
 	}
 
@@ -1066,14 +1066,14 @@ void ScriptHotReloader::SetPreferMSBuild(bool prefer) {
 	if (prefer) {
 		if (m_MSBuildPath.empty() || !std::filesystem::exists(m_MSBuildPath)) {
 			if (!FindWorkingMSBuild()) {
-				LOG(LogType::LOG_WARNING, "Preferencia establecida a MSBuild, pero no se encontró una instalación. Se usará dotnet si está disponible.");
+				LOG(LogType::LOG_WARNING, "Preferencia establecida a MSBuild, pero no se encontrï¿½ una instalaciï¿½n. Se usarï¿½ dotnet si estï¿½ disponible.");
 			}
 		}
 	}
 	else {
 		if (m_DotnetPath.empty() || !std::filesystem::exists(m_DotnetPath)) {
 			if (!FindWorkingDotnet()) {
-				LOG(LogType::LOG_WARNING, "Preferencia establecida a dotnet, pero no se encontró una instalación. Se usará MSBuild si está disponible.");
+				LOG(LogType::LOG_WARNING, "Preferencia establecida a dotnet, pero no se encontrï¿½ una instalaciï¿½n. Se usarï¿½ MSBuild si estï¿½ disponible.");
 			}
 		}
 	}
@@ -1093,7 +1093,7 @@ void ScriptHotReloader::SaveBuildPreference(bool preferMSBuild) {
 		}
 	}
 	catch (...) {
-		LOG(LogType::LOG_WARNING, "Error al guardar la preferencia de compilación");
+		LOG(LogType::LOG_WARNING, "Error al guardar la preferencia de compilaciï¿½n");
 	}
 }
 
@@ -1112,7 +1112,7 @@ bool ScriptHotReloader::LoadBuildPreference() {
 		}
 	}
 	catch (...) {
-		LOG(LogType::LOG_WARNING, "Error al cargar la preferencia de compilación");
+		LOG(LogType::LOG_WARNING, "Error al cargar la preferencia de compilaciï¿½n");
 	}
 
 	return false;

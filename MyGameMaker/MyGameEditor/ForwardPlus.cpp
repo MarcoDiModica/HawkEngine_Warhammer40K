@@ -130,7 +130,7 @@ void ForwardPlusLighting::CollectLights(const std::vector<GameObject*>& gameObje
 					pointLights.push_back(ConvertToGPULight(light));
 				}
 				else {
-					LOG(LogType::LOG_WARNING, "Warning: Excedido máximo de luces puntuales");
+					LOG(LogType::LOG_WARNING, "Warning: Excedido mï¿½ximo de luces puntuales");
 				}
 			}
 		}
@@ -175,7 +175,7 @@ void ForwardPlusLighting::PerformLightCulling(const glm::mat4& viewMatrix, const
 	glUniformMatrix4fv(glGetUniformLocation(lightCullingShader, "viewMatrix"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(lightCullingShader, "projMatrix"), 1, GL_FALSE, glm::value_ptr(projMatrix));
 
-	// Pasar otros parámetros
+	// Pasar otros parï¿½metros
 	glUniform1i(glGetUniformLocation(lightCullingShader, "numLights"), (int)pointLights.size());
 	glUniform1i(glGetUniformLocation(lightCullingShader, "tileSize"), tileSize);
 	glUniform1i(glGetUniformLocation(lightCullingShader, "maxLightsPerTile"), maxLightsPerTile);
@@ -191,12 +191,12 @@ void ForwardPlusLighting::PerformLightCulling(const glm::mat4& viewMatrix, const
 	int computeGroupsY = (tilesY + 15) / 16;
 	glDispatchCompute(computeGroupsX, computeGroupsY, 1);
 
-	// Barrera de memoria para asegurar que los resultados estén disponibles
+	// Barrera de memoria para asegurar que los resultados estï¿½n disponibles
 	glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 
 	glUseProgram(0);
 
-	// Por ahora, asumimos que todas las luces son visibles para estadísticas
+	// Por ahora, asumimos que todas las luces son visibles para estadï¿½sticas
 	visibleLightCount = static_cast<int>(pointLights.size());
 }
 
@@ -215,7 +215,7 @@ void ForwardPlusLighting::CPUFallbackCulling(const glm::mat4& viewMatrix, const 
 		// Almacenar offset y conteo en el grid
 		tileData[tileIdx] = glm::uvec2(offset, count);
 
-		// Asignar índices de luces al tile
+		// Asignar ï¿½ndices de luces al tile
 		for (uint32_t lightIdx = 0; lightIdx < count; lightIdx++) {
 			lightIndices[offset + lightIdx] = lightIdx;
 		}
@@ -241,13 +241,13 @@ bool ForwardPlusLighting::CompileLightCullingShader() {
         
         // Estructura para luz puntual
         struct PointLight {
-            vec4 position;    // xyz = posición, w = radio
+            vec4 position;    // xyz = posiciï¿½n, w = radio
             vec4 color;       // rgb = color, a = intensidad
-            vec4 attenuation; // x = constante, y = lineal, z = cuadrática, w = no usado
+            vec4 attenuation; // x = constante, y = lineal, z = cuadrï¿½tica, w = no usado
             uint lightType;   // 0 = point, 1 = spot (futuro)
             uint castShadow;  // 0 = no, 1 = yes
-            uint shadowMapIndex; // índice a shadowmap (si usa sombras)
-            uint padding;     // alineación
+            uint shadowMapIndex; // ï¿½ndice a shadowmap (si usa sombras)
+            uint padding;     // alineaciï¿½n
         };
         
         // Buffer de luces puntuales
@@ -260,7 +260,7 @@ bool ForwardPlusLighting::CompileLightCullingShader() {
             uvec2 data[];     // x = offset into light indices, y = light count
         } lightGrid;
         
-        // Buffer para índices de luces por tile
+        // Buffer para ï¿½ndices de luces por tile
         layout(std430, binding = 2) buffer LightIndicesBuffer {
             uint indices[];
         } lightIndices;
@@ -283,7 +283,7 @@ bool ForwardPlusLighting::CompileLightCullingShader() {
             float distance;
         };
         
-        // Verifica si la esfera está delante del plano
+        // Verifica si la esfera estï¿½ delante del plano
         bool sphereInsidePlane(vec4 sphere, Plane plane) {
             return dot(plane.normal, sphere.xyz) - plane.distance > -sphere.w;
         }
@@ -330,8 +330,8 @@ bool ForwardPlusLighting::CompileLightCullingShader() {
             // Calcular planos del frustum (en world space)
             Plane frustumPlanes[6];
             
-            // Función para crear plano a partir de 3 puntos
-            // Esta función asume que los puntos están en sentido horario vistos desde el lado positivo del plano
+            // Funciï¿½n para crear plano a partir de 3 puntos
+            // Esta funciï¿½n asume que los puntos estï¿½n en sentido horario vistos desde el lado positivo del plano
             vec3 a, b, c, normal;
             float d;
             
@@ -387,7 +387,7 @@ bool ForwardPlusLighting::CompileLightCullingShader() {
             uint lightIndexStart = gl_LocalInvocationIndex;
             uint lightIndexStep = gl_WorkGroupSize.x * gl_WorkGroupSize.y;
             
-            // Recorrer todas las luces y verificar intersección con frustum
+            // Recorrer todas las luces y verificar intersecciï¿½n con frustum
             for (uint i = lightIndexStart; i < numLights; i += lightIndexStep) {
                 vec4 lightSphere = vec4(lights[i].position.xyz, lights[i].position.w);
                 
@@ -400,7 +400,7 @@ bool ForwardPlusLighting::CompileLightCullingShader() {
                     }
                 }
                 
-                // Si es visible, añadir a la lista compartida
+                // Si es visible, aï¿½adir a la lista compartida
                 if (isVisible) {
                     uint index = atomicAdd(visibleLightCount, 1);
                     if (index < 64) { // Usar maxLightsPerTile en lugar de 64
@@ -415,11 +415,11 @@ bool ForwardPlusLighting::CompileLightCullingShader() {
             if (gl_LocalInvocationIndex == 0) {
                 uint count = min(visibleLightCount, 64u); // Usar maxLightsPerTile en lugar de 64
                 
-                // Escribir información del tile en grid
+                // Escribir informaciï¿½n del tile en grid
                 uint offset = tileIndex * maxLightsPerTile;
                 lightGrid.data[tileIndex] = uvec2(offset, count);
                 
-                // Escribir índices de luces para este tile
+                // Escribir ï¿½ndices de luces para este tile
                 for (uint i = 0; i < count; i++) {
                     lightIndices.indices[offset + i] = visibleLightIndices[i];
                 }

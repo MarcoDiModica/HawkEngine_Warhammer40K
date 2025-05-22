@@ -8,23 +8,23 @@
 #include "../MyGameEngine/LightComponent.h"
 
 struct GPUPointLight {
-	glm::vec4 position;   // xyz = posición, w = radio
+	glm::vec4 position;   // xyz = posiciï¿½n, w = radio
 	glm::vec4 color;      // rgb = color, a = intensidad
-	glm::vec4 attenuation; // x = constante, y = lineal, z = cuadrática, w = no usado
+	glm::vec4 attenuation; // x = constante, y = lineal, z = cuadrï¿½tica, w = no usado
 	uint32_t lightType;   // 0 = point, 1 = spot (futuro)
 	uint32_t castShadow;  // 0 = no, 1 = yes
-	uint32_t shadowMapIndex; // índice a shadowmap (si usa sombras)
-	uint32_t padding;     // alineación
+	uint32_t shadowMapIndex; // ï¿½ndice a shadowmap (si usa sombras)
+	uint32_t padding;     // alineaciï¿½n
 };
 
 struct GPUDirectionalLight {
-	glm::vec4 direction;  // xyz = dirección, w = intensidad
+	glm::vec4 direction;  // xyz = direcciï¿½n, w = intensidad
 	glm::vec4 color;      // rgb = color, a = no usado
 	glm::mat4 shadowMatrix; // matriz para shadowmap (si usa sombras)
 	uint32_t castShadow;  // 0 = no, 1 = yes
-	uint32_t shadowMapIndex; // índice a shadowmap (si usa sombras)
+	uint32_t shadowMapIndex; // ï¿½ndice a shadowmap (si usa sombras)
 	uint32_t useCascades; // 0 = no, 1 = yes (futuro)
-	uint32_t numCascades; // número de cascadas (futuro)
+	uint32_t numCascades; // nï¿½mero de cascadas (futuro)
 	float darknessFallback;
 };
 
@@ -61,6 +61,21 @@ public:
 
 	const GPUDirectionalLight& GetDirectionalLight() const { return directionalLight; }
 
+	glm::vec3 GetDirLightPosition() const { return dirLightPosition; }
+	glm::vec4 GetDirLightBounds() const { return dirOrthographicBounds; }
+	float GetDirLightDistance() const { return dirLightDistance; }
+	float GetDirLightNearPlane() const { return dirNearPlane; }
+	float GetDirLightFarPlane() const { return dirFarPlane; }
+
+	void SetDirLightPosition(const glm::vec3& position) { dirLightPosition = position; }
+
+	void SetDirLightDistance(float distance) { dirLightDistance = distance; }
+	void SetDirLightNearPlane(float nearPlane) { dirNearPlane = nearPlane; }
+	void SetDirLightFarPlane(float farPlane) { dirFarPlane = farPlane; }
+	void SetDirLightOrthographicBounds(const glm::vec4& bounds) { dirOrthographicBounds = bounds; }
+
+
+
 private:
 	ForwardPlusLighting() = default;
 	~ForwardPlusLighting() = default;
@@ -88,6 +103,12 @@ private:
 	GLuint directionalLightBuffer = 0;
 	GLuint lightGridBuffer = 0;
 	GLuint lightIndicesBuffer = 0;
+
+	glm::vec3 dirLightPosition = glm::vec3(0.0f, 1.0f, 0.0f);
+	float dirLightDistance = 100.0f;
+	float dirNearPlane = 1.0f;
+	float dirFarPlane = 100.0f;
+	glm::vec4 dirOrthographicBounds = glm::vec4(-10.0f, 10.0f, -10.0f, 10.0f); // left, right, bottom, top
 
 	std::vector<GPUPointLight> pointLights;
 	GPUDirectionalLight directionalLight;

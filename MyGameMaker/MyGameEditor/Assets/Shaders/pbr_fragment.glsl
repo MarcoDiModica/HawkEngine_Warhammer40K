@@ -87,18 +87,27 @@ layout(location = 0) out vec4 FragColor;
 
 const float PI = 3.14159265359;
 
-float ShadowCalculation(vec4 fragPosLightSpace, float bias) {
+float ShadowCalculation(vec4 fragPosLightSpace, sampler2D depthMap) {
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
-    projCoords = projCoords * 0.5 + 0.5; // Transform to [0, 1] range
+    projCoords = projCoords * 0.5 + 0.5; // Transform to [0,1] range
 
-    float closestDepth = texture(shadowMap, projCoords.xy).r; 
     float currentDepth = projCoords.z;
+    float shadow = 0.0;
+    float bias = 0.005; // Shadow bias to reduce acne
 
-    // Apply bias to avoid shadow acne
-    currentDepth -= bias;
+    // PCF kernel
+    vec2 texelSize = 1.0 / textureSize(depthMap, 0);
+    for (int x = -1; x <= 1; ++x) {
+        for (int y = -1; y <= 1; ++y) {
+            float closestDepth = texture(depthMap, projCoords.xy + vec2(x, y) * texelSize).r;
+            shadow += currentDepth > closestDepth + bias ? 1.0 : 0.0;
+        }
+    }
+    shadow /= 9.0; // Average the samples
 
-    // Check if the fragment is in shadow
-    float shadow = currentDepth > closestDepth ? 1.0 : 0.0;
+    if (projCoords.z > 1.0) {
+        shadow = 0.0; // Outside the light's range
+    }
 
     return shadow;
 }
@@ -207,7 +216,7 @@ kD *= 1.0 - metallic;
 
 vec3 directLighting = (kD * albedo.rgb / PI + specular) * radiance * NdotL;
 float bias = max(0.05 * (1.0 - dot(N, lightDir)), 0.005);
-float shadow = ShadowCalculation(fs_in.FragPosLightSpace, bias);
+float shadow = ShadowCalculation(fs_in.FragPosLightSpace, shadowMap);
 
 directLighting *= (1.0 - shadow);
 

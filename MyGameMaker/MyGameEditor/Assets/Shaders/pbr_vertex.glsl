@@ -63,8 +63,8 @@ void main() {
         vec3 normal = normalize(normal);
         positionOffset += normal * (height * heightScale);
     }
-    vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
-    vs_out.FragPos = vec3(model * vec4(positionOffset, 1.0));
+vs_out.FragPos = vec3(model * vec4(positionOffset, 1.0));
+vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
     
     gl_Position = projection * view * model * vec4(positionOffset, 1.0);
 }

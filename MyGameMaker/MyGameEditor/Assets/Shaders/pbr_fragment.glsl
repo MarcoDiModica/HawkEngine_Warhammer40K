@@ -20,7 +20,6 @@ uniform float aoFactor;
 uniform vec3 emissiveColor;
 uniform float emissiveIntensity;
 
-uniform sampler2D shadowMap;
 uniform mat4 depthMVP;
 uniform int useShadows;
 
@@ -30,6 +29,8 @@ uniform sampler2D metallicMap;
 uniform sampler2D roughnessMap;
 uniform sampler2D aoMap;
 uniform sampler2D emissiveMap;
+
+uniform sampler2D shadowMap;
 
 uniform int u_HasAlbedoMap;
 uniform int u_HasNormalMap;
@@ -86,21 +87,21 @@ layout(location = 0) out vec4 FragColor;
 
 const float PI = 3.14159265359;
 
-float ShadowCalculation(vec4 fragPosLightSpace)
-{
-    // perform perspective divide
+float ShadowCalculation(vec4 fragPosLightSpace, float bias) {
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
-    // transform to [0,1] range
-    projCoords = projCoords * 0.5 + 0.5;
-    // get closest depth value from light's perspective (using [0,1] range fragPosLight as coords)
+    projCoords = projCoords * 0.5 + 0.5; // Transform to [0, 1] range
+
     float closestDepth = texture(shadowMap, projCoords.xy).r; 
-    // get depth of current fragment from light's perspective
     float currentDepth = projCoords.z;
-    // check whether current frag pos is in shadow
-    float shadow = currentDepth > closestDepth  ? 1.0 : 0.0;
+
+    // Apply bias to avoid shadow acne
+    currentDepth -= bias;
+
+    // Check if the fragment is in shadow
+    float shadow = currentDepth > closestDepth ? 1.0 : 0.0;
 
     return shadow;
-}  
+}
 
 uvec2 getLightGridInfo() {
     ivec2 tileIndex = ivec2(gl_FragCoord.xy) / tileSize;
@@ -205,6 +206,10 @@ vec3 kD = vec3(1.0) - kS;
 kD *= 1.0 - metallic; 
 
 vec3 directLighting = (kD * albedo.rgb / PI + specular) * radiance * NdotL;
+float bias = max(0.05 * (1.0 - dot(N, lightDir)), 0.005);
+float shadow = ShadowCalculation(fs_in.FragPosLightSpace, bias);
+
+directLighting *= (1.0 - shadow);
 
 lighting += directLighting;
 
@@ -269,8 +274,8 @@ lighting += emission;
 vec3 ambientFallback = vec3(directionalLight.darknessfallback) * albedo.rgb;
 lighting += ambientFallback;
 
-float shadow = ShadowCalculation(fs_in.FragPosLightSpace);
-lighting *= (1.0 - shadow);
+
+//lighting *= (1.0 - shadow);
 
 lighting = albedo.rgb * lighting / (lighting + vec3(1.0 - tonemapStrength) + 0.001);
 

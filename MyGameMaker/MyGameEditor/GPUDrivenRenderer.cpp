@@ -15,7 +15,7 @@ GPUDrivenRenderer& GPUDrivenRenderer::GetInstance() {
 	return instance;
 }
 
-void GPUDrivenRenderer::InitializeShadows() 
+void GPUDrivenRenderer::InitializeShadows()
 {
 	glGenFramebuffers(1, &depthMapFBO);
 
@@ -32,7 +32,7 @@ void GPUDrivenRenderer::InitializeShadows()
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
 	glDrawBuffer(GL_NONE);
 	glReadBuffer(GL_NONE);
-	
+
 
 	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 	if (status != GL_FRAMEBUFFER_COMPLETE) {
@@ -74,7 +74,7 @@ bool GPUDrivenRenderer::Initialize() {
 	GLuint zero = 0;
 	glNamedBufferSubData(visibleCountBuffer, 0, sizeof(GLuint), &zero);
 
-	//InitializeShadows();
+	InitializeShadows();
 
 	return true;
 }
@@ -85,15 +85,6 @@ void GPUDrivenRenderer::Shutdown() {
 	if (cullDataBuffer) glDeleteBuffers(1, &cullDataBuffer);
 	if (visibleCountBuffer) glDeleteBuffers(1, &visibleCountBuffer);
 	if (defaultVAO) glDeleteVertexArrays(1, &defaultVAO);
-	if (depthMapFBO) {
-		glDeleteFramebuffers(1, &depthMapFBO);
-		depthMapFBO = 0;
-	}
-	if (depthMap) {
-		glDeleteTextures(1, &depthMap);
-		depthMap = 0;
-	}
-
 
 	cullingShader = 0;
 	drawCommandBuffer = 0;
@@ -246,13 +237,26 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 		return;
 	}
 
-
 	float near_plane = 1.0f, far_plane = 7;
+
+	const auto& dirLight = ForwardPlusLighting::GetInstance().GetDirectionalLight();
+
+	// Define la posición de la luz lejos en la dirección opuesta a la luz
+	glm::vec3 lightDir = glm::normalize(dirLight.direction);
+	glm::vec3 sceneCenter = glm::vec3(0.0f); // O el centro de tu escena
+	float lightDistance = 20.0f; // Ajusta según el tamaño de tu escena
+
+	glm::vec3 lightPos = sceneCenter - lightDir * lightDistance;
+
+	// Matriz de proyección ortográfica (ajusta los valores según tu escena)
 	glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
 
-	glm::mat4 lightView = glm::lookAt(glm::vec3(-2.0f, 4.0f, -1.0f),
-		glm::vec3(0.0f, 0.0f, 0.0f),
-		glm::vec3(0.0f, 1.0f, 0.0f));
+	// Matriz de vista de la luz
+	glm::mat4 lightView = glm::lookAt(
+		lightPos,           // Posición de la luz
+		sceneCenter,        // Hacia dónde mira (centro de la escena)
+		glm::vec3(0.0f, 1.0f, 0.0f) // Up vector
+	);
 
 	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
 
@@ -263,6 +267,7 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 	}
 
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
+
 	for (const auto& [shaderType, batch] : shaderBatches) {
 		switch (shaderType) {
 		case ShaderType::UNLIT:
@@ -458,15 +463,15 @@ void GPUDrivenRenderer::RenderPBRBatch(
 
 	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::PBR);
 	if (!shader) {
-		LOG(LogType::LOG_ERROR, "Failed to retrieve PBR shader");
+		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader PBR");
 		return;
 	}
 
 	shader->Bind();
-
 	shader->SetUniformMat4("view", viewMatrix);
 	shader->SetUniformMat4("projection", projMatrix);
 	shader->SetUniformVec3("cameraPos", cameraPos);
+	shader->SetUniformMat4("lightSpaceMatrix", lightSpaceMatrix);
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, ForwardPlusLighting::GetInstance().GetPointLightBuffer());
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4, ForwardPlusLighting::GetInstance().GetDirectionalLightBuffer());
@@ -476,18 +481,20 @@ void GPUDrivenRenderer::RenderPBRBatch(
 	// Update Forward+ uniforms every frame
 	shader->SetUniform("useForwardPlus", 1);
 	shader->SetUniform("tileSize", ForwardPlusLighting::GetInstance().GetTileSize());
-
 	glm::vec2 tileSize = glm::vec2(
 		ForwardPlusLighting::GetInstance().GetTilesX() * ForwardPlusLighting::GetInstance().GetTileSize(),
 		ForwardPlusLighting::GetInstance().GetTilesY() * ForwardPlusLighting::GetInstance().GetTileSize());
 	shader->SetUniformVec2("screenSize", tileSize);
-
 	shader->SetUniform("numLights", ForwardPlusLighting::GetInstance().GetTotalLights());
 	shader->SetUniform("maxLightsPerTile", ForwardPlusLighting::GetInstance().GetMaxLightsPerTile());
-	shader->SetUniformMat4("lightSpaceMatrix", lightSpaceMatrix);
+
+	GLint uniformCheck;
+	glGetUniformiv(shader->GetProgram(), glGetUniformLocation(shader->GetProgram(), "useForwardPlus"), &uniformCheck);
+	LOG(LogType::LOG_INFO, "Forward+ Uniform State: %d", uniformCheck);
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
 
+	bindlessErrorDetected = true;
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
 		uint32_t meshIndex = batch.meshIndices[i];
 		uint32_t materialIndex = batch.materialIndices[i];
@@ -502,9 +509,25 @@ void GPUDrivenRenderer::RenderPBRBatch(
 		shader->SetUniform("roughnessFactor", materialData->pbrParams.y);
 		shader->SetUniform("aoFactor", materialData->pbrParams.z);
 		shader->SetUniform("tonemapStrength", materialData->pbrParams.w);
+
 		shader->SetUniformVec3("emissiveColor", glm::vec3(materialData->emissiveParams));
 		shader->SetUniform("emissiveIntensity", materialData->emissiveParams.w);
+
 		shader->SetUniform("heightScale", materialData->heightScale);
+
+		if (GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64 && !bindlessErrorDetected) {
+			HandleTextureBindings(shader, "albedoMap", "u_HasAlbedoMap", materialData->albedoTexture);
+			HandleTextureBindings(shader, "normalMap", "u_HasNormalMap", materialData->normalTexture);
+			HandleTextureBindings(shader, "metallicMap", "u_HasMetallicMap", materialData->metallicTexture);
+			HandleTextureBindings(shader, "roughnessMap", "u_HasRoughnessMap", materialData->roughnessTexture);
+			HandleTextureBindings(shader, "aoMap", "u_HasAoMap", materialData->aoTexture);
+			HandleTextureBindings(shader, "emissiveMap", "u_HasEmissiveMap", materialData->emissiveTexture);
+			HandleTextureBindings(shader, "heightMap", "u_HasHeightMap", materialData->heightTexture);
+			HandleTextureBindings(shader, "shadowMap", "u_HasShadowMap", depthMap);
+		}
+		else {
+			BindRegularTextures(shader, materialData);
+		}
 
 		glBindVertexArray(meshData->vertexArray);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
@@ -520,6 +543,11 @@ void GPUDrivenRenderer::RenderPBRBatch(
 				nullptr,
 				cmd.instanceCount
 			);
+
+			GLenum err = glGetError();
+			if (err != GL_NO_ERROR) {
+				LOG(LogType::LOG_ERROR, "GL Error after PBR draw: 0x%X", err);
+			}
 		}
 	}
 
@@ -624,6 +652,18 @@ void GPUDrivenRenderer::BindRegularTextures(Shaders* shader, GPUMaterial* materi
 	}
 	else {
 		shader->SetUniform("u_HasHeightMap", 0);
+	}
+
+	// Shadow map
+
+	if (BindlessManager::GetInstance().GetTextureIDFromHandle(depthMap, textureID)) {
+		glActiveTexture(GL_TEXTURE7);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		shader->SetUniform("u_HasShadowMap", 1);
+		shader->SetUniform("shadowMap", 7);
+	}
+	else {
+		shader->SetUniform("u_HasShadowMap", 0);
 	}
 }
 

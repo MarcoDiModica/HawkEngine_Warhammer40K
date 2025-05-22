@@ -122,6 +122,7 @@ void ForwardPlusLighting::CollectLights(const std::vector<GameObject*>& gameObje
 			LightComponent* light = gameObject->GetComponent<LightComponent>();
 
 			if (light->GetLightType() == LightType::DIRECTIONAL) {
+				SetDirLightPosition(gameObject->GetTransform()->GetPosition());
 				UpdateDirectionalLight(light);
 				foundDirectional = true;
 			}

@@ -52,6 +52,7 @@
 #include "RenderManager.h"
 #include <MyGameEngine/PrefabManager.h>
 #include "DragDropManager.h"
+#include "ForwardPlus.h" 
 typedef unsigned int guint32;
 #pragma endregion
 
@@ -928,6 +929,45 @@ private:
 			}
 			ImGui::PopItemWidth();
 
+			glm::vec4 dirOrthographicBounds = ForwardPlusLighting::GetInstance().GetDirLightBounds();
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Orthographic Bounds");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat4("##OrthographicBounds", &dirOrthographicBounds[0], 0.1f, -100.0f, 100.0f)) {
+				ForwardPlusLighting::GetInstance().SetDirLightOrthographicBounds(glm::vec4(dirOrthographicBounds[0], dirOrthographicBounds[1], dirOrthographicBounds[2], dirOrthographicBounds[3]));
+			}
+			ImGui::PopItemWidth();
+
+			float dirLightDistance = ForwardPlusLighting::GetInstance().GetDirLightDistance();
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Light Distance");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##LightDistance", &dirLightDistance, 0.1f, 0.0f, 1000.0f)) {
+				ForwardPlusLighting::GetInstance().SetDirLightDistance(dirLightDistance);
+			}
+			ImGui::PopItemWidth();
+
+			float dirNearPlane = ForwardPlusLighting::GetInstance().GetDirLightNearPlane();
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Near Plane");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##NearPlane", &dirNearPlane, 0.1f, 0.0f, 1000.0f)) {
+				ForwardPlusLighting::GetInstance().SetDirLightNearPlane(dirNearPlane);
+			}
+			ImGui::PopItemWidth();
+
+			float dirFarPlane = ForwardPlusLighting::GetInstance().GetDirLightFarPlane();
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Far Plane");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##FarPlane", &dirFarPlane, 0.1f, 0.0f, 1000.0f)) {
+				ForwardPlusLighting::GetInstance().SetDirLightFarPlane(dirFarPlane);
+			}
+			ImGui::PopItemWidth();
 
 			ImGui::EndGroup();
 		}

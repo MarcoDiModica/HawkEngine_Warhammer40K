@@ -25,8 +25,10 @@ void GPUDrivenRenderer::InitializeShadows()
 		SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0);
@@ -237,19 +239,21 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 		return;
 	}
 
-	float near_plane = ForwardPlusLighting::GetInstance().dirNearPlane, far_plane = ForwardPlusLighting::GetInstance().dirFarPlane;
+	float near_plane = ForwardPlusLighting::GetInstance().GetDirLightNearPlane(), far_plane = ForwardPlusLighting::GetInstance().GetDirLightFarPlane();
 
 	const auto& dirLight = ForwardPlusLighting::GetInstance().GetDirectionalLight();
 
 	// Define la posici�n de la luz lejos en la direcci�n opuesta a la luz
 	glm::vec3 lightDir = glm::normalize(dirLight.direction);
-	glm::vec3 sceneCenter = ForwardPlusLighting::GetInstance().dirLightPosition; // O el centro de tu escena
-	float lightDistance = ForwardPlusLighting::GetInstance().dirLightDistance; // Ajusta seg�n el tama�o de tu escena
+	glm::vec3 sceneCenter = ForwardPlusLighting::GetInstance().GetDirLightPosition(); // O el centro de tu escena
+	float lightDistance = ForwardPlusLighting::GetInstance().GetDirLightDistance(); // Ajusta seg�n el tama�o de tu escena
 
 	glm::vec3 lightPos = sceneCenter - lightDir * lightDistance;
 
+	glm::vec4 lightortho = ForwardPlusLighting::GetInstance().GetDirLightBounds();
+
 	// Matriz de proyecci�n ortogr�fica (ajusta los valores seg�n tu escena)
-	glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+	glm::mat4 lightProjection = glm::ortho(lightortho.x, lightortho.y, lightortho.z, lightortho.w, near_plane, far_plane);
 
 	// Matriz de vista de la luz
 	glm::mat4 lightView = glm::lookAt(

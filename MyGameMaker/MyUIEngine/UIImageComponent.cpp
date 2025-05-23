@@ -10,6 +10,7 @@
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
 #include "../MyGameEngine/ShaderManager.h"
+#include "MyGameEditor/BindlessManager.h"
 
 UIImageComponent::UIImageComponent(GameObject* owner)
 	: Component(owner), projection(glm::mat4(1.0f)), shader(nullptr) 
@@ -163,10 +164,17 @@ void UIImageComponent::SetTexture(std::string path)
 {
 	texturePath = path;
 	texture = std::make_shared<Image>();
-	texture->LoadTexture(path);
+
+	if (!texture->LoadTexture(path) || texture->id() == 0) {
+		LOG(LogType::LOG_ERROR, "Error al cargar la textura: %s", path.c_str());
+		return;
+	}
+
 	material->setImage(texture);
 	sheetSize = glm::vec2(texture->width(), texture->height());
 	LoadMesh();
+
+	BindlessManager::GetInstance().UpdateMaterial(material.get());
 }
 
 void UIImageComponent::LoadMesh()

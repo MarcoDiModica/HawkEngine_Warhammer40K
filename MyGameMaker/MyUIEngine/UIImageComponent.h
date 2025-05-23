@@ -103,12 +103,13 @@ protected:
     YAML::Node encode() override {  
        YAML::Node node = Component::encode();  
 
-       node["texture_path"] = texturePath;
        node["use_animation"] = useAnimation;  
        node["sprite_size"] = std::vector<float>{spriteSize.x, spriteSize.y};  
        node["sheet_size"] = std::vector<float>{sheetSize.x, sheetSize.y};  
        node["sprite_offset"] = std::vector<float>{spriteOffset.x, spriteOffset.y};  
-       node["anim_speed"] = animSpeed;  
+       node["anim_speed"] = animSpeed;
+
+	   node["material"] = material->encode();
 
        return node;  
     }  
@@ -118,7 +119,6 @@ protected:
 			return false;
 		}
 		
-       std::string path = node["texture_path"].as<std::string>();  
        useAnimation = node["use_animation"].as<bool>();  
 
        auto spriteSizeVec = node["sprite_size"].as<std::vector<float>>();  
@@ -131,10 +131,16 @@ protected:
        spriteOffset = glm::vec2(spriteOffsetVec[0], spriteOffsetVec[1]);  
 
        animSpeed = node["anim_speed"].as<float>();  
-       SetTexture(path);  
 
-       /*shader = node["shader"].as<Shaders*>();*/  
-       /*mesh = node["mesh"].as<std::shared_ptr<Mesh>>();*/  
+	   if (node["material"]) {
+		   std::shared_ptr<Material> mat = std::make_shared<Material>();
+		   if (mat->decode(node["material"])) {
+			   material = mat;
+		   }
+		   else {
+			   return false;
+		   }
+	   }
 
        return true;  
     }

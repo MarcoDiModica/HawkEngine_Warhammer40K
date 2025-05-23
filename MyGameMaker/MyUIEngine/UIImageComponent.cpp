@@ -26,7 +26,7 @@ void UIImageComponent::Awake()
 
 void UIImageComponent::Start()
 {
-	
+	material->SetColor(color);
 }
 
 int CalculateMaxIndex(const glm::vec2& sheetSize, const glm::vec2& spriteSize) {
@@ -141,6 +141,12 @@ void UIImageComponent::Update(float deltaTime)
 	if (material->imagePtr != texture) {
 		material->setImage(texture);
 	}
+
+	material->spriteOffset = spriteOffset;
+	material->spriteSize = spriteSize;
+	material->sheetSize = sheetSize;
+
+	material->color = color;
 }
 
 void UIImageComponent::Destroy()

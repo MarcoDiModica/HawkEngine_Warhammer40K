@@ -500,9 +500,9 @@ void GPUDrivenRenderer::RenderUIBatch(const ShaderBatch& batch, const glm::mat4&
 			shader->SetUniform("u_HasTexture", 0);
 		}
 
-		shader->SetUniformVec2("SpriteOffset", glm::vec2(0.0f));
-		shader->SetUniformVec2("SpriteSize", glm::vec2(1.0f));
-		shader->SetUniformVec2("SheetSize", glm::vec2(1.0f));
+		shader->SetUniformVec2("SpriteOffset", materialData->spriteOffset);
+		shader->SetUniformVec2("SpriteSize", materialData->spriteSize);
+		shader->SetUniformVec2("SheetSize", materialData->sheetSize);
 
 		glBindVertexArray(meshData->vertexArray);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);

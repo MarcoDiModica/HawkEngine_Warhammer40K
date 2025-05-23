@@ -94,6 +94,11 @@ public:
 	float GetEmissiveIntensity() const { return emissiveIntensity; }
 	float GetHeightScale() const { return heightScale; }
 
+	//ui shit
+	glm::vec2 spriteOffset = glm::vec2(0.0f, 0.0f);
+	glm::vec2 spriteSize = glm::vec2(1.0f, 1.0f);
+	glm::vec2 sheetSize = glm::vec2(1.0f, 1.0f);
+
 	size_t matID;
 
 	void SetMatName(const std::string& name) { matName = name; }

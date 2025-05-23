@@ -251,6 +251,10 @@ void BindlessManager::SetupGPUMaterial(GPUMaterial& gpuMaterial, const Material*
 	gpuMaterial.heightScale = material->heightScale;
 	gpuMaterial.padding = 0.0f;
 
+	gpuMaterial.spriteOffset = material->spriteOffset;
+	gpuMaterial.spriteSize = material->spriteSize;
+	gpuMaterial.sheetSize = material->sheetSize;
+
 	gpuMaterial.shaderType = static_cast<uint32_t>(material->GetShaderType());
 
 	gpuMaterial.albedoTexture = fallbackTextureHandle.handle;

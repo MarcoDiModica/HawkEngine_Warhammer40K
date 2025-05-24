@@ -80,7 +80,7 @@ void UIImageComponent::Update(float deltaTime)
 		uiTransform->SetResized(true);
 	}
 
-	if (useAnimation && sheetSize != glm::vec2(0, 0))
+	if (useAnimation && material->sheetSize != glm::vec2(0, 0))
 	{
 		indexTimer += deltaTime;
 
@@ -103,7 +103,7 @@ void UIImageComponent::Update(float deltaTime)
 			}
 			else if (animationNum == 1)
 			{
-				if (animIndex >= CalculateMaxIndex(sheetSize, spriteSize))
+				if (animIndex >= CalculateMaxIndex(material->sheetSize, material->spriteSize))
 				{
 					animIndex = anim1IndexLimit + 1;
 					indexTimer = 0;
@@ -118,13 +118,13 @@ void UIImageComponent::Update(float deltaTime)
 			}
 
 			indexTimer = 0.0f;
-			spriteOffset = CalculateSpriteOffset(animIndex, sheetSize, spriteSize);
+			material->spriteOffset = CalculateSpriteOffset(animIndex, material->sheetSize, material->spriteSize);
 		}
 	}
 	else
 	{
-		spriteOffset = glm::vec2(0.0f, 0.0f);
-		spriteSize = sheetSize;
+		material->spriteOffset = glm::vec2(0.0f, 0.0f);
+		material->spriteSize = material->sheetSize;
 	}
 
 	glm::vec3 scale = uiTransform->GetScale() * uiTransform->GetCanvasSize();
@@ -138,10 +138,6 @@ void UIImageComponent::Update(float deltaTime)
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) *
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
 		glm::scale(glm::mat4(1.0f), scale);
-
-	material->spriteOffset = spriteOffset;
-	material->spriteSize = spriteSize;
-	material->sheetSize = sheetSize;
 
 	material->color = color;
 
@@ -169,10 +165,10 @@ void UIImageComponent::SetTexture(std::string path)
 	}
 
 	material->setImage(texture);
-	sheetSize = glm::vec2(texture->width(), texture->height());
+	material->sheetSize = glm::vec2(texture->width(), texture->height());
 	LoadMesh();
 
-	BindlessManager::GetInstance().UpdateMaterial(material.get());
+	BindlessManager::GetInstance().RegisterMaterial(material.get());
 }
 
 void UIImageComponent::LoadMesh()

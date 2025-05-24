@@ -3,7 +3,7 @@ SceneMetadata:
 GameObject0:
   name: MainCamera
   prefabPath: ""
-  uuid: 12115554565316147701
+  uuid: 1442560812913847998
   tag: Untagged
   active: true
   isStatic: false
@@ -16,7 +16,7 @@ GameObject0:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -36,7 +36,7 @@ GameObject0:
 GameObject1:
   name: Canvas_LocationSM
   prefabPath: ""
-  uuid: 17789656206557061239
+  uuid: 10991755500577247528
   tag: Untagged
   active: true
   isStatic: false
@@ -81,7 +81,7 @@ GameObject1:
   Children:
     - name: Menu_Image
       prefabPath: ""
-      uuid: 15781019134261756153
+      uuid: 13740665975078586841
       tag: Untagged
       active: true
       isStatic: false
@@ -123,11 +123,10 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/location_sacarium_mortis.png
-          use_animation: false
+          use_animation: true
           sprite_size:
-            - 2560
-            - 1440
+            - 100
+            - 100
           sheet_size:
             - 2560
             - 1440
@@ -135,4 +134,44 @@ GameObject1:
             - 0
             - 0
           anim_speed: 0
+          texture_path: Library/Textures/UI/location_sacarium_mortis.png
       Children: ~
+GameObject2:
+  name: mesh.089
+  prefabPath: ""
+  uuid: 13626571287666391865
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0.00024807715089991689
+        - 1.6976573467254639
+        - 0.040951989591121674
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.015062279999256134
+        - 0.015062279999256134
+        - 0.015062279999256134
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 2137182048
+      material:
+        name: Low_BSurfaceMesh_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+      id: 2137182048
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~

@@ -4,7 +4,7 @@
 
 enum class ParticleType {
 
-    // The last one is 34
+    // The last one is 36
 
     // PLACE_HOLDERS
     DEFAULT = 0,
@@ -34,6 +34,9 @@ enum class ParticleType {
     LICTOR_LEAP = 26,
     LICTOR_DODGE = 27,
     LICTOR_SLASH = 34,
+
+    LICTOR_BLOOD = 35,
+    MAWLOC_SWIPE = 36,
 
     // Player / Weapons
     ENERGY_BALL = 12,

@@ -1208,6 +1208,74 @@ namespace ParticlePresets {
 		true 						   // Is Local Space
 	};
 
+	const ParticlePreset Lictor_Blood = {
+		ParticleType::LICTOR_BLOOD,
+		false,						   // PlayOnAwake
+		0.001,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   				   // Start color (white)
+		glm::vec3(1,1,1),   				   // End color (white)
+		1.0f,                          			   // Alpha start
+		1.0f,                          			   // Alpha end
+		0.8f,                          			   // Size start
+		16.0f,                          		   // Size end
+		1,                          			   // Min lifetime
+		1,                         			   // Max lifetime
+		0.0f,                          			   // Min speed
+		0.0f,                          			   // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+		0,                          			   // Rotation speed
+		1.0f,                         			   // Emission rate (particles per second)
+		EmitterShape::POINT,            		   // Shape
+		0.2f,                          			   // Cone base radius
+		1.0f,                          			   // Cone height
+		20.0f,                         			   // Cone angle in degrees
+		glm::vec2(321,181),		   	   // Sprite size
+		true,						   // Use animation
+		false,						   // Random animation Index
+		0.06f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		16.0f,						   // Min scale
+		16.0f,						   // Max scale
+		"Assets/Textures/Lictor-blood.png", 	   // Texture path
+		true 						   // Is Local Space
+	};
+
+	const ParticlePreset MawlocSwipe = {
+		ParticleType::MAWLOC_SWIPE,
+		false,						   // PlayOnAwake
+		0.001,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   				   // Start color (white)
+		glm::vec3(1,1,1),   				   // End color (white)
+		1.0f,                          			   // Alpha start
+		1.0f,                          			   // Alpha end
+		0.8f,                          			   // Size start
+		16.0f,                          		   // Size end
+		1,                          			   // Min lifetime
+		1,                         			   // Max lifetime
+		0.0f,                          			   // Min speed
+		0.0f,                          			   // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+		0,                          			   // Rotation speed
+		1.0f,                         			   // Emission rate (particles per second)
+		EmitterShape::POINT,            		   // Shape
+		0.2f,                          			   // Cone base radius
+		1.0f,                          			   // Cone height
+		20.0f,                         			   // Cone angle in degrees
+		glm::vec2(400,225),		   	   // Sprite size
+		true,						   // Use animation
+		false,						   // Random animation Index
+		0.06f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		16.0f,						   // Min scale
+		16.0f,						   // Max scale
+		"Assets/Textures/MawlocSlashSpritesheet.png", 	   // Texture path
+		true 						   // Is Local Space
+	};
+
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -1775,6 +1843,14 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::LICTOR_SLASH:
 		preset = ParticlePresets::Lictor_Slash;
+		SetOneShot(true);
+		break;
+	case ParticleType::LICTOR_BLOOD : 
+		preset = ParticlePresets::Lictor_Blood;
+		SetOneShot(true);
+		break;
+	case ParticleType::MAWLOC_SWIPE:
+		preset = ParticlePresets::MawlocSwipe;
 		SetOneShot(true);
 		break;
 

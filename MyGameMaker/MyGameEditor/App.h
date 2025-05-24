@@ -98,7 +98,9 @@ public:
 			"Assets/Textures/Tree3Spritesheet.png",
 			"Assets/Textures/Red_Thirst_Sprite_sheet.png",
 			"Assets/Textures/niebla30Frames.png",
-			"Assets/Textures/LictorSlashSpritesheetv6.png"
+			"Assets/Textures/LictorSlashSpritesheetv6.png",
+			"Assets/Textures/Lictor-blood.png",
+			"Assets/Textures/MawlocSlashSpritesheet.png"
 
 		};
 

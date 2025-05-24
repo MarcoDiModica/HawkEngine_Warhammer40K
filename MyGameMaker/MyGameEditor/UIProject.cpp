@@ -188,10 +188,18 @@ void UIProject::DrawMainLayout()
 		ImGui::TableNextRow();
 
 		ImGui::TableSetColumnIndex(0);
-		DrawDirectoryTree();
+		ImVec2 availSpaceTree = ImGui::GetContentRegionAvail();
+		if (ImGui::BeginChild("DirectoryTreeScroll", availSpaceTree, true, ImGuiWindowFlags_HorizontalScrollbar)) {
+			DrawDirectoryTree();
+		}
+		ImGui::EndChild();
 
 		ImGui::TableSetColumnIndex(1);
-		DrawContentArea();
+		ImVec2 availSpaceContent = ImGui::GetContentRegionAvail();
+		if (ImGui::BeginChild("ContentAreaScroll", availSpaceContent, true, ImGuiWindowFlags_HorizontalScrollbar)) {
+			DrawContentArea();
+		}
+		ImGui::EndChild();
 
 		ImGui::EndTable();
 	}
@@ -311,7 +319,7 @@ void UIProject::DrawSettings()
 	ImGui::PopItemWidth();
 
 	ImGui::SameLine();
-	ImGui::Checkbox("Show Thumbnails", &settings.showThumbnails);
+	ImGui::Checkbox("Tn", &settings.showThumbnails);
 
 	ImGui::Separator();
 }

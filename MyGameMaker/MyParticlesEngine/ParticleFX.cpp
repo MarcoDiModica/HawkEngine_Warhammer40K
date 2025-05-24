@@ -1174,6 +1174,40 @@ namespace ParticlePresets {
 	false 									   // Is Local Space
 	};
 
+	const ParticlePreset Lictor_Slash = {
+		ParticleType::LICTOR_SLASH,
+		false,						   // PlayOnAwake
+		0.01,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   				   // Start color (white)
+		glm::vec3(1,1,1),   				   // End color (white)
+		1.0f,                          			   // Alpha start
+		1.0f,                          			   // Alpha end
+		0.8f,                          			   // Size start
+		8.0f,                          		   // Size end
+		1,                          			   // Min lifetime
+		1,                         			   // Max lifetime
+		0.0f,                          			   // Min speed
+		0.0f,                          			   // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+		0,                          			   // Rotation speed
+		1.0f,                         			   // Emission rate (particles per second)
+		EmitterShape::POINT,            		   // Shape
+		0.2f,                          			   // Cone base radius
+		1.0f,                          			   // Cone height
+		20.0f,                         			   // Cone angle in degrees
+		glm::vec2(480,270),		   	   // Sprite size
+		true,						   // Use animation
+		false,						   // Random animation Index
+		0.1f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		8.0f,						   // Min scale
+		8.0f,						   // Max scale
+		"Assets/Textures/LictorSlashSpritesheetv6.png", 	   // Texture path
+		true 						   // Is Local Space
+	};
+
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -1738,6 +1772,10 @@ void ParticleFX::ApplyPreset(int particleID) {
 	case ParticleType::EnVIRONMENT_Fog:
 		preset = ParticlePresets::Envitoment_Fog;
 		SetOneShot(false);
+		break;
+	case ParticleType::LICTOR_SLASH:
+		preset = ParticlePresets::Lictor_Slash;
+		SetOneShot(true);
 		break;
 
 	default:

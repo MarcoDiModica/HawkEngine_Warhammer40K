@@ -245,20 +245,20 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 
 	// Define la posici�n de la luz lejos en la direcci�n opuesta a la luz
 	glm::vec3 lightDir = glm::normalize(dirLight.direction);
-	glm::vec3 sceneCenter = ForwardPlusLighting::GetInstance().GetDirLightPosition(); // O el centro de tu escena
+	glm::vec3 sceneCenter = glm::vec3(0)/* ForwardPlusLighting::GetInstance().GetDirLightPosition()*/; // O el centro de tu escena
 	float lightDistance = ForwardPlusLighting::GetInstance().GetDirLightDistance(); // Ajusta seg�n el tama�o de tu escena
 
-	glm::vec3 lightPos = sceneCenter - lightDir * lightDistance;
+	glm::vec3 lightPos = ForwardPlusLighting::GetInstance().GetDirLightPosition()/*sceneCenter - lightDir * lightDistance*/;
 
-	glm::vec4 lightortho = ForwardPlusLighting::GetInstance().GetDirLightBounds();
+	float lightortho = lightDistance * 0.5f;
 
 	// Matriz de proyecci�n ortogr�fica (ajusta los valores seg�n tu escena)
-	glm::mat4 lightProjection = glm::ortho(lightortho.x, lightortho.y, lightortho.z, lightortho.w, near_plane, far_plane);
+	glm::mat4 lightProjection = glm::ortho(-lightortho, lightortho, -lightortho, lightortho, near_plane, far_plane);
 
 	// Matriz de vista de la luz
 	glm::mat4 lightView = glm::lookAt(
 		lightPos,           // Posici�n de la luz
-		sceneCenter,        // Hacia d�nde mira (centro de la escena)
+		lightPos + lightDir,        // Hacia d�nde mira
 		glm::vec3(0.0f, 1.0f, 0.0f) // Up vector
 	);
 
@@ -303,7 +303,7 @@ void GPUDrivenRenderer::RenderShadowBatch(const ShaderBatch& batch, glm::mat4 li
 
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 
-	//glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+	glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
 
 	glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -354,6 +354,7 @@ void GPUDrivenRenderer::RenderShadowBatch(const ShaderBatch& batch, glm::mat4 li
 
 	shader->UnBind();
 	glClear(GL_COLOR_BUFFER_BIT);
+	glViewport(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y);
 }
 
 void GPUDrivenRenderer::RenderUnlitBatch(
@@ -476,6 +477,11 @@ void GPUDrivenRenderer::RenderPBRBatch(
 	shader->SetUniformMat4("projection", projMatrix);
 	shader->SetUniformVec3("cameraPos", cameraPos);
 	shader->SetUniformMat4("lightSpaceMatrix", lightSpaceMatrix);
+
+	glActiveTexture(GL_TEXTURE7);
+	glBindTexture(GL_TEXTURE_2D, depthMap);
+	shader->SetUniform("u_HasShadowMap", 1);
+	shader->SetUniform("shadowMap", 7);
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, ForwardPlusLighting::GetInstance().GetPointLightBuffer());
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4, ForwardPlusLighting::GetInstance().GetDirectionalLightBuffer());

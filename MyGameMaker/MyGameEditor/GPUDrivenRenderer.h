@@ -92,7 +92,7 @@ private:
 	GLuint visibleCountBuffer = 0;
 	GLuint defaultVAO = 0;
 
-	const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
+	const unsigned int SHADOW_WIDTH = 4096, SHADOW_HEIGHT = 4096;
 
 	unsigned int depthMap;
 

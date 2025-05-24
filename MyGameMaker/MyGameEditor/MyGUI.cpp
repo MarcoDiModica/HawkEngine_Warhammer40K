@@ -127,17 +127,6 @@ MyGUI::MyGUI(App* app) : Module(app) {
 }
 
 MyGUI::~MyGUI() {
-	
-	for (auto& element : elements)
-	{
-		if (element)
-		{
-			delete element;
-			element = nullptr;
-		}
-	}
-	elements.clear();
-
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
@@ -284,16 +273,6 @@ bool MyGUI::PostUpdate()
 
 bool MyGUI::CleanUp() {
 	
-	for (auto& element : elements)
-	{
-		if (element)
-		{
-			delete element;
-			element = nullptr;
-		}
-	}
-	elements.clear();
-
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 

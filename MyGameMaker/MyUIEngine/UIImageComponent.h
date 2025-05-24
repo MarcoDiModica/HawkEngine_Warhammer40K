@@ -8,6 +8,7 @@
 
 #include <string>
 #include "MyGameEngine/Material.h"
+#include "MyGameEditor/BindlessManager.h"
 
 class UIImageComponent : public Component
 {
@@ -109,7 +110,8 @@ protected:
        node["sprite_offset"] = std::vector<float>{spriteOffset.x, spriteOffset.y};  
        node["anim_speed"] = animSpeed;
 
-	   node["material"] = material->encode();
+	   node["material"] = material ? material->encode() : YAML::Node();
+	   node["texture_path"] = texturePath;
 
        return node;  
     }  
@@ -133,14 +135,27 @@ protected:
        animSpeed = node["anim_speed"].as<float>();  
 
 	   if (node["material"]) {
-		   std::shared_ptr<Material> mat = std::make_shared<Material>();
-		   if (mat->decode(node["material"])) {
-			   material = mat;
-		   }
-		   else {
+		   material = std::make_shared<Material>();
+		   if (!material->decode(node["material"])) {
 			   return false;
 		   }
+	   } 
+	   else {
+		   material = std::make_shared<Material>();
 	   }
+
+	   if (node["texture_path"]) {
+		   texturePath = node["texture_path"].as<std::string>();
+		   SetTexture(texturePath);
+	   } else {
+		   texture = nullptr;
+	   }
+
+	   if (mesh) {
+		   LoadMesh();
+	   }
+
+	   BindlessManager::GetInstance().UpdateMaterial(material.get());
 
        return true;  
     }

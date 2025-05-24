@@ -23,6 +23,7 @@
 #include "MyParticlesEngine/ParticleFX.h"
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
 #include <MyScriptingEngine/MonoManager.h>
+#include "BindlessManager.h"
 
 
 SceneSerializer::SceneSerializer(App* app) : Module(app) {
@@ -205,6 +206,15 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 		return false;
 	}
 
+	auto resourceManager = Application->root->GetResourceManager();
+	if (resourceManager) {
+		const auto& materials = resourceManager->GetAllMaterials();
+		for (const auto& material : materials) {
+			if (material) {
+				BindlessManager::GetInstance().RegisterMaterial(material.get());
+			}
+		}
+	}
 	
 	//Application->root->GetActiveScene()->Start();
 }

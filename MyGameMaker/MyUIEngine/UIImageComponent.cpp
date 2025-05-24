@@ -139,15 +139,13 @@ void UIImageComponent::Update(float deltaTime)
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
 		glm::scale(glm::mat4(1.0f), scale);
 
-	if (material->imagePtr != texture) {
-		material->setImage(texture);
-	}
-
 	material->spriteOffset = spriteOffset;
 	material->spriteSize = spriteSize;
 	material->sheetSize = sheetSize;
 
 	material->color = color;
+
+	BindlessManager::GetInstance().UpdateMaterial(material.get());
 }
 
 void UIImageComponent::Destroy()

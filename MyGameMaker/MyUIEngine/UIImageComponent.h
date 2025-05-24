@@ -110,8 +110,9 @@ protected:
        node["sprite_offset"] = std::vector<float>{spriteOffset.x, spriteOffset.y};  
        node["anim_speed"] = animSpeed;
 
-	   node["material"] = material ? material->encode() : YAML::Node();
-	   node["texture_path"] = texturePath;
+	   if (texture) {
+		   node["texture_path"] = texturePath;
+	   }
 
        return node;  
     }  
@@ -134,21 +135,9 @@ protected:
 
        animSpeed = node["anim_speed"].as<float>();  
 
-	   if (node["material"]) {
-		   material = std::make_shared<Material>();
-		   if (!material->decode(node["material"])) {
-			   return false;
-		   }
-	   } 
-	   else {
-		   material = std::make_shared<Material>();
-	   }
-
 	   if (node["texture_path"]) {
 		   texturePath = node["texture_path"].as<std::string>();
 		   SetTexture(texturePath);
-	   } else {
-		   texture = nullptr;
 	   }
 
 	   if (mesh) {

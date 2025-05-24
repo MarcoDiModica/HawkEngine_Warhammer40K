@@ -59,6 +59,7 @@ struct GPUInstance {
 	uint32_t materialIndex;
 	uint32_t objectId;
 	uint32_t flags;
+	//glm::mat4 boneMatrices[200];
 };
 
 class BindlessManager {

@@ -53,8 +53,8 @@ public:
 
 	CameraBase::FrustumIntersection TestFrustumAABB(const glm::vec3& bboxMin, const glm::vec3& bboxMax, CameraBase::Plane* frustumPlanes);
 
-	void RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos, CameraBase::Plane* frustrumPlanes);
-	void RenderFromCamera(CameraComponent* camera);
+	void RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos, CameraBase::Plane* frustrumPlanes, bool isEditor);
+	void RenderFromCamera(CameraComponent* camera, bool isEditor);
 	
 	void SetWindowSize(int width, int height);
 	void SetUseForwardPlus(bool enable) { useForwardPlus = enable; }

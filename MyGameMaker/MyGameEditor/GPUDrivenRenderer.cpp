@@ -233,7 +233,7 @@ void GPUDrivenRenderer::BatchCommandsByShaderType() {
 	}
 }
 
-void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
+void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos, bool isEditor) {
 	if (shaderBatches.empty()) {
 		LOG(LogType::LOG_INFO, "No hay objetos para renderizar");
 		return;
@@ -243,19 +243,16 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 
 	const auto& dirLight = ForwardPlusLighting::GetInstance().GetDirectionalLight();
 
-	// Define la posici�n de la luz lejos en la direcci�n opuesta a la luz
 	glm::vec3 lightDir = glm::normalize(dirLight.direction);
-	glm::vec3 sceneCenter = glm::vec3(0)/* ForwardPlusLighting::GetInstance().GetDirLightPosition()*/; // O el centro de tu escena
-	float lightDistance = ForwardPlusLighting::GetInstance().GetDirLightDistance(); // Ajusta seg�n el tama�o de tu escena
+	glm::vec3 sceneCenter = glm::vec3(0)/* ForwardPlusLighting::GetInstance().GetDirLightPosition()*/; 
+	float lightDistance = ForwardPlusLighting::GetInstance().GetDirLightDistance();
 
-	glm::vec3 lightPos = ForwardPlusLighting::GetInstance().GetDirLightPosition()/*sceneCenter - lightDir * lightDistance*/;
+	glm::vec3 lightPos = ForwardPlusLighting::GetInstance().GetDirLightPosition();
 
 	float lightortho = lightDistance * 0.5f;
 
-	// Matriz de proyecci�n ortogr�fica (ajusta los valores seg�n tu escena)
 	glm::mat4 lightProjection = glm::ortho(-lightortho, lightortho, -lightortho, lightortho, near_plane, far_plane);
 
-	// Matriz de vista de la luz
 	glm::mat4 lightView = glm::lookAt(
 		lightPos,           // Posici�n de la luz
 		lightPos + lightDir,        // Hacia d�nde mira
@@ -266,9 +263,10 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 
 	for (const auto& [shaderType, batch] : shaderBatches) {
 		if (shaderType == ShaderType::PBR) {
-			RenderShadowBatch(batch, lightSpaceMatrix);
+			RenderShadowBatch(batch, lightSpaceMatrix, isEditor);
 		}
 	}
+
 
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
 
@@ -289,7 +287,7 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
 }
 
-void GPUDrivenRenderer::RenderShadowBatch(const ShaderBatch& batch, glm::mat4 lightSpaceMatrix)
+void GPUDrivenRenderer::RenderShadowBatch(const ShaderBatch& batch, glm::mat4 lightSpaceMatrix, bool isEditor)
 {
 	if (batch.commands.empty()) return;
 
@@ -343,18 +341,30 @@ void GPUDrivenRenderer::RenderShadowBatch(const ShaderBatch& batch, glm::mat4 li
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	bool useMSAA = Application->gui->UISceneWindowPanel->msaaSamples > 0;
+	if (isEditor) 
+	{
+		bool useMSAA = Application->gui->UISceneWindowPanel->msaaSamples > 0;
 
-	if (useMSAA) {
-		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->multisampleFBO);
+		if (useMSAA) {
+			glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->multisampleFBO);
+		}
+		else {
+			glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
+		}
 	}
 	else {
-		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
+		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
 	}
 
 	shader->UnBind();
 	glClear(GL_COLOR_BUFFER_BIT);
-	glViewport(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y);
+	
+	if (isEditor) {
+		glViewport(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y);
+	}
+	else {
+		glViewport(0, 0, 1280, 720);
+	}
 }
 
 void GPUDrivenRenderer::RenderUnlitBatch(
@@ -524,6 +534,8 @@ void GPUDrivenRenderer::RenderPBRBatch(
 		shader->SetUniform("emissiveIntensity", materialData->emissiveParams.w);
 
 		shader->SetUniform("heightScale", materialData->heightScale);
+
+		//shader->SetUniform("finalBonesMatrices[" + std::to_string(i) + "]",   transforms[i]);
 
 		if (GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64 && !bindlessErrorDetected) {
 			HandleTextureBindings(shader, "albedoMap", "u_HasAlbedoMap", materialData->albedoTexture);

@@ -5,6 +5,7 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEngine/LightComponent.h"
 #include "../MyGameEngine/ShaderManager.h"
+#include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
 RenderManager& RenderManager::GetInstance() {
 	static RenderManager instance;
@@ -151,7 +152,7 @@ CameraBase::FrustumIntersection RenderManager::TestFrustumAABB(const glm::vec3& 
 	return result;
 }
 
-void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos, CameraBase::Plane* frustrumPlanes) {
+void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos, CameraBase::Plane* frustrumPlanes, bool isEditor) {
 	if (queuedObjects.empty()) return;
 
 	for (auto* obj : queuedObjects) {
@@ -176,13 +177,13 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 
 	GPUDrivenRenderer::GetInstance().PrepareDrawCommands();
 
-	GPUDrivenRenderer::GetInstance().RenderAll(viewMatrix, projMatrix, cameraPos);
+	GPUDrivenRenderer::GetInstance().RenderAll(viewMatrix, projMatrix, cameraPos,isEditor);
 
 	stats.visibleGameObjects = GPUDrivenRenderer::GetInstance().GetVisibleInstanceCount();
 	stats.totalDrawCalls = GPUDrivenRenderer::GetInstance().GetTotalDrawCommands();
 }
 
-void RenderManager::RenderFromCamera(CameraComponent* camera) {
+void RenderManager::RenderFromCamera(CameraComponent* camera, bool isEditor) {
 	if (!camera) return;
 
 	glm::mat4 viewMatrix = camera->view();
@@ -190,7 +191,7 @@ void RenderManager::RenderFromCamera(CameraComponent* camera) {
 	glm::vec3 cameraPos = camera->owner->GetTransform()->GetPosition();
 	CameraBase::Plane* frstrumPlanes = camera->GetPlanes();
 
-	RenderScene(viewMatrix, projMatrix, cameraPos, frstrumPlanes);
+	RenderScene(viewMatrix, projMatrix, cameraPos, frstrumPlanes, isEditor);
 }
 
 void RenderManager::SetWindowSize(int width, int height) {
@@ -248,6 +249,13 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 				instance.materialIndex = materialIndex;
 				instance.objectId = gameObject->GetID().GetValue();
 				instance.flags = 0;
+
+				if (gameObject->HasComponent<SkeletalAnimationComponent>()) 
+				{
+					for (int i = 0; i < MAX_BONES; ++i) {
+						//instance.boneMatrices[i] = gameObject->GetComponent<SkeletalAnimationComponent>()->GetAnimator()->GetFinalBoneMatrices().at(i);
+					}
+				}
 
 				MeshMaterialKey key{ meshIndex, materialIndex };
 

@@ -50,7 +50,7 @@ public:
 	void PrepareDrawCommands();	
 	void ForceIncludeAllObjects();
 	
-	void RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
+	void RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos,bool isEditor);
 
 	void SetUseGPUCulling(bool enabled) { useGPUCulling = enabled; }
 	void SetUseOcclusionCulling(bool enabled) { useOcclusionCulling = enabled; }
@@ -81,7 +81,7 @@ private:
 		const glm::vec3& cameraPos,
 		const glm::mat4& lightSpaceMatrix);
 
-	void RenderShadowBatch(const ShaderBatch& batch, glm::mat4 lightSpaceMatrix);
+	void RenderShadowBatch(const ShaderBatch& batch, glm::mat4 lightSpaceMatrix, bool isEditor);
 
 	void HandleTextureBindings(Shaders* shader, const char* textureName, const char* hasTextureName, GLuint64 textureHandle);
 	void BindRegularTextures(Shaders* shader, GPUMaterial* materialData);

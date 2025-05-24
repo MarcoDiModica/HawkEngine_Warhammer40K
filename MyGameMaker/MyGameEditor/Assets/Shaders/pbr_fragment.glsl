@@ -87,20 +87,19 @@ layout(location = 0) out vec4 FragColor;
 
 const float PI = 3.14159265359;
 
-float ShadowCalculation(vec4 fragPosLightSpace, sampler2D depthMap) {
+float ShadowCalculation(vec4 fragPosLightSpace, sampler2D depthMap, float bias) {
     vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;
     projCoords = projCoords * 0.5 + 0.5; // Transform to [0,1] range
 
     float currentDepth = projCoords.z;
     float shadow = 0.0;
-    float bias = 0.005; // Shadow bias to reduce acne
 
     // PCF kernel
     vec2 texelSize = 1.0 / textureSize(depthMap, 0);
     for (int x = -1; x <= 1; ++x) {
         for (int y = -1; y <= 1; ++y) {
             float closestDepth = texture(depthMap, projCoords.xy + vec2(x, y) * texelSize).r;
-            shadow += currentDepth > closestDepth + bias ? 1.0 : 0.0;
+            shadow += currentDepth - bias > closestDepth ? 1.0 : 0.0;
         }
     }
     shadow /= 9.0; // Average the samples
@@ -215,8 +214,8 @@ vec3 kD = vec3(1.0) - kS;
 kD *= 1.0 - metallic; 
 
 vec3 directLighting = (kD * albedo.rgb / PI + specular) * radiance * NdotL;
-float bias = max(0.05 * (1.0 - dot(N, lightDir)), 0.005);
-float shadow = ShadowCalculation(fs_in.FragPosLightSpace, shadowMap);
+float bias = 0.005;
+float shadow = ShadowCalculation(fs_in.FragPosLightSpace, shadowMap,bias);
 
 directLighting *= (1.0 - shadow);
 
@@ -291,6 +290,9 @@ lighting = albedo.rgb * lighting / (lighting + vec3(1.0 - tonemapStrength) + 0.0
 color += pow(lighting, vec3(1.0 / 2.2));
 
 FragColor = vec4(color, albedo.a);
+
+// float depth = texture(shadowMap, fs_in.FragPosLightSpace.xy / fs_in.FragPosLightSpace.w * 0.5 + 0.5).r;
+// FragColor = vec4(vec3(depth), 1.0);
 //FragColor = vec4(N * 0.5 + 0.5, 1.0);
 //FragColor = vec4(fs_in.TBN[0] * 0.5 + 0.5, 1.0); 
 //FragColor = vec4(fs_in.TBN[1] * 0.5 + 0.5, 1.0); 

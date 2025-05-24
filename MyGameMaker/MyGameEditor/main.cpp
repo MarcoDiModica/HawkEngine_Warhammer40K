@@ -660,7 +660,7 @@ static void RenderEditor() {
 	glm::vec3 cameraUp = Application->camera->GetTransform().GetUp();
 	CameraBase::Plane* frustumPlanes = Application->camera->GetPlanes();
 
-	RenderManager::GetInstance().RenderScene(viewMatrix, projMatrix, cameraPos, frustumPlanes);
+	RenderManager::GetInstance().RenderScene(viewMatrix, projMatrix, cameraPos, frustumPlanes, true);
 
 	RenderParticleSystems(objects, viewMatrix, projMatrix, cameraPos, cameraUp);
 
@@ -757,7 +757,7 @@ static void RenderGameView() {
 	glm::vec3 cameraPos = gameCamera->GetOwner()->GetTransform()->GetPosition();
 	glm::vec3 cameraUp = gameCamera->GetOwner()->GetTransform()->GetUp();
 
-	RenderManager::GetInstance().RenderFromCamera(gameCamera);
+	RenderManager::GetInstance().RenderFromCamera(gameCamera, false);
 
 	RenderParticleSystems(objects, viewMatrix, projMatrix, cameraPos, cameraUp);
 
@@ -938,7 +938,7 @@ static void GameRelease() {
 	glm::vec3 cameraPos = gameCamera->GetOwner()->GetTransform()->GetPosition();
 	glm::vec3 cameraUp = gameCamera->GetOwner()->GetTransform()->GetUp();
 
-	RenderManager::GetInstance().RenderFromCamera(gameCamera);
+	RenderManager::GetInstance().RenderFromCamera(gameCamera,true);
 
 	RenderParticleSystems(objects, viewMatrix, projMatrix, cameraPos, cameraUp);
 

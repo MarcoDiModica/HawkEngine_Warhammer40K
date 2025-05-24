@@ -1078,16 +1078,16 @@ void Mesh::loadToOpenGL()
 		glBindBuffer(GL_ARRAY_BUFFER, boneIDBuffer);
 		glBufferData(GL_ARRAY_BUFFER, boneIDs.size() * sizeof(glm::ivec4), boneIDs.data(), GL_STATIC_DRAW);
 
-		glEnableVertexAttribArray(3);
-		glVertexAttribIPointer(3, 4, GL_INT, sizeof(glm::ivec4), (const void*)0);
+		glEnableVertexAttribArray(7);
+		glVertexAttribIPointer(7, 4, GL_INT, sizeof(glm::ivec4), (const void*)0);
 
 		GLuint weightBuffer;
 		glGenBuffers(1, &weightBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, weightBuffer);
 		glBufferData(GL_ARRAY_BUFFER, weights.size() * sizeof(glm::vec4), weights.data(), GL_STATIC_DRAW);
 
-		glEnableVertexAttribArray(4);
-		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (const void*)0);
+		glEnableVertexAttribArray(8);
+		glVertexAttribPointer(8, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (const void*)0);
 	}
 
 	if (model->GetModelData().vertex_tangents.size() > 0) {

@@ -1584,6 +1584,108 @@ namespace ParticlePresets {
 	"Assets/Textures/Red_thirst_lost_vfx.png",   // Texture path
 	false 									     // Is Local Space
 	};
+
+	const ParticlePreset TermagauntSlash = {
+	ParticleType::TERMAGAUNT_SLASH,
+	false,										 // PlayOnAwake
+	1,											 // Duration (only if one-shot)
+	glm::vec3(1,1,1),   						 // Start color (white)
+	glm::vec3(1,1,1),   						 // End color (white)
+	1.0f,		                     			 // Alpha start
+	1.0f,		                     			 // Alpha end
+	10.0f,		                     			 // Size start
+	10.0f,		                       			 // Size end
+	1,                          				 // Min lifetime
+	1,                         					 // Max lifetime
+	1.0f,                          				 // Min speed
+	1.0f,                          				 // Max speed
+	1.0f,										 // End Speed
+	glm::vec3(0.0f,0.01f,0.0f),	   			 // Gravity (negative for upward)
+	0,                          				 // Rotation speed
+	1.f,                         				 // Emission rate (particles per second)
+	EmitterShape::POINT,            			 // Shape
+	0.2f,                          				 // Cone base radius
+	1.0f,                          				 // Cone height
+	20.0f,                         				 // Cone angle in degrees
+	glm::vec2(138,127),		   					 // Sprite size
+	true,										 // Use animation
+	false,										 // Random animation Index
+	0.1f,										 // Animation speed
+	0.0f,										 // Start rotation
+	false,										 // Random rotation
+	1.0f,										 // Min scale
+	1.0f,										 // Max scale
+	"Assets/Textures/termagaunt_slash.png",   // Texture path
+	false 									     // Is Local Space
+	};
+
+	const ParticlePreset BloodSquirt1 = {
+	ParticleType::BLOOD_SQUIRT_1,
+	false,										 // PlayOnAwake
+	1,											 // Duration (only if one-shot)
+	glm::vec3(1,1,1),   						 // Start color (white)
+	glm::vec3(1,1,1),   						 // End color (white)
+	1.0f,		                     			 // Alpha start
+	1.0f,		                     			 // Alpha end
+	5.0f,		                     			 // Size start
+	5.0f,		                       			 // Size end
+	1,                          				 // Min lifetime
+	1,                         					 // Max lifetime
+	0.0f,                          				 // Min speed
+	0.0f,                          				 // Max speed
+	0.0f,										 // End Speed
+	glm::vec3(0.0f,0.01f,0.0f),	   			 // Gravity (negative for upward)
+	0,                          				 // Rotation speed
+	1.f,                         				 // Emission rate (particles per second)
+	EmitterShape::POINT,            			 // Shape
+	0.2f,                          				 // Cone base radius
+	1.0f,                          				 // Cone height
+	20.0f,                         				 // Cone angle in degrees
+	glm::vec2(320,320),		   					 // Sprite size
+	true,										 // Use animation
+	false,										 // Random animation Index
+	0.04f,										 // Animation speed
+	180.0f,										 // Start rotation
+	false,										 // Random rotation
+	1.0f,										 // Min scale
+	1.0f,										 // Max scale
+	"Assets/Textures/blood_splash_1.png",   // Texture path
+	false 									     // Is Local Space
+	};
+
+	const ParticlePreset BloodSquirt2 = {
+	ParticleType::BLOOD_SQUIRT_2,
+	false,										 // PlayOnAwake
+	1,											 // Duration (only if one-shot)
+	glm::vec3(1,1,1),   						 // Start color (white)
+	glm::vec3(1,1,1),   						 // End color (white)
+	1.0f,		                     			 // Alpha start
+	1.0f,		                     			 // Alpha end
+	5.0f,		                     			 // Size start
+	5.0f,		                       			 // Size end
+	1,                          				 // Min lifetime
+	1,                         					 // Max lifetime
+	0.0f,                          				 // Min speed
+	0.0f,                          				 // Max speed
+	0.0f,										 // End Speed
+	glm::vec3(0.0f,0.01f,0.0f),	   			 // Gravity (negative for upward)
+	0,                          				 // Rotation speed
+	1.f,                         				 // Emission rate (particles per second)
+	EmitterShape::POINT,            			 // Shape
+	0.2f,                          				 // Cone base radius
+	1.0f,                          				 // Cone height
+	20.0f,                         				 // Cone angle in degrees
+	glm::vec2(335,335),		   					 // Sprite size
+	true,										 // Use animation
+	false,										 // Random animation Index
+	0.04f,										 // Animation speed
+	180.0f,										 // Start rotation
+	false,										 // Random rotation
+	1.0f,										 // Min scale
+	1.0f,										 // Max scale
+	"Assets/Textures/blood_splash_2.png",   // Texture path
+	false 									     // Is Local Space
+	};
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -2195,6 +2297,18 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::BLOOD_THIRST_LOST:
 		preset = ParticlePresets::BloodThirstLost;
+		SetOneShot(false);
+		break;
+	case ParticleType::TERMAGAUNT_SLASH:
+		preset = ParticlePresets::TermagauntSlash;
+		SetOneShot(false);
+		break;
+	case ParticleType::BLOOD_SQUIRT_1:
+		preset = ParticlePresets::BloodSquirt1;
+		SetOneShot(false);
+		break;
+	case ParticleType::BLOOD_SQUIRT_2:
+		preset = ParticlePresets::BloodSquirt2;
 		SetOneShot(false);
 		break;
 	default:

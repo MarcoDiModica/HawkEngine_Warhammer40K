@@ -8624,10 +8624,10 @@ GameObject23:
             - 1225
             - 40
           sprite_offset:
-            - 0
+            - 350
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 2
           anim_index_limit: 6
           color:
             - 1
@@ -16074,7 +16074,7 @@ GameObject30:
 GameObject31:
   name: Empty_1
   prefabPath: ""
-  uuid: 2249193969421033768
+  uuid: 16612300777906961219
   tag: Untagged
   active: true
   isStatic: false
@@ -16083,9 +16083,9 @@ GameObject31:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -26.301054000854492
-        - 11.591452598571777
-        - -4.0680985450744629
+        - -30.792722702026367
+        - 11.941668510437012
+        - -0.73576521873474121
       localRotation:
         - 0
         - -0
@@ -16098,16 +16098,16 @@ GameObject31:
       name: ParticleFX
       enabled: true
       emitterShape: 0
-      emissionRate: 3
-      particlesPerSecond: 3
+      emissionRate: 10
+      particlesPerSecond: 10
       minLifetime: 1
-      maxLifetime: 5
+      maxLifetime: 3
       minSpeed: 1
-      maxSpeed: 1
-      startSize: 0.800000012
-      endSize: 0.300000012
-      minSize: 0.200000003
-      maxSize: 0.200000003
+      maxSpeed: 3
+      startSize: 1
+      endSize: 1
+      minSize: 0
+      maxSize: 0
       startColor:
         - 1
         - 1
@@ -16116,32 +16116,32 @@ GameObject31:
         - 1
         - 1
         - 1
-      startAlpha: 200
-      endAlpha: 200
+      startAlpha: 1
+      endAlpha: 0
       rotationSpeed: 0
       gravity:
         - 0
-        - -20
         - 0
-      shapeParam1: 150
-      shapeParam2: 150
+        - 0
+      shapeParam1: 0.5
+      shapeParam2: 1
       shapeParam3: 0
       isOneShot: false
       isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
-        - 133
-        - 175
-      useAnimation: false
-      animSpeed: 0.100000001
-      startRotation: 180
+        - 128
+        - 137
+      useAnimation: true
+      animSpeed: 0
+      startRotation: 0
       randomRotation: false
       material:
         billboardType: 0
-        particleType: 39
+        particleType: 0
         softness: 0
         useColorGradient: false
-        texturePath: Assets/Textures/dropplet.png
-      particleType: 39
+        texturePath: Assets\Textures\termagaunt_slash.png
+      particleType: 0
   Children: ~

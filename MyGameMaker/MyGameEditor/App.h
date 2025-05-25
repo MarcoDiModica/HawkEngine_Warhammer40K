@@ -105,8 +105,10 @@ public:
 			"Assets/Textures/grenade_shot_smoke_vfx.png",
 			"Assets/Textures/Bullet Eject vfx.png",
 			"Assets/Textures/Red_thirst_lost_vfx.png",
-			"Assets/Textures/leaf3.png"
-
+			"Assets/Textures/leaf3.png",
+			"Assets/Textures/termagaunt_slash.png",
+			"Assets/Textures/blood_splash_1.png",
+			"Assets/Textures/blood_splash_2.png"
 		};
 
 		for (const auto& path : texturePaths) {

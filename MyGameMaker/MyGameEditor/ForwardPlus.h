@@ -74,7 +74,9 @@ public:
 	void SetDirLightFarPlane(float farPlane) { dirFarPlane = farPlane; }
 	void SetDirLightOrthographicBounds(const glm::vec4& bounds) { dirOrthographicBounds = bounds; }
 
+	void CalculateLightSpaceMatrix();
 
+	const glm::mat4& GetLightSpaceMatrix() const { return lightSpaceMatrix; }
 
 private:
 	ForwardPlusLighting() = default;
@@ -109,6 +111,8 @@ private:
 	float dirNearPlane = 1.0f;
 	float dirFarPlane = 100.0f;
 	glm::vec4 dirOrthographicBounds = glm::vec4(-10.0f, 10.0f, -10.0f, 10.0f); // left, right, bottom, top
+
+	glm::mat4 lightSpaceMatrix;
 
 	std::vector<GPUPointLight> pointLights;
 	GPUDirectionalLight directionalLight;

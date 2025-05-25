@@ -159,6 +159,33 @@ void ForwardPlusLighting::UpdateLights() {
 	glNamedBufferSubData(directionalLightBuffer, 0,
 		sizeof(GPUDirectionalLight),
 		&directionalLight);
+
+	CalculateLightSpaceMatrix();
+}
+
+void ForwardPlusLighting::CalculateLightSpaceMatrix() {
+	float near_plane = GetDirLightNearPlane(), far_plane = GetDirLightFarPlane();
+
+	const auto& dirLight = GetDirectionalLight();
+
+	glm::vec3 lightDir = glm::normalize(dirLight.direction);
+	glm::vec3 sceneCenter = glm::vec3(0)/* ForwardPlusLighting::GetInstance().GetDirLightPosition()*/;
+	float lightDistance = GetDirLightDistance();
+
+	glm::vec3 lightPos = GetDirLightPosition();
+
+	float lightortho = lightDistance * 0.5f;
+
+	glm::mat4 lightProjection = glm::ortho(-lightortho, lightortho, -lightortho, lightortho, near_plane, far_plane);
+
+	glm::mat4 lightView = glm::lookAt(
+		lightPos,           // Posici�n de la luz
+		lightPos + lightDir,        // Hacia d�nde mira
+		glm::vec3(0.0f, 1.0f, 0.0f) // Up vector
+	);
+
+	lightSpaceMatrix = lightProjection * lightView;
+
 }
 
 void ForwardPlusLighting::PerformLightCulling(const glm::mat4& viewMatrix, const glm::mat4& projMatrix) {

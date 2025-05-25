@@ -239,34 +239,11 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 		return;
 	}
 
-	float near_plane = ForwardPlusLighting::GetInstance().GetDirLightNearPlane(), far_plane = ForwardPlusLighting::GetInstance().GetDirLightFarPlane();
-
-	const auto& dirLight = ForwardPlusLighting::GetInstance().GetDirectionalLight();
-
-	glm::vec3 lightDir = glm::normalize(dirLight.direction);
-	glm::vec3 sceneCenter = glm::vec3(0)/* ForwardPlusLighting::GetInstance().GetDirLightPosition()*/; 
-	float lightDistance = ForwardPlusLighting::GetInstance().GetDirLightDistance();
-
-	glm::vec3 lightPos = ForwardPlusLighting::GetInstance().GetDirLightPosition();
-
-	float lightortho = lightDistance * 0.5f;
-
-	glm::mat4 lightProjection = glm::ortho(-lightortho, lightortho, -lightortho, lightortho, near_plane, far_plane);
-
-	glm::mat4 lightView = glm::lookAt(
-		lightPos,           // Posici�n de la luz
-		lightPos + lightDir,        // Hacia d�nde mira
-		glm::vec3(0.0f, 1.0f, 0.0f) // Up vector
-	);
-
-	glm::mat4 lightSpaceMatrix = lightProjection * lightView;
-
 	for (const auto& [shaderType, batch] : shaderBatches) {
 		if (shaderType == ShaderType::PBR) {
-			RenderShadowBatch(batch, lightSpaceMatrix, isEditor);
+			RenderShadowBatch(batch, ForwardPlusLighting::GetInstance().GetLightSpaceMatrix(), isEditor);
 		}
 	}
-
 
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
 
@@ -276,7 +253,7 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 			RenderUnlitBatch(batch, viewMatrix, projMatrix);
 			break;
 		case ShaderType::PBR:
-			RenderPBRBatch(batch, viewMatrix, projMatrix, cameraPos, lightSpaceMatrix);
+			RenderPBRBatch(batch, viewMatrix, projMatrix, cameraPos, ForwardPlusLighting::GetInstance().GetLightSpaceMatrix());
 			break;
 		default:
 			LOG(LogType::LOG_WARNING, "Tipo de shader desconocido: %d", (int)shaderType);

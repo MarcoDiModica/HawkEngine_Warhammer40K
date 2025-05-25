@@ -59,10 +59,6 @@ App::App() {
 }
 
 App::~App() {
-	for (auto it = m_modules.rbegin(); it != m_modules.rend(); ++it) {
-		delete* it;
-	}
-	m_modules.clear();
 }
 
 bool App::Awake() {

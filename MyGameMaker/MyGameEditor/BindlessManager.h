@@ -34,6 +34,10 @@ struct GPUMaterial {
 	uint32_t shaderType;
 	float heightScale;         // Scale factor for height map displacement
 	float padding;             // Keep structure aligned
+
+	glm::vec2 spriteOffset;
+	glm::vec2 spriteSize;
+	glm::vec2 sheetSize;
 };
 
 struct GPUMesh {

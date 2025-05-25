@@ -203,6 +203,12 @@ uint64_t CalculateMaterialHash(const Material* material) {
 	hash ^= std::hash<float>{}(material->emissiveColor.b) << 16;
 	hash ^= std::hash<float>{}(material->emissiveIntensity) << 17;
 	hash ^= std::hash<float>{}(material->heightScale) << 18;
+	hash ^= std::hash<float>{}(material->spriteOffset.x) << 21;
+	hash ^= std::hash<float>{}(material->spriteOffset.y) << 22;
+	hash ^= std::hash<float>{}(material->spriteSize.x) << 23;
+	hash ^= std::hash<float>{}(material->spriteSize.y) << 24;
+	hash ^= std::hash<float>{}(material->sheetSize.x) << 25;
+	hash ^= std::hash<float>{}(material->sheetSize.y) << 26;
 
 	if (material->getImage())
 		hash ^= std::hash<unsigned int>{}(material->getImage()->id()) << 9;
@@ -250,6 +256,10 @@ void BindlessManager::SetupGPUMaterial(GPUMaterial& gpuMaterial, const Material*
 
 	gpuMaterial.heightScale = material->heightScale;
 	gpuMaterial.padding = 0.0f;
+
+	gpuMaterial.spriteOffset = material->spriteOffset;
+	gpuMaterial.spriteSize = material->spriteSize;
+	gpuMaterial.sheetSize = material->sheetSize;
 
 	gpuMaterial.shaderType = static_cast<uint32_t>(material->GetShaderType());
 

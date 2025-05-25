@@ -1,9 +1,48 @@
 SceneMetadata:
-  SceneName: DefaultScene
+  SceneName: UITesting
 GameObject0:
+  name: Kevin
+  prefabPath: ""
+  uuid: 7475339824886399718
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 3474915133386946841
+      material:
+        name: ""
+      color:
+        - 1
+        - 1
+        - 1
+      id: 640186649
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject1:
   name: MainCamera
   prefabPath: ""
-  uuid: 1442560812913847998
+  uuid: 15736853499604447315
   tag: Untagged
   active: true
   isStatic: false
@@ -16,7 +55,7 @@ GameObject0:
         - 20
         - -14
       localRotation:
-        - 54.999999735770004
+        - 54.999999253784715
         - -0
         - 0
       localScale:
@@ -33,10 +72,10 @@ GameObject0:
       far_plane: 500
       priority: 1
   Children: ~
-GameObject1:
+GameObject2:
   name: Canvas_LocationSM
   prefabPath: ""
-  uuid: 10991755500577247528
+  uuid: 7768154871578820984
   tag: Untagged
   active: true
   isStatic: false
@@ -81,7 +120,7 @@ GameObject1:
   Children:
     - name: Menu_Image
       prefabPath: ""
-      uuid: 13740665975078586841
+      uuid: 6687027307435464079
       tag: Untagged
       active: true
       isStatic: false
@@ -123,10 +162,11 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          use_animation: true
+          texture_path: Library/Textures/UI/location_sacarium_mortis.png
+          use_animation: false
           sprite_size:
-            - 100
-            - 100
+            - 2560
+            - 1440
           sheet_size:
             - 2560
             - 1440
@@ -134,44 +174,4 @@ GameObject1:
             - 0
             - 0
           anim_speed: 0
-          texture_path: Library/Textures/UI/location_sacarium_mortis.png
       Children: ~
-GameObject2:
-  name: mesh.089
-  prefabPath: ""
-  uuid: 13626571287666391865
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0.00024807715089991689
-        - 1.6976573467254639
-        - 0.040951989591121674
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 0.015062279999256134
-        - 0.015062279999256134
-        - 0.015062279999256134
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2137182048
-      material:
-        name: Low_BSurfaceMesh_BaseColor
-      color:
-        - 1
-        - 1
-        - 1
-      id: 2137182048
-    Shader:
-      name: Shader
-      enabled: true
-  Children: ~

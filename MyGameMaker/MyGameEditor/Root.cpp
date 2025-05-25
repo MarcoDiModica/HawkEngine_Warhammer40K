@@ -62,13 +62,11 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-
 	//resourceManager->LoadResources();
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/lijt.scene");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
 	/*auto env = CreateGameObjectWithPath("Assets/FBX/Level2_Zone1.fbx");
-
 	env->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));*/
 
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
@@ -161,9 +159,9 @@ bool Root::Start()
 	//ParentGameObject(*walkingFX, *player);
 	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 
-	/*auto walkingFX = CreateGameObject("WalkingFX");
-	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
-	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
+	//auto walkingFX = CreateGameObject("WalkingFX");
+	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
+	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 	
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
@@ -283,8 +281,8 @@ bool Root::Start()
 	auto playerMesh19 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
 	playerMesh19->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);*/
 
-	//auto Kevin = CreateCube("Kevin");
-	//Kevin->GetComponent<MeshRenderer>()->GetMaterial()->SetShaderType(ShaderType::UNLIT);
+	auto Kevin = CreateCube("Kevin");
+	Kevin->GetComponent<MeshRenderer>()->GetMaterial()->SetShaderType(ShaderType::UNLIT);
 
 	//particle->ApplyPreset(Particle)
 
@@ -320,22 +318,16 @@ bool Root::Start()
 	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));*/
 
- //	auto objMainCamera = CreateCameraObject("MainCamera");
- //	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
- //	objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
- //	auto camera = objMainCamera->AddComponent<CameraComponent>();
- //	camera->priority = 1;
- //	//objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
- //	mainCamera = objMainCamera;
- //	UpdateCameraPriority();
-
-	//auto light = CreateGameObject("DirectionalLight");
-	//light->GetTransform()->SetPosition(glm::vec3(-20, 10, 0));
-	//auto lightComp = light->AddComponent<LightComponent>();
-	//lightComp->SetLightType(LightType::DIRECTIONAL);
-
-	//auto light2 = CreateGameObject("PointLight");
-	//auto lightComp2 = light2->AddComponent<LightComponent>();
+ 	auto objMainCamera = CreateCameraObject("MainCamera");
+ 	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+ 	objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
+ 	auto camera = objMainCamera->AddComponent<CameraComponent>();
+ 	camera->priority = 1;
+ 	//objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+ 	mainCamera = objMainCamera;
+ 	UpdateCameraPriority();
+	
+	CreateLocationSM();
 
 	//particle->ApplyPreset(Particle)
 

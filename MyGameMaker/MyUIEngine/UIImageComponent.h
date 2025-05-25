@@ -7,6 +7,8 @@
 #include <yaml-cpp/yaml.h>
 
 #include <string>
+#include "MyGameEngine/Material.h"
+#include "MyGameEditor/BindlessManager.h"
 
 class UIImageComponent : public Component
 {
@@ -46,8 +48,8 @@ public:
 	void SetColor(const glm::vec4& color) { this->color = color; }
 	glm::vec4 GetColor() const { return color; }
 
-	void SetSpriteSize(const glm::vec2& size) { spriteSize = size; }
-	glm::vec2 GetSpriteSize() const { return spriteSize; }
+	void SetSpriteSize(const glm::vec2& size) { material->spriteSize = size; }
+	glm::vec2 GetSpriteSize() const { return material->spriteSize; }
 
 	void SetAnimSpeed(float speed) { animSpeed = speed; }
 	float GetAnimSpeed() const { return animSpeed; }
@@ -67,19 +69,23 @@ public:
 
 	void SetAnimationIndex(int index) { animIndex = index; }
 
+	glm::mat4 GetModelMatrix() const { return modelMatrix; }
+
+	std::shared_ptr<Mesh> GetMesh() const { return mesh; }
+	std::shared_ptr<Material> GetMaterial() const { return material; }
+
 private:
 	//texture
 	std::string texturePath;
+	std::shared_ptr<Material> material;
 	std::shared_ptr<Image> texture;
 	std::shared_ptr<Mesh> mesh;
 	glm::vec4 color = glm::vec4(1.0f);
 	Shaders * shader;
 	glm::mat4 projection;
+	glm::mat4 modelMatrix;
 
 	bool useAnimation = false;
-	glm::vec2 spriteSize = glm::vec2(0.0f, 0.0f);
-	glm::vec2 sheetSize = glm::vec2(0.0f, 0.0f);
-	glm::vec2 spriteOffset = glm::vec2(0.0f, 0.0f);
 	float indexTimer = 0.0f;
 	float animSpeed = 0.0f;
 	int animIndex = 0;
@@ -95,15 +101,15 @@ protected:
     YAML::Node encode() override {  
        YAML::Node node = Component::encode();  
 
-       node["texture_path"] = texture->image_path;  
        node["use_animation"] = useAnimation;  
-       node["sprite_size"] = std::vector<float>{spriteSize.x, spriteSize.y};  
-       node["sheet_size"] = std::vector<float>{sheetSize.x, sheetSize.y};  
-       node["sprite_offset"] = std::vector<float>{spriteOffset.x, spriteOffset.y};  
-       node["anim_speed"] = animSpeed;  
+       node["sprite_size"] = std::vector<float>{ material->spriteSize.x, material->spriteSize.y};
+       node["sheet_size"] = std::vector<float>{ material->sheetSize.x, material->sheetSize.y};
+       node["sprite_offset"] = std::vector<float>{ material->spriteOffset.x, material->spriteOffset.y};
+       node["anim_speed"] = animSpeed;
 
-       /*node["shader"] = shader;*/  
-       /*node["mesh"] = mesh;*/  
+	   if (texture) {
+		   node["texture_path"] = texturePath;
+	   }
 
        return node;  
     }  
@@ -112,26 +118,40 @@ protected:
 		if (!Component::decode(node)) {
 			return false;
 		}
-		
-       std::string path = node["texture_path"].as<std::string>();  
-       useAnimation = node["use_animation"].as<bool>();  
 
-       auto spriteSizeVec = node["sprite_size"].as<std::vector<float>>();  
-       spriteSize = glm::vec2(spriteSizeVec[0], spriteSizeVec[1]);  
+		if (node["texture_path"]) {
+			texturePath = node["texture_path"].as<std::string>();
+			SetTexture(texturePath);
+		}
 
-       auto sheetSizeVec = node["sheet_size"].as<std::vector<float>>();  
-       sheetSize = glm::vec2(sheetSizeVec[0], sheetSizeVec[1]);  
+		useAnimation = node["use_animation"].as<bool>();
 
-       auto spriteOffsetVec = node["sprite_offset"].as<std::vector<float>>();  
-       spriteOffset = glm::vec2(spriteOffsetVec[0], spriteOffsetVec[1]);  
+		if (node["sprite_size"]) {
+			auto spriteSizeVec = node["sprite_size"].as<std::vector<float>>();
+			material->spriteSize = glm::vec2(spriteSizeVec[0], spriteSizeVec[1]);
+		}
 
-       animSpeed = node["anim_speed"].as<float>();  
-       SetTexture(path);  
+		if (node["sheet_size"]) {
+			auto sheetSizeVec = node["sheet_size"].as<std::vector<float>>();
+			material->sheetSize = glm::vec2(sheetSizeVec[0], sheetSizeVec[1]);
+		}
 
-       /*shader = node["shader"].as<Shaders*>();*/  
-       /*mesh = node["mesh"].as<std::shared_ptr<Mesh>>();*/  
+		if (node["sprite_offset"]) {
+			auto spriteOffsetVec = node["sprite_offset"].as<std::vector<float>>();
+			material->spriteOffset = glm::vec2(spriteOffsetVec[0], spriteOffsetVec[1]);
+		}
 
-       return true;  
+		if (node["anim_speed"]) {
+			animSpeed = node["anim_speed"].as<float>();
+		}
+
+		if (mesh) {
+			LoadMesh();
+		}
+
+		BindlessManager::GetInstance().RegisterMaterial(material.get());
+
+		return true;
     }
 };
 

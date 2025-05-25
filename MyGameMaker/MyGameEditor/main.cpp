@@ -68,6 +68,7 @@
 #include "ForwardPlus.h"
 #include "GPUDrivenRenderer.h"
 #include "MyAudioEngine/AudioManager.h"
+#include "MyUIEngine/UIImageComponent.h"
 
 using namespace std;
 
@@ -617,10 +618,6 @@ static void RenderEditor() {
 		if (object->IsActive()) {
 			object->Update(static_cast<float>(Application->GetDt()));
 
-			if (object->HasComponent<UICanvasComponent>()) {
-				continue;
-			}
-
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
 
@@ -639,6 +636,11 @@ static void RenderEditor() {
 
 				return;
 			}
+
+			// omit UI elements from rendering on this framebuffer
+			/*if (object->HasComponent<UICanvasComponent>() || object->HasComponent<UIImageComponent>()) {
+				continue;
+			}*/
 
 			glm::mat4 viewMatrix = Application->camera->view();
 			glm::mat4 projMatrix = Application->camera->projection();
@@ -888,17 +890,11 @@ static void GameRelease() {
 
 	RenderManager::GetInstance().BeginFrame();
 
-	std::vector<std::shared_ptr<GameObject>> UI;
 	std::vector<GameObject*> objects;
 	auto activeScene = Application->root->GetActiveScene();
 
 	if (activeScene) {
 		for (auto& object : activeScene->children()) {
-			if (object->HasComponent<UICanvasComponent>()) {
-				UI.push_back(object);
-				continue;
-			}
-
 			if (object->IsActive()) {
 				objects.push_back(object.get());
 				object->Update(static_cast<float>(Application->GetDt()));
@@ -950,12 +946,6 @@ static void GameRelease() {
 		glBlitFramebuffer(0, 0, currentWidth, currentHeight,
 			0, 0, currentWidth, currentHeight,
 			GL_COLOR_BUFFER_BIT, GL_NEAREST);
-	}
-
-	for (const auto& i : UI) {
-		if (i->IsActive()) {
-			i->Update(static_cast<float>(Application->GetDt()));
-		}
 	}
 
 	glUseProgram(lastProgram);

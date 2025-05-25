@@ -6,6 +6,9 @@
 #include "../MyGameEngine/LightComponent.h"
 #include "../MyGameEngine/ShaderManager.h"
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
+#include "MyUIEngine/UICanvasComponent.h"
+#include "MyUIEngine/UIImageComponent.h"
+#include "MyUIEngine/UITransformComponent.h"
 
 RenderManager& RenderManager::GetInstance() {
 	static RenderManager instance;
@@ -43,7 +46,7 @@ bool RenderManager::Initialize() {
 	}
 
 	if (!ForwardPlusLighting::GetInstance().Initialize(windowWidth, windowHeight)) {
-		LOG(LogType::LOG_WARNING, "Warning: No se pudo inicializar ForwardPlusLighting, se utilizará forward rendering estándar");
+		LOG(LogType::LOG_WARNING, "Warning: No se pudo inicializar ForwardPlusLighting, se utilizarï¿½ forward rendering estï¿½ndar");
 		useForwardPlus = false;
 	}
 
@@ -262,6 +265,36 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 				MeshMaterialKey key{ meshIndex, materialIndex };
 
 				instanceGroups[key].push_back(instance);
+			}
+		}
+	}
+
+	if (gameObject->HasComponent<UIImageComponent>()) {
+		auto image = gameObject->GetComponent<UIImageComponent>();
+		if (image) {
+			glm::mat4 modelMatrix = image->GetModelMatrix();
+
+			auto mesh = image->GetMesh();
+			auto material = image->GetMaterial();
+
+			if (mesh && material) {
+				uint32_t meshIndex = BindlessManager::GetInstance().RegisterMesh(mesh.get());
+				uint32_t materialIndex = BindlessManager::GetInstance().RegisterMaterial(material.get());
+
+				if (meshIndex != UINT32_MAX && materialIndex != UINT32_MAX) {
+					GPUInstance instance;
+					instance.modelMatrix = modelMatrix;
+					instance.prevModelMatrix = modelMatrix;
+					instance.objectData = glm::vec4(1.0f);
+					instance.meshIndex = meshIndex;
+					instance.materialIndex = materialIndex;
+					instance.objectId = gameObject->GetID().GetValue();
+					instance.flags = 0;
+
+					MeshMaterialKey key{ meshIndex, materialIndex };
+
+					instanceGroups[key].push_back(instance);
+				}
 			}
 		}
 	}

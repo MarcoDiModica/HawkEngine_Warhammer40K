@@ -60,7 +60,10 @@ struct GPUInstance {
 	uint32_t objectId;
 	uint32_t flags;
 	glm::mat4 boneMatrices[200];
-};
+	};
+
+//int isAnimated;
+
 
 class BindlessManager {
 public:

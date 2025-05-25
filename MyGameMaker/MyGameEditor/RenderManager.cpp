@@ -249,11 +249,13 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 				instance.materialIndex = materialIndex;
 				instance.objectId = gameObject->GetID().GetValue();
 				instance.flags = 0;
-
+				//instance.isAnimated = false;
+				
 				if (gameObject->HasComponent<SkeletalAnimationComponent>()) 
 				{
+				//	instance.isAnimated = true;
 					for (int i = 0; i < MAX_BONES; ++i) {
-						//instance.boneMatrices[i] = gameObject->GetComponent<SkeletalAnimationComponent>()->GetAnimator()->GetFinalBoneMatrices().at(i);
+						instance.boneMatrices[i] = gameObject->GetComponent<SkeletalAnimationComponent>()->GetAnimator()->GetFinalBoneMatrices().at(i);
 					}
 				}
 

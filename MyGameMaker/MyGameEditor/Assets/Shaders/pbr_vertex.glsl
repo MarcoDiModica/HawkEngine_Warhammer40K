@@ -34,7 +34,6 @@ uniform float heightScale;
 uniform int u_HasHeightMap;
 uniform sampler2D heightMap;
 uniform mat4 lightSpaceMatrix;
-uniform int isAnimated;
 
 out VS_OUT {
     vec3 FragPos;
@@ -55,18 +54,17 @@ void main() {
     vec4 tPos = vec4(position, 1.0);
     vec3 tNormal = normal;
 
-   // if (isAnimated == 1)
-    //{
+    
         // Apply bone transformations to the position
-    //    mat4 BoneTransform = data.boneMatrices[boneIds[0]] * weights[0];
-      //  BoneTransform += data.boneMatrices[boneIds[1]] * weights[1];
-        //BoneTransform += data.boneMatrices[boneIds[2]] * weights[2];
-        //BoneTransform += data.boneMatrices[boneIds[3]] * weights[3];
-        //tPos = BoneTransform * vec4(position, 1.0);
+        mat4 BoneTransform = data.boneMatrices[boneIds[0]] * weights[0];
+        BoneTransform += data.boneMatrices[boneIds[1]] * weights[1];
+        BoneTransform += data.boneMatrices[boneIds[2]] * weights[2];
+        BoneTransform += data.boneMatrices[boneIds[3]] * weights[3];
+        tPos = BoneTransform * vec4(position, 1.0);
 
         // Apply bone transformations to the normal
-      //  tNormal = mat3(BoneTransform) * normal;
-    //}
+        tNormal = mat3(BoneTransform) * normal;
+    
 
 
     vs_out.TexCoord = texCoord;

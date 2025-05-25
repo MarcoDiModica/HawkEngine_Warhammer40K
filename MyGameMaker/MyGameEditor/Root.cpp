@@ -68,6 +68,7 @@ bool Root::Start()
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
 
 	auto env = CreateGameObjectWithPath("Assets/FBX/Level2_Zone1.fbx");
+
 	env->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
@@ -129,11 +130,11 @@ bool Root::Start()
 	//player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
 	//player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
 	//
-	//auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
-	//playerMesh->SetName("playerMesh");
-	//playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	//playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	//playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
+	playerMesh->SetName("playerMesh");
+	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//ParentGameObject(*playerMesh, *player);
 	//playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
 	//player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);

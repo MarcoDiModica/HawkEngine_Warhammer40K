@@ -122,6 +122,13 @@ public:
     bool Initialize() override;
 };
 
+class UIShader : public Shaders {
+    public:
+    UIShader();
+    ShaderType GetShaderType() const override { return ShaderType::UI; }
+    bool Initialize() override;
+};
+
 class ForwardPlusComputeShader : public Shaders {
 public:
     ForwardPlusComputeShader();

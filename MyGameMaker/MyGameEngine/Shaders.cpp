@@ -477,6 +477,13 @@ bool PBRShader::Initialize() {
 	return LoadShaders("Assets/Shaders/pbr_vertex.glsl", "Assets/Shaders/pbr_fragment.glsl");
 }
 
+UIShader::UIShader() {
+}
+
+bool UIShader::Initialize() {
+	return LoadShaders("Assets/Shaders/ui_vertex.glsl", "Assets/Shaders/ui_fragment.glsl");
+}
+
 ForwardPlusComputeShader::ForwardPlusComputeShader() {
 }
 

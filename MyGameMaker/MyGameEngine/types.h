@@ -54,14 +54,13 @@ enum class ShaderType {
 	UNLIT = 0,
 	PBR = 1,
 	PARTICLE = 2,
-	BINDLESS_PBR = 3,
-	BINDLESS_UNLIT = 4,
+	UI = 3,
+    DEPTH = 4,
 	FORWARD_PLUS_COMPUTE = 5,
 	CULLING_COMPUTE = 6,
 	DEBUG = 7,
 	UTILITY = 8,
-	DEPTH = 9,
-	CUSTOM = 10
+    CUSTOM = 9
 };
 
 

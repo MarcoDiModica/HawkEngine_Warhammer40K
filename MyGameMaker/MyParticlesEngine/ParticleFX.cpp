@@ -1309,6 +1309,39 @@ namespace ParticlePresets {
 		"Assets/Textures/niebla30Frames.png", 	   // Texture path
 		true 						   // Is Local Space
 	};
+	const ParticlePreset EnvironmentCinder = {
+		ParticleType::ENVIRONMENT_CINDER,
+		false,						   // PlayOnAwake
+		0,						   // Duration (only if one-shot)
+		glm::vec3(255 / 255.0f,107 / 255.0f,0.0f),   				   // Start color (white)
+		glm::vec3(58 / 255.0f,58 / 255.0f,58 / 255.0f),   				   // End color (white)
+		20.0f,                          			   // Alpha start
+		50.0f,                          			   // Alpha end
+		0.01f,                          			   // Size start
+		0.2f,                          		   // Size end
+		15,                          			   // Min lifetime
+		40,                         			   // Max lifetime
+		1.0f,                          			   // Min speed
+		1.0f,                          			   // Max speed
+		1.0f,						   // End Speed
+		glm::vec3(0.0f,0.0f,0.0f),	   		   // Gravity (negative for upward)
+		1,                          			   // Rotation speed
+		300.0f,                         			   // Emission rate (particles per second)
+		EmitterShape::BOX,            		   // Shape
+		150.0f,                          			   // Cone base radius
+		150.0f,                          			   // Cone height
+		0.0f,                         			   // Cone angle in degrees
+		glm::vec2(70,80),		   	   // Sprite size
+		false,						   // Use animation
+		false,						   // Random animation Index
+		0.1f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		0.2f,						   // Min scale
+		0.2f,						   // Max scale
+		"Assets/Textures/rock.png", // Texture path
+		true 						   // Is Local Space
+	};
 
 }
 
@@ -1891,7 +1924,10 @@ void ParticleFX::ApplyPreset(int particleID) {
 		preset = ParticlePresets::DashReady;
 		SetOneShot(false);
 		break;
-
+	case ParticleType::ENVIRONMENT_CINDER:
+		preset = ParticlePresets::EnvironmentCinder;
+		SetOneShot(false);
+		break;
 	default:
 		preset = ParticlePresets::Medicae_Stim;
 		SetOneShot(false);

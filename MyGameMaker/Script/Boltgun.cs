@@ -9,6 +9,7 @@ public class Boltgun : BaseWeapon
     public ArcSnare arcSnare;
     private PlayerController playerController;
     public PlayerData playerData;
+    public PlayerInput playerInput;
 
     private const string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/Boltgun_hit_enviroment.wav";
     private const string boltgunShotEnemy = "Assets/Audio/SFX/Weapons/Boltgun/Boltgun_hit_enemy.wav";
@@ -50,6 +51,7 @@ public class Boltgun : BaseWeapon
         timeToLerp = 0.2f;
         ammoType = AmmoType.BOLTGUN;
         transform = gameObject.GetComponent<Transform>();
+        playerInput = gameObject.GetComponent<PlayerInput>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
         arcSnare = gameObject.GetComponent<ArcSnare>();
         playerController = gameObject.GetComponent<PlayerController>();
@@ -241,7 +243,15 @@ public class Boltgun : BaseWeapon
                                   (transform.forward * localOffset.Z);
             bulletStart.Y += 0.5f;
 
-            Vector3 direction = Vector3.Normalize(transform.forward);
+            Vector3 direction;
+            if (playerInput.GetCurrentLookDirection() != Vector3.Zero)
+            {
+                direction = Vector3.Normalize(playerInput.GetCurrentLookDirection());
+            }
+            else
+            {
+                direction = Vector3.Normalize(transform.forward);
+            }
 
             float yaw = (float)(Math.Atan2(direction.X, direction.Z) * (180.0 / Math.PI));
             float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));

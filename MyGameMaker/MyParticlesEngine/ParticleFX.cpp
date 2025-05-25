@@ -1309,6 +1309,7 @@ namespace ParticlePresets {
 		"Assets/Textures/niebla30Frames.png", 	   // Texture path
 		true 						   // Is Local Space
 	};
+
 	const ParticlePreset EnvironmentCinder = {
 		ParticleType::ENVIRONMENT_CINDER,
 		false,						   // PlayOnAwake
@@ -1341,6 +1342,111 @@ namespace ParticlePresets {
 		0.2f,						   // Max scale
 		"Assets/Textures/rock.png", // Texture path
 		true 						   // Is Local Space
+	};
+
+
+	const ParticlePreset EnviromentDrippingWater = {
+		ParticleType::Enviroment_Dripping_Water,
+		true,											 // PlayOnAwake
+		0,												 // Duration (only if one-shot)
+		glm::vec3(1/1/1),							   	 // Start color (white)
+		glm::vec3(1 / 1 / 1),							 // End color (white)
+		0.8f,                          					 // Alpha start
+		0.8f,                          					 // Alpha end
+		0.8f,                          			         // Size start
+		0.3f,                          					 // Size end
+		1,                          				     // Min lifetime
+		5,                         			   		     // Max lifetime
+		1.0f,                          				     // Min speed
+		1.0f,                          				     // Max speed
+		1.0f,											 // End Speed
+		glm::vec3(0.0f,-20.0f,0.0f),	   				 // Gravity (negative for upward)
+		0,                          					 // Rotation speed
+		3.0f,                         			         // Emission rate (particles per second)
+		EmitterShape::POINT,            				 // Shape
+		150.0f,                          				 // Cone base radius
+		150.0f,                          				 // Cone height
+		0.0f,                         					 // Cone angle in degrees
+		glm::vec2(72,91),		   						 // Sprite size
+		false,											 // Use animation
+		false,											 // Random animation Index
+		0.1f,											 // Animation speed
+		180.0f,											 // Start rotation
+		false,											 // Random rotation
+		0.8f,                          			         // Size start
+		0.3f,  											 // Max scale
+		"Assets/Textures/dropplet.png",					 // Texture path
+		true 											 // Is Local Space
+	};
+
+
+	const ParticlePreset EnviromentGrass = {
+		ParticleType::Enviroment_Grass,
+		false,											 // PlayOnAwake
+		1,												 // Duration (only if one-shot)
+		glm::vec3(1 / 1 / 1),							 // Start color (white)
+		glm::vec3(1 / 1 / 1),							 // End color (white)
+		1.0f,                          					 // Alpha start
+		0.65f,                          				 // Alpha end
+		0.8f,                          			         // Size start
+		0.3f,                          					 // Size end
+		1,                          				     // Min lifetime
+		5,                         			   		     // Max lifetime
+		1.0f,                          				     // Min speed
+		1.0f,                          				     // Max speed
+		1.0f,											 // End Speed
+		glm::vec3(0.0f,0.01f,0.0f),	   				 // Gravity (negative for upward)
+		0,                          					 // Rotation speed
+		2.0f,                         			         // Emission rate (particles per second)
+		EmitterShape::POINT,            				 // Shape
+		150.0f,                          				 // Cone base radius
+		150.0f,                          				 // Cone height
+		0.0f,                         					 // Cone angle in degrees
+		glm::vec2(72,91),		   						 // Sprite size
+		false,											 // Use animation
+		false,											 // Random animation Index
+		0.1f,											 // Animation speed
+		180.0f,											 // Start rotation
+		true,											 // Random rotation
+		0.5f,                          			         // Size start
+		0.5f,  											 // Max scale
+		"Assets/Textures/leaf3.png",					 // Texture path
+		true 											 // Is Local Space
+	};
+
+
+	const ParticlePreset EnviromentLeaves = {
+		ParticleType::Enviroment_Leaves,
+		true,											 // PlayOnAwake
+		1,												 // Duration (only if one-shot)
+		glm::vec3(1 / 1 / 1),							 // Start color (white)
+		glm::vec3(1 / 1 / 1),							 // End color (white)
+		0.4f,                          					 // Alpha start
+		0.4f,                          					 // Alpha end
+		1.0f,                          			         // Size start
+		1.0f,                          					 // Size end
+		2,                          				     // Min lifetime
+		5,                         			   		     // Max lifetime
+		1.0f,                          				     // Min speed
+		1.0f,                          				     // Max speed
+		1.0f,											 // End Speed
+		glm::vec3(5.0f,-5.0f,5.0f),	   					 // Gravity (negative for upward)
+		1.5f,                          					 // Rotation speed
+		2.0f,                         			         // Emission rate (particles per second)
+		EmitterShape::POINT,            				 // Shape
+		150.0f,                          				 // Cone base radius
+		150.0f,                          				 // Cone height
+		0.0f,                         					 // Cone angle in degrees
+		glm::vec2(200,200),		   						 // Sprite size
+		false,											 // Use animation
+		false,											 // Random animation Index
+		0.1f,											 // Animation speed
+		0.0f,											 // Start rotation
+		true,											 // Random rotation
+		1.0f,                          			         // Size start
+		1.0f,  											 // Max scale
+		"Assets/Textures/leaf3.png",					 // Texture path
+		true 											 // Is Local Space
 	};
 
 }
@@ -1926,6 +2032,18 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::ENVIRONMENT_CINDER:
 		preset = ParticlePresets::EnvironmentCinder;
+		SetOneShot(false);
+		break;
+	case ParticleType::Enviroment_Dripping_Water:
+		preset = ParticlePresets::EnviromentDrippingWater;
+		SetOneShot(false);
+		break;
+	case ParticleType::Enviroment_Grass:
+		preset = ParticlePresets::EnviromentGrass;
+		SetOneShot(false);
+		break;
+	case ParticleType::Enviroment_Leaves:
+		preset = ParticlePresets::EnviromentLeaves;
 		SetOneShot(false);
 		break;
 	default:

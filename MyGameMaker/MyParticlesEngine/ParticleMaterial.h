@@ -49,9 +49,12 @@ enum class ParticleType {
     MAWLOC_SWIPE = 36,
     // Player / Weapons
 	DASH_READY = 37,
-	ENVIRONMENT_CINDER = 38
+	ENVIRONMENT_CINDER = 38,
     // ACID_ATK_EXPLODE can use the same vfx structure as ACID_ATK with different texture
     // PowerUps
+	Enviroment_Dripping_Water = 39,
+	Enviroment_Grass = 40,
+	Enviroment_Leaves = 41
 
 };
 

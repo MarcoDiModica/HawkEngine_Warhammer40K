@@ -100,7 +100,8 @@ public:
 			"Assets/Textures/niebla30Frames.png",
 			"Assets/Textures/LictorSlashSpritesheetv6.png",
 			"Assets/Textures/Lictor-blood.png",
-			"Assets/Textures/MawlocSlashSpritesheet.png"
+			"Assets/Textures/MawlocSlashSpritesheet.png",
+			"Assets/Textures/leaf3.png"
 
 		};
 

@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
     public GameObject aimLaser;
     public GameObject aimLaserEnd;
     private Transform transform;
-    private float dashEndTimer = 0.25f;
+    private float dashEndTimer = 0.15f;
 
     private bool componentsInitialized = false;
     private bool effectsInitialized = false;
@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
             frameCounter++;
             if (frameCounter == 2)
             {
-                rb?.SetMass(1000.0f); 
+                rb?.SetMass(100.0f); 
             }
         }
         
@@ -668,7 +668,7 @@ public class PlayerController : MonoBehaviour
 
                 TransitionFromDashState();
                 isDashing = false;
-                dashEndTimer = 0.25f;
+                dashEndTimer = 0.15f;
             }
         }
     }

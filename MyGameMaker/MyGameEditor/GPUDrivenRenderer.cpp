@@ -9,7 +9,6 @@
 #include "App.h"
 #include "UISceneWindow.h"
 #include "MyGUI.h"
-#include "UIGameView.h"
 
 GPUDrivenRenderer& GPUDrivenRenderer::GetInstance() {
 	static GPUDrivenRenderer instance;
@@ -229,7 +228,6 @@ void GPUDrivenRenderer::BatchCommandsByShaderType() {
 		switch (type) {
 		case ShaderType::PBR: shaderName = "PBR"; break;
 		case ShaderType::UNLIT: shaderName = "UNLIT"; break;
-		case ShaderType::UI: shaderName = "UI"; break;
 		default: shaderName = "DESCONOCIDO";
 		}
 	}
@@ -263,12 +261,7 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 		}
 	}
 
-    auto it = shaderBatches.find(ShaderType::UI);
-    if (it != shaderBatches.end()) {
-        RenderUIBatch(it->second, viewMatrix, projMatrix);
-    }
-
-    glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
+	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
 }
 
 void GPUDrivenRenderer::RenderShadowBatch(const ShaderBatch& batch, glm::mat4 lightSpaceMatrix, bool isEditor)
@@ -549,102 +542,6 @@ void GPUDrivenRenderer::RenderPBRBatch(
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	shader->UnBind();
-}
-
-void GPUDrivenRenderer::RenderUIBatch(const ShaderBatch& batch, const glm::mat4& viewMatrix, const glm::mat4& projMatrix)
-{
-	if (batch.commands.empty()) return;
-
-	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::UI);
-	if (!shader) {
-		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader UI");
-		return;
-	}
-
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	shader->Bind();
-
-	glm::mat4 uiViewMatrix = glm::mat4(1.0f);
-	shader->SetUniformMat4("view", uiViewMatrix);
-
-	glm::mat4 uiProjection;
-	float width = 0, height = 0;
-
-#ifdef _BUILD
-	width = Application->window->width();
-	height = Application->window->height();
-#else
-	width = Application->gui->UIGameViewPanel->GetWidth();
-	height = Application->gui->UIGameViewPanel->GetHeight();
-#endif
-
-	uiProjection = glm::ortho(
-		0.0f, width,
-		height, 0.0f,
-		-1.0f, 1.0f
-	);
-
-	shader->SetUniformMat4("projection", uiProjection);
-
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
-
-	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
-		uint32_t meshIndex = batch.meshIndices[i];
-		uint32_t materialIndex = batch.materialIndices[i];
-
-		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
-		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
-
-		if (!meshData || !materialData) continue;
-
-		shader->SetUniformVec4("modColor", materialData->albedoColor);
-
-		if (materialData->flags & (1 << 0)) {
-			shader->SetUniform("u_HasTexture", 1);
-			GLuint textureID = 0;
-			if (BindlessManager::GetInstance().GetTextureIDFromHandle(materialData->albedoTexture, textureID)) {
-				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, textureID);
-				shader->SetUniform("texture1", 0);
-			}
-		}
-		else {
-			shader->SetUniform("u_HasTexture", 0);
-		}
-
-		shader->SetUniformVec2("SpriteOffset", materialData->spriteOffset);
-		shader->SetUniformVec2("SpriteSize", materialData->spriteSize);
-		shader->SetUniformVec2("SheetSize", materialData->sheetSize);
-
-		glBindVertexArray(meshData->vertexArray);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
-
-		if (i < batch.commands.size()) {
-			const DrawElementsCommand& cmd = batch.commands[i];
-			shader->SetUniform("instanceOffset", (int)cmd.baseInstance);
-
-			glDrawElementsInstanced(
-				GL_TRIANGLES,
-				cmd.count,
-				GL_UNSIGNED_INT,
-				nullptr,
-				cmd.instanceCount
-			);
-		}
-	}
-
-	glBindVertexArray(0);
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	shader->UnBind();
-
-	glEnable(GL_CULL_FACE);
-	glEnable(GL_DEPTH_TEST);
 }
 
 void GPUDrivenRenderer::HandleTextureBindings(Shaders* shader, const char* textureName, const char* hasTextureName, GLuint64 textureHandle) {

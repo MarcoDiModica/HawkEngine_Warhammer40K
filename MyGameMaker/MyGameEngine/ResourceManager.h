@@ -90,8 +90,6 @@ public:
 		materialIndex.clear();
 	}
 
-	const std::vector<std::shared_ptr<Material>>& GetAllMaterials() const { return materials; }
-
 	//images
 	std::shared_ptr<Image> AddImage(std::shared_ptr<Image> image) {
 		if (imageIndex.find(image->image_name) != imageIndex.end()) {

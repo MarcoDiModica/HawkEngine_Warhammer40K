@@ -10,14 +10,10 @@
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
 #include "../MyGameEngine/ShaderManager.h"
-#include "MyGameEditor/BindlessManager.h"
 
-UIImageComponent::UIImageComponent(GameObject* owner)
-	: Component(owner), projection(glm::mat4(1.0f)), shader(nullptr) 
+UIImageComponent::UIImageComponent(GameObject* owner) : Component(owner)
 {
 	name = "UIImageComponent";
-	material = std::make_shared<Material>();
-	material->SetShaderType(ShaderType::UI);
 }
 
 void UIImageComponent::Awake()
@@ -27,7 +23,7 @@ void UIImageComponent::Awake()
 
 void UIImageComponent::Start()
 {
-	material->SetColor(color);
+	
 }
 
 int CalculateMaxIndex(const glm::vec2& sheetSize, const glm::vec2& spriteSize) {
@@ -46,33 +42,27 @@ glm::vec2 CalculateSpriteOffset(int index, const glm::vec2& sheetSize, const glm
 	float offsetX = currentColumn * spriteSize.x;
 	float offsetY = currentRow * spriteSize.y;
 
-	return {offsetX, offsetY};
+	return glm::vec2(offsetX, offsetY);
 }
 
 void UIImageComponent::Update(float deltaTime)
 {
-	if (!enabled) {
-		LOG(LogType::LOG_INFO, "UIImageComponent is disabled.");
-		return;
-	}
+	if (!enabled) return;
+	if (shader == nullptr) return;
 
 	auto uiTransform = owner->GetComponent<UITransformComponent>();
-	if (!uiTransform) {
-		LOG(LogType::LOG_ERROR, "UITransformComponent not found on owner GameObject.");
-		return;
-	}
 
-	if (!uiTransform->GetResised() && uiTransform->GetCanvasSize().x > 0)
+	if (!uiTransform->GetResised() && uiTransform->GetCanvasSize().x > 0) 
 	{
 		float scaleX = 1.0f;
 		float scaleY = 1.0f;
 
-		if (material->imagePtr->width() < uiTransform->GetCanvasSize().x) {
-			scaleX = (material->imagePtr->width() / uiTransform->GetCanvasSize().x);
+		if (texture->width() < uiTransform->GetCanvasSize().x) {
+			scaleX = (texture->width() / uiTransform->GetCanvasSize().x);
 		}
 
-		if (material->imagePtr->height() < uiTransform->GetCanvasSize().y) {
-			scaleY = (material->imagePtr->height() / uiTransform->GetCanvasSize().y);
+		if (texture->height() < uiTransform->GetCanvasSize().y) {
+			scaleY = (texture->height() / uiTransform->GetCanvasSize().y);
 		}
 
 		auto scale = uiTransform->GetScale();
@@ -80,13 +70,15 @@ void UIImageComponent::Update(float deltaTime)
 		uiTransform->SetResized(true);
 	}
 
-	if (useAnimation && material->sheetSize != glm::vec2(0, 0))
+	shader->Bind();
+
+	if (useAnimation && sheetSize != glm::vec2(0, 0))
 	{
 		indexTimer += deltaTime;
 
 		if (indexTimer >= animSpeed)
 		{
-			if (animationNum == 0)
+			if (animationNum == 0) 
 			{
 				if (animIndex >= anim1IndexLimit - 1)
 				{
@@ -95,17 +87,18 @@ void UIImageComponent::Update(float deltaTime)
 				}
 				else
 				{
-					if (playAnimation)
+					if (playAnimation) 
 					{
 						animIndex++;
 					}
+					
 				}
 			}
 			else if (animationNum == 1)
 			{
-				if (animIndex >= CalculateMaxIndex(material->sheetSize, material->spriteSize))
+				if (animIndex >= CalculateMaxIndex(sheetSize, spriteSize))
 				{
-					animIndex = anim1IndexLimit + 1;
+					animIndex = anim1IndexLimit+ 1;
 					indexTimer = 0;
 				}
 				else
@@ -116,16 +109,31 @@ void UIImageComponent::Update(float deltaTime)
 					}
 				}
 			}
-
+			
 			indexTimer = 0.0f;
-			material->spriteOffset = CalculateSpriteOffset(animIndex, material->sheetSize, material->spriteSize);
+			spriteOffset = CalculateSpriteOffset(animIndex, sheetSize, spriteSize);
+
 		}
 	}
 	else
 	{
-		material->spriteOffset = glm::vec2(0.0f, 0.0f);
-		material->spriteSize = material->sheetSize;
+		spriteOffset = glm::vec2(0.0f, 0.0f);
+		spriteSize = sheetSize;
 	}
+
+	if (!texture->image_path.empty()) {
+		texture->bind();
+		shader->SetUniform("u_HasTexture", true);
+		shader->SetUniform("texture1", 0);
+		shader->SetUniformVec2("SpriteSize", spriteSize);
+		shader->SetUniformVec2("SpriteOffset", spriteOffset);
+		shader->SetUniformVec2("SheetSize", sheetSize);
+	}
+	else {
+		shader->SetUniform("u_HasTexture", false);
+	}
+
+	glm::mat4 viewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
 
 	glm::vec3 scale = uiTransform->GetScale() * uiTransform->GetCanvasSize();
 	glm::vec3 translation = uiTransform->GetCanvasPosition() + (uiTransform->GetPosition() * uiTransform->GetCanvasSize());
@@ -133,15 +141,31 @@ void UIImageComponent::Update(float deltaTime)
 
 	translation -= uiTransform->GetPivotOffset() * scale;
 
-	modelMatrix = glm::translate(glm::mat4(1.0f), translation) *
+	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), translation) *
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f)) *
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) *
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
 		glm::scale(glm::mat4(1.0f), scale);
 
-	material->color = color;
+	shader->SetUniformMat4("model", modelMatrix);
+	shader->SetUniformMat4("view", viewMatrix);
+	shader->SetUniformMat4("projection", projection);
+	shader->SetUniformVec4("modColor", color);
 
-	BindlessManager::GetInstance().UpdateMaterial(material.get());
+	glBindVertexArray(mesh->getModel()->GetModelData().vA);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getModel()->GetModelData().iBID);
+
+	glDrawElements(GL_TRIANGLES, mesh->getModel()->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
+
+	shader->UnBind();
+
+	if (!texture->image_path.empty()) {
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
 }
 
 void UIImageComponent::Destroy()
@@ -156,19 +180,11 @@ std::unique_ptr<Component> UIImageComponent::Clone(GameObject* owner)
 
 void UIImageComponent::SetTexture(std::string path)
 {
-	texturePath = path;
 	texture = std::make_shared<Image>();
-
-	if (!texture->LoadTexture(path) || texture->id() == 0) {
-		LOG(LogType::LOG_ERROR, "Error al cargar la textura: %s", path.c_str());
-		return;
-	}
-
-	material->setImage(texture);
-	material->sheetSize = glm::vec2(texture->width(), texture->height());
+	texture->LoadTexture(path);
+	sheetSize = glm::vec2(texture->width(), texture->height());
+	shader = ShaderManager::GetInstance().GetShader(ShaderType::UNLIT);
 	LoadMesh();
-
-	BindlessManager::GetInstance().RegisterMaterial(material.get());
 }
 
 void UIImageComponent::LoadMesh()
@@ -184,13 +200,6 @@ void UIImageComponent::LoadMesh()
 
 	model->GetModelData().indexData = {
 		0, 2, 1, 0, 3, 2
-	};
-
-	model->GetModelData().vertex_normals = {
-		vec3(0.0f, 0.0f, 1.0f),
-		vec3(0.0f, 0.0f, 1.0f),
-		vec3(0.0f, 0.0f, 1.0f),
-		vec3(0.0f, 0.0f, 1.0f)
 	};
 
 	model->GetModelData().vertex_texCoords = {

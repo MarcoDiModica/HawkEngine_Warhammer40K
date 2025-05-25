@@ -43,8 +43,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{6949
 		MyGameEditor\Assets\Shaders\particle_vertex.glsl = MyGameEditor\Assets\Shaders\particle_vertex.glsl
 		MyGameEditor\Assets\Shaders\pbr_fragment.glsl = MyGameEditor\Assets\Shaders\pbr_fragment.glsl
 		MyGameEditor\Assets\Shaders\pbr_vertex.glsl = MyGameEditor\Assets\Shaders\pbr_vertex.glsl
-		MyGameEditor\Assets\Shaders\ui_fragment.glsl = MyGameEditor\Assets\Shaders\ui_fragment.glsl
-		MyGameEditor\Assets\Shaders\ui_vertex.glsl = MyGameEditor\Assets\Shaders\ui_vertex.glsl
 		MyGameEditor\Assets\Shaders\unlit_fragment.glsl = MyGameEditor\Assets\Shaders\unlit_fragment.glsl
 		MyGameEditor\Assets\Shaders\unlit_vertex.glsl = MyGameEditor\Assets\Shaders\unlit_vertex.glsl
 	EndProjectSection

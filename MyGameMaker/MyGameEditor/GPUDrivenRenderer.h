@@ -83,10 +83,6 @@ private:
 
 	void RenderShadowBatch(const ShaderBatch& batch, glm::mat4 lightSpaceMatrix, bool isEditor);
 
-	void RenderUIBatch(const ShaderBatch& batch,
-		const glm::mat4& viewMatrix,
-		const glm::mat4& projMatrix);
-
 	void HandleTextureBindings(Shaders* shader, const char* textureName, const char* hasTextureName, GLuint64 textureHandle);
 	void BindRegularTextures(Shaders* shader, GPUMaterial* materialData);
 

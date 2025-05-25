@@ -67,7 +67,7 @@ bool Root::Start()
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
-	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");
 
 	//-------------------SHAKE MANAGER COLOCAR EN TODAS LAS ESCENAS -------------------//

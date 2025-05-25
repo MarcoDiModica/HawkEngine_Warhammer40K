@@ -40371,10 +40371,10 @@ GameObject137:
             - 1225
             - 40
           sprite_offset:
-            - 350
+            - 875
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 5
           anim_index_limit: 6
           color:
             - 1
@@ -40499,10 +40499,10 @@ GameObject137:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 1
@@ -40627,10 +40627,10 @@ GameObject137:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 1

@@ -197,7 +197,7 @@ GameObject4:
           AmmunitionBlessingPrefab: Assets\Prefabs\AmmunitionBlessingPrefab.prefab.yaml
           ChapterStandardPrefab: Assets\Prefabs\ChapterStandardPrefab.prefab.yaml
           ShotgunShellsPrefab: Assets\Prefabs\ShotgunShellsNew.prefab.yaml
-          BoltgunBulletsPrefab: Assets\Prefabs\BoltgunBulletsPrefab.prefab.yaml
+          BoltgunBulletsPrefab: Assets\Prefabs\BoltgunBulletsNew.prefab.yaml
           MedicaeStimmPrefab: Assets\Prefabs\MedicaeStimmPrefab.prefab.yaml
           PiercingBulletsPrefab: Assets\Prefabs\PiercingBulletsPrefab.prefab.yaml
   Children: ~
@@ -481,9 +481,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 1.52169275
+          floatSpeed: 1.77489626
           floatHeight: 0.5
-          rotationSpeed: 60.9160843
+          rotationSpeed: 48.088665
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -589,9 +589,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 0.703720629
+          floatSpeed: 1.93653727
           floatHeight: 0.5
-          rotationSpeed: 35.7289886
+          rotationSpeed: 32.2063446
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -3592,7 +3592,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.846820279632496
+            - 89.839857553391781
             - 0
           localScale:
             - 208.60295104980469
@@ -3634,7 +3634,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.846820279632496
+            - 89.839857553391781
             - 0
           localScale:
             - 208.60295104980469
@@ -3676,7 +3676,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.846820279632496
+            - 89.839857553391781
             - 0
           localScale:
             - 208.60295104980469
@@ -3718,7 +3718,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.846820279632496
+            - 89.839857553391781
             - 0
           localScale:
             - 208.60295104980469
@@ -3760,7 +3760,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.846820279632496
+            - 89.839857553391781
             - 0
           localScale:
             - 208.60295104980469
@@ -3802,7 +3802,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.846820279632496
+            - 89.839857553391781
             - 0
           localScale:
             - 208.60295104980469
@@ -3844,7 +3844,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.846820279632496
+            - 89.839857553391781
             - 0
           localScale:
             - 208.60295104980469
@@ -3886,7 +3886,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.846820279632496
+            - 89.839857553391781
             - 0
           localScale:
             - 208.60295104980469
@@ -3928,7 +3928,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.846820279632496
+            - 89.839857553391781
             - 0
           localScale:
             - 208.60295104980469
@@ -4179,9 +4179,9 @@ GameObject20:
             - 164.68646240234375
             - 1182.335205078125
           localRotation:
-            - -90.00002081954193
-            - 83.400682702463925
-            - -8.8468622306910861e-06
+            - -90.000052196467152
+            - 83.400692964791972
+            - -3.6803021822784831e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -4221,9 +4221,9 @@ GameObject20:
             - 158.47599792480469
             - 1306.6678466796875
           localRotation:
-            - -90.000022329904013
-            - -76.296831728460759
-            - 2.0610074528317326e-05
+            - -90.000022329887898
+            - -76.296840882286389
+            - 2.0610058463586403e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -5187,9 +5187,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.995483330431682
-            - 89.839364205144875
-            - 179.99461589552814
+            - 89.996082553002282
+            - 89.844153957545984
+            - 179.99520316534733
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5229,9 +5229,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.995483330431682
-            - 89.839364205144875
-            - 179.99461589552814
+            - 89.996082553002282
+            - 89.844153957545984
+            - 179.99520316534733
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5733,9 +5733,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999996775941923
-            - 66.695713392354193
-            - 179.99998631507907
+            - 89.999993288988833
+            - 66.695720103365531
+            - 179.99998980203466
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5775,9 +5775,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999996775941923
-            - 66.695713392354193
-            - 179.99998631507907
+            - 89.999993288988833
+            - 66.695720103365531
+            - 179.99998980203466
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5817,9 +5817,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999996775941923
-            - 66.695713392354193
-            - 179.99998631507907
+            - 89.999993288988833
+            - 66.695720103365531
+            - 179.99998980203466
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -6741,9 +6741,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360391534552
-            - 52.153760491639723
-            - -35.460575201138177
+            - 178.33360479206519
+            - 52.153761099889579
+            - -35.460576025032005
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6783,9 +6783,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360391534552
-            - 52.153760491639723
-            - -35.460575201138177
+            - 178.33360479206519
+            - 52.153761099889579
+            - -35.460576025032005
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6825,9 +6825,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360391534552
-            - 52.153760491639723
-            - -35.460575201138177
+            - 178.33360479206519
+            - 52.153761099889579
+            - -35.460576025032005
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -8169,9 +8169,9 @@ GameObject20:
             - 48.267116546630859
             - -1413.0146484375
           localRotation:
-            - 90.000047624140635
-            - 66.469451566834678
-            - -179.99998900386532
+            - 90.000037678930312
+            - 66.469449649334109
+            - 179.99999581835272
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -12273,9 +12273,9 @@ GameObject23:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.999797830931215
-            - 81.207680384492576
-            - 179.99991257418597
+            - 89.999811537372409
+            - 81.207692366070276
+            - 179.99992114287113
           localScale:
             - 41.956031799316406
             - 53.921905517578125
@@ -12441,9 +12441,9 @@ GameObject23:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.979835319454523
-            - -89.82813002491649
-            - -179.97078018579148
+            - 89.98110128216679
+            - -89.820250005623478
+            - -179.97202565710143
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -13333,9 +13333,9 @@ GameObject23:
             - 22.607597351074219
             - -2101.2529296875
           localRotation:
-            - -179.9999913485772
-            - 84.241636004164036
-            - 2.1271356554776735e-05
+            - -179.99999134858396
+            - 84.241616660938121
+            - 2.1271357299730072e-05
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -13375,9 +13375,9 @@ GameObject23:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.1000652029144602
-            - -81.281070731672898
-            - -179.99999178930778
+            - 1.1000672551417594
+            - -81.281070864371358
+            - -179.9999917225197
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -13921,9 +13921,9 @@ GameObject23:
             - 72.838882446289062
             - 742.7088623046875
           localRotation:
-            - -90.000081979047366
-            - -82.668067569086617
-            - -1.8623272393428683e-06
+            - -90.000069481607625
+            - -82.667975995157946
+            - -1.607082183862709e-05
           localScale:
             - 59.934871673583984
             - 59.934871673583984
@@ -14803,9 +14803,9 @@ GameObject23:
             - 84.565017700195312
             - -2966.651611328125
           localRotation:
-            - -90.00888711198796
-            - -89.740791563341418
-            - 0.0062233313848546953
+            - -90.008878718877071
+            - -89.740706209465614
+            - 0.0062217684806538665
           localScale:
             - 43.324676513671875
             - 43.324676513671875
@@ -14845,9 +14845,9 @@ GameObject23:
             - 60.107398986816406
             - 545.6107177734375
           localRotation:
-            - -10.799291445322565
-            - 6.8374596736866993
-            - -1.3541886326385688
+            - -10.799291457115242
+            - 6.8374605332444283
+            - -1.3541886606075466
           localScale:
             - 24.36241340637207
             - 24.36241340637207
@@ -14887,9 +14887,9 @@ GameObject23:
             - 47.50750732421875
             - 561.61212158203125
           localRotation:
-            - 178.20561868727728
-            - 0.51393305786351895
-            - 3.0765089001733159
+            - 178.20561869460326
+            - 0.51393308143077299
+            - 3.07651039360357
           localScale:
             - 24.362417221069336
             - 24.36241340637207
@@ -15307,9 +15307,9 @@ GameObject23:
             - 27.166694641113281
             - -2728.593017578125
           localRotation:
-            - 89.999993077010672
-            - -71.216285566685457
-            - 179.99999307701066
+            - 89.999995633462873
+            - -71.216296935556358
+            - -179.99999390271563
           localScale:
             - 110.40802001953125
             - 110.40802001953125
@@ -15433,9 +15433,9 @@ GameObject23:
             - 27.166694641113281
             - 109.11194610595703
           localRotation:
-            - -89.99951163275766
-            - 85.72633437034834
-            - 0.00051912448057790477
+            - -89.99951158644943
+            - 85.726668269316789
+            - 0.0005191707860718837
           localScale:
             - 49.63983154296875
             - 49.63983154296875
@@ -21738,9 +21738,9 @@ GameObject27:
             - 3.1512765884399414
             - 3.5392885208129883
           localRotation:
-            - 179.84665361319773
-            - -57.005669363341617
-            - -179.97224712605899
+            - 179.84665360261309
+            - -57.005754697775664
+            - -179.97224711984444
           localScale:
             - 4.1512908935546875
             - 8.0131254196166992
@@ -25185,9 +25185,9 @@ GameObject29:
             - 3.0124197006225586
             - -194.1514892578125
           localRotation:
-            - 179.99999499104624
-            - 87.96954795149837
-            - 179.99999499104624
+            - 179.9999949910484
+            - 87.969567273503927
+            - 179.9999949910484
           localScale:
             - 12.215158462524414
             - 7.4319052696228027
@@ -28375,9 +28375,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.978872597
+          floatSpeed: 1.51540291
           floatHeight: 0.5
-          rotationSpeed: 96.2490692
+          rotationSpeed: 54.1544495
   Children: ~
 GameObject34:
   name: BiblePage_Pueblo
@@ -28460,9 +28460,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.14043617
+          floatSpeed: 1.72284722
           floatHeight: 0.5
-          rotationSpeed: 34.1226006
+          rotationSpeed: 77.3997345
   Children: ~
 GameObject35:
   name: BiblePage_Pasillo_Zona3
@@ -28545,9 +28545,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.4624722
+          floatSpeed: 1.0474149
           floatHeight: 0.5
-          rotationSpeed: 77.1490021
+          rotationSpeed: 34.7126732
   Children: ~
 GameObject36:
   name: BiblePage_Ciudad
@@ -28630,9 +28630,9 @@ GameObject36:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.45756114
+          floatSpeed: 0.788578033
           floatHeight: 0.5
-          rotationSpeed: 70.1248093
+          rotationSpeed: 98.2202377
   Children: ~
 GameObject37:
   name: Barril_Ciudad1
@@ -33333,9 +33333,9 @@ GameObject95:
             - 0
             - -25.443840026855469
           localRotation:
-            - 89.991165741019515
-            - 89.8814004470253
-            - 179.99232345870485
+            - 89.989397609756239
+            - 89.885405935208084
+            - 179.99057240285362
           localScale:
             - 86.512344360351562
             - 99.999984741210938
@@ -33375,9 +33375,9 @@ GameObject95:
             - 341.29437255859375
             - 124.93968963623047
           localRotation:
-            - 89.991697414420628
-            - 89.909349243075852
-            - 179.99143103696363
+            - 89.990444070147603
+            - 89.915274908587591
+            - 179.9901845228818
           localScale:
             - 96.124794006347656
             - 99.999984741210938
@@ -33796,7 +33796,7 @@ GameObject95:
             - -869.0504150390625
           localRotation:
             - 90
-            - 89.849103680043044
+            - 89.848409553747416
             - 0
           localScale:
             - 100
@@ -34509,9 +34509,9 @@ GameObject95:
             - 19.999998092651367
             - -924.02191162109375
           localRotation:
-            - -90.000024148367501
-            - 0.061902001331847298
-            - -1.2536767714496287e-09
+            - -90.000024148366222
+            - 0.061902060287848906
+            - 1.1045504404780796e-09
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -35223,9 +35223,9 @@ GameObject95:
             - 0
             - -469.199462890625
           localRotation:
-            - -90.000056103600002
-            - 65.587224437805361
-            - -2.4656809638720077e-05
+            - -90.000059268101438
+            - 65.587229349345165
+            - -2.9568355432569616e-05
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -36147,9 +36147,9 @@ GameObject95:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075433400077898e-05
-            - -79.275327825096156
-            - -90.000097096917941
+            - 5.9068823293115537e-05
+            - -79.275324691999899
+            - -90.000105375255501
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -36189,9 +36189,9 @@ GameObject95:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075433400077898e-05
-            - -79.275327825096156
-            - -90.000097096917941
+            - 5.9068823293115537e-05
+            - -79.275324691999899
+            - -90.000105375255501
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -40446,10 +40446,10 @@ GameObject137:
             - 1225
             - 40
           sprite_offset:
-            - 525
+            - 350
             - 0
           anim_speed: 0.5
-          anim_index: 3
+          anim_index: 2
           anim_index_limit: 6
           color:
             - 1
@@ -40574,10 +40574,10 @@ GameObject137:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 50
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 1
           anim_index_limit: 4
           color:
             - 1
@@ -40702,10 +40702,10 @@ GameObject137:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 50
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 1
           anim_index_limit: 4
           color:
             - 1
@@ -46564,15 +46564,15 @@ GameObject142:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.88191550970077515
-                                        - 2.1393187046051025
-                                        - 0.73448634147644043
+                                        - -0.97447091341018677
+                                        - 2.4221625328063965
+                                        - 0.57886636257171631
                                       localRotation:
                                         - 92.577432593778326
                                         - -8.1256827441871984
                                         - 106.41994501626159
                                       localScale:
-                                        - 1.0000007152557373
+                                        - 1.0000008344650269
                                         - 1.0000001192092896
                                         - 1.0000002384185791
                                     ParticleFX:
@@ -46637,15 +46637,15 @@ GameObject142:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.77566248178482056
-                                        - 2.112607479095459
-                                        - 0.72231030464172363
+                                        - -0.84507864713668823
+                                        - 2.3241524696350098
+                                        - 0.60179436206817627
                                       localRotation:
                                         - 92.577432593778326
                                         - -8.1256827441871984
                                         - 106.41994501626159
                                       localScale:
-                                        - 1.0000007152557373
+                                        - 1.0000008344650269
                                         - 1.0000001192092896
                                         - 1.0000002384185791
                                     ParticleFX:
@@ -109412,7 +109412,7 @@ GameObject193:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 4
+          secondsBetweenSpawns: 3
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
           maxEnemiesToSpawn: 1
@@ -109424,7 +109424,7 @@ GameObject193:
           spawnWarrior: false
           spawnClimberHormagaunt: true
           spawnerActive: false
-          spawnRadius: 90
+          spawnRadius: 60
           player: Player
   Children: ~
 GameObject194:
@@ -109467,7 +109467,7 @@ GameObject194:
           spawnWarrior: false
           spawnClimberHormagaunt: true
           spawnerActive: false
-          spawnRadius: 90
+          spawnRadius: 60
           player: Player
   Children: ~
 GameObject195:
@@ -109510,7 +109510,7 @@ GameObject195:
           spawnWarrior: false
           spawnClimberHormagaunt: true
           spawnerActive: false
-          spawnRadius: 90
+          spawnRadius: 60
           player: Player
   Children: ~
 GameObject196:
@@ -109541,7 +109541,7 @@ GameObject196:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 2
+          secondsBetweenSpawns: 3
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
           maxEnemiesToSpawn: 1
@@ -109553,7 +109553,7 @@ GameObject196:
           spawnWarrior: false
           spawnClimberHormagaunt: true
           spawnerActive: false
-          spawnRadius: 90
+          spawnRadius: 60
           player: Player
   Children: ~
 GameObject197:
@@ -109569,6 +109569,49 @@ GameObject197:
       enabled: true
       localPosition:
         - 395.49560546875
+        - 9.0542879104614258
+        - 6.5
+      localRotation:
+        - -179.99999499104422
+        - 0.14205708459091942
+        - -179.99999499104422
+      localScale:
+        - 1.0000002384185791
+        - 1
+        - 1.0000002384185791
+    ScriptComponents:
+      Script0:
+        name: EnemySpawner
+        fields:
+          spawnTimer: 0
+          secondsBetweenSpawns: 3
+          firstSpawnTime: 0
+          currentEnemiesSpawned: 0
+          maxEnemiesToSpawn: 1
+          hasSpawnedFirst: false
+          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagaunt.prefab.yaml
+          spawnHormagaunt: false
+          spawnRanged: false
+          spawnStalker: false
+          spawnWarrior: false
+          spawnClimberHormagaunt: true
+          spawnerActive: false
+          spawnRadius: 60
+          player: Player
+  Children: ~
+GameObject198:
+  name: SpawnerClimbingHormagaunt_1_Instance5
+  prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
+  uuid: 5381691170264302502
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 334.20330810546875
         - 8.5045557022094727
         - 6.5
       localRotation:
@@ -109596,50 +109639,7 @@ GameObject197:
           spawnWarrior: false
           spawnClimberHormagaunt: true
           spawnerActive: false
-          spawnRadius: 90
-          player: Player
-  Children: ~
-GameObject198:
-  name: SpawnerClimbingHormagaunt_1_Instance5
-  prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
-  uuid: 5381691170264302502
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 332.89132690429688
-        - 8.5045557022094727
-        - 6.5
-      localRotation:
-        - -179.99999499104422
-        - 0.14205708459091942
-        - -179.99999499104422
-      localScale:
-        - 1.0000002384185791
-        - 1
-        - 1.0000002384185791
-    ScriptComponents:
-      Script0:
-        name: EnemySpawner
-        fields:
-          spawnTimer: 0
-          secondsBetweenSpawns: 2
-          firstSpawnTime: 0
-          currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
-          hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagaunt.prefab.yaml
-          spawnHormagaunt: false
-          spawnRanged: false
-          spawnStalker: false
-          spawnWarrior: false
-          spawnClimberHormagaunt: true
-          spawnerActive: false
-          spawnRadius: 75
+          spawnRadius: 60
           player: Player
   Children: ~
 GameObject199:
@@ -109655,7 +109655,7 @@ GameObject199:
       enabled: true
       localPosition:
         - 291.1234130859375
-        - 8.5045557022094727
+        - 8.795802116394043
         - 6.5
       localRotation:
         - -179.99999499104422
@@ -109682,7 +109682,7 @@ GameObject199:
           spawnWarrior: false
           spawnClimberHormagaunt: true
           spawnerActive: false
-          spawnRadius: 75
+          spawnRadius: 60
           player: Player
   Children: ~
 GameObject200:
@@ -109713,7 +109713,7 @@ GameObject200:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 1
+          secondsBetweenSpawns: 3
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
           maxEnemiesToSpawn: 1
@@ -109725,7 +109725,7 @@ GameObject200:
           spawnWarrior: false
           spawnClimberHormagaunt: true
           spawnerActive: false
-          spawnRadius: 75
+          spawnRadius: 60
           player: Player
   Children: ~
 GameObject201:
@@ -109756,7 +109756,7 @@ GameObject201:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 2
+          secondsBetweenSpawns: 3
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
           maxEnemiesToSpawn: 1
@@ -109768,7 +109768,7 @@ GameObject201:
           spawnWarrior: false
           spawnClimberHormagaunt: true
           spawnerActive: false
-          spawnRadius: 75
+          spawnRadius: 60
           player: Player
   Children: ~
 GameObject202:

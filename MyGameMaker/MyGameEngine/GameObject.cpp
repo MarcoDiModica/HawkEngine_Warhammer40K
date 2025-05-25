@@ -438,7 +438,7 @@ bool GameObject::CompareTag(const std::string& tag) const
 }
 
 Transform_Component* GameObject::GetTransform() const {
-	if (destroyed) {
+	if (destroyed || !this) {
 		return nullptr;
 	}
 

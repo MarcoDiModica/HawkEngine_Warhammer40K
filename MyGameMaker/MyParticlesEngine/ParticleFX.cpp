@@ -1449,6 +1449,141 @@ namespace ParticlePresets {
 		true 											 // Is Local Space
 	};
 
+	const ParticlePreset AbiltyRecharged = {
+		ParticleType::ABILITY_RECHARGED,
+		true,										// PlayOnAwake
+		1,											// Duration (only if one-shot)
+		glm::vec3(1,1,1),   						// Start color (white)
+		glm::vec3(1,1,1),   						// End color (white)
+		1.0f,                          			// Alpha start
+		1.0f,                          			// Alpha end
+		3.0f,                          			// Size start
+		3.0f,                          			// Size end
+		5,                          				// Min lifetime
+		5,                         					// Max lifetime
+		0.0f,                          				// Min speed
+		0.0f,                          				// Max speed
+		0.0f,										// End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   			// Gravity (negative for upward)
+		0,                          				// Rotation speed
+		1.f,                         				// Emission rate (particles per second)
+		EmitterShape::POINT,            			// Shape
+		0.2f,                          				// Cone base radius
+		1.0f,                          				// Cone height
+		20.0f,                         				// Cone angle in degrees
+		glm::vec2(95,87),		   					// Sprite size
+		true,										// Use animation
+		false,										// Random animation Index
+		0.2f,										// Animation speed
+		0.0f,										// Start rotation
+		false,										// Random rotation
+		1.0f,										// Min scale
+		1.0f,										// Max scale
+		"Assets/Textures/Ability_recharge_vfx.png", // Texture path
+		false 									    // Is Local Space
+	};
+
+	const ParticlePreset GrenadeShot = {
+	ParticleType::GRENADE_SHOT,
+	true,										 // PlayOnAwake
+	1,											 // Duration (only if one-shot)
+	glm::vec3(1,1,1),   						 // Start color (white)
+	glm::vec3(1,1,1),   						 // End color (white)
+	1.0f,                          			 // Alpha start
+	1.0f,                          			 // Alpha end
+	10.0f,                          			 // Size start
+	10.0f,                          			 // Size end
+	5,                          				 // Min lifetime
+	5,                         					 // Max lifetime
+	0.0f,                          				 // Min speed
+	0.0f,                          				 // Max speed
+	0.0f,										 // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   			 // Gravity (negative for upward)
+	0,                          				 // Rotation speed
+	1.f,                         				 // Emission rate (particles per second)
+	EmitterShape::POINT,            			 // Shape
+	0.2f,                          				 // Cone base radius
+	1.0f,                          				 // Cone height
+	20.0f,                         				 // Cone angle in degrees
+	glm::vec2(256,256),		   					 // Sprite size
+	true,										 // Use animation
+	false,										 // Random animation Index
+	7.2f,										 // Animation speed
+	0.0f,										 // Start rotation
+	false,										 // Random rotation
+	1.0f,										 // Min scale
+	1.0f,										 // Max scale
+	"Assets/Textures/grenade_shot_smoke_vfx.png",// Texture path
+	false 									     // Is Local Space
+	};
+
+	const ParticlePreset BulletEject = {
+	ParticleType::BULLET_EJECT,
+	true,										 // PlayOnAwake
+	1,											 // Duration (only if one-shot)
+	glm::vec3(1,1,1),   						 // Start color (white)
+	glm::vec3(1,1,1),   						 // End color (white)
+	1.0f,                          			 // Alpha start
+	1.0f,                          			     // Alpha end
+	1.0f,                          			 // Size start
+	1.0f,                          			     // Size end
+	5,                          				 // Min lifetime
+	5,                         					 // Max lifetime
+	0.0f,                          				 // Min speed
+	0.0f,                          				 // Max speed
+	0.0f,										 // End Speed
+	glm::vec3(0.0f,-5.00f,4.0f),	   			 // Gravity (negative for upward)
+	0,                          			 // Rotation speed
+	1.f,                         				 // Emission rate (particles per second)
+	EmitterShape::POINT,            			 // Shape
+	0.2f,                          				 // Cone base radius
+	1.0f,                          				 // Cone height
+	20.0f,                         				 // Cone angle in degrees
+	glm::vec2(100,100),		   					 // Sprite size
+	true,										 // Use animation
+	false,										 // Random animation Index
+	7.2f,										 // Animation speed
+	0.0f,										 // Start rotation
+	true,										 // Random rotation
+	1.0f,										 // Min scale
+	1.0f,										 // Max scale
+	"Assets/Textures/Bullet Eject vfx.png",      // Texture path
+	false 									     // Is Local Space
+	};
+
+	const ParticlePreset BloodThirstLost = {
+	ParticleType::BLOOD_THIRST_LOST,
+	true,										 // PlayOnAwake
+	1,											 // Duration (only if one-shot)
+	glm::vec3(1,1,1),   						 // Start color (white)
+	glm::vec3(1,1,1),   						 // End color (white)
+	1.0f,		                     			 // Alpha start
+	1.0f,		                     			 // Alpha end
+	5.0f,		                     			 // Size start
+	5.0f,		                       			 // Size end
+	5,                          				 // Min lifetime
+	5,                         					 // Max lifetime
+	0.0f,                          				 // Min speed
+	0.0f,                          				 // Max speed
+	0.0f,										 // End Speed
+	glm::vec3(0.0f,-1.00f,0.0f),	   			 // Gravity (negative for upward)
+	0,                          				 // Rotation speed
+	1.f,                         				 // Emission rate (particles per second)
+	EmitterShape::POINT,            			 // Shape
+	0.2f,                          				 // Cone base radius
+	1.0f,                          				 // Cone height
+	20.0f,                         				 // Cone angle in degrees
+	glm::vec2(180,180),		   					 // Sprite size
+	true,										 // Use animation
+	false,										 // Random animation Index
+	1.0f,										 // Animation speed
+	180.0f,										 // Start rotation
+	false,										 // Random rotation
+	1.0f,										 // Min scale
+	1.0f,										 // Max scale
+	"Assets/Textures/Red_thirst_lost_vfx.png",   // Texture path
+	false 									     // Is Local Space
+	};
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -2044,6 +2179,22 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::Enviroment_Leaves:
 		preset = ParticlePresets::EnviromentLeaves;
+		SetOneShot(false);
+		break;
+	case ParticleType::ABILITY_RECHARGED:
+		preset = ParticlePresets::AbiltyRecharged;
+		SetOneShot(false);
+		break;
+	case ParticleType::GRENADE_SHOT:
+		preset = ParticlePresets::GrenadeShot;
+		SetOneShot(false);
+		break;
+	case ParticleType::BULLET_EJECT:
+		preset = ParticlePresets::BulletEject;
+		SetOneShot(false);
+		break;
+	case ParticleType::BLOOD_THIRST_LOST:
+		preset = ParticlePresets::BloodThirstLost;
 		SetOneShot(false);
 		break;
 	default:

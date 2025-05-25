@@ -101,6 +101,10 @@ public:
 			"Assets/Textures/LictorSlashSpritesheetv6.png",
 			"Assets/Textures/Lictor-blood.png",
 			"Assets/Textures/MawlocSlashSpritesheet.png",
+			"Assets/Textures/Ability_recharge_vfx.png",
+			"Assets/Textures/grenade_shot_smoke_vfx.png",
+			"Assets/Textures/Bullet Eject vfx.png",
+			"Assets/Textures/Red_thirst_lost_vfx.png",
 			"Assets/Textures/leaf3.png"
 
 		};

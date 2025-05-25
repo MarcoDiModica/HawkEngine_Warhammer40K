@@ -54,7 +54,11 @@ enum class ParticleType {
     // PowerUps
 	Enviroment_Dripping_Water = 39,
 	Enviroment_Grass = 40,
-	Enviroment_Leaves = 41
+	Enviroment_Leaves = 41,
+	ABILITY_RECHARGED = 42,
+	GRENADE_SHOT = 43,
+	BULLET_EJECT = 44,
+	BLOOD_THIRST_LOST = 45
 
 };
 

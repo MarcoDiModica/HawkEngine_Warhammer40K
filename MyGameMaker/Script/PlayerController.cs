@@ -185,7 +185,10 @@ public class PlayerController : MonoBehaviour
         if (!componentsInitialized || playerData == null)
             return;
 
-        //playerData.FullHealth();  
+        if (playerData.GodMode)
+        {
+            playerData.FullHealth();
+        }
 
         if (playerData.isHit)
         {

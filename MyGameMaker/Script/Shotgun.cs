@@ -15,6 +15,7 @@ public class Shotgun : BaseWeapon
     public Barrage barrage;
     public HookShot hookShot;
     private RedThirstManager redThirstManager;
+    private PlayerInput playerInput;
 
     public float timeSinceLastShot = 0.0f;
     private List<Vector3> bulletDirections = new List<Vector3>();
@@ -74,6 +75,13 @@ public class Shotgun : BaseWeapon
             if (playerData == null)
             {
                 Engineson.print("ERROR: PlayerData not found on PlayerController");
+                return;
+            }
+
+            playerInput = gameObject.GetComponent<PlayerInput>();
+            if (playerInput == null)
+            {
+                Engineson.print("ERROR: PlayerInput component not found on Shotgun");
                 return;
             }
 
@@ -319,7 +327,7 @@ public class Shotgun : BaseWeapon
 
                 for (int i = 0; i < numProjectiles; i++)
                 {
-                    Vector3 baseDirection = transform.forward;
+                    Vector3 baseDirection = playerInput.GetCurrentLookDirection();
 
                     float randomYaw = (float)(random.NextDouble() * 2 * maxSpreadAngle - maxSpreadAngle);   // izquierda/derecha
                     float randomPitch = (float)(random.NextDouble() * 2 * maxSpreadAngle - maxSpreadAngle); // arriba/abajo

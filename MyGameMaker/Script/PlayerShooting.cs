@@ -22,7 +22,7 @@ public class PlayerShooting : MonoBehaviour
 
     private bool firstShotReady = false;
     private float firstShotTimer = 0f;
-    private float firstShotDelay = 0.04f;
+    //private float firstShotDelay = 0.04f;
 
     // Guns Scripts
     public Boltgun boltgun;
@@ -213,16 +213,6 @@ public class PlayerShooting : MonoBehaviour
 
         if (playerInput?.IsShooting() == true)
         {
-            if (!firstShotReady)
-            {
-                firstShotTimer += deltaTime; 
-                if (firstShotTimer >= firstShotDelay)
-                {
-                    firstShotReady = true;
-                    shootTimer = 0f;
-                }
-            }
-
             Shoot();
         }
         else
@@ -294,10 +284,6 @@ public class PlayerShooting : MonoBehaviour
                     railgun?.Shoot();
                     break;
             }
-
-            
-
-
 
         }
         catch (System.Exception e)

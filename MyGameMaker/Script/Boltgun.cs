@@ -9,6 +9,7 @@ public class Boltgun : BaseWeapon
     public ArcSnare arcSnare;
     private PlayerController playerController;
     public PlayerData playerData;
+    private PlayerInput playerInput;
 
     private const string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/Boltgun_hit_enviroment.wav";
     private const string boltgunShotEnemy = "Assets/Audio/SFX/Weapons/Boltgun/Boltgun_hit_enemy.wav";
@@ -23,8 +24,8 @@ public class Boltgun : BaseWeapon
 
     private List<float> bulletLifetimes = new List<float>();
     private float bulletSpeed = 60f;
-    private float maxLifetime = 2f;
-    private float hitRayLength = 1f;
+    private float maxLifetime = 4f;
+    private float hitRayLength = 2f;
 
     //private ShakeManager shakeManager;
     public float shakeIntensity = 0.15f;
@@ -33,21 +34,26 @@ public class Boltgun : BaseWeapon
 
     private bool isReloading = false;
     private float reloadTimer = 0.0f;
+
+    //bullet spresd
+    private float bulletSpreadAngle = 6.5f;
+    private static readonly Random random = new Random();
+
     public override void Awake()
     {
 
     }
     public override void Start()
     {
-        damage = 20.0f;
-        shootCadence = 0.15f;
-        magazineSize = 30;
+        damage = 14.0f;
+        shootCadence = 0.12f;
+        magazineSize = 40;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 240;
         currentTotalAmmo = 180;
         reloadTime = 0.5f;
-        range = 30f;
-        timeToLerp = 0.2f;
+        range = 80f;
+        timeToLerp = 0.45f;
         ammoType = AmmoType.BOLTGUN;
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
@@ -55,6 +61,7 @@ public class Boltgun : BaseWeapon
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
+        playerInput = gameObject.GetComponent<PlayerInput>();
         //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
         //if (shakeManager == null)
         //{
@@ -226,7 +233,6 @@ public class Boltgun : BaseWeapon
     {
         if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence && !isReloading)
         {
-            //shakeManager.ApplyShake(shakeIntensity, shakeDuration, shakeSpeed);
             timeSinceLastShot = 0f;
 
             if (!playerData.infiniteBullets)
@@ -241,7 +247,17 @@ public class Boltgun : BaseWeapon
                                   (transform.forward * localOffset.Z);
             bulletStart.Y += 0.5f;
 
-            Vector3 direction = Vector3.Normalize(transform.forward);
+            Vector3 direction = Vector3.Normalize(playerInput.GetCurrentLookDirection());
+
+            float spreadYaw = ((float)random.NextDouble() - 0.5f) * bulletSpreadAngle;
+            float spreadPitch = ((float)random.NextDouble() - 0.5f) * bulletSpreadAngle;
+
+            Matrix4x4 spreadMatrix =
+                Matrix4x4.CreateFromAxisAngle(transform.up, (float)Math.PI / 180f * spreadYaw) *
+                Matrix4x4.CreateFromAxisAngle(transform.right, (float)Math.PI / 180f * spreadPitch);
+
+            direction = Vector3.TransformNormal(direction, spreadMatrix);
+            direction = Vector3.Normalize(direction);
 
             float yaw = (float)(Math.Atan2(direction.X, direction.Z) * (180.0 / Math.PI));
             float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
@@ -253,7 +269,6 @@ public class Boltgun : BaseWeapon
                 return;
             }
 
-            //projectile.AddComponent<MeshRenderer>();
             projectile.transform.SetScale(0.25f, 0.25f, 0.25f);
             projectile.transform.position = bulletStart;
             projectile.transform.SetRotation(pitch, yaw, 0f);

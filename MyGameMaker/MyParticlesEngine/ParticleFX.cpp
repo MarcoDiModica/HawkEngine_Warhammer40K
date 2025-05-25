@@ -1276,6 +1276,40 @@ namespace ParticlePresets {
 		true 						   // Is Local Space
 	};
 
+	const ParticlePreset DashReady = {
+		ParticleType::DASH_READY,
+		false,						   // PlayOnAwake
+		0,						   // Duration (only if one-shot)
+		glm::vec3(255/255.0f,107/255.0f,0.0f),   				   // Start color (white)
+		glm::vec3(58/255.0f,58/255.0f,58/255.0f),   				   // End color (white)
+		70.0f,                          			   // Alpha start
+		25.0f,                          			   // Alpha end
+		0.2f,                          			   // Size start
+		0.2f,                          		   // Size end
+		0.2,                          			   // Min lifetime
+		0.25,                         			   // Max lifetime
+		1.0f,                          			   // Min speed
+		1.0f,                          			   // Max speed
+		1.0f,						   // End Speed
+		glm::vec3(0.0f,-30.0f,0.0f),	   		   // Gravity (negative for upward)
+		1,                          			   // Rotation speed
+		300.0f,                         			   // Emission rate (particles per second)
+		EmitterShape::BOX,            		   // Shape
+		0.5f,                          			   // Cone base radius
+		0.5f,                          			   // Cone height
+		0.0f,                         			   // Cone angle in degrees
+		glm::vec2(70,80),		   	   // Sprite size
+		false,						   // Use animation
+		false,						   // Random animation Index
+		0.1f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		0.2f,						   // Min scale
+		0.2f,						   // Max scale
+		"Assets/Textures/niebla30Frames.png", 	   // Texture path
+		true 						   // Is Local Space
+	};
+
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -1852,6 +1886,10 @@ void ParticleFX::ApplyPreset(int particleID) {
 	case ParticleType::MAWLOC_SWIPE:
 		preset = ParticlePresets::MawlocSwipe;
 		SetOneShot(true);
+		break;
+	case ParticleType::DASH_READY:
+		preset = ParticlePresets::DashReady;
+		SetOneShot(false);
 		break;
 
 	default:

@@ -4,7 +4,7 @@
 
 enum class ParticleType {
 
-    // The last one is 36
+    // The last one is 37
 
     // PLACE_HOLDERS
     DEFAULT = 0,
@@ -49,6 +49,7 @@ enum class ParticleType {
     SHOTGUN_SHOT = 20,
     MEDICAE_STIM_SPEED = 21,
     RED_THIRST = 32,
+	DASH_READY = 37,
 
     // PowerUps
     AMMUNITION_BLESSING = 22,

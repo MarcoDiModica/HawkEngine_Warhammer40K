@@ -108,7 +108,9 @@ public:
 			"Assets/Textures/leaf3.png",
 			"Assets/Textures/termagaunt_slash.png",
 			"Assets/Textures/blood_splash_1.png",
-			"Assets/Textures/blood_splash_2.png"
+			"Assets/Textures/blood_splash_2.png",
+			"Assets/Textures/RailgunChargeVFX.png",
+			"Assets/Textures/EnergyBallHittingVFX.png"
 		};
 
 		for (const auto& path : texturePaths) {

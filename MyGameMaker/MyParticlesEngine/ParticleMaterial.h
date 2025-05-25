@@ -61,7 +61,9 @@ enum class ParticleType {
 	BLOOD_THIRST_LOST = 45,
 	TERMAGAUNT_SLASH = 46,
     BLOOD_SQUIRT_1 = 47,
-    BLOOD_SQUIRT_2 = 48
+    BLOOD_SQUIRT_2 = 48,
+	RAILGUN_CHARGE = 49,
+	ENERGY_BALL_HITING = 50
 };
 
 class ParticleMaterial : public Material {

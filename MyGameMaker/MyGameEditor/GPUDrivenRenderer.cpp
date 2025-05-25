@@ -267,7 +267,6 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 		}
 	}
 
-
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
 
 	for (const auto& [shaderType, batch] : shaderBatches) {
@@ -298,6 +297,11 @@ void GPUDrivenRenderer::RenderShadowBatch(const ShaderBatch& batch, glm::mat4 li
 	}
 
 	shader->Bind();
+
+	GLint viewport[4];
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	GLuint currentFBO;
+	glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, (GLint*)&currentFBO);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 
@@ -341,30 +345,10 @@ void GPUDrivenRenderer::RenderShadowBatch(const ShaderBatch& batch, glm::mat4 li
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	if (isEditor) 
-	{
-		bool useMSAA = Application->gui->UISceneWindowPanel->msaaSamples > 0;
-
-		if (useMSAA) {
-			glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->multisampleFBO);
-		}
-		else {
-			glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
-		}
-	}
-	else {
-		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
-	}
-
 	shader->UnBind();
-	glClear(GL_COLOR_BUFFER_BIT);
-	
-	if (isEditor) {
-		glViewport(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y);
-	}
-	else {
-		glViewport(0, 0, 1280, 720);
-	}
+
+	glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+	glBindFramebuffer(GL_FRAMEBUFFER, currentFBO);
 }
 
 void GPUDrivenRenderer::RenderUnlitBatch(
@@ -521,7 +505,8 @@ void GPUDrivenRenderer::RenderPBRBatch(
 
 		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
 		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
-
+		//get instance data
+		GPUInstance* instanceData = BindlessManager::GetInstance().GetInstanceData(i);
 
 		if (!meshData || !materialData) continue;
 
@@ -536,10 +521,7 @@ void GPUDrivenRenderer::RenderPBRBatch(
 
 		shader->SetUniform("heightScale", materialData->heightScale);
 
-		//for (int j = 0; j < MAX_BONES; j++) 
-		//{	
-		//	shader->SetUniformMat4("finalBonesMatrices[" + std::to_string(i) + "]", instanceData->boneMatrices[i]);
-		//}
+		
 
 		if (GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64 && !bindlessErrorDetected) {
 			HandleTextureBindings(shader, "albedoMap", "u_HasAlbedoMap", materialData->albedoTexture);

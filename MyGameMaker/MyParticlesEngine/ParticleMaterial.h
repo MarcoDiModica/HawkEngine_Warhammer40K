@@ -14,47 +14,45 @@ enum class ParticleType {
     EXPLOSION = 4,
     // ENVIRONMENT
     FLAME = 5,
-    ENVIRONMENT_FIRE = 23,
     ENVIRONMENT_SMOKE = 6,
     ENVIRONMENT_EXPLOSION = 7,
-    ENVIRONMENT_DROPPLET = 15,
-    ENVIRONMENT_SPARK = 16,
-    ENVIRONMENT_TREE = 29,
-    ENVIRONMENT2_TREE = 30,
-    ENVIRONMENT3_TREE = 31,
-	EnVIRONMENT_Fog = 33,
-	ENVIRONMENT_CINDER = 38,
-    // Enemies
+    RIFFLE_SHOT = 8,
+  // Enemies
     ENEMY_DASH = 9,
     ACID_ATK = 10,
-    // ACID_ATK_EXPLODE can use the same vfx structure as ACID_ATK with different texture
     ACID_PUDDLE = 11,
-    MAWLOC_SLAM = 24,
-    MAWLOC_ROCKS = 25,
-    //Lictor
-    LICTOR_LEAP = 26,
-    LICTOR_DODGE = 27,
-    LICTOR_SLASH = 34,
-
-    LICTOR_BLOOD = 35,
-    MAWLOC_SWIPE = 36,
-
-    // Player / Weapons
     ENERGY_BALL = 12,
     RAILGUN_AUTO = 13,
     RAILGUN_SEMI = 14,
-    RIFFLE_SHOT = 8,
+    ENVIRONMENT_DROPPLET = 15,
+    ENVIRONMENT_SPARK = 16, 
     ARC_SNARE_IMPACT = 17,
     MEDICAE_STIM = 18,
     BLOOD_SPLASH = 19,
     SHOTGUN_SHOT = 20,
     MEDICAE_STIM_SPEED = 21,
-    RED_THIRST = 32,
-	DASH_READY = 37,
-
-    // PowerUps
     AMMUNITION_BLESSING = 22,
-    MAGNET_AREA = 28
+    ENVIRONMENT_FIRE = 23,
+     MAWLOC_SLAM = 24,
+    MAWLOC_ROCKS = 25,
+    //Lictor
+    LICTOR_LEAP = 26,
+    LICTOR_DODGE = 27,
+    MAGNET_AREA = 28,
+    ENVIRONMENT_TREE = 29,
+    ENVIRONMENT2_TREE = 30,
+    ENVIRONMENT3_TREE = 31,
+    RED_THIRST = 32,
+    EnVIRONMENT_Fog = 33,
+	LICTOR_SLASH = 34,
+    LICTOR_BLOOD = 35,
+    MAWLOC_SWIPE = 36,
+    // Player / Weapons
+	DASH_READY = 37,
+	ENVIRONMENT_CINDER = 38
+    // ACID_ATK_EXPLODE can use the same vfx structure as ACID_ATK with different texture
+    // PowerUps
+
 };
 
 class ParticleMaterial : public Material {

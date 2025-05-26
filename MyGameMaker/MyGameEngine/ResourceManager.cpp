@@ -225,7 +225,7 @@ void ResourceManager::UpdateTextures()
 	{
 		std::string imageName = image->image_name;
 		texturePath += imageName + ".png";
-		//image->LoadTexture(texturePath);
+		image->LoadTexture(texturePath);
 		image->SaveBinary(imageName);
 		texturePath = std::filesystem::current_path().string() + "\\Assets\\Textures\\";
 	}

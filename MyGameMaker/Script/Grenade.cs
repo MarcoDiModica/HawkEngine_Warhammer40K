@@ -13,8 +13,9 @@ public class Grenade : MonoBehaviour
     Rigidbody rigidbody;
     bool isExploded = false;
     GameObject explosion;
-    float deathtimer = 0.2f;
+    float deathtimer = 0.8f;
     GameObject explosionFX;
+    GameObject granadeVFX;
     float deathTimerPrevention = 0;
     private const string granadeExplosion = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunAbility1GrenadeExplosion.wav";
 
@@ -39,6 +40,19 @@ public class Grenade : MonoBehaviour
         rigidbody.SetGravity(new Vector3(0.0f, -9.81f, 0.0f) * 20);
         rigidbody.AddForce(dir * 150);
         rigidbody.SetFriction(0.5f);
+        granadeVFX = Engineson.CreateGameObject("ExplosionGranadeFX", null);
+        gameObject.AddChild(granadeVFX);
+        granadeVFX.AddComponent<ParticleFX>();
+        ParticleFX particleFX = granadeVFX.GetComponent<ParticleFX>();
+        if (particleFX != null)
+        {
+
+
+            particleFX.ApplyPreset(12);
+            //    particleFX.EmitBurst(100);
+            particleFX.EmitBurst(1);
+
+        }
     }
 
     public override void Update(float deltaTime)
@@ -67,7 +81,7 @@ public class Grenade : MonoBehaviour
                 //isExploded = false;
             }
         }
-
+        
     }
 
     void Explode()
@@ -81,7 +95,7 @@ public class Grenade : MonoBehaviour
         explosionFX = Engineson.CreateGameObject("ExplosionGranadeFX", null);
         gameObject.AddChild(explosionFX);
         explosionFX.AddComponent<ParticleFX>().ApplyPreset(4);
-        explosionFX.GetComponent<ParticleFX>().EmitBurst(40);
+        explosionFX.GetComponent<ParticleFX>().EmitBurst(80);
         explosionFX.GetComponent<Transform>().SetPosition(
             GetComponent<Transform>().GetPosition().X,
             GetComponent<Transform>().GetPosition().Y,

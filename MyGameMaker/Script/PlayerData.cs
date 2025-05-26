@@ -10,7 +10,7 @@ public class PlayerData
     float maxHealth = 100;
     float maxHealthTemp = 50;
     public bool isHit = false;
-    public float movSpeed = 10;
+    public float movSpeed = 9;
     public float collectionArea = 1;
     public float bonusCadence = 1;
     public bool isPiercing = false;

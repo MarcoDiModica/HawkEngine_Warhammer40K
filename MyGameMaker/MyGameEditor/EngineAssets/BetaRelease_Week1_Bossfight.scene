@@ -1129,9 +1129,9 @@ GameObject10:
             - -11.527710914611816
             - 144.69508361816406
           localRotation:
-            - 90.000038965826022
-            - 81.889388733908149
-            - -179.99991823834085
+            - 90.000038965520773
+            - 81.889368191963001
+            - -179.9999182386461
           localScale:
             - 4.3183484077453613
             - 6.8110980987548828
@@ -1423,9 +1423,9 @@ GameObject10:
             - -35.877773284912109
             - 3.1861171722412109
           localRotation:
-            - -89.99999966693828
-            - -68.954355277239088
-            - -9.0168396474099158e-06
+            - -90.000006947022655
+            - -68.954342120760089
+            - -6.9470226572472448e-06
           localScale:
             - 6.9018840789794922
             - 6.9018840789794922
@@ -2623,9 +2623,9 @@ GameObject12:
             - 95.477737426757812
             - 23.753135681152344
           localRotation:
-            - -167.41258126276497
-            - 71.109357897879931
-            - 17.939053100853954
+            - -167.41258212287215
+            - 71.109365028548382
+            - 17.939052012175409
           localScale:
             - 45.338405609130859
             - 45.338409423828125
@@ -3337,9 +3337,9 @@ GameObject12:
             - 24.198019027709961
             - 139.26609802246094
           localRotation:
-            - -146.7952038088747
-            - 87.995062251623267
-            - 17.006718579365547
+            - -146.7952322285158
+            - 87.994950235451896
+            - 17.006681873566617
           localScale:
             - 51.601947784423828
             - 51.601947784423828
@@ -3421,9 +3421,9 @@ GameObject12:
             - 30.123611450195312
             - 142.57989501953125
           localRotation:
-            - 37.038501307948671
-            - 81.597393122062812
-            - -128.79315113295834
+            - 37.038469796216916
+            - 81.597447953031548
+            - -128.79317122763305
           localScale:
             - 45.338413238525391
             - 45.338409423828125
@@ -3463,9 +3463,9 @@ GameObject12:
             - 12.570405006408691
             - 129.93734741210938
           localRotation:
-            - -146.7949347453858
-            - 87.994941991741811
-            - 17.006978161138161
+            - -146.79489306125942
+            - 87.994884278969849
+            - 17.007011310850761
           localScale:
             - 51.601955413818359
             - 51.601959228515625
@@ -3547,9 +3547,9 @@ GameObject12:
             - 11.215756416320801
             - 130.21820068359375
           localRotation:
-            - -83.578406019598717
-            - 75.542970098998097
-            - 111.51303513688627
+            - -83.578404080323892
+            - 75.542990518518096
+            - 111.51303821066358
           localScale:
             - 45.338409423828125
             - 45.338405609130859
@@ -3846,7 +3846,7 @@ GameObject20:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1000
+      mass: 100000
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -8624,10 +8624,10 @@ GameObject23:
             - 1225
             - 40
           sprite_offset:
-            - 0
+            - 175
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 1
           anim_index_limit: 6
           color:
             - 1
@@ -8752,10 +8752,10 @@ GameObject23:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 0
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 0
           anim_index_limit: 4
           color:
             - 1
@@ -8880,10 +8880,10 @@ GameObject23:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 0
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 0
           anim_index_limit: 4
           color:
             - 1
@@ -13233,7 +13233,7 @@ GameObject28:
       Script0:
         name: PlayerShooting
         fields:
-          shootCooldown: 6.66666651
+          shootCooldown: 8.33333397
           projectileSpeed: 90
           projectileLifetime: 0.5
           hasShotgun: false
@@ -13248,13 +13248,14 @@ GameObject28:
           rotationSpeed: 30
           acceleration: 40
           deceleration: 15
+          speedTransitionRate: 7
       Script2:
         name: PlayerInput
         fields: ~
       Script3:
         name: PlayerDash
         fields:
-          dashSpeed: 1600
+          dashSpeed: 160000
           dashDuration: 0.0500000007
           dashCooldown: 1.25
           canDash: true
@@ -14737,15 +14738,15 @@ GameObject28:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.88191550970077515
-                                        - 2.1393187046051025
-                                        - 0.73448634147644043
+                                        - -0.99429786205291748
+                                        - 2.4878385066986084
+                                        - 0.57711803913116455
                                       localRotation:
                                         - 92.577432593778326
                                         - -8.1256827441871984
                                         - 106.41994501626159
                                       localScale:
-                                        - 1.0000007152557373
+                                        - 1.0000008344650269
                                         - 1.0000001192092896
                                         - 1.0000002384185791
                                     ParticleFX:
@@ -14754,14 +14755,14 @@ GameObject28:
                                       emitterShape: 0
                                       emissionRate: 1
                                       particlesPerSecond: 1
-                                      minLifetime: 1
-                                      maxLifetime: 1
+                                      minLifetime: 0.25
+                                      maxLifetime: 0.25
                                       minSpeed: 0
                                       maxSpeed: 0
-                                      startSize: 8
+                                      startSize: 2
                                       endSize: 5
-                                      minSize: 8
-                                      maxSize: 8
+                                      minSize: 2
+                                      maxSize: 2
                                       startColor:
                                         - 1
                                         - 1
@@ -15628,79 +15629,6 @@ GameObject28:
             texturePath: Assets/Textures/Smoke30Frames.png
           particleType: 1
       Children: ~
-    - name: WalkingFX
-      prefabPath: ""
-      uuid: 11814766232687384232
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - -1
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        ParticleFX:
-          name: ParticleFX
-          enabled: true
-          emitterShape: 2
-          emissionRate: 15
-          particlesPerSecond: 15
-          minLifetime: 2
-          maxLifetime: 4
-          minSpeed: 0.5
-          maxSpeed: 1.5
-          startSize: 0.5
-          endSize: 2
-          minSize: 0.5
-          maxSize: 0
-          startColor:
-            - 0.800000012
-            - 0.800000012
-            - 0.800000012
-          endColor:
-            - 0.200000003
-            - 0.200000003
-            - 0.200000003
-          startAlpha: 0.699999988
-          endAlpha: 0
-          rotationSpeed: 0.200000003
-          gravity:
-            - 0
-            - -0.100000001
-            - 0
-          shapeParam1: 0.200000003
-          shapeParam2: 1
-          shapeParam3: 20
-          isOneShot: false
-          isPlaying: true
-          isPaused: false
-          burstEmitted: false
-          spriteSize:
-            - 256
-            - 256
-          useAnimation: true
-          animSpeed: 0.5
-          startRotation: 0
-          randomRotation: true
-          material:
-            billboardType: 0
-            particleType: 1
-            softness: 0
-            useColorGradient: false
-            texturePath: Assets/Textures/Smoke30Frames.png
-          particleType: 1
-      Children: ~
     - name: AimLaser
       prefabPath: ""
       uuid: 9455378644202122856
@@ -15883,6 +15811,79 @@ GameObject28:
             texturePath: Assets/Textures/Red_Thirst_Sprite_sheet.png
           particleType: 32
       Children: ~
+    - name: WalkingFX
+      prefabPath: ""
+      uuid: 3256241955928086423
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.00049591064453125
+            - 8.58306884765625e-05
+            - -0.99992883205413818
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 2
+          emissionRate: 120
+          particlesPerSecond: 120
+          minLifetime: 0.150000006
+          maxLifetime: 0.150000006
+          minSpeed: 5.55000019
+          maxSpeed: 5.55000019
+          startSize: 0
+          endSize: 2
+          minSize: 0
+          maxSize: 1
+          startColor:
+            - 0.800000012
+            - 0.800000012
+            - 0.800000012
+          endColor:
+            - 0.800000012
+            - 0.800000012
+            - 0.800000012
+          startAlpha: 0.699999988
+          endAlpha: 0
+          rotationSpeed: 0.200000003
+          gravity:
+            - 0
+            - -5.32999992
+            - 0
+          shapeParam1: 0.200000003
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: true
+          isPaused: false
+          burstEmitted: false
+          spriteSize:
+            - 256
+            - 256
+          useAnimation: true
+          animSpeed: 0.5
+          startRotation: 0
+          randomRotation: true
+          material:
+            billboardType: 0
+            particleType: 51
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/Smoke30Frames.png
+          particleType: 51
+      Children: ~
 GameObject29:
   name: CanvasFade
   prefabPath: ""
@@ -15906,9 +15907,6 @@ GameObject29:
         - 1
         - 1
         - 1
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -15928,6 +15926,9 @@ GameObject29:
         - 0
         - 1
         - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
   Children:
     - name: FadeController
       prefabPath: ""

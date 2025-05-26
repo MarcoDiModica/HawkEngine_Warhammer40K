@@ -1,0 +1,86 @@
+name: shotgun boolets
+prefabPath: ""
+uuid: 8917711769064627024
+tag: Ammunition
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - -2.4226522445678711
+      - 3
+      - 5.0470800399780273
+    localRotation:
+      - -111.141903821767
+      - -8.2509558553217648
+      - -86.823565510248017
+    localScale:
+      - 0.16448879241943359
+      - 0.16448871791362762
+      - 0.16448874771595001
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 17616482687524573465
+    material:
+      name: boolets shotgun_DefaultMaterial_BaseColor
+      color:
+        - 0.898832679
+        - 0.444170266
+        - 0.444170266
+        - 1
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0.100000001
+      - 0.100000001
+      - 0.300000012
+    isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 1
+      - 0.24902725219726562
+      - 0.24902725219726562
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - -0.20000000298023224
+      - -1
+      - -0.30000001192092896
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 1
+    intensity: 3
+    direction:
+      - -1
+      - -1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: ShotgunShells
+      fields:
+        floatSpeed: 1.12383211
+        floatHeight: 0.5
+        rotationSpeed: 37.6649437
+        lifeTime: 10
+        isDetected: false
+Children: ~

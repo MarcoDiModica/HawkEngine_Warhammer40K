@@ -16,6 +16,7 @@ public class Railgun : BaseWeapon
     public EnergyBall energyBall;
     LaserBeam laserBeam;
     public PlayerData playerData;
+    public PlayerInput playerInput;
 
     private RedThirstManager redThirstManager;
 
@@ -66,6 +67,7 @@ public class Railgun : BaseWeapon
         energyBall = gameObject.GetComponent<EnergyBall>();
         laserBeam = gameObject.GetComponent<LaserBeam>();
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
+        playerInput = gameObject.GetComponent<PlayerInput>();
         //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
         //if (shakeManager == null)
         //{
@@ -229,7 +231,14 @@ public class Railgun : BaseWeapon
                                   (transform.forward * localOffset.Z);
 
             bulletStart.Y += 0.5f;
-            Vector3 direction = Vector3.Normalize(transform.forward);
+            Vector3 direction;
+            if (playerInput.GetCurrentLookDirection() != Vector3.Zero)
+            {
+                direction = playerInput.GetCurrentLookDirection();
+            } else
+            {
+                direction = Vector3.Normalize(transform.forward);
+            }
 
             float yaw = (float)(System.Math.Atan2(direction.X, direction.Z) * (180.0 / System.Math.PI));
             float pitch = (float)(-System.Math.Asin(direction.Y) * (180.0 / System.Math.PI));
@@ -287,12 +296,12 @@ public class Railgun : BaseWeapon
         }
     }
 
-    public override void UseAbility1()
+    public override void UseAbility2()
     {
         toggleMode.TriggerAbility();
     }
 
-    public override void UseAbility2()
+    public override void UseAbility1()
     {
         if (railgunMode == RailgunMode.SEMIAUTOMATIC)
         {

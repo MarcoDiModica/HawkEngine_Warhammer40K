@@ -413,7 +413,7 @@ public class EnemyControllerStalker : EnemyController
             hasPounce = false;
             isPouncing = true;
             Audio.PlayOneShot(SFX_POUNCE);
-            AddComponent<ParticleFX>().ApplyPreset(26);
+            AddComponent<ParticleFX>().ApplyPreset(35);
             GetComponent<ParticleFX>().EmitBurst(1);
             Engineson.print("Pouncing");
             anim.SetLeapAnimation();

@@ -574,8 +574,7 @@ public class EnemyControllerRanged : EnemyController
 
             if (particles != null)
             {
-                particles.ApplyPreset(19);
-                particles.EmitBurst(1);
+                EnemySquirting();
             }
 
             if (anim != null)

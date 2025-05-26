@@ -63,6 +63,12 @@ public class EnemyControllerWarrior : EnemyController
     private float deathTimer = 0f;
     private float deathCooldown = 2f;
 
+    public void SetVFX(int id = 34)
+    {
+        var vfx = AddComponent<ParticleFX>();
+        vfx.ApplyPreset(id);
+        vfx.Play();
+    }
     public override void Awake()
     {
         try
@@ -670,6 +676,7 @@ public class EnemyControllerWarrior : EnemyController
             if (isAttacking)
             {
                 Audio.PlayOneShot(MeleeAttackSound);
+                SetVFX();
 
                 if (pc != null && pc.playerData != null)
                 {
@@ -763,8 +770,7 @@ public class EnemyControllerWarrior : EnemyController
 
             if (particles != null)
             {
-                AddComponent<ParticleFX>().ApplyPreset(19);
-                GetComponent<ParticleFX>().EmitBurst(1);
+                EnemySquirting();
             }
 
             if (currentHealth <= 0)

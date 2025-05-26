@@ -3,7 +3,7 @@ using HawkEngine;
 
 public class PlayerDash : MonoBehaviour
 {
-    public float dashSpeed = 1600.0f;
+    public float dashSpeed = 160000.0f;
     public float dashDuration = 0.05f;
     public float dashCooldown = 1.25f;
     public bool canDash = true;
@@ -39,7 +39,8 @@ public class PlayerDash : MonoBehaviour
         lastDashTime = -dashCooldown;
 
         playerCamera = GameObject.Find("MainCamera");
-        playerCamera.GetComponent<PlayerCamera>();    
+        playerCamera.GetComponent<PlayerCamera>();
+        dashSpeed = 160000.0f;
     }
 
     public override void Update(float deltaTime)

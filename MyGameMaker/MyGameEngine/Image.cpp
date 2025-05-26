@@ -229,14 +229,11 @@ void Image::LoadTextureLocalPath(const std::string& path) {
 
 void Image::SaveBinary(const std::string& filename) const {
 
+
 	std::string fullPath = "Library/Images/" + image_name + ".image";
 
 	if (!std::filesystem::exists("Library/Images")) {
 		std::filesystem::create_directories("Library/Images");
-	}
-
-	if (std::filesystem::exists(fullPath)) {
-		return;
 	}
 
 	std::ofstream fout(fullPath, std::ios::binary);
@@ -245,25 +242,53 @@ void Image::SaveBinary(const std::string& filename) const {
 		return;
 	}
 
+	const char header[] = "IMGZ";
+	fout.write(header, sizeof(header) - 1);
+
 	fout.write(reinterpret_cast<const char*>(&_width), sizeof(_width));
 	fout.write(reinterpret_cast<const char*>(&_height), sizeof(_height));
 	fout.write(reinterpret_cast<const char*>(&_channels), sizeof(_channels));
 
-	size_t pathLen = image_path.length();
+	std::string relativePath = image_path;
+	try {
+		fs::path basePath = fs::current_path();
+		fs::path absPath = fs::absolute(image_path);
+		if (absPath.string().find(basePath.string()) == 0) {
+			relativePath = fs::relative(absPath, basePath).string();
+		}
+	}
+	catch (...) {
+
+	}
+
+	uint64_t pathLen = static_cast<uint64_t>(relativePath.length());
 	fout.write(reinterpret_cast<const char*>(&pathLen), sizeof(pathLen));
-	fout.write(image_path.c_str(), pathLen);
+	fout.write(relativePath.c_str(), pathLen);
 
 	std::vector<unsigned char> pixels(_width * _height * _channels);
-
 	glBindTexture(GL_TEXTURE_2D, _id);
-
 	GLenum format = formatFromChannels(_channels);
-
 	glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, pixels.data());
-
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	fout.write(reinterpret_cast<const char*>(pixels.data()), pixels.size());
+	uLongf compressedSize = compressBound(pixels.size());
+	std::vector<Bytef> compressedData(compressedSize);
+
+	int result = compress2(compressedData.data(), &compressedSize,
+		pixels.data(), pixels.size(), Z_BEST_COMPRESSION);
+
+	if (result != Z_OK) {
+		LOG(LogType::LOG_ERROR, "Error compressing image data: %d", result);
+		fout.close();
+		return;
+	}
+
+	uint64_t origSize = static_cast<uint64_t>(pixels.size());
+	uint64_t compSize = static_cast<uint64_t>(compressedSize);
+
+	fout.write(reinterpret_cast<const char*>(&origSize), sizeof(origSize));
+	fout.write(reinterpret_cast<const char*>(&compSize), sizeof(compSize));
+	fout.write(reinterpret_cast<const char*>(compressedData.data()), compSize);
 
 	if (!fout.good()) {
 		LOG(LogType::LOG_ERROR, "Error writing image data to file: %s", fullPath.c_str());
@@ -271,16 +296,16 @@ void Image::SaveBinary(const std::string& filename) const {
 
 	fout.close();
 	LOG(LogType::LOG_INFO, "Successfully saved %s image to: %s", image_name.c_str(), fullPath.c_str());
+
 }
 
 std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
+	std::string fullPath = "Library/Images/" + filename + ".image";
 	std::string baseFilename = filename;
 	if (baseFilename.size() > 6 &&
 		baseFilename.substr(baseFilename.size() - 6) == ".image") {
 		baseFilename = baseFilename.substr(0, baseFilename.size() - 6);
 	}
-
-	std::string fullPath = "Library/Images/" + filename + ".image";
 
 	if (Application->root->GetResourceManager()->GetImage(filename) != nullptr)
 	{
@@ -293,86 +318,66 @@ std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
 		return nullptr;
 	}
 
+	char header[5] = {};
+	fin.read(header, 4);
+	if (strncmp(header, "IMGZ", 4) != 0) {
+		LOG(LogType::LOG_ERROR, "Invalid file format: %s", fullPath.c_str());
+		fin.close();
+		return nullptr;
+	}
+
 	auto img = std::make_shared<Image>();
 
 	img->image_name = baseFilename;
 
-	fin.read(reinterpret_cast<char*>(&img->_width), sizeof(img->_width));
-	fin.read(reinterpret_cast<char*>(&img->_height), sizeof(img->_height));
-	fin.read(reinterpret_cast<char*>(&img->_channels), sizeof(img->_channels));
+	fin.read(reinterpret_cast<char*>(&img->_width), sizeof(_width));
+	fin.read(reinterpret_cast<char*>(&img->_height), sizeof(_height));
+	fin.read(reinterpret_cast<char*>(&img->_channels), sizeof(_channels));
 
-	size_t pathLen;
+	uint64_t pathLen;
 	fin.read(reinterpret_cast<char*>(&pathLen), sizeof(pathLen));
-	img->image_path.resize(pathLen);
-	fin.read(&img->image_path[0], pathLen);
 
-	std::vector<unsigned char> pixels(img->_width * img->_height * img->_channels);
-	fin.read(reinterpret_cast<char*>(pixels.data()), pixels.size());
+	std::vector<char> pathBuffer(pathLen + 1, '\0');
+	fin.read(pathBuffer.data(), pathLen);
+	img->image_path = std::string(pathBuffer.data(), pathLen);
 
-	if (!fin.good() && !fin.eof()) {
-		LOG(LogType::LOG_ERROR, "Error reading image data from file: %s", fullPath.c_str());
-		return nullptr;
-	}
+	uint64_t origSize, compSize;
+	fin.read(reinterpret_cast<char*>(&origSize), sizeof(origSize));
+	fin.read(reinterpret_cast<char*>(&compSize), sizeof(compSize));
+
+	std::vector<Bytef> compressedData(compSize);
+	fin.read(reinterpret_cast<char*>(compressedData.data()), compSize);
 
 	fin.close();
 
+	std::vector<Bytef> pixels(origSize);
+	uLongf destLen = origSize;
+
+	int result = uncompress(pixels.data(), &destLen,
+		compressedData.data(), compSize);
+
+	if (result != Z_OK || destLen != origSize) {
+		LOG(LogType::LOG_ERROR, "Failed to decompress image data: %d", result);
+		return nullptr;
+	}
+
+	GLenum format = formatFromChannels(img->_channels);
+
 	glGenTextures(1, &img->_id);
 	glBindTexture(GL_TEXTURE_2D, img->_id);
-
-	GLint internalFormat;
-	GLenum format;
-
-	switch (img->_channels) {
-	case 1:
-		internalFormat = GL_R8;
-		format = GL_RED;
-		break;
-	case 2:
-		internalFormat = GL_RG8;
-		format = GL_RG;
-		break;
-	case 3:
-		internalFormat = GL_RGB8;
-		format = GL_RGB;
-		break;
-	case 4:
-		internalFormat = GL_RGBA8;
-		format = GL_RGBA;
-		break;
-	default:
-		LOG(LogType::LOG_WARNING, "Unexpected number of channels: %d, using RGB", img->_channels);
-		internalFormat = GL_RGB8;
-		format = GL_RGB;
-		break;
-	}
-
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, img->_width, img->_height, 0,
-		format, GL_UNSIGNED_BYTE, pixels.data());
-
-	GLenum glError = glGetError();
-	if (glError != GL_NO_ERROR) {
-		LOG(LogType::LOG_ERROR, "OpenGL error when loading texture: 0x%x", glError);
-	}
-
+	glTexImage2D(GL_TEXTURE_2D, 0, format, img->_width, img->_height, 0, format, GL_UNSIGNED_BYTE, pixels.data());
 	glGenerateMipmap(GL_TEXTURE_2D);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_RED);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_GREEN);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_BLUE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_A, GL_ALPHA);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	LOG(LogType::LOG_INFO, "Successfully loaded image: %s (%dx%d, %d channels)",
-		fullPath.c_str(), img->_width, img->_height, img->_channels);
 
 	Application->root->GetResourceManager()->AddImage(img);
 
 	return img;
+
+
 }

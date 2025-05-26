@@ -144,10 +144,10 @@ GameObject1:
             - 10253
             - 9612
           sprite_offset:
-            - 1708.83301
-            - 8650.7998
+            - 0
+            - 3844.80005
           anim_speed: 0.5
-          anim_index: 55
+          anim_index: 24
           anim_index_limit: 60
           color:
             - 1
@@ -2571,7 +2571,7 @@ GameObject3:
   prefabPath: Assets/Prefabs/Canvas_CreditMenu.prefab.yaml
   uuid: 11992356840085735898
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -4588,7 +4588,7 @@ GameObject3:
             - 0
             - 0
       Children: ~
-    - name: Ivo_Montes
+    - name: Pol_Celaya
       prefabPath: ""
       uuid: 1776296715053871525
       tag: Untagged
@@ -4632,7 +4632,7 @@ GameObject3:
         TextComponent:
           name: TextComponent
           enabled: true
-          text: Ivo Montes
+          text: Pol Celaya
           position:
             - 0
             - 0
@@ -4642,7 +4642,7 @@ GameObject3:
             - 0.114125334
           fontSize: 15
           boxSize:
-            - 133.5
+            - 145.5
             - 16.5
           spriteSize:
             - 0
@@ -4841,6 +4841,72 @@ GameObject3:
           fontSize: 15
           boxSize:
             - 192
+            - 16.5
+          spriteSize:
+            - 0
+            - 0
+          sheetSize:
+            - 0
+            - 0
+          spriteOffset:
+            - 0
+            - 0
+      Children: ~
+    - name: Ivo_Montes
+      prefabPath: ""
+      uuid: 9871433525383801112
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.75
+            - 0.275000006
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        TextComponent:
+          name: TextComponent
+          enabled: true
+          text: Ivo Montes
+          position:
+            - 0
+            - 0
+          color:
+            - 0.709803939
+            - 0.128141299
+            - 0.114125334
+          fontSize: 15
+          boxSize:
+            - 133.5
             - 16.5
           spriteSize:
             - 0

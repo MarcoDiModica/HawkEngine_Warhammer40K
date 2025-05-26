@@ -241,6 +241,7 @@ namespace EngineBinds {
 	void PlayParticle(MonoObject* particleRef);
 	void StopParticle(MonoObject* particleRef);
 	void EmitBurst(MonoObject* particleRef, int burstCount);
+	void SetParticleStartRotation(MonoObject* particleRef, float startRotation);
 }
 
 #endif // ENGINE_BINDS_H

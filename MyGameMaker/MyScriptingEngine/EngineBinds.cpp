@@ -1678,6 +1678,14 @@ void EngineBinds::PlayParticle(MonoObject* particleRef)
 	}
 }
 
+void EngineBinds::SetParticleStartRotation(MonoObject* particleRef, float startRotation)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->SetStartRotation(startRotation);
+	}
+}
+
 void EngineBinds::StopParticle(MonoObject* particleRef)
 {
 	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
@@ -1988,6 +1996,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.ParticleFX::Play", (const void*)&EngineBinds::PlayParticle);
 	mono_add_internal_call("HawkEngine.ParticleFX::Stop", (const void*)&EngineBinds::StopParticle);
 	mono_add_internal_call("HawkEngine.ParticleFX::EmitBurst", (const void*)&EngineBinds::EmitBurst);
+	mono_add_internal_call("HawkEngine.ParticleFX::SetParticleStartRotation", (const void*)&EngineBinds::SetParticleStartRotation);
 }
 
 template <class T>

@@ -76,6 +76,7 @@ public class EnemyControllerStalker : EnemyController
             return;
         }
 
+        //collider = gameObject.GetComponent<CapsuleCollider>();
         collider = gameObject.GetComponent<BoxCollider>();
         if (collider == null)
         { 

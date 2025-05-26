@@ -112,6 +112,7 @@ public class EnemyControllerWarrior : EnemyController
                 return;
             }
 
+            //collider = gameObject.GetComponent<CapsuleCollider>();
             collider = gameObject.GetComponent<BoxCollider>();
             if (collider == null)
             {

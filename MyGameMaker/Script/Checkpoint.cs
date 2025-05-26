@@ -85,13 +85,12 @@ public class Checkpoint : MonoBehaviour
             enemies.Add(GameObject.FindGameObjectsWithTag("Stalker")[i]);
             Engineson.print(enemies[i].name);
         }
-
     }
 
     
     public override void Start()
     {
-        
+        //ResetCheckPointData();
     }
 
     public override void Update(float deltatime)
@@ -298,5 +297,32 @@ public class Checkpoint : MonoBehaviour
             Engineson.print("PlayerDetected");
         }
 
+    }
+
+    public void ResetCheckPointData()
+    {
+        checkpointData = new CheckpointData()
+        {
+            playerSpawnX = 0f,
+            playerSpawnY = 0f,
+            playerSpawnZ = 0f,
+            playerCurrentHealth = 100f,
+            playerCurrentTemporalHealth = 100f,
+            boltgunCurrentAmmo = 0,
+            shotgunCurrentAmmo = 0,
+            hasBoltgun = false,
+            hasShotgun = false,
+            hasRailgun = false,
+            isBoltgunUpgraded = false,
+            isShotgunUpgraded = false,
+            isRailgunUpgraded = false,
+            hasMedicaeStimm = false,
+            hasAmmunitionBlessing = false,
+            hasMagnet = false,
+            hasPiercingBullets = false
+        };
+        
+        string json = JsonSerializer.Serialize<CheckpointData>(checkpointData);
+        File.WriteAllText("Serialized/checkpointData.json", json);
     }
 }

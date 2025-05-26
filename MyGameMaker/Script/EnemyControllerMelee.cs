@@ -788,8 +788,8 @@ public class EnemyControllerMelee : EnemyController
         {
             if (particles != null)
             {
-                AddComponent<ParticleFX>().ApplyPreset(19);
-                GetComponent<ParticleFX>().EmitBurst(1);
+                // Emit blood particles
+                EnemySquirting();
             }
 
             if (currentHealth <= 0)

@@ -61,17 +61,17 @@ GameObject1:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -10.191407203674316
-        - 17.091867446899414
-        - 6.7519006729125977
+        - 617.210693359375
+        - 355.86578369140625
+        - -442.27590942382812
       localRotation:
-        - -130.00000586752782
-        - 45.000007244515459
-        - -179.99999565358792
+        - -130.00000393764998
+        - 45.000002600858409
+        - -179.99999565358834
       localScale:
-        - 0.99999918209561667
-        - 0.99999994664585778
-        - 0.99999910694767635
+        - 0.9999992847442627
+        - 0.99999994039535522
+        - 0.99999922513961792
     CameraComponent:
       name: CameraComponent
       enabled: true
@@ -481,9 +481,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 1.60624635
+          floatSpeed: 0.73630631
           floatHeight: 0.5
-          rotationSpeed: 71.9355698
+          rotationSpeed: 98.1000595
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -589,9 +589,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 0.951481164
+          floatSpeed: 1.42474592
           floatHeight: 0.5
-          rotationSpeed: 54.1117744
+          rotationSpeed: 43.8805656
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -4294,7 +4294,7 @@ GameObject20:
       prefabPath: ""
       uuid: 13055247711068244380
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6310,7 +6310,7 @@ GameObject20:
       prefabPath: ""
       uuid: 9998378317629824216
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7150,7 +7150,7 @@ GameObject20:
       prefabPath: ""
       uuid: 12756864127904200681
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11080,7 +11080,7 @@ GameObject21:
       prefabPath: ""
       uuid: 5394484032393638463
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11122,7 +11122,7 @@ GameObject21:
       prefabPath: ""
       uuid: 1440562189602295462
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19700,7 +19700,7 @@ GameObject24:
       prefabPath: ""
       uuid: 1588361673359088064
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -19869,7 +19869,7 @@ GameObject25:
   prefabPath: ""
   uuid: 6388059465102455352
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -28375,9 +28375,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.52348626
+          floatSpeed: 1.31283951
           floatHeight: 0.5
-          rotationSpeed: 44.5486488
+          rotationSpeed: 87.6950378
   Children: ~
 GameObject34:
   name: BiblePage_Pueblo
@@ -28460,9 +28460,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.762163103
+          floatSpeed: 1.41099834
           floatHeight: 0.5
-          rotationSpeed: 59.6772041
+          rotationSpeed: 99.6214523
   Children: ~
 GameObject35:
   name: BiblePage_Pasillo_Zona3
@@ -28545,9 +28545,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.753114998
+          floatSpeed: 1.87085903
           floatHeight: 0.5
-          rotationSpeed: 99.8368835
+          rotationSpeed: 38.7292175
   Children: ~
 GameObject36:
   name: BiblePage_Ciudad
@@ -28630,9 +28630,9 @@ GameObject36:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.767321348
+          floatSpeed: 1.87589884
           floatHeight: 0.5
-          rotationSpeed: 95.9910507
+          rotationSpeed: 92.637619
   Children: ~
 GameObject37:
   name: Barril_Ciudad1
@@ -36685,7 +36685,7 @@ GameObject98:
   prefabPath: ""
   uuid: 14353319690858754280
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -40446,10 +40446,10 @@ GameObject137:
             - 1225
             - 40
           sprite_offset:
-            - 175
+            - 875
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 5
           anim_index_limit: 6
           color:
             - 1
@@ -40574,10 +40574,10 @@ GameObject137:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 0
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 0
           anim_index_limit: 4
           color:
             - 1
@@ -40702,10 +40702,10 @@ GameObject137:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 0
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 0
           anim_index_limit: 4
           color:
             - 1
@@ -45172,7 +45172,7 @@ GameObject142:
       prefabPath: ""
       uuid: 6750679036182856212
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -46320,7 +46320,7 @@ GameObject142:
                                       prefabPath: ""
                                       uuid: 3976416577445253952
                                       tag: Untagged
-                                      active: true
+                                      active: false
                                       isStatic: false
                                       Components:
                                         Transform_Component:
@@ -46408,7 +46408,7 @@ GameObject142:
                                           prefabPath: ""
                                           uuid: 15241579144144417828
                                           tag: Untagged
-                                          active: true
+                                          active: false
                                           isStatic: false
                                           Components:
                                             Transform_Component:
@@ -46450,7 +46450,7 @@ GameObject142:
                                           prefabPath: ""
                                           uuid: 1829950831750583134
                                           tag: Untagged
-                                          active: true
+                                          active: false
                                           isStatic: false
                                           Components:
                                             Transform_Component:
@@ -46515,7 +46515,7 @@ GameObject142:
                                       prefabPath: ""
                                       uuid: 7072250728429641775
                                       tag: Untagged
-                                      active: true
+                                      active: false
                                       isStatic: false
                                       Components:
                                         Transform_Component:
@@ -47532,7 +47532,7 @@ GameObject142:
       prefabPath: ""
       uuid: 9455378644202122856
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -47574,7 +47574,7 @@ GameObject142:
       prefabPath: ""
       uuid: 1938234868609460992
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -110252,78 +110252,4 @@ GameObject210:
       Script0:
         name: Checkpoint
         fields: ~
-  Children: ~
-GameObject211:
-  name: EmptyGameObject
-  prefabPath: ""
-  uuid: 16228070372417148416
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -4.1837868690490723
-        - 6.9433178901672363
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 3
-      emissionRate: 300
-      particlesPerSecond: 300
-      minLifetime: 0.0900000036
-      maxLifetime: 0.100000001
-      minSpeed: 1
-      maxSpeed: 1
-      startSize: 0.200000003
-      endSize: 0.200000003
-      minSize: 0.200000003
-      maxSize: 0.200000003
-      startColor:
-        - 1
-        - 0.419607878
-        - 0
-      endColor:
-        - 0.225680947
-        - 0.225680947
-        - 0.225680947
-      startAlpha: 70
-      endAlpha: 25
-      rotationSpeed: 1
-      gravity:
-        - 0
-        - -40
-        - 0
-      shapeParam1: 0.5
-      shapeParam2: 0.5
-      shapeParam3: 0
-      isOneShot: false
-      isPlaying: true
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 70
-        - 80
-      useAnimation: false
-      animSpeed: 0.100000001
-      startRotation: 0
-      randomRotation: false
-      material:
-        billboardType: 0
-        particleType: 37
-        softness: 0
-        useColorGradient: false
-        texturePath: Assets/Textures/niebla30Frames.png
-      particleType: 37
   Children: ~

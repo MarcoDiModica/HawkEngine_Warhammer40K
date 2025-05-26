@@ -1200,7 +1200,7 @@ namespace ParticlePresets {
 		true,						   // Use animation
 		false,						   // Random animation Index
 		0.1f,						   // Animation speed
-		0.0f,						   // Start rotation
+		90.0f,						   // Start rotation
 		false,						   // Random rotation
 		8.0f,						   // Min scale
 		8.0f,						   // Max scale
@@ -1211,7 +1211,7 @@ namespace ParticlePresets {
 	const ParticlePreset Lictor_Blood = {
 		ParticleType::LICTOR_BLOOD,
 		false,						   // PlayOnAwake
-		0.001,						   // Duration (only if one-shot)
+		0.01,						   // Duration (only if one-shot)
 		glm::vec3(1,1,1),   				   // Start color (white)
 		glm::vec3(1,1,1),   				   // End color (white)
 		1.0f,                          			   // Alpha start
@@ -1233,7 +1233,7 @@ namespace ParticlePresets {
 		glm::vec2(321,181),		   	   // Sprite size
 		true,						   // Use animation
 		false,						   // Random animation Index
-		0.06f,						   // Animation speed
+		0.01f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
 		16.0f,						   // Min scale

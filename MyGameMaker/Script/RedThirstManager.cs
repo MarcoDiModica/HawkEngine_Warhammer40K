@@ -78,6 +78,17 @@ public class RedThirstManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.U))
         {
             AddRedThirstPoint(1);
+            GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
+            gameObject.AddChild(redThirstVFX);
+            redThirstVFX.AddComponent<ParticleFX>();
+            ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
+            if (particleFX != null)
+            {
+                particleFX.ApplyPreset(32);
+                //particleFX.EmitBurst(100);
+                particleFX.EmitBurst(1);
+            }
+
         }
     }
 
@@ -91,6 +102,16 @@ public class RedThirstManager : MonoBehaviour
             ResetAbilityCombo();
         }
         lastActionTime = 0f;
+        GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
+        gameObject.AddChild(redThirstVFX);
+        redThirstVFX.AddComponent<ParticleFX>();
+        ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
+        if (particleFX != null)
+        {
+            particleFX.ApplyPreset(32);
+            //particleFX.EmitBurst(100);
+            particleFX.EmitBurst(1);
+        }
     }
 
     public void OnWeaponUsed()
@@ -108,11 +129,22 @@ public class RedThirstManager : MonoBehaviour
         //    ResetWeaponCombo();
         //}
         //lastActionTime = 0f;
+        GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
+        gameObject.AddChild(redThirstVFX);
+        redThirstVFX.AddComponent<ParticleFX>();
+        ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
+        if (particleFX != null)
+        {
+            particleFX.ApplyPreset(32);
+            //particleFX.EmitBurst(100);
+            particleFX.EmitBurst(1);
+        }
     }
     public void OnBoltgunUsed()
     {
         boltgunUsed = true;
         OnWeaponUsed();
+
     }
     public void OnShotgunUsed()
     {

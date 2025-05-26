@@ -247,7 +247,15 @@ public class Boltgun : BaseWeapon
                                   (transform.forward * localOffset.Z);
             bulletStart.Y += 0.5f;
 
-            Vector3 direction = Vector3.Normalize(playerInput.GetCurrentLookDirection());
+            Vector3 direction;
+            if (playerInput.GetCurrentLookDirection() != Vector3.Zero)
+            {
+                direction = playerInput.GetCurrentLookDirection();
+            }
+            else
+            {
+                direction = Vector3.Normalize(transform.forward);
+            }
 
             float spreadYaw = ((float)random.NextDouble() - 0.5f) * bulletSpreadAngle;
             float spreadPitch = ((float)random.NextDouble() - 0.5f) * bulletSpreadAngle;

@@ -327,7 +327,16 @@ public class Shotgun : BaseWeapon
 
                 for (int i = 0; i < numProjectiles; i++)
                 {
-                    Vector3 baseDirection = playerInput.GetCurrentLookDirection();
+
+                    Vector3 baseDirection;
+                    if (playerInput.GetCurrentLookDirection() != Vector3.Zero)
+                    {
+                        baseDirection = playerInput.GetCurrentLookDirection();
+                    }
+                    else
+                    {
+                        baseDirection = Vector3.Normalize(transform.forward);
+                    }
 
                     float randomYaw = (float)(random.NextDouble() * 2 * maxSpreadAngle - maxSpreadAngle);   // izquierda/derecha
                     float randomPitch = (float)(random.NextDouble() * 2 * maxSpreadAngle - maxSpreadAngle); // arriba/abajo

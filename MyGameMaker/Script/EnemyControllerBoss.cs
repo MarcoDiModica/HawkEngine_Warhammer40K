@@ -12,7 +12,7 @@ using HawkEngine;
 public class EnemyControllerBoss : EnemyController
 {
     private float hurtboxDuration = 0.5f; 
-    private Vector3 slamHurtboxSize = new Vector3(3.0f, 1.0f, 15.0f);
+    private Vector3 slamHurtboxSize = new Vector3(3.0f, 10.0f, 15.0f);
     private Vector3 hurtboxOffset = new Vector3(4.0f, 0.0f, 0.0f);
     private GameObject slamHurtboxObject;
 
@@ -95,6 +95,7 @@ public class EnemyControllerBoss : EnemyController
 
     private EnemyControllerBossTail tailController;
     private bool hasUnburiedInPhase2 = false;
+    private bool clawDamageAppliedThisFrame = false;
 
     private MawlocAnimation anim;
     private PlayerController pc;
@@ -120,7 +121,7 @@ public class EnemyControllerBoss : EnemyController
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
-        rb.SetMass(1000.0f);
+        rb.SetMass(100000.0f);
         tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
         tailController?.gameObject.SetActive(false);
         currentHealth = 1500.0f;
@@ -173,6 +174,7 @@ public class EnemyControllerBoss : EnemyController
             }
 
             float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+            clawDamageAppliedThisFrame = false;
 
                 if (playerTransform != null)
                 {
@@ -389,13 +391,14 @@ public class EnemyControllerBoss : EnemyController
             ApplyBossDamage(slamDamage);
         }
 
-        if (clawHurtboxObjects != null)
+        if (clawHurtboxObjects != null && !clawDamageAppliedThisFrame)
         {
             foreach (GameObject claw in clawHurtboxObjects)
             {
                 if (claw != null && IsPlayerInCollider(claw, playerPos))
                 {
                     ApplyBossDamage(strikeDamage);
+                    clawDamageAppliedThisFrame = true;
                     break;
                 }
             }
@@ -413,10 +416,9 @@ public class EnemyControllerBoss : EnemyController
 
     private bool IsPlayerInCollider(GameObject hurtbox, Vector3 playerPos)
     {
-        Transform transform = hurtbox.GetComponent<Transform>();
-        Vector3 center = transform.position;
-        Vector3 size = transform.localScale;
-        Vector3 halfSize = size * 0.5f;
+        var bc = hurtbox.GetComponent<BoxCollider>();
+        Vector3 halfSize = bc.GetSize() * 0.5f; 
+        Vector3 center = hurtbox.GetComponent<Transform>().position;
 
         return (playerPos.X >= center.X - halfSize.X && playerPos.X <= center.X + halfSize.X) &&
                (playerPos.Y >= center.Y - halfSize.Y && playerPos.Y <= center.Y + halfSize.Y) &&

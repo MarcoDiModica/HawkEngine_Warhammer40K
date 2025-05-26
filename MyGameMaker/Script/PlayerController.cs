@@ -671,7 +671,7 @@ public class PlayerController : MonoBehaviour
 
                 TransitionFromDashState();
                 isDashing = false;
-                dashEndTimer = 0.15f;
+                dashEndTimer = 0.10f;
             }
         }
     }

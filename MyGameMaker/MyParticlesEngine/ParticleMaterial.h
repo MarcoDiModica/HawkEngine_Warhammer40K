@@ -12,6 +12,7 @@ enum class ParticleType {
     FIRE = 2,
     MUZZLE_FLASH = 3,
     EXPLOSION = 4,
+    FOOTSTEPS = 51,
     // ENVIRONMENT
     FLAME = 5,
     ENVIRONMENT_SMOKE = 6,

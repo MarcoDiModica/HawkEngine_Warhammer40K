@@ -261,8 +261,12 @@ public class Boltgun : BaseWeapon
             ParticleFX particleFX = projectile.GetComponent<ParticleFX>();
             if (particleFX != null)
             {
-                particleFX.ApplyPreset(14);
+
+
+                particleFX.ApplyPreset(51);
+            //    particleFX.EmitBurst(100);
                 particleFX.EmitBurst(1);
+
             }
 
             bulletsObjects.Add(projectile);

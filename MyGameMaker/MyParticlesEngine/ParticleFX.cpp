@@ -1752,6 +1752,76 @@ false,										 // Random rotation
 "Assets/Textures/EnergyBallHittingVFX.png",   // Texture path
 false 									     // Is Local Space
 	};
+
+
+	const ParticlePreset Bullet = {
+ParticleType::REGULAR_BULLET,
+false,										 // PlayOnAwake
+5,											 // Duration (only if one-shot)
+glm::vec3(1,1,1),   						 // Start color (white)
+glm::vec3(1,1,1),   						 // End color (white)
+1.0f,		                     			 // Alpha start
+1.0f,		                     			 // Alpha end
+2.0f,		                     			 // Size start
+2.0f,		                       			 // Size end
+5,                          				 // Min lifetime
+5,                         					 // Max lifetime
+0.0f,                          				 // Min speed
+0.01f,                          			 // Max speed
+0.0f,										 // End Speed
+glm::vec3(0.0f,0.01f,0.0f),	   			 // Gravity (negative for upward)
+0,                          				 // Rotation speed
+0.5f,                         				 // Emission rate (particles per second)
+EmitterShape::POINT,            			 // Shape
+0.2f,                          				 // Cone base radius
+1.0f,                          				 // Cone height
+20.0f,                         				 // Cone angle in degrees
+glm::vec2(226 , 275),		   					 // Sprite size
+true,										 // Use animation
+false,										 // Random animation Index
+0.1f,										 // Animation speed
+180.0f,										 // Start rotation
+false,										 // Random rotation
+2.0f,										 // Min scale
+2.0f,										 // Max scale
+"Assets/Textures/bullet.png",   // Texture path
+true 									     // Is Local Space
+	};
+
+	const ParticlePreset Gun_trail = {
+ParticleType::GUN_TRAIL,
+false,										 // PlayOnAwake
+0.8f,											 // Duration (only if one-shot)
+glm::vec3(1,1,1),   						 // Start color (white)
+glm::vec3(1,1,1),   						 // End color (white)
+1.0f,		                     			 // Alpha start
+0.0f,		                     			 // Alpha end
+2.0f,		                     			 // Size start
+0.01f,		                       			 // Size end
+0.5f,                          				 // Min lifetime
+0.5f,                         					 // Max lifetime
+0.0f,                          				 // Min speed
+0.01f,                          			 // Max speed
+0.0f,										 // End Speed
+glm::vec3(0.0f,0.01f,0.0f),	   			 // Gravity (negative for upward)
+0,                          				 // Rotation speed
+100.0f,                         				 // Emission rate (particles per second)
+EmitterShape::POINT,            			 // Shape
+0.2f,                          				 // Cone base radius
+1.0f,                          				 // Cone height
+20.0f,                         				 // Cone angle in degrees
+glm::vec2(336 , 330 ),		   					 // Sprite size
+true,										 // Use animation
+false,										 // Random animation Index
+0.1f,										 // Animation speed
+180.0f,										 // Start rotation
+false,										 // Random rotation
+2.0f,										 // Min scale
+2.0f,										 // Max scale
+"Assets/Textures/smoke.png",   // Texture path
+true 									     // Is Local Space
+	};
+
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -2383,6 +2453,14 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::ENERGY_BALL_HITING:
 		preset = ParticlePresets::EnergyBallHitting;
+		SetOneShot(false);
+		break;
+	case ParticleType::REGULAR_BULLET:
+		preset = ParticlePresets::Bullet;
+		SetOneShot(false);
+		break;
+	case ParticleType::GUN_TRAIL:
+		preset = ParticlePresets::Gun_trail;
 		SetOneShot(false);
 		break;
 	default:

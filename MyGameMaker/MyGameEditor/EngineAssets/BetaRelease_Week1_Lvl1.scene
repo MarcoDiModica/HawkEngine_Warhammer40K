@@ -481,9 +481,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 0.73630631
+          floatSpeed: 1.65129495
           floatHeight: 0.5
-          rotationSpeed: 98.1000595
+          rotationSpeed: 52.9605675
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -589,9 +589,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 1.42474592
+          floatSpeed: 0.612486839
           floatHeight: 0.5
-          rotationSpeed: 43.8805656
+          rotationSpeed: 65.3694763
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -28375,9 +28375,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.31283951
+          floatSpeed: 0.835872114
           floatHeight: 0.5
-          rotationSpeed: 87.6950378
+          rotationSpeed: 61.8349953
   Children: ~
 GameObject34:
   name: BiblePage_Pueblo
@@ -28460,9 +28460,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.41099834
+          floatSpeed: 1.08878541
           floatHeight: 0.5
-          rotationSpeed: 99.6214523
+          rotationSpeed: 74.1426315
   Children: ~
 GameObject35:
   name: BiblePage_Pasillo_Zona3
@@ -28545,9 +28545,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.87085903
+          floatSpeed: 1.2337836
           floatHeight: 0.5
-          rotationSpeed: 38.7292175
+          rotationSpeed: 37.8162117
   Children: ~
 GameObject36:
   name: BiblePage_Ciudad
@@ -28630,9 +28630,9 @@ GameObject36:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.87589884
+          floatSpeed: 0.603814781
           floatHeight: 0.5
-          rotationSpeed: 92.637619
+          rotationSpeed: 73.9093475
   Children: ~
 GameObject37:
   name: Barril_Ciudad1
@@ -40446,10 +40446,10 @@ GameObject137:
             - 1225
             - 40
           sprite_offset:
-            - 875
+            - 700
             - 0
           anim_speed: 0.5
-          anim_index: 5
+          anim_index: 4
           anim_index_limit: 6
           color:
             - 1
@@ -40574,10 +40574,10 @@ GameObject137:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 150
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 3
           anim_index_limit: 4
           color:
             - 1
@@ -40702,10 +40702,10 @@ GameObject137:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 150
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 3
           anim_index_limit: 4
           color:
             - 1

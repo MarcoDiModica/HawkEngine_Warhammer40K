@@ -48,7 +48,7 @@ public class Grenade : MonoBehaviour
         {
 
 
-            particleFX.ApplyPreset(12);
+            particleFX.ApplyPreset(51);
             //    particleFX.EmitBurst(100);
             particleFX.EmitBurst(1);
 
@@ -73,7 +73,6 @@ public class Grenade : MonoBehaviour
         }
         deathTimerPrevention += deltaTime;
         //Engineson.print(deathTimerPrevention.ToString());
-
         if (deathTimerPrevention > .1f)
         {
             if (explosion != null) {

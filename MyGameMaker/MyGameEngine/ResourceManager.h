@@ -91,6 +91,7 @@ public:
 	}
 
 	const std::vector<std::shared_ptr<Material>>& GetAllMaterials() const { return materials; }
+	const std::vector<std::shared_ptr<Mesh>>& GetAllMeshes() const { return meshes; }
 
 	//images
 	std::shared_ptr<Image> AddImage(std::shared_ptr<Image> image) {

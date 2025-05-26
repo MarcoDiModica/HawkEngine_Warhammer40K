@@ -8,6 +8,7 @@
 #include "../MyGameEditor/Log.h"
 #include "../MyGameEditor/App.h"
 #include "ResourceManager.h"
+#include "MyGameEditor/BindlessManager.h"
 
 unsigned int Material::next_id = 0;
 
@@ -221,6 +222,8 @@ void Material::SaveBinary(const std::string& filename) const {
 		return;
 	}
 
+	fout.write(reinterpret_cast<const char*>(&matID), sizeof(matID));
+
 	fout.write(reinterpret_cast<const char*>(&wrapMode), sizeof(wrapMode));
 	fout.write(reinterpret_cast<const char*>(&filter), sizeof(filter));
 	fout.write(reinterpret_cast<const char*>(&color), sizeof(color));
@@ -235,7 +238,7 @@ void Material::SaveBinary(const std::string& filename) const {
 
 	auto writeTexture = [&](const std::string& tag, const std::shared_ptr<Image>& img) {
 		if (img && !img->image_name.empty()) {
-			fout.write(tag.c_str(), 3); // Escribe tipo
+			fout.write(tag.c_str(), 3);
 			uint32_t len = img->image_name.size();
 			fout.write(reinterpret_cast<char*>(&len), sizeof(len));
 			fout.write(img->image_name.c_str(), len);
@@ -270,7 +273,7 @@ std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
 
 	mat = std::make_shared<Material>();
 
-	mat->matID = std::stoull(filename);
+	fin.read(reinterpret_cast<char*>(&mat->matID), sizeof(mat->matID));
 
 	fin.read(reinterpret_cast<char*>(&mat->wrapMode), sizeof(mat->wrapMode));
 	fin.read(reinterpret_cast<char*>(&mat->filter), sizeof(mat->filter));
@@ -324,6 +327,9 @@ std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
 		}
 	}
 
-	LOG(LogType::LOG_INFO, "Material loaded successfully: %s", fullPath.c_str());
+	//LOG(LogType::LOG_INFO, "Material loaded successfully: %s", fullPath.c_str());
+
+	BindlessManager::GetInstance().RegisterMaterial(mat.get());
+
 	return mat;
 }

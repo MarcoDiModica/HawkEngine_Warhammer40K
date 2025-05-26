@@ -904,8 +904,6 @@ void Mesh::SaveBinary(const std::string& filename) const
 
 	uint32_t modelID = model->GetID();
 	fout.write(reinterpret_cast<const char*>(&modelID), sizeof(modelID));
-
-	LOG(LogType::LOG_INFO, "Mesh saved successfully: %s", fullPath.c_str());
 }
 
 std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
@@ -1013,7 +1011,6 @@ std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 	mesh->nameM = filename;
 	mesh->filePath = filename;
 
-	LOG(LogType::LOG_INFO, "Mesh loaded successfully: %s", fullPath.c_str());
 	return mesh;
 }
 

@@ -149,8 +149,6 @@ protected:
 			LoadMesh();
 		}
 
-		BindlessManager::GetInstance().RegisterMaterial(material.get());
-
 		return true;
     }
 };

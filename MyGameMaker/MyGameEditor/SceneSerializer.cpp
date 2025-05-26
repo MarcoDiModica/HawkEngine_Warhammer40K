@@ -206,7 +206,7 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 		return false;
 	}
 
-	/*auto resourceManager = Application->root->GetResourceManager();
+	auto resourceManager = Application->root->GetResourceManager();
 	if (resourceManager) {
 		const auto& materials = resourceManager->GetAllMaterials();
 		for (const auto& material : materials) {
@@ -214,7 +214,7 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 				BindlessManager::GetInstance().RegisterMaterial(material.get());
 			}
 		}
-	}*/
+	}
 	
 	//Application->root->GetActiveScene()->Start();
 }

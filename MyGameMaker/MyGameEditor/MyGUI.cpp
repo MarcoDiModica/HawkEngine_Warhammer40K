@@ -273,12 +273,12 @@ bool MyGUI::PostUpdate()
 
 bool MyGUI::CleanUp() {
 	
-	ImGui_ImplOpenGL3_Shutdown();
+	/*ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 
 	if (ImGui::GetCurrentContext() != nullptr) {
 		ImGui::DestroyContext();
-	}
+	}*/
 
 	return true;
 }

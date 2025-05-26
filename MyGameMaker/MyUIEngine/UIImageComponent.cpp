@@ -138,10 +138,6 @@ void UIImageComponent::Update(float deltaTime)
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) *
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
 		glm::scale(glm::mat4(1.0f), scale);
-
-	material->color = color;
-
-	BindlessManager::GetInstance().UpdateMaterial(material.get());
 }
 
 void UIImageComponent::Destroy()
@@ -167,8 +163,6 @@ void UIImageComponent::SetTexture(std::string path)
 	material->setImage(texture);
 	material->sheetSize = glm::vec2(texture->width(), texture->height());
 	LoadMesh();
-
-	BindlessManager::GetInstance().RegisterMaterial(material.get());
 }
 
 void UIImageComponent::LoadMesh()

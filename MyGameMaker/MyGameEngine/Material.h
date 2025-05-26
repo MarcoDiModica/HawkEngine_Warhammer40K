@@ -128,62 +128,43 @@ protected:
         return node;
     }
 
-    bool decode(const YAML::Node& node) {
+	bool decode(const YAML::Node& node) {
 		if (!node["name"])
 			return false;
 
-		std::string name = node["name"].as<std::string>();
+		matName = node["name"].as<std::string>();
 
-		std::string fullPath = "Library/Materials/" + name + ".mat";
-
-		std::ifstream fin(fullPath, std::ios::binary);
-		if (!fin.is_open()) {
+		std::shared_ptr<Material> loadedMaterial = LoadBinary(matName);
+		if (!loadedMaterial) {
 			return false;
-			throw std::runtime_error("Error opening material file: " + fullPath);
 		}
 
-		matName = name;
+		color = loadedMaterial->color;
+		metallic = loadedMaterial->metallic;
+		roughness = loadedMaterial->roughness;
+		ao = loadedMaterial->ao;
+		emissiveColor = loadedMaterial->emissiveColor;
+		emissiveIntensity = loadedMaterial->emissiveIntensity;
+		heightScale = loadedMaterial->heightScale;
+		tonemapStrength = loadedMaterial->tonemapStrength;
+		shaderType = loadedMaterial->shaderType;
+		wrapMode = loadedMaterial->wrapMode;
+		filter = loadedMaterial->filter;
+		spriteOffset = loadedMaterial->spriteOffset;
+		spriteSize = loadedMaterial->spriteSize;
+		sheetSize = loadedMaterial->sheetSize;
 
-		fin.read(reinterpret_cast<char*>(&wrapMode), sizeof(wrapMode));
-		fin.read(reinterpret_cast<char*>(&filter), sizeof(filter));
-		fin.read(reinterpret_cast<char*>(&color), sizeof(color));
-		fin.read(reinterpret_cast<char*>(&shaderType), sizeof(shaderType));
+		imagePtr = loadedMaterial->imagePtr;
+		normalMapPtr = loadedMaterial->normalMapPtr;
+		metallicMapPtr = loadedMaterial->metallicMapPtr;
+		roughnessMapPtr = loadedMaterial->roughnessMapPtr;
+		aoMapPtr = loadedMaterial->aoMapPtr;
+		heightMapPtr = loadedMaterial->heightMapPtr;
+		emissiveMapPtr = loadedMaterial->emissiveMapPtr;
 
-		color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+		matID = loadedMaterial->matID;
 
-		while (fin.peek() != EOF) {
-			char type[4];
-			fin.read(type, 3);
-			type[3] = '\0';
-
-			uint32_t pathLen;
-			fin.read(reinterpret_cast<char*>(&pathLen), sizeof(pathLen));
-
-			std::string texturePath(pathLen, '\0');
-			fin.read(&texturePath[0], pathLen);
-
-			std::shared_ptr<Image> img = Image::LoadBinary(texturePath);
-
-			if (strcmp(type, "IMG") == 0) {
-				setImage(img);
-			}
-			else if (strcmp(type, "NML") == 0) {
-				setNormalMap(img);
-			}
-			else if (strcmp(type, "MTL") == 0) {
-				setMetallicMap(img);
-			}
-			else if (strcmp(type, "RGL") == 0) {
-				setRoughnessMap(img);
-			}
-			else if (strcmp(type, "AOM") == 0) {
-				setAoMap(img);
-			}
-		}
-
-		LOG(LogType::LOG_INFO, "Material loaded successfully: %s", fullPath.c_str());
-
-        return true;
-    }
+		return true;
+	}
 
 };

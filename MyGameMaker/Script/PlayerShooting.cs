@@ -48,6 +48,9 @@ public class PlayerShooting : MonoBehaviour
     public ParticleFX railgunShotSemiFX;
     public ParticleFX railgunShotAutoFX;
 
+    private float changeWeaponDelay = 0.5f;
+    private float currentdelay = 0.5f;
+
     private enum GunType
     {
         BOLTGUN,
@@ -195,23 +198,32 @@ public class PlayerShooting : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        if(currentdelay < changeWeaponDelay)
+        {
+            currentdelay += deltaTime;            
+        }
+
+
         playerInput.UpdateLookDirection();
 
-        if (playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Q))
+        if (playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Q) )
         {
             ChangeWeaponRight();
+            currentdelay = 0f;
         }
         else if (playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.Z))
         {
             ChangeWeaponLeft();
+            currentdelay = 0f;
         }
 
         if (playerInput.IsChangingRailgunMode() && currentGun == GunType.RAILGUN)
         {
             railgun?.ChangeMode();
+            currentdelay = 0f;
         }
 
-        if (playerInput?.IsShooting() == true)
+        if (playerInput?.IsShooting() == true && currentdelay >= changeWeaponDelay)
         {
             Shoot();
         }

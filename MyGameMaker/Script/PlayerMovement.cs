@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     lookDirection = playerInput.GetCurrentLookDirection();
 
-                    if (playerInput.IsShooting() && lookDirection != Vector3.Zero)
+                    if (lookDirection != Vector3.Zero)
                     {
                         UpdateRotation(lookDirection, deltaTime);
                     }

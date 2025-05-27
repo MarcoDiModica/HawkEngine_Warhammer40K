@@ -29,5 +29,18 @@ namespace HawkEngine
         public override void Update(float deltaTime) { }
 
         public override void Destroy() { }
+
+        public void SetCanvasActive(string canvasname)
+        {
+            GameObject canvas = GameObject.Find(canvasname);
+            if (canvas != null)
+            {
+                canvas.SetActive(true);
+            }
+            else
+            {
+                Engineson.print("Canvas not found: " + canvasname);
+            }
+        }
     }
 }

@@ -5,6 +5,14 @@ namespace HawkEngine
 {
     public static class Mathf
     {
+
+        public const float PI = (float)Math.PI;
+
+        public const float Deg2Rad = PI / 180f;
+
+        public const float Rad2Deg = 180f / PI;
+
+
         public static float Clamp(float value, float min, float max)
         {
             if (value < min) return min;
@@ -60,6 +68,13 @@ namespace HawkEngine
         {
             t = Repeat(t, length * 2f);
             return length - Abs(t - length);
+        }
+
+        public static float Acos(float f)
+        {
+            if (f < -1f) return (float)Math.PI;
+            if (f > 1f) return 0f;
+            return (float)Math.Acos(f);
         }
     }
 }

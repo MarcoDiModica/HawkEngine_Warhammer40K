@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Numerics;
 using HawkEngine;
 public class PlayerController : MonoBehaviour
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private float transitionDelay = 0.1f;
     private bool isDashing = false;
     Vector3 moveDirection;
+    Vector3 lookDirection;
     private bool once = false;
 
     private float elapsedTime = 0f;
@@ -72,6 +74,28 @@ public class PlayerController : MonoBehaviour
     private bool isChangingWeaponRunning = false;
     private bool isChangingWeaponWalking = false;
     private int frameCounter = 0;
+
+    public enum LookingDirection
+    {
+        Idle,
+        Forward,
+        Backward,
+        Left,
+        Right
+    }
+
+    public LookingDirection currentLookingDirection = LookingDirection.Idle;
+
+    public enum ShootingDirection
+    {
+        Idle,
+        Forward,
+        Backward,
+        Left,
+        Right
+    }
+
+    public ShootingDirection currentShootingDirection = ShootingDirection.Idle;
 
     public override void Awake()
     {
@@ -264,7 +288,7 @@ public class PlayerController : MonoBehaviour
         }
 
         moveDirection = playerInput.GetCurrentMoveDirection();
-        Vector3 lookDirection = playerInput.GetCurrentLookDirection();
+        lookDirection = playerInput.GetCurrentLookDirection();
         bool isRunningInput = playerInput.IsRunningPressed();
         bool isKeyboard = playerInput.IsKeyboardMoving();
         isDashInput = playerInput.GetDashInput();
@@ -411,6 +435,135 @@ public class PlayerController : MonoBehaviour
             StopFootsteps();
         }
     }
+    private void UpdateCharacterState()
+    {
+        if (isShootInput && !isDashing)
+        {
+            SetShootingState();
+            return;
+        }
+
+        if (moveDirection != Vector3.Zero)
+        {
+            if (effectsInitialized)
+            {
+                walkingFX.Play();
+            }
+
+            if (!isFootstepPlaying)
+            {
+                PlayFootstep();
+            }
+
+            bool shouldBeRunning = playerMovement != null &&
+                                  (playerMovement.moveSpeed > playerMovement.walkSpeed ||
+                                   isRunningInput);
+
+            if (shouldBeRunning && !isRunning)
+            {
+                isWalking = false;
+                isIdle = false;
+                isShootingStanding = false;
+                isShootingRunning = false;
+
+                SetRunningAnimation();
+
+                isRunning = true;
+                isMoving = true;
+                transitionTimer = 0f;
+            }
+            else if (!shouldBeRunning && !isWalking)
+            {
+                isRunning = false;
+                isIdle = false;
+                isShootingStanding = false;
+                isShootingRunning = false;
+
+                playerAnimations?.IdleToWalkingAnimation();
+                isWalking = true;
+                isMoving = true;
+                transitionTimer = 0f;
+            }
+
+            if (isRunning)
+            {
+                SetRunningAnimation();
+            }
+        }
+        else
+        {
+            StopFootsteps();
+
+            if (effectsInitialized)
+            {
+                walkingFX.Stop();
+            }
+
+            if (isWalking)
+            {
+                SetWalkingToIdle();
+                currentLookingDirection = LookingDirection.Idle;
+                currentShootingDirection = ShootingDirection.Idle;
+            }
+            else if (isRunning)
+            {
+                SetRunningToIdle();
+                currentLookingDirection = LookingDirection.Idle;
+                currentShootingDirection = ShootingDirection.Idle;
+            }
+            else if (!isIdle)
+            {
+                SetIdleState();
+                currentLookingDirection = LookingDirection.Idle;
+                currentShootingDirection = ShootingDirection.Idle;
+            }
+        }
+    }
+
+    private void SetRunningAnimation()
+    {
+        const float epsilon = 0.1f;
+        currentShootingDirection = ShootingDirection.Idle;
+
+        if (moveDirection.LengthSquared() < epsilon)
+        {
+            // No se está moviendo
+            return;
+        }
+
+        Vector3 moveDir = Vector3.Normalize(moveDirection);
+        Vector3 lookDir = Vector3.Normalize(lookDirection);
+
+        if (lookDirection == Vector3.Zero)
+        {
+            lookDir = moveDir;
+        }
+
+        float dot = Vector3.Dot(lookDir, moveDir);
+        Vector3 cross = Vector3.Cross(lookDir, moveDir);
+
+        if (dot > 0.7f && currentLookingDirection != LookingDirection.Forward)
+        {
+            playerAnimations.IdleToRunAnimation();
+            currentLookingDirection = LookingDirection.Forward;
+        }
+        else if (dot < -0.7f && currentLookingDirection != LookingDirection.Backward)
+        {
+            Engineson.print("Moving Backwards");
+            currentLookingDirection = LookingDirection.Backward;
+        }
+        else if (cross.Y > epsilon && currentLookingDirection != LookingDirection.Left)
+        {
+            Engineson.print("Moving Left");
+            currentLookingDirection = LookingDirection.Left;
+        }
+        else if (cross.Y < -epsilon && currentLookingDirection != LookingDirection.Right)
+        {
+            Engineson.print("Moving Right");
+            currentLookingDirection = LookingDirection.Right;
+        }
+    }
+
 
     private void ReloadingIdleAnimationFinished()
     {
@@ -584,78 +737,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void UpdateCharacterState()
-    {
-        if (isShootInput && !isDashing)
-        {
-            SetShootingState();
-            return;
-        }
-
-        if (moveDirection != Vector3.Zero)
-        {
-            if (effectsInitialized)
-            {
-                walkingFX.Play();
-            }
-
-            if (!isFootstepPlaying)
-            {
-                PlayFootstep();
-            }
-
-            bool shouldBeRunning = playerMovement != null &&
-                                  (playerMovement.moveSpeed > playerMovement.walkSpeed ||
-                                   isRunningInput);
-
-            if (shouldBeRunning && !isRunning)
-            {
-                isWalking = false;
-                isIdle = false;
-                isShootingStanding = false;
-                isShootingRunning = false;
-
-                playerAnimations?.IdleToRunAnimation();
-                isRunning = true;
-                isMoving = true;
-                transitionTimer = 0f;
-            }
-            else if (!shouldBeRunning && !isWalking)
-            {
-                isRunning = false;
-                isIdle = false;
-                isShootingStanding = false;
-                isShootingRunning = false;
-
-                playerAnimations?.IdleToWalkingAnimation();
-                isWalking = true;
-                isMoving = true;
-                transitionTimer = 0f; 
-            }
-        }
-        else
-        {
-            StopFootsteps();
-
-            if (effectsInitialized)
-            {
-                walkingFX.Stop();
-            }
-
-            if (isWalking)
-            {
-                SetWalkingToIdle();
-            }
-            else if (isRunning)
-            {
-                SetRunningToIdle();
-            }
-            else if (!isIdle)
-            {
-                SetIdleState();
-            }
-        }
-    }
+    
 
     private void ProcessDashLogic(float deltaTime)
     {
@@ -880,7 +962,7 @@ public class PlayerController : MonoBehaviour
 
         if (moveDirection != Vector3.Zero && !isShootingRunning)
         {
-            playerAnimations.RunningToShootingWalkingStraightAnimation();
+            SetRunningShootingAnimation();
             isShootingStanding = false;
             isShootingRunning = true;
             isFootstepPlaying = false;
@@ -899,11 +981,119 @@ public class PlayerController : MonoBehaviour
             isIdle = false;
         }
 
+        if (isShootingRunning)
+        {
+            SetRunningShootingAnimation();
+        }
+
         if (isShootingStanding && moveDirection != Vector3.Zero)
         {
             playerAnimations.ShootingStandingToShootingWalkingStraightAnimation();
             isShootingStanding = false;
             isShootingRunning = true;
+        }
+    }
+
+    private void SetRunningShootingAnimation()
+    {
+        const float epsilon = 0.1f;
+        const float angleThreshold = 10f;
+
+        if (moveDirection.LengthSquared() < epsilon)
+            return;
+
+        Vector3 moveDir = Vector3.Normalize(moveDirection);
+        Vector3 lookDir = lookDirection == Vector3.Zero ? moveDir : Vector3.Normalize(lookDirection);
+
+        float dot = Vector3.Dot(lookDir, moveDir);
+        dot = Mathf.Clamp(dot, -1f, 1f);
+        float angleRad = Mathf.Acos(dot);
+        float angleDeg = angleRad * (180f / Mathf.PI);
+
+        ShootingDirection newDir;
+
+        if (angleDeg < 45f)
+            newDir = ShootingDirection.Forward;
+        else if (angleDeg > 135f)
+            newDir = ShootingDirection.Backward;
+        else
+            newDir = Vector3.Cross(lookDir, moveDir).Y > 0 ? ShootingDirection.Left : ShootingDirection.Right;
+
+        if (newDir == currentShootingDirection)
+            return;
+
+        float diff = GetDirectionAngleDifference(currentShootingDirection, newDir);
+        if (diff < angleThreshold)
+            return;
+
+        Engineson.print($"Moving {newDir}");
+
+        switch (currentShootingDirection)
+        {
+            case ShootingDirection.Idle:
+                switch (newDir)
+                {
+                    case ShootingDirection.Forward:
+                        playerAnimations.RunningToShootingWalkingStraightAnimation(); break;
+                    case ShootingDirection.Backward:
+                        playerAnimations.RunningToShootingWalkingBackwardsAnimation(); break;
+                    case ShootingDirection.Left:
+                        playerAnimations.RunningToShootingWalkingLeftAnimation(); break;
+                    case ShootingDirection.Right:
+                        playerAnimations.RunningToShootingWalkingRightAnimation(); break;
+                }
+                break;
+
+            case ShootingDirection.Forward:
+                if (newDir == ShootingDirection.Left) playerAnimations.ShootingWalkingStraightToShootingWalkingLeftAnimation();
+                else if (newDir == ShootingDirection.Right) playerAnimations.ShootingWalkingStraightToShootingWalkingRightAnimation();
+                else if (newDir == ShootingDirection.Backward) playerAnimations.ShootingWalkingStraightToShootingWalkingBackwardsAnimation();
+                break;
+
+            case ShootingDirection.Backward:
+                if (newDir == ShootingDirection.Left) playerAnimations.ShootingWalkingBackwardsToShootingWalkingLeftAnimation();
+                else if (newDir == ShootingDirection.Right) playerAnimations.ShootingWalkingBackwardsToShootingWalkingRightAnimation();
+                else if (newDir == ShootingDirection.Forward) playerAnimations.ShootingWalkingBackwardsToShootingWalkingStraightAnimation();
+                break;
+
+            case ShootingDirection.Left:
+                if (newDir == ShootingDirection.Forward) playerAnimations.ShootingWalkingLeftToShootingWalkingStraightAnimation();
+                else if (newDir == ShootingDirection.Right) playerAnimations.ShootingWalkingLeftToShootingWalkingRightAnimation();
+                else if (newDir == ShootingDirection.Backward) playerAnimations.ShootingWalkingLeftToShootingWalkingBackwardsAnimation();
+                break;
+
+            case ShootingDirection.Right:
+                if (newDir == ShootingDirection.Forward) playerAnimations.ShootingWalkingRightToShootingWalkingStraightAnimation();
+                else if (newDir == ShootingDirection.Left) playerAnimations.ShootingWalkingRightToShootingWalkingLeftAnimation();
+                else if (newDir == ShootingDirection.Backward) playerAnimations.ShootingWalkingRightToShootingWalkingBackwardsAnimation();
+                break;
+        }
+
+        currentShootingDirection = newDir;
+    }
+
+    private float GetDirectionAngleDifference(ShootingDirection oldDir, ShootingDirection newDir)
+    {
+        int oldAngle = GetDirectionAngle(oldDir);
+        int newAngle = GetDirectionAngle(newDir);
+        int diff = Math.Abs(oldAngle - newAngle);
+        return Math.Min(diff, 360 - diff);
+    }
+
+    private int GetDirectionAngle(ShootingDirection dir)
+    {
+        switch (dir)
+        {
+            case ShootingDirection.Forward:
+                return 0;
+            case ShootingDirection.Right:
+                return 90;
+            case ShootingDirection.Backward:
+                return 180;
+            case ShootingDirection.Left:
+                return 270;
+            default:
+                return -1;
         }
     }
 

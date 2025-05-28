@@ -481,9 +481,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 0.551741421
+          floatSpeed: 1.6051929
           floatHeight: 0.5
-          rotationSpeed: 43.2262115
+          rotationSpeed: 91.6027603
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -589,9 +589,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 1.56933486
+          floatSpeed: 0.92064029
           floatHeight: 0.5
-          rotationSpeed: 90.7482758
+          rotationSpeed: 95.0802689
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -28300,9 +28300,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.35206413
+          floatSpeed: 0.744221568
           floatHeight: 0.5
-          rotationSpeed: 53.5862694
+          rotationSpeed: 64.5316696
   Children: ~
 GameObject34:
   name: BiblePage_Pueblo
@@ -28385,9 +28385,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.979521155
+          floatSpeed: 1.63139522
           floatHeight: 0.5
-          rotationSpeed: 76.3604736
+          rotationSpeed: 51.6902046
   Children: ~
 GameObject35:
   name: BiblePage_Pasillo_Zona3
@@ -28470,9 +28470,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.27124619
+          floatSpeed: 1.93798447
           floatHeight: 0.5
-          rotationSpeed: 85.860878
+          rotationSpeed: 83.9566498
   Children: ~
 GameObject36:
   name: BiblePage_Ciudad
@@ -28555,9 +28555,9 @@ GameObject36:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.531555593
+          floatSpeed: 0.545485437
           floatHeight: 0.5
-          rotationSpeed: 71.8514633
+          rotationSpeed: 60.9388771
   Children: ~
 GameObject37:
   name: Barril_Ciudad1
@@ -40371,10 +40371,10 @@ GameObject137:
             - 1225
             - 40
           sprite_offset:
-            - 350
+            - 0
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 0
           anim_index_limit: 6
           color:
             - 1

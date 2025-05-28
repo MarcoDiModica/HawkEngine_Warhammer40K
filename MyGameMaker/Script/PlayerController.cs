@@ -960,6 +960,11 @@ public class PlayerController : MonoBehaviour
         if (playerAnimations == null)
             return;
 
+        if (isShootingRunning)
+        {
+            SetRunningShootingAnimation();
+        }
+
         if (moveDirection != Vector3.Zero && !isShootingRunning)
         {
             SetRunningShootingAnimation();
@@ -972,7 +977,27 @@ public class PlayerController : MonoBehaviour
         }
         else if (!isShootingStanding && moveDirection == Vector3.Zero)
         {
-            playerAnimations.IdleToShootingStillAnimation();
+
+            switch(currentShootingDirection)
+            {
+                case ShootingDirection.Forward:
+                    playerAnimations.ShootingWalkingStraightToShootingStandingAnimation();
+                    break;
+                case ShootingDirection.Backward:
+                    playerAnimations.ShootingWalkingBackwardsToShootingStandingAnimation();
+                    break;
+                case ShootingDirection.Left:
+                    playerAnimations.ShootingWalkingLeftToShootingStandingAnimation();
+                    break;
+                case ShootingDirection.Right:
+                    playerAnimations.ShootingWalkingRightToShootingStandingAnimation();
+                    break;
+                case ShootingDirection.Idle:
+                    playerAnimations.IdleToShootingStillAnimation();
+                    break;
+            }
+
+            currentShootingDirection = ShootingDirection.Idle;
             isShootingStanding = true;
             isShootingRunning = false;
             isFootstepPlaying = false;
@@ -981,10 +1006,7 @@ public class PlayerController : MonoBehaviour
             isIdle = false;
         }
 
-        if (isShootingRunning)
-        {
-            SetRunningShootingAnimation();
-        }
+        
 
         if (isShootingStanding && moveDirection != Vector3.Zero)
         {
@@ -1003,7 +1025,12 @@ public class PlayerController : MonoBehaviour
             return;
 
         Vector3 moveDir = Vector3.Normalize(moveDirection);
-        Vector3 lookDir = lookDirection == Vector3.Zero ? moveDir : Vector3.Normalize(lookDirection);
+        Vector3 lookDir = Vector3.Normalize(lookDirection);
+
+        if (lookDirection == Vector3.Zero)
+        {
+            lookDir = moveDir;
+        }
 
         float dot = Vector3.Dot(lookDir, moveDir);
         dot = Mathf.Clamp(dot, -1f, 1f);
@@ -1012,21 +1039,32 @@ public class PlayerController : MonoBehaviour
 
         ShootingDirection newDir;
 
-        if (angleDeg < 45f)
-            newDir = ShootingDirection.Forward;
-        else if (angleDeg > 135f)
-            newDir = ShootingDirection.Backward;
+        if (currentShootingDirection != ShootingDirection.Idle)
+        {
+           
+
+            if (angleDeg < 45f)
+                newDir = ShootingDirection.Forward;
+            else if (angleDeg > 135f)
+                newDir = ShootingDirection.Backward;
+            else
+                newDir = Vector3.Cross(lookDir, moveDir).Y > 0 ? ShootingDirection.Left : ShootingDirection.Right;
+
+            if (newDir == currentShootingDirection)
+                return;
+
+            float diff = GetDirectionAngleDifference(currentShootingDirection, newDir);
+            if (diff < angleThreshold)
+                return;
+
+            Engineson.print($"Moving {newDir}");
+
+        }
         else
-            newDir = Vector3.Cross(lookDir, moveDir).Y > 0 ? ShootingDirection.Left : ShootingDirection.Right;
+        {
+            newDir = ShootingDirection.Forward;
+        }
 
-        if (newDir == currentShootingDirection)
-            return;
-
-        float diff = GetDirectionAngleDifference(currentShootingDirection, newDir);
-        if (diff < angleThreshold)
-            return;
-
-        Engineson.print($"Moving {newDir}");
 
         switch (currentShootingDirection)
         {
@@ -1034,13 +1072,46 @@ public class PlayerController : MonoBehaviour
                 switch (newDir)
                 {
                     case ShootingDirection.Forward:
-                        playerAnimations.RunningToShootingWalkingStraightAnimation(); break;
+                        if (isShootingStanding)
+                        {
+                            playerAnimations.ShootingStandingToShootingWalkingStraightAnimation();
+                        }
+                        else
+                        {
+                            playerAnimations.RunningToShootingWalkingStraightAnimation();
+                        }
+                        break;
                     case ShootingDirection.Backward:
-                        playerAnimations.RunningToShootingWalkingBackwardsAnimation(); break;
+                        if (isShootingStanding)
+                        {
+                            playerAnimations.ShootingStandingToShootingWalkingBackwardsAnimation();
+                        }
+                        else
+                        {
+                            playerAnimations.RunningToShootingWalkingBackwardsAnimation();
+                        }
+                        break;
                     case ShootingDirection.Left:
-                        playerAnimations.RunningToShootingWalkingLeftAnimation(); break;
+                        if (isShootingStanding)
+                        {
+                            playerAnimations.ShootingStandingToShootingWalkingLeftAnimation();
+                        } 
+                        else
+                        {
+                            playerAnimations.RunningToShootingWalkingLeftAnimation();
+                        }
+                            
+                        break;
                     case ShootingDirection.Right:
-                        playerAnimations.RunningToShootingWalkingRightAnimation(); break;
+                        if (isShootingStanding)
+                        {
+                            playerAnimations.ShootingStandingToShootingWalkingRightAnimation();
+                        }
+                        else
+                        {
+                            playerAnimations.RunningToShootingWalkingRightAnimation();
+                        }
+                        break;
                 }
                 break;
 

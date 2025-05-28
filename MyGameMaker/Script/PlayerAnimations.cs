@@ -358,7 +358,7 @@ public class PlayerAnimations : MonoBehaviour
         try
         {
             esk.PlayAnimOnce(6, 0.1f);
-            esk.SetAnimationSpeed(2.5f);
+            esk.SetAnimationSpeed(5f);
         }
         catch (Exception e)
         {
@@ -1878,7 +1878,7 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(11, 10, 0.1f);
+            esk.PlayAnimOnce(10, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -1894,7 +1894,7 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(32, 8, 0.1f);
+            esk.PlayAnimOnce(8, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -1910,7 +1910,7 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(33, 9, 0.1f);
+            esk.PlayAnimOnce(9, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)

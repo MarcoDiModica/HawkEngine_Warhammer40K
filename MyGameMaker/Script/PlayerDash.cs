@@ -4,7 +4,7 @@ using HawkEngine;
 public class PlayerDash : MonoBehaviour
 {
     public float dashSpeed = 160000.0f;
-    public float dashDuration = 0.05f;
+    public float dashDuration = 0.3f;
     public float dashCooldown = 1.25f;
     public bool canDash = true;
 

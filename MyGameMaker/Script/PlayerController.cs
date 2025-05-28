@@ -245,7 +245,22 @@ public class PlayerController : MonoBehaviour
                     int audioDeath = Audio.PlayOneShot(DeathAudio);
                     SceneManager.LoadScene("LoseScene");
                 }
-            }
+                else
+                {
+                    if (isIdle)
+                    {
+                        playerAnimations.IdleToHitAnimation();
+                    }
+                    else if (isRunning || isShootingRunning)
+                    {
+                        playerAnimations.RunningToHitAnimation();
+                    }
+                    else if (isShootingStanding)
+                    {
+                        playerAnimations.ShootingStandingToHitAnimation();
+                    }
+                } 
+                }
             playerData.isHit = false;
         }
 
@@ -459,7 +474,7 @@ public class PlayerController : MonoBehaviour
                                   (playerMovement.moveSpeed > playerMovement.walkSpeed ||
                                    isRunningInput);
 
-            if (shouldBeRunning && !isRunning)
+            if (shouldBeRunning && !isRunning && !isDashing)
             {
                 isWalking = false;
                 isIdle = false;
@@ -753,7 +768,7 @@ public class PlayerController : MonoBehaviour
 
                 TransitionFromDashState();
                 isDashing = false;
-                dashEndTimer = 0.10f;
+                dashEndTimer = 0.3f;
             }
         }
     }
@@ -915,39 +930,6 @@ public class PlayerController : MonoBehaviour
             isRunning = false;
             isWalking = true;
             isIdle = false;
-            isShootingStanding = false;
-            isShootingRunning = false;
-            isMoving = true;
-            isTransitioning = false;
-        }
-    }
-
-    private void SetRunningState()
-    {
-        if (playerAnimations == null)
-            return;
-
-        if (isShootInput && !isShootingRunning)
-        {
-            TransitionShootingStandingToRunning();
-        }
-        else if (isShootingRunning && !isShootInput)
-        {
-            playerAnimations.ShootingWalkingStraightToRunAnimation();
-            isRunning = false;
-            isWalking = false;
-            isIdle = false;
-            isShootingStanding = false;
-            isShootingRunning = false;
-            isMoving = true;
-            isTransitioning = true;
-            transitionTimer = transitionDelay;
-        }
-        else if (transitionTimer <= 0f && !isRunning)
-        {
-            playerAnimations.IdleToRunAnimation();
-            isRunning = true;
-            isWalking = false;
             isShootingStanding = false;
             isShootingRunning = false;
             isMoving = true;

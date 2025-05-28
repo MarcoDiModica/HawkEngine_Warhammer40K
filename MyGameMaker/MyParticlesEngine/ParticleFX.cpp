@@ -47,7 +47,39 @@ namespace ParticlePresets {
 		"Assets/Textures/Smoke30Frames.png", // Texture path
 		false						   // Is Local Space
 	};
-
+	const ParticlePreset Footsteps = {
+		ParticleType::FOOTSTEPS,
+		true,						   // PlayOnAwake
+		5.0f,						   // Duration (only if one-shot)
+		glm::vec3(0.8f, 0.8f, 0.8f),   // Start color (light gray)
+		glm::vec3(0.8f, 0.8f, 0.8f),    // End color (dark gray)
+		0.7f,                          // Alpha start
+		0.0f,                          // Alpha end
+		0.0f,                          // Size start
+		2.0f,                          // Size end
+		0.15f,                          // Min lifetime
+		0.15f,                          // Max lifetime
+		5.55f,                          // Min speed
+		5.55f,                          // Max speed
+		4.0f,						   // End Speed
+		glm::vec3(0.0f,-5.33f,0.0f),	   // Gravity (negative for upward)
+		0.2f,                          // Rotation speed
+		120.0f,                         // Emission rate (particles per second)
+		EmitterShape::CONE,            // Shape
+		0.2f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(256,256),			   // Sprite size
+		true,						   // Use animation
+		true,						   // Random animation Index
+		0.5f,						   // Animation speed
+		0.0f,						   // Start rotation
+		true,						   // Random rotation
+		0.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/Smoke30Frames.png", // Texture path
+		false						   // Is Local Space
+	};
 	const ParticlePreset Fire = {
 		ParticleType::FIRE,
 		true,						   // PlayOnAwake
@@ -296,10 +328,10 @@ namespace ParticlePresets {
 		glm::vec3(1,1,1),   // End color (dark gray)
 		1.0f,                          // Alpha start
 		1.0f,                          // Alpha end
-		8,                          // Size start
+		2,                          // Size start
 		5,                          // Size end
-		1.0f,                          // Min lifetime
-		1.0f,                          // Max lifetime
+		0.250f,                          // Min lifetime
+		0.250f,                          // Max lifetime
 		0.0f,                          // Min speed
 		0.0f,                          // Max speed
 		0.0f,						   // End Speed
@@ -316,8 +348,8 @@ namespace ParticlePresets {
 		0.07f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
-		8.0f,						   // Min scale
-		8.0f,						   // Max scale
+		2.0f,						   // Min scale
+		2.0f,						   // Max scale
 		"Assets/Textures/muzzle.png", // Texture path
 		true						   // Is Local Space
 	};
@@ -1200,7 +1232,7 @@ namespace ParticlePresets {
 		true,						   // Use animation
 		false,						   // Random animation Index
 		0.1f,						   // Animation speed
-		0.0f,						   // Start rotation
+		90.0f,						   // Start rotation
 		false,						   // Random rotation
 		8.0f,						   // Min scale
 		8.0f,						   // Max scale
@@ -1211,7 +1243,7 @@ namespace ParticlePresets {
 	const ParticlePreset Lictor_Blood = {
 		ParticleType::LICTOR_BLOOD,
 		false,						   // PlayOnAwake
-		0.001,						   // Duration (only if one-shot)
+		0.01,						   // Duration (only if one-shot)
 		glm::vec3(1,1,1),   				   // Start color (white)
 		glm::vec3(1,1,1),   				   // End color (white)
 		1.0f,                          			   // Alpha start
@@ -1233,7 +1265,7 @@ namespace ParticlePresets {
 		glm::vec2(321,181),		   	   // Sprite size
 		true,						   // Use animation
 		false,						   // Random animation Index
-		0.06f,						   // Animation speed
+		0.01f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
 		16.0f,						   // Min scale
@@ -1752,6 +1784,76 @@ false,										 // Random rotation
 "Assets/Textures/EnergyBallHittingVFX.png",   // Texture path
 false 									     // Is Local Space
 	};
+
+
+	const ParticlePreset Bullet = {
+ParticleType::REGULAR_BULLET,
+false,										 // PlayOnAwake
+5,											 // Duration (only if one-shot)
+glm::vec3(1,1,1),   						 // Start color (white)
+glm::vec3(1,1,1),   						 // End color (white)
+1.0f,		                     			 // Alpha start
+1.0f,		                     			 // Alpha end
+2.0f,		                     			 // Size start
+2.0f,		                       			 // Size end
+5,                          				 // Min lifetime
+5,                         					 // Max lifetime
+0.0f,                          				 // Min speed
+0.01f,                          			 // Max speed
+0.0f,										 // End Speed
+glm::vec3(0.0f,0.01f,0.0f),	   			 // Gravity (negative for upward)
+0,                          				 // Rotation speed
+0.5f,                         				 // Emission rate (particles per second)
+EmitterShape::POINT,            			 // Shape
+0.2f,                          				 // Cone base radius
+1.0f,                          				 // Cone height
+20.0f,                         				 // Cone angle in degrees
+glm::vec2(226 , 275),		   					 // Sprite size
+true,										 // Use animation
+false,										 // Random animation Index
+0.1f,										 // Animation speed
+180.0f,										 // Start rotation
+false,										 // Random rotation
+2.0f,										 // Min scale
+2.0f,										 // Max scale
+"Assets/Textures/bullet.png",   // Texture path
+true 									     // Is Local Space
+	};
+
+	const ParticlePreset Gun_trail = {
+ParticleType::GUN_TRAIL,
+false,										 // PlayOnAwake
+0.8f,											 // Duration (only if one-shot)
+glm::vec3(1,1,1),   						 // Start color (white)
+glm::vec3(1,1,1),   						 // End color (white)
+1.0f,		                     			 // Alpha start
+0.0f,		                     			 // Alpha end
+2.0f,		                     			 // Size start
+0.01f,		                       			 // Size end
+0.5f,                          				 // Min lifetime
+0.5f,                         					 // Max lifetime
+0.0f,                          				 // Min speed
+0.01f,                          			 // Max speed
+0.0f,										 // End Speed
+glm::vec3(0.0f,0.01f,0.0f),	   			 // Gravity (negative for upward)
+0,                          				 // Rotation speed
+100.0f,                         				 // Emission rate (particles per second)
+EmitterShape::POINT,            			 // Shape
+0.2f,                          				 // Cone base radius
+1.0f,                          				 // Cone height
+20.0f,                         				 // Cone angle in degrees
+glm::vec2(336 , 330 ),		   					 // Sprite size
+true,										 // Use animation
+false,										 // Random animation Index
+0.1f,										 // Animation speed
+180.0f,										 // Start rotation
+false,										 // Random rotation
+2.0f,										 // Min scale
+2.0f,										 // Max scale
+"Assets/Textures/smoke.png",   // Texture path
+true 									     // Is Local Space
+	};
+
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -2383,6 +2485,18 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::ENERGY_BALL_HITING:
 		preset = ParticlePresets::EnergyBallHitting;
+		SetOneShot(false);
+		break;
+	case ParticleType::FOOTSTEPS:
+		preset = ParticlePresets::Footsteps;
+		SetOneShot(false);
+		break;
+	case ParticleType::REGULAR_BULLET:
+		preset = ParticlePresets::Bullet;
+		SetOneShot(false);
+		break;
+	case ParticleType::GUN_TRAIL:
+		preset = ParticlePresets::Gun_trail;
 		SetOneShot(false);
 		break;
 	default:

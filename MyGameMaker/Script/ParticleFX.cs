@@ -22,6 +22,9 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void EmitBurst(int count);
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetParticleStartRotation(float rotation);
+
         private GameObject owner;
 
         public ParticleFX(UIntPtr nativeRigidbody, GameObject owner)

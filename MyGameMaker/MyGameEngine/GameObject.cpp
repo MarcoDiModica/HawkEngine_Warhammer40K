@@ -434,7 +434,11 @@ std::string GameObject::GetTag() const
         return "";
 	}
 
-	return tag;
+	if (tag.empty()) {
+		return "Untagged";
+	}
+	
+    return tag;
 }
 
 bool GameObject::CompareTag(const std::string& tag) const

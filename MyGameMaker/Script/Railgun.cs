@@ -296,12 +296,12 @@ public class Railgun : BaseWeapon
         }
     }
 
-    public override void UseAbility1()
+    public override void UseAbility2()
     {
         toggleMode.TriggerAbility();
     }
 
-    public override void UseAbility2()
+    public override void UseAbility1()
     {
         if (railgunMode == RailgunMode.SEMIAUTOMATIC)
         {

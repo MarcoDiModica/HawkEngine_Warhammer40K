@@ -480,7 +480,7 @@ void Tweening::Update(float deltaTime) {
 	}
 
 	for (auto& tween : tweens) {
-		if (tween.object == nullptr) {
+		if (tween.object == nullptr || tween.object->IsDestroyed()) {
 			continue;
 		}
 
@@ -598,7 +598,9 @@ void Tweening::Update(float deltaTime) {
 	tweens.erase(
 		std::remove_if(tweens.begin(), tweens.end(),
 			[](const Tween& tween) {
-				return tween.elapsedTime >= tween.duration || tween.object == nullptr;
+				return tween.elapsedTime >= tween.duration ||
+					tween.object == nullptr ||
+					(tween.object && tween.object->IsDestroyed());
 			}),
 		tweens.end());
 }

@@ -254,9 +254,11 @@ MonoObject* SkeletalAnimationComponent::GetSharp()
 
 bool SkeletalAnimationComponent::IsAnimationFinished()
 {
+	if (!animator || owner->IsDestroyed() || !owner) {
+		return true;
+	}
 
 	return animator->animationFinished;
-	
 }
 
 void SkeletalAnimationComponent::SaveBinary(const std::string& filename) const

@@ -76,7 +76,7 @@ public class EnemyControllerStalker : EnemyController
             return;
         }
 
-        collider = gameObject.GetComponent<BoxCollider>();
+        collider = gameObject.GetComponent<CapsuleCollider>();
         if (collider == null)
         { 
             Engineson.print("ERROR: Lictor Collider not found!"); 

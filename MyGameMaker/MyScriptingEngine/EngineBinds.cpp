@@ -476,7 +476,17 @@ void EngineBinds::GameObjectSetActive(MonoObject* ref, bool active) {
 
 
 MonoString* EngineBinds::GetTag(MonoObject* ref) {
-	return mono_string_new(MonoManager::GetInstance().GetDomain(), ConvertFromSharp(ref)->GetTag().c_str());
+	if (!ref) {
+		LOG(LogType::LOG_ERROR, "Null reference passed to GetTag");
+		return nullptr;
+	}
+	GameObject* go = ConvertFromSharp(ref);
+	if (!go) {
+		LOG(LogType::LOG_ERROR, "Failed to convert reference to GameObject");
+		return nullptr;
+	}
+	std::string tag = go->GetTag();
+	return mono_string_new(MonoManager::GetInstance().GetDomain(), tag.c_str());
 }
 
 MonoObject* EngineBinds::GetGameObjectByName(MonoString* name) {

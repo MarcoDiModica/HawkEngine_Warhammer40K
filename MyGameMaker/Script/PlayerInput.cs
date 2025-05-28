@@ -75,21 +75,20 @@ public class PlayerInput : MonoBehaviour
         if (isA) direction += Vector3.UnitX;
 
         bool shiftHeld = Input.GetKey(KeyCode.CAPSLOCK);
-        bool isKeyboardMoving = isW || isS || isA || isD;
+        isKeyboardMoving = isW || isS || isA || isD;
         isRunningPressed = !shiftHeld && isKeyboardMoving;
 
         float leftStickMagnitude = Input.GetLeftStick().Length();
-        if (leftStickMagnitude > 0.75f)
+        if (leftStickMagnitude > 0.1f)
         {
             isRunningPressed = true;
             Vector2 leftStickInput = Input.GetLeftStick();
             direction = new Vector3(-leftStickInput.X, 0, -leftStickInput.Y);
         }
-        else if (leftStickMagnitude > 0.1f)
+        else if (!isKeyboardMoving)
         {
             isRunningPressed = false;
-            Vector2 leftStickInput = Input.GetLeftStick();
-            direction = new Vector3(-leftStickInput.X, 0, -leftStickInput.Y);
+            direction = Vector3.Zero; 
         }
 
         if (cameraTransform != null && direction != Vector3.Zero)
@@ -107,9 +106,8 @@ public class PlayerInput : MonoBehaviour
         }
         else
         {
-            currentMoveDirection = direction != Vector3.Zero ? Vector3.Normalize(direction) : direction;
+            currentMoveDirection = direction;
         }
-
     }
     public bool IsRunningPressed()
     {

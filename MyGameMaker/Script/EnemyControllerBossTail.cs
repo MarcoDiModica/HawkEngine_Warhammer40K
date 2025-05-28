@@ -62,7 +62,7 @@ public class EnemyControllerBossTail : EnemyController
         }
         rb = gameObject.GetComponent<Rigidbody>();
         rb.SetMass(10000.0f);
-        collider = gameObject.GetComponent<BoxCollider>();
+        collider = gameObject.GetComponent<CapsuleCollider>();
         collider.SetSize(new Vector3(2.0f, 2.0f, 2.0f));
         if (collider == null)
         {

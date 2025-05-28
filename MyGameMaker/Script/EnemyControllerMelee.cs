@@ -131,7 +131,7 @@ public class EnemyControllerMelee : EnemyController
                 return;
             }
 
-            collider = gameObject.GetComponent<BoxCollider>();
+            collider = gameObject.GetComponent<CapsuleCollider>();
             if (collider == null)
             {
                 Engineson.print("ERROR: BoxCollider component not found!");

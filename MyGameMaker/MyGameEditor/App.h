@@ -97,8 +97,20 @@ public:
 			"Assets/Textures/Tree2Spritesheet.png",
 			"Assets/Textures/Tree3Spritesheet.png",
 			"Assets/Textures/Red_Thirst_Sprite_sheet.png",
-			"Assets/Textures/niebla30Frames.png"
-
+			"Assets/Textures/niebla30Frames.png",
+			"Assets/Textures/LictorSlashSpritesheetv6.png",
+			"Assets/Textures/Lictor-blood.png",
+			"Assets/Textures/MawlocSlashSpritesheet.png",
+			"Assets/Textures/Ability_recharge_vfx.png",
+			"Assets/Textures/grenade_shot_smoke_vfx.png",
+			"Assets/Textures/Bullet Eject vfx.png",
+			"Assets/Textures/Red_thirst_lost_vfx.png",
+			"Assets/Textures/leaf3.png",
+			"Assets/Textures/termagaunt_slash.png",
+			"Assets/Textures/blood_splash_1.png",
+			"Assets/Textures/blood_splash_2.png",
+			"Assets/Textures/RailgunChargeVFX.png",
+			"Assets/Textures/EnergyBallHittingVFX.png"
 		};
 
 		for (const auto& path : texturePaths) {

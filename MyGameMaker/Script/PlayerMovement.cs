@@ -5,18 +5,20 @@ using System.Numerics;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 10.0f;
-    public float walkSpeed = 5f;
-    public float runSpeed = 30.0f;
+    public float walkSpeed = 10f;
+    public float runSpeed = 25.0f;
     public float rotationSpeed = 30.0f;
-    public float acceleration = 40.0f;
+    public float acceleration = 20.0f;
     public float deceleration = 15.0f;
+    public float speedTransitionRate = 7.0f;
 
+    private float targetMoveSpeed;
     private Rigidbody rb;
     private Collider collider;
     private Transform transform;
 
     private float currentRotationAngle;
-    private Vector3 moveDirection = Vector3.Zero;
+    public Vector3 moveDirection = Vector3.Zero;
     private Vector3 rotationDirection = Vector3.Zero;
     private PlayerDash playerDash;
     private PlayerInput playerInput;
@@ -27,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
 
     public PlayerData playerData;
 
-    // Flag to track successful component initialization
     private bool componentsInitialized = false;
 
     public override void Awake()
@@ -67,6 +68,8 @@ public class PlayerMovement : MonoBehaviour
             rb.SetMass(1.0f);
 
             currentRotationAngle = transform.eulerAngles.Y;
+
+            targetMoveSpeed = moveSpeed;
 
             if (playerCamera != null)
             {
@@ -112,6 +115,8 @@ public class PlayerMovement : MonoBehaviour
 
         try
         {
+            moveSpeed = Lerp(moveSpeed, targetMoveSpeed, speedTransitionRate * deltaTime);
+
             bool isDashing = playerDash != null && playerDash.IsDashing;
             if (!isDashing)
             {
@@ -196,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (playerData.GodMode)
                 {
-                    moveSpeed = (runSpeed + playerData.blackRageSpeed + playerData.stimmSpeed) * 3;
+                    targetMoveSpeed = (runSpeed + playerData.blackRageSpeed + playerData.stimmSpeed) * 3;
                 }
                 else
                 {
@@ -205,10 +210,13 @@ public class PlayerMovement : MonoBehaviour
 
                     if (magnitude > 0.1f)
                     {
-                        if (magnitude > 0.7f)
-                            moveSpeed = runSpeed + playerData.blackRageSpeed + playerData.stimmSpeed;
-                        else
-                            moveSpeed = walkSpeed + playerData.blackRageSpeed + playerData.stimmSpeed;
+                        //de momento he quitado el caminar, solo correr: marco d
+                        targetMoveSpeed = runSpeed + playerData.blackRageSpeed + playerData.stimmSpeed;
+                        
+                        //if (magnitude > 0.65f)
+                        //    targetMoveSpeed = runSpeed + playerData.blackRageSpeed + playerData.stimmSpeed;
+                        //else
+                        //    targetMoveSpeed = walkSpeed + playerData.blackRageSpeed + playerData.stimmSpeed;
                     }
                 }
             }
@@ -254,12 +262,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetSpeedToRun()
     {
-        moveSpeed = runSpeed;
+        targetMoveSpeed = runSpeed;
     }
 
     public void SetSpeedToWalk()
     {
-        moveSpeed = walkSpeed;
+        targetMoveSpeed = walkSpeed;
     }
 
     private float Lerp(float start, float end, float t)

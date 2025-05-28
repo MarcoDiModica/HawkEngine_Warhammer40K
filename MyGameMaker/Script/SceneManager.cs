@@ -89,6 +89,18 @@ namespace HawkEngine
                     }
                 });
             }
+            else
+            {
+                Engineson.print("FadeController not found in the scene. Cannot perform fade transition.");
+                if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
+                {
+                    SetSceneToPlay();
+                }
+                else
+                {
+                    Engineson.print("Scene not found");
+                }
+            }
         }
 
         //contructor

@@ -505,6 +505,16 @@ bool PhysicsModule::Update(double dt) {
 #ifdef PROFILE
     OPTICK_EVENT();
 #endif // PROFILE
+
+	for (auto it = gameObjectRigidBodyMap.begin(); it != gameObjectRigidBodyMap.end();) {
+		if (it->first->IsDestroyed()) {
+			dynamicsWorld->removeRigidBody(it->second);
+			it = gameObjectRigidBodyMap.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
   
     if (linkPhysicsToScene) {  
         int maxSubSteps = 10;

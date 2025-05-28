@@ -2054,7 +2054,23 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(32, 0, 0.1f);
+            esk.PlayAnimOnce(0, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void ActiveBlackRageToRunningAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(0, 32, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2070,7 +2086,23 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(11, 1, 0.1f);
+            esk.PlayAnimOnce(1, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void ActiveBlackRageToIdleAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(1, 11, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2086,7 +2118,23 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(38, 2, 0.1f);
+            esk.PlayAnimOnce(2, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void ActiveBlackRageToWalkingBackwardsAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(2, 34, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2102,7 +2150,23 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(39, 3, 0.1f);
+            esk.PlayAnimOnce(3, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void ActiveBlackRageToWalkingLeftAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(3, 35, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2118,7 +2182,23 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(40, 4, 0.1f);
+            esk.PlayAnimOnce(4, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void ActiveBlackRageToWalkingRightAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(4, 36, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2134,7 +2214,23 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(41, 5, 0.1f);
+            esk.PlayAnimOnce(5, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void ActiveBlackRageToWalkingForwardAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(5, 37, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)

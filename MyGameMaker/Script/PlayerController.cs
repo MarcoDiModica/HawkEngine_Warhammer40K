@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     private bool isTransitioning = false;
     private float transitionTimer = 0f;
     private float transitionDelay = 0.1f;
-    private bool isDashing = false;
+    public bool isDashing = false;
     Vector3 moveDirection;
     Vector3 lookDirection;
     private bool once = false;
@@ -61,7 +61,9 @@ public class PlayerController : MonoBehaviour
     public GameObject aimLaser;
     public GameObject aimLaserEnd;
     private Transform transform;
-    private float dashEndTimer = 0.15f;
+    private float dashEndTimer = 0.3f;
+    private float blockTimer = 0.2f;
+    private bool isBlockingInput = false;
 
     private bool componentsInitialized = false;
     private bool effectsInitialized = false;
@@ -435,11 +437,17 @@ public class PlayerController : MonoBehaviour
         if (isDashInput && playerDash != null && playerDash.CanDash(elapsedTime))
         {
             isDashing = true;
+            isIdle = false;
+            isWalking = false;
+            isRunning = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
             playerDash.InitiateDash(moveDirection, elapsedTime);
-
+            isBlockingInput = true;
             if (playerAnimations != null)
             {
                 playerAnimations.SetDashAnimation();
+
             }
 
             if (playerInput != null)
@@ -526,7 +534,7 @@ public class PlayerController : MonoBehaviour
                 currentLookingDirection = LookingDirection.Idle;
                 currentShootingDirection = ShootingDirection.Idle;
             }
-            else if (!isIdle)
+            else if (!isIdle && !isDashing)
             {
                 SetIdleState();
                 currentLookingDirection = LookingDirection.Idle;
@@ -759,6 +767,13 @@ public class PlayerController : MonoBehaviour
         if (isDashing)
         {
             dashEndTimer -= deltaTime;
+            blockTimer -= deltaTime;
+            if (blockTimer <= 0f && playerInput != null && isBlockingInput)
+            {
+                playerInput.UnBlockInput();
+                blockTimer = 0.2f;
+                isBlockingInput = false;
+            }
             if (dashEndTimer <= 0f)
             {
                 if (playerInput != null)
@@ -863,8 +878,17 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                playerAnimations.SetDashToIdleAnimation();
-                isIdle = true;
+                if(Input.GetLeftStick().Length() > 0.1f)
+                {
+                    playerAnimations.SetDashToRunningAnimation();
+                    isWalking = true;
+                }
+                else
+                {
+                    playerAnimations.SetStandardIdleAnimation();
+                    isIdle = true;
+                }
+               
             }
             isMoving = false;
         }

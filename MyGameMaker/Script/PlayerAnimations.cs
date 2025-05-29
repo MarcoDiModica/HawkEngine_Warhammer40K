@@ -358,14 +358,13 @@ public class PlayerAnimations : MonoBehaviour
         try
         {
             esk.PlayAnimOnce(6, 0.1f);
-            esk.SetAnimationSpeed(5f);
+            esk.SetAnimationSpeed(3f);
         }
         catch (Exception e)
         {
             Engineson.print($"ERROR in SetDeathAnimation: {e.Message}");
         }
     }
-
     public void SetDeathAnimation()
     {
         if (!componentsInitialized || esk == null)

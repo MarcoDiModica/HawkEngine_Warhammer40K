@@ -1,7 +1,7 @@
 name: Hormagaunt
-prefabPath: ""
+prefabPath: Assets/Prefabs/Hormagaunt.prefab.yaml
 uuid: 7417968142418403327
-tag: Enemy
+tag: Melee
 active: true
 isStatic: false
 Components:
@@ -9,9 +9,9 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
+      - 52.802703857421875
       - 0
-      - 0
-      - 10
+      - -2.7913699150085449
     localRotation:
       - 0
       - -0
@@ -20,11 +20,61 @@ Components:
       - 2.2000000476837158
       - 2.2000000476837158
       - 2.2000000476837158
-  BoxColliderComponent:
+  ParticleFX:
+    name: ParticleFX
+    enabled: true
+    emitterShape: 0
+    emissionRate: 0.200000003
+    particlesPerSecond: 0.200000003
+    minLifetime: 0.349999994
+    maxLifetime: 0.349999994
+    minSpeed: 0
+    maxSpeed: 0
+    startSize: 17
+    endSize: 17
+    minSize: 17
+    maxSize: 17
+    startColor:
+      - 1
+      - 1
+      - 1
+    endColor:
+      - 1
+      - 1
+      - 1
+    startAlpha: 1
+    endAlpha: 1
+    rotationSpeed: 0
+    gravity:
+      - 0
+      - 0.00100000005
+      - 0
+    shapeParam1: 0.200000003
+    shapeParam2: 1
+    shapeParam3: 20
+    isOneShot: true
+    isPlaying: false
+    isPaused: false
+    burstEmitted: false
+    spriteSize:
+      - 640
+      - 360
+    useAnimation: true
+    animSpeed: 0.0500000007
+    startRotation: 0
+    randomRotation: false
+    material:
+      billboardType: 0
+      particleType: 9
+      softness: 0
+      useColorGradient: false
+      texturePath: Assets/Textures/EnemyDash.png
+    particleType: 9
+  CapsuleColliderComponent:
     size:
-      - 1.29999995
-      - 2
-      - 1.60000002
+      - 1
+      - 1
+      - 1
     offset:
       - 0
       - 0
@@ -57,7 +107,7 @@ Children:
     prefabPath: ""
     uuid: 17006855275563467050
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
     Components:
       Transform_Component:
@@ -97,7 +147,70 @@ Children:
       SkeletalAnimationComponent:
         name: SkeletalAnimationComponent
         enabled: true
-        bone_names: ~
+        bone_names:
+          - root.x
+          - spine_01.x
+          - spine_02.x
+          - spine_03.x
+          - c_subneck_1.x
+          - neck.x
+          - head.x
+          - c_eyebrow_full.l
+          - c_eyebrow_03.l
+          - c_eyebrow_02.l
+          - c_eyebrow_01.l
+          - c_eyebrow_01_end.l
+          - c_eyebrow_full.r
+          - c_eyebrow_03.r
+          - c_eyebrow_02.r
+          - c_eyebrow_01.r
+          - c_eyebrow_01_end.r
+          - c_jawbone.x
+          - c_lips_bot.l
+          - c_lips_bot.r
+          - c_lips_bot.x
+          - tong_01.x
+          - tong_02.x
+          - tong_03.x
+          - c_lips_top.x
+          - c_lips_top.l
+          - c_lips_top.r
+          - c_lips_smile.l
+          - c_lips_corner_mini.l
+          - c_lips_smile.r
+          - c_lips_corner_mini.r
+          - shoulder.l
+          - arm_stretch.l
+          - forearm_stretch.l
+          - hand.l
+          - shoulder.r
+          - arm_stretch.r
+          - forearm_stretch.r
+          - hand.r
+          - shoulder_dupli_001.l
+          - arm_stretch_dupli_001.l
+          - forearm_stretch_dupli_001.l
+          - hand_dupli_001.l
+          - shoulder_dupli_001.r
+          - arm_stretch_dupli_001.r
+          - forearm_stretch_dupli_001.r
+          - hand_dupli_001.r
+          - c_tail_00.x
+          - c_tail_01.x
+          - c_tail_02.x
+          - c_tail_03.x
+          - c_tail_04.x
+          - c_tail_05.x
+          - thigh_b_str.l
+          - thigh_stretch.l
+          - leg_stretch.l
+          - foot.l
+          - toes_01.l
+          - thigh_b_str.r
+          - thigh_stretch.r
+          - leg_stretch.r
+          - foot.r
+          - toes_01.r
         animation_file: skeletal_anim_HormagauntMesh
       ScriptComponents:
         Script0:
@@ -116,17 +229,17 @@ Children:
             name: Transform_Component
             enabled: true
             localPosition:
-              - 0
-              - 0
-              - 0
+              - -0.039187345653772354
+              - 98.123992919921875
+              - -35.655204772949219
             localRotation:
-              - 0
-              - -0
-              - 0
+              - 78.538464180792246
+              - -1.4901983734060593
+              - -0.37117236121895658
             localScale:
-              - 1
-              - 1
-              - 1
+              - 100.00001525878906
+              - 99.999977111816406
+              - 99.999977111816406
         Children:
           - name: spine_01.x
             prefabPath: ""
@@ -139,17 +252,17 @@ Children:
                 name: Transform_Component
                 enabled: true
                 localPosition:
-                  - 0
-                  - 0
-                  - 0
+                  - 1.0320982255507261e-06
+                  - 0.37227663397789001
+                  - 7.9953821341405273e-08
                 localRotation:
-                  - 0
-                  - -0
-                  - 0
+                  - -1.0185721170876876
+                  - -0.0023972645825350134
+                  - 0.00034330323695470422
                 localScale:
-                  - 1
-                  - 1
-                  - 1
+                  - 0.99999988079071045
+                  - 0.99999994039535522
+                  - 0.9999997615814209
             Children:
               - name: spine_02.x
                 prefabPath: ""
@@ -162,17 +275,17 @@ Children:
                     name: Transform_Component
                     enabled: true
                     localPosition:
-                      - 0
-                      - 0
-                      - 0
+                      - -5.2665575367427664e-07
+                      - 0.23583289980888367
+                      - -1.6088038989892084e-07
                     localRotation:
-                      - 0
-                      - -0
-                      - 0
+                      - -7.29296202628767
+                      - 0.0020287183857294238
+                      - 0.00085874686407012835
                     localScale:
-                      - 1
-                      - 1
-                      - 1
+                      - 0.99999994039535522
+                      - 1.0000001192092896
+                      - 1.0000001192092896
                 Children:
                   - name: spine_03.x
                     prefabPath: ""
@@ -185,17 +298,17 @@ Children:
                         name: Transform_Component
                         enabled: true
                         localPosition:
-                          - 0
-                          - 0
-                          - 0
+                          - 1.3916087482357398e-07
+                          - 0.17099250853061676
+                          - 4.4024027090472373e-08
                         localRotation:
-                          - 0
-                          - -0
-                          - 0
+                          - -1.8293460297256141
+                          - -8.2333534283644832e-05
+                          - -3.7634616066483791e-07
                         localScale:
-                          - 1
-                          - 1
-                          - 1
+                          - 1.0000002384185791
+                          - 0.99999982118606567
+                          - 0.99999964237213135
                     Children:
                       - name: c_subneck_1.x
                         prefabPath: ""
@@ -208,17 +321,17 @@ Children:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 0
-                              - 0
-                              - 0
+                              - 1.5569990807762224e-07
+                              - 0.15294972062110901
+                              - 0.024442611262202263
                             localRotation:
-                              - 0
-                              - -0
-                              - 0
+                              - -20.059173475458728
+                              - 0.015278063136273948
+                              - 0.010839460724379402
                             localScale:
-                              - 1
-                              - 1
-                              - 1
+                              - 0.99999988079071045
+                              - 0.9999997615814209
+                              - 0.99999982118606567
                         Children:
                           - name: neck.x
                             prefabPath: ""
@@ -231,17 +344,17 @@ Children:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 0
-                                  - 0
-                                  - 0
+                                  - 5.1275566192998667e-07
+                                  - 0.11079003661870956
+                                  - 8.5815543116041226e-08
                                 localRotation:
-                                  - 0
-                                  - -0
-                                  - 0
+                                  - -1.8027284009147437
+                                  - 0.00027187009930103507
+                                  - 0.00036961572647737858
                                 localScale:
                                   - 1
-                                  - 1
-                                  - 1
+                                  - 0.99999994039535522
+                                  - 0.99999988079071045
                             Children:
                               - name: head.x
                                 prefabPath: ""
@@ -254,17 +367,17 @@ Children:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - 0
-                                      - 0
-                                      - 0
+                                      - 1.6122166357490642e-07
+                                      - 0.11079033464193344
+                                      - -2.3818761007987632e-07
                                     localRotation:
-                                      - 0
-                                      - -0
-                                      - 0
+                                      - -28.358858056579543
+                                      - 0.078328372088243614
+                                      - -0.041913294662474641
                                     localScale:
-                                      - 1
-                                      - 1
-                                      - 1
+                                      - 1.0000002384185791
+                                      - 1.0000001192092896
+                                      - 0.99999964237213135
                                 Children:
                                   - name: c_eyebrow_full.l
                                     prefabPath: ""
@@ -277,17 +390,17 @@ Children:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0
-                                          - 0
-                                          - 0
+                                          - 0.11149842292070389
+                                          - 0.25231030583381653
+                                          - 0.25097459554672241
                                         localRotation:
-                                          - 0
-                                          - -0
-                                          - 0
+                                          - 163.84641690010704
+                                          - 7.847020792228478
+                                          - -169.70979297500449
                                         localScale:
-                                          - 1
-                                          - 1
-                                          - 1
+                                          - 1.0000001192092896
+                                          - 1.0000001192092896
+                                          - 1.0000002384185791
                                     Children:
                                       - name: c_eyebrow_03.l
                                         prefabPath: ""
@@ -300,17 +413,17 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - 0.00040855800034478307
+                                              - -0.041006270796060562
+                                              - 0.033513527363538742
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - 59.599584497669333
+                                              - -87.196784262610237
+                                              - -44.390648764094671
                                             localScale:
-                                              - 1
-                                              - 1
-                                              - 1
+                                              - 1.0000002384185791
+                                              - 1.0000001192092896
+                                              - 1.0000001192092896
                                         Children: ~
                                       - name: c_eyebrow_02.l
                                         prefabPath: ""
@@ -323,13 +436,13 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - -0.0015734353801235557
+                                              - -0.035325329750776291
+                                              - 0.013326574116945267
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - -86.226728964286139
+                                              - -86.540590346935602
+                                              - 89.151877045839399
                                             localScale:
                                               - 1
                                               - 1
@@ -346,17 +459,17 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - 0.00088060565758496523
+                                              - -0.038136929273605347
+                                              - -0.01140181627124548
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - -99.083909086330124
+                                              - -82.348241835759836
+                                              - 86.968678511495781
                                             localScale:
                                               - 1
                                               - 1
-                                              - 1
+                                              - 1.0000001192092896
                                         Children: ~
                                       - name: c_eyebrow_01_end.l
                                         prefabPath: ""
@@ -369,17 +482,17 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - 0.011413127183914185
+                                              - -0.047117907553911209
+                                              - -0.038730252534151077
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - -90.243427376522959
+                                              - -85.644005275315308
+                                              - 89.541036061368615
                                             localScale:
-                                              - 1
-                                              - 1
-                                              - 1
+                                              - 1.0000001192092896
+                                              - 1.0000002384185791
+                                              - 1.0000002384185791
                                         Children: ~
                                   - name: c_eyebrow_full.r
                                     prefabPath: ""
@@ -392,17 +505,17 @@ Children:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0
-                                          - 0
-                                          - 0
+                                          - -0.10685286670923233
+                                          - 0.25865855813026428
+                                          - 0.25613519549369812
                                         localRotation:
-                                          - 0
-                                          - -0
-                                          - 0
+                                          - 159.79771325217786
+                                          - -7.6007651625199015
+                                          - 170.28598686441237
                                         localScale:
-                                          - 1
-                                          - 1
-                                          - 1
+                                          - 1.0000003576278687
+                                          - 1.0000004768371582
+                                          - 1.0000004768371582
                                     Children:
                                       - name: c_eyebrow_03.r
                                         prefabPath: ""
@@ -415,16 +528,16 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - 0.00072679389268159866
+                                              - -0.04430161789059639
+                                              - 0.036526594310998917
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - 1.3798784254474024
+                                              - 89.985008107749152
+                                              - 1.3799314009461834
                                             localScale:
                                               - 1
-                                              - 1
+                                              - 1.0000001192092896
                                               - 1
                                         Children: ~
                                       - name: c_eyebrow_02.r
@@ -438,15 +551,15 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - -0.00034153723390772939
+                                              - -0.04430161789059639
+                                              - 0.011863649822771549
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - 0.21522469597430907
+                                              - 90
+                                              - 0.21494049990625511
                                             localScale:
-                                              - 1
+                                              - 1.0000001192092896
                                               - 1
                                               - 1
                                         Children: ~
@@ -461,16 +574,16 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - -0.0014051260659471154
+                                              - -0.044301696121692657
+                                              - -0.01274453941732645
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - 0.099749901686543949
+                                              - 90
+                                              - 0.099355057072890732
                                             localScale:
-                                              - 1
-                                              - 1
+                                              - 0.99999988079071045
+                                              - 1.0000001192092896
                                               - 1
                                         Children: ~
                                       - name: c_eyebrow_01_end.r
@@ -484,17 +597,17 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - -0.0024887514300644398
+                                              - -0.04430176317691803
+                                              - -0.037798777222633362
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - 0.10450972259249457
+                                              - 89.984991528959895
+                                              - 0.10465980091263193
                                             localScale:
-                                              - 1
-                                              - 1
-                                              - 1
+                                              - 1.0000002384185791
+                                              - 1.0000001192092896
+                                              - 0.99999994039535522
                                         Children: ~
                                   - name: c_jawbone.x
                                     prefabPath: ""
@@ -507,17 +620,17 @@ Children:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0
-                                          - 0
-                                          - 0
+                                          - -1.5466704326172476e-06
+                                          - 0.094657815992832184
+                                          - 0.0377812460064888
                                         localRotation:
-                                          - 0
-                                          - -0
-                                          - 0
+                                          - 108.12365887544476
+                                          - 0.82368655032060001
+                                          - 0.3270849008331303
                                         localScale:
-                                          - 1
-                                          - 1
-                                          - 1
+                                          - 0.99999994039535522
+                                          - 1.0000001192092896
+                                          - 0.99999982118606567
                                     Children:
                                       - name: c_lips_bot.l
                                         prefabPath: ""
@@ -530,16 +643,16 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - 0.080269485712051392
+                                              - 0.21143363416194916
+                                              - 0.0062247500754892826
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - -89.999839175187674
+                                              - 25.205323910915546
+                                              - 90.0001636847974
                                             localScale:
                                               - 1
-                                              - 1
+                                              - 0.99999988079071045
                                               - 1
                                         Children: ~
                                       - name: c_lips_bot.r
@@ -553,17 +666,17 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - -0.080267451703548431
+                                              - 0.21143350005149841
+                                              - 0.0062250248156487942
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - -90.00004610425438
+                                              - -25.205320834037611
+                                              - -90.000091175035294
                                             localScale:
-                                              - 1
-                                              - 1
-                                              - 1
+                                              - 1.0000001192092896
+                                              - 0.99999964237213135
+                                              - 0.9999997615814209
                                         Children: ~
                                       - name: c_lips_bot.x
                                         prefabPath: ""
@@ -576,17 +689,17 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - 3.6778442336071748e-07
+                                              - 0.32400599122047424
+                                              - -0.027743477374315262
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - -89.99985664342222
+                                              - 25.204393289002791
+                                              - 90.000109036578905
                                             localScale:
-                                              - 1
-                                              - 1
-                                              - 1
+                                              - 1.0000001192092896
+                                              - 1.0000004768371582
+                                              - 1.0000004768371582
                                         Children: ~
                                       - name: tong_01.x
                                         prefabPath: ""
@@ -599,17 +712,17 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - -0.00049753970233723521
+                                              - -0.027589738368988037
+                                              - 0.083491750061511993
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - -138.81510846220817
+                                              - -0.099471085233283449
+                                              - 179.84707707663193
                                             localScale:
-                                              - 1
-                                              - 1
-                                              - 1
+                                              - 0.76172029972076416
+                                              - 0.76172047853469849
+                                              - 0.76172035932540894
                                         Children:
                                           - name: tong_02.x
                                             prefabPath: ""
@@ -622,17 +735,17 @@ Children:
                                                 name: Transform_Component
                                                 enabled: true
                                                 localPosition:
-                                                  - 0
-                                                  - 0
-                                                  - 0
+                                                  - -8.8526212493889034e-07
+                                                  - 0.1152976006269455
+                                                  - 1.3793118647242864e-08
                                                 localRotation:
-                                                  - 0
-                                                  - -0
-                                                  - 0
+                                                  - -18.575009816437539
+                                                  - -0.11694268816024991
+                                                  - -0.065369622622715853
                                                 localScale:
+                                                  - 0.9999997615814209
                                                   - 1
-                                                  - 1
-                                                  - 1
+                                                  - 0.99999994039535522
                                             Children:
                                               - name: tong_03.x
                                                 prefabPath: ""
@@ -645,17 +758,17 @@ Children:
                                                     name: Transform_Component
                                                     enabled: true
                                                     localPosition:
-                                                      - 0
-                                                      - 0
-                                                      - 0
+                                                      - -0.012752676382660866
+                                                      - 0.24791644513607025
+                                                      - 0.0088283568620681763
                                                     localRotation:
-                                                      - 0
-                                                      - -0
-                                                      - 0
+                                                      - -21.814711630295299
+                                                      - -5.2868703533500998
+                                                      - -3.117609576839095
                                                     localScale:
-                                                      - 1
-                                                      - 1
-                                                      - 1
+                                                      - 0.99999988079071045
+                                                      - 1.0000002384185791
+                                                      - 0.99999994039535522
                                                 Children: ~
                                   - name: c_lips_top.x
                                     prefabPath: ""
@@ -668,17 +781,17 @@ Children:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0
-                                          - 0
-                                          - 0
+                                          - 0.00039243677747435868
+                                          - 0.15781491994857788
+                                          - 0.34548571705818176
                                         localRotation:
-                                          - 0
-                                          - -0
-                                          - 0
+                                          - -0.1807703108550188
+                                          - -89.985002385036381
+                                          - 0.18077036745374023
                                         localScale:
+                                          - 0.99999994039535522
                                           - 1
-                                          - 1
-                                          - 1
+                                          - 0.99999982118606567
                                     Children: ~
                                   - name: c_lips_top.l
                                     prefabPath: ""
@@ -691,15 +804,15 @@ Children:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0
-                                          - 0
-                                          - 0
+                                          - 0.09161849319934845
+                                          - 0.12279988825321198
+                                          - 0.2266194075345993
                                         localRotation:
-                                          - 0
-                                          - -0
-                                          - 0
+                                          - 1.3019528235402442
+                                          - -90
+                                          - -1.3019525216175063
                                         localScale:
-                                          - 1
+                                          - 1.0000002384185791
                                           - 1
                                           - 1
                                     Children: ~
@@ -714,13 +827,13 @@ Children:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0
-                                          - 0
-                                          - 0
+                                          - -0.090663686394691467
+                                          - 0.11536464840173721
+                                          - 0.22835718095302582
                                         localRotation:
-                                          - 0
-                                          - -0
-                                          - 0
+                                          - 0.18884031563959341
+                                          - 90
+                                          - 0.18884045713404901
                                         localScale:
                                           - 1
                                           - 1
@@ -737,16 +850,16 @@ Children:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0
-                                          - 0
-                                          - 0
+                                          - 0.10551100969314575
+                                          - 0.082733713090419769
+                                          - 0.077473126351833344
                                         localRotation:
-                                          - 0
-                                          - -0
-                                          - 0
+                                          - 0.11699233915904032
+                                          - -90
+                                          - -0.11699223068051014
                                         localScale:
-                                          - 1
-                                          - 1
+                                          - 1.0000001192092896
+                                          - 1.0000001192092896
                                           - 1
                                     Children:
                                       - name: c_lips_corner_mini.l
@@ -760,15 +873,15 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - 1.3614736360523239e-07
+                                              - 0.0023590931668877602
+                                              - 0.00041084931581281126
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - -1.3929273294881098e-08
+                                              - -1.3036887294376113e-06
+                                              - -0.0010534787225736091
                                             localScale:
-                                              - 1
+                                              - 1.0000001192092896
                                               - 1
                                               - 1
                                         Children: ~
@@ -783,16 +896,16 @@ Children:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0
-                                          - 0
-                                          - 0
+                                          - -0.10551257431507111
+                                          - 0.082733765244483948
+                                          - 0.077473357319831848
                                         localRotation:
-                                          - 0
-                                          - -0
-                                          - 0
+                                          - 0.51755027166277945
+                                          - 89.985008858096108
+                                          - 0.51755040373351557
                                         localScale:
-                                          - 1
-                                          - 1
+                                          - 0.99999994039535522
+                                          - 1.0000001192092896
                                           - 1
                                     Children:
                                       - name: c_lips_corner_mini.r
@@ -806,13 +919,13 @@ Children:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
+                                              - -1.11646933476095e-07
+                                              - 0.0023588545154780149
+                                              - 0.00041130583849735558
                                             localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
+                                              - 1.4440245939144921e-08
+                                              - 1.4266215382758189e-06
+                                              - 0.0010509970260330749
                                             localScale:
                                               - 1
                                               - 1
@@ -829,17 +942,17 @@ Children:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 0
-                              - 0
-                              - 0
+                              - 0.049841232597827911
+                              - 0.032837223261594772
+                              - -0.058782860636711121
                             localRotation:
-                              - 0
-                              - -0
-                              - 0
+                              - -163.01138406274407
+                              - -18.6122248983615
+                              - 87.996245602391042
                             localScale:
+                              - 1.0000002384185791
                               - 1
-                              - 1
-                              - 1
+                              - 1.0000001192092896
                         Children:
                           - name: arm_stretch.l
                             prefabPath: ""
@@ -852,17 +965,17 @@ Children:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 0
-                                  - 0
-                                  - 0
+                                  - -1.2817787364838296e-07
+                                  - 0.16584932804107666
+                                  - -2.8370041604830476e-07
                                 localRotation:
-                                  - 0
-                                  - -0
-                                  - 0
+                                  - -84.361344949301056
+                                  - -23.78276434033754
+                                  - -12.586322862014525
                                 localScale:
-                                  - 1
-                                  - 1
-                                  - 1
+                                  - 0.9999997615814209
+                                  - 0.99999994039535522
+                                  - 0.99999982118606567
                             Children:
                               - name: forearm_stretch.l
                                 prefabPath: ""
@@ -875,17 +988,17 @@ Children:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - 0
-                                      - 0
-                                      - 0
+                                      - 1.0409173967218521e-07
+                                      - 0.55363130569458008
+                                      - 1.7480255110058351e-07
                                     localRotation:
-                                      - 0
-                                      - -0
-                                      - 0
+                                      - -6.8247910388493396e-06
+                                      - 6.662435053711101e-06
+                                      - -116.21820698013396
                                     localScale:
-                                      - 1
-                                      - 1
-                                      - 1
+                                      - 0.99999994039535522
+                                      - 1.0000001192092896
+                                      - 1.0000002384185791
                                 Children:
                                   - name: hand.l
                                     prefabPath: ""
@@ -898,16 +1011,16 @@ Children:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0
-                                          - 0
-                                          - 0
+                                          - -7.9656047091702931e-08
+                                          - 0.30724161863327026
+                                          - 3.2844539532561612e-07
                                         localRotation:
-                                          - 0
-                                          - -0
-                                          - 0
+                                          - -3.4858699024302258
+                                          - 0.21940326933428483
+                                          - 108.96700568762562
                                         localScale:
-                                          - 1
-                                          - 1
+                                          - 1.0000001192092896
+                                          - 1.0000001192092896
                                           - 1
                                     Children: ~
                       - name: shoulder.r
@@ -921,17 +1034,17 @@ Children:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 0
-                              - 0
-                              - 0
+                              - -0.049841441214084625
+                              - 0.032837145030498505
+                              - -0.058782912790775299
                             localRotation:
-                              - 0
-                              - -0
-                              - 0
+                              - -163.01138406274407
+                              - 18.6122248983615
+                              - -87.996245602391042
                             localScale:
-                              - 1
-                              - 1
-                              - 1
+                              - 1.0000002384185791
+                              - 1.0000003576278687
+                              - 1.0000001192092896
                         Children:
                           - name: arm_stretch.r
                             prefabPath: ""
@@ -944,17 +1057,17 @@ Children:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 0
-                                  - 0
-                                  - 0
+                                  - 6.2163024949768442e-08
+                                  - 0.16584835946559906
+                                  - 8.0631089360849728e-08
                                 localRotation:
-                                  - 0
-                                  - -0
-                                  - 0
+                                  - -84.21796602784633
+                                  - 31.349039073293365
+                                  - 13.565591193402875
                                 localScale:
-                                  - 1
-                                  - 1
-                                  - 1
+                                  - 0.99999964237213135
+                                  - 0.99999988079071045
+                                  - 0.99999964237213135
                             Children:
                               - name: forearm_stretch.r
                                 prefabPath: ""
@@ -967,17 +1080,17 @@ Children:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - 0
-                                      - 0
-                                      - 0
+                                      - -3.2516219050648942e-08
+                                      - 0.55363088846206665
+                                      - -2.8348569003355806e-07
                                     localRotation:
-                                      - 0
-                                      - -0
-                                      - 0
+                                      - 1.4724338126050301e-05
+                                      - 7.1741036398762579e-06
+                                      - 112.99644419089726
                                     localScale:
                                       - 1
-                                      - 1
-                                      - 1
+                                      - 0.99999964237213135
+                                      - 1.0000002384185791
                                 Children:
                                   - name: hand.r
                                     prefabPath: ""
@@ -990,17 +1103,17 @@ Children:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0
-                                          - 0
-                                          - 0
+                                          - -7.4513248904395368e-09
+                                          - 0.30724170804023743
+                                          - -9.0371941041667014e-09
                                         localRotation:
-                                          - 0
-                                          - -0
-                                          - 0
+                                          - -4.850018621996032
+                                          - 4.4533821949438632
+                                          - -112.23363300856035
                                         localScale:
-                                          - 1
-                                          - 1
-                                          - 1
+                                          - 1.0000005960464478
+                                          - 1.0000003576278687
+                                          - 0.9999997615814209
                                     Children: ~
                   - name: shoulder_dupli_001.l
                     prefabPath: ""
@@ -1013,17 +1126,17 @@ Children:
                         name: Transform_Component
                         enabled: true
                         localPosition:
-                          - 0
-                          - 0
-                          - 0
+                          - 0.049171820282936096
+                          - 0.018627235665917397
+                          - -0.08290565013885498
                         localRotation:
-                          - 0
-                          - -0
-                          - 0
+                          - 164.62097417553528
+                          - -15.339930697587642
+                          - 85.577781913200965
                         localScale:
+                          - 0.99999994039535522
                           - 1
-                          - 1
-                          - 1
+                          - 1.0000001192092896
                     Children:
                       - name: arm_stretch_dupli_001.l
                         prefabPath: ""
@@ -1036,17 +1149,17 @@ Children:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 0
-                              - 0
-                              - 0
+                              - 1.2627508816365207e-08
+                              - 0.12816879153251648
+                              - 1.8672399448860233e-07
                             localRotation:
-                              - 0
-                              - -0
-                              - 0
+                              - -50.6747532591097
+                              - 5.6597025849736822
+                              - -21.540307502770471
                             localScale:
                               - 1
-                              - 1
-                              - 1
+                              - 0.9999995231628418
+                              - 1.0000001192092896
                         Children:
                           - name: forearm_stretch_dupli_001.l
                             prefabPath: ""
@@ -1059,17 +1172,17 @@ Children:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 0
-                                  - 0
-                                  - 0
+                                  - 2.4247879082395229e-07
+                                  - 0.22907166182994843
+                                  - -2.8947252417310665e-07
                                 localRotation:
-                                  - 0
-                                  - -0
-                                  - 0
+                                  - 1.7233982559183564e-05
+                                  - 2.2585730093091799e-05
+                                  - -71.94208542042773
                                 localScale:
-                                  - 1
-                                  - 1
-                                  - 1
+                                  - 1.0000004768371582
+                                  - 1.0000001192092896
+                                  - 0.99999994039535522
                             Children:
                               - name: hand_dupli_001.l
                                 prefabPath: ""
@@ -1082,17 +1195,17 @@ Children:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - 0
-                                      - 0
-                                      - 0
+                                      - 2.6639489192348265e-07
+                                      - 0.20310348272323608
+                                      - -2.6586516810311878e-07
                                     localRotation:
-                                      - 0
-                                      - -0
-                                      - 0
+                                      - -23.350904731996653
+                                      - -12.772775051647383
+                                      - 79.901610194883148
                                     localScale:
+                                      - 1.0000003576278687
                                       - 1
-                                      - 1
-                                      - 1
+                                      - 1.0000001192092896
                                 Children: ~
                   - name: shoulder_dupli_001.r
                     prefabPath: ""
@@ -1105,17 +1218,17 @@ Children:
                         name: Transform_Component
                         enabled: true
                         localPosition:
-                          - 0
-                          - 0
-                          - 0
+                          - -0.049171779304742813
+                          - 0.01862725242972374
+                          - -0.082905814051628113
                         localRotation:
-                          - 0
-                          - -0
-                          - 0
+                          - 164.62112318670336
+                          - 15.33991454805242
+                          - -85.57773095151687
                         localScale:
-                          - 1
-                          - 1
-                          - 1
+                          - 0.99999982118606567
+                          - 0.99999988079071045
+                          - 1.0000001192092896
                     Children:
                       - name: arm_stretch_dupli_001.r
                         prefabPath: ""
@@ -1128,16 +1241,16 @@ Children:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 0
-                              - 0
-                              - 0
+                              - 1.0795605476232595e-07
+                              - 0.12816748023033142
+                              - -2.7205118158235564e-07
                             localRotation:
-                              - 0
-                              - -0
-                              - 0
+                              - -53.166005435192609
+                              - -30.70600140778123
+                              - 9.7492948983848731
                             localScale:
-                              - 1
-                              - 1
+                              - 0.99999982118606567
+                              - 0.99999856948852539
                               - 1
                         Children:
                           - name: forearm_stretch_dupli_001.r
@@ -1151,15 +1264,15 @@ Children:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 0
-                                  - 0
-                                  - 0
+                                  - 5.9704440502628131e-08
+                                  - 0.22907218337059021
+                                  - 2.7352868414709519e-07
                                 localRotation:
-                                  - 0
-                                  - -0
-                                  - 0
+                                  - 2.2680176173425017e-05
+                                  - -1.2750262886548862e-05
+                                  - 95.691965754603373
                                 localScale:
-                                  - 1
+                                  - 1.0000015497207642
                                   - 1
                                   - 1
                             Children:
@@ -1174,17 +1287,17 @@ Children:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - 0
-                                      - 0
-                                      - 0
+                                      - 3.499113176985702e-08
+                                      - 0.20310355722904205
+                                      - 2.8495003334683133e-07
                                     localRotation:
-                                      - 0
-                                      - -0
-                                      - 0
+                                      - -14.145616659635134
+                                      - 21.593194030981728
+                                      - -77.933420697594556
                                     localScale:
-                                      - 1
-                                      - 1
-                                      - 1
+                                      - 1.0000001192092896
+                                      - 1.0000001192092896
+                                      - 1.0000001192092896
                                 Children: ~
           - name: c_tail_00.x
             prefabPath: ""
@@ -1197,17 +1310,17 @@ Children:
                 name: Transform_Component
                 enabled: true
                 localPosition:
-                  - 0
-                  - 0
-                  - 0
+                  - 1.3997095038575935e-06
+                  - -0.0062116710469126701
+                  - 7.5089395977556705e-05
                 localRotation:
-                  - 0
-                  - -0
-                  - 0
+                  - -175.86022722143011
+                  - -0.40119980474325595
+                  - 8.2018749412203729
                 localScale:
-                  - 1
-                  - 1
-                  - 1
+                  - 0.99999982118606567
+                  - 1.0000001192092896
+                  - 1.0000002384185791
             Children:
               - name: c_tail_01.x
                 prefabPath: ""
@@ -1220,17 +1333,17 @@ Children:
                     name: Transform_Component
                     enabled: true
                     localPosition:
-                      - 0
-                      - 0
-                      - 0
+                      - -9.6851874786807457e-07
+                      - 0.40412500500679016
+                      - -2.2558054979526787e-07
                     localRotation:
-                      - 0
-                      - -0
-                      - 0
+                      - 1.2157475293145921
+                      - -0.024858358054860273
+                      - -8.2113745646145642
                     localScale:
+                      - 1.0000001192092896
                       - 1
-                      - 1
-                      - 1
+                      - 0.99999982118606567
                 Children:
                   - name: c_tail_02.x
                     prefabPath: ""
@@ -1243,17 +1356,17 @@ Children:
                         name: Transform_Component
                         enabled: true
                         localPosition:
-                          - 0
-                          - 0
-                          - 0
+                          - 1.4720269803092378e-07
+                          - 0.33925369381904602
+                          - 9.0299501209756272e-08
                         localRotation:
-                          - 0
-                          - -0
-                          - 0
+                          - 0.67656606603476255
+                          - -0.10266282786563326
+                          - -8.2107720810638654
                         localScale:
-                          - 1
-                          - 1
-                          - 1
+                          - 0.99999982118606567
+                          - 0.99999994039535522
+                          - 0.9999997615814209
                     Children:
                       - name: c_tail_03.x
                         prefabPath: ""
@@ -1266,17 +1379,17 @@ Children:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 0
-                              - 0
-                              - 0
+                              - 5.0326161726843566e-07
+                              - 0.22678923606872559
+                              - 1.7390833306762943e-07
                             localRotation:
-                              - 0
-                              - -0
-                              - 0
+                              - -4.44327965212862
+                              - -0.83997498809567872
+                              - -8.1686242016829826
                             localScale:
-                              - 1
-                              - 1
-                              - 1
+                              - 0.9999997615814209
+                              - 0.9999997615814209
+                              - 0.99999988079071045
                         Children:
                           - name: c_tail_04.x
                             prefabPath: ""
@@ -1289,17 +1402,17 @@ Children:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 0
-                                  - 0
-                                  - 0
+                                  - 3.0394392069865717e-07
+                                  - 0.25114554166793823
+                                  - -1.2171576635466863e-08
                                 localRotation:
-                                  - 0
-                                  - -0
-                                  - 0
+                                  - 1.5508212514692232
+                                  - 0.023494401972619001
+                                  - -8.2113704720025655
                                 localScale:
-                                  - 1
-                                  - 1
-                                  - 1
+                                  - 0.99999988079071045
+                                  - 0.99999982118606567
+                                  - 0.9999997615814209
                             Children:
                               - name: c_tail_05.x
                                 prefabPath: ""
@@ -1312,16 +1425,16 @@ Children:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - 0
-                                      - 0
-                                      - 0
+                                      - -1.1520891121108434e-06
+                                      - 0.23845331370830536
+                                      - -6.1380177385217394e-08
                                     localRotation:
-                                      - 0
-                                      - -0
-                                      - 0
+                                      - 2.1580000335964971
+                                      - 0.11111000291463526
+                                      - -8.2106646820986739
                                     localScale:
-                                      - 1
-                                      - 1
+                                      - 0.99999994039535522
+                                      - 0.99999994039535522
                                       - 1
                                 Children: ~
           - name: thigh_b_str.l
@@ -1335,17 +1448,17 @@ Children:
                 name: Transform_Component
                 enabled: true
                 localPosition:
-                  - 0
-                  - 0
-                  - 0
+                  - 0.038181178271770477
+                  - 0.16527508199214935
+                  - 0.042036879807710648
                 localRotation:
-                  - 0
-                  - -0
-                  - 0
+                  - -157.36964652948421
+                  - 43.386876145092941
+                  - 130.10786604410401
                 localScale:
                   - 1
-                  - 1
-                  - 1
+                  - 1.0000001192092896
+                  - 1.0000003576278687
             Children:
               - name: thigh_stretch.l
                 prefabPath: ""
@@ -1358,17 +1471,17 @@ Children:
                     name: Transform_Component
                     enabled: true
                     localPosition:
-                      - 0
-                      - 0
-                      - 0
+                      - -2.9151030389584776e-07
+                      - 0.14963710308074951
+                      - 4.8767894611501106e-08
                     localRotation:
-                      - 0
-                      - -0
-                      - 0
+                      - -68.237312708895971
+                      - 40.433850167639875
+                      - 14.516230498162857
                     localScale:
-                      - 1
-                      - 1
-                      - 1
+                      - 0.99999970197677612
+                      - 1.0000008344650269
+                      - 0.9999997615814209
                 Children:
                   - name: leg_stretch.l
                     prefabPath: ""
@@ -1381,17 +1494,17 @@ Children:
                         name: Transform_Component
                         enabled: true
                         localPosition:
-                          - 0
-                          - 0
-                          - 0
+                          - 1.8112565669525793e-07
+                          - 0.37440958619117737
+                          - -4.4874420268570248e-07
                         localRotation:
-                          - 0
-                          - -0
-                          - 0
+                          - -13.765511982258165
+                          - 8.9131790792095824
+                          - 67.220739301280503
                         localScale:
-                          - 1
-                          - 1
-                          - 1
+                          - 0.99999970197677612
+                          - 1.0000003576278687
+                          - 1.0000002384185791
                     Children:
                       - name: foot.l
                         prefabPath: ""
@@ -1404,17 +1517,17 @@ Children:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 0
-                              - 0
-                              - 0
+                              - 1.8853614225378124e-09
+                              - 0.35727369785308838
+                              - 7.0864223289390793e-07
                             localRotation:
-                              - 0
-                              - -0
-                              - 0
+                              - -145.09631553692353
+                              - 81.170706639759729
+                              - 143.99105498362215
                             localScale:
-                              - 1
-                              - 1
-                              - 1
+                              - 0.99999988079071045
+                              - 0.99999988079071045
+                              - 0.9999997615814209
                         Children:
                           - name: toes_01.l
                             prefabPath: ""
@@ -1427,17 +1540,17 @@ Children:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 0
-                                  - 0
-                                  - 0
+                                  - 9.4544361672888044e-08
+                                  - 0.39389276504516602
+                                  - 4.926002006300223e-08
                                 localRotation:
-                                  - 0
-                                  - -0
-                                  - 0
+                                  - 136.74193198353785
+                                  - 15.063751165337944
+                                  - 154.27613186383329
                                 localScale:
-                                  - 1
-                                  - 1
-                                  - 1
+                                  - 1.0000002384185791
+                                  - 0.99999994039535522
+                                  - 1.0000001192092896
                             Children: ~
           - name: thigh_b_str.r
             prefabPath: ""
@@ -1450,17 +1563,17 @@ Children:
                 name: Transform_Component
                 enabled: true
                 localPosition:
-                  - 0
-                  - 0
-                  - 0
+                  - -0.038185331970453262
+                  - 0.165274977684021
+                  - 0.042031154036521912
                 localRotation:
-                  - 0
-                  - -0
-                  - 0
+                  - -160.95747728840485
+                  - -60.881740159871704
+                  - -110.34020088720621
                 localScale:
-                  - 1
-                  - 1
-                  - 1
+                  - 0.99999982118606567
+                  - 0.99999964237213135
+                  - 1.0000001192092896
             Children:
               - name: thigh_stretch.r
                 prefabPath: ""
@@ -1473,16 +1586,16 @@ Children:
                     name: Transform_Component
                     enabled: true
                     localPosition:
-                      - 0
-                      - 0
-                      - 0
+                      - 3.9829895825960193e-08
+                      - 0.14963732659816742
+                      - 7.2088761626787345e-09
                     localRotation:
-                      - 0
-                      - -0
-                      - 0
+                      - -71.180839800940475
+                      - -28.973458520850098
+                      - -9.3741446400511936
                     localScale:
-                      - 1
-                      - 1
+                      - 0.99999988079071045
+                      - 1.0000069141387939
                       - 1
                 Children:
                   - name: leg_stretch.r
@@ -1496,17 +1609,17 @@ Children:
                         name: Transform_Component
                         enabled: true
                         localPosition:
-                          - 0
-                          - 0
-                          - 0
+                          - 2.4861540737219912e-07
+                          - 0.37441012263298035
+                          - 3.872923457493016e-07
                         localRotation:
-                          - 0
-                          - -0
-                          - 0
+                          - 1.5263881663999084
+                          - 2.4386520632473112
+                          - -90.611347137799697
                         localScale:
-                          - 1
-                          - 1
-                          - 1
+                          - 0.99999338388442993
+                          - 1.0000004768371582
+                          - 0.99999982118606567
                     Children:
                       - name: foot.r
                         prefabPath: ""
@@ -1519,17 +1632,17 @@ Children:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 0
-                              - 0
-                              - 0
+                              - -2.4067867343546823e-07
+                              - 0.35727348923683167
+                              - 6.5574766949794139e-07
                             localRotation:
-                              - 0
-                              - -0
-                              - 0
+                              - -123.55687180089977
+                              - -69.012622902935902
+                              - -179.90090390205958
                             localScale:
-                              - 1
-                              - 1
-                              - 1
+                              - 1.0000001192092896
+                              - 0.99999988079071045
+                              - 0.99999988079071045
                         Children:
                           - name: toes_01.r
                             prefabPath: ""
@@ -1542,15 +1655,15 @@ Children:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 0
-                                  - 0
-                                  - 0
+                                  - -1.2342619584160275e-06
+                                  - 0.39389258623123169
+                                  - -7.1351308861267171e-08
                                 localRotation:
-                                  - 0
-                                  - -0
-                                  - 0
+                                  - 121.9361876336333
+                                  - -4.8584518047840168
+                                  - -168.15535116700744
                                 localScale:
-                                  - 1
-                                  - 1
-                                  - 1
+                                  - 1.0000003576278687
+                                  - 1.0000003576278687
+                                  - 1.0000001192092896
                             Children: ~

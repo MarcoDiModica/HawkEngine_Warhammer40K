@@ -434,10 +434,11 @@ std::string GameObject::GetTag() const
         return "";
 	}
 
-	if (tag.empty()) {
-		return "Untagged";
-	}
-	
+    if (tag.size() > 1024) {
+        LOG(LogType::LOG_WARNING, "Tag size is abnormally large (%zu), returning empty tag", tag.size());
+        return "";
+    }
+
     return tag;
 }
 

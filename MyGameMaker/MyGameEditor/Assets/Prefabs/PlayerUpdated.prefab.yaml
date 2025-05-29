@@ -1,0 +1,2695 @@
+name: Player
+prefabPath: ""
+uuid: 9974478857989296044
+tag: Player
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0
+      - 0
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  CapsuleColliderComponent:
+    size:
+      - 1.70000005
+      - 1.10000002
+      - 1
+    offset:
+      - 0
+      - 2.0999999
+      - 0
+    isTrigger: false
+  RigidbodyComponent:
+    mass: 1
+    isKinematic: false
+    isFreezed: true
+    friction: 0.5
+    gravity:
+      x: 0
+      y: -200
+      z: 0
+    damping:
+      linear: 0
+      angular: 0
+  ParticleFX:
+    name: ParticleFX
+    enabled: true
+    emitterShape: 2
+    emissionRate: 15
+    particlesPerSecond: 15
+    minLifetime: 2
+    maxLifetime: 4
+    minSpeed: 0.5
+    maxSpeed: 1.5
+    startSize: 0.5
+    endSize: 2
+    minSize: 0.5
+    maxSize: 0
+    startColor:
+      - 0.800000012
+      - 0.800000012
+      - 0.800000012
+    endColor:
+      - 0.200000003
+      - 0.200000003
+      - 0.200000003
+    startAlpha: 0.699999988
+    endAlpha: 0
+    rotationSpeed: 0.200000003
+    gravity:
+      - 0
+      - -0.100000001
+      - 0
+    shapeParam1: 0.200000003
+    shapeParam2: 1
+    shapeParam3: 20
+    isOneShot: false
+    isPlaying: false
+    isPaused: false
+    burstEmitted: false
+    spriteSize:
+      - 256
+      - 256
+    useAnimation: true
+    animSpeed: 0.5
+    startRotation: 0
+    randomRotation: true
+    material:
+      billboardType: 0
+      particleType: 1
+      softness: 0
+      useColorGradient: false
+      texturePath: Assets/Textures/Smoke30Frames.png
+    particleType: 1
+  ScriptComponents:
+    Script0:
+      name: PlayerShooting
+      fields:
+        shootCooldown: 8.33333397
+        projectileSpeed: 90
+        projectileLifetime: 0.5
+        hasShotgun: false
+        hasRailgun: false
+        hasBoltgun: true
+    Script1:
+      name: PlayerMovement
+      fields:
+        moveSpeed: 10
+        walkSpeed: 10
+        runSpeed: 25
+        rotationSpeed: 30
+        acceleration: 20
+        deceleration: 15
+        speedTransitionRate: 7
+    Script2:
+      name: PlayerInput
+      fields: ~
+    Script3:
+      name: PlayerDash
+      fields:
+        dashSpeed: 160000
+        dashDuration: 0.300000012
+        dashCooldown: 1.25
+        canDash: true
+        isInvulnerable: false
+    Script4:
+      name: PlayerController
+      fields:
+        isIdle: false
+        isShootInput: false
+        isRunning: false
+        isShootingStanding: false
+        isShootingRunning: false
+        isDashing: false
+        flashDuration: 0.100000001
+        aimLaser: AimLaser
+        aimLaserEnd: AimLaserEnd
+    Script5:
+      name: PlayerPowerUp
+      fields:
+        hasMedicaeStimm: false
+        hasAmmunitionBlessing: false
+        hasMagnet: false
+        hasPiercingBullets: false
+    Script6:
+      name: Boltgun
+      fields:
+        shakeIntensity: 0.150000006
+        shakeDuration: 0.200000003
+        shakeSpeed: 0.200000003
+    Script7:
+      name: Shotgun
+      fields:
+        timeSinceLastShot: 0
+        shakeIntensity: 0.400000006
+        shakeDuration: 0.25
+        shakeSpeed: 0.200000003
+    Script8:
+      name: GrenadeLauncher
+      fields:
+        enabled: false
+        cooldown: 0
+        canThrow: true
+        needsDestroy: false
+    Script9:
+      name: Railgun
+      fields:
+        isCooling: false
+        isRecharged: true
+        isReloading: false
+        shakeIntensity: 0.400000006
+        shakeDuration: 0.25
+        shakeSpeed: 0.200000003
+    Script10:
+      name: LaserBeam
+      fields:
+        enabled: false
+        cooldown: 0
+    Script11:
+      name: EnergyBall
+      fields:
+        enabled: false
+        cooldown: 0
+        canThrow: true
+    Script12:
+      name: ToggleMode
+      fields: ~
+    Script13:
+      name: Barrage
+      fields:
+        enabled: false
+        cooldown: 0
+        canThrow: true
+    Script14:
+      name: HookShot
+      fields:
+        enabled: false
+        cooldown: 0
+        canThrow: true
+    Script15:
+      name: ArcSnare
+      fields:
+        enabled: false
+        cooldown: 0
+        canThrow: true
+    Script16:
+      name: RedThirstManager
+      fields:
+        redThirstBonus: 5
+        biblePages: 0
+    Script17:
+      name: InteractionSystem
+      fields:
+        interactionRadius: 2
+        areaInteractionRadius: 3
+Children:
+  - name: playerMesh
+    prefabPath: ""
+    uuid: 7277458271627645256
+    tag: Untagged
+    active: false
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - -90
+          - -2.2136726787520311e-07
+          - 3.5983869146997249e-14
+        localScale:
+          - 1
+          - 1
+          - 1
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 10584935415069013389
+        material:
+          name: dieno zachael jetpack 2_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+      SkeletalAnimationComponent:
+        name: SkeletalAnimationComponent
+        enabled: true
+        bone_names:
+          - ROOT
+          - HIP.L
+          - THIGH.L
+          - TIBIA.L
+          - FOOT.L
+          - TOE.L
+          - SPINE
+          - SHOULDER.L
+          - ARM.L
+          - FOREARM.L
+          - HAND.L
+          - INDEX1.L
+          - INDEX2.L
+          - INDEX3.L
+          - MIDDLE1.L
+          - MIDDLE2.L
+          - MIDDLE3.L
+          - RING1.L
+          - RING2.L
+          - RING3.L
+          - PINKY1.L
+          - PINKY2.L
+          - PINKY3.L
+          - THUMB1.L
+          - THUMB2.L
+          - HEAD
+          - SHOULDER.R
+          - ARM.R
+          - FOREARM.R
+          - HAND.R
+          - INDEX1.R
+          - INDEX2.R
+          - INDEX3.R
+          - MIDDLE1.R
+          - MIDDLE2.R
+          - MIDDLE3.R
+          - RING1.R
+          - RING2.R
+          - RING3.R
+          - PINKY1.R
+          - PINKY2.R
+          - PINKY3.R
+          - THUMB1.R
+          - THUMB2.R
+          - HIP.R
+          - THIGH.R
+          - TIBIA.R
+          - FOOT.R
+          - TOE.R
+          - KNEE.L
+          - FOOT.R.002
+          - TOE.R.001
+          - PIVOTHEEL.L
+          - PIVOTTOE.L
+          - FOOT.L.001
+          - IKLEG.L
+          - KNEE.R
+          - PIVOTHEEL.R
+          - PIVOTTOE.R
+          - FOOT.R.001
+          - IKLEG.R
+        animation_file: skeletal_anim_playerMesh
+      ScriptComponents:
+        Script0:
+          name: PlayerAnimations
+          fields:
+            animIndex: 0
+    Children:
+      - name: ROOT
+        prefabPath: ""
+        uuid: 303503866733625310
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 1.2600981592779655e-17
+              - 0.09999992698431015
+              - 2.1847772598266602
+            localRotation:
+              - 114.54408637087302
+              - 4.1535734219784759
+              - 1.8933177082467281
+            localScale:
+              - 1
+              - 0.99999994039535522
+              - 0.9999997615814209
+        Children:
+          - name: HIP.L
+            prefabPath: ""
+            uuid: 5533659298031795150
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - -8.8997653691080814e-09
+                  - 6.328415906864393e-07
+                  - 2.3643283952878846e-07
+                localRotation:
+                  - 179.99998258247277
+                  - -80.537681591875497
+                  - 90.000065392317339
+                localScale:
+                  - 1.0000001192092896
+                  - 0.99999982118606567
+                  - 1.0000003576278687
+            Children:
+              - name: THIGH.L
+                prefabPath: ""
+                uuid: 5997843520065774792
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - -4.4559573808555797e-08
+                      - 0.29999992251396179
+                      - -4.7530736679846086e-08
+                    localRotation:
+                      - -51.797577449886724
+                      - -62.047275308698552
+                      - -35.42165873126109
+                    localScale:
+                      - 0.99999970197677612
+                      - 0.99999988079071045
+                      - 1.0000004768371582
+                Children:
+                  - name: TIBIA.L
+                    prefabPath: ""
+                    uuid: 3149573260683507589
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - -2.9107999921507144e-07
+                          - 1.0392307043075562
+                          - -7.2669330108965369e-08
+                        localRotation:
+                          - -3.5770715150395769
+                          - 12.215839969497365
+                          - 90.859403082605098
+                        localScale:
+                          - 0.99999970197677612
+                          - 1.0000001192092896
+                          - 1
+                    Children:
+                      - name: FOOT.L
+                        prefabPath: ""
+                        uuid: 17481533733679865703
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - -1.1682663370038426e-07
+                              - 1.1680763959884644
+                              - 2.7813593206360565e-08
+                            localRotation:
+                              - 8.2160669692790016
+                              - -3.7747017606263857
+                              - -102.35020867331625
+                            localScale:
+                              - 1.0000005960464478
+                              - 1.0000003576278687
+                              - 1.0000001192092896
+                        Children:
+                          - name: TOE.L
+                            prefabPath: ""
+                            uuid: 16910055118081358938
+                            tag: Untagged
+                            active: true
+                            isStatic: false
+                            Components:
+                              Transform_Component:
+                                name: Transform_Component
+                                enabled: true
+                                localPosition:
+                                  - 7.9476862424598949e-08
+                                  - 0.39319249987602234
+                                  - -7.3853513526955794e-08
+                                localRotation:
+                                  - 0.23958710471110997
+                                  - 0.012788083590003876
+                                  - -6.2481859503948005
+                                localScale:
+                                  - 0.99999964237213135
+                                  - 0.99999934434890747
+                                  - 0.99999988079071045
+                            Children: ~
+          - name: SPINE
+            prefabPath: ""
+            uuid: 5751207946688768474
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - 2.0216051055399475e-10
+                  - 0.6082763671875
+                  - 2.3943874438714374e-08
+                localRotation:
+                  - -3.1217765447947761
+                  - -2.1178403860318372e-07
+                  - 2.0092363787412987e-08
+                localScale:
+                  - 0.99999988079071045
+                  - 1.0000002384185791
+                  - 0.99999994039535522
+            Children:
+              - name: SHOULDER.L
+                prefabPath: ""
+                uuid: 15234654106375538394
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - -3.0059439382057462e-09
+                      - 0.90553903579711914
+                      - 2.9207279794718488e-07
+                    localRotation:
+                      - -5.8169554412080915
+                      - -14.283796500221975
+                      - -109.64380847209344
+                    localScale:
+                      - 0.99999946355819702
+                      - 0.99999988079071045
+                      - 0.99999988079071045
+                Children:
+                  - name: ARM.L
+                    prefabPath: ""
+                    uuid: 3137740505297982422
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - 3.3422153933315712e-10
+                          - 0.7352069616317749
+                          - 7.3486883245266199e-09
+                        localRotation:
+                          - -9.6580258662880851
+                          - 26.698149883127506
+                          - -47.734538914945226
+                        localScale:
+                          - 0.99999994039535522
+                          - 0.9999997615814209
+                          - 0.9999995231628418
+                    Children:
+                      - name: FOREARM.L
+                        prefabPath: ""
+                        uuid: 9999678871612676222
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - 2.3661388581786014e-07
+                              - 0.80925321578979492
+                              - 1.9079394064647204e-08
+                            localRotation:
+                              - 79.109782205133683
+                              - 10.162257536475213
+                              - 23.770260774564225
+                            localScale:
+                              - 1.0000001192092896
+                              - 1.0000003576278687
+                              - 1.0000001192092896
+                        Children:
+                          - name: HAND.L
+                            prefabPath: ""
+                            uuid: 6772674239612885214
+                            tag: Untagged
+                            active: true
+                            isStatic: false
+                            Components:
+                              Transform_Component:
+                                name: Transform_Component
+                                enabled: true
+                                localPosition:
+                                  - -2.6123478846784565e-07
+                                  - 0.69208711385726929
+                                  - 5.3007791933623594e-08
+                                localRotation:
+                                  - 169.06775495157319
+                                  - -37.719852977179521
+                                  - -165.96228598366324
+                                localScale:
+                                  - 1.0000005960464478
+                                  - 0.99999970197677612
+                                  - 1.0000008344650269
+                            Children:
+                              - name: INDEX1.L
+                                prefabPath: ""
+                                uuid: 11168655213698815681
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - 0.0084817958995699883
+                                      - 0.32837802171707153
+                                      - 0.058274611830711365
+                                    localRotation:
+                                      - 6.8973802393794204
+                                      - 11.500609653614804
+                                      - -35.65725979761185
+                                    localScale:
+                                      - 0.9999997615814209
+                                      - 0.99999988079071045
+                                      - 0.9999997615814209
+                                Children:
+                                  - name: INDEX2.L
+                                    prefabPath: ""
+                                    uuid: 4845007429989528796
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - -6.1797408079655725e-08
+                                          - 0.13528183102607727
+                                          - 2.8037735688712928e-08
+                                        localRotation:
+                                          - 0.5904906148672634
+                                          - -31.485228445718917
+                                          - -15.749607527497183
+                                        localScale:
+                                          - 0.99999982118606567
+                                          - 0.99999940395355225
+                                          - 0.9999997615814209
+                                    Children:
+                                      - name: INDEX3.L
+                                        prefabPath: ""
+                                        uuid: 11518676038220852290
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 1.9231806902553217e-07
+                                              - 0.14031033217906952
+                                              - -2.4038135393311677e-07
+                                            localRotation:
+                                              - 3.002346548041396
+                                              - 6.9387842506981103
+                                              - 2.6222299271915839
+                                            localScale:
+                                              - 0.99999970197677612
+                                              - 1
+                                              - 1.0000001192092896
+                                        Children: ~
+                              - name: MIDDLE1.L
+                                prefabPath: ""
+                                uuid: 12948006386995353767
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - 0.034890212118625641
+                                      - 0.36481741070747375
+                                      - -0.017056535929441452
+                                    localRotation:
+                                      - -8.5895361830209769
+                                      - -2.5417227516330536
+                                      - -26.291369933957288
+                                    localScale:
+                                      - 0.99999982118606567
+                                      - 0.99999988079071045
+                                      - 0.99999994039535522
+                                Children:
+                                  - name: MIDDLE2.L
+                                    prefabPath: ""
+                                    uuid: 1874418376885629862
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 2.9326276518304439e-08
+                                          - 0.14866100251674652
+                                          - -1.5303265854527126e-07
+                                        localRotation:
+                                          - 0.66839654180814523
+                                          - 4.5333461139595252
+                                          - -39.806868724574429
+                                        localScale:
+                                          - 0.9999997615814209
+                                          - 1
+                                          - 0.99999988079071045
+                                    Children:
+                                      - name: MIDDLE3.L
+                                        prefabPath: ""
+                                        uuid: 5000209253669129193
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 6.4107993580364564e-08
+                                              - 0.11445552855730057
+                                              - 2.5727213692761097e-09
+                                            localRotation:
+                                              - 6.1959898712987984
+                                              - -5.3820857352138516
+                                              - -46.925691135860831
+                                            localScale:
+                                              - 1
+                                              - 1.0000001192092896
+                                              - 1
+                                        Children: ~
+                              - name: RING1.L
+                                prefabPath: ""
+                                uuid: 9083210177356123756
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - 0.049478292465209961
+                                      - 0.33854770660400391
+                                      - -0.097661063075065613
+                                    localRotation:
+                                      - -20.830444388937934
+                                      - -9.109282133376567
+                                      - -19.256664506361499
+                                    localScale:
+                                      - 0.99999964237213135
+                                      - 0.99999988079071045
+                                      - 0.99999994039535522
+                                Children:
+                                  - name: RING2.L
+                                    prefabPath: ""
+                                    uuid: 14001075207005610491
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - -6.1458258926450071e-08
+                                          - 0.13784070312976837
+                                          - 5.9688780140731978e-08
+                                        localRotation:
+                                          - -1.1650264944412216
+                                          - 6.5603591130968013
+                                          - -17.756093769779806
+                                        localScale:
+                                          - 0.99999958276748657
+                                          - 0.99999988079071045
+                                          - 0.99999946355819702
+                                    Children:
+                                      - name: RING3.L
+                                        prefabPath: ""
+                                        uuid: 9468882028033634394
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 1.0524339444373254e-07
+                                              - 0.10049920529127121
+                                              - -1.0627650937067301e-07
+                                            localRotation:
+                                              - 0.42717836796701425
+                                              - 0.62477203633391876
+                                              - -54.244899105595287
+                                            localScale:
+                                              - 1
+                                              - 1.0000002384185791
+                                              - 1.0000001192092896
+                                        Children: ~
+                              - name: PINKY1.L
+                                prefabPath: ""
+                                uuid: 5368521417269951902
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - 0.068656668066978455
+                                      - 0.30465030670166016
+                                      - -0.17370836436748505
+                                    localRotation:
+                                      - -34.476338921936602
+                                      - -16.908120743554182
+                                      - -14.99167810979562
+                                    localScale:
+                                      - 0.9999997615814209
+                                      - 1.0000002384185791
+                                      - 0.99999958276748657
+                                Children:
+                                  - name: PINKY2.L
+                                    prefabPath: ""
+                                    uuid: 6138442682595098930
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - -2.4216410565713886e-07
+                                          - 0.092195339500904083
+                                          - -7.8179304807690642e-08
+                                        localRotation:
+                                          - -3.2519046523416253
+                                          - -0.48862639659865476
+                                          - -17.077997756270655
+                                        localScale:
+                                          - 0.99999994039535522
+                                          - 0.99999994039535522
+                                          - 0.9999997615814209
+                                    Children:
+                                      - name: PINKY3.L
+                                        prefabPath: ""
+                                        uuid: 7734319167480239208
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - -9.2689511177468376e-08
+                                              - 0.076157890260219574
+                                              - -2.4969952505671245e-07
+                                            localRotation:
+                                              - -2.8265118891474224
+                                              - -0.36708920224747299
+                                              - -14.789047544801791
+                                            localScale:
+                                              - 0.99999958276748657
+                                              - 0.99999940395355225
+                                              - 0.99999982118606567
+                                        Children: ~
+                              - name: THUMB1.L
+                                prefabPath: ""
+                                uuid: 1781250281215360224
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - 0.024536436423659325
+                                      - 0.23643217980861664
+                                      - 0.1296064704656601
+                                    localRotation:
+                                      - 18.723594651885872
+                                      - 26.238264408075306
+                                      - -36.985904478603089
+                                    localScale:
+                                      - 0.99999964237213135
+                                      - 1.0000001192092896
+                                      - 0.9999997615814209
+                                Children:
+                                  - name: THUMB2.L
+                                    prefabPath: ""
+                                    uuid: 4952992548717695628
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - -1.4942304460419109e-07
+                                          - 0.14899724721908569
+                                          - 1.0242938230931031e-07
+                                        localRotation:
+                                          - 34.183323374467449
+                                          - -0.66971137754830223
+                                          - -9.5659386399248021
+                                        localScale:
+                                          - 1.0000002384185791
+                                          - 1.0000003576278687
+                                          - 1.0000001192092896
+                                    Children: ~
+              - name: HEAD
+                prefabPath: ""
+                uuid: 4834605471206862668
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - -3.2713767694758644e-08
+                      - 0.90553897619247437
+                      - 2.9194416129030287e-07
+                    localRotation:
+                      - 13.382674022270596
+                      - 1.3334218297938807e-05
+                      - 3.0300034020320022e-06
+                    localScale:
+                      - 1
+                      - 0.99999946355819702
+                      - 0.99999988079071045
+                Children: ~
+              - name: SHOULDER.R
+                prefabPath: ""
+                uuid: 6911001351410634363
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - -4.7567677796678254e-08
+                      - 0.90553897619247437
+                      - 2.9187984296186187e-07
+                    localRotation:
+                      - -5.6563243658111304
+                      - 6.7628636660221719
+                      - 106.25287617840102
+                    localScale:
+                      - 0.99999964237213135
+                      - 1.0000002384185791
+                      - 0.99999988079071045
+                Children:
+                  - name: ARM.R
+                    prefabPath: ""
+                    uuid: 4842048603229123541
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - 1.5071668713062536e-07
+                          - 0.73520684242248535
+                          - -1.0136379557934561e-07
+                        localRotation:
+                          - 71.180460570505417
+                          - -15.637688498625375
+                          - 20.743467553714666
+                        localScale:
+                          - 0.9999995231628418
+                          - 0.9999997615814209
+                          - 0.9999997615814209
+                    Children:
+                      - name: FOREARM.R
+                        prefabPath: ""
+                        uuid: 7253946448750552250
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - 5.123621349412133e-07
+                              - 0.8092532753944397
+                              - 1.1853474291001476e-07
+                            localRotation:
+                              - 74.499011287619979
+                              - -47.639021517994017
+                              - -5.6528207016034422
+                            localScale:
+                              - 0.9999997615814209
+                              - 1
+                              - 1.0000001192092896
+                        Children:
+                          - name: HAND.R
+                            prefabPath: ""
+                            uuid: 9106460334788750686
+                            tag: Untagged
+                            active: true
+                            isStatic: false
+                            Components:
+                              Transform_Component:
+                                name: Transform_Component
+                                enabled: true
+                                localPosition:
+                                  - -2.2632923091236989e-08
+                                  - 0.69208687543869019
+                                  - 2.0373833820030995e-07
+                                localRotation:
+                                  - 24.33151555198322
+                                  - 54.686385326316952
+                                  - 1.2843836152804669
+                                localScale:
+                                  - 1.0000002384185791
+                                  - 0.99999964237213135
+                                  - 1.0000001192092896
+                            Children:
+                              - name: INDEX1.R
+                                prefabPath: ""
+                                uuid: 1249721793206729809
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.0084824021905660629
+                                      - 0.32837760448455811
+                                      - 0.058274857699871063
+                                    localRotation:
+                                      - 10.409385837740844
+                                      - -8.4635808814265179
+                                      - 15.60448562781588
+                                    localScale:
+                                      - 0.99999982118606567
+                                      - 0.99999958276748657
+                                      - 0.9999997615814209
+                                Children:
+                                  - name: INDEX2.R
+                                    prefabPath: ""
+                                    uuid: 7034416399550309292
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 4.2534676225614021e-08
+                                          - 0.13528183102607727
+                                          - -1.766131063618559e-08
+                                        localRotation:
+                                          - -13.102861854991909
+                                          - 3.625526163501597
+                                          - 20.706365562016046
+                                        localScale:
+                                          - 0.9999997615814209
+                                          - 0.99999922513961792
+                                          - 0.99999982118606567
+                                    Children:
+                                      - name: INDEX3.R
+                                        prefabPath: ""
+                                        uuid: 2621576057313833175
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 1.7430845389299066e-07
+                                              - 0.14031027257442474
+                                              - 4.3804618599097012e-08
+                                            localRotation:
+                                              - 10.556134484185407
+                                              - 7.41868813186188
+                                              - 30.174405314124531
+                                            localScale:
+                                              - 1.0000002384185791
+                                              - 0.99999994039535522
+                                              - 1
+                                        Children: ~
+                              - name: MIDDLE1.R
+                                prefabPath: ""
+                                uuid: 14159542895426089549
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.044995587319135666
+                                      - 0.38370776176452637
+                                      - -0.025200344622135162
+                                    localRotation:
+                                      - 16.026130423866917
+                                      - 2.6633499330808661
+                                      - 78.095502273707254
+                                    localScale:
+                                      - 0.99999988079071045
+                                      - 0.99999970197677612
+                                      - 0.99999988079071045
+                                Children:
+                                  - name: MIDDLE2.R
+                                    prefabPath: ""
+                                    uuid: 14855696790706426261
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 4.5904513967798266e-08
+                                          - 0.14866073429584503
+                                          - 1.2607463872882363e-07
+                                        localRotation:
+                                          - 10.655619569939114
+                                          - -4.4732464918860364
+                                          - 35.654663379315352
+                                        localScale:
+                                          - 0.99999946355819702
+                                          - 0.9999997615814209
+                                          - 0.99999994039535522
+                                    Children:
+                                      - name: MIDDLE3.R
+                                        prefabPath: ""
+                                        uuid: 5544900316808936312
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 1.2984564534690435e-08
+                                              - 0.11445537209510803
+                                              - 1.0307100239970168e-07
+                                            localRotation:
+                                              - -3.6384669062271895
+                                              - 2.3268813246564939
+                                              - 75.570857584683637
+                                            localScale:
+                                              - 1.0000002384185791
+                                              - 1.0000002384185791
+                                              - 1.0000001192092896
+                                        Children: ~
+                              - name: RING1.R
+                                prefabPath: ""
+                                uuid: 2823804462858727772
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.052376911044120789
+                                      - 0.33865237236022949
+                                      - -0.097633726894855499
+                                    localRotation:
+                                      - 16.001075441215566
+                                      - 18.60366785572079
+                                      - 86.774653935458375
+                                    localScale:
+                                      - 0.99999994039535522
+                                      - 0.9999995231628418
+                                      - 0.99999994039535522
+                                Children:
+                                  - name: RING2.R
+                                    prefabPath: ""
+                                    uuid: 14264786906547621416
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 1.5139203668468326e-08
+                                          - 0.13784083724021912
+                                          - -4.0037562598627119e-07
+                                        localRotation:
+                                          - 5.3758951877546668
+                                          - -5.1064517623299865
+                                          - 47.755467725694587
+                                        localScale:
+                                          - 1.0000001192092896
+                                          - 0.99999994039535522
+                                          - 0.99999970197677612
+                                    Children:
+                                      - name: RING3.R
+                                        prefabPath: ""
+                                        uuid: 823278122436826417
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - -2.9557833514104459e-08
+                                              - 0.10049902647733688
+                                              - 1.7848340405635099e-07
+                                            localRotation:
+                                              - 0.30336609919955648
+                                              - -0.69340184505703573
+                                              - 64.977578646817904
+                                            localScale:
+                                              - 1.0000001192092896
+                                              - 1.0000003576278687
+                                              - 0.99999988079071045
+                                        Children: ~
+                              - name: PINKY1.R
+                                prefabPath: ""
+                                uuid: 6842508065508903277
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.073668822646141052
+                                      - 0.29854035377502441
+                                      - -0.16958606243133545
+                                    localRotation:
+                                      - 8.2356296176381996
+                                      - 29.269783037658421
+                                      - 70.386391186463158
+                                    localScale:
+                                      - 0.99999982118606567
+                                      - 0.99999994039535522
+                                      - 0.99999970197677612
+                                Children:
+                                  - name: PINKY2.R
+                                    prefabPath: ""
+                                    uuid: 8369473338069766461
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 3.2440773622965935e-08
+                                          - 0.092195436358451843
+                                          - -1.0990299870172748e-07
+                                        localRotation:
+                                          - 7.0837784087155011
+                                          - 2.0429966219716063
+                                          - 46.9208885026869
+                                        localScale:
+                                          - 1.0000002384185791
+                                          - 1
+                                          - 0.99999982118606567
+                                    Children:
+                                      - name: PINKY3.R
+                                        prefabPath: ""
+                                        uuid: 10194783934736328465
+                                        tag: Untagged
+                                        active: true
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - -6.6068793103113421e-08
+                                              - 0.076158039271831512
+                                              - 6.3341647482673125e-09
+                                            localRotation:
+                                              - -0.73533304567032354
+                                              - 2.7538170160285276
+                                              - 82.438304192970236
+                                            localScale:
+                                              - 0.9999997615814209
+                                              - 0.9999997615814209
+                                              - 0.9999997615814209
+                                        Children: ~
+                              - name: THUMB1.R
+                                prefabPath: ""
+                                uuid: 8882384657752344552
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.024536933749914169
+                                      - 0.23643171787261963
+                                      - 0.12960678339004517
+                                    localRotation:
+                                      - 26.978050819330704
+                                      - -26.238267914131939
+                                      - 36.985916278901378
+                                    localScale:
+                                      - 0.9999995231628418
+                                      - 1
+                                      - 0.9999997615814209
+                                Children:
+                                  - name: THUMB2.R
+                                    prefabPath: ""
+                                    uuid: 16562325791886424873
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 4.1654619309383634e-08
+                                          - 0.14899715781211853
+                                          - -3.2486155987498933e-07
+                                        localRotation:
+                                          - -1.6069978050998381
+                                          - 0.669711743746776
+                                          - 9.5659475356332244
+                                        localScale:
+                                          - 1.0000001192092896
+                                          - 0.99999994039535522
+                                          - 1.0000001192092896
+                                    Children: ~
+                              - name: Shotgun
+                                prefabPath: ""
+                                uuid: 1442915752480883811
+                                tag: Untagged
+                                active: false
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.19924682378768921
+                                      - 0.27737721800804138
+                                      - -0.16762782633304596
+                                    localRotation:
+                                      - 97.443993647648341
+                                      - -13.663991232177683
+                                      - 18.400000348206369
+                                    localScale:
+                                      - 0.0020000000949949026
+                                      - 0.0020000000949949026
+                                      - 0.0020000000949949026
+                                Children:
+                                  - name: shotgunMesh
+                                    prefabPath: ""
+                                    uuid: 5427703639703225106
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                    Children:
+                                      - name: bOLTER.010
+                                        prefabPath: ""
+                                        uuid: 12418002066798083621
+                                        tag: Untagged
+                                        active: false
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                          MeshRenderer:
+                                            name: MeshRenderer
+                                            enabled: true
+                                            mesh:
+                                              name: 12445246452344068261
+                                            material:
+                                              name: shotgun_DefaultMaterial_BaseColor
+                                              color:
+                                                - 1
+                                                - 1
+                                                - 1
+                                                - 1
+                                            color:
+                                              - 1
+                                              - 1
+                                              - 1
+                                          Shader:
+                                            name: Shader
+                                            enabled: true
+                                        Children: ~
+                                      - name: Cone
+                                        prefabPath: ""
+                                        uuid: 18356958387254418243
+                                        tag: Untagged
+                                        active: false
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                          MeshRenderer:
+                                            name: MeshRenderer
+                                            enabled: true
+                                            mesh:
+                                              name: 5508932554690171827
+                                            material:
+                                              name: ""
+                                              color:
+                                                - 1
+                                                - 1
+                                                - 1
+                                                - 1
+                                            color:
+                                              - 1
+                                              - 1
+                                              - 1
+                                          Shader:
+                                            name: Shader
+                                            enabled: true
+                                        Children: ~
+                              - name: Railgun
+                                prefabPath: ""
+                                uuid: 17898768077411905007
+                                tag: Untagged
+                                active: false
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.28644415736198425
+                                      - 0.30779379606246948
+                                      - -0.091815672814846039
+                                    localRotation:
+                                      - 100.39299605114684
+                                      - -6.7880001680311661
+                                      - 19.958999373853736
+                                    localScale:
+                                      - 0.0020000000949949026
+                                      - 0.0020000000949949026
+                                      - 0.0020000000949949026
+                                Children:
+                                  - name: railgunMesh
+                                    prefabPath: ""
+                                    uuid: 2514290170571567102
+                                    tag: Untagged
+                                    active: false
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                      MeshRenderer:
+                                        name: MeshRenderer
+                                        enabled: true
+                                        mesh:
+                                          name: 5139834007055871956
+                                        material:
+                                          name: railgun_DefaultMaterial_BaseColor
+                                          color:
+                                            - 1
+                                            - 1
+                                            - 1
+                                            - 1
+                                        color:
+                                          - 1
+                                          - 1
+                                          - 1
+                                      Shader:
+                                        name: Shader
+                                        enabled: true
+                                    Children: ~
+                              - name: Boltgun
+                                prefabPath: ""
+                                uuid: 3770709696540222420
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.23056256771087646
+                                      - 0.22513541579246521
+                                      - -0.027229748666286469
+                                    localRotation:
+                                      - 97.881075704000452
+                                      - -11.463281808074012
+                                      - 16.855554752612736
+                                    localScale:
+                                      - 0.0020000007934868336
+                                      - 0.0020000012591481209
+                                      - 0.0020000012591481209
+                                Children:
+                                  - name: boltgunMesh
+                                    prefabPath: ""
+                                    uuid: 3976416577445253952
+                                    tag: Untagged
+                                    active: false
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                      MeshRenderer:
+                                        name: MeshRenderer
+                                        enabled: true
+                                        mesh:
+                                          name: 15519798888640081881
+                                        material:
+                                          name: boltgun_DefaultMaterial_BaseColor
+                                          color:
+                                            - 1
+                                            - 1
+                                            - 1
+                                            - 1
+                                        color:
+                                          - 1
+                                          - 1
+                                          - 1
+                                      Shader:
+                                        name: Shader
+                                        enabled: true
+                                    Children: ~
+                              - name: RiffleShotFX
+                                prefabPath: ""
+                                uuid: 12529392665530611263
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.97445738315582275
+                                      - 2.4220023155212402
+                                      - 0.57921308279037476
+                                    localRotation:
+                                      - -19.988760599848376
+                                      - -63.284940541371562
+                                      - -49.431831972908249
+                                    localScale:
+                                      - 1.0000007152557373
+                                      - 1.0000004768371582
+                                      - 1.0000001192092896
+                                  ParticleFX:
+                                    name: ParticleFX
+                                    enabled: true
+                                    emitterShape: 0
+                                    emissionRate: 1
+                                    particlesPerSecond: 1
+                                    minLifetime: 0.25
+                                    maxLifetime: 0.25
+                                    minSpeed: 0
+                                    maxSpeed: 0
+                                    startSize: 2
+                                    endSize: 5
+                                    minSize: 2
+                                    maxSize: 2
+                                    startColor:
+                                      - 1
+                                      - 1
+                                      - 1
+                                    endColor:
+                                      - 1
+                                      - 1
+                                      - 1
+                                    startAlpha: 1
+                                    endAlpha: 1
+                                    rotationSpeed: 0
+                                    gravity:
+                                      - 0
+                                      - 0.00100000005
+                                      - 0
+                                    shapeParam1: 0.200000003
+                                    shapeParam2: 1
+                                    shapeParam3: 20
+                                    isOneShot: false
+                                    isPlaying: false
+                                    isPaused: false
+                                    burstEmitted: false
+                                    spriteSize:
+                                      - 1920
+                                      - 1080
+                                    useAnimation: true
+                                    animSpeed: 0.0700000003
+                                    startRotation: 0
+                                    randomRotation: false
+                                    material:
+                                      billboardType: 0
+                                      particleType: 8
+                                      softness: 0
+                                      useColorGradient: false
+                                      texturePath: Assets/Textures/muzzle.png
+                                    particleType: 8
+                                Children: ~
+                              - name: ShotgunShotFX
+                                prefabPath: ""
+                                uuid: 5965737133931028225
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.84459787607192993
+                                      - 2.3242380619049072
+                                      - 0.60167747735977173
+                                    localRotation:
+                                      - 92.577531013459165
+                                      - -8.1256990869256676
+                                      - 106.41998900079969
+                                    localScale:
+                                      - 1.0000002384185791
+                                      - 1.0000005960464478
+                                      - 1.0000004768371582
+                                  ParticleFX:
+                                    name: ParticleFX
+                                    enabled: true
+                                    emitterShape: 0
+                                    emissionRate: 1
+                                    particlesPerSecond: 1
+                                    minLifetime: 0.25
+                                    maxLifetime: 0.25
+                                    minSpeed: 0
+                                    maxSpeed: 0
+                                    startSize: 1
+                                    endSize: 1
+                                    minSize: 1
+                                    maxSize: 1
+                                    startColor:
+                                      - 1
+                                      - 1
+                                      - 1
+                                    endColor:
+                                      - 1
+                                      - 1
+                                      - 1
+                                    startAlpha: 1
+                                    endAlpha: 1
+                                    rotationSpeed: 0
+                                    gravity:
+                                      - 0
+                                      - 0.00100000005
+                                      - 0
+                                    shapeParam1: 0.200000003
+                                    shapeParam2: 1
+                                    shapeParam3: 20
+                                    isOneShot: false
+                                    isPlaying: false
+                                    isPaused: false
+                                    burstEmitted: false
+                                    spriteSize:
+                                      - 1024
+                                      - 778
+                                    useAnimation: true
+                                    animSpeed: 0.0500000007
+                                    startRotation: 0
+                                    randomRotation: false
+                                    material:
+                                      billboardType: 0
+                                      particleType: 20
+                                      softness: 0
+                                      useColorGradient: false
+                                      texturePath: Assets/Textures/ShotGun Muzzle Flash_Spritesheet_Yiwei.png
+                                    particleType: 20
+                                Children: ~
+                              - name: RailgunShotAutoFX
+                                prefabPath: ""
+                                uuid: 2474552656792370531
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.89011251926422119
+                                      - 2.3719477653503418
+                                      - 0.76410651206970215
+                                    localRotation:
+                                      - 92.577531013459165
+                                      - -8.1256990869256676
+                                      - 106.41998900079969
+                                    localScale:
+                                      - 1.0000002384185791
+                                      - 1.0000005960464478
+                                      - 1.0000004768371582
+                                  ParticleFX:
+                                    name: ParticleFX
+                                    enabled: true
+                                    emitterShape: 0
+                                    emissionRate: 1
+                                    particlesPerSecond: 1
+                                    minLifetime: 1
+                                    maxLifetime: 1
+                                    minSpeed: 0
+                                    maxSpeed: 0
+                                    startSize: 10
+                                    endSize: 10
+                                    minSize: 10
+                                    maxSize: 10
+                                    startColor:
+                                      - 1
+                                      - 1
+                                      - 1
+                                    endColor:
+                                      - 1
+                                      - 1
+                                      - 1
+                                    startAlpha: 1
+                                    endAlpha: 1
+                                    rotationSpeed: 0
+                                    gravity:
+                                      - 0
+                                      - 0.00100000005
+                                      - 0
+                                    shapeParam1: 0.200000003
+                                    shapeParam2: 1
+                                    shapeParam3: 20
+                                    isOneShot: false
+                                    isPlaying: false
+                                    isPaused: false
+                                    burstEmitted: false
+                                    spriteSize:
+                                      - 434
+                                      - 181
+                                    useAnimation: true
+                                    animSpeed: 0.0500000007
+                                    startRotation: 0
+                                    randomRotation: false
+                                    material:
+                                      billboardType: 0
+                                      particleType: 13
+                                      softness: 0
+                                      useColorGradient: false
+                                      texturePath: Assets/Textures/RailGunAuto.png
+                                    particleType: 13
+                                Children: ~
+                              - name: RailgunShotSemiFX
+                                prefabPath: ""
+                                uuid: 13799083494462733349
+                                tag: Untagged
+                                active: true
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.90020769834518433
+                                      - 2.4309425354003906
+                                      - 0.77227562665939331
+                                    localRotation:
+                                      - 92.577531013459165
+                                      - -8.1256990869256676
+                                      - 106.41998900079969
+                                    localScale:
+                                      - 1.0000002384185791
+                                      - 1.0000005960464478
+                                      - 1.0000004768371582
+                                  ParticleFX:
+                                    name: ParticleFX
+                                    enabled: true
+                                    emitterShape: 2
+                                    emissionRate: 26
+                                    particlesPerSecond: 26
+                                    minLifetime: 3.5
+                                    maxLifetime: 4
+                                    minSpeed: 0
+                                    maxSpeed: 0
+                                    startSize: 2.5
+                                    endSize: 2.5
+                                    minSize: 2.5
+                                    maxSize: 2.5
+                                    startColor:
+                                      - 1
+                                      - 1
+                                      - 1
+                                    endColor:
+                                      - 1
+                                      - 1
+                                      - 1
+                                    startAlpha: 1
+                                    endAlpha: 1
+                                    rotationSpeed: 0
+                                    gravity:
+                                      - 0
+                                      - 0.00100000005
+                                      - 1.20000005
+                                    shapeParam1: 0.100000001
+                                    shapeParam2: 1
+                                    shapeParam3: 20
+                                    isOneShot: false
+                                    isPlaying: false
+                                    isPaused: false
+                                    burstEmitted: false
+                                    spriteSize:
+                                      - 641
+                                      - 361
+                                    useAnimation: true
+                                    animSpeed: 0.0500000007
+                                    startRotation: 0
+                                    randomRotation: false
+                                    material:
+                                      billboardType: 0
+                                      particleType: 14
+                                      softness: 0
+                                      useColorGradient: false
+                                      texturePath: Assets/Textures/RailGunSemi.png
+                                    particleType: 14
+                                Children: ~
+          - name: HIP.R
+            prefabPath: ""
+            uuid: 11387666372171101373
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - 2.1932381244482713e-08
+                  - 6.1052992350596469e-07
+                  - 1.8218379693735187e-07
+                localRotation:
+                  - -179.99989320272977
+                  - 80.537662602837514
+                  - -89.999941177521279
+                localScale:
+                  - 0.99999994039535522
+                  - 0.99999964237213135
+                  - 1.0000003576278687
+            Children:
+              - name: THIGH.R
+                prefabPath: ""
+                uuid: 1968360146313982772
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - -1.4242105272899153e-08
+                      - 0.29999998211860657
+                      - -8.439968723905622e-08
+                    localRotation:
+                      - -90.770577399708884
+                      - -30.039016642415501
+                      - 0.99054216275012907
+                    localScale:
+                      - 0.99999958276748657
+                      - 0.99999994039535522
+                      - 1
+                Children:
+                  - name: TIBIA.R
+                    prefabPath: ""
+                    uuid: 17987886291837943836
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - 4.8309761524478745e-08
+                          - 1.0392307043075562
+                          - 5.1024390046450208e-08
+                        localRotation:
+                          - -0.11584454251256358
+                          - -1.2686338657604277
+                          - -0.37606129493143586
+                        localScale:
+                          - 0.99999922513961792
+                          - 0.99999982118606567
+                          - 0.99999910593032837
+                    Children:
+                      - name: FOOT.R
+                        prefabPath: ""
+                        uuid: 16880378712619290140
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - -9.8180251484336623e-08
+                              - 1.1680752038955688
+                              - -2.6109352901926286e-08
+                            localRotation:
+                              - -0.82995679219656082
+                              - 1.5315620817165922
+                              - 71.514538795884178
+                            localScale:
+                              - 1.0000001192092896
+                              - 0.99999994039535522
+                              - 1.0000001192092896
+                        Children:
+                          - name: TOE.R
+                            prefabPath: ""
+                            uuid: 17952635052734824415
+                            tag: Untagged
+                            active: true
+                            isStatic: false
+                            Components:
+                              Transform_Component:
+                                name: Transform_Component
+                                enabled: true
+                                localPosition:
+                                  - 1.0726386534543053e-07
+                                  - 0.3931918740272522
+                                  - 5.0127404449540336e-08
+                                localRotation:
+                                  - 1.6765546229037944
+                                  - -0.15121345017778415
+                                  - 36.174024670908217
+                                localScale:
+                                  - 0.99999982118606567
+                                  - 1.0000001192092896
+                                  - 1.0000002384185791
+                            Children: ~
+      - name: KNEE.L
+        prefabPath: ""
+        uuid: 15966151933733196360
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0.25559970736503601
+              - -1.4599999189376831
+              - 1.5324516296386719
+            localRotation:
+              - -7.8310298230667443e-12
+              - -89.690400379263693
+              - -179.99996402757887
+            localScale:
+              - 1
+              - 1
+              - 1
+        Children: ~
+      - name: FOOT.R.002
+        prefabPath: ""
+        uuid: 8437296046768929730
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - -0.59999990463256836
+              - 0.37999993562698364
+              - 0.20000018179416656
+            localRotation:
+              - -73.329708130309712
+              - 82.371773069746467
+              - 106.81098763696913
+            localScale:
+              - 1
+              - 1.0000002384185791
+              - 1.0000170469284058
+        Children: ~
+      - name: TOE.R.001
+        prefabPath: ""
+        uuid: 4888335285182905946
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - -0.60000002384185791
+              - -0.51999998092651367
+              - 0.14000016450881958
+            localRotation:
+              - 152.94744980769946
+              - -87.529622520454808
+              - -152.96903500999056
+            localScale:
+              - 0.99999988079071045
+              - 1.0000002384185791
+              - 1.0000001192092896
+        Children: ~
+      - name: PIVOTHEEL.L
+        prefabPath: ""
+        uuid: 12703299956262491932
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0.54148542881011963
+              - 0.10346642881631851
+              - 0.54889833927154541
+            localRotation:
+              - -84.417668893601217
+              - -68.446249713861263
+              - -95.999103758779597
+            localScale:
+              - 1
+              - 1.0000002384185791
+              - 1
+        Children:
+          - name: PIVOTTOE.L
+            prefabPath: ""
+            uuid: 3546665883043613470
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - 0.090503938496112823
+                  - 0.94640642404556274
+                  - 0.003477470250800252
+                localRotation:
+                  - 2.5686229632232606e-07
+                  - 4.4008257261949195
+                  - -179.99999134857757
+                localScale:
+                  - 0.99999964237213135
+                  - 0.99999982118606567
+                  - 0.99999988079071045
+            Children:
+              - name: FOOT.L.001
+                prefabPath: ""
+                uuid: 3920156934408390610
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - -2.9231028264575798e-08
+                      - 0.51009798049926758
+                      - -1.0929024352179795e-10
+                    localRotation:
+                      - -0.23959911843507159
+                      - 0.013064211939715136
+                      - 6.2481432266348218
+                    localScale:
+                      - 0.99999988079071045
+                      - 1.0000002384185791
+                      - 0.99999970197677612
+                Children:
+                  - name: IKLEG.L
+                    prefabPath: ""
+                    uuid: 15269002824559512511
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - 9.0924032747352612e-08
+                          - 0.3931921124458313
+                          - -5.2490394253368322e-09
+                        localRotation:
+                          - 1.0029409670938436e-06
+                          - 4.4010582045957394
+                          - -179.99999134857771
+                        localScale:
+                          - 1.0000003576278687
+                          - 1
+                          - 0.99999970197677612
+                    Children: ~
+      - name: KNEE.R
+        prefabPath: ""
+        uuid: 423083130541124417
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - -0.26562899351119995
+              - -1.4599999189376831
+              - 1.5136154890060425
+            localRotation:
+              - 1.0134005795907931e-11
+              - 89.690400379263693
+              - -179.99996402758117
+            localScale:
+              - 1
+              - 1
+              - 1
+        Children: ~
+      - name: PIVOTHEEL.R
+        prefabPath: ""
+        uuid: 5834092013915331073
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - -0.45172858238220215
+              - 1.9330471754074097
+              - 0.33572044968605042
+            localRotation:
+              - -84.317013327657378
+              - 68.793105125110486
+              - 96.093032826884141
+            localScale:
+              - 0.99999982118606567
+              - 1.0000002384185791
+              - 0.99999988079071045
+        Children:
+          - name: PIVOTTOE.R
+            prefabPath: ""
+            uuid: 1196572608465785782
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - -0.09050402045249939
+                  - 0.94640666246414185
+                  - 0.0034774534869939089
+                localRotation:
+                  - 2.4895178002779743e-08
+                  - -4.4008270096953019
+                  - 179.99999134857799
+                localScale:
+                  - 0.9999997615814209
+                  - 0.9999997615814209
+                  - 1
+            Children:
+              - name: FOOT.R.001
+                prefabPath: ""
+                uuid: 3605998847959759882
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - -6.3938729866208632e-09
+                      - 0.51009786128997803
+                      - 1.8155899006444542e-10
+                    localRotation:
+                      - -1.4978612255531387
+                      - -0.58804185037399814
+                      - -42.867669482897249
+                    localScale:
+                      - 0.99999994039535522
+                      - 1.0000001192092896
+                      - 0.99999988079071045
+                Children:
+                  - name: IKLEG.R
+                    prefabPath: ""
+                    uuid: 16463184428455576808
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - -1.1484148743079459e-08
+                          - 0.39319214224815369
+                          - 2.3523234915501234e-08
+                        localRotation:
+                          - 8.1826625792998771e-07
+                          - -4.4010590602630923
+                          - 179.99996402782256
+                        localScale:
+                          - 1
+                          - 1
+                          - 0.99999970197677612
+                    Children: ~
+  - name: AmmunitionBlessingFX
+    prefabPath: ""
+    uuid: 3023879322924651625
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 3
+          - -1
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      ParticleFX:
+        name: ParticleFX
+        enabled: true
+        emitterShape: 1
+        emissionRate: 15
+        particlesPerSecond: 15
+        minLifetime: 0.100000001
+        maxLifetime: 1.70000005
+        minSpeed: 0.25
+        maxSpeed: 2
+        startSize: 0.800000012
+        endSize: 2
+        minSize: 1
+        maxSize: 1
+        startColor:
+          - 1
+          - 1
+          - 1
+        endColor:
+          - 1
+          - 1
+          - 1
+        startAlpha: 1
+        endAlpha: 0.699999988
+        rotationSpeed: 0
+        gravity:
+          - 0
+          - 2.60100007
+          - 0
+        shapeParam1: 1.84000003
+        shapeParam2: 1
+        shapeParam3: 20
+        isOneShot: false
+        isPlaying: false
+        isPaused: false
+        burstEmitted: false
+        spriteSize:
+          - 778
+          - 1024
+        useAnimation: true
+        animSpeed: 0.0299999993
+        startRotation: 180
+        randomRotation: false
+        material:
+          billboardType: 0
+          particleType: 22
+          softness: 0
+          useColorGradient: false
+          texturePath: Assets/Textures/Project3_AmmunitionBlessing_effect_Yiwei.png
+        particleType: 22
+    Children: ~
+  - name: InactiveDashFX
+    prefabPath: ""
+    uuid: 12929257454630874587
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 3
+          - -1
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      ParticleFX:
+        name: ParticleFX
+        enabled: true
+        emitterShape: 2
+        emissionRate: 15
+        particlesPerSecond: 15
+        minLifetime: 2
+        maxLifetime: 4
+        minSpeed: 0.5
+        maxSpeed: 1.5
+        startSize: 0.5
+        endSize: 2
+        minSize: 0.5
+        maxSize: 0
+        startColor:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+        endColor:
+          - 0.200000003
+          - 0.200000003
+          - 0.200000003
+        startAlpha: 0.699999988
+        endAlpha: 0
+        rotationSpeed: 0.200000003
+        gravity:
+          - 0
+          - -0.100000001
+          - 0
+        shapeParam1: 0.200000003
+        shapeParam2: 1
+        shapeParam3: 20
+        isOneShot: false
+        isPlaying: false
+        isPaused: false
+        burstEmitted: false
+        spriteSize:
+          - 256
+          - 256
+        useAnimation: true
+        animSpeed: 0.5
+        startRotation: 0
+        randomRotation: true
+        material:
+          billboardType: 0
+          particleType: 1
+          softness: 0
+          useColorGradient: false
+          texturePath: Assets/Textures/Smoke30Frames.png
+        particleType: 1
+    Children: ~
+  - name: AimLaser
+    prefabPath: ""
+    uuid: 10536007065216245538
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: AimLaserEnd
+    prefabPath: ""
+    uuid: 6819706601792338584
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: RedThirstFX
+    prefabPath: ""
+    uuid: 5310089416473126753
+    tag: Untagged
+    active: false
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 3
+          - -1
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      ParticleFX:
+        name: ParticleFX
+        enabled: true
+        emitterShape: 0
+        emissionRate: 1
+        particlesPerSecond: 1
+        minLifetime: 1
+        maxLifetime: 1
+        minSpeed: 0
+        maxSpeed: 0
+        startSize: 0.800000012
+        endSize: 5
+        minSize: 5
+        maxSize: 5
+        startColor:
+          - 1
+          - 1
+          - 1
+        endColor:
+          - 1
+          - 1
+          - 1
+        startAlpha: 1
+        endAlpha: 1
+        rotationSpeed: 0
+        gravity:
+          - 0
+          - 0.00100000005
+          - 0
+        shapeParam1: 0.200000003
+        shapeParam2: 1
+        shapeParam3: 20
+        isOneShot: false
+        isPlaying: false
+        isPaused: false
+        burstEmitted: false
+        spriteSize:
+          - 640
+          - 360
+        useAnimation: true
+        animSpeed: 0.100000001
+        startRotation: 0
+        randomRotation: false
+        material:
+          billboardType: 0
+          particleType: 32
+          softness: 0
+          useColorGradient: false
+          texturePath: Assets/Textures/Red_Thirst_Sprite_sheet.png
+        particleType: 32
+    Children: ~
+  - name: WalkingFX
+    prefabPath: ""
+    uuid: 9015514207683951836
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - -1
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      ParticleFX:
+        name: ParticleFX
+        enabled: true
+        emitterShape: 2
+        emissionRate: 120
+        particlesPerSecond: 120
+        minLifetime: 0.150000006
+        maxLifetime: 0.150000006
+        minSpeed: 5.55000019
+        maxSpeed: 5.55000019
+        startSize: 0
+        endSize: 2
+        minSize: 0
+        maxSize: 1
+        startColor:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+        endColor:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+        startAlpha: 0.699999988
+        endAlpha: 0
+        rotationSpeed: 0.200000003
+        gravity:
+          - 0
+          - -5.32999992
+          - 0
+        shapeParam1: 0.200000003
+        shapeParam2: 1
+        shapeParam3: 20
+        isOneShot: false
+        isPlaying: false
+        isPaused: false
+        burstEmitted: false
+        spriteSize:
+          - 256
+          - 256
+        useAnimation: true
+        animSpeed: 0.5
+        startRotation: 0
+        randomRotation: true
+        material:
+          billboardType: 0
+          particleType: 53
+          softness: 0
+          useColorGradient: false
+          texturePath: Assets/Textures/Smoke30Frames.png
+        particleType: 53
+    Children: ~
+  - name: SpeedBoostFX
+    prefabPath: ""
+    uuid: 12222525333173663648
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 3
+          - -1
+        localRotation:
+          - -7.9513734333505544e-16
+          - 2.087239388862097e-15
+          - -4.7708320221952752e-15
+        localScale:
+          - 1
+          - 1
+          - 1
+      ParticleFX:
+        name: ParticleFX
+        enabled: true
+        emitterShape: 4
+        emissionRate: 80
+        particlesPerSecond: 80
+        minLifetime: 0.100000001
+        maxLifetime: 0.200000003
+        minSpeed: 0
+        maxSpeed: 0
+        startSize: 0.800000012
+        endSize: 8
+        minSize: 1
+        maxSize: 1
+        startColor:
+          - 1
+          - 1
+          - 1
+        endColor:
+          - 1
+          - 1
+          - 1
+        startAlpha: 0.170000002
+        endAlpha: 0.170000002
+        rotationSpeed: 0
+        gravity:
+          - 0
+          - 0.00100000005
+          - 0
+        shapeParam1: 2.1099999
+        shapeParam2: 1
+        shapeParam3: 20
+        isOneShot: false
+        isPlaying: false
+        isPaused: false
+        burstEmitted: false
+        spriteSize:
+          - 1024
+          - 778
+        useAnimation: true
+        animSpeed: 0.0299999993
+        startRotation: 0
+        randomRotation: true
+        material:
+          billboardType: 0
+          particleType: 21
+          softness: 0
+          useColorGradient: false
+          texturePath: Assets/Textures/Project3_Velocity_effect.png
+        particleType: 21
+    Children: ~

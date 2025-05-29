@@ -129,8 +129,8 @@ public class EnemyControllerBoss : EnemyController
         {
             Engineson.print("ERROR: Player couldn't be found!");
         }
-        //collider = gameObject.GetComponent<CapsuleCollider>();
-        collider = gameObject.GetComponent<BoxCollider>();
+        collider = gameObject.GetComponent<CapsuleCollider>();
+        //collider = gameObject.GetComponent<BoxCollider>();
         collider.SetSize(new Vector3(3.0f, 2.0f, 3.0f));
         if (collider == null)
         {

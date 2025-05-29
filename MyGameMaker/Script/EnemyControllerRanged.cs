@@ -86,8 +86,8 @@ public class EnemyControllerRanged : EnemyController
                 return;
             }
 
-            //collider = gameObject.GetComponent<CapsuleCollider>();
-            collider = gameObject.GetComponent<BoxCollider>();
+            collider = gameObject.GetComponent<CapsuleCollider>();
+            //collider = gameObject.GetComponent<BoxCollider>();
             if (collider == null)
             {
                 Engineson.print("ERROR: BoxCollider component not found!");

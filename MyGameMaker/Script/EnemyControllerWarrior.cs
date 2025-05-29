@@ -112,8 +112,8 @@ public class EnemyControllerWarrior : EnemyController
                 return;
             }
 
-            //collider = gameObject.GetComponent<CapsuleCollider>();
-            collider = gameObject.GetComponent<BoxCollider>();
+            collider = gameObject.GetComponent<CapsuleCollider>();
+            //collider = gameObject.GetComponent<BoxCollider>();
             if (collider == null)
             {
                 Engineson.print("ERROR: Tyranid Warrior Collider not found!");

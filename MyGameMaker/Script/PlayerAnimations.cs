@@ -397,6 +397,22 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
+    public void IdleToRunBackwardsAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(11, 48, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
     public void ShootingStillToIdleAnimation()
     {
         if (!componentsInitialized || esk == null)
@@ -445,6 +461,22 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
+    public void ShootingWalkingBackwardsToRunBackwardsAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(34, 48, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
     public void ShootingWalkingLeftToRunAnimation()
     {
         if (!componentsInitialized || esk == null)
@@ -453,6 +485,22 @@ public class PlayerAnimations : MonoBehaviour
         try
         {
             esk.TransitionAnimations(35, 32, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void ShootingWalkingLeftToRunBackwardsAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(35, 48, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -477,6 +525,23 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
+    public void ShootingWalkingRightToRunBackwardsAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(36, 48, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+
     public void ShootingWalkingStraightToRunAnimation()
     {
         if (!componentsInitialized || esk == null)
@@ -485,6 +550,22 @@ public class PlayerAnimations : MonoBehaviour
         try
         {
             esk.TransitionAnimations(37, 32, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void ShootingWalkingStraightToRunBackwardsAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(37, 48, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)
@@ -2696,6 +2777,38 @@ public class PlayerAnimations : MonoBehaviour
         try
         {
             esk.TransitionAnimations(47, 37, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void RunningBackwardsToRunningForwardAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(48, 32, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void RunningForwardToRunningBackwardsAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(32, 48, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)

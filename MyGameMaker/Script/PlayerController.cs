@@ -79,9 +79,9 @@ public class PlayerController : MonoBehaviour
 
     public enum LookingDirection
     {
-        Idle,
-        Forward,
         Backward,
+        Forward,
+        Idle,
         Left,
         Right
     }
@@ -90,9 +90,9 @@ public class PlayerController : MonoBehaviour
 
     public enum ShootingDirection
     {
-        Idle,
-        Forward,
         Backward,
+        Forward,
+        Idle,
         Left,
         Right
     }
@@ -546,7 +546,7 @@ public class PlayerController : MonoBehaviour
     private void SetRunningAnimation()
     {
         const float epsilon = 0.1f;
-        currentShootingDirection = ShootingDirection.Idle;
+        
 
         if (moveDirection.LengthSquared() < epsilon)
         {
@@ -563,28 +563,86 @@ public class PlayerController : MonoBehaviour
         }
 
         float dot = Vector3.Dot(lookDir, moveDir);
-        Vector3 cross = Vector3.Cross(lookDir, moveDir);
 
-        if (dot > 0.7f && currentLookingDirection != LookingDirection.Forward)
+        if (dot > 0.7f && (currentLookingDirection != LookingDirection.Forward || isShootingRunning))
         {
-            playerAnimations.IdleToRunAnimation();
+            
+            if (currentLookingDirection == LookingDirection.Idle && !isShootingRunning)
+            {
+               
+                playerAnimations.IdleToRunAnimation();
+            }
+            else if (currentLookingDirection == LookingDirection.Backward || isShootingRunning)
+            {
+                if (isShootingRunning)
+                {
+                    
+                    switch (currentShootingDirection)
+                    {
+                        
+                        case ShootingDirection.Left:
+                            playerAnimations.ShootingWalkingLeftToRunAnimation();
+                            break;
+                        case ShootingDirection.Right:
+                            playerAnimations.ShootingWalkingRightToRunAnimation();
+                            break;
+                        case ShootingDirection.Forward:
+                            playerAnimations.ShootingWalkingStraightToRunAnimation();
+                            break;
+                        case ShootingDirection.Backward:
+                            playerAnimations.ShootingWalkingBackwardsToRunAnimation();
+                            break;
+                    }
+                }
+                else
+                {
+                    playerAnimations.RunningBackwardsToRunningForwardAnimation();
+                   
+                }
+                
+            }
+            
+
             currentLookingDirection = LookingDirection.Forward;
         }
-        else if (dot < -0.7f && currentLookingDirection != LookingDirection.Backward)
+        else if (dot < -0.7f && (currentLookingDirection != LookingDirection.Backward || isShootingRunning))
         {
-            Engineson.print("Moving Backwards");
+
+            if (currentLookingDirection == LookingDirection.Idle)
+            {
+                playerAnimations.IdleToRunBackwardsAnimation();
+            }
+            else if (currentLookingDirection == LookingDirection.Forward || isShootingRunning)
+            {
+                if (isShootingRunning)
+                {
+                    switch (currentShootingDirection)
+                    {
+                        case ShootingDirection.Left:
+                            playerAnimations.ShootingWalkingLeftToRunBackwardsAnimation();
+                            break;
+                        case ShootingDirection.Right:
+                            playerAnimations.ShootingWalkingRightToRunBackwardsAnimation();
+                            break;
+                        case ShootingDirection.Forward:
+                            playerAnimations.ShootingWalkingStraightToRunBackwardsAnimation();
+                            break;
+                        case ShootingDirection.Backward:
+                            playerAnimations.ShootingWalkingBackwardsToRunBackwardsAnimation();
+                            break;
+                    }
+                }
+                else
+                {
+                    playerAnimations.RunningForwardToRunningBackwardsAnimation();
+                }
+                
+            }
+            
+
             currentLookingDirection = LookingDirection.Backward;
         }
-        else if (cross.Y > epsilon && currentLookingDirection != LookingDirection.Left)
-        {
-            Engineson.print("Moving Left");
-            currentLookingDirection = LookingDirection.Left;
-        }
-        else if (cross.Y < -epsilon && currentLookingDirection != LookingDirection.Right)
-        {
-            Engineson.print("Moving Right");
-            currentLookingDirection = LookingDirection.Right;
-        }
+        currentShootingDirection = ShootingDirection.Idle;
     }
 
 
@@ -1063,7 +1121,7 @@ public class PlayerController : MonoBehaviour
             if (diff < angleThreshold)
                 return;
 
-            Engineson.print($"Moving {newDir}");
+            
 
         }
         else
@@ -1147,6 +1205,7 @@ public class PlayerController : MonoBehaviour
         }
 
         currentShootingDirection = newDir;
+        currentLookingDirection = LookingDirection.Idle;
     }
 
     private float GetDirectionAngleDifference(ShootingDirection oldDir, ShootingDirection newDir)

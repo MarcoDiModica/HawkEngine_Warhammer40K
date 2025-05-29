@@ -10,8 +10,8 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     // Variables comunes
     protected Transform playerTransform;
     protected Rigidbody rb;
-    protected BoxCollider collider;
-    //protected CapsuleCollider collider;
+    //protected BoxCollider collider;
+    protected CapsuleCollider collider;
     protected Transform enemyTransform;
     //protected AudioSource sound;
     protected ParticleFX particles;

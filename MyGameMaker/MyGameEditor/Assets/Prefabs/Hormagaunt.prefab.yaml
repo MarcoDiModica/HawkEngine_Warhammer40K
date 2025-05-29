@@ -17,9 +17,9 @@ Components:
       - -0
       - 0
     localScale:
-      - 2.2000000476837158
-      - 2.2000000476837158
-      - 2.2000000476837158
+      - 1.7999999523162842
+      - 1.7999999523162842
+      - 1.7999999523162842
   ParticleFX:
     name: ParticleFX
     enabled: true
@@ -72,7 +72,7 @@ Components:
     particleType: 9
   CapsuleColliderComponent:
     size:
-      - 1
+      - 1.20000005
       - 1
       - 1
     offset:
@@ -107,7 +107,7 @@ Children:
     prefabPath: ""
     uuid: 17006855275563467050
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     Components:
       Transform_Component:

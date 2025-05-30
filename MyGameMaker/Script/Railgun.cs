@@ -234,9 +234,8 @@ public class Railgun : BaseWeapon
             Vector3 direction;
             if (playerInput.GetCurrentLookDirection() != Vector3.Zero)
             {
-                direction  = Vector3.Normalize(playerInput.GetCurrentLookDirection());
-            }
-            else
+                direction = playerInput.GetCurrentLookDirection();
+            } else
             {
                 direction = Vector3.Normalize(transform.forward);
             }
@@ -297,12 +296,12 @@ public class Railgun : BaseWeapon
         }
     }
 
-    public override void UseAbility1()
+    public override void UseAbility2()
     {
         toggleMode.TriggerAbility();
     }
 
-    public override void UseAbility2()
+    public override void UseAbility1()
     {
         if (railgunMode == RailgunMode.SEMIAUTOMATIC)
         {

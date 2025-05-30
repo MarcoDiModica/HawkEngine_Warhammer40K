@@ -12,6 +12,13 @@ public class LictorAnimation : MonoBehaviour
 
     }
 
+    public void SetVFX(int id = 34)
+    {
+        var vfx = AddComponent<ParticleFX>();
+        vfx.ApplyPreset(id);
+        vfx.Play();
+    }
+
     public override void Start()
     {
         lictorAnimation = gameObject.GetComponent<SkeletalAnimation>();
@@ -35,6 +42,9 @@ public class LictorAnimation : MonoBehaviour
 
     public void SetCrossSlashAnimation()
     {
+
+        SetVFX();
+
         lictorAnimation.SetAnimationPlayState(true);
         isAnimFinished = false;
         if (lictorAnimation.GetAnimationIndex() != 0)
@@ -57,6 +67,8 @@ public class LictorAnimation : MonoBehaviour
 
     public void SetIdleAnimation()
     {
+        SetVFX();
+
         lictorAnimation.SetAnimationPlayState(true);
         isAnimFinished = false;
         if (lictorAnimation.GetAnimationIndex() != 2)
@@ -68,6 +80,8 @@ public class LictorAnimation : MonoBehaviour
 
     public void SetLeapAnimation()
     {
+        SetVFX();
+
         lictorAnimation.SetAnimationPlayState(true);
         isAnimFinished = false;
         if (lictorAnimation.GetAnimationIndex() != 3)
@@ -78,6 +92,7 @@ public class LictorAnimation : MonoBehaviour
     }
     public void SetPiercingAnimation()
     {
+        SetVFX();
         lictorAnimation.SetAnimationPlayState(true);
         isAnimFinished = false;
         if (lictorAnimation.GetAnimationIndex() != 4)
@@ -89,6 +104,7 @@ public class LictorAnimation : MonoBehaviour
 
     public void SetRoarAnimation()
     {
+        SetVFX();
         lictorAnimation.SetAnimationPlayState(true);
         if (lictorAnimation.GetAnimationIndex() != 5)
         {
@@ -99,6 +115,7 @@ public class LictorAnimation : MonoBehaviour
 
     public void SetStunnedAnimation()
     {
+        SetVFX();
         lictorAnimation.SetAnimationPlayState(true);
         if (lictorAnimation.GetAnimationIndex() != 6)
         {
@@ -109,6 +126,7 @@ public class LictorAnimation : MonoBehaviour
 
     public void SetWalkAroundAnimation()
     {
+        SetVFX();
         lictorAnimation.SetAnimationPlayState(true);
         if (lictorAnimation.GetAnimationIndex() != 7)
         {
@@ -119,6 +137,7 @@ public class LictorAnimation : MonoBehaviour
 
     public void SetWalkToPlayerAnimation()
     {
+
         lictorAnimation.SetAnimationPlayState(true);
         if (lictorAnimation.GetAnimationIndex() != 8)
         {

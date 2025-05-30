@@ -476,7 +476,17 @@ void EngineBinds::GameObjectSetActive(MonoObject* ref, bool active) {
 
 
 MonoString* EngineBinds::GetTag(MonoObject* ref) {
-	return mono_string_new(MonoManager::GetInstance().GetDomain(), ConvertFromSharp(ref)->GetTag().c_str());
+	if (!ref) {
+		LOG(LogType::LOG_ERROR, "Null reference passed to GetTag");
+		return nullptr;
+	}
+	GameObject* go = ConvertFromSharp(ref);
+	if (!go) {
+		LOG(LogType::LOG_ERROR, "Failed to convert reference to GameObject");
+		return nullptr;
+	}
+	std::string tag = go->GetTag();
+	return mono_string_new(MonoManager::GetInstance().GetDomain(), tag.c_str());
 }
 
 MonoObject* EngineBinds::GetGameObjectByName(MonoString* name) {
@@ -1678,6 +1688,14 @@ void EngineBinds::PlayParticle(MonoObject* particleRef)
 	}
 }
 
+void EngineBinds::SetParticleStartRotation(MonoObject* particleRef, float startRotation)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->SetStartRotation(startRotation);
+	}
+}
+
 void EngineBinds::StopParticle(MonoObject* particleRef)
 {
 	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
@@ -1988,6 +2006,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.ParticleFX::Play", (const void*)&EngineBinds::PlayParticle);
 	mono_add_internal_call("HawkEngine.ParticleFX::Stop", (const void*)&EngineBinds::StopParticle);
 	mono_add_internal_call("HawkEngine.ParticleFX::EmitBurst", (const void*)&EngineBinds::EmitBurst);
+	mono_add_internal_call("HawkEngine.ParticleFX::SetParticleStartRotation", (const void*)&EngineBinds::SetParticleStartRotation);
 }
 
 template <class T>

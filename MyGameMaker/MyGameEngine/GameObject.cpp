@@ -429,7 +429,17 @@ void GameObject::SetTag(const std::string& tag)
 
 std::string GameObject::GetTag() const
 {
-	return tag;
+    if (!this || destroyed) {
+        LOG(LogType::LOG_ERROR, "GameObject %s has no owner set, returning empty tag", name.c_str());
+        return "";
+	}
+
+    if (tag.size() > 1024) {
+        LOG(LogType::LOG_WARNING, "Tag size is abnormally large (%zu), returning empty tag", tag.size());
+        return "";
+    }
+
+    return tag;
 }
 
 bool GameObject::CompareTag(const std::string& tag) const
@@ -438,7 +448,7 @@ bool GameObject::CompareTag(const std::string& tag) const
 }
 
 Transform_Component* GameObject::GetTransform() const {
-	if (destroyed) {
+	if (destroyed || !this) {
 		return nullptr;
 	}
 

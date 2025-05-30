@@ -15,7 +15,7 @@ public class Shotgun : BaseWeapon
     public Barrage barrage;
     public HookShot hookShot;
     private RedThirstManager redThirstManager;
-    public PlayerInput playerInput;
+    private PlayerInput playerInput;
 
     public float timeSinceLastShot = 0.0f;
     private List<Vector3> bulletDirections = new List<Vector3>();
@@ -327,13 +327,15 @@ public class Shotgun : BaseWeapon
 
                 for (int i = 0; i < numProjectiles; i++)
                 {
+
                     Vector3 baseDirection;
                     if (playerInput.GetCurrentLookDirection() != Vector3.Zero)
                     {
                         baseDirection = playerInput.GetCurrentLookDirection();
-                    } else
+                    }
+                    else
                     {
-                        baseDirection = transform.forward;
+                        baseDirection = Vector3.Normalize(transform.forward);
                     }
 
                     float randomYaw = (float)(random.NextDouble() * 2 * maxSpreadAngle - maxSpreadAngle);   // izquierda/derecha

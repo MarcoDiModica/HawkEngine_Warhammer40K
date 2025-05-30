@@ -81,7 +81,8 @@ void DebugDrawerPhysics::drawBoundingBox(const BoundingBox& bbox, const glm::vec
     glColor3f(color.r, color.g, color.b);
     glLineWidth(2.0f);
 
-    // Draw the edges of the BoundingBox
+    // Draw the 
+    // s of the BoundingBox
     drawWiredLine(bbox.v000(), bbox.v001(), color);
     drawWiredLine(bbox.v001(), bbox.v011(), color);
     drawWiredLine(bbox.v011(), bbox.v010(), color);

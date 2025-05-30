@@ -144,10 +144,10 @@ GameObject1:
             - 10253
             - 9612
           sprite_offset:
-            - 0
-            - 3844.80005
+            - 6835.33203
+            - 1922.40002
           anim_speed: 0.5
-          anim_index: 24
+          anim_index: 16
           anim_index_limit: 60
           color:
             - 1
@@ -2571,7 +2571,7 @@ GameObject3:
   prefabPath: Assets/Prefabs/Canvas_CreditMenu.prefab.yaml
   uuid: 11992356840085735898
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -4917,4 +4917,233 @@ GameObject3:
           spriteOffset:
             - 0
             - 0
+      Children: ~
+GameObject4:
+  name: CanvasCinematic
+  prefabPath: ""
+  uuid: 14645508196647998947
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+  Children:
+    - name: CinematicManager
+      prefabPath: ""
+      uuid: 16210432024970194970
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 1
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/FadeToBlackImage.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 0
+            - 0
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 0
+            - 0
+            - 0
+            - 0
+        ScriptComponents:
+          Script0:
+            name: CinematicManager
+            fields:
+              imageCooldown: 0.0549999997
+      Children: ~
+GameObject5:
+  name: CanvasFade
+  prefabPath: ""
+  uuid: 15971780212265548051
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+  Children:
+    - name: FadeController
+      prefabPath: ""
+      uuid: 11097303880844808094
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 1
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/FadeToBlackImage.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 0
+            - 0
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 0
+            - 0
+            - 0
+            - 0
+        ScriptComponents:
+          Script0:
+            name: FadeController
+            fields: ~
       Children: ~

@@ -481,9 +481,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 1.48956883
+          floatSpeed: 0.797641575
           floatHeight: 0.5
-          rotationSpeed: 97.4116211
+          rotationSpeed: 81.4441986
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -589,9 +589,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 1.6939466
+          floatSpeed: 1.10253131
           floatHeight: 0.5
-          rotationSpeed: 93.9621735
+          rotationSpeed: 38.8375587
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -3592,7 +3592,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.81911540933649
             - 0
           localScale:
             - 208.60295104980469
@@ -3634,7 +3634,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.81911540933649
             - 0
           localScale:
             - 208.60295104980469
@@ -3676,7 +3676,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.81911540933649
             - 0
           localScale:
             - 208.60295104980469
@@ -3718,7 +3718,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.81911540933649
             - 0
           localScale:
             - 208.60295104980469
@@ -3760,7 +3760,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.81911540933649
             - 0
           localScale:
             - 208.60295104980469
@@ -3802,7 +3802,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.81911540933649
             - 0
           localScale:
             - 208.60295104980469
@@ -3844,7 +3844,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.81911540933649
             - 0
           localScale:
             - 208.60295104980469
@@ -3886,7 +3886,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.81911540933649
             - 0
           localScale:
             - 208.60295104980469
@@ -3928,7 +3928,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.81911540933649
             - 0
           localScale:
             - 208.60295104980469
@@ -5187,9 +5187,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.992369911835524
-            - 89.841466050453676
-            - 179.99148710903026
+            - 89.993644223296883
+            - 89.841347326901342
+            - 179.99271702421902
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5229,9 +5229,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.992369911835524
-            - 89.841466050453676
-            - 179.99148710903026
+            - 89.993644223296883
+            - 89.841347326901342
+            - 179.99271702421902
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5271,9 +5271,9 @@ GameObject20:
             - 54.029090881347656
             - -3545.785888671875
           localRotation:
-            - -90.000010910578467
-            - 41.425539507705125
-            - -1.5438385469118765e-06
+            - -90.000009771516233
+            - 41.425536495295006
+            - 1.4685718556198884e-06
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5733,9 +5733,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999993288988833
-            - 66.695720103365531
-            - 179.99998980203466
+            - 90.00001019796666
+            - 66.695713392353156
+            - -179.99999328898764
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5775,9 +5775,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999993288988833
-            - 66.695720103365531
-            - 179.99998980203466
+            - 90.00001019796666
+            - 66.695713392353156
+            - -179.99999328898764
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5817,9 +5817,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999993288988833
-            - 66.695720103365531
-            - 179.99998980203466
+            - 90.00001019796666
+            - 66.695713392353156
+            - -179.99999328898764
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -6279,9 +6279,9 @@ GameObject20:
             - 201.60006713867188
             - -701.08270263671875
           localRotation:
-            - -89.99999657384474
-            - 80.78974981347659
-            - -3.4261552652453462e-06
+            - -90.000009777344786
+            - 80.789757877741891
+            - -1.1490422395121572e-05
           localScale:
             - 56
             - 56
@@ -6405,9 +6405,9 @@ GameObject20:
             - 109.05261993408203
             - 3582.95361328125
           localRotation:
-            - -8.5567713767149858
-            - -57.209904822524862
-            - -138.90944749320749
+            - -8.5567701040473878
+            - -57.209905254181926
+            - -138.90944816177014
           localScale:
             - 1
             - 1
@@ -8127,9 +8127,9 @@ GameObject20:
             - 48.267116546630859
             - -1413.0146484375
           localRotation:
-            - 90.000047624140635
-            - 66.469451566834678
-            - -179.99998900386532
+            - 90.000054427585894
+            - 66.46946325622973
+            - -179.99998743299042
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -8253,9 +8253,9 @@ GameObject20:
             - 48.267116546630859
             - 1095.0556640625
           localRotation:
-            - 90.000007192950903
-            - -53.451699924938005
-            - -179.9999928070491
+            - 90.000007192951131
+            - -53.451692681091934
+            - -179.99999280704887
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -12231,9 +12231,9 @@ GameObject23:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.999811537630606
-            - 81.207661526619404
-            - 179.99992114313261
+            - 89.999797830480844
+            - 81.207694085187299
+            - 179.99991257373557
           localScale:
             - 41.956031799316406
             - 53.921905517578125
@@ -12399,9 +12399,9 @@ GameObject23:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.979503833806689
-            - -89.826769824678394
-            - -179.97043333206531
+            - 89.980789295204389
+            - -89.813048403047048
+            - -179.9717170841563
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -12913,9 +12913,9 @@ GameObject23:
             - 72.816131591796875
             - 381.2847900390625
           localRotation:
-            - -90.000181498723933
-            - -82.523163076591089
-            - 1.8239280906533197e-06
+            - -90.000193737143292
+            - -82.523212292504823
+            - 1.5773549266366961e-05
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -13291,9 +13291,9 @@ GameObject23:
             - 22.607597351074219
             - -2101.2529296875
           localRotation:
-            - -179.9999913485772
-            - 84.241636004164036
-            - 2.1271356554776735e-05
+            - -179.99999134858152
+            - 84.241650511540783
+            - 2.1271351066091105e-05
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -13333,9 +13333,9 @@ GameObject23:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.1000728798470485
-            - -81.281071226910868
-            - -179.9999915577722
+            - 1.1000761117689921
+            - -81.281071413865419
+            - -179.99999180036886
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -14425,9 +14425,9 @@ GameObject23:
             - 72.816177368164062
             - 17.716598510742188
           localRotation:
-            - -90.000181498723933
-            - -82.523163076591089
-            - 1.8239280906533197e-06
+            - -90.000193737143292
+            - -82.523212292504823
+            - 1.5773549266366961e-05
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -14761,9 +14761,9 @@ GameObject23:
             - 84.565017700195312
             - -2966.651611328125
           localRotation:
-            - -90.012769107252566
-            - -89.743395006093522
-            - 0.010088251292587872
+            - -90.009330964877606
+            - -89.742196675823024
+            - 0.0066620616592765287
           localScale:
             - 43.324676513671875
             - 43.324676513671875
@@ -14845,9 +14845,9 @@ GameObject23:
             - 47.50750732421875
             - 561.61212158203125
           localRotation:
-            - 178.20561871096638
-            - 0.51393308532894255
-            - 3.076514021334452
+            - 178.20561871791037
+            - 0.51393305892635677
+            - 3.0765157289407221
           localScale:
             - 24.362417221069336
             - 24.36241340637207
@@ -14971,9 +14971,9 @@ GameObject23:
             - 148.99980163574219
             - 222.72898864746094
           localRotation:
-            - -15.158007319902184
-            - -65.712721843277919
-            - -74.31680329619185
+            - -15.158003019171982
+            - -65.712734709883506
+            - -74.316807628942172
           localScale:
             - 24.540990829467773
             - 24.540992736816406
@@ -15265,9 +15265,9 @@ GameObject23:
             - 27.166694641113281
             - -2728.593017578125
           localRotation:
-            - 89.999976515901992
-            - -71.216288202477699
-            - -179.99999209262776
+            - 90.000000905047273
+            - -71.216295125466445
+            - 179.9999904412162
           localScale:
             - 110.40802001953125
             - 110.40802001953125
@@ -15307,9 +15307,9 @@ GameObject23:
             - 27.166694641113281
             - -1073.0118408203125
           localRotation:
-            - 89.999980544396763
-            - -66.052905348130082
-            - -179.99997007125407
+            - 89.99997381074671
+            - -66.052893874802578
+            - -179.99996857417514
           localScale:
             - 49.639827728271484
             - 49.63983154296875
@@ -15391,9 +15391,9 @@ GameObject23:
             - 27.166694641113281
             - 109.11194610595703
           localRotation:
-            - -89.999559020505359
-            - 85.727379860642685
-            - 0.00047515419257955049
+            - -89.999511452306848
+            - 85.727832753549549
+            - 0.00051930491672905839
           localScale:
             - 49.63983154296875
             - 49.63983154296875
@@ -15500,7 +15500,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -15542,7 +15542,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -15584,7 +15584,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -17095,9 +17095,9 @@ GameObject24:
             - 451.7078857421875
             - 9679.166015625
           localRotation:
-            - 89.999993094735103
-            - 73.08696969774131
-            - -179.99999309473512
+            - 90.000001489878429
+            - 73.086993156850184
+            - -179.99998987854087
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -20641,7 +20641,7 @@ GameObject27:
             - 57.399997711181641
           localRotation:
             - 0
-            - 82.875057103326867
+            - 82.875066781348494
             - 0
           localScale:
             - 20.007547378540039
@@ -21663,9 +21663,9 @@ GameObject27:
             - 3.1512765884399414
             - 3.5392885208129883
           localRotation:
-            - 179.84665360839961
-            - -57.005951974738096
-            - -179.97224712363084
+            - 179.84665360223156
+            - -57.006052894808477
+            - -179.97224711661309
           localScale:
             - 4.1512908935546875
             - 8.0131254196166992
@@ -24022,7 +24022,7 @@ GameObject29:
             - -160.05094909667969
           localRotation:
             - 0
-            - 63.749229862193133
+            - 63.749226666872545
             - 0
           localScale:
             - 24.358108520507812
@@ -24220,7 +24220,7 @@ GameObject29:
             - -72.031135559082031
           localRotation:
             - 0
-            - -69.383040276432098
+            - -69.383029236251048
             - 0
           localScale:
             - 12.133749961853027
@@ -24979,7 +24979,7 @@ GameObject29:
             - -148.216064453125
           localRotation:
             - -179.99999499104374
-            - 25.858725770479122
+            - 25.858725770479126
             - -179.99999499104374
           localScale:
             - 10.84910774230957
@@ -25110,9 +25110,9 @@ GameObject29:
             - 3.0124197006225586
             - -194.1514892578125
           localRotation:
-            - -179.9999949910484
-            - 87.969567273503927
-            - -179.9999949910484
+            - -179.99999499103433
+            - 87.969514137546156
+            - -179.99999499103433
           localScale:
             - 12.215158462524414
             - 7.4319052696228027
@@ -25573,7 +25573,7 @@ GameObject29:
             - -57.019905090332031
           localRotation:
             - 0
-            - -21.351410654346925
+            - -21.351410654346921
             - 0
           localScale:
             - 6.2044053077697754
@@ -28300,9 +28300,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.4781636
+          floatSpeed: 1.71915066
           floatHeight: 0.5
-          rotationSpeed: 30.1325417
+          rotationSpeed: 46.5958176
   Children: ~
 GameObject34:
   name: BiblePage_Pueblo
@@ -28385,9 +28385,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.10270941
+          floatSpeed: 1.01664495
           floatHeight: 0.5
-          rotationSpeed: 83.423996
+          rotationSpeed: 89.8411789
   Children: ~
 GameObject35:
   name: BiblePage_Pasillo_Zona3
@@ -28470,9 +28470,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.724141598
+          floatSpeed: 1.95294631
           floatHeight: 0.5
-          rotationSpeed: 97.6953201
+          rotationSpeed: 50.2387886
   Children: ~
 GameObject36:
   name: BiblePage_Ciudad
@@ -28555,9 +28555,9 @@ GameObject36:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.4611299
+          floatSpeed: 0.593592644
           floatHeight: 0.5
-          rotationSpeed: 75.789032
+          rotationSpeed: 69.5280075
   Children: ~
 GameObject37:
   name: Barril_Ciudad1
@@ -28616,6 +28616,7 @@ GameObject37:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject38:
   name: CajaMadera1
@@ -28674,6 +28675,7 @@ GameObject38:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject39:
   name: WoodenBox_Lvl1_prefab_1_Instance
@@ -28732,6 +28734,7 @@ GameObject39:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject40:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance
@@ -28790,6 +28793,7 @@ GameObject40:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject41:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance2
@@ -28848,6 +28852,7 @@ GameObject41:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject42:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance3
@@ -28906,6 +28911,7 @@ GameObject42:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject43:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance4
@@ -28964,6 +28970,7 @@ GameObject43:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject44:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance5
@@ -29022,6 +29029,7 @@ GameObject44:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject45:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance7
@@ -29080,6 +29088,7 @@ GameObject45:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject46:
   name: WoodenBox_Lvl1_prefab_1_Instance2
@@ -29138,6 +29147,7 @@ GameObject46:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject47:
   name: WoodenBox_Lvl1_prefab_1_Instance3
@@ -29196,6 +29206,7 @@ GameObject47:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject48:
   name: WoodenBox_Lvl1_prefab_1_Instance4
@@ -29254,6 +29265,7 @@ GameObject48:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject49:
   name: WoodenBox_Lvl1_prefab_1_Instance5
@@ -29312,6 +29324,7 @@ GameObject49:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject50:
   name: WoodenBox_Lvl1_prefab_1_Instance6
@@ -29370,6 +29383,7 @@ GameObject50:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject51:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance6
@@ -29428,6 +29442,7 @@ GameObject51:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject52:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance8
@@ -29486,6 +29501,7 @@ GameObject52:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject53:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance9
@@ -29544,6 +29560,7 @@ GameObject53:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject54:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance10
@@ -29602,6 +29619,7 @@ GameObject54:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject55:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance11
@@ -29660,6 +29678,7 @@ GameObject55:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject56:
   name: WoodenBox_Lvl1_prefab_1_Instance7
@@ -29718,6 +29737,7 @@ GameObject56:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject57:
   name: WoodenBox_Lvl1_prefab_1_Instance8
@@ -29776,6 +29796,7 @@ GameObject57:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject58:
   name: WoodenBox_Lvl1_prefab_1_Instance10
@@ -29834,6 +29855,7 @@ GameObject58:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject59:
   name: WoodenBox_Lvl1_prefab_1_Instance9
@@ -29892,6 +29914,7 @@ GameObject59:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject60:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance12
@@ -29950,6 +29973,7 @@ GameObject60:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject61:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance13
@@ -30008,6 +30032,7 @@ GameObject61:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject62:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance14
@@ -30066,6 +30091,7 @@ GameObject62:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject63:
   name: WoodenBox_Lvl1_prefab_1_Instance11
@@ -30124,6 +30150,7 @@ GameObject63:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject64:
   name: WoodenBox_Lvl1_prefab_1_Instance12
@@ -30182,6 +30209,7 @@ GameObject64:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject65:
   name: WoodenBox_Lvl1_prefab_1_Instance13
@@ -30240,6 +30268,7 @@ GameObject65:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject66:
   name: WoodenBox_Lvl1_prefab_1_Instance14
@@ -30298,6 +30327,7 @@ GameObject66:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject67:
   name: WoodenBox_Lvl1_prefab_1_Instance15
@@ -30356,6 +30386,7 @@ GameObject67:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject68:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance15
@@ -30414,6 +30445,7 @@ GameObject68:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject69:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance16
@@ -30472,6 +30504,7 @@ GameObject69:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject70:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance17
@@ -30530,6 +30563,7 @@ GameObject70:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject71:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance18
@@ -30588,6 +30622,7 @@ GameObject71:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject72:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance19
@@ -30646,6 +30681,7 @@ GameObject72:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject73:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance20
@@ -30704,6 +30740,7 @@ GameObject73:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject74:
   name: WoodenBox_Lvl1_prefab_1_Instance16
@@ -30762,6 +30799,7 @@ GameObject74:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject75:
   name: WoodenBox_Lvl1_prefab_1_Instance17
@@ -30820,6 +30858,7 @@ GameObject75:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject76:
   name: WoodenBox_Lvl1_prefab_1_Instance18
@@ -30878,6 +30917,7 @@ GameObject76:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject77:
   name: WoodenBox_Lvl1_prefab_1_Instance19
@@ -30936,6 +30976,7 @@ GameObject77:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject78:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance21
@@ -30994,6 +31035,7 @@ GameObject78:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject79:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance22
@@ -31052,6 +31094,7 @@ GameObject79:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject80:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance23
@@ -31110,6 +31153,7 @@ GameObject80:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject81:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance24
@@ -31168,6 +31212,7 @@ GameObject81:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject82:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance25
@@ -31226,6 +31271,7 @@ GameObject82:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject83:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance26
@@ -31284,6 +31330,7 @@ GameObject83:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject84:
   name: WoodenBox_Lvl1_prefab_1_Instance20
@@ -31342,6 +31389,7 @@ GameObject84:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject85:
   name: WoodenBox_Lvl1_prefab_1_Instance21
@@ -31400,6 +31448,7 @@ GameObject85:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject86:
   name: WoodenBox_Lvl1_prefab_1_Instance22
@@ -31458,6 +31507,7 @@ GameObject86:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject87:
   name: WoodenBox_Lvl1_prefab_1_Instance23
@@ -31516,6 +31566,7 @@ GameObject87:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject88:
   name: WoodenBox_Lvl1_prefab_1_Instance24
@@ -31574,6 +31625,7 @@ GameObject88:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject89:
   name: TyranidMouth
@@ -33258,9 +33310,9 @@ GameObject95:
             - 0
             - -25.443840026855469
           localRotation:
-            - 89.986197247295223
-            - 89.889446345778055
-            - 179.9873532573462
+            - 89.988033730319287
+            - 89.887262838631855
+            - 179.9892204762711
           localScale:
             - 86.512344360351562
             - 99.999984741210938
@@ -33300,9 +33352,9 @@ GameObject95:
             - 341.29437255859375
             - 124.93968963623047
           localRotation:
-            - 89.989032492060758
-            - 89.909423303732453
-            - 179.98881051083995
+            - 89.9872173099197
+            - 89.908033388077499
+            - 179.98701923436883
           localScale:
             - 96.124794006347656
             - 99.999984741210938
@@ -33721,7 +33773,7 @@ GameObject95:
             - -869.0504150390625
           localRotation:
             - 90
-            - 89.835858610661589
+            - 89.831984065456254
             - 0
           localScale:
             - 100
@@ -34434,9 +34486,9 @@ GameObject95:
             - 19.999998092651367
             - -924.02191162109375
           localRotation:
-            - -90.000024148366222
-            - 0.061902187632811315
-            - 1.1045236045382691e-09
+            - -90.000024148367501
+            - 0.061902274887692468
+            - -1.2537344190301188e-09
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -34854,9 +34906,9 @@ GameObject95:
             - 0
             - -443.06002807617188
           localRotation:
-            - 90.00000429381106
-            - 78.583655090653039
-            - -179.99998712590619
+            - 90.000011158021692
+            - 78.583679130119805
+            - -179.99999399014766
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -34896,9 +34948,9 @@ GameObject95:
             - 0
             - -346.2620849609375
           localRotation:
-            - 90.000032238323755
-            - -74.941231903828864
-            - -179.99995473040573
+            - 90.000032238327037
+            - -74.941239767902985
+            - -179.99995473041133
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -36072,9 +36124,9 @@ GameObject95:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075433400077898e-05
-            - -79.275327825096156
-            - -90.000097096917941
+            - 4.9075478576823292e-05
+            - -79.275294712142454
+            - -90.000097096965987
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -36114,9 +36166,9 @@ GameObject95:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075433400077898e-05
-            - -79.275327825096156
-            - -90.000097096917941
+            - 4.9075478576823292e-05
+            - -79.275294712142454
+            - -90.000097096965987
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -40371,10 +40423,10 @@ GameObject137:
             - 1225
             - 40
           sprite_offset:
-            - 875
+            - 0
             - 0
           anim_speed: 0.5
-          anim_index: 5
+          anim_index: 0
           anim_index_limit: 6
           color:
             - 1
@@ -40499,10 +40551,10 @@ GameObject137:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 50
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 1
           anim_index_limit: 4
           color:
             - 1
@@ -40627,10 +40679,10 @@ GameObject137:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 50
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 1
           anim_index_limit: 4
           color:
             - 1
@@ -47588,31 +47640,31 @@ GameObject142:
         ParticleFX:
           name: ParticleFX
           enabled: true
-          emitterShape: 2
-          emissionRate: 120
-          particlesPerSecond: 120
-          minLifetime: 0.150000006
-          maxLifetime: 0.150000006
-          minSpeed: 5.55000019
-          maxSpeed: 5.55000019
-          startSize: 0
+          emitterShape: 0
+          emissionRate: 0.5
+          particlesPerSecond: 0.5
+          minLifetime: 5
+          maxLifetime: 5
+          minSpeed: 0
+          maxSpeed: 0.00999999978
+          startSize: 2
           endSize: 2
-          minSize: 0
-          maxSize: 1
+          minSize: 2
+          maxSize: 2
           startColor:
-            - 0.800000012
-            - 0.800000012
-            - 0.800000012
+            - 1
+            - 1
+            - 1
           endColor:
-            - 0.800000012
-            - 0.800000012
-            - 0.800000012
-          startAlpha: 0.699999988
-          endAlpha: 0
-          rotationSpeed: 0.200000003
+            - 1
+            - 1
+            - 1
+          startAlpha: 1
+          endAlpha: 1
+          rotationSpeed: 0
           gravity:
             - 0
-            - -5.32999992
+            - 0.00999999978
             - 0
           shapeParam1: 0.200000003
           shapeParam2: 1
@@ -47622,18 +47674,18 @@ GameObject142:
           isPaused: false
           burstEmitted: false
           spriteSize:
-            - 256
-            - 256
+            - 226
+            - 275
           useAnimation: true
-          animSpeed: 0.5
-          startRotation: 0
-          randomRotation: true
+          animSpeed: 0.100000001
+          startRotation: 180
+          randomRotation: false
           material:
             billboardType: 0
             particleType: 51
             softness: 0
             useColorGradient: false
-            texturePath: Assets/Textures/Smoke30Frames.png
+            texturePath: Assets/Textures/bullet.png
           particleType: 51
       Children: ~
 GameObject143:
@@ -66555,7 +66607,7 @@ GameObject166:
                                                 - -0.027743477931437943
                                               localRotation:
                                                 - -89.999855893192247
-                                                - 25.204391014596474
+                                                - 25.204391014596478
                                                 - 90.000114242232542
                                               localScale:
                                                 - 1.0000001197585893
@@ -109754,6 +109806,7 @@ GameObject202:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: true
+          isDestroyed: false
   Children: ~
 GameObject203:
   name: Medkit_1_Instance
@@ -109812,6 +109865,7 @@ GameObject203:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: true
+          isDestroyed: false
   Children: ~
 GameObject204:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_Instance
@@ -109870,6 +109924,7 @@ GameObject204:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          isDestroyed: false
   Children: ~
 GameObject205:
   name: Medkit_1_Instance2
@@ -109928,6 +109983,7 @@ GameObject205:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: true
+          isDestroyed: false
   Children: ~
 GameObject206:
   name: Medkit_1_Instance3
@@ -109986,6 +110042,7 @@ GameObject206:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: true
+          isDestroyed: false
   Children: ~
 GameObject207:
   name: Medkit_1_Instance4
@@ -110044,6 +110101,7 @@ GameObject207:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: true
+          isDestroyed: false
   Children: ~
 GameObject208:
   name: Medkit_1_Instance5
@@ -110102,6 +110160,7 @@ GameObject208:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: true
+          isDestroyed: false
   Children: ~
 GameObject209:
   name: CheckPoint_Instance6
@@ -110281,9 +110340,9 @@ GameObject213:
         - 3.2896044254302979
         - 95.662101745605469
       localRotation:
-        - -9.4455226469603577
-        - -57.750502882185728
-        - -138.16008338243279
+        - -9.4455227961361796
+        - -57.750504429274216
+        - -138.16007961232918
       localScale:
         - 0.031276464462280273
         - 0.031276464462280273
@@ -110460,9 +110519,9 @@ GameObject218:
         - 3.2896044254302979
         - 10.935238838195801
       localRotation:
-        - -2.6537749339577728
-        - -52.984219098736126
-        - -143.75537661231976
+        - -2.6537748637056882
+        - -52.984221972044473
+        - -143.75536936882705
       localScale:
         - 0.017827585339546204
         - 0.017827583476901054
@@ -110648,9 +110707,9 @@ GameObject223:
         - 3.6899499893188477
         - -170.51780700683594
       localRotation:
-        - -179.99999499103552
-        - 87.995653108211442
-        - -179.99999499103552
+        - -179.99999499105965
+        - 87.995648277800413
+        - -179.99999499105965
       localScale:
         - 8.99188232421875
         - 10.001480102539062
@@ -110682,9 +110741,9 @@ GameObject224:
         - 3.6899499893188477
         - -170.51780700683594
       localRotation:
-        - -179.99999499103552
-        - 87.995653108211442
-        - -179.99999499103552
+        - -179.99999499105965
+        - 87.995648277800413
+        - -179.99999499105965
       localScale:
         - 8.99188232421875
         - 10.001480102539062
@@ -111023,7 +111082,7 @@ GameObject234:
         - -33.089832305908203
       localRotation:
         - 0
-        - -20.58092977298061
+        - -20.580931567600413
         - 0
       localScale:
         - 0.92220032215118408
@@ -111057,7 +111116,7 @@ GameObject235:
         - 41.939746856689453
       localRotation:
         - 0
-        - -4.2800886771721842
+        - -4.2800891049543113
         - 0
       localScale:
         - 0.92220038175582886
@@ -111091,7 +111150,7 @@ GameObject236:
         - 40.217510223388672
       localRotation:
         - 0
-        - -4.2800886771721842
+        - -4.2800891049543113
         - 0
       localScale:
         - 0.92220038175582886
@@ -111125,7 +111184,7 @@ GameObject237:
         - -26.198375701904297
       localRotation:
         - 0
-        - -18.088778477220405
+        - -18.088776703226465
         - 0
       localScale:
         - 0.92220032215118408
@@ -111181,7 +111240,7 @@ GameObject239:
   prefabPath: Assets\Prefabs\CanvasFadeLvl1.prefab.yaml
   uuid: 17913736688530679997
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -111289,4 +111348,130 @@ GameObject239:
           Script0:
             name: FadeController
             fields: ~
+      Children: ~
+GameObject240:
+  name: DestroyableBox
+  prefabPath: ""
+  uuid: 13963065713046294458
+  tag: Destroyable
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -9.5953731536865234
+        - 1.1080666780471802
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 3
+        - 5
+        - 3
+      offset:
+        - 0
+        - 1.29999995
+        - 0
+      isTrigger: false
+    ScriptComponents:
+      Script0:
+        name: DestroyEnviormentObject
+        fields:
+          onlyMedicaeStimm: false
+          boxAlive: BoxAlive
+          boxDestroyed: BoxDestroyed
+          isDestroyed: false
+  Children:
+    - name: BoxAlive
+      prefabPath: ""
+      uuid: 17703206239552153590
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 0
+          material:
+            name: ""
+            color:
+              - 0.5
+              - 0.5
+              - 0.5
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: BoxDestroyed
+      prefabPath: ""
+      uuid: 17488062830303586530
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 0
+          material:
+            name: ""
+            color:
+              - 1
+              - 0
+              - 0
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
       Children: ~

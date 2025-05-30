@@ -9,27 +9,43 @@ public class DestroyEnviormentObject : MonoBehaviour
     public DropManager dropManager;
     public bool onlyMedicaeStimm = false;
 
+    public GameObject boxAlive;
+    public GameObject boxDestroyed;
+    public bool isDestroyed = false;
+
     public void DestroyObject()
     {
-        //gameObject.GetComponent<Transform>().position = new Vector3(0, -100, 0);
-        //gameObject.GetComponent<Collider>().SetTrigger(true);
-        if(dropManager != null)
+        Engineson.print("Destroying object: " + gameObject.name);
+        if (!isDestroyed)
         {
-            if (onlyMedicaeStimm)
+            if (dropManager != null)
             {
-                dropManager.SpawnMedicaeStimm(gameObject.transform.position);
+                if (onlyMedicaeStimm)
+                {
+                    dropManager.SpawnMedicaeStimm(gameObject.transform.position);
+                }
+                else
+                {
+                    dropManager.SpawnPrefabFromDestroyableObject(gameObject.transform.position);
+                }
+
             }
             else
             {
-                dropManager.SpawnPrefabFromDestroyableObject(gameObject.transform.position);
+                Engineson.print("DropManager not found");
             }
-            
+            if (boxAlive != null && boxDestroyed != null)
+            {
+                Engineson.print("Destroying object, switching box states.");
+                boxAlive.SetActive(false);
+                boxDestroyed.SetActive(true);
+            }
+            isDestroyed = true;
         }
-        else
-        {
-            Engineson.print("DropManager not found");
-        }
-        Engineson.Destroy(gameObject);
+        //gameObject.GetComponent<Transform>().position = new Vector3(0, -100, 0);
+        //gameObject.GetComponent<Collider>().SetTrigger(true);
+        
+        
     }
 
     public override void Awake()
@@ -40,6 +56,13 @@ public class DestroyEnviormentObject : MonoBehaviour
     {
         //base.Start();
         dropManager = GameObject.Find("DropManager").GetComponent<DropManager>();
+        if (boxAlive != null && boxDestroyed != null)
+        {
+            Engineson.print("Box Alive and Box Destroyed found, setting initial state.");
+            boxAlive.SetActive(true);
+            boxDestroyed.SetActive(false);
+        }
+      
         if (dropManager == null)
         {
            Engineson.print("DropManager not found");

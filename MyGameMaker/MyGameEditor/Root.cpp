@@ -405,9 +405,9 @@ bool Root::Start()
 	//player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
 	//player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
 	//
-	//player->AddComponent<SoundComponent>()->LoadSound("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true, false);
+	////player->AddComponent<SoundComponent>()->LoadSound("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true, false);
 	//
-	//auto playerMesh = CreateGameObjectWithPath("Assets/FBX/PlayerUpdated.fbx");
+	//auto playerMesh = CreateGameObjectWithPath("Assets/FBX/dieno zachael.fbx");
 	//playerMesh->SetName("playerMesh");
 	//playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
 	//playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));

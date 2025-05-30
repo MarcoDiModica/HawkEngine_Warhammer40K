@@ -329,8 +329,9 @@ public class MenuButtons : MonoBehaviour
     {
        
         FadeController fadeController = GameObject.Find("FadeController")?.GetComponent<FadeController>();
-        fadeController.FadeIn(1.0f, () =>
+        fadeController.FadeIn(2.0f, () =>
         {
+            fadeController.SetAlpha(0.0f);
             Audio.Stop(MainMenuMusic);
             SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
         });   

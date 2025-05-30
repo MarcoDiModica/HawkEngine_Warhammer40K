@@ -16,8 +16,11 @@ public class CinematicManager : MonoBehaviour
 
     private Action onCinematicEndAction;
 
+    private bool hasTransitioned = false;
+
     public override void Start()
     {
+        imageCooldown = 0.07f;
         GameObject fadeObj = GameObject.Find("FadeController");
         fadeController = fadeObj?.GetComponent<FadeController>();
         if (fadeController == null)
@@ -46,18 +49,27 @@ public class CinematicManager : MonoBehaviour
             timer = 0f;
             currentFrame++;
 
-            if (currentFrame > totalFrames)
+            if (currentFrame > totalFrames-5)
             {
-                isPlaying = false;
-                onCinematicEndAction.Invoke();
-                return;
+                if (currentFrame > totalFrames)
+                {
+                    isPlaying = false;
+                   
+                    return;
+                }
+                // load fadeToBlack
+                if (!hasTransitioned)
+                {
+                    onCinematicEndAction.Invoke();
+                    hasTransitioned = true;
+                }
             }
 
             if (ShouldFade(currentFrame))
             {
-                fadeController.FadeToBlackHoldAndBack(0.5f, 0.4f);
+                fadeController.FadeToBlackHoldAndBack(0.6f, 0.4f);
             }
-            if (currentFrame == 135)
+            if (currentFrame == 135 || currentFrame == 227)
             {
                 currentFrame++; // Skip frame 135 because there is no image 
             }

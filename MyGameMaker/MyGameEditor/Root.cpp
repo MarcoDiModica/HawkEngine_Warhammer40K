@@ -66,6 +66,7 @@ bool Root::Start()
 	//resourceManager->CreateDefaultCube(); // Esto no se mutea
 	//resourceManager->LoadTextures();
 	//resourceManager->UpdateTextures();
+
 	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
@@ -467,9 +468,9 @@ bool Root::Start()
 	//inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 	//inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
 	//
-	auto walkingFX = CreateGameObject("WalkingFX2");
-	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
-	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(51);
+	//auto walkingFX = CreateGameObject("WalkingFX2");
+	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
+	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(51);
 	
 	////ARMAS NO TOCAR
 	//

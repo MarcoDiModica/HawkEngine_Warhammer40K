@@ -131,6 +131,21 @@ void ResourceManager::CleanUp() {
 	ClearAllMeshes();
 }
 
+void ResourceManager::LoadImage(std::string id)
+{
+	if (imageIndex.find(id) != imageIndex.end()) {
+		return; // Image already loaded
+	}
+
+	std::string texturePath = std::filesystem::current_path().string() + "\\Assets\\Textures\\";
+	std::string imageName = id;
+	std::shared_ptr<Image> image = std::make_shared<Image>();
+	texturePath += imageName + ".png";
+	image->LoadTexture(texturePath);
+	image->SaveBinary(imageName);
+	AddImage(image);
+}
+
 std::shared_ptr<Material> ResourceManager::GetDefaultMaterial() {
 	std::string materialPath = std::filesystem::current_path().string() + "\\Library\\Materials\\.mat";
 

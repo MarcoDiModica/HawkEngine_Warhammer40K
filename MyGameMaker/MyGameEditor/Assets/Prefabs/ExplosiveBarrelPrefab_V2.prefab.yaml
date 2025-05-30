@@ -1,0 +1,120 @@
+name: ExplosiveBarrel
+prefabPath: ""
+uuid: 14439797240389753833
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0.48455190658569336
+      - 0
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+Children:
+  - name: ExplosionArea
+    prefabPath: ""
+    uuid: 1438507827614470401
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0.36446285247802734
+          - 3.5827431678771973
+          - 2.5702230930328369
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 2
+          - 2
+          - 2
+      CapsuleColliderComponent:
+        size:
+          - 5
+          - 1
+          - 1
+        offset:
+          - 0
+          - 0
+          - 0
+        isTrigger: true
+      ScriptComponents:
+        Script0:
+          name: Explosion
+          fields:
+            explosionRadius: 5
+            justExploded: false
+            flamesActive: false
+    Children: ~
+  - name: Barrel
+    prefabPath: ""
+    uuid: 18133613121197259353
+    tag: ExplosiveBarrel
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - -0.1490168571472168
+          - 3.5827431678771973
+          - 2.8218607902526855
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 2
+          - 2
+          - 2
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 0
+        material:
+          name: ""
+          color:
+            - 1
+            - 0
+            - 0
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+      BoxColliderComponent:
+        size:
+          - 1
+          - 1
+          - 1
+        offset:
+          - 0
+          - 0
+          - 0
+        isTrigger: false
+      ScriptComponents:
+        Script0:
+          name: ExplosiveBarrel
+          fields:
+            explosion: ExplosionArea
+    Children: ~

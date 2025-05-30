@@ -94,7 +94,8 @@ public class Explosion : MonoBehaviour
             }
             if (other.tag == "DestructibleWall")
             {
-                Engineson.Destroy(other);
+                Engineson.print("Destroy Wall Explosion");
+                other.GetComponent<DestructibleWall>().DestroyWall();
             }
         }
 

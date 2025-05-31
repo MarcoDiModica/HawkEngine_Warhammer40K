@@ -8,8 +8,8 @@ layout(location = 2) in vec3 normal;
 layout(location = 3) in vec3 tangent;
 layout(location = 4) in vec3 bitangent;
 
-layout(location = 7) in ivec4 boneIds;
-layout(location = 8) in vec4 weights;
+layout(location = 5) in ivec4 boneIds;
+layout(location = 6) in vec4 weights;
 
 struct InstanceData {
     mat4 modelMatrix;
@@ -54,7 +54,7 @@ void main() {
     vec4 tPos = vec4(position, 1.0);
     vec3 tNormal = normal;
 
-    
+    if (data.flags == 1) { // Check if the instance is animated
         // Apply bone transformations to the position
         mat4 BoneTransform = data.boneMatrices[boneIds[0]] * weights[0];
         BoneTransform += data.boneMatrices[boneIds[1]] * weights[1];
@@ -66,17 +66,17 @@ void main() {
         tNormal = mat3(BoneTransform) * normal;
     
 
-
+    }
     vs_out.TexCoord = texCoord;
     
-    vs_out.Normal = normalize(normalMatrix * normal);
+    vs_out.Normal = normalize(normalMatrix * tNormal);
     vs_out.Tangent = normalize(normalMatrix * tangent);
     vs_out.Bitangent = normalize(normalMatrix * bitangent);
     vs_out.TBN = mat3(vs_out.Tangent, vs_out.Bitangent, vs_out.Normal);
 
     vs_out.CameraPos = cameraPos;
     
-    vec3 positionOffset = position;
+    vec3 positionOffset = tPos.xyz;
     
     if (u_HasHeightMap == 1 && heightScale > 0.0) {
         float height = texture(heightMap, texCoord).r;

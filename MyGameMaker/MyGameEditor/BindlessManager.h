@@ -132,6 +132,8 @@ public:
 		return false;
 	}
 
+	glm::mat4 realBonesMatrices[200]; // Matrices for bone animations, size can be adjusted as needed
+
 private:
 	BindlessManager() = default;
 	~BindlessManager() = default;
@@ -162,6 +164,8 @@ private:
 	static constexpr size_t MAX_MESHES = 1024;
 	static constexpr size_t MAX_MATERIALS = 1024;
 	static constexpr size_t MAX_INSTANCES = 1000;
+
+
 
 	GLuint fallbackTextureID = 0;
 	BindlessHandle fallbackTextureHandle;

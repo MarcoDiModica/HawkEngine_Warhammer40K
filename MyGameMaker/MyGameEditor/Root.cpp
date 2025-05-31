@@ -73,6 +73,16 @@ bool Root::Start()
 	auto env = CreateGameObjectWithPath("Assets/FBX/Level2_Zone1.fbx");
 	env->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
+	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
+	playerMesh->GetTransform()->SetScale(glm::vec3(1));
+	playerMesh->SetName("playerMesh");
+
+	auto hormagauntmesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	hormagauntmesh->SetName("HormagauntMesh");
+
+	auto hormagauntmesh2 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	hormagauntmesh2->SetName("HormagauntMesh2");
+
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
 	//auto scenezone23 = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2area2&3.fbx");
 	////	

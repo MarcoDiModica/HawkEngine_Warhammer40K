@@ -301,12 +301,9 @@ void GPUDrivenRenderer::RenderShadowBatch(const ShaderBatch& batch, glm::mat4 li
 		
 		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
 		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
-		GPUInstance* instanceData = BindlessManager::GetInstance().GetInstanceData(i);
+		
 
-		for (int j = 0; j < MAX_BONES; j++)
-		{
-			shader->SetUniformMat4("realBonesMatrices[" + std::to_string(i) + "]", instanceData->boneMatrices[i]);
-		}
+
 
 		if (!meshData || !materialData) continue;
 
@@ -509,7 +506,10 @@ void GPUDrivenRenderer::RenderPBRBatch(
 
 		shader->SetUniform("heightScale", materialData->heightScale);
 
-		
+		//for (int j = 0; j < MAX_BONES; j++)
+		//{
+		//	shader->SetUniformMat4("realBonesMatrices[" + std::to_string(i) + "]", BindlessManager::GetInstance().realBonesMatrices[i]);
+		//}
 
 		if (GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64 && !bindlessErrorDetected) {
 			HandleTextureBindings(shader, "albedoMap", "u_HasAlbedoMap", materialData->albedoTexture);

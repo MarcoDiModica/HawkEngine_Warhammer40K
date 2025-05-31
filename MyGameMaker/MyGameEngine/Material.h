@@ -165,7 +165,7 @@ protected:
 			}
 		}
 
-		LOG(LogType::LOG_INFO, "Material loaded successfully: %s", fullPath.c_str());
+		//LOG(LogType::LOG_INFO, "Material loaded successfully: %s", fullPath.c_str());
 
         return true;
     }

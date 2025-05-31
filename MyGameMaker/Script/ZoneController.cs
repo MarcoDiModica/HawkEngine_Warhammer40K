@@ -12,7 +12,6 @@ public class ZoneController : MonoBehaviour
 
     public float fallbackDelay = 5f;
 
-    // internals
     private List<EnemySpawner> _spawners = new List<EnemySpawner>();
     private List<Collider> _barriers = new List<Collider>();
     private int _totalToSpawn;
@@ -22,10 +21,8 @@ public class ZoneController : MonoBehaviour
 
     public override void Start()
     {
-        // Your zone center:
         var myPos = this.gameObject.GetComponent<Transform>().GetPosition();
 
-        // 1) Find all spawners in scene, pick only those within zoneRadius
         var foundSpawners = GameObject.FindGameObjectsWithTag(spawnerTag);
         foreach (var go in foundSpawners)
         {
@@ -51,7 +48,7 @@ public class ZoneController : MonoBehaviour
             var pos = t.GetPosition();
             if (Vector3.Distance(pos, myPos) <= colliderRadius)
             {
-                Engineson.print("Colliders dentro de rango");
+                //Engineson.print("Colliders dentro de rango");
                 var col = go.GetComponent<Collider>();
                 if (col != null)
                 {
@@ -60,7 +57,8 @@ public class ZoneController : MonoBehaviour
                 }
             } else
             {
-                Engineson.print("Colliders fuera de rango");
+                
+                //Engineson.print("Colliders fuera de rango");
             }
         }
     }
@@ -71,7 +69,6 @@ public class ZoneController : MonoBehaviour
 
         _timeSinceLast += deltaTime;
 
-        // once all spawners have fired, and fallback time passed, drop barriers
         if (_spawnedCount >= _totalToSpawn && _timeSinceLast >= fallbackDelay)
         {
             SetBarriers(false);
@@ -86,7 +83,6 @@ public class ZoneController : MonoBehaviour
             SetBarriers(true);
             _barrierUp = true;
         }
-        Engineson.print("He Spawneado");
         _spawnedCount++;
         _timeSinceLast = 0f;
     }

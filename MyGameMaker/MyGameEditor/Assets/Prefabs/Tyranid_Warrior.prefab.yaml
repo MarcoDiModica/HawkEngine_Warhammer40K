@@ -1,6 +1,6 @@
-name: Tyranid_Warrior
-prefabPath: ""
-uuid: 9224897557229879268
+name: Tyranid_Warrior_Instance
+prefabPath: Assets\Prefabs\Tyranid_Warrior.prefab.yaml
+uuid: 1181414933045092982
 tag: Enemy
 active: true
 isStatic: false
@@ -17,17 +17,17 @@ Components:
       - -0
       - 0
     localScale:
-      - 1
-      - 1
-      - 1
-  BoxColliderComponent:
+      - 1.5
+      - 1.5
+      - 1.5
+  CapsuleColliderComponent:
     size:
-      - 1.60000002
-      - 3.70000005
-      - 1.79999995
+      - 1.20000005
+      - 2
+      - 1
     offset:
       - 0
-      - 2.0999999
+      - 0
       - 0
     isTrigger: false
   RigidbodyComponent:
@@ -61,7 +61,7 @@ Children:
     prefabPath: ""
     uuid: 1139392228580222506
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     Components:
       Transform_Component:
@@ -72,9 +72,9 @@ Children:
           - 0
           - 0
         localRotation:
-          - -1.3660378005559652e-05
-          - 6.5367021841000603e-07
-          - -4.6857504432419561e-07
+          - -1.3660377528476352e-05
+          - 6.5367018849739474e-07
+          - -4.685750164813548e-07
         localScale:
           - 0.0099999997764825821
           - 0.0099999997764825821
@@ -1332,24 +1332,24 @@ Children:
                                 prefabPath: ""
                                 uuid: 2294104548723104178
                                 tag: Untagged
-                                active: true
+                                active: false
                                 isStatic: false
                                 Components:
                                   Transform_Component:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - 10.028074141591787
-                                      - 154.39646908962476
-                                      - 86.930182701596181
+                                      - 10.028074264526367
+                                      - 154.39646911621094
+                                      - 86.930183410644531
                                     localRotation:
-                                      - -68.766245454866777
-                                      - -6.5367033012697652e-07
-                                      - 4.6857488847706644e-07
+                                      - -68.766242787412835
+                                      - -6.5367034353702331e-07
+                                      - 4.6857488725935409e-07
                                     localScale:
-                                      - 113.09160246904797
-                                      - 113.09160403802969
-                                      - 113.09160403802969
+                                      - 113.09160614013672
+                                      - 113.09160614013672
+                                      - 113.09160614013672
                                   MeshRenderer:
                                     name: MeshRenderer
                                     enabled: true

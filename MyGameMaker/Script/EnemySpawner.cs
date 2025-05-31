@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Numerics;
@@ -30,6 +31,7 @@ public class EnemySpawner : MonoBehaviour
     public float spawnRadius = 5f;
 
     public GameObject player;
+    public event Action<GameObject> onEnemySpawned;
 
     public override void Start()
     {
@@ -54,50 +56,49 @@ public class EnemySpawner : MonoBehaviour
             spawnTimer += deltaTime;
         }
 
-        if(!hasSpawnedFirst && spawnTimer >= firstSpawnTime && spawnerActive)
+        if ((!hasSpawnedFirst && spawnTimer >= firstSpawnTime) ||
+            (hasSpawnedFirst && spawnTimer >= secondsBetweenSpawns && currentEnemiesSpawned < maxEnemiesToSpawn))
         {
             SpawnEnemy();
             currentEnemiesSpawned++;
             hasSpawnedFirst = true;
             spawnTimer = 0;
-        }
-        else if (hasSpawnedFirst && spawnTimer >= secondsBetweenSpawns && currentEnemiesSpawned < maxEnemiesToSpawn && spawnerActive)
-        {
-            SpawnEnemy();
-            currentEnemiesSpawned++;
-            spawnTimer = 0;
+
+            onEnemySpawned?.Invoke(_lastSpawnedEnemy);
         }
 
 
     }
 
+    private GameObject _lastSpawnedEnemy;
     public void SpawnEnemy()
     {
-
+        GameObject enemy = null;
         if (spawnHormagaunt)
         {
-            GameObject meleeEnemy = Instantiate(hormagauntPrefab, transform);
-            meleeEnemy.GetComponent<Collider>().SetPosition(transform.position);
+            enemy = Instantiate(hormagauntPrefab, transform);
+            enemy.GetComponent<Collider>().SetPosition(transform.position);
         }
         else if (spawnRanged)
         {
-            GameObject rangedEnemy = Instantiate(rangedEnemyPrefab, transform);
-            rangedEnemy.GetComponent<Collider>().SetPosition(transform.position);
+            enemy = Instantiate(rangedEnemyPrefab, transform);
+            enemy.GetComponent<Collider>().SetPosition(transform.position);
         }
         else if (spawnStalker)
         {
-            GameObject stalkerEnemy = Instantiate(stalkerEnemyPrefab, transform);
-            stalkerEnemy.GetComponent<Collider>().SetPosition(transform.position);
+            enemy = Instantiate(stalkerEnemyPrefab, transform);
+            enemy.GetComponent<Collider>().SetPosition(transform.position);
         }
         else if (spawnWarrior)
         {
-            GameObject warriorEnemy = Instantiate(warriorEnemyPrefab, transform);
-            warriorEnemy.GetComponent<Collider>().SetPosition(transform.position);
+            enemy = Instantiate(warriorEnemyPrefab, transform);
+            enemy.GetComponent<Collider>().SetPosition(transform.position);
         }
         else if (spawnClimberHormagaunt)
         {
-            GameObject climberHormagaunt = Instantiate(climberHormagauntPrefab, transform);
-            climberHormagaunt.GetComponent<Collider>().SetPosition(transform.position);
+            enemy = Instantiate(climberHormagauntPrefab, transform);
+            enemy.GetComponent<Collider>().SetPosition(transform.position);
         }
+        _lastSpawnedEnemy = enemy;
     }
 }

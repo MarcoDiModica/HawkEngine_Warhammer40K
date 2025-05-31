@@ -201,7 +201,7 @@ public class PlayerShooting : MonoBehaviour
         {
             ChangeWeaponRight();
         }
-        else if (playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.Z))
+        else if (playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.C))
         {
             ChangeWeaponLeft();
         }

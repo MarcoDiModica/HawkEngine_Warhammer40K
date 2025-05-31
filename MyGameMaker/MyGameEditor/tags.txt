@@ -8,3 +8,5 @@ Enemy
 Melee
 ExplosiveBarrel
 DestructibleWall
+Spawner
+Barrier

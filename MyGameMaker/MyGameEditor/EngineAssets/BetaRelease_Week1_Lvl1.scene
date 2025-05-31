@@ -481,9 +481,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 1.48956883
+          floatSpeed: 1.03345788
           floatHeight: 0.5
-          rotationSpeed: 97.4116211
+          rotationSpeed: 66.2568588
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -589,9 +589,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 1.6939466
+          floatSpeed: 1.30788898
           floatHeight: 0.5
-          rotationSpeed: 93.9621735
+          rotationSpeed: 43.8878937
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -3592,7 +3592,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.822585219410826
             - 0
           localScale:
             - 208.60295104980469
@@ -3634,7 +3634,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.822585219410826
             - 0
           localScale:
             - 208.60295104980469
@@ -3676,7 +3676,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.822585219410826
             - 0
           localScale:
             - 208.60295104980469
@@ -3718,7 +3718,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.822585219410826
             - 0
           localScale:
             - 208.60295104980469
@@ -3760,7 +3760,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.822585219410826
             - 0
           localScale:
             - 208.60295104980469
@@ -3802,7 +3802,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.822585219410826
             - 0
           localScale:
             - 208.60295104980469
@@ -3844,7 +3844,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.822585219410826
             - 0
           localScale:
             - 208.60295104980469
@@ -3886,7 +3886,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.822585219410826
             - 0
           localScale:
             - 208.60295104980469
@@ -3928,7 +3928,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.828091537005946
+            - 89.822585219410826
             - 0
           localScale:
             - 208.60295104980469
@@ -4179,9 +4179,9 @@ GameObject20:
             - 164.68646240234375
             - 1182.335205078125
           localRotation:
-            - -90.000055617440481
-            - 83.40067869170214
-            - -3.3382463232385589e-05
+            - -89.999992863405609
+            - 83.400678691693273
+            - 2.2530040179191903e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -4221,9 +4221,9 @@ GameObject20:
             - 158.47599792480469
             - 1061.107666015625
           localRotation:
-            - -90.000032066250384
-            - -76.296838579876479
-            - 2.5186932764085601e-05
+            - -90.000032066307597
+            - -76.296852338521205
+            - 2.5186989974818382e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -5187,9 +5187,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.992369911835524
-            - 89.841466050453676
-            - 179.99148710903026
+            - 89.992958153472131
+            - 89.843879663424858
+            - 179.9920360770823
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5229,9 +5229,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.992369911835524
-            - 89.841466050453676
-            - 179.99148710903026
+            - 89.992958153472131
+            - 89.843879663424858
+            - 179.9920360770823
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5733,9 +5733,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999993288988833
-            - 66.695720103365531
-            - 179.99998980203466
+            - 89.99999664449409
+            - 66.695725202350346
+            - 179.99999490101703
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5775,9 +5775,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999993288988833
-            - 66.695720103365531
-            - 179.99998980203466
+            - 89.99999664449409
+            - 66.695725202350346
+            - 179.99999490101703
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5817,9 +5817,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999993288988833
-            - 66.695720103365531
-            - 179.99998980203466
+            - 89.99999664449409
+            - 66.695725202350346
+            - 179.99999490101703
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -6741,9 +6741,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360241669106
-            - 52.153760355639683
-            - -35.460577179108597
+            - 178.3336032357864
+            - 52.153765872309769
+            - -35.460576839329157
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6783,9 +6783,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360241669106
-            - 52.153760355639683
-            - -35.460577179108597
+            - 178.3336032357864
+            - 52.153765872309769
+            - -35.460576839329157
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6825,9 +6825,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360241669106
-            - 52.153760355639683
-            - -35.460577179108597
+            - 178.3336032357864
+            - 52.153765872309769
+            - -35.460576839329157
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -8127,9 +8127,9 @@ GameObject20:
             - 48.267116546630859
             - -1413.0146484375
           localRotation:
-            - 90.000047624140635
-            - 66.469451566834678
-            - -179.99998900386532
+            - 90.000037678930312
+            - 66.469449649334109
+            - 179.99999581835272
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -12231,9 +12231,9 @@ GameObject23:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.999811537630606
-            - 81.207661526619404
-            - 179.99992114313261
+            - 89.999814962597753
+            - 81.207712930060339
+            - 179.99991771774972
           localScale:
             - 41.956031799316406
             - 53.921905517578125
@@ -12399,9 +12399,9 @@ GameObject23:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.979503833806689
-            - -89.826769824678394
-            - -179.97043333206531
+            - 89.980392139947867
+            - -89.815612347326407
+            - -179.97131992917016
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -13291,9 +13291,9 @@ GameObject23:
             - 22.607597351074219
             - -2101.2529296875
           localRotation:
-            - -179.9999913485772
-            - 84.241636004164036
-            - 2.1271356554776735e-05
+            - -179.99999134858396
+            - 84.241616660938121
+            - 2.1271357299730072e-05
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -13333,9 +13333,9 @@ GameObject23:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.1000728798470485
-            - -81.281071226910868
-            - -179.9999915577722
+            - 1.1000751234949049
+            - -81.281071352280861
+            - -179.99999179592336
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -13879,9 +13879,9 @@ GameObject23:
             - 72.838882446289062
             - 742.7088623046875
           localRotation:
-            - -90.000066059634904
-            - -82.667993105541612
-            - -1.2648600186825117e-05
+            - -90.000056984542425
+            - -82.668045996639336
+            - -3.0278931708182398e-05
           localScale:
             - 59.934871673583984
             - 59.934871673583984
@@ -14761,9 +14761,9 @@ GameObject23:
             - 84.565017700195312
             - -2966.651611328125
           localRotation:
-            - -90.012769107252566
-            - -89.743395006093522
-            - 0.010088251292587872
+            - -90.009757983549932
+            - -89.743292082603901
+            - 0.0070907879229940253
           localScale:
             - 43.324676513671875
             - 43.324676513671875
@@ -14845,9 +14845,9 @@ GameObject23:
             - 47.50750732421875
             - 561.61212158203125
           localRotation:
-            - 178.20561871096638
-            - 0.51393308532894255
-            - 3.076514021334452
+            - 178.20561871686377
+            - 0.51393305555960622
+            - 3.0765155155935431
           localScale:
             - 24.362417221069336
             - 24.36241340637207
@@ -15265,9 +15265,9 @@ GameObject23:
             - 27.166694641113281
             - -2728.593017578125
           localRotation:
-            - 89.999976515901992
-            - -71.216288202477699
-            - -179.99999209262776
+            - 89.999993077010672
+            - -71.216278643695048
+            - 179.99999307701066
           localScale:
             - 110.40802001953125
             - 110.40802001953125
@@ -15391,9 +15391,9 @@ GameObject23:
             - 27.166694641113281
             - 109.11194610595703
           localRotation:
-            - -89.999559020505359
-            - 85.727379860642685
-            - 0.00047515419257955049
+            - -89.999558983878984
+            - 85.727733971032762
+            - 0.00047519081488092891
           localScale:
             - 49.63983154296875
             - 49.63983154296875
@@ -21663,9 +21663,9 @@ GameObject27:
             - 3.1512765884399414
             - 3.5392885208129883
           localRotation:
-            - 179.84665360839961
-            - -57.005951974738096
-            - -179.97224712363084
+            - 179.84665361833211
+            - -57.006026286953421
+            - -179.97224712377823
           localScale:
             - 4.1512908935546875
             - 8.0131254196166992
@@ -25110,9 +25110,9 @@ GameObject29:
             - 3.0124197006225586
             - -194.1514892578125
           localRotation:
-            - -179.9999949910484
-            - 87.969567273503927
-            - -179.9999949910484
+            - -179.99999499104948
+            - 87.96957693443774
+            - -179.99999499104948
           localScale:
             - 12.215158462524414
             - 7.4319052696228027
@@ -28300,9 +28300,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.4781636
+          floatSpeed: 1.85019338
           floatHeight: 0.5
-          rotationSpeed: 30.1325417
+          rotationSpeed: 85.7615891
   Children: ~
 GameObject34:
   name: BiblePage_Pueblo
@@ -28385,9 +28385,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.10270941
+          floatSpeed: 0.778727293
           floatHeight: 0.5
-          rotationSpeed: 83.423996
+          rotationSpeed: 57.7273941
   Children: ~
 GameObject35:
   name: BiblePage_Pasillo_Zona3
@@ -28470,9 +28470,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.724141598
+          floatSpeed: 1.43523479
           floatHeight: 0.5
-          rotationSpeed: 97.6953201
+          rotationSpeed: 41.1022377
   Children: ~
 GameObject36:
   name: BiblePage_Ciudad
@@ -28555,9 +28555,9 @@ GameObject36:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.4611299
+          floatSpeed: 1.22761786
           floatHeight: 0.5
-          rotationSpeed: 75.789032
+          rotationSpeed: 77.8098602
   Children: ~
 GameObject37:
   name: Barril_Ciudad1
@@ -33258,9 +33258,9 @@ GameObject95:
             - 0
             - -25.443840026855469
           localRotation:
-            - 89.986197247295223
-            - 89.889446345778055
-            - 179.9873532573462
+            - 89.990653151191054
+            - 89.888237133665001
+            - 179.9918176989998
           localScale:
             - 86.512344360351562
             - 99.999984741210938
@@ -33300,9 +33300,9 @@ GameObject95:
             - 341.29437255859375
             - 124.93968963623047
           localRotation:
-            - 89.989032492060758
-            - 89.909423303732453
-            - 179.98881051083995
+            - 89.990595645676663
+            - 89.9083789836519
+            - 179.99038220219833
           localScale:
             - 96.124794006347656
             - 99.999984741210938
@@ -33721,7 +33721,7 @@ GameObject95:
             - -869.0504150390625
           localRotation:
             - 90
-            - 89.835858610661589
+            - 89.831512878255523
             - 0
           localScale:
             - 100
@@ -34435,8 +34435,8 @@ GameObject95:
             - -924.02191162109375
           localRotation:
             - -90.000024148366222
-            - 0.061902187632811315
-            - 1.1045236045382691e-09
+            - 0.061902253663532567
+            - 1.1045096896065154e-09
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -35148,9 +35148,9 @@ GameObject95:
             - 0
             - -469.199462890625
           localRotation:
-            - -90.000062432597062
-            - 65.587224437801908
-            - -3.4479894512716319e-05
+            - -90.000052939103796
+            - 65.587229349348618
+            - -1.974527001603451e-05
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -36072,9 +36072,9 @@ GameObject95:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075433400077898e-05
-            - -79.275327825096156
-            - -90.000097096917941
+            - 5.9068823293115537e-05
+            - -79.275324691999899
+            - -90.000105375255501
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -36114,9 +36114,9 @@ GameObject95:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075433400077898e-05
-            - -79.275327825096156
-            - -90.000097096917941
+            - 5.9068823293115537e-05
+            - -79.275324691999899
+            - -90.000105375255501
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -37388,264 +37388,6 @@ GameObject115:
             fields: ~
       Children: ~
 GameObject116:
-  name: SpawnerHormagaunt_Instance
-  prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
-  uuid: 13127436435192144738
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 587.68426513671875
-        - 0.69824838638305664
-        - -34.594791412353516
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    ScriptComponents:
-      Script0:
-        name: EnemySpawner
-        fields:
-          spawnTimer: 0
-          secondsBetweenSpawns: 5
-          firstSpawnTime: 0
-          currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 2
-          hasSpawnedFirst: false
-          hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-          spawnHormagaunt: true
-          spawnRanged: false
-          spawnStalker: false
-          spawnWarrior: false
-          spawnClimberHormagaunt: false
-          spawnerActive: false
-          spawnRadius: 50
-          player: Player
-  Children: ~
-GameObject117:
-  name: SpawnerHormagaunt_Instance2
-  prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
-  uuid: 8830116652190043920
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 595.83880615234375
-        - 0.9514155387878418
-        - 12.442151069641113
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    ScriptComponents:
-      Script0:
-        name: EnemySpawner
-        fields:
-          spawnTimer: 0
-          secondsBetweenSpawns: 5
-          firstSpawnTime: 0
-          currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 2
-          hasSpawnedFirst: false
-          hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-          spawnHormagaunt: true
-          spawnRanged: false
-          spawnStalker: false
-          spawnWarrior: false
-          spawnClimberHormagaunt: false
-          spawnerActive: false
-          spawnRadius: 50
-          player: Player
-  Children: ~
-GameObject118:
-  name: SpawnerTermagant_Instance
-  prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
-  uuid: 14374692933268069086
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 587.3240966796875
-        - 0
-        - -35.014080047607422
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    ScriptComponents:
-      Script0:
-        name: EnemySpawner
-        fields:
-          spawnTimer: 0
-          secondsBetweenSpawns: 15
-          firstSpawnTime: 0
-          currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
-          hasSpawnedFirst: false
-          rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
-          spawnHormagaunt: false
-          spawnRanged: true
-          spawnStalker: false
-          spawnWarrior: false
-          spawnClimberHormagaunt: false
-          spawnerActive: false
-          spawnRadius: 50
-          player: Player
-  Children: ~
-GameObject119:
-  name: SpawnerTermagant_Instance2
-  prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
-  uuid: 5253325594229723898
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 596.15911865234375
-        - 0
-        - 12.580535888671875
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    ScriptComponents:
-      Script0:
-        name: EnemySpawner
-        fields:
-          spawnTimer: 0
-          secondsBetweenSpawns: 15
-          firstSpawnTime: 0
-          currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
-          hasSpawnedFirst: false
-          rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
-          spawnHormagaunt: false
-          spawnRanged: true
-          spawnStalker: false
-          spawnWarrior: false
-          spawnClimberHormagaunt: false
-          spawnerActive: false
-          spawnRadius: 50
-          player: Player
-  Children: ~
-GameObject120:
-  name: SpawnerTyranidWarrior_Instance
-  prefabPath: Assets\Prefabs\SpawnerTyranidWarrior.prefab.yaml
-  uuid: 2532421825862386911
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 596.12908935546875
-        - 0
-        - 12.022642135620117
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    ScriptComponents:
-      Script0:
-        name: EnemySpawner
-        fields:
-          spawnTimer: 0
-          secondsBetweenSpawns: 10
-          firstSpawnTime: 0
-          currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
-          hasSpawnedFirst: false
-          warriorEnemyPrefab: Assets\Prefabs\Tyranid_Warrior.prefab.yaml
-          spawnHormagaunt: false
-          spawnRanged: false
-          spawnStalker: false
-          spawnWarrior: true
-          spawnClimberHormagaunt: false
-          spawnerActive: false
-          spawnRadius: 50
-          player: Player
-  Children: ~
-GameObject121:
-  name: SpawnerTyranidWarrior_Instance2
-  prefabPath: Assets\Prefabs\SpawnerTyranidWarrior.prefab.yaml
-  uuid: 18094794166059469410
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 588.20947265625
-        - 0
-        - -34.964122772216797
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    ScriptComponents:
-      Script0:
-        name: EnemySpawner
-        fields:
-          spawnTimer: 0
-          secondsBetweenSpawns: 10
-          firstSpawnTime: 0
-          currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
-          hasSpawnedFirst: false
-          warriorEnemyPrefab: Assets\Prefabs\Tyranid_Warrior.prefab.yaml
-          spawnHormagaunt: false
-          spawnRanged: false
-          spawnStalker: false
-          spawnWarrior: true
-          spawnClimberHormagaunt: false
-          spawnerActive: false
-          spawnRadius: 50
-          player: Player
-  Children: ~
-GameObject122:
   name: SpawnerLictor_Instance
   prefabPath: Assets\Prefabs\SpawnerLictor.prefab.yaml
   uuid: 9571561034620138745
@@ -37673,22 +37415,21 @@ GameObject122:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 20
+          secondsBetweenSpawns: 0
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          stalkerEnemyPrefab: Assets\Prefabs\Lictor.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
-          spawnStalker: true
+          spawnStalker: false
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 50
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject123:
+GameObject117:
   name: SpawnerHormagaunt_Instance3
   prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
   uuid: 16580966163423364833
@@ -37716,22 +37457,21 @@ GameObject123:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 5
+          secondsBetweenSpawns: 0
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 2
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-          spawnHormagaunt: true
+          spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 50
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject124:
+GameObject118:
   name: SpawnerHormagaunt_Instance5
   prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
   uuid: 5901448414540169129
@@ -37759,22 +37499,21 @@ GameObject124:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 5
+          secondsBetweenSpawns: 0
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 2
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-          spawnHormagaunt: true
+          spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 50
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject125:
+GameObject119:
   name: SpawnerHormagaunt_Instance6
   prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
   uuid: 10231391297256788343
@@ -37802,22 +37541,21 @@ GameObject125:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 5
+          secondsBetweenSpawns: 0
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 2
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-          spawnHormagaunt: true
+          spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 50
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject126:
+GameObject120:
   name: SpawnerTermagant_Instance4
   prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
   uuid: 18111165282557653429
@@ -37845,22 +37583,21 @@ GameObject126:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 15
+          secondsBetweenSpawns: 0
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
           spawnHormagaunt: false
-          spawnRanged: true
+          spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 50
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject127:
+GameObject121:
   name: SpawnerTermagant_Instance5
   prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
   uuid: 10954002349267036451
@@ -37888,22 +37625,21 @@ GameObject127:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 15
+          secondsBetweenSpawns: 0
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
           spawnHormagaunt: false
-          spawnRanged: true
+          spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 50
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject128:
+GameObject122:
   name: SpawnerTermagant_Instance6
   prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
   uuid: 9597066908695249242
@@ -37931,22 +37667,21 @@ GameObject128:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 15
+          secondsBetweenSpawns: 0
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
           spawnHormagaunt: false
-          spawnRanged: true
+          spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 50
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject129:
+GameObject123:
   name: SpawnerTermagant_Instance3
   prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
   uuid: 12024279504145694481
@@ -37974,22 +37709,21 @@ GameObject129:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 15
+          secondsBetweenSpawns: 0
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
           spawnHormagaunt: false
-          spawnRanged: true
+          spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 50
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject130:
+GameObject124:
   name: SpawnerTyranidWarrior_Instance4
   prefabPath: Assets\Prefabs\SpawnerTyranidWarrior.prefab.yaml
   uuid: 2665088459853920409
@@ -38017,22 +37751,21 @@ GameObject130:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 10
+          secondsBetweenSpawns: 0
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          warriorEnemyPrefab: Assets\Prefabs\Tyranid_Warrior.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
-          spawnWarrior: true
+          spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 50
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject131:
+GameObject125:
   name: SpawnerTyranidWarrior_Instance6
   prefabPath: Assets\Prefabs\SpawnerTyranidWarrior.prefab.yaml
   uuid: 7656923810244698155
@@ -38060,22 +37793,21 @@ GameObject131:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 10
+          secondsBetweenSpawns: 0
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          warriorEnemyPrefab: Assets\Prefabs\Tyranid_Warrior.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
-          spawnWarrior: true
+          spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 50
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject132:
+GameObject126:
   name: SpawnerLictor_Instance2
   prefabPath: Assets\Prefabs\SpawnerLictor.prefab.yaml
   uuid: 14876423971544103617
@@ -38103,22 +37835,21 @@ GameObject132:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 25
+          secondsBetweenSpawns: 0
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          stalkerEnemyPrefab: Assets\Prefabs\Lictor.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
-          spawnStalker: true
+          spawnStalker: false
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 50
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject133:
+GameObject127:
   name: SpawnerLictor_Instance3
   prefabPath: Assets\Prefabs\SpawnerLictor.prefab.yaml
   uuid: 8647882437215167394
@@ -38146,22 +37877,21 @@ GameObject133:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 25
+          secondsBetweenSpawns: 0
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          stalkerEnemyPrefab: Assets\Prefabs\Lictor.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
-          spawnStalker: true
+          spawnStalker: false
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 50
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject134:
+GameObject128:
   name: SpawnerHormagaunt_Instance4
   prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
   uuid: 8262494591601837887
@@ -38189,22 +37919,21 @@ GameObject134:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 5
+          secondsBetweenSpawns: 0
           firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 2
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-          spawnHormagaunt: true
+          spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
           spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 50
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject135:
+GameObject129:
   name: Statue ISE
   prefabPath: ""
   uuid: 13473198104926902521
@@ -38242,9 +37971,9 @@ GameObject135:
         name: Item
         fields:
           isTextVisible: false
-          text: A magnificent statue
+          text: hola
   Children: ~
-GameObject136:
+GameObject130:
   name: ClawsISE
   prefabPath: ""
   uuid: 5818929705644964628
@@ -38282,9 +38011,9 @@ GameObject136:
         name: Item
         fields:
           isTextVisible: false
-          text: The marks of a creature's attack.
+          text: hola
   Children: ~
-GameObject137:
+GameObject131:
   name: Canvas_HUD
   prefabPath: Assets\Prefabs\Canvas_HUD.prefab.yaml
   uuid: 12949476511572047555
@@ -40371,10 +40100,10 @@ GameObject137:
             - 1225
             - 40
           sprite_offset:
-            - 875
+            - 350
             - 0
           anim_speed: 0.5
-          anim_index: 5
+          anim_index: 2
           anim_index_limit: 6
           color:
             - 1
@@ -40499,10 +40228,10 @@ GameObject137:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 150
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 3
           anim_index_limit: 4
           color:
             - 1
@@ -40627,10 +40356,10 @@ GameObject137:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 150
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 3
           anim_index_limit: 4
           color:
             - 1
@@ -41670,7 +41399,7 @@ GameObject137:
             - 0
             - 0
       Children: ~
-GameObject138:
+GameObject132:
   name: Canvas_Interaction
   prefabPath: Assets\Prefabs\Canvas_Interaction_Level1.prefab.yaml
   uuid: 6591346108623782193
@@ -42374,7 +42103,7 @@ GameObject138:
             - 0
             - 0
       Children: ~
-GameObject139:
+GameObject133:
   name: Canvas_TitleSM
   prefabPath: Assets\Prefabs\Canvas_TitleSM.prefab.yaml
   uuid: 15444793993539794259
@@ -42488,7 +42217,7 @@ GameObject139:
             - 1
             - 1
       Children: ~
-GameObject140:
+GameObject134:
   name: Canvas_PauseMenu
   prefabPath: Assets\Prefabs\Canvas_PauseMenu.prefab.yaml
   uuid: 15860094252941017456
@@ -42874,7 +42603,7 @@ GameObject140:
           enabled: true
           state: 1
       Children: ~
-GameObject141:
+GameObject135:
   name: Canvas_OptionsMenu
   prefabPath: Assets\Prefabs\Canvas_OptionsMenu.prefab.yaml
   uuid: 2164386902305167382
@@ -44881,7 +44610,7 @@ GameObject141:
             - 1
             - 1
       Children: ~
-GameObject142:
+GameObject136:
   name: Player
   prefabPath: Assets\Prefabs\Player (1).prefab.yaml
   uuid: 15456081765123126343
@@ -44990,10 +44719,10 @@ GameObject142:
         name: PlayerMovement
         fields:
           moveSpeed: 10
-          walkSpeed: 5
-          runSpeed: 30
+          walkSpeed: 10
+          runSpeed: 25
           rotationSpeed: 30
-          acceleration: 40
+          acceleration: 20
           deceleration: 15
           speedTransitionRate: 7
       Script2:
@@ -47588,31 +47317,31 @@ GameObject142:
         ParticleFX:
           name: ParticleFX
           enabled: true
-          emitterShape: 2
-          emissionRate: 120
-          particlesPerSecond: 120
-          minLifetime: 0.150000006
-          maxLifetime: 0.150000006
-          minSpeed: 5.55000019
-          maxSpeed: 5.55000019
-          startSize: 0
+          emitterShape: 0
+          emissionRate: 0.5
+          particlesPerSecond: 0.5
+          minLifetime: 5
+          maxLifetime: 5
+          minSpeed: 0
+          maxSpeed: 0.00999999978
+          startSize: 2
           endSize: 2
-          minSize: 0
-          maxSize: 1
+          minSize: 2
+          maxSize: 2
           startColor:
-            - 0.800000012
-            - 0.800000012
-            - 0.800000012
+            - 1
+            - 1
+            - 1
           endColor:
-            - 0.800000012
-            - 0.800000012
-            - 0.800000012
-          startAlpha: 0.699999988
-          endAlpha: 0
-          rotationSpeed: 0.200000003
+            - 1
+            - 1
+            - 1
+          startAlpha: 1
+          endAlpha: 1
+          rotationSpeed: 0
           gravity:
             - 0
-            - -5.32999992
+            - 0.00999999978
             - 0
           shapeParam1: 0.200000003
           shapeParam2: 1
@@ -47622,21 +47351,21 @@ GameObject142:
           isPaused: false
           burstEmitted: false
           spriteSize:
-            - 256
-            - 256
+            - 226
+            - 275
           useAnimation: true
-          animSpeed: 0.5
-          startRotation: 0
-          randomRotation: true
+          animSpeed: 0.100000001
+          startRotation: 180
+          randomRotation: false
           material:
             billboardType: 0
             particleType: 51
             softness: 0
             useColorGradient: false
-            texturePath: Assets/Textures/Smoke30Frames.png
+            texturePath: Assets/Textures/bullet.png
           particleType: 51
       Children: ~
-GameObject143:
+GameObject137:
   name: TermagantBColliderPrefab_Instance
   prefabPath: Assets\Prefabs\TermagantBColliderPrefab.prefab.yaml
   uuid: 8770736101472636265
@@ -49247,7 +48976,7 @@ GameObject143:
                                     - 1
                                     - 1
                               Children: ~
-GameObject144:
+GameObject138:
   name: TWarriorBColliderPrefab_Instance
   prefabPath: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
   uuid: 14484042400935160439
@@ -51088,7 +50817,7 @@ GameObject144:
                                         - 1
                                         - 1
                                   Children: ~
-GameObject145:
+GameObject139:
   name: TermagantBColliderPrefab_Instance2
   prefabPath: Assets\Prefabs\TermagantBColliderPrefab (1).prefab.yaml
   uuid: 10640554401568185472
@@ -52699,7 +52428,7 @@ GameObject145:
                                     - 1
                                     - 1
                               Children: ~
-GameObject146:
+GameObject140:
   name: TWarriorBColliderPrefab_Instance2
   prefabPath: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
   uuid: 12161109127945049066
@@ -54540,7 +54269,7 @@ GameObject146:
                                         - 1
                                         - 1
                                   Children: ~
-GameObject147:
+GameObject141:
   name: TermagantBColliderPrefab_Instance3
   prefabPath: Assets\Prefabs\TermagantBColliderPrefab.prefab.yaml
   uuid: 12869994003619074492
@@ -56151,7 +55880,7 @@ GameObject147:
                                     - 1
                                     - 1
                               Children: ~
-GameObject148:
+GameObject142:
   name: TWarriorBColliderPrefab_Instance3
   prefabPath: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
   uuid: 6319486607026283397
@@ -57992,7 +57721,7 @@ GameObject148:
                                         - 1
                                         - 1
                                   Children: ~
-GameObject149:
+GameObject143:
   name: TWarriorBColliderPrefab_Instance4
   prefabPath: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
   uuid: 13188273245184250817
@@ -59833,7 +59562,7 @@ GameObject149:
                                         - 1
                                         - 1
                                   Children: ~
-GameObject150:
+GameObject144:
   name: TWarriorBColliderPrefab_Instance5
   prefabPath: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
   uuid: 8111797364521967134
@@ -61674,7 +61403,7 @@ GameObject150:
                                         - 1
                                         - 1
                                   Children: ~
-GameObject151:
+GameObject145:
   name: TermagantBColliderPrefab_Instance4
   prefabPath: Assets\Prefabs\TermagantBColliderPrefab.prefab.yaml
   uuid: 17830980644627765106
@@ -63285,7 +63014,7 @@ GameObject151:
                                     - 1
                                     - 1
                               Children: ~
-GameObject152:
+GameObject146:
   name: TermagantBColliderPrefab_Instance5
   prefabPath: Assets\Prefabs\TermagantBColliderPrefab.prefab.yaml
   uuid: 12864962186389674150
@@ -64896,7 +64625,7 @@ GameObject152:
                                     - 1
                                     - 1
                               Children: ~
-GameObject153:
+GameObject147:
   name: Empty
   prefabPath: ""
   uuid: 216413949403326497
@@ -64970,7 +64699,7 @@ GameObject153:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject154:
+GameObject148:
   name: Empty_copy
   prefabPath: ""
   uuid: 2224171210041641758
@@ -65044,7 +64773,7 @@ GameObject154:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject155:
+GameObject149:
   name: Empty_copy_1
   prefabPath: ""
   uuid: 10103092373147595627
@@ -65118,7 +64847,7 @@ GameObject155:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject156:
+GameObject150:
   name: Empty_copy_2
   prefabPath: ""
   uuid: 9029708812861586945
@@ -65192,7 +64921,7 @@ GameObject156:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject157:
+GameObject151:
   name: Empty_copy_3
   prefabPath: ""
   uuid: 10536053615790440960
@@ -65266,7 +64995,7 @@ GameObject157:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject158:
+GameObject152:
   name: Empty_copy_4
   prefabPath: ""
   uuid: 731947215233105101
@@ -65340,7 +65069,7 @@ GameObject158:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject159:
+GameObject153:
   name: Empty_copy_5
   prefabPath: ""
   uuid: 9508416278347018144
@@ -65414,7 +65143,7 @@ GameObject159:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject160:
+GameObject154:
   name: Empty_copy_6
   prefabPath: ""
   uuid: 16077730398484303198
@@ -65488,7 +65217,7 @@ GameObject160:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject161:
+GameObject155:
   name: Empty_copy_7
   prefabPath: ""
   uuid: 4645654447411526786
@@ -65562,7 +65291,7 @@ GameObject161:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject162:
+GameObject156:
   name: Empty_copy_8
   prefabPath: ""
   uuid: 3244302606388155532
@@ -65636,7 +65365,7 @@ GameObject162:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject163:
+GameObject157:
   name: Empty_copy_9
   prefabPath: ""
   uuid: 6771818396086189966
@@ -65710,7 +65439,7 @@ GameObject163:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject164:
+GameObject158:
   name: Empty_copy_10
   prefabPath: ""
   uuid: 16932495380773345724
@@ -65784,7 +65513,7 @@ GameObject164:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject165:
+GameObject159:
   name: Empty_copy_11
   prefabPath: ""
   uuid: 16106028467944845601
@@ -65858,7 +65587,7 @@ GameObject165:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject166:
+GameObject160:
   name: Hormagaunt
   prefabPath: Assets/Prefabs/Hormagaunt.prefab.yaml
   uuid: 7417968142418403327
@@ -67528,7 +67257,7 @@ GameObject166:
                                     - 1.0000003597445826
                                     - 1.0000001104363665
                               Children: ~
-GameObject167:
+GameObject161:
   name: Hormagaunt_1_Instance
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 4148571943544012834
@@ -69135,7 +68864,7 @@ GameObject167:
                                     - 1
                                     - 1
                               Children: ~
-GameObject168:
+GameObject162:
   name: Hormagaunt_1_Instance2
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 6742478964426490707
@@ -70742,7 +70471,7 @@ GameObject168:
                                     - 1
                                     - 1
                               Children: ~
-GameObject169:
+GameObject163:
   name: Hormagaunt_1_Instance3
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 11440517040959366132
@@ -72349,7 +72078,7 @@ GameObject169:
                                     - 1
                                     - 1
                               Children: ~
-GameObject170:
+GameObject164:
   name: Hormagaunt_1_Instance4
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 8241453012028387906
@@ -73956,7 +73685,7 @@ GameObject170:
                                     - 1
                                     - 1
                               Children: ~
-GameObject171:
+GameObject165:
   name: Hormagaunt_1_Instance5
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 1771158132173550310
@@ -75563,7 +75292,7 @@ GameObject171:
                                     - 1
                                     - 1
                               Children: ~
-GameObject172:
+GameObject166:
   name: Hormagaunt_1_Instance6
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 574415872201069662
@@ -77170,7 +76899,7 @@ GameObject172:
                                     - 1
                                     - 1
                               Children: ~
-GameObject173:
+GameObject167:
   name: Hormagaunt_1_Instance7
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 7391176766029426896
@@ -78777,7 +78506,7 @@ GameObject173:
                                     - 1
                                     - 1
                               Children: ~
-GameObject174:
+GameObject168:
   name: Hormagaunt_1_Instance8
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 7292980984981196410
@@ -80384,7 +80113,7 @@ GameObject174:
                                     - 1
                                     - 1
                               Children: ~
-GameObject175:
+GameObject169:
   name: Hormagaunt_1_Instance9
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 10024796770625895607
@@ -81991,7 +81720,7 @@ GameObject175:
                                     - 1
                                     - 1
                               Children: ~
-GameObject176:
+GameObject170:
   name: Hormagaunt_1_Instance10
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 13060096831599190986
@@ -83598,7 +83327,7 @@ GameObject176:
                                     - 1
                                     - 1
                               Children: ~
-GameObject177:
+GameObject171:
   name: Hormagaunt_1_Instance11
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 1707640671069553277
@@ -85205,7 +84934,7 @@ GameObject177:
                                     - 1
                                     - 1
                               Children: ~
-GameObject178:
+GameObject172:
   name: Hormagaunt_1_Instance12
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 16686011334917666939
@@ -86812,7 +86541,7 @@ GameObject178:
                                     - 1
                                     - 1
                               Children: ~
-GameObject179:
+GameObject173:
   name: Hormagaunt_1_Instance13
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 6205087639851069783
@@ -88419,7 +88148,7 @@ GameObject179:
                                     - 1
                                     - 1
                               Children: ~
-GameObject180:
+GameObject174:
   name: Hormagaunt_1_Instance14
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 7308197113675174675
@@ -90026,7 +89755,7 @@ GameObject180:
                                     - 1
                                     - 1
                               Children: ~
-GameObject181:
+GameObject175:
   name: Hormagaunt_1_Instance15
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 16765757649118054933
@@ -91633,7 +91362,7 @@ GameObject181:
                                     - 1
                                     - 1
                               Children: ~
-GameObject182:
+GameObject176:
   name: Hormagaunt_1_Instance16
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 17996600457875003728
@@ -93240,7 +92969,7 @@ GameObject182:
                                     - 1
                                     - 1
                               Children: ~
-GameObject183:
+GameObject177:
   name: Hormagaunt_1_Instance17
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 18325591665860736127
@@ -94847,7 +94576,7 @@ GameObject183:
                                     - 1
                                     - 1
                               Children: ~
-GameObject184:
+GameObject178:
   name: Hormagaunt_1_Instance18
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 1926358541611559493
@@ -96454,7 +96183,7 @@ GameObject184:
                                     - 1
                                     - 1
                               Children: ~
-GameObject185:
+GameObject179:
   name: Hormagaunt_1_Instance19
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 3599268846492380028
@@ -98061,7 +97790,7 @@ GameObject185:
                                     - 1
                                     - 1
                               Children: ~
-GameObject186:
+GameObject180:
   name: Hormagaunt_1_Instance20
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 5260323047292257298
@@ -99668,7 +99397,7 @@ GameObject186:
                                     - 1
                                     - 1
                               Children: ~
-GameObject187:
+GameObject181:
   name: Hormagaunt_1_Instance21
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 8840209521303313163
@@ -101275,7 +101004,7 @@ GameObject187:
                                     - 1
                                     - 1
                               Children: ~
-GameObject188:
+GameObject182:
   name: Hormagaunt_1_Instance22
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 14732183213394411251
@@ -102882,7 +102611,7 @@ GameObject188:
                                     - 1
                                     - 1
                               Children: ~
-GameObject189:
+GameObject183:
   name: Hormagaunt_1_Instance23
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 13748905221402601075
@@ -104489,7 +104218,7 @@ GameObject189:
                                     - 1
                                     - 1
                               Children: ~
-GameObject190:
+GameObject184:
   name: Hormagaunt_1_Instance24
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 2865731208622186373
@@ -106096,7 +105825,7 @@ GameObject190:
                                     - 1
                                     - 1
                               Children: ~
-GameObject191:
+GameObject185:
   name: Hormagaunt_1_Instance25
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 1868009602320175666
@@ -107703,7 +107432,7 @@ GameObject191:
                                     - 1
                                     - 1
                               Children: ~
-GameObject192:
+GameObject186:
   name: Hormagaunt_1_Instance26
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 4252913514676126513
@@ -109310,7 +109039,7 @@ GameObject192:
                                     - 1
                                     - 1
                               Children: ~
-GameObject193:
+GameObject187:
   name: SpawnerClimbingHormagaunt
   prefabPath: Assets/Prefabs/SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 6728732850253370239
@@ -109339,21 +109068,20 @@ GameObject193:
         fields:
           spawnTimer: 0
           secondsBetweenSpawns: 0
-          firstSpawnTime: 4
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject194:
+GameObject188:
   name: SpawnerClimbingHormagaunt_1_Instance
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 1420409606034537124
@@ -109382,21 +109110,20 @@ GameObject194:
         fields:
           spawnTimer: 0
           secondsBetweenSpawns: 0
-          firstSpawnTime: 4
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject195:
+GameObject189:
   name: SpawnerClimbingHormagaunt_1_Instance2
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 6986717565944475453
@@ -109425,21 +109152,20 @@ GameObject195:
         fields:
           spawnTimer: 0
           secondsBetweenSpawns: 0
-          firstSpawnTime: 4
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject196:
+GameObject190:
   name: SpawnerClimbingHormagaunt_1_Instance3
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 15444110007630934330
@@ -109468,21 +109194,20 @@ GameObject196:
         fields:
           spawnTimer: 0
           secondsBetweenSpawns: 0
-          firstSpawnTime: 4
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject197:
+GameObject191:
   name: SpawnerClimbingHormagaunt_1_Instance4
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 744731945026244590
@@ -109511,21 +109236,20 @@ GameObject197:
         fields:
           spawnTimer: 0
           secondsBetweenSpawns: 0
-          firstSpawnTime: 3
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagaunt.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 70
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject198:
+GameObject192:
   name: SpawnerClimbingHormagaunt_1_Instance5
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 5381691170264302502
@@ -109554,21 +109278,20 @@ GameObject198:
         fields:
           spawnTimer: 0
           secondsBetweenSpawns: 0
-          firstSpawnTime: 4
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagaunt.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject199:
+GameObject193:
   name: SpawnerClimbingHormagaunt_1_Instance6
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 5193939022234906693
@@ -109597,21 +109320,20 @@ GameObject199:
         fields:
           spawnTimer: 0
           secondsBetweenSpawns: 0
-          firstSpawnTime: 4
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagaunt.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject200:
+GameObject194:
   name: SpawnerClimbingHormagaunt_1_Instance7
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 5095157378474398078
@@ -109640,21 +109362,20 @@ GameObject200:
         fields:
           spawnTimer: 0
           secondsBetweenSpawns: 0
-          firstSpawnTime: 3
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 70
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject201:
+GameObject195:
   name: SpawnerClimbingHormagaunt_1_Instance8
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 15820258501899192178
@@ -109683,21 +109404,20 @@ GameObject201:
         fields:
           spawnTimer: 0
           secondsBetweenSpawns: 0
-          firstSpawnTime: 3
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 70
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject202:
+GameObject196:
   name: Medkit
   prefabPath: Assets/Prefabs/Medkit.prefab.yaml
   uuid: 2395089655681620673
@@ -109753,9 +109473,9 @@ GameObject202:
       Script0:
         name: DestroyEnviormentObject
         fields:
-          onlyMedicaeStimm: true
+          onlyMedicaeStimm: false
   Children: ~
-GameObject203:
+GameObject197:
   name: Medkit_1_Instance
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 9417299982244269123
@@ -109811,9 +109531,9 @@ GameObject203:
       Script0:
         name: DestroyEnviormentObject
         fields:
-          onlyMedicaeStimm: true
+          onlyMedicaeStimm: false
   Children: ~
-GameObject204:
+GameObject198:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_Instance
   prefabPath: Assets\Prefabs\barrel.prefab.yaml
   uuid: 1394964808370497272
@@ -109871,7 +109591,7 @@ GameObject204:
         fields:
           onlyMedicaeStimm: false
   Children: ~
-GameObject205:
+GameObject199:
   name: Medkit_1_Instance2
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 13558665426562903421
@@ -109927,9 +109647,9 @@ GameObject205:
       Script0:
         name: DestroyEnviormentObject
         fields:
-          onlyMedicaeStimm: true
+          onlyMedicaeStimm: false
   Children: ~
-GameObject206:
+GameObject200:
   name: Medkit_1_Instance3
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 1835144200292419928
@@ -109985,9 +109705,9 @@ GameObject206:
       Script0:
         name: DestroyEnviormentObject
         fields:
-          onlyMedicaeStimm: true
+          onlyMedicaeStimm: false
   Children: ~
-GameObject207:
+GameObject201:
   name: Medkit_1_Instance4
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 15789529315576345182
@@ -110043,9 +109763,9 @@ GameObject207:
       Script0:
         name: DestroyEnviormentObject
         fields:
-          onlyMedicaeStimm: true
+          onlyMedicaeStimm: false
   Children: ~
-GameObject208:
+GameObject202:
   name: Medkit_1_Instance5
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 12034232093523455558
@@ -110101,9 +109821,9 @@ GameObject208:
       Script0:
         name: DestroyEnviormentObject
         fields:
-          onlyMedicaeStimm: true
+          onlyMedicaeStimm: false
   Children: ~
-GameObject209:
+GameObject203:
   name: CheckPoint_Instance6
   prefabPath: Assets\Prefabs\CheckPoint.prefab.yaml
   uuid: 6421311150561009010
@@ -110141,7 +109861,7 @@ GameObject209:
         name: Checkpoint
         fields: ~
   Children: ~
-GameObject210:
+GameObject204:
   name: CheckPoint_Instance7
   prefabPath: Assets\Prefabs\CheckPoint.prefab.yaml
   uuid: 14068703732000644303
@@ -110179,7 +109899,7 @@ GameObject210:
         name: Checkpoint
         fields: ~
   Children: ~
-GameObject211:
+GameObject205:
   name: L1Z1_stylized_rock_51.032_level1_copy
   prefabPath: ""
   uuid: 17653790614199481450
@@ -110222,7 +109942,7 @@ GameObject211:
       name: Shader
       enabled: true
   Children: ~
-GameObject212:
+GameObject206:
   name: L1Z1_stylized_rock_51.032_level1_copy_1
   prefabPath: ""
   uuid: 1890984661785808071
@@ -110265,7 +109985,7 @@ GameObject212:
       name: Shader
       enabled: true
   Children: ~
-GameObject213:
+GameObject207:
   name: L1Z1_stylized_rock_51.032_level1_copy_2
   prefabPath: ""
   uuid: 4414708348618523143
@@ -110308,7 +110028,7 @@ GameObject213:
       name: Shader
       enabled: true
   Children: ~
-GameObject214:
+GameObject208:
   name: Collider_Edificio1
   prefabPath: ""
   uuid: 6901655663101121691
@@ -110342,7 +110062,7 @@ GameObject214:
         - 0
       isTrigger: false
   Children: ~
-GameObject215:
+GameObject209:
   name: Collider_Edificio1_copy_1
   prefabPath: ""
   uuid: 5139436668644921095
@@ -110376,7 +110096,7 @@ GameObject215:
         - 0
       isTrigger: false
   Children: ~
-GameObject216:
+GameObject210:
   name: Collider_Edificio1_copy_2
   prefabPath: ""
   uuid: 17997461632804195923
@@ -110410,7 +110130,7 @@ GameObject216:
         - 0
       isTrigger: false
   Children: ~
-GameObject217:
+GameObject211:
   name: Collider_Edificio1_copy_3
   prefabPath: ""
   uuid: 8287970801633723378
@@ -110444,7 +110164,7 @@ GameObject217:
         - 0
       isTrigger: false
   Children: ~
-GameObject218:
+GameObject212:
   name: L1Z1_stylized_rock_51.032_level1_copy_copy
   prefabPath: ""
   uuid: 1511911630058461561
@@ -110460,9 +110180,9 @@ GameObject218:
         - 3.2896044254302979
         - 10.935238838195801
       localRotation:
-        - -2.6537749339577728
-        - -52.984219098736126
-        - -143.75537661231976
+        - -2.6537738700059132
+        - -52.984219813431402
+        - -143.75537597419421
       localScale:
         - 0.017827585339546204
         - 0.017827583476901054
@@ -110487,7 +110207,7 @@ GameObject218:
       name: Shader
       enabled: true
   Children: ~
-GameObject219:
+GameObject213:
   name: Collider_Edificio1_copy_4
   prefabPath: ""
   uuid: 14949878503491691145
@@ -110521,7 +110241,7 @@ GameObject219:
         - 0
       isTrigger: false
   Children: ~
-GameObject220:
+GameObject214:
   name: L1Z1_stylized_rock_51.032_level1_copy_copy_copy
   prefabPath: ""
   uuid: 2941671114678821643
@@ -110564,7 +110284,7 @@ GameObject220:
       name: Shader
       enabled: true
   Children: ~
-GameObject221:
+GameObject215:
   name: Collider_Edificio1_copy_4_copy
   prefabPath: ""
   uuid: 9880108591093153826
@@ -110598,7 +110318,7 @@ GameObject221:
         - 0
       isTrigger: false
   Children: ~
-GameObject222:
+GameObject216:
   name: Collider_Edificio1_copy_4_copy_1
   prefabPath: ""
   uuid: 5375421592587098862
@@ -110632,7 +110352,7 @@ GameObject222:
         - 0
       isTrigger: false
   Children: ~
-GameObject223:
+GameObject217:
   name: Collider_Edificio1_copy_4_copy_copy
   prefabPath: ""
   uuid: 10811469488891096497
@@ -110648,9 +110368,9 @@ GameObject223:
         - 3.6899499893188477
         - -170.51780700683594
       localRotation:
-        - -179.99999499103552
-        - 87.995653108211442
-        - -179.99999499103552
+        - -179.99999499105965
+        - 87.995648277800413
+        - -179.99999499105965
       localScale:
         - 8.99188232421875
         - 10.001480102539062
@@ -110666,7 +110386,7 @@ GameObject223:
         - 0
       isTrigger: false
   Children: ~
-GameObject224:
+GameObject218:
   name: Collider_Edificio1_copy_4_copy_copy_copy
   prefabPath: ""
   uuid: 6006828437155950486
@@ -110682,9 +110402,9 @@ GameObject224:
         - 3.6899499893188477
         - -170.51780700683594
       localRotation:
-        - -179.99999499103552
-        - 87.995653108211442
-        - -179.99999499103552
+        - -179.99999499105965
+        - 87.995648277800413
+        - -179.99999499105965
       localScale:
         - 8.99188232421875
         - 10.001480102539062
@@ -110700,7 +110420,7 @@ GameObject224:
         - 0
       isTrigger: false
   Children: ~
-GameObject225:
+GameObject219:
   name: Collider_Piedras_copy
   prefabPath: ""
   uuid: 2029998932891582860
@@ -110734,7 +110454,7 @@ GameObject225:
         - 0
       isTrigger: false
   Children: ~
-GameObject226:
+GameObject220:
   name: Collider_Pilar_1
   prefabPath: ""
   uuid: 10228753773789114147
@@ -110768,7 +110488,7 @@ GameObject226:
         - 0
       isTrigger: false
   Children: ~
-GameObject227:
+GameObject221:
   name: Collider_Pilar_2
   prefabPath: ""
   uuid: 11502327986428984019
@@ -110802,7 +110522,7 @@ GameObject227:
         - 0
       isTrigger: false
   Children: ~
-GameObject228:
+GameObject222:
   name: Collider_Pilar_3
   prefabPath: ""
   uuid: 11303474563928365470
@@ -110836,7 +110556,7 @@ GameObject228:
         - 0
       isTrigger: false
   Children: ~
-GameObject229:
+GameObject223:
   name: Collider_Pilar_4
   prefabPath: ""
   uuid: 9491118739533155679
@@ -110870,7 +110590,7 @@ GameObject229:
         - 0
       isTrigger: false
   Children: ~
-GameObject230:
+GameObject224:
   name: Collider_Pilar_5
   prefabPath: ""
   uuid: 12221860929665498082
@@ -110904,7 +110624,7 @@ GameObject230:
         - 0
       isTrigger: false
   Children: ~
-GameObject231:
+GameObject225:
   name: Collider_Pilar_6
   prefabPath: ""
   uuid: 6767918400856096539
@@ -110938,7 +110658,7 @@ GameObject231:
         - 0
       isTrigger: false
   Children: ~
-GameObject232:
+GameObject226:
   name: Collider_Pilar_7
   prefabPath: ""
   uuid: 12364788708448086590
@@ -110972,7 +110692,7 @@ GameObject232:
         - 0
       isTrigger: false
   Children: ~
-GameObject233:
+GameObject227:
   name: Empty_1
   prefabPath: ""
   uuid: 8924132653665476389
@@ -111006,7 +110726,7 @@ GameObject233:
         - 0
       isTrigger: false
   Children: ~
-GameObject234:
+GameObject228:
   name: Empty_1_copy
   prefabPath: ""
   uuid: 3471145572366966497
@@ -111023,7 +110743,7 @@ GameObject234:
         - -33.089832305908203
       localRotation:
         - 0
-        - -20.58092977298061
+        - -20.580931567600413
         - 0
       localScale:
         - 0.92220032215118408
@@ -111040,7 +110760,7 @@ GameObject234:
         - 0
       isTrigger: false
   Children: ~
-GameObject235:
+GameObject229:
   name: Empty_1_copy_copy
   prefabPath: ""
   uuid: 14922611500417836264
@@ -111057,7 +110777,7 @@ GameObject235:
         - 41.939746856689453
       localRotation:
         - 0
-        - -4.2800886771721842
+        - -4.2800891049543113
         - 0
       localScale:
         - 0.92220038175582886
@@ -111074,7 +110794,7 @@ GameObject235:
         - 0
       isTrigger: false
   Children: ~
-GameObject236:
+GameObject230:
   name: Empty_1_copy_copy_1
   prefabPath: ""
   uuid: 13447501969192581763
@@ -111091,7 +110811,7 @@ GameObject236:
         - 40.217510223388672
       localRotation:
         - 0
-        - -4.2800886771721842
+        - -4.2800891049543113
         - 0
       localScale:
         - 0.92220038175582886
@@ -111108,7 +110828,7 @@ GameObject236:
         - 0
       isTrigger: false
   Children: ~
-GameObject237:
+GameObject231:
   name: Empty_1_copy_copy_2
   prefabPath: ""
   uuid: 10481528243400983740
@@ -111125,7 +110845,7 @@ GameObject237:
         - -26.198375701904297
       localRotation:
         - 0
-        - -18.088778477220405
+        - -18.088776703226465
         - 0
       localScale:
         - 0.92220032215118408
@@ -111142,7 +110862,7 @@ GameObject237:
         - 0
       isTrigger: false
   Children: ~
-GameObject238:
+GameObject232:
   name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy
   prefabPath: ""
   uuid: 14537044896678886014
@@ -111176,7 +110896,7 @@ GameObject238:
         - 0
       isTrigger: false
   Children: ~
-GameObject239:
+GameObject233:
   name: CanvasFade_Instance2
   prefabPath: Assets\Prefabs\CanvasFadeLvl1.prefab.yaml
   uuid: 17913736688530679997
@@ -111289,4 +111009,363 @@ GameObject239:
           Script0:
             name: FadeController
             fields: ~
+      Children: ~
+GameObject234:
+  name: SpawnCluster
+  prefabPath: ""
+  uuid: 425495445762080332
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 589.1812744140625
+        - 0
+        - -12.364723205566406
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: ""
+      Script1:
+        name: ""
+      Script2:
+        name: ""
+      Script3:
+        name: ZoneController
+        fields:
+          spawnerTag: Spawner
+          barrierTag: Barrier
+          zoneRadius: 10
+          colliderRadius: 200
+          fallbackDelay: 5
+      Script4:
+        name: ""
+  Children:
+    - name: SpawnerHormagaunt_Instance
+      prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
+      uuid: 13127436435192144738
+      tag: Spawner
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -1.49700927734375
+            - 0.69824838638305664
+            - -22.230068206787109
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ScriptComponents:
+          Script0:
+            name: EnemySpawner
+            fields:
+              spawnTimer: 0
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 3
+              currentEnemiesSpawned: 0
+              maxEnemiesToSpawn: 2
+              hasSpawnedFirst: false
+              hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
+              spawnHormagaunt: true
+              spawnRanged: false
+              spawnStalker: false
+              spawnWarrior: false
+              spawnClimberHormagaunt: false
+              spawnerActive: false
+              spawnRadius: 5
+              player: Player
+      Children: ~
+    - name: SpawnerHormagaunt_Instance2
+      prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
+      uuid: 8830116652190043920
+      tag: Spawner
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 6.65753173828125
+            - 0.9514155387878418
+            - 24.806875228881836
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ScriptComponents:
+          Script0:
+            name: EnemySpawner
+            fields:
+              spawnTimer: 0
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 3
+              currentEnemiesSpawned: 0
+              maxEnemiesToSpawn: 2
+              hasSpawnedFirst: false
+              hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
+              spawnHormagaunt: true
+              spawnRanged: false
+              spawnStalker: false
+              spawnWarrior: false
+              spawnClimberHormagaunt: false
+              spawnerActive: false
+              spawnRadius: 5
+              player: Player
+      Children: ~
+    - name: SpawnerTermagant_Instance
+      prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
+      uuid: 14374692933268069086
+      tag: Spawner
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -1.857177734375
+            - 0
+            - -22.649356842041016
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ScriptComponents:
+          Script0:
+            name: EnemySpawner
+            fields:
+              spawnTimer: 0
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 3
+              currentEnemiesSpawned: 0
+              maxEnemiesToSpawn: 2
+              hasSpawnedFirst: false
+              rangedEnemyPrefab: Assets\Prefabs\TermagantBColliderPrefab.prefab.yaml
+              spawnHormagaunt: false
+              spawnRanged: true
+              spawnStalker: false
+              spawnWarrior: false
+              spawnClimberHormagaunt: false
+              spawnerActive: false
+              spawnRadius: 5
+              player: Player
+      Children: ~
+    - name: SpawnerTermagant_Instance2
+      prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
+      uuid: 5253325594229723898
+      tag: Spawner
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 6.97784423828125
+            - 0
+            - 24.945259094238281
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ScriptComponents:
+          Script0:
+            name: EnemySpawner
+            fields:
+              spawnTimer: 0
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 3
+              currentEnemiesSpawned: 0
+              maxEnemiesToSpawn: 2
+              hasSpawnedFirst: false
+              rangedEnemyPrefab: Assets\Prefabs\TermagantBColliderPrefab.prefab.yaml
+              spawnHormagaunt: false
+              spawnRanged: true
+              spawnStalker: false
+              spawnWarrior: false
+              spawnClimberHormagaunt: false
+              spawnerActive: false
+              spawnRadius: 5
+              player: Player
+      Children: ~
+    - name: SpawnerTyranidWarrior_Instance
+      prefabPath: Assets\Prefabs\SpawnerTyranidWarrior.prefab.yaml
+      uuid: 2532421825862386911
+      tag: Spawner
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 6.94781494140625
+            - 0
+            - 24.387365341186523
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ScriptComponents:
+          Script0:
+            name: EnemySpawner
+            fields:
+              spawnTimer: 0
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 3
+              currentEnemiesSpawned: 0
+              maxEnemiesToSpawn: 1
+              hasSpawnedFirst: false
+              warriorEnemyPrefab: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
+              spawnHormagaunt: false
+              spawnRanged: false
+              spawnStalker: false
+              spawnWarrior: true
+              spawnClimberHormagaunt: false
+              spawnerActive: false
+              spawnRadius: 5
+              player: Player
+      Children: ~
+    - name: SpawnerTyranidWarrior_Instance2
+      prefabPath: Assets\Prefabs\SpawnerTyranidWarrior.prefab.yaml
+      uuid: 18094794166059469410
+      tag: Spawner
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -0.9718017578125
+            - 0
+            - -22.599399566650391
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ScriptComponents:
+          Script0:
+            name: EnemySpawner
+            fields:
+              spawnTimer: 0
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 3
+              currentEnemiesSpawned: 0
+              maxEnemiesToSpawn: 1
+              hasSpawnedFirst: false
+              warriorEnemyPrefab: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
+              spawnHormagaunt: false
+              spawnRanged: false
+              spawnStalker: false
+              spawnWarrior: true
+              spawnClimberHormagaunt: false
+              spawnerActive: false
+              spawnRadius: 5
+              player: Player
+      Children: ~
+    - name: Barrier Retreat
+      prefabPath: ""
+      uuid: 4470570664332006666
+      tag: Barrier
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -88.645172119140625
+            - 0
+            - 33.435756683349609
+          localRotation:
+            - 0
+            - 19.200000938278489
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        BoxColliderComponent:
+          size:
+            - 2.4000001
+            - 9.80000019
+            - 34
+          offset:
+            - 0
+            - 4.5
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Barrier Advance
+      prefabPath: ""
+      uuid: 3095678686833622251
+      tag: Barrier
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 49.94580078125
+            - 0
+            - 8.1284122467041016
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        BoxColliderComponent:
+          size:
+            - 2.20000005
+            - 9.10000038
+            - 100
+          offset:
+            - 0
+            - 3.79999995
+            - 0
+          isTrigger: false
       Children: ~

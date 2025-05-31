@@ -20,7 +20,7 @@ public class CinematicManager : MonoBehaviour
 
     public override void Start()
     {
-        imageCooldown = 0.07f;
+        imageCooldown = 0.041f;
         GameObject fadeObj = GameObject.Find("FadeController");
         fadeController = fadeObj?.GetComponent<FadeController>();
         if (fadeController == null)
@@ -67,7 +67,7 @@ public class CinematicManager : MonoBehaviour
 
             if (ShouldFade(currentFrame))
             {
-                fadeController.FadeToBlackHoldAndBack(0.6f, 0.4f);
+                fadeController.FadeToBlackHoldAndBack(0.3f, 0.4f);
             }
             if (currentFrame == 135 || currentFrame == 227)
             {
@@ -85,7 +85,7 @@ public class CinematicManager : MonoBehaviour
 
     private bool ShouldFade(int frame)
     {
-        return frame == 160 || frame == 220;
+        return frame == 164 || frame == 224;
     }
 
     private void SetAlpha(float alpha)

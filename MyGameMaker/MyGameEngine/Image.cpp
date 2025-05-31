@@ -236,6 +236,10 @@ void Image::SaveBinary(const std::string& filename) const {
 		std::filesystem::create_directories("Library/Images");
 	}
 
+	if (std::filesystem::exists(fullPath)) {
+		return;
+	}
+
 	std::ofstream fout(fullPath, std::ios::binary);
 	if (!fout.is_open()) {
 		LOG(LogType::LOG_ERROR, "Failed to open file for writing: %s", fullPath.c_str());

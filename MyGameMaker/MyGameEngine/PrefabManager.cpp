@@ -33,6 +33,30 @@ bool PrefabManager::SavePrefab(const std::shared_ptr<GameObject>& go, const std:
        return false;  
    }  
 }  
+bool PrefabManager::ApplyPrefabToGameObject(GameObject* target, const std::string& prefabPath) {
+    if (!target || prefabPath.empty()) return false;
+
+    std::ifstream fin(prefabPath);
+    if (!fin.is_open()) {
+        LOG(LogType::LOG_ERROR, "[SyncComponentsFromPrefab] Cannot open prefab file: %s", prefabPath.c_str());
+        return false;
+    }
+
+    try {
+        YAML::Node prefabNode = YAML::Load(fin);
+        fin.close();
+
+        if (!prefabNode["Components"] || !prefabNode["Components"].IsMap()) return false;
+
+        Application->scene_serializer->ApplyComponentDelta(target, prefabNode["Components"]);
+        return true;
+
+    }
+    catch (const std::exception& e) {
+        LOG(LogType::LOG_ERROR, "[SyncComponentsFromPrefab] Exception: %s", e.what());
+        return false;
+    }
+}
 
 std::shared_ptr<GameObject> PrefabManager::LoadPrefab(const std::string& path)
 {

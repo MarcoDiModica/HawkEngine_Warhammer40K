@@ -1,6 +1,6 @@
-name: Termagaunt
-prefabPath: ""
-uuid: 15755223990846240506
+name: Termagaunt_Instance
+prefabPath: Assets\Prefabs\Termagaunt.prefab.yaml
+uuid: 9361078304583339060
 tag: Enemy
 active: true
 isStatic: false
@@ -17,14 +17,14 @@ Components:
       - -0
       - 0
     localScale:
-      - 2.2000000476837158
-      - 2.2000000476837158
-      - 2.2000000476837158
-  BoxColliderComponent:
+      - 1.7999999523162842
+      - 1.7999999523162842
+      - 1.7999999523162842
+  CapsuleColliderComponent:
     size:
-      - 0.699999988
-      - 2
-      - 1.60000002
+      - 1.20000005
+      - 1
+      - 1
     offset:
       - 0
       - 0

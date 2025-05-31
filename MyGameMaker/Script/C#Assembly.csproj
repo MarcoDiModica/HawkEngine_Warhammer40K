@@ -249,6 +249,7 @@
     <Compile Include="WaitForSeconds.cs" />
     <Compile Include="WarriorAnimation.cs" />
     <Compile Include="WinScreen.cs" />
+    <Compile Include="ZoneController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

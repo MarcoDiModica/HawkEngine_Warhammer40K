@@ -144,10 +144,10 @@ GameObject1:
             - 10253
             - 9612
           sprite_offset:
-            - 6835.33203
-            - 1922.40002
+            - 5126.49902
+            - 3844.80005
           anim_speed: 0.5
-          anim_index: 16
+          anim_index: 27
           anim_index_limit: 60
           color:
             - 1
@@ -4919,7 +4919,7 @@ GameObject3:
             - 0
       Children: ~
 GameObject4:
-  name: CanvasCinematic
+  name: Canvas_Cinematic
   prefabPath: ""
   uuid: 14645508196647998947
   tag: Untagged
@@ -5034,7 +5034,7 @@ GameObject4:
               imageCooldown: 0.0549999997
       Children: ~
 GameObject5:
-  name: CanvasFade
+  name: Canvas_Fade
   prefabPath: ""
   uuid: 15971780212265548051
   tag: Untagged

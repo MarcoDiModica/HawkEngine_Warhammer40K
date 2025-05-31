@@ -43,13 +43,22 @@ public class CinematicManager : MonoBehaviour
     {
         if (!isPlaying) return;
 
+        if (Input.GetKeyDown(KeyCode.RETURN) || Input.GetControllerButtonDown(ControllerButton.Start))
+        {
+            if(currentFrame < totalFrames - 45)
+            {
+                isPlaying = false;
+                onCinematicEndAction.Invoke();
+            }       
+        }
+
         timer += deltaTime;
         if (timer >= imageCooldown)
         {
             timer = 0f;
             currentFrame++;
 
-            if (currentFrame > totalFrames-5)
+            if (currentFrame > totalFrames-15)
             {
                 if (currentFrame > totalFrames)
                 {
@@ -67,7 +76,7 @@ public class CinematicManager : MonoBehaviour
 
             if (ShouldFade(currentFrame))
             {
-                fadeController.FadeToBlackHoldAndBack(0.3f, 0.4f);
+                fadeController.FadeToBlackHoldAndBack(0.4f, 0.2f);
             }
             if (currentFrame == 135 || currentFrame == 227)
             {
@@ -85,7 +94,7 @@ public class CinematicManager : MonoBehaviour
 
     private bool ShouldFade(int frame)
     {
-        return frame == 164 || frame == 224;
+        return frame == 160 || frame == 220;
     }
 
     private void SetAlpha(float alpha)

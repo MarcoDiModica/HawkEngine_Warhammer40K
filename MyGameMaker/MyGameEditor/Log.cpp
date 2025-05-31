@@ -21,6 +21,10 @@ bool IsValidFormatString(const char* format)
 
 void Log(const char file[], int line, LogType type, const char* format, ...)
 {
+#ifdef _BUILD
+	return;
+#endif
+	
 	if (file == nullptr || format == nullptr)
 		return;
 

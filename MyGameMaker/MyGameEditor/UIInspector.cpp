@@ -3311,6 +3311,17 @@ bool UIInspector::Draw() {
 			PrefabManager::SavePrefab(selectedObject->shared_from_this(), selectedObject->GetPrefabSourcePath());
 		}
 		ImGui::PopStyleColor();
+
+		ImGui::SameLine();
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 1.0f, 1.0f)); 
+		if (ImGui::Button("Load From Prefab")) {
+			const std::string& prefabPath = selectedObject->GetPrefabSourcePath();
+			if (!PrefabManager::ApplyPrefabToGameObject(selectedObject, prefabPath)) {
+				LOG(LogType::LOG_ERROR, "[Inspector] Failed to apply prefab to GameObject.");
+			}
+		}
+		ImGui::PopStyleColor();
+
 	}
 
     ComponentDrawer::DrawComponents(selectedObject, snap, snapValue);

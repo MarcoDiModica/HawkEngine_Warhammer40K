@@ -65,6 +65,7 @@ namespace HawkEngine
             }
 
             GameObject fadeObj = GameObject.Find("FadeController"); // debe tener UIImage + FadeController
+            fadeObj.SetActive(true); 
             FadeController fader = fadeObj?.GetComponent<FadeController>();
 
             if (fader != null)
@@ -88,6 +89,18 @@ namespace HawkEngine
                         Engineson.print("Scene not found");
                     }
                 });
+            }
+            else
+            {
+                Engineson.print("FadeController not found in the scene. Cannot perform fade transition.");
+                if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
+                {
+                    SetSceneToPlay();
+                }
+                else
+                {
+                    Engineson.print("Scene not found");
+                }
             }
         }
 

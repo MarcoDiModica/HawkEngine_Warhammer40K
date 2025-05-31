@@ -20,6 +20,9 @@ RigidbodyComponent::~RigidbodyComponent() {
         MonoManager::GetInstance().UnregisterMonoObject(this);
         CsharpReference = nullptr;
     }
+
+	rigidBody = nullptr;
+	motionState = nullptr;
 }
 
 void RigidbodyComponent::Init() {
@@ -72,7 +75,10 @@ void RigidbodyComponent::Update(float deltaTime)
     
 }
 
-void RigidbodyComponent::Destroy() {}
+void RigidbodyComponent::Destroy() {
+	rigidBody = nullptr;
+	motionState = nullptr;
+}
 
 void RigidbodyComponent::SetMass(float newMass) {
     mass = newMass;

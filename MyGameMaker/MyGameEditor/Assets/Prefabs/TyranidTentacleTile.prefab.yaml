@@ -1,0 +1,585 @@
+name: TyranidTentacleTile
+prefabPath: ""
+uuid: 2637106467504124387
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - -196.76557922363281
+      - 0
+      - -35.827442169189453
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+Children:
+  - name: Suelo_low.918_copy
+    prefabPath: ""
+    uuid: 3073680053270565546
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - -0.058834075927734375
+          - 0.00039768218994140625
+          - -0.38327217102050781
+        localRotation:
+          - 89.999977633502681
+          - -6.8301891700126908e-06
+          - 179.99999499104436
+        localScale:
+          - 3.4000000953674694
+          - 3.4000003337862941
+          - 3.4000003337862847
+      Shader:
+        name: Shader
+        enabled: true
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 11706868761610221402
+        material:
+          name: Suelo2_low_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: TyranidTentacle_Instance_Instance_1_Instance3
+    prefabPath: Assets\Prefabs\TyranidTentacle.prefab.yaml
+    uuid: 9175155841338562502
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 1.6912879943847656
+          - 3.6183874607086182
+          - -4.2720127105712891
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      BoxColliderComponent:
+        size:
+          - 1
+          - 8
+          - 1
+        offset:
+          - -1.79999995
+          - 0
+          - 0
+        isTrigger: true
+      ScriptComponents:
+        Script0:
+          name: TyranidTentacles
+          fields: ~
+    Children:
+      - name: TyranidTentacleMesh
+        prefabPath: ""
+        uuid: 712494115707971512
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - -2.4336280822753906
+              - -1.6094179153442383
+              - -0.32730293273925781
+            localRotation:
+              - 179.99999499104516
+              - -55.529983913487392
+              - 179.99999499104348
+            localScale:
+              - 0.02209661372979781
+              - 0.022096615284681629
+              - 0.022096613729798067
+          MeshRenderer:
+            name: MeshRenderer
+            enabled: true
+            mesh:
+              name: 14187302242716503069
+            material:
+              name: Tentacle_Low_DefaultMaterial_BaseColor
+              color:
+                - 1
+                - 1
+                - 1
+                - 1
+            color:
+              - 1
+              - 1
+              - 1
+          Shader:
+            name: Shader
+            enabled: true
+          SkeletalAnimationComponent:
+            name: SkeletalAnimationComponent
+            enabled: true
+            bone_names:
+              - root.x
+              - c_tail_00.x
+              - c_tail_01.x
+              - c_tail_02.x
+            animation_file: skeletal_anim_TyranidTentacleMesh
+          ScriptComponents:
+            Script0:
+              name: TyranidTentaclesAnim
+              fields: ~
+        Children:
+          - name: root.x
+            prefabPath: ""
+            uuid: 18445769872184720967
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - -36.225231170654297
+                  - -515.1790771484375
+                  - 43.864551544189453
+                localRotation:
+                  - 179.97003413842978
+                  - 36.089034397858391
+                  - 179.59711947843311
+                localScale:
+                  - 100.00001525878906
+                  - 99.999992370605469
+                  - 99.999984741210938
+            Children:
+              - name: c_tail_00.x
+                prefabPath: ""
+                uuid: 10072455992975747695
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - -3.6058961541129975e-06
+                      - 0.39311936497688293
+                      - -7.4004867656185525e-07
+                    localRotation:
+                      - -179.97133187410077
+                      - 0.24801720128467236
+                      - 179.52364029152341
+                    localScale:
+                      - 1.0000001192092896
+                      - 0.99999988079071045
+                      - 1.0000001192092896
+                Children:
+                  - name: c_tail_01.x
+                    prefabPath: ""
+                    uuid: 1035258719938936765
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - 1.1341320487190387e-06
+                          - 1.9455124139785767
+                          - 1.7858189949038206e-07
+                        localRotation:
+                          - 0.10079125448529119
+                          - 0.021780640469233416
+                          - 0.27250211107158262
+                        localScale:
+                          - 1.0000001192092896
+                          - 1
+                          - 1
+                    Children:
+                      - name: c_tail_02.x
+                        prefabPath: ""
+                        uuid: 8374738970664642107
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - 0.00054630765225738287
+                              - 1.3972399234771729
+                              - -9.8796499514719471e-06
+                            localRotation:
+                              - 0.18831708200766004
+                              - -0.50383112416016151
+                              - -0.063044781245768816
+                            localScale:
+                              - 0.99999994039535522
+                              - 1
+                              - 1
+                        Children: ~
+      - name: TyranidTentacleMesh2
+        prefabPath: ""
+        uuid: 712494115707971512
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - -1.19097900390625
+              - -1.9302172660827637
+              - -0.82653427124023438
+            localRotation:
+              - 179.99999499104368
+              - 32.951763607194742
+              - -179.99999499104368
+            localScale:
+              - 0.02209661528468132
+              - 0.02209661528468132
+              - 0.02209661528468132
+          MeshRenderer:
+            name: MeshRenderer
+            enabled: true
+            mesh:
+              name: 14187302242716503069
+            material:
+              name: Tentacle_Low_DefaultMaterial_BaseColor
+              color:
+                - 1
+                - 1
+                - 1
+                - 1
+            color:
+              - 1
+              - 1
+              - 1
+          Shader:
+            name: Shader
+            enabled: true
+          SkeletalAnimationComponent:
+            name: SkeletalAnimationComponent
+            enabled: true
+            bone_names:
+              - root.x
+              - c_tail_00.x
+              - c_tail_01.x
+              - c_tail_02.x
+            animation_file: skeletal_anim_TyranidTentacleMesh2
+          ScriptComponents:
+            Script0:
+              name: TyranidTentaclesAnim
+              fields: ~
+        Children:
+          - name: root.x
+            prefabPath: ""
+            uuid: 18445769872184720967
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - -36.225200653076172
+                  - -515.1790771484375
+                  - 43.864913940429688
+                localRotation:
+                  - 179.97003413842978
+                  - 36.089034397858391
+                  - 179.59711947843311
+                localScale:
+                  - 100.00001525878906
+                  - 99.999992370605469
+                  - 100
+            Children:
+              - name: c_tail_00.x
+                prefabPath: ""
+                uuid: 10072455992975747695
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - 1.0665675063137314e-06
+                      - 0.39311933517456055
+                      - -1.9457378641618561e-07
+                    localRotation:
+                      - -179.97133187419539
+                      - 0.24801882881571877
+                      - 179.52364029193035
+                    localScale:
+                      - 1.0000001192092896
+                      - 0.99999988079071045
+                      - 1.0000001192092896
+                Children:
+                  - name: c_tail_01.x
+                    prefabPath: ""
+                    uuid: 1035258719938936765
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - 1.7037370980688138e-06
+                          - 1.945512056350708
+                          - 2.9636564136126253e-07
+                        localRotation:
+                          - 0.10079124170825066
+                          - 0.021780877289008353
+                          - 0.2725021112774535
+                        localScale:
+                          - 1.0000001192092896
+                          - 1
+                          - 1
+                    Children:
+                      - name: c_tail_02.x
+                        prefabPath: ""
+                        uuid: 8374738970664642107
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - 0.00055046839406713843
+                              - 1.397240161895752
+                              - -1.0770100743684452e-05
+                            localRotation:
+                              - 0.18831708138810369
+                              - -0.50383064403064692
+                              - -0.063044700411873614
+                            localScale:
+                              - 0.99999988079071045
+                              - 1
+                              - 1
+                        Children: ~
+      - name: TyranidTentacleMesh3
+        prefabPath: ""
+        uuid: 712494115707971512
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - -1.586090087890625
+              - -1.5871198177337646
+              - 0.33873653411865234
+            localRotation:
+              - 16.348734885026996
+              - 28.488720791262953
+              - 7.77162973352464
+            localScale:
+              - 0.022096630185842514
+              - 0.022096611559391022
+              - 0.022096633911132812
+          MeshRenderer:
+            name: MeshRenderer
+            enabled: true
+            mesh:
+              name: 14187302242716503069
+            material:
+              name: Tentacle_Low_DefaultMaterial_BaseColor
+              color:
+                - 1
+                - 1
+                - 1
+                - 1
+            color:
+              - 1
+              - 1
+              - 1
+          Shader:
+            name: Shader
+            enabled: true
+          SkeletalAnimationComponent:
+            name: SkeletalAnimationComponent
+            enabled: true
+            bone_names:
+              - root.x
+              - c_tail_00.x
+              - c_tail_01.x
+              - c_tail_02.x
+            animation_file: skeletal_anim_TyranidTentacleMesh3
+          ScriptComponents:
+            Script0:
+              name: TyranidTentaclesAnim
+              fields: ~
+        Children:
+          - name: root.x
+            prefabPath: ""
+            uuid: 18445769872184720967
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - -36.225212097167969
+                  - -515.17901611328125
+                  - 43.864761352539062
+                localRotation:
+                  - 179.97003413842978
+                  - 36.089034397858391
+                  - 179.59711947843311
+                localScale:
+                  - 100.00000762939453
+                  - 100
+                  - 99.999992370605469
+            Children:
+              - name: c_tail_00.x
+                prefabPath: ""
+                uuid: 10072455992975747695
+                tag: Untagged
+                active: true
+                isStatic: false
+                Components:
+                  Transform_Component:
+                    name: Transform_Component
+                    enabled: true
+                    localPosition:
+                      - -3.8090852285677101e-06
+                      - 0.39311915636062622
+                      - -2.3128944093286918e-08
+                    localRotation:
+                      - -179.9713318730783
+                      - 0.24801936243722877
+                      - 179.52364029206629
+                    localScale:
+                      - 1.0000002384185791
+                      - 0.99999982118606567
+                      - 1.0000001192092896
+                Children:
+                  - name: c_tail_01.x
+                    prefabPath: ""
+                    uuid: 1035258719938936765
+                    tag: Untagged
+                    active: true
+                    isStatic: false
+                    Components:
+                      Transform_Component:
+                        name: Transform_Component
+                        enabled: true
+                        localPosition:
+                          - -4.3183613342989702e-06
+                          - 1.9455119371414185
+                          - 2.1187537413425162e-07
+                        localRotation:
+                          - 0.10078987535055335
+                          - 0.021781324312240571
+                          - 0.27250187128768866
+                        localScale:
+                          - 1.0000001192092896
+                          - 1
+                          - 1
+                    Children:
+                      - name: c_tail_02.x
+                        prefabPath: ""
+                        uuid: 8374738970664642107
+                        tag: Untagged
+                        active: true
+                        isStatic: false
+                        Components:
+                          Transform_Component:
+                            name: Transform_Component
+                            enabled: true
+                            localPosition:
+                              - 0.00055612722644582391
+                              - 1.3972402811050415
+                              - -8.5765286712558009e-06
+                            localRotation:
+                              - 0.18831790949681509
+                              - -0.50383010947677753
+                              - -0.063044996662305799
+                            localScale:
+                              - 0.99999982118606567
+                              - 0.99999988079071045
+                              - 1
+                        Children: ~
+  - name: Lvl2Z1_Suel2Suelo_low.062
+    prefabPath: ""
+    uuid: 10641437560531772667
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - -0.072887420654296875
+          - 0.46399980783462524
+          - -4.2887840270996094
+        localRotation:
+          - -90.00000769831874
+          - 89.97880739325673
+          - -1.2898297455095882e-10
+        localScale:
+          - 3.3871476583060725
+          - 3.3871471814688929
+          - 3.3871479034424139
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 15379351865106138115
+        material:
+          name: TentacleVentilation_Material_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~

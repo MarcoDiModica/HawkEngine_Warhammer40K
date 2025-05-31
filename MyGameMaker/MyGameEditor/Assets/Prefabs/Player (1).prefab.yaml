@@ -99,8 +99,8 @@ Components:
         shootCooldown: 6.66666651
         projectileSpeed: 90
         projectileLifetime: 0.5
-        hasShotgun: true
-        hasRailgun: true
+        hasShotgun: false
+        hasRailgun: false
         hasBoltgun: true
     Script1:
       name: PlayerMovement
@@ -203,12 +203,17 @@ Components:
       fields:
         redThirstBonus: 5
         biblePages: 0
+    Script17:
+      name: InteractionSystem
+      fields:
+        interactionRadius: 2
+        areaInteractionRadius: 3
 Children:
   - name: playerMesh
     prefabPath: ""
     uuid: 6750679036182856212
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
     Components:
       Transform_Component:
@@ -1356,7 +1361,7 @@ Children:
                                     prefabPath: ""
                                     uuid: 3976416577445253952
                                     tag: Untagged
-                                    active: false
+                                    active: true
                                     isStatic: false
                                     Components:
                                       Transform_Component:
@@ -1444,7 +1449,7 @@ Children:
                                         prefabPath: ""
                                         uuid: 15241579144144417828
                                         tag: Untagged
-                                        active: false
+                                        active: true
                                         isStatic: false
                                         Components:
                                           Transform_Component:
@@ -1486,7 +1491,7 @@ Children:
                                         prefabPath: ""
                                         uuid: 1829950831750583134
                                         tag: Untagged
-                                        active: false
+                                        active: true
                                         isStatic: false
                                         Components:
                                           Transform_Component:
@@ -1551,7 +1556,7 @@ Children:
                                     prefabPath: ""
                                     uuid: 7072250728429641775
                                     tag: Untagged
-                                    active: false
+                                    active: true
                                     isStatic: false
                                     Components:
                                       Transform_Component:
@@ -1600,31 +1605,31 @@ Children:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - -0.88191550970077515
-                                      - 2.1393187046051025
-                                      - 0.73448634147644043
+                                      - -0.97447092659260925
+                                      - 2.42216242968246
+                                      - 0.5788663891710214
                                     localRotation:
-                                      - 92.577442619710439
-                                      - -8.1256872961554603
-                                      - 106.41994129596135
+                                      - 92.577432215359963
+                                      - -8.1256825816514198
+                                      - 106.41994587810811
                                     localScale:
-                                      - 1.0000007152557373
-                                      - 1.0000001192092896
-                                      - 1.0000002384185791
+                                      - 1.0000007907122017
+                                      - 1.0000000904971558
+                                      - 1.00000025741056
                                   ParticleFX:
                                     name: ParticleFX
                                     enabled: true
                                     emitterShape: 0
                                     emissionRate: 1
                                     particlesPerSecond: 1
-                                    minLifetime: 1
-                                    maxLifetime: 1
+                                    minLifetime: 0.25
+                                    maxLifetime: 0.25
                                     minSpeed: 0
                                     maxSpeed: 0
                                     startSize: 8
-                                    endSize: 5
-                                    minSize: 8
-                                    maxSize: 8
+                                    endSize: 2
+                                    minSize: 2
+                                    maxSize: 2
                                     startColor:
                                       - 1
                                       - 1
@@ -1644,8 +1649,8 @@ Children:
                                     shapeParam2: 1
                                     shapeParam3: 20
                                     isOneShot: false
-                                    isPlaying: false
-                                    isPaused: false
+                                    isPlaying: true
+                                    isPaused: true
                                     burstEmitted: false
                                     spriteSize:
                                       - 1920
@@ -1673,17 +1678,17 @@ Children:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - -0.77566248178482056
-                                      - 2.112607479095459
-                                      - 0.72231030464172363
+                                      - -0.84507862546712109
+                                      - 2.3241524250353836
+                                      - 0.60179435337233411
                                     localRotation:
-                                      - 92.577442619710439
-                                      - -8.1256872961554603
-                                      - 106.41994129596135
+                                      - 92.577432215359963
+                                      - -8.1256825816514198
+                                      - 106.41994587810811
                                     localScale:
-                                      - 1.0000007152557373
-                                      - 1.0000001192092896
-                                      - 1.0000002384185791
+                                      - 1.0000007907122017
+                                      - 1.0000000904971558
+                                      - 1.00000025741056
                                   ParticleFX:
                                     name: ParticleFX
                                     enabled: true
@@ -1750,9 +1755,9 @@ Children:
                                       - 2.3720710277557373
                                       - 0.76418697834014893
                                     localRotation:
-                                      - 92.577442619710439
-                                      - -8.1256872961554603
-                                      - 106.41994129596135
+                                      - 92.577432593778326
+                                      - -8.1256827441871984
+                                      - 106.41994501626159
                                     localScale:
                                       - 1.0000007152557373
                                       - 1.0000001192092896
@@ -1823,9 +1828,9 @@ Children:
                                       - 2.4305312633514404
                                       - 0.77223163843154907
                                     localRotation:
-                                      - 92.577442619710439
-                                      - -8.1256872961554603
-                                      - 106.41994129596135
+                                      - 92.577432593778326
+                                      - -8.1256827441871984
+                                      - 106.41994501626159
                                     localScale:
                                       - 1.0000007152557373
                                       - 1.0000001192092896
@@ -2568,7 +2573,7 @@ Children:
     prefabPath: ""
     uuid: 9455378644202122856
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
     Components:
       Transform_Component:
@@ -2610,7 +2615,7 @@ Children:
     prefabPath: ""
     uuid: 1938234868609460992
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
     Components:
       Transform_Component:
@@ -2677,7 +2682,7 @@ Children:
     prefabPath: ""
     uuid: 16409861770339590909
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     Components:
       Transform_Component:

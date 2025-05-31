@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private GameObject playerMesh;
     private ParticleFX bloodSplashEffect;
     private CapsuleCollider capsuleCollider;
+    private Rigidbody rb;
     //private ShakeManager shakeManager;
     private bool isIdle = false;
     public bool isShootInput = false;
@@ -58,7 +59,7 @@ public class PlayerController : MonoBehaviour
     public GameObject aimLaser;
     public GameObject aimLaserEnd;
     private Transform transform;
-    private float dashEndTimer = 0.25f;
+    private float dashEndTimer = 0.15f;
 
     private bool componentsInitialized = false;
     private bool effectsInitialized = false;
@@ -70,9 +71,11 @@ public class PlayerController : MonoBehaviour
     private bool isChangingWeaponIdle = false;
     private bool isChangingWeaponRunning = false;
     private bool isChangingWeaponWalking = false;
+    private int frameCounter = 0;
 
     public override void Awake()
     {
+        
         playerInput = gameObject.GetComponent<PlayerInput>();
         playerMovement = gameObject.GetComponent<PlayerMovement>();
         playerDash = gameObject.GetComponent<PlayerDash>();
@@ -80,9 +83,11 @@ public class PlayerController : MonoBehaviour
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
         transform = gameObject.GetComponent<Transform>();
         capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
+        rb = gameObject.GetComponent<Rigidbody>();
 
         if (playerInput == null || playerMovement == null || playerDash == null ||
-            playerShooting == null || transform == null || capsuleCollider == null)
+            playerShooting == null || transform == null || capsuleCollider == null ||
+            rb == null)
         {
             Engineson.print("ERROR: PlayerController missing required components");
             return;
@@ -166,10 +171,24 @@ public class PlayerController : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        //In case the rb component is not well initialized, the set mass is made on the 2nd frame
+        if (frameCounter < 2)
+        {
+            frameCounter++;
+            if (frameCounter == 2)
+            {
+                rb?.SetMass(100.0f); 
+            }
+        }
+        
+
         if (!componentsInitialized || playerData == null)
             return;
 
-        //playerData.FullHealth();
+        if (playerData.GodMode)
+        {
+            playerData.FullHealth();
+        }
 
         if (playerData.isHit)
         {
@@ -652,7 +671,7 @@ public class PlayerController : MonoBehaviour
 
                 TransitionFromDashState();
                 isDashing = false;
-                dashEndTimer = 0.25f;
+                dashEndTimer = 0.15f;
             }
         }
     }

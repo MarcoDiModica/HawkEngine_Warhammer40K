@@ -47,7 +47,39 @@ namespace ParticlePresets {
 		"Assets/Textures/Smoke30Frames.png", // Texture path
 		false						   // Is Local Space
 	};
-
+	const ParticlePreset Footsteps = {
+		ParticleType::FOOTSTEPS,
+		true,						   // PlayOnAwake
+		5.0f,						   // Duration (only if one-shot)
+		glm::vec3(0.8f, 0.8f, 0.8f),   // Start color (light gray)
+		glm::vec3(0.8f, 0.8f, 0.8f),    // End color (dark gray)
+		0.7f,                          // Alpha start
+		0.0f,                          // Alpha end
+		0.0f,                          // Size start
+		2.0f,                          // Size end
+		0.15f,                          // Min lifetime
+		0.15f,                          // Max lifetime
+		5.55f,                          // Min speed
+		5.55f,                          // Max speed
+		4.0f,						   // End Speed
+		glm::vec3(0.0f,-5.33f,0.0f),	   // Gravity (negative for upward)
+		0.2f,                          // Rotation speed
+		120.0f,                         // Emission rate (particles per second)
+		EmitterShape::CONE,            // Shape
+		0.2f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(256,256),			   // Sprite size
+		true,						   // Use animation
+		true,						   // Random animation Index
+		0.5f,						   // Animation speed
+		0.0f,						   // Start rotation
+		true,						   // Random rotation
+		0.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/Smoke30Frames.png", // Texture path
+		false						   // Is Local Space
+	};
 	const ParticlePreset Fire = {
 		ParticleType::FIRE,
 		true,						   // PlayOnAwake
@@ -296,10 +328,10 @@ namespace ParticlePresets {
 		glm::vec3(1,1,1),   // End color (dark gray)
 		1.0f,                          // Alpha start
 		1.0f,                          // Alpha end
-		8,                          // Size start
+		2,                          // Size start
 		5,                          // Size end
-		1.0f,                          // Min lifetime
-		1.0f,                          // Max lifetime
+		0.250f,                          // Min lifetime
+		0.250f,                          // Max lifetime
 		0.0f,                          // Min speed
 		0.0f,                          // Max speed
 		0.0f,						   // End Speed
@@ -316,8 +348,8 @@ namespace ParticlePresets {
 		0.07f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
-		8.0f,						   // Min scale
-		8.0f,						   // Max scale
+		2.0f,						   // Min scale
+		2.0f,						   // Max scale
 		"Assets/Textures/muzzle.png", // Texture path
 		true						   // Is Local Space
 	};
@@ -2453,6 +2485,10 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::ENERGY_BALL_HITING:
 		preset = ParticlePresets::EnergyBallHitting;
+		SetOneShot(false);
+		break;
+	case ParticleType::FOOTSTEPS:
+		preset = ParticlePresets::Footsteps;
 		SetOneShot(false);
 		break;
 	case ParticleType::REGULAR_BULLET:

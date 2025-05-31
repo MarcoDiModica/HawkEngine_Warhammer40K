@@ -64,11 +64,12 @@ bool Root::Start()
 {
 	//resourceManager->LoadResources(); // Esto no se mutea
 	//resourceManager->CreateDefaultCube(); // Esto no se mutea
-
-	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
+	//resourceManager->LoadTextures();
+	//resourceManager->UpdateTextures();
+	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
-	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");
 
 	//-------------------SHAKE MANAGER COLOCAR EN TODAS LAS ESCENAS -------------------//
 	/*auto shakeManager = CreateGameObject("ShakeManager");
@@ -249,25 +250,19 @@ bool Root::Start()
 		railgunUpgrade->SetTag("Upgrade");*/
 	//
 	////// Test Ammunition
-	//auto ShotgunShells = CreateGameObjectWithPath("Assets/Meshes/ShotgunShells.fbx");
+	//auto ShotgunShells = CreateGameObjectWithPath("Assets/FBX/shotgun boolets.fbx");
 	//ShotgunShells->GetTransform()->SetPosition(glm::vec3(0, 3, 20));
 	//ShotgunShells->GetTransform()->SetScale(glm::vec3(0.008, 0.008, 0.008));
 	//ShotgunShells->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//ShotgunShells->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//std::shared_ptr<Image> ShotgunShellsBaseColor = std::make_shared<Image>();
-	//ShotgunShellsBaseColor->LoadTexture("Assets/Textures/ShotgunShells.png");
-	//ShotgunShells->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ShotgunShellsBaseColor);
 	//ShotgunShells->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
 	//ShotgunShells->SetTag("Ammunition");
 	//
-	//auto BoltgunBullets = CreateGameObjectWithPath("Assets/Meshes/BoltgunBullets.fbx");
+	//auto BoltgunBullets = CreateGameObjectWithPath("Assets/FBX/boolets rifle.fbx");
 	//BoltgunBullets->GetTransform()->SetPosition(glm::vec3(10, 3, 20));
 	//BoltgunBullets->GetTransform()->SetScale(glm::vec3(0.008, 0.008, 0.008));
 	//BoltgunBullets->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//BoltgunBullets->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//std::shared_ptr<Image> BoltgunBulletsBaseColor = std::make_shared<Image>();
-	//BoltgunBulletsBaseColor->LoadTexture("Assets/Textures/BoltgunBullets.png");
-	//BoltgunBullets->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BoltgunBulletsBaseColor);
 	//BoltgunBullets->AddComponent<ScriptComponent>()->LoadScript("BoltgunBullets");
 	//BoltgunBullets->SetTag("Ammunition");
 	//
@@ -472,10 +467,9 @@ bool Root::Start()
 	//inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 	//inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
 	//
-	//auto walkingFX = CreateGameObject("WalkingFX");
-	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
-	//ParentGameObject(*walkingFX, *player);
-	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	/*auto walkingFX = CreateGameObject("WalkingFX2");
+	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(51);*/
 	
 	////ARMAS NO TOCAR
 	//

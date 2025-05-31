@@ -66,7 +66,8 @@ enum class ParticleType {
 	ENERGY_BALL_HITING = 50,
 
     REGULAR_BULLET = 51,
-    GUN_TRAIL = 52
+    GUN_TRAIL = 52,
+	FOOTSTEPS = 53,
 
 };
 

@@ -121,6 +121,7 @@ public class EnemyControllerBossTail : EnemyController
                     currentPositionIndex = FindClosestFixedPosition();
                     Emerge();
                     waitingToEmerge = false;
+                    emergeTimer = 2.0f;
                 }
                 return;
             }
@@ -271,9 +272,8 @@ public class EnemyControllerBossTail : EnemyController
     private bool IsPlayerInCollider(GameObject hurtbox, Vector3 playerPos)
     {
         var bc = hurtbox.GetComponent<BoxCollider>();
-        Vector3 halfSize = bc.GetSize() * 0.5f;    // <--- your engine�s getter for collider size
+        Vector3 halfSize = bc.GetSize() * 0.5f;
         Vector3 center = hurtbox.GetComponent<Transform>().position;
-        Engineson.print($"Checking {hurtbox.name}: center={center}, halfSize={halfSize}, playerPos={playerPos}");
 
         return (playerPos.X >= center.X - halfSize.X && playerPos.X <= center.X + halfSize.X) &&
                (playerPos.Y >= center.Y - halfSize.Y && playerPos.Y <= center.Y + halfSize.Y) &&

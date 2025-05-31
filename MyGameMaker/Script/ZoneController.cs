@@ -7,89 +7,108 @@ public class ZoneController : MonoBehaviour
 {
     public string spawnerTag = "Spawner";
     public string barrierTag = "Barrier";
+
     public float zoneRadius = 10f;
     public float colliderRadius = 200f;
 
     public float fallbackDelay = 5f;
 
+    
     private List<EnemySpawner> _spawners = new List<EnemySpawner>();
-    private List<Collider> _barriers = new List<Collider>();
+    private List<int> _lastCounts = new List<int>();
     private int _totalToSpawn;
     private int _spawnedCount;
     private float _timeSinceLast;
     private bool _barrierUp;
 
+    private List<Collider> _barriers = new List<Collider>();
+
     public override void Start()
     {
-        var myPos = this.gameObject.GetComponent<Transform>().GetPosition();
+        var centerPos = GetComponent<Transform>().GetPosition();
 
-        var foundSpawners = GameObject.FindGameObjectsWithTag(spawnerTag);
-        foreach (var go in foundSpawners)
+        var allSpawnerGOs = GameObject.FindGameObjectsWithTag(spawnerTag);
+        foreach (var go in allSpawnerGOs)
         {
-            var t = go.GetComponent<Transform>();
-            var pos = t.GetPosition();
-            if (Vector3.Distance(pos, myPos) <= zoneRadius)
+            var spawnerTransform = go.GetComponent<Transform>();
+            var spawnerPos = spawnerTransform.GetPosition();
+            if (Vector3.Distance(spawnerPos, centerPos) <= zoneRadius)
             {
-                Engineson.print("Spawner found");
+                Engineson.print($"[ZoneController] Found spawner at {spawnerPos}");
                 var sp = go.GetComponent<EnemySpawner>();
                 if (sp != null)
                 {
-                    sp.onEnemySpawned += OnEnemySpawned;
                     _spawners.Add(sp);
+                    _lastCounts.Add(sp.currentEnemiesSpawned);
                     _totalToSpawn += sp.maxEnemiesToSpawn;
                 }
             }
         }
+        if (_spawners.Count == 0)
+            Engineson.print("[ZoneController] WARNING: no spawners found in zone.");
 
-        var foundBarriers = GameObject.FindGameObjectsWithTag(barrierTag);
-        foreach (var go in foundBarriers)
+        var allBarrierGOs = GameObject.FindGameObjectsWithTag(barrierTag);
+        foreach (var go in allBarrierGOs)
         {
-            var t = go.GetComponent<Transform>();
-            var pos = t.GetPosition();
-            if (Vector3.Distance(pos, myPos) <= colliderRadius)
+            var barrierTransform = go.GetComponent<Transform>();
+            var barrierPos = barrierTransform.GetPosition();
+            if (Vector3.Distance(barrierPos, centerPos) <= colliderRadius)
             {
-                //Engineson.print("Colliders dentro de rango");
+                Engineson.print($"[ZoneController] Found barrier at {barrierPos}");
                 var col = go.GetComponent<Collider>();
                 if (col != null)
                 {
                     col.SetActive(false);
                     _barriers.Add(col);
                 }
-            } else
+            }
+            else
             {
-                
-                //Engineson.print("Colliders fuera de rango");
+                Engineson.print($"[ZoneController] Skipping barrier at {barrierPos} (outside colliderRadius)");
             }
         }
+        if (_barriers.Count == 0)
+            Engineson.print("[ZoneController] WARNING: no barriers found in zone.");
     }
 
     public override void Update(float deltaTime)
     {
-        if (!_barrierUp) return;
-
-        _timeSinceLast += deltaTime;
-
-        if (_spawnedCount >= _totalToSpawn && _timeSinceLast >= fallbackDelay)
+        for (int i = 0; i < _spawners.Count; i++)
         {
-            SetBarriers(false);
-            _barrierUp = false;
-        }
-    }
+            var sp = _spawners[i];
+            int prevCount = _lastCounts[i];
+            int currCount = sp.currentEnemiesSpawned;
 
-    private void OnEnemySpawned(GameObject enemy)
-    {
-        if (!_barrierUp)
+            if (currCount > prevCount)
+            {
+                int newlySpawned = currCount - prevCount;
+                _spawnedCount += newlySpawned;
+                _lastCounts[i] = currCount;
+                _timeSinceLast = 0f;
+
+                Engineson.print($"[ZoneController] Detected {newlySpawned} new spawn(s) from spawner #{i}.");
+
+                if (!_barrierUp)
+                {
+                    Engineson.print("[ZoneController] Raising ALL barriers.");
+                    foreach (var c in _barriers)
+                        c.SetActive(true);
+                    _barrierUp = true;
+                }
+            }
+        }
+
+        if (_barrierUp)
         {
-            SetBarriers(true);
-            _barrierUp = true;
-        }
-        _spawnedCount++;
-        _timeSinceLast = 0f;
-    }
+            _timeSinceLast += deltaTime;
 
-    private void SetBarriers(bool active)
-    {
-        foreach (var c in _barriers)
-            c.SetActive(active);
+            if (_spawnedCount >= _totalToSpawn && _timeSinceLast >= fallbackDelay)
+            {
+                Engineson.print("[ZoneController] All spawns done & fallback timer elapsed. Dropping barriers.");
+                foreach (var c in _barriers)
+                    c.SetActive(false);
+                _barrierUp = false;
+            }
+        }
     }
 }

@@ -12879,7 +12879,7 @@ GameObject27:
                 - 0.3357204794883728
               localRotation:
                 - -84.316960389188438
-                - 68.793106582909942
+                - 68.793106582909928
                 - 96.092982580919397
               localScale:
                 - 0.9999997615814209
@@ -13430,7 +13430,7 @@ GameObject27:
           particleType: 51
       Children: ~
 GameObject28:
-  name: CanvasFade
+  name: Canvas_Fade
   prefabPath: ""
   uuid: 13194198903263174931
   tag: Untagged

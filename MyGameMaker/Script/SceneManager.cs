@@ -65,6 +65,7 @@ namespace HawkEngine
             }
 
             GameObject fadeObj = GameObject.Find("FadeController"); // debe tener UIImage + FadeController
+            fadeObj.SetActive(true); 
             FadeController fader = fadeObj?.GetComponent<FadeController>();
 
             if (fader != null)

@@ -23,8 +23,9 @@ public class LoseScreen : MonoBehaviour
 
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
-//     private AudioClip buttonHoveredFX;
-//     private AudioClip buttonClickedFX;
+    private string LoseMusic = "Assets/Audio/Music/Warhammer_LoseScreen.ogg";
+    //     private AudioClip buttonHoveredFX;
+    //     private AudioClip buttonClickedFX;
 
     private int selectedButtonIndex = -1;
     private UIButton[] buttons;
@@ -51,7 +52,7 @@ public class LoseScreen : MonoBehaviour
         mainMenuButton = GameObject.Find("MM_button");
         quitButton = GameObject.Find("QUIT_button");
         //sound = gameObject.GetComponent<AudioSource>();
-
+        Audio.Play(LoseMusic, true);
         button_loadLastCheckpoint = loadLastCheckpoint.GetComponent<UIButton>();
         button_mainMenuButton = mainMenuButton.GetComponent<UIButton>();
         button_quitButton = quitButton.GetComponent<UIButton>();

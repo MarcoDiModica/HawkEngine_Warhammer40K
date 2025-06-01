@@ -1,5 +1,6 @@
 using HawkEngine;
 using System;
+using System.Collections;
 using System.Numerics;
 
 public class Interaction : MonoBehaviour
@@ -18,6 +19,11 @@ public class Interaction : MonoBehaviour
     private UIButton choice2Button;
     private GameObject choice2Hover;
     private GameObject choice2TextGO;
+    private GameObject controllerMovementText;
+    private bool controllerTextVisible = true;
+    private float controllerTextDuration = 5f;
+    private float controllerTextTimer = 0f;
+
     private UIText choice2Text;
     bool hasChoices = false;
     private float timer = 0f;
@@ -88,6 +94,7 @@ public class Interaction : MonoBehaviour
         choice2Hover = GameObject.Find("Choice2Hover");
         choice2TextGO = GameObject.Find("Choice2Text");
         choice2Text = choice2TextGO.GetComponent<UIText>();
+        controllerMovementText = GameObject.Find("Controller_popup");
 
         dialogueText.SetBoxSize(1200f, 200f);
 
@@ -102,15 +109,24 @@ public class Interaction : MonoBehaviour
         choice2TextGO.SetActive(false);
         choice1Hover.SetActive(false);
         choice2Hover.SetActive(false);
+
+        controllerMovementText.SetActive(true);
+        controllerTextVisible = true;
+        controllerTextTimer = 0f;
     }
 
     public override void Update(float deltaTime)
     {
         timer += deltaTime;
-        if (Input.GetKeyDown(KeyCode.X))
+
+        if (controllerTextVisible)
         {
-            Audio.PlayOneShot(TextSFX);
-            SpawnDialogueText(true);
+            controllerTextTimer += deltaTime;
+            if (controllerTextTimer >= controllerTextDuration)
+            {
+                controllerMovementText.SetActive(false);
+                controllerTextVisible = false;
+            }
         }
 
         if (hasChoices)

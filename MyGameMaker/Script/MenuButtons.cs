@@ -122,13 +122,6 @@ public class MenuButtons : MonoBehaviour
             Engineson.print("ERROR: Buttons array is null or empty.");
             return;
         }
-
-        if ((optionsCanvas != null && optionsCanvas.IsActive()) ||
-        (creditsCanvas != null && creditsCanvas.IsActive()))
-        {
-            return;
-        }
-
         long currentTime = DateTime.Now.Ticks;
 
         if (currentInputMethod != InputMethod.Mouse && currentTime - lastInputTime < 2500000)
@@ -173,7 +166,7 @@ public class MenuButtons : MonoBehaviour
             currentInputMethod = InputMethod.None;
         }
 
-        // Detectar si el rat�n est� sobre un bot�n
+        // Detectar si el rat n est  sobre un bot n
         for (int i = 0; i < buttons.Length; i++)
         {
             if (buttons[i] == null)
@@ -214,22 +207,28 @@ public class MenuButtons : MonoBehaviour
             }
         }
 
-        // Detectar clic del rat�n
-        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1) ||
-            Input.GetControllerButtonDown(ControllerButton.A))
+        // Detectar clic del rat n
+        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse) || Input.GetControllerButtonDown(ControllerButton.A))
         {
+            if (selectedButtonIndex == -1)
+                return;
 
-            if (selectedButtonIndex >= 0 && selectedButtonIndex < buttons.Length)
+            UIButton selectedButton = buttons[selectedButtonIndex];
+            selectedButton.SetState(ButtonState.CLICKED);
+
+            if (selectedButton == button_newGameButton)
             {
-                UIButton selectedButton = buttons[selectedButtonIndex];
-                selectedButton.SetState(ButtonState.CLICKED);
-                
+                Audio.PlayOneShot(ConfirmSFX);
+
 
                 GameObject cinematicObj = GameObject.Find("CinematicManager");
                 CinematicManager manager = cinematicObj?.GetComponent<CinematicManager>();
                 FadeController fadeController = GameObject.Find("FadeController")?.GetComponent<FadeController>();
+                SceneManager.isNewGame = true;
+                SceneManager.isLevel2 = false;
+                SceneManager.isBossFight = false;
                 if (manager != null && fadeController != null)
-                {              
+                {
                     fadeController.FadeIn(1.0f, () =>
                     {
                         manager.StartCinematic(LoadLevel1);
@@ -241,18 +240,11 @@ public class MenuButtons : MonoBehaviour
                     Audio.Stop(MainMenuMusic);
                     SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
                 }
-         
-            
-            
 
-                if (selectedButton == button_newGameButton)
-                {
-                    Audio.PlayOneShot(ConfirmSFX);
-                    Audio.Stop(MainMenuMusic);
-                    SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
-                }
-                else if (selectedButton == button_continueButton)
-            
+
+            }
+            else if (selectedButton == button_continueButton)
+            {
                 //sound?.Play(buttonStartGameFX);
                 if (SceneManager.isLevel2)
                 {
@@ -272,24 +264,26 @@ public class MenuButtons : MonoBehaviour
                     Audio.Stop(MainMenuMusic);
                     SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl1");
                 }
-                
-            
-                else if (selectedButton == button_optionsButton)
-                {
-                    Audio.PlayOneShot(MenuSFX);
-                    optionsCanvas.SetActive(true);
-                }
-                else if (selectedButton == button_creditsButton)
-                {
-                    Audio.PlayOneShot(MenuSFX);
-                    creditsCanvas.SetActive(true);
-                }
-                else if (selectedButton == button_quitButton)
-                {
-                    Audio.PlayOneShot(ConfirmSFX);
-                }
+
+            }
+            else if (selectedButton == button_optionsButton)
+            {
+                //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(MenuSFX);
+                optionsCanvas.SetActive(true);
+            }
+            else if (selectedButton == button_creditsButton)
+            {
+                Audio.PlayOneShot(MenuSFX);
+                creditsCanvas.SetActive(true);
+
+            }
+            else if (selectedButton == button_quitButton)
+            {
+                Audio.PlayOneShot(ConfirmSFX);
             }
         }
+
     }
 
     private bool IsMouseOverButton(UIButton button)
@@ -315,7 +309,7 @@ public class MenuButtons : MonoBehaviour
             return;
         }
 
-        if(creditsCanvas.IsActive() == true)
+        if (creditsCanvas.IsActive() == true)
         {
             if (Input.GetKeyDown(KeyCode.ESCAPE) || Input.GetControllerButtonDown(ControllerButton.B))
             {
@@ -323,11 +317,11 @@ public class MenuButtons : MonoBehaviour
                 Audio.PlayOneShot(ConfirmSFX);
             }
         }
-        
+
         if (!isMainMenuMusicPlaying)
         {
             Audio.Play(MainMenuMusic, true);
-            isMainMenuMusicPlaying = true; 
+            isMainMenuMusicPlaying = true;
         }
         //         if (sound == null)
         //         {
@@ -340,14 +334,14 @@ public class MenuButtons : MonoBehaviour
 
     private void LoadLevel1()
     {
-       
+
         FadeController fadeController = GameObject.Find("FadeController")?.GetComponent<FadeController>();
         fadeController.FadeIn(2.0f, () =>
         {
             fadeController.SetAlpha(0.0f);
             Audio.Stop(MainMenuMusic);
             SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
-        });   
+        });
     }
 }
 

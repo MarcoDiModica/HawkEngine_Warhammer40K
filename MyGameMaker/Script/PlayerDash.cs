@@ -4,7 +4,7 @@ using HawkEngine;
 public class PlayerDash : MonoBehaviour
 {
     public float dashSpeed = 160000.0f;
-    public float dashDuration = 0.3f;
+    public float dashDuration = 0.05f;
     public float dashCooldown = 1.25f;
     public bool canDash = true;
 
@@ -41,6 +41,7 @@ public class PlayerDash : MonoBehaviour
         playerCamera = GameObject.Find("MainCamera");
         playerCamera.GetComponent<PlayerCamera>();
         dashSpeed = 160000.0f;
+        dashDuration = 0.05f;
     }
 
     public override void Update(float deltaTime)
@@ -77,6 +78,7 @@ public class PlayerDash : MonoBehaviour
         isInvulnerable = true;
         rb.AddForce(dashDirection * dashSpeed);
         playerCamera.GetComponent<PlayerCamera>().StartDash(dashDirection);
+        int audio = Audio.PlayOneShot(DashSound);
     }
 
     private void HandleActiveDash(float deltaTime)
@@ -85,7 +87,6 @@ public class PlayerDash : MonoBehaviour
         {
             rb.AddForce(dashDirection * dashSpeed);
             currentDashTime -= deltaTime;
-            int audio = Audio.PlayOneShot(DashSound);
         }
         else
         {

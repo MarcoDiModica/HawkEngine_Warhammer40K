@@ -19,6 +19,9 @@ namespace HawkEngine
         public static bool isBossFight = false;
 
         public static string currentSceneName = "";
+        public static string currentLevel = "";
+
+        public static bool isNewGame = false;
 
         //funciones
         public static void LoadScene(string sceneName)
@@ -107,28 +110,6 @@ namespace HawkEngine
             }
         }
 
-        public static void LoadCheckpointSceneAuto()
-        {
-            string path = "Serialized/checkpointData.json";
-
-            if (!System.IO.File.Exists(path))
-            {
-                Engineson.print("Checkpoint file not found.");
-                return;
-            }
-
-            string json = System.IO.File.ReadAllText(path);
-            var data = JsonSerializer.Deserialize<Checkpoint.CheckpointData>(json);
-
-            if (string.IsNullOrEmpty(data.savedSceneName))
-            {
-                Engineson.print("savedSceneName not set in checkpoint data");
-                return;
-            }
-
-            isLoadedFromCheckpoint = true;
-            LoadScene(data.savedSceneName);
-        }
 
         //contructor
         public SceneManager()

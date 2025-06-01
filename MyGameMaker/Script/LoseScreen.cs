@@ -176,15 +176,29 @@ public class LoseScreen : MonoBehaviour
         }
 
         // Detectar clic del rat�n
-        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1) || Input.GetControllerButtonDown(ControllerButton.A))
+        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse) || Input.GetControllerButtonDown(ControllerButton.A))
         {
+            if (selectedButtonIndex == -1)
+                return;
+
             UIButton selectedButton = buttons[selectedButtonIndex];
             selectedButton.SetState(ButtonState.CLICKED);
 
             if (selectedButton == button_loadLastCheckpoint)
             {
                 Audio.PlayOneShot(ConfirmSFX);
-                SceneManager.LoadCheckpointSceneAuto();
+                if (SceneManager.isLevel2)
+                {
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl2");
+                }
+                else if (SceneManager.isBossFight)
+                {
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Bossfight");
+                }
+                else
+                {
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl1");
+                }
             }
             else if (selectedButton == button_mainMenuButton)
             {

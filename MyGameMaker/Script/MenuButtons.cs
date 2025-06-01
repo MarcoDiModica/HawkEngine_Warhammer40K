@@ -208,8 +208,11 @@ public class MenuButtons : MonoBehaviour
         }
 
         // Detectar clic del rat�n
-        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1)|| Input.GetControllerButtonDown(ControllerButton.A))
+        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse)|| Input.GetControllerButtonDown(ControllerButton.A))
         {
+            if(selectedButtonIndex == -1)
+                return;
+            
             UIButton selectedButton = buttons[selectedButtonIndex];
             selectedButton.SetState(ButtonState.CLICKED);
 
@@ -217,6 +220,9 @@ public class MenuButtons : MonoBehaviour
             {
                 Audio.PlayOneShot(ConfirmSFX);
                 Audio.Stop(MainMenuMusic);
+                SceneManager.isNewGame = true;
+                SceneManager.isLevel2 = false;
+                SceneManager.isBossFight = false;
                 SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
             }
             else if (selectedButton == button_continueButton)

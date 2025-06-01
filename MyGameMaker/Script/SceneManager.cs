@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace HawkEngine
 {
@@ -17,31 +18,18 @@ namespace HawkEngine
         public static bool isLevel2 = false;
         public static bool isBossFight = false;
 
+        public static string currentSceneName = "";
+        public static string currentLevel = "";
+
+        public static bool isNewGame = false;
+
         //funciones
         public static void LoadScene(string sceneName)
         {
             Tweening.CleanTweens();
-
-
-           
-
             if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
             {
-               SetSceneToPlay();
-            }
-            else
-            {
-                Engineson.print("Scene not found");
-            }
-        }
-
-        public static void LoadSceneFromCheckpoint(string sceneName)
-        {
-            Tweening.CleanTweens();
-
-            if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
-            {
-                isLoadedFromCheckpoint = true;
+                currentSceneName = sceneName;
                 SetSceneToPlay();
             }
             else
@@ -49,6 +37,23 @@ namespace HawkEngine
                 Engineson.print("Scene not found");
             }
         }
+
+
+        public static void LoadSceneFromCheckpoint(string sceneName)
+        {
+            Tweening.CleanTweens();
+            if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
+            {
+                isLoadedFromCheckpoint = true;
+                currentSceneName = sceneName;
+                SetSceneToPlay();
+            }
+            else
+            {
+                Engineson.print("Scene not found");
+            }
+        }
+
 
         public static void LoadSceneWithFade(string sceneName, float fadeTime = 1.0f)
         {
@@ -65,6 +70,7 @@ namespace HawkEngine
             }
 
             GameObject fadeObj = GameObject.Find("FadeController"); // debe tener UIImage + FadeController
+            fadeObj.SetActive(true); 
             FadeController fader = fadeObj?.GetComponent<FadeController>();
 
             if (fader != null)
@@ -81,6 +87,7 @@ namespace HawkEngine
 
                     if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
                     {
+                        currentSceneName = sceneName;
                         SetSceneToPlay();
                     }
                     else
@@ -102,6 +109,7 @@ namespace HawkEngine
                 }
             }
         }
+
 
         //contructor
         public SceneManager()

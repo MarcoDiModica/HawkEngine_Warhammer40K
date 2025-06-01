@@ -129,6 +129,7 @@
     <Compile Include="CapsuleCollider.cs" />
     <Compile Include="ChapterStandard.cs" />
     <Compile Include="Checkpoint.cs" />
+    <Compile Include="CinematicManager.cs" />
     <Compile Include="Collider.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -188,6 +189,7 @@
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="BaseAbilities.cs" />
     <Compile Include="MusicManager.cs" />
+    <Compile Include="MusicManagerLvl1.cs" />
     <Compile Include="OptionMenu.cs" />
     <Compile Include="Pathfinding.cs" />
     <Compile Include="PauseMenu.cs" />
@@ -251,6 +253,7 @@
     <Compile Include="WaitForSeconds.cs" />
     <Compile Include="WarriorAnimation.cs" />
     <Compile Include="WinScreen.cs" />
+    <Compile Include="ZoneController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

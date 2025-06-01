@@ -1,6 +1,6 @@
-name: Lictor
-prefabPath: ""
-uuid: 10215105647362140935
+name: Lictor_Instance
+prefabPath: Assets\Prefabs\Lictor.prefab.yaml
+uuid: 13077221380683328430
 tag: Enemy
 active: true
 isStatic: false
@@ -17,17 +17,17 @@ Components:
       - -0
       - 0
     localScale:
-      - 5
-      - 5
-      - 5
-  BoxColliderComponent:
+      - 7.5
+      - 7.5
+      - 7.5
+  CapsuleColliderComponent:
     size:
-      - 0.600000024
-      - 1.29999995
-      - 0.5
+      - 1.20000005
+      - 2
+      - 1
     offset:
       - 0
-      - -0.699999988
+      - 0
       - 0
     isTrigger: false
   RigidbodyComponent:
@@ -62,7 +62,7 @@ Children:
           - -0.09231160581111908
           - -0.150098517537117
         localRotation:
-          - -90.000009334667311
+          - -90.000009659346318
           - 0
           - 0
         localScale:
@@ -91,7 +91,67 @@ Children:
       SkeletalAnimationComponent:
         name: SkeletalAnimationComponent
         enabled: true
-        bone_names: ~
+        bone_names:
+          - root
+          - spine
+          - tail
+          - tail2
+          - tail3
+          - tail4
+          - tail5
+          - spine2
+          - spine3
+          - spine4
+          - neck
+          - head
+          - tentacle1
+          - tentacle2
+          - tentacle3
+          - ptentacle.r
+          - ptentacle2.r
+          - ptentacle3.r
+          - stentacle.r
+          - stentacle2.r
+          - stentacle.l
+          - stentacle2.l
+          - ptentacle.l
+          - ptentacle2.l
+          - ptentacle3.l
+          - clavicle.r
+          - sythe.r
+          - sythe2.r
+          - sythe3.r
+          - arm.r
+          - arm2.r
+          - hand.r
+          - thumb1.r
+          - tumb2.r
+          - thumb3.r
+          - middle.r
+          - middle1.r
+          - middle2.r
+          - clavicle.l
+          - arm.l
+          - arm2.l
+          - hand.l
+          - thumb1.l
+          - tumb2.l
+          - thumb3.l
+          - middle.l
+          - middle1.l
+          - middle2.l
+          - sythe.l
+          - sythe2.l
+          - sythe3.l
+          - leg.r
+          - leg2.r
+          - leg3.r
+          - foot.r
+          - leg.l
+          - leg2.l
+          - leg3.l
+          - foot.l
+          - TENTACLE_IK_CNTRL
         animation_file: skeletal_anim_LictorMesh
       ScriptComponents:
         Script0:

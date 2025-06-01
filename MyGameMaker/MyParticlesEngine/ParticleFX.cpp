@@ -516,7 +516,7 @@ namespace ParticlePresets {
 	glm::vec2(641,361),			   // Sprite size
 	true,						   // Use animation
 	true,						   // Random animation Index
-	0.05f,						   // Animation speed
+	0.001f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
 	5.0f,						   // Min scale
@@ -807,8 +807,8 @@ namespace ParticlePresets {
 		0.0f,                          // Alpha end
 		1.0f,                          // Size start
 		1.0f,                          // Size end
-		0.5f,                          // Min lifetime
-		1.0f,                          // Max lifetime
+		0.30f,                          // Min lifetime
+		0.30f,                          // Max lifetime
 		20.0f,                         // Min speed
 		0.01f,                         // Max speed
 		0.01f,                         // End Speed
@@ -825,8 +825,8 @@ namespace ParticlePresets {
 		0.0f,                          // Animation speed
 		0.0f,                          // Start rotation
 		true,                          // Random rotation
-		10.0f,                         // Min scale
-		5.0f,                          // Max scale
+		2.0f,                         // Min scale
+		2.0f,                          // Max scale
 		"Assets/Textures/BloodSplash_decals1_Yiwei.png", // Texture path
 		false						   // Is Local Space
 	};
@@ -1085,7 +1085,7 @@ namespace ParticlePresets {
 	0.0f,                         // Min speed
 	0.0f,                         // Max speed
 	0.0f,                         // End Speed
-		glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+	glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
 	0.0f,                          // Rotation speed
 	0.2f,                         // Emission rate (particles per second)
 	EmitterShape::POINT,           // Shape
@@ -1720,67 +1720,67 @@ namespace ParticlePresets {
 	};
 	const ParticlePreset RailgunCharge = {
 	ParticleType::RAILGUN_CHARGE,
-	false,										 // PlayOnAwake
-	1,											 // Duration (only if one-shot)
-	glm::vec3(1,1,1),   						 // Start color (white)
-	glm::vec3(1,1,1),   						 // End color (white)
-	1.0f,		                     			 // Alpha start
-	1.0f,		                     			 // Alpha end
-	5.0f,		                     			 // Size start
-	5.0f,		                       			 // Size end
-	5,                          				 // Min lifetime
-	5,                         					 // Max lifetime
-	0.0f,                          				 // Min speed
-	0.01f,                          				 // Max speed
-	0.0f,										 // End Speed
-	glm::vec3(0.0f,0.0f,0.0f),	   			 // Gravity (negative for upward)
-	0,                          				 // Rotation speed
-	0.5f,                         				 // Emission rate (particles per second)
-	EmitterShape::POINT,            			 // Shape
-	0.2f,                          				 // Cone base radius
-	1.0f,                          				 // Cone height
-	20.0f,                         				 // Cone angle in degrees
-	glm::vec2(160,160),		   					 // Sprite size
-	true,										 // Use animation
-	false,										 // Random animation Index
-	1.0f,										 // Animation speed
-	180.0f,										 // Start rotation
-	false,										 // Random rotation
-	1.0f,										 // Min scale
-	1.0f,										 // Max scale
+	false,                         // PlayOnAwake
+	1.0f,                          // Duration (only if one-shot)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	1.0f,                          // Size start
+	1.0f,                          // Size end
+	5.0f,                          // Min lifetime
+	5.0f,                          // Max lifetime
+	0.0f,                         // Min speed
+	0.0f,                         // Max speed
+	0.0f,                         // End Speed
+	glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+	0.0f,                          // Rotation speed
+	0.2f,                         // Emission rate (particles per second)
+	EmitterShape::POINT,           // Shape
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	glm::vec2(160.0f , 160.0f),     // Sprite size
+	true,                         // Use animation
+	true,                         // Random animation Index
+	0.050f,                          // Animation speed
+	180.0f,                          // Start rotation
+	false,                          // Random rotation
+	2.0f,                         // Min scale
+	2.0f,                          // Max scale
 	"Assets/Textures/RailgunChargeVFX.png",   // Texture path
 	false 									     // Is Local Space
 	};
 	const ParticlePreset EnergyBallHitting = {
 ParticleType::ENERGY_BALL_HITING,
-false,										 // PlayOnAwake
-5,											 // Duration (only if one-shot)
-glm::vec3(1,1,1),   						 // Start color (white)
-glm::vec3(1,1,1),   						 // End color (white)
-1.0f,		                     			 // Alpha start
-1.0f,		                     			 // Alpha end
-5.0f,		                     			 // Size start
-5.0f,		                       			 // Size end
-5,                          				 // Min lifetime
-5,                         					 // Max lifetime
-0.0f,                          				 // Min speed
-0.01f,                          			 // Max speed
-0.0f,										 // End Speed
-glm::vec3(0.0f,0.01f,0.0f),	   			 // Gravity (negative for upward)
-0,                          				 // Rotation speed
-0.5f,                         				 // Emission rate (particles per second)
-EmitterShape::POINT,            			 // Shape
-0.2f,                          				 // Cone base radius
-1.0f,                          				 // Cone height
-20.0f,                         				 // Cone angle in degrees
-glm::vec2(160,160),		   					 // Sprite size
-true,										 // Use animation
-false,										 // Random animation Index
-10.0f,										 // Animation speed
-180.0f,										 // Start rotation
-false,										 // Random rotation
-5.0f,										 // Min scale
-5.0f,										 // Max scale
+false,                         // PlayOnAwake
+1.0f,                          // Duration (only if one-shot)
+glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+1.0f,                          // Alpha start
+1.0f,                          // Alpha end
+1.0f,                          // Size start
+1.0f,                          // Size end
+5.0f,                          // Min lifetime
+5.0f,                          // Max lifetime
+0.0f,                         // Min speed
+0.0f,                         // Max speed
+0.0f,                         // End Speed
+glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+0.0f,                          // Rotation speed
+0.2f,                         // Emission rate (particles per second)
+EmitterShape::POINT,           // Shape
+0.0f,                          // Unused for point
+0.0f,                          // Unused for point
+0.0f,                          // Unused for point
+glm::vec2(160.0f , 160.0f),     // Sprite size
+true,                         // Use animation
+true,                         // Random animation Index
+0.050f,                          // Animation speed
+180.0f,                          // Start rotation
+false,                          // Random rotation
+2.0f,                         // Min scale
+2.0f,                          // Max scale
 "Assets/Textures/EnergyBallHittingVFX.png",   // Texture path
 false 									     // Is Local Space
 	};

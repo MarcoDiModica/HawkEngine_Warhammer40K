@@ -78,6 +78,8 @@ public class HUD : MonoBehaviour
     private GameObject Text;
     private UIText text;
 
+    private GameObject fadeCanvas;
+
     private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
 
 
@@ -338,6 +340,16 @@ public class HUD : MonoBehaviour
         {
             Engineson.print("ERROR: railgun_ammo_text GameObject not found");
         }
+
+        fadeCanvas = GameObject.Find("Canvas_Fade");
+        if (fadeCanvas == null)
+        {
+            Engineson.print("ERROR: Fade_Canvas not found");
+        }
+        else
+        {
+            fadeCanvas.SetActive(true);
+        }
     }
     public override void Update(float deltaTime)
     {
@@ -591,7 +603,7 @@ public class HUD : MonoBehaviour
             magnet.SetActive(false);
         }
 
-        if (playerData.GetHealth() <= 0)
+        if (playerData.GetHealth() <= 0 && SceneManager.isLoadedFromCheckpoint == false)
         {
             lose();
         }

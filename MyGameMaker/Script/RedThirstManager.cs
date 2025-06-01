@@ -31,6 +31,10 @@ public class RedThirstManager : MonoBehaviour
     private bool shotgunUsed = false;
     private bool railgunUsed = false;
 
+    private bool isActivatingIdle = false;
+    private bool isActivatingRunning = false;
+    private bool isActivatingWalking = false;
+
     private ParticleFX Angy;
     
     public override void Awake()
@@ -66,6 +70,20 @@ public class RedThirstManager : MonoBehaviour
                 ResetWeaponCombo();
             }
         }
+
+        if (isActivatingIdle)
+        {
+            FinishIdleBlackRageAnimation();
+        }
+        else if (isActivatingRunning)
+        {
+            FinishRunningBlackRageAnimation();
+        }
+        else if (isActivatingWalking)
+        {
+            FinishWalkingBlackRageAnimation();
+        }
+
         //redThirstDamageBonus = 5f + (biblePages * biblePages);
         if (isInBlackRage)
         {
@@ -78,6 +96,58 @@ public class RedThirstManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.U))
         {
             AddRedThirstPoint(1);
+            GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
+            gameObject.AddChild(redThirstVFX);
+            redThirstVFX.AddComponent<ParticleFX>();
+            ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
+            if (particleFX != null)
+            {
+                particleFX.ApplyPreset(32);
+                //particleFX.EmitBurst(100);
+                particleFX.EmitBurst(1);
+            }
+
+        }
+    }
+
+    private void FinishIdleBlackRageAnimation()
+    {
+        if (playerController.playerAnimations.esk.IsAnimationFinished())
+        {
+            isActivatingIdle = false;
+            playerController.playerAnimations.ActiveBlackRageToIdleAnimation();
+        }
+    }
+
+    private void FinishRunningBlackRageAnimation()
+    {
+        if (playerController.playerAnimations.esk.IsAnimationFinished())
+        {
+            isActivatingRunning = false;
+            playerController.playerAnimations.ActiveBlackRageToRunningAnimation();
+        }
+    }
+
+    private void FinishWalkingBlackRageAnimation()
+    {
+        if (playerController.playerAnimations.esk.IsAnimationFinished())
+        {
+            isActivatingWalking = false;
+            switch(playerController.currentShootingDirection)
+            {
+                case PlayerController.ShootingDirection.Forward:
+                    playerController.playerAnimations.ActiveBlackRageToWalkingForwardAnimation();
+                    break;
+                case PlayerController.ShootingDirection.Backward:
+                    playerController.playerAnimations.ActiveBlackRageToWalkingBackwardsAnimation();
+                    break;
+                case PlayerController.ShootingDirection.Left:
+                    playerController.playerAnimations.ActiveBlackRageToWalkingLeftAnimation();
+                    break;
+                case PlayerController.ShootingDirection.Right:
+                    playerController.playerAnimations.ActiveBlackRageToWalkingRightAnimation();
+                    break;
+            }
         }
     }
 
@@ -91,6 +161,16 @@ public class RedThirstManager : MonoBehaviour
             ResetAbilityCombo();
         }
         lastActionTime = 0f;
+        GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
+        gameObject.AddChild(redThirstVFX);
+        redThirstVFX.AddComponent<ParticleFX>();
+        ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
+        if (particleFX != null)
+        {
+            particleFX.ApplyPreset(32);
+            //particleFX.EmitBurst(100);
+            particleFX.EmitBurst(1);
+        }
     }
 
     public void OnWeaponUsed()
@@ -108,11 +188,22 @@ public class RedThirstManager : MonoBehaviour
         //    ResetWeaponCombo();
         //}
         //lastActionTime = 0f;
+        GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
+        gameObject.AddChild(redThirstVFX);
+        redThirstVFX.AddComponent<ParticleFX>();
+        ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
+        if (particleFX != null)
+        {
+            particleFX.ApplyPreset(32);
+            //particleFX.EmitBurst(100);
+            particleFX.EmitBurst(1);
+        }
     }
     public void OnBoltgunUsed()
     {
         boltgunUsed = true;
         OnWeaponUsed();
+
     }
     public void OnShotgunUsed()
     {
@@ -151,6 +242,37 @@ public class RedThirstManager : MonoBehaviour
         if (redThirstPoints >= maxRedThirstPoints && isInBlackRage == false)
         {
             ActivateBlackRage();
+            
+            if (playerController.isIdle || playerController.isShootingStanding)
+            {
+                isActivatingIdle = true;
+                playerController.playerAnimations.ActivateBlackRageWhileIdleAnimation();
+            }
+            else if (playerController.isRunning)
+            {
+                isActivatingRunning = true;
+                playerController.playerAnimations.ActivateBlackRageWhileRunningAnimation();
+            }
+            else if (playerController.isShootingRunning)
+            {
+                isActivatingWalking = true;
+                switch (playerController.currentShootingDirection)
+                {
+                    case PlayerController.ShootingDirection.Forward:
+                        playerController.playerAnimations.ActivateBlackRageWhileWalkingStraightAnimation();
+                        break;
+                    case PlayerController.ShootingDirection.Backward:
+                        playerController.playerAnimations.ActivateBlackRageWhileWalkingBackwardsAnimation();
+                        break;
+                    case PlayerController.ShootingDirection.Left:
+                        playerController.playerAnimations.ActivateBlackRageWhileWalkingLeftAnimation();
+                        break;
+                    case PlayerController.ShootingDirection.Right:
+                        playerController.playerAnimations.ActivateBlackRageWhileWalkingRightAnimation();
+                        break;
+                }
+            }
+
         }
 
         redThirstDecayTimer = 0f;
@@ -171,6 +293,16 @@ public class RedThirstManager : MonoBehaviour
         playerController.playerData.blackRageSpeed = redThirstBonus;
         playerController.playerDash.canDash = false;
         Angy.Play();
+        GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
+        gameObject.AddChild(redThirstVFX);
+        redThirstVFX.AddComponent<ParticleFX>();
+        ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
+        if (particleFX != null)
+        {
+            particleFX.ApplyPreset(32);
+            //particleFX.EmitBurst(100);
+            particleFX.EmitBurst(10);
+        }
 
     }
     private void DeactivateBlackRage()

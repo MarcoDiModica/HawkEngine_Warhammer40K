@@ -223,6 +223,27 @@ public class MenuButtons : MonoBehaviour
             {
                 UIButton selectedButton = buttons[selectedButtonIndex];
                 selectedButton.SetState(ButtonState.CLICKED);
+                
+
+                GameObject cinematicObj = GameObject.Find("CinematicManager");
+                CinematicManager manager = cinematicObj?.GetComponent<CinematicManager>();
+                FadeController fadeController = GameObject.Find("FadeController")?.GetComponent<FadeController>();
+                if (manager != null && fadeController != null)
+                {              
+                    fadeController.FadeIn(1.0f, () =>
+                    {
+                        manager.StartCinematic(LoadLevel1);
+                        fadeController.FadeOut(0.5f);
+                    });
+                }
+                else
+                {
+                    Audio.Stop(MainMenuMusic);
+                    SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
+                }
+         
+            
+            
 
                 if (selectedButton == button_newGameButton)
                 {
@@ -231,17 +252,28 @@ public class MenuButtons : MonoBehaviour
                     SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
                 }
                 else if (selectedButton == button_continueButton)
+            
+                //sound?.Play(buttonStartGameFX);
+                if (SceneManager.isLevel2)
                 {
                     Audio.PlayOneShot(ConfirmSFX);
                     Audio.Stop(MainMenuMusic);
-
-                    if (SceneManager.isLevel2)
-                        SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl2");
-                    else if (SceneManager.isBossFight)
-                        SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Bossfight");
-                    else
-                        SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl1");
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl2");
                 }
+                else if (SceneManager.isBossFight)
+                {
+                    Audio.PlayOneShot(ConfirmSFX);
+                    Audio.Stop(MainMenuMusic);
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Bossfight");
+                }
+                else
+                {
+                    Audio.PlayOneShot(ConfirmSFX);
+                    Audio.Stop(MainMenuMusic);
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl1");
+                }
+                
+            
                 else if (selectedButton == button_optionsButton)
                 {
                     Audio.PlayOneShot(MenuSFX);
@@ -304,6 +336,18 @@ public class MenuButtons : MonoBehaviour
         //         }
 
         NavigateMenu();
+    }
+
+    private void LoadLevel1()
+    {
+       
+        FadeController fadeController = GameObject.Find("FadeController")?.GetComponent<FadeController>();
+        fadeController.FadeIn(2.0f, () =>
+        {
+            fadeController.SetAlpha(0.0f);
+            Audio.Stop(MainMenuMusic);
+            SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
+        });   
     }
 }
 

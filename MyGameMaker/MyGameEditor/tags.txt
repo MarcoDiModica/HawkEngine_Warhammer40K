@@ -10,3 +10,4 @@ ExplosiveBarrel
 DestructibleWall
 Spawner
 Barrier
+Spawned

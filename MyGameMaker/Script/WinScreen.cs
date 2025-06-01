@@ -11,6 +11,7 @@ public class WinScreen : MonoBehaviour
     private UITransform transform_mainMenuButton;
     private UITransform transform_quitButton;
 
+    private string WinMusic = "Assets/Audio/Music/Warhammer_WinScreen.ogg";
     private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
     //     private AudioSource sound;
     //     private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
@@ -48,7 +49,7 @@ public class WinScreen : MonoBehaviour
         //sound = gameObject.GetComponent<AudioSource>();
         button_mainMenuButton = mainMenuButton.GetComponent<UIButton>();
         button_quitButton = quitButton.GetComponent<UIButton>();
-
+        Audio.Play(WinMusic, true);
         transform_mainMenuButton = mainMenuButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
 

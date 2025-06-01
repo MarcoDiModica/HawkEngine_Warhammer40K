@@ -117,8 +117,14 @@ public class FadeController : MonoBehaviour
         fadeImage.SetImageEnabled(true);
     }
 
-    private void SetAlpha(float alpha)
+    public void SetAlpha(float alpha)
     {
         fadeImage.SetImageColor(new Vector4(0f, 0f, 0f, Mathf.Clamp01(alpha)));
+    }
+
+    public void FadeIn(float duration, Action onComplete = null)
+    {
+        SetAlpha(0f); // start full transparent (black)  
+        StartFade(duration, true, onComplete);
     }
 }

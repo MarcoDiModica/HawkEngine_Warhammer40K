@@ -36,6 +36,7 @@ public class PlayerShooting : MonoBehaviour
     public bool hasShotgun = false;
     public bool hasRailgun = false;
     public bool hasBoltgun = true;
+    private bool grenadeLauncherFXPlayed = false; 
 
     //private AudioSource sound;
     private const string boltgunEquiped = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunEqquiped.wav";
@@ -47,6 +48,8 @@ public class PlayerShooting : MonoBehaviour
     public ParticleFX shotgunShotFX;
     public ParticleFX railgunShotSemiFX;
     public ParticleFX railgunShotAutoFX;
+
+    private ParticleFX grenadeLauncherFX;
 
     private enum GunType
     {
@@ -108,6 +111,8 @@ public class PlayerShooting : MonoBehaviour
         shotgunShotFX = GameObject.Find("ShotgunShotFX").GetComponent<ParticleFX>();
         railgunShotSemiFX = GameObject.Find("RailgunShotSemiFX").GetComponent<ParticleFX>();
         railgunShotAutoFX = GameObject.Find("RailgunShotAutoFX").GetComponent<ParticleFX>();
+
+        grenadeLauncherFX = GameObject.Find("GrenadeLauncherFX").GetComponent<ParticleFX>();
 
         boltgunMesh = GameObject.Find("Boltgun");
         shotgunMesh = GameObject.Find("Shotgun");
@@ -466,10 +471,15 @@ public class PlayerShooting : MonoBehaviour
                         redThirstManager.OnAbilityUsed();
                     }
                     boltgun?.UseAbility1();
+                    if (!grenadeLauncherFXPlayed)
+                    {
+                        grenadeLauncherFX.Play();
+                        grenadeLauncherFXPlayed = true; 
+                    }
                 }
-                
 
-              
+
+
 
                 break;
             case GunType.SHOTGUN:

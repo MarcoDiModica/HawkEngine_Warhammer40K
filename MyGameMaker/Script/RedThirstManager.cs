@@ -32,14 +32,19 @@ public class RedThirstManager : MonoBehaviour
     private bool railgunUsed = false;
 
     private ParticleFX Angy;
-    
+    private ParticleFX redThirstLostFX;
     public override void Awake()
     {
         playerController = gameObject.GetComponent<PlayerController>();
         Angy = GameObject.Find("RedThirstFX").GetComponent<ParticleFX>();
+        redThirstLostFX = GameObject.Find("RedThirstLostFX").GetComponent<ParticleFX>();
         if (Angy != null)
         {
             Angy.ApplyPreset(32);
+        }
+        if (redThirstLostFX != null)
+        {
+            redThirstLostFX.ApplyPreset(45);
         }
     }
 
@@ -176,11 +181,17 @@ public class RedThirstManager : MonoBehaviour
     private void DeactivateBlackRage()
     {
         // Actualizar el HUD para mostrar que Black Rage ha terminado
+
         isInBlackRage = false;
         redThirstPoints = 0;
         Engineson.print("Black Rage Deactivated");
         playerController.playerData.blackRageSpeed = 0f;
         playerController.playerDash.canDash = true;
+
+        if (redThirstLostFX != null)
+        {
+            redThirstLostFX.Play();
+        }
     }
     private void HandleBlackRage(float deltaTime)
     {

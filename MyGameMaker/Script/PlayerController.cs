@@ -156,7 +156,8 @@ public class PlayerController : MonoBehaviour
         {
             inactiveDashFX = inactiveDashObj.GetComponent<ParticleFX>();
             walkingFX = walkingObj.GetComponent<ParticleFX>();
-
+            walkingFX.ApplyPreset(43);
+            walkingFX.EmitBurst(1);
             if (inactiveDashFX != null && walkingFX != null)
             {
                 effectsInitialized = true;

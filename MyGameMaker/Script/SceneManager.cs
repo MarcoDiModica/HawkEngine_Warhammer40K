@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace HawkEngine
 {
@@ -17,31 +18,15 @@ namespace HawkEngine
         public static bool isLevel2 = false;
         public static bool isBossFight = false;
 
+        public static string currentSceneName = "";
+
         //funciones
         public static void LoadScene(string sceneName)
         {
             Tweening.CleanTweens();
-
-
-           
-
             if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
             {
-               SetSceneToPlay();
-            }
-            else
-            {
-                Engineson.print("Scene not found");
-            }
-        }
-
-        public static void LoadSceneFromCheckpoint(string sceneName)
-        {
-            Tweening.CleanTweens();
-
-            if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
-            {
-                isLoadedFromCheckpoint = true;
+                currentSceneName = sceneName;
                 SetSceneToPlay();
             }
             else
@@ -49,6 +34,23 @@ namespace HawkEngine
                 Engineson.print("Scene not found");
             }
         }
+
+
+        public static void LoadSceneFromCheckpoint(string sceneName)
+        {
+            Tweening.CleanTweens();
+            if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
+            {
+                isLoadedFromCheckpoint = true;
+                currentSceneName = sceneName;
+                SetSceneToPlay();
+            }
+            else
+            {
+                Engineson.print("Scene not found");
+            }
+        }
+
 
         public static void LoadSceneWithFade(string sceneName, float fadeTime = 1.0f)
         {
@@ -82,6 +84,7 @@ namespace HawkEngine
 
                     if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
                     {
+                        currentSceneName = sceneName;
                         SetSceneToPlay();
                     }
                     else
@@ -102,6 +105,29 @@ namespace HawkEngine
                     Engineson.print("Scene not found");
                 }
             }
+        }
+
+        public static void LoadCheckpointSceneAuto()
+        {
+            string path = "Serialized/checkpointData.json";
+
+            if (!System.IO.File.Exists(path))
+            {
+                Engineson.print("Checkpoint file not found.");
+                return;
+            }
+
+            string json = System.IO.File.ReadAllText(path);
+            var data = JsonSerializer.Deserialize<Checkpoint.CheckpointData>(json);
+
+            if (string.IsNullOrEmpty(data.savedSceneName))
+            {
+                Engineson.print("savedSceneName not set in checkpoint data");
+                return;
+            }
+
+            isLoadedFromCheckpoint = true;
+            LoadScene(data.savedSceneName);
         }
 
         //contructor

@@ -184,7 +184,7 @@ public class LoseScreen : MonoBehaviour
             if (selectedButton == button_loadLastCheckpoint)
             {
                 Audio.PlayOneShot(ConfirmSFX);
-                SceneManager.LoadScene("BetaRelease_Week1_Lvl2");
+                SceneManager.LoadCheckpointSceneAuto();
             }
             else if (selectedButton == button_mainMenuButton)
             {

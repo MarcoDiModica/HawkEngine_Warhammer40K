@@ -603,7 +603,7 @@ public class HUD : MonoBehaviour
             magnet.SetActive(false);
         }
 
-        if (playerData.GetHealth() <= 0)
+        if (playerData.GetHealth() <= 0 && SceneManager.isLoadedFromCheckpoint == false)
         {
             lose();
         }

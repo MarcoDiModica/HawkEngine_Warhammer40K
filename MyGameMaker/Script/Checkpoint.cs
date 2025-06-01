@@ -41,11 +41,13 @@ public class Checkpoint : MonoBehaviour
         public bool hasMagnet { get; set; }
         public bool hasPiercingBullets { get; set; }
 
-        public float playerSpawnX { get; set; }
-        public float playerSpawnY { get; set; }
-        public float playerSpawnZ { get; set; }
+        //public float playerSpawnX { get; set; }
+        //public float playerSpawnY { get; set; }
+        //public float playerSpawnZ { get; set; }
 
         public List<bool> areEnemiesDead { get; set; } = new List<bool>();
+
+        public string savedSceneName { get; set; }
     }
 
     
@@ -95,24 +97,39 @@ public class Checkpoint : MonoBehaviour
 
     public override void Update(float deltatime)
     {
-
-        if (SceneManager.isLoadedFromCheckpoint == true)
+        if (SceneManager.isLoadedFromCheckpoint)
         {
-            loadSceneContinueTimer++;
-            if (loadSceneContinueTimer >= 3)
+            if (loadSceneContinueTimer >= 0)
             {
                 LoadCheckPointData();
                 SceneManager.isLoadedFromCheckpoint = false;
                 loadSceneContinueTimer = 0;
             }
-            
         }
 
         if (playerData.GetHealth() <= 0)
         {
-            LoadCheckPointData();
+            SaveCheckpointData(); 
+            //SceneManager.LoadScene("LoseScene");     
         }
+
+        //if (isPlayerDead)
+        //{
+        //    deathTimer -= deltatime;
+        //    if (deathTimer <= 0)
+        //    {
+        //        SaveCheckpointData();
+        //        SceneManager.LoadScene("LoseScene");
+        //    }
+        //}
+
+        //if (playerData.GetHealth() <= 0 && !isPlayerDead)
+        //{
+        //    isPlayerDead = true;
+        //    deathTimer = 5f;
+        //}
     }
+
 
     public CheckpointData checkpointData;
 
@@ -120,11 +137,11 @@ public class Checkpoint : MonoBehaviour
     {
         checkpointData = new CheckpointData()
         {
-            playerSpawnX = spawnPoint.X,
-            playerSpawnY = spawnPoint.Y,
-            playerSpawnZ = spawnPoint.Z,
-            playerCurrentHealth = playerData.GetHealth(),
-            playerCurrentTemporalHealth = playerData.GetHealthTemp(),
+            //playerSpawnX = spawnPoint.X,
+            //playerSpawnY = spawnPoint.Y,
+            //playerSpawnZ = spawnPoint.Z,
+            playerCurrentHealth = 100f,
+            playerCurrentTemporalHealth = 100f,
             boltgunCurrentAmmo = playerShooting.boltgun.currentTotalAmmo,
             shotgunCurrentAmmo = playerShooting.shotgun.currentTotalAmmo,
             hasBoltgun = playerData.hasBoltgun,
@@ -136,8 +153,9 @@ public class Checkpoint : MonoBehaviour
             hasMedicaeStimm = playerPowerUp.hasMedicaeStimm,
             hasAmmunitionBlessing = playerPowerUp.hasAmmunitionBlessing,
             hasMagnet = playerPowerUp.hasMagnet,
-            hasPiercingBullets = playerPowerUp.hasPiercingBullets
-           
+            hasPiercingBullets = playerPowerUp.hasPiercingBullets,
+            savedSceneName = SceneManager.currentSceneName
+
 
 
         };
@@ -212,8 +230,8 @@ public class Checkpoint : MonoBehaviour
     {
         CheckpointData checkpointData = JsonSerializer.Deserialize<CheckpointData>(File.ReadAllText("Serialized/checkpointData.json"));
 
-        playerData.SetHealth(checkpointData.playerCurrentHealth);
-        playerData.SetTempHealth(checkpointData.playerCurrentTemporalHealth);
+        playerData.SetHealth(100f);
+        playerData.SetTempHealth(100f);
         playerShooting.boltgun.currentTotalAmmo = checkpointData.boltgunCurrentAmmo;
         playerShooting.shotgun.currentTotalAmmo = checkpointData.shotgunCurrentAmmo;
         playerData.hasBoltgun = checkpointData.hasBoltgun;
@@ -226,67 +244,67 @@ public class Checkpoint : MonoBehaviour
         playerPowerUp.hasAmmunitionBlessing = checkpointData.hasAmmunitionBlessing;
         playerPowerUp.hasMagnet = checkpointData.hasMagnet;
         playerPowerUp.hasPiercingBullets = checkpointData.hasPiercingBullets;
-        Vector3 spawnPos = new Vector3(checkpointData.playerSpawnX, checkpointData.playerSpawnY, checkpointData.playerSpawnZ);
-        player.GetComponent<Collider>().SetPosition(spawnPos);
+        //Vector3 spawnPos = new Vector3(checkpointData.playerSpawnX, checkpointData.playerSpawnY, checkpointData.playerSpawnZ);
+        //player.GetComponent<Collider>().SetPosition(spawnPos);
 
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            if (enemies[i] != null)
-            {
-                if (checkpointData.areEnemiesDead[i] == true)
-                {
-                    if (enemies[i].tag == "Melee")
-                    {
-                        enemies[i].GetComponent<EnemyControllerMelee>().isDead = true;
-                    }
-                    else if (enemies[i].tag == "Ranged")
-                    {
-                        enemies[i].GetComponent<EnemyControllerRanged>().isDead = true;
+        //for (int i = 0; i < enemies.Count; i++)
+        //{
+        //    if (enemies[i] != null)
+        //    {
+        //        if (checkpointData.areEnemiesDead[i] == true)
+        //        {
+        //            if (enemies[i].tag == "Melee")
+        //            {
+        //                enemies[i].GetComponent<EnemyControllerMelee>().isDead = true;
+        //            }
+        //            else if (enemies[i].tag == "Ranged")
+        //            {
+        //                enemies[i].GetComponent<EnemyControllerRanged>().isDead = true;
 
-                    }
-                    else if (enemies[i].tag == "Stalker")
-                    {
-                        enemies[i].GetComponent<EnemyControllerStalker>().isDead = true;
+        //            }
+        //            else if (enemies[i].tag == "Stalker")
+        //            {
+        //                enemies[i].GetComponent<EnemyControllerStalker>().isDead = true;
 
-                    }
-                    else if (enemies[i].tag == "Warrior")
-                    {
-                        enemies[i].GetComponent<EnemyControllerWarrior>().isDead = true;
+        //            }
+        //            else if (enemies[i].tag == "Warrior")
+        //            {
+        //                enemies[i].GetComponent<EnemyControllerWarrior>().isDead = true;
 
-                    }
-                }
-                else
-                {
-                    if (enemies[i].tag == "Melee")
-                    {
-                        enemies[i].GetComponent<EnemyControllerMelee>().isDead = false;
-                        enemies[i].GetComponent<EnemyControllerMelee>().ResetEnemyCheckPoint();
-                    }
-                    else if (enemies[i].tag == "Ranged")
-                    {
-                        enemies[i].GetComponent<EnemyControllerRanged>().isDead = false;
-                        enemies[i].GetComponent<EnemyControllerRanged>().ResetEnemyCheckPoint();
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (enemies[i].tag == "Melee")
+        //            {
+        //                enemies[i].GetComponent<EnemyControllerMelee>().isDead = false;
+        //                enemies[i].GetComponent<EnemyControllerMelee>().ResetEnemyCheckPoint();
+        //            }
+        //            else if (enemies[i].tag == "Ranged")
+        //            {
+        //                enemies[i].GetComponent<EnemyControllerRanged>().isDead = false;
+        //                enemies[i].GetComponent<EnemyControllerRanged>().ResetEnemyCheckPoint();
 
-                    }
-                    else if (enemies[i].tag == "Stalker")
-                    {
-                        enemies[i].GetComponent<EnemyControllerStalker>().isDead = false;
-                        enemies[i].GetComponent<EnemyControllerStalker>().ResetEnemyCheckPoint();
+        //            }
+        //            else if (enemies[i].tag == "Stalker")
+        //            {
+        //                enemies[i].GetComponent<EnemyControllerStalker>().isDead = false;
+        //                enemies[i].GetComponent<EnemyControllerStalker>().ResetEnemyCheckPoint();
 
-                    }
-                    else if (enemies[i].tag == "Warrior")
-                    {
-                        enemies[i].GetComponent<EnemyControllerWarrior>().isDead = false;
-                        enemies[i].GetComponent<EnemyControllerWarrior>().ResetEnemyCheckPoint();
+        //            }
+        //            else if (enemies[i].tag == "Warrior")
+        //            {
+        //                enemies[i].GetComponent<EnemyControllerWarrior>().isDead = false;
+        //                enemies[i].GetComponent<EnemyControllerWarrior>().ResetEnemyCheckPoint();
 
-                    }
-                }
+        //            }
+        //        }
 
                 
-            }
-        }
+        //    }
+        //}
 
-        Engineson.print(spawnPos.ToString());
+        //Engineson.print(spawnPos.ToString());
     }
 
     public override void OnTriggerEnter(GameObject other)
@@ -303,9 +321,9 @@ public class Checkpoint : MonoBehaviour
     {
         checkpointData = new CheckpointData()
         {
-            playerSpawnX = 0f,
-            playerSpawnY = 0f,
-            playerSpawnZ = 0f,
+            //playerSpawnX = 0f,
+            //playerSpawnY = 0f,
+            //playerSpawnZ = 0f,
             playerCurrentHealth = 100f,
             playerCurrentTemporalHealth = 100f,
             boltgunCurrentAmmo = 0,

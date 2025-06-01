@@ -1,6 +1,6 @@
-name: ExplosiveBarrel
-prefabPath: ""
-uuid: 14439797240389753833
+name: ExplosiveBarrel_Instance
+prefabPath: Assets\Prefabs\ExplosiveBarrelPrefab_V2.prefab.yaml
+uuid: 17449053050883675567
 tag: Untagged
 active: true
 isStatic: false
@@ -9,9 +9,9 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 0.48455190658569336
+      - -29.190324783325195
       - 0
-      - 0
+      - -0.0056064128875732422
     localRotation:
       - 0
       - -0
@@ -57,15 +57,17 @@ Children:
         Script0:
           name: Explosion
           fields:
+            player: Player
             explosionRadius: 5
             justExploded: false
             flamesActive: false
+            explosionFXGO: ExplosionVFX
     Children: ~
   - name: Barrel
     prefabPath: ""
     uuid: 18133613121197259353
     tag: ExplosiveBarrel
-    active: true
+    active: false
     isStatic: false
     Components:
       Transform_Component:
@@ -117,4 +119,77 @@ Children:
           name: ExplosiveBarrel
           fields:
             explosion: ExplosionArea
+    Children: ~
+  - name: ExplosionVFX
+    prefabPath: ""
+    uuid: 6382393370825994463
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      ParticleFX:
+        name: ParticleFX
+        enabled: true
+        emitterShape: 0
+        emissionRate: 0.200000003
+        particlesPerSecond: 0.200000003
+        minLifetime: 0.349999994
+        maxLifetime: 0.349999994
+        minSpeed: 0
+        maxSpeed: 0
+        startSize: 12
+        endSize: 8
+        minSize: 12
+        maxSize: 12
+        startColor:
+          - 1
+          - 1
+          - 1
+        endColor:
+          - 1
+          - 1
+          - 1
+        startAlpha: 1
+        endAlpha: 1
+        rotationSpeed: 0
+        gravity:
+          - 0
+          - 0.00100000005
+          - 0
+        shapeParam1: 0.200000003
+        shapeParam2: 1
+        shapeParam3: 20
+        isOneShot: false
+        isPlaying: false
+        isPaused: false
+        burstEmitted: false
+        spriteSize:
+          - 640
+          - 360
+        useAnimation: true
+        animSpeed: 0.0700000003
+        startRotation: 0
+        randomRotation: true
+        material:
+          billboardType: 0
+          particleType: 7
+          softness: 0
+          useColorGradient: false
+          texturePath: Assets/Textures/ixplosion.png
+        particleType: 7
     Children: ~

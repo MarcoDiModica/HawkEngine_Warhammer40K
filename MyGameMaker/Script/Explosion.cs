@@ -17,21 +17,34 @@ public class Explosion : MonoBehaviour
     private float flamesDuration = 3.0f;
     private bool flameDamageActive = false;
 
+    public GameObject explosionFXGO;
+    private ParticleFX explosionVFX;
+    private bool playVFX = true;
+
     public override void Start()
     {
         explosionArea = GetComponent<CapsuleCollider>();
         explosionArea.SetActive(false);
         player = GameObject.Find("Player");
         playerController = player.GetComponent<PlayerController>();
+        explosionVFX = explosionFXGO.GetComponent<ParticleFX>();
+        explosionVFX.ApplyPreset(7);
+        playVFX = true;
     }
 
     public override void Update(float deltaTime)
     {
         if (justExploded)
         {
+            if (playVFX)
+            {
+                explosionVFX.EmitBurst(1);
+                playVFX = false;
+            }
             explosionTimer += deltaTime;
             if (explosionTimer >= 0.5f)
             {
+                
                 justExploded = false;
                 flamesActive = true;
                 explosionTimer = 0.0f;

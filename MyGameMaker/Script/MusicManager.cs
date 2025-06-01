@@ -8,6 +8,7 @@ public class MusicManager : MonoBehaviour
     private string lvl2music = "Assets/Audio/Music/Level2AmbientBeta_Build2.ogg";
     private string lvl2churchmusic = "Assets/Audio/Music/Warhammer_Level2Church.ogg";
     private string lvl2bossmusic = "Assets/Audio/Music/Warhammer_Level2BossThemeHallway.ogg";
+
     private GameObject churchGO;
     private GameObject bossGO;
 

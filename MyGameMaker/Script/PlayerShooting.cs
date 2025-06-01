@@ -48,6 +48,10 @@ public class PlayerShooting : MonoBehaviour
     public ParticleFX railgunShotSemiFX;
     public ParticleFX railgunShotAutoFX;
 
+    private bool autoReloading = false;
+    private float autoReloadTimer = 0f;
+    private const float autoReloadDelay = 2f;
+
     private enum GunType
     {
         BOLTGUN,
@@ -259,6 +263,24 @@ public class PlayerShooting : MonoBehaviour
         {
             //Engineson.print("Ability 2 pressed");
             //UseAbility2();
+        }
+        if (!autoReloading && GetCurrentAmmo() == 0 && currentGun != GunType.RAILGUN)
+        {
+            autoReloading = true;
+            autoReloadTimer = 0f;
+        }
+        if (autoReloading)
+        {
+            autoReloadTimer += deltaTime;
+            if (autoReloadTimer >= autoReloadDelay)
+            {
+                Reload();
+                autoReloading = false;
+            }
+        }
+        if (playerInput?.IsReloading() == true && currentGun != GunType.RAILGUN)
+        {
+            autoReloading = false;
         }
     }
 

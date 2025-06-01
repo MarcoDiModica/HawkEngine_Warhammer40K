@@ -39,6 +39,15 @@ public class ShotgunUpgradePickUp : PickUp
 
     public override void OnPickUp(PlayerController playerController)
     {
-        playerController.playerData.ShotgunUpgraded = true;
+        if (!playerController.playerShooting.hasShotgun)
+        {
+            playerController.playerShooting.hasShotgun = true;
+            playerController.playerData.hasShotgun = true;
+        }
+        else
+        {
+            playerController.playerData.ShotgunUpgraded = true;
+        }
+       
     }
 }

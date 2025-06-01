@@ -1,6 +1,6 @@
 name: Player
-prefabPath: Assets\Prefabs\Player (1).prefab.yaml
-uuid: 15456081765123126343
+prefabPath: ""
+uuid: 3319496250425494496
 tag: Player
 active: true
 isStatic: false
@@ -106,10 +106,10 @@ Components:
       name: PlayerMovement
       fields:
         moveSpeed: 10
-        walkSpeed: 5
-        runSpeed: 30
+        walkSpeed: 10
+        runSpeed: 25
         rotationSpeed: 30
-        acceleration: 40
+        acceleration: 20
         deceleration: 15
         speedTransitionRate: 7
     Script2:
@@ -119,15 +119,19 @@ Components:
       name: PlayerDash
       fields:
         dashSpeed: 160000
-        dashDuration: 0.0500000007
+        dashDuration: 0.300000012
         dashCooldown: 1.25
         canDash: true
         isInvulnerable: false
     Script4:
       name: PlayerController
       fields:
+        isIdle: false
         isShootInput: false
         isRunning: false
+        isShootingStanding: false
+        isShootingRunning: false
+        isDashing: false
         flashDuration: 0.100000001
         aimLaser: AimLaser
         aimLaserEnd: AimLaserEnd
@@ -212,7 +216,7 @@ Components:
 Children:
   - name: playerMesh
     prefabPath: ""
-    uuid: 6750679036182856212
+    uuid: 2832236310539048833
     tag: Untagged
     active: false
     isStatic: false
@@ -325,7 +329,7 @@ Children:
     Children:
       - name: ROOT
         prefabPath: ""
-        uuid: 10113169538028761331
+        uuid: 746505560252552504
         tag: Untagged
         active: true
         isStatic: false
@@ -348,7 +352,7 @@ Children:
         Children:
           - name: HIP.L
             prefabPath: ""
-            uuid: 3156624587977171851
+            uuid: 2810930772160508206
             tag: Untagged
             active: true
             isStatic: false
@@ -371,7 +375,7 @@ Children:
             Children:
               - name: THIGH.L
                 prefabPath: ""
-                uuid: 6877586695856108032
+                uuid: 93764659875074137
                 tag: Untagged
                 active: true
                 isStatic: false
@@ -394,7 +398,7 @@ Children:
                 Children:
                   - name: TIBIA.L
                     prefabPath: ""
-                    uuid: 10316998445145394230
+                    uuid: 5512569453948615980
                     tag: Untagged
                     active: true
                     isStatic: false
@@ -417,7 +421,7 @@ Children:
                     Children:
                       - name: FOOT.L
                         prefabPath: ""
-                        uuid: 15384496158003795675
+                        uuid: 2895519849269033170
                         tag: Untagged
                         active: true
                         isStatic: false
@@ -440,7 +444,7 @@ Children:
                         Children:
                           - name: TOE.L
                             prefabPath: ""
-                            uuid: 10288735638162264893
+                            uuid: 14756284635032686607
                             tag: Untagged
                             active: true
                             isStatic: false
@@ -463,7 +467,7 @@ Children:
                             Children: ~
           - name: SPINE
             prefabPath: ""
-            uuid: 2144969792448596446
+            uuid: 17826183018008606514
             tag: Untagged
             active: true
             isStatic: false
@@ -486,7 +490,7 @@ Children:
             Children:
               - name: SHOULDER.L
                 prefabPath: ""
-                uuid: 9691985083647430659
+                uuid: 1382589160160672563
                 tag: Untagged
                 active: true
                 isStatic: false
@@ -509,7 +513,7 @@ Children:
                 Children:
                   - name: ARM.L
                     prefabPath: ""
-                    uuid: 17470226890906816650
+                    uuid: 4288637305455668788
                     tag: Untagged
                     active: true
                     isStatic: false
@@ -532,7 +536,7 @@ Children:
                     Children:
                       - name: FOREARM.L
                         prefabPath: ""
-                        uuid: 8492826620697960909
+                        uuid: 15418908381664638266
                         tag: Untagged
                         active: true
                         isStatic: false
@@ -555,7 +559,7 @@ Children:
                         Children:
                           - name: HAND.L
                             prefabPath: ""
-                            uuid: 10385561072221028108
+                            uuid: 3015883395662602468
                             tag: Untagged
                             active: true
                             isStatic: false
@@ -578,7 +582,7 @@ Children:
                             Children:
                               - name: INDEX1.L
                                 prefabPath: ""
-                                uuid: 14594350558659141476
+                                uuid: 14030091026247771708
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -601,7 +605,7 @@ Children:
                                 Children:
                                   - name: INDEX2.L
                                     prefabPath: ""
-                                    uuid: 4529766853618576382
+                                    uuid: 11081163714851619391
                                     tag: Untagged
                                     active: true
                                     isStatic: false
@@ -624,7 +628,7 @@ Children:
                                     Children:
                                       - name: INDEX3.L
                                         prefabPath: ""
-                                        uuid: 6348260914454938153
+                                        uuid: 11412932383399885113
                                         tag: Untagged
                                         active: true
                                         isStatic: false
@@ -647,7 +651,7 @@ Children:
                                         Children: ~
                               - name: MIDDLE1.L
                                 prefabPath: ""
-                                uuid: 6417338958803182298
+                                uuid: 14194842825519018004
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -670,7 +674,7 @@ Children:
                                 Children:
                                   - name: MIDDLE2.L
                                     prefabPath: ""
-                                    uuid: 10543789561204641926
+                                    uuid: 5839677019994329017
                                     tag: Untagged
                                     active: true
                                     isStatic: false
@@ -693,7 +697,7 @@ Children:
                                     Children:
                                       - name: MIDDLE3.L
                                         prefabPath: ""
-                                        uuid: 15465006651493419690
+                                        uuid: 968764780372091969
                                         tag: Untagged
                                         active: true
                                         isStatic: false
@@ -716,7 +720,7 @@ Children:
                                         Children: ~
                               - name: RING1.L
                                 prefabPath: ""
-                                uuid: 13873981978607872926
+                                uuid: 11109691446011541847
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -739,7 +743,7 @@ Children:
                                 Children:
                                   - name: RING2.L
                                     prefabPath: ""
-                                    uuid: 14820667649073915463
+                                    uuid: 16586003091161140414
                                     tag: Untagged
                                     active: true
                                     isStatic: false
@@ -762,7 +766,7 @@ Children:
                                     Children:
                                       - name: RING3.L
                                         prefabPath: ""
-                                        uuid: 14037960794601485651
+                                        uuid: 2348345712817717105
                                         tag: Untagged
                                         active: true
                                         isStatic: false
@@ -785,7 +789,7 @@ Children:
                                         Children: ~
                               - name: PINKY1.L
                                 prefabPath: ""
-                                uuid: 12967980681692481437
+                                uuid: 1134575379161695830
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -808,7 +812,7 @@ Children:
                                 Children:
                                   - name: PINKY2.L
                                     prefabPath: ""
-                                    uuid: 7437004183588441344
+                                    uuid: 11792187731414337961
                                     tag: Untagged
                                     active: true
                                     isStatic: false
@@ -831,7 +835,7 @@ Children:
                                     Children:
                                       - name: PINKY3.L
                                         prefabPath: ""
-                                        uuid: 420171487449772032
+                                        uuid: 13351223222591424567
                                         tag: Untagged
                                         active: true
                                         isStatic: false
@@ -854,7 +858,7 @@ Children:
                                         Children: ~
                               - name: THUMB1.L
                                 prefabPath: ""
-                                uuid: 4325481147945660690
+                                uuid: 16351593492434771420
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -877,7 +881,7 @@ Children:
                                 Children:
                                   - name: THUMB2.L
                                     prefabPath: ""
-                                    uuid: 14569656333985465270
+                                    uuid: 14573021698651613731
                                     tag: Untagged
                                     active: true
                                     isStatic: false
@@ -900,7 +904,7 @@ Children:
                                     Children: ~
               - name: HEAD
                 prefabPath: ""
-                uuid: 3477311253914090104
+                uuid: 5605552116159775826
                 tag: Untagged
                 active: true
                 isStatic: false
@@ -923,7 +927,7 @@ Children:
                 Children: ~
               - name: SHOULDER.R
                 prefabPath: ""
-                uuid: 12994046613348546701
+                uuid: 16190687723382104598
                 tag: Untagged
                 active: true
                 isStatic: false
@@ -946,7 +950,7 @@ Children:
                 Children:
                   - name: ARM.R
                     prefabPath: ""
-                    uuid: 2754853089285750014
+                    uuid: 1276459409439994029
                     tag: Untagged
                     active: true
                     isStatic: false
@@ -969,7 +973,7 @@ Children:
                     Children:
                       - name: FOREARM.R
                         prefabPath: ""
-                        uuid: 104534122190133057
+                        uuid: 1348551606692136323
                         tag: Untagged
                         active: true
                         isStatic: false
@@ -992,7 +996,7 @@ Children:
                         Children:
                           - name: HAND.R
                             prefabPath: ""
-                            uuid: 6681000239068496482
+                            uuid: 7687640961639739503
                             tag: Untagged
                             active: true
                             isStatic: false
@@ -1015,7 +1019,7 @@ Children:
                             Children:
                               - name: INDEX1.R
                                 prefabPath: ""
-                                uuid: 13128905051247094694
+                                uuid: 12485375336660270512
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -1038,7 +1042,7 @@ Children:
                                 Children:
                                   - name: INDEX2.R
                                     prefabPath: ""
-                                    uuid: 2838562906774380026
+                                    uuid: 10889942595896063931
                                     tag: Untagged
                                     active: true
                                     isStatic: false
@@ -1061,7 +1065,7 @@ Children:
                                     Children:
                                       - name: INDEX3.R
                                         prefabPath: ""
-                                        uuid: 9115763084248012752
+                                        uuid: 11154699610871838248
                                         tag: Untagged
                                         active: true
                                         isStatic: false
@@ -1084,7 +1088,7 @@ Children:
                                         Children: ~
                               - name: MIDDLE1.R
                                 prefabPath: ""
-                                uuid: 7655077195702485031
+                                uuid: 2211368746108196130
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -1107,7 +1111,7 @@ Children:
                                 Children:
                                   - name: MIDDLE2.R
                                     prefabPath: ""
-                                    uuid: 214141663458486254
+                                    uuid: 11278627095600136331
                                     tag: Untagged
                                     active: true
                                     isStatic: false
@@ -1130,7 +1134,7 @@ Children:
                                     Children:
                                       - name: MIDDLE3.R
                                         prefabPath: ""
-                                        uuid: 12332491915787534252
+                                        uuid: 4904112309044459332
                                         tag: Untagged
                                         active: true
                                         isStatic: false
@@ -1153,7 +1157,7 @@ Children:
                                         Children: ~
                               - name: RING1.R
                                 prefabPath: ""
-                                uuid: 1274072906690663667
+                                uuid: 275498382001889559
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -1176,7 +1180,7 @@ Children:
                                 Children:
                                   - name: RING2.R
                                     prefabPath: ""
-                                    uuid: 15294440181811279781
+                                    uuid: 14492695196337614110
                                     tag: Untagged
                                     active: true
                                     isStatic: false
@@ -1199,7 +1203,7 @@ Children:
                                     Children:
                                       - name: RING3.R
                                         prefabPath: ""
-                                        uuid: 3028940331105245720
+                                        uuid: 6068895843571473028
                                         tag: Untagged
                                         active: true
                                         isStatic: false
@@ -1222,7 +1226,7 @@ Children:
                                         Children: ~
                               - name: PINKY1.R
                                 prefabPath: ""
-                                uuid: 13277471907816666673
+                                uuid: 14560097188945417707
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -1245,7 +1249,7 @@ Children:
                                 Children:
                                   - name: PINKY2.R
                                     prefabPath: ""
-                                    uuid: 13197690459644379234
+                                    uuid: 9556440023938148418
                                     tag: Untagged
                                     active: true
                                     isStatic: false
@@ -1268,7 +1272,7 @@ Children:
                                     Children:
                                       - name: PINKY3.R
                                         prefabPath: ""
-                                        uuid: 15905209439765703799
+                                        uuid: 6005344238265361916
                                         tag: Untagged
                                         active: true
                                         isStatic: false
@@ -1291,7 +1295,7 @@ Children:
                                         Children: ~
                               - name: THUMB1.R
                                 prefabPath: ""
-                                uuid: 4490903796316417442
+                                uuid: 12865499723881324147
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -1314,7 +1318,7 @@ Children:
                                 Children:
                                   - name: THUMB2.R
                                     prefabPath: ""
-                                    uuid: 15588389799091472329
+                                    uuid: 6639749478982951640
                                     tag: Untagged
                                     active: true
                                     isStatic: false
@@ -1335,6 +1339,201 @@ Children:
                                           - 1
                                           - 1.0000001192092896
                                     Children: ~
+                              - name: Shotgun
+                                prefabPath: ""
+                                uuid: 1442915752480883811
+                                tag: Untagged
+                                active: false
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.19924551248550415
+                                      - 0.27737703919410706
+                                      - -0.16762752830982208
+                                    localRotation:
+                                      - 97.444001621347851
+                                      - -13.664004719005408
+                                      - 18.400001822629104
+                                    localScale:
+                                      - 0.001999999163672328
+                                      - 0.0019999993965029716
+                                      - 0.001999999862164259
+                                Children:
+                                  - name: shotgunMesh
+                                    prefabPath: ""
+                                    uuid: 5427703639703225106
+                                    tag: Untagged
+                                    active: true
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                    Children:
+                                      - name: bOLTER.010
+                                        prefabPath: ""
+                                        uuid: 12418002066798083621
+                                        tag: Untagged
+                                        active: false
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                          MeshRenderer:
+                                            name: MeshRenderer
+                                            enabled: true
+                                            mesh:
+                                              name: 12445246452344068261
+                                            material:
+                                              name: shotgun_DefaultMaterial_BaseColor
+                                              color:
+                                                - 1
+                                                - 1
+                                                - 1
+                                                - 1
+                                            color:
+                                              - 1
+                                              - 1
+                                              - 1
+                                          Shader:
+                                            name: Shader
+                                            enabled: true
+                                        Children: ~
+                                      - name: Cone
+                                        prefabPath: ""
+                                        uuid: 18356958387254418243
+                                        tag: Untagged
+                                        active: false
+                                        isStatic: false
+                                        Components:
+                                          Transform_Component:
+                                            name: Transform_Component
+                                            enabled: true
+                                            localPosition:
+                                              - 0
+                                              - 0
+                                              - 0
+                                            localRotation:
+                                              - 0
+                                              - -0
+                                              - 0
+                                            localScale:
+                                              - 1
+                                              - 1
+                                              - 1
+                                          MeshRenderer:
+                                            name: MeshRenderer
+                                            enabled: true
+                                            mesh:
+                                              name: 5508932554690171827
+                                            material:
+                                              name: ""
+                                              color:
+                                                - 1
+                                                - 1
+                                                - 1
+                                                - 1
+                                            color:
+                                              - 1
+                                              - 1
+                                              - 1
+                                          Shader:
+                                            name: Shader
+                                            enabled: true
+                                        Children: ~
+                              - name: Railgun
+                                prefabPath: ""
+                                uuid: 17898768077411905007
+                                tag: Untagged
+                                active: false
+                                isStatic: false
+                                Components:
+                                  Transform_Component:
+                                    name: Transform_Component
+                                    enabled: true
+                                    localPosition:
+                                      - -0.28644287586212158
+                                      - 0.30779373645782471
+                                      - -0.091815508902072906
+                                    localRotation:
+                                      - 100.39299674999046
+                                      - -6.7879964791324978
+                                      - 19.958998469742799
+                                    localScale:
+                                      - 0.001999999163672328
+                                      - 0.0019999989308416843
+                                      - 0.0019999996293336153
+                                Children:
+                                  - name: railgunMesh
+                                    prefabPath: ""
+                                    uuid: 2514290170571567102
+                                    tag: Untagged
+                                    active: false
+                                    isStatic: false
+                                    Components:
+                                      Transform_Component:
+                                        name: Transform_Component
+                                        enabled: true
+                                        localPosition:
+                                          - 0
+                                          - 0
+                                          - 0
+                                        localRotation:
+                                          - 0
+                                          - -0
+                                          - 0
+                                        localScale:
+                                          - 1
+                                          - 1
+                                          - 1
+                                      MeshRenderer:
+                                        name: MeshRenderer
+                                        enabled: true
+                                        mesh:
+                                          name: 5139834007055871956
+                                        material:
+                                          name: railgun_DefaultMaterial_BaseColor
+                                          color:
+                                            - 1
+                                            - 1
+                                            - 1
+                                            - 1
+                                        color:
+                                          - 1
+                                          - 1
+                                          - 1
+                                      Shader:
+                                        name: Shader
+                                        enabled: true
+                                    Children: ~
                               - name: Boltgun
                                 prefabPath: ""
                                 uuid: 3770709696540222420
@@ -1346,17 +1545,17 @@ Children:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - -0.23044180870056152
-                                      - 0.22472895681858063
-                                      - -0.027290269732475281
+                                      - -0.2302716076374054
+                                      - 0.22517223656177521
+                                      - -0.026904087513685226
                                     localRotation:
-                                      - 97.881044071641767
-                                      - -11.463360460108857
-                                      - 16.855501726716806
+                                      - 97.880992069934791
+                                      - -11.462994213801887
+                                      - 16.856001074235088
                                     localScale:
-                                      - 0.0020000003278255463
-                                      - 0.0020000005606561899
-                                      - 0.0020000019576400518
+                                      - 0.001999999862164259
+                                      - 0.0019999996293336153
+                                      - 0.0020000000949949026
                                 Children:
                                   - name: boltgunMesh
                                     prefabPath: ""
@@ -1400,204 +1599,9 @@ Children:
                                         name: Shader
                                         enabled: true
                                     Children: ~
-                              - name: Shotgun
-                                prefabPath: ""
-                                uuid: 1975759910323025713
-                                tag: Untagged
-                                active: false
-                                isStatic: false
-                                Components:
-                                  Transform_Component:
-                                    name: Transform_Component
-                                    enabled: true
-                                    localPosition:
-                                      - -0.19896343350410461
-                                      - 0.27792796492576599
-                                      - -0.16794253885746002
-                                    localRotation:
-                                      - 97.443753859434025
-                                      - -13.664144897490345
-                                      - 18.399943680772878
-                                    localScale:
-                                      - 0.001999999163672328
-                                      - 0.0020000000949949026
-                                      - 0.001999999862164259
-                                Children:
-                                  - name: shotgunMesh
-                                    prefabPath: ""
-                                    uuid: 13104373082815733014
-                                    tag: Untagged
-                                    active: true
-                                    isStatic: false
-                                    Components:
-                                      Transform_Component:
-                                        name: Transform_Component
-                                        enabled: true
-                                        localPosition:
-                                          - 0
-                                          - 0
-                                          - 0
-                                        localRotation:
-                                          - 0
-                                          - -0
-                                          - 0
-                                        localScale:
-                                          - 1
-                                          - 1
-                                          - 1
-                                    Children:
-                                      - name: bOLTER.010
-                                        prefabPath: ""
-                                        uuid: 15241579144144417828
-                                        tag: Untagged
-                                        active: false
-                                        isStatic: false
-                                        Components:
-                                          Transform_Component:
-                                            name: Transform_Component
-                                            enabled: true
-                                            localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
-                                            localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
-                                            localScale:
-                                              - 1
-                                              - 1
-                                              - 1
-                                          MeshRenderer:
-                                            name: MeshRenderer
-                                            enabled: true
-                                            mesh:
-                                              name: 12445246452344068261
-                                            material:
-                                              name: shotgun_DefaultMaterial_BaseColor
-                                              color:
-                                                - 1
-                                                - 1
-                                                - 1
-                                                - 1
-                                            color:
-                                              - 1
-                                              - 1
-                                              - 1
-                                          Shader:
-                                            name: Shader
-                                            enabled: true
-                                        Children: ~
-                                      - name: Cone
-                                        prefabPath: ""
-                                        uuid: 1829950831750583134
-                                        tag: Untagged
-                                        active: false
-                                        isStatic: false
-                                        Components:
-                                          Transform_Component:
-                                            name: Transform_Component
-                                            enabled: true
-                                            localPosition:
-                                              - 0
-                                              - 0
-                                              - 0
-                                            localRotation:
-                                              - 0
-                                              - -0
-                                              - 0
-                                            localScale:
-                                              - 1
-                                              - 1
-                                              - 1
-                                          MeshRenderer:
-                                            name: MeshRenderer
-                                            enabled: true
-                                            mesh:
-                                              name: 5508932554690171827
-                                            material:
-                                              name: ""
-                                              color:
-                                                - 1
-                                                - 0
-                                                - 0
-                                                - 1
-                                            color:
-                                              - 1
-                                              - 1
-                                              - 1
-                                          Shader:
-                                            name: Shader
-                                            enabled: true
-                                        Children: ~
-                              - name: Railgun
-                                prefabPath: ""
-                                uuid: 16521894593680514932
-                                tag: Untagged
-                                active: false
-                                isStatic: false
-                                Components:
-                                  Transform_Component:
-                                    name: Transform_Component
-                                    enabled: true
-                                    localPosition:
-                                      - -0.2868901789188385
-                                      - 0.30804619193077087
-                                      - -0.091418266296386719
-                                    localRotation:
-                                      - 100.39274024878178
-                                      - -6.7884618910754915
-                                      - 19.959318435874014
-                                    localScale:
-                                      - 0.001999999862164259
-                                      - 0.0020000003278255463
-                                      - 0.0020000017248094082
-                                Children:
-                                  - name: railgunMesh
-                                    prefabPath: ""
-                                    uuid: 7072250728429641775
-                                    tag: Untagged
-                                    active: false
-                                    isStatic: false
-                                    Components:
-                                      Transform_Component:
-                                        name: Transform_Component
-                                        enabled: true
-                                        localPosition:
-                                          - 0
-                                          - 0
-                                          - 0
-                                        localRotation:
-                                          - 0
-                                          - -0
-                                          - 0
-                                        localScale:
-                                          - 1
-                                          - 1
-                                          - 1
-                                      MeshRenderer:
-                                        name: MeshRenderer
-                                        enabled: true
-                                        mesh:
-                                          name: 5139834007055871956
-                                        material:
-                                          name: railgun_DefaultMaterial_BaseColor
-                                          color:
-                                            - 1
-                                            - 1
-                                            - 1
-                                            - 1
-                                        color:
-                                          - 1
-                                          - 1
-                                          - 1
-                                      Shader:
-                                        name: Shader
-                                        enabled: true
-                                    Children: ~
                               - name: RiffleShotFX
                                 prefabPath: ""
-                                uuid: 13642003620504256543
+                                uuid: 12529392665530611263
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -1606,17 +1610,17 @@ Children:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - -0.97447091341018677
-                                      - 2.4221625328063965
-                                      - 0.57886636257171631
+                                      - -0.97445440292358398
+                                      - 2.4220039844512939
+                                      - 0.57921278476715088
                                     localRotation:
-                                      - 92.577432593778326
-                                      - -8.1256827441871984
-                                      - 106.41994501626159
+                                      - 92.577012351024692
+                                      - -8.1260047469248455
+                                      - 106.41997829649549
                                     localScale:
-                                      - 1.0000008344650269
                                       - 1.0000001192092896
-                                      - 1.0000002384185791
+                                      - 1.0000001192092896
+                                      - 1
                                   ParticleFX:
                                     name: ParticleFX
                                     enabled: true
@@ -1670,7 +1674,7 @@ Children:
                                 Children: ~
                               - name: ShotgunShotFX
                                 prefabPath: ""
-                                uuid: 8047293535795612007
+                                uuid: 5965737133931028225
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -1679,16 +1683,16 @@ Children:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - -0.84507864713668823
-                                      - 2.3241524696350098
-                                      - 0.60179436206817627
+                                      - -0.84459501504898071
+                                      - 2.3242394924163818
+                                      - 0.6016772985458374
                                     localRotation:
-                                      - 92.577432593778326
-                                      - -8.1256827441871984
-                                      - 106.41994501626159
+                                      - 92.577012351024692
+                                      - -8.1260047469248455
+                                      - 106.41997829649549
                                     localScale:
-                                      - 1.0000008344650269
                                       - 1.0000001192092896
+                                      - 1.0000002384185791
                                       - 1.0000002384185791
                                   ParticleFX:
                                     name: ParticleFX
@@ -1743,7 +1747,7 @@ Children:
                                 Children: ~
                               - name: RailgunShotAutoFX
                                 prefabPath: ""
-                                uuid: 2197138691374676647
+                                uuid: 2474552656792370531
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -1752,16 +1756,16 @@ Children:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - -0.89015871286392212
-                                      - 2.3720710277557373
-                                      - 0.76418697834014893
+                                      - -0.8901098370552063
+                                      - 2.3719491958618164
+                                      - 0.76410627365112305
                                     localRotation:
-                                      - 92.577432593778326
-                                      - -8.1256827441871984
-                                      - 106.41994501626159
+                                      - 92.577012351024692
+                                      - -8.1260047469248455
+                                      - 106.41997829649549
                                     localScale:
-                                      - 1.0000007152557373
                                       - 1.0000001192092896
+                                      - 1.0000002384185791
                                       - 1.0000002384185791
                                   ParticleFX:
                                     name: ParticleFX
@@ -1816,7 +1820,7 @@ Children:
                                 Children: ~
                               - name: RailgunShotSemiFX
                                 prefabPath: ""
-                                uuid: 14148320861147348496
+                                uuid: 13799083494462733349
                                 tag: Untagged
                                 active: true
                                 isStatic: false
@@ -1825,16 +1829,16 @@ Children:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - -0.90029722452163696
-                                      - 2.4305312633514404
-                                      - 0.77223163843154907
+                                      - -0.90020495653152466
+                                      - 2.4309439659118652
+                                      - 0.77227538824081421
                                     localRotation:
-                                      - 92.577432593778326
-                                      - -8.1256827441871984
-                                      - 106.41994501626159
+                                      - 92.577012351024692
+                                      - -8.1260047469248455
+                                      - 106.41997829649549
                                     localScale:
-                                      - 1.0000007152557373
                                       - 1.0000001192092896
+                                      - 1.0000002384185791
                                       - 1.0000002384185791
                                   ParticleFX:
                                     name: ParticleFX
@@ -1889,7 +1893,7 @@ Children:
                                 Children: ~
           - name: HIP.R
             prefabPath: ""
-            uuid: 16967034121257847038
+            uuid: 7278315126696158596
             tag: Untagged
             active: true
             isStatic: false
@@ -1912,7 +1916,7 @@ Children:
             Children:
               - name: THIGH.R
                 prefabPath: ""
-                uuid: 5190758825952743899
+                uuid: 8849441807751736663
                 tag: Untagged
                 active: true
                 isStatic: false
@@ -1935,7 +1939,7 @@ Children:
                 Children:
                   - name: TIBIA.R
                     prefabPath: ""
-                    uuid: 5467062127366173075
+                    uuid: 194515527473034352
                     tag: Untagged
                     active: true
                     isStatic: false
@@ -1958,7 +1962,7 @@ Children:
                     Children:
                       - name: FOOT.R
                         prefabPath: ""
-                        uuid: 6761037819746592853
+                        uuid: 9324020545417246407
                         tag: Untagged
                         active: true
                         isStatic: false
@@ -1981,7 +1985,7 @@ Children:
                         Children:
                           - name: TOE.R
                             prefabPath: ""
-                            uuid: 8156061614326245088
+                            uuid: 3561285274896893234
                             tag: Untagged
                             active: true
                             isStatic: false
@@ -2004,7 +2008,7 @@ Children:
                             Children: ~
       - name: KNEE.L
         prefabPath: ""
-        uuid: 16332621324094840062
+        uuid: 13438197048480908142
         tag: Untagged
         active: true
         isStatic: false
@@ -2027,7 +2031,7 @@ Children:
         Children: ~
       - name: FOOT.R.002
         prefabPath: ""
-        uuid: 14688360011884523231
+        uuid: 9850972896495956708
         tag: Untagged
         active: true
         isStatic: false
@@ -2050,7 +2054,7 @@ Children:
         Children: ~
       - name: TOE.R.001
         prefabPath: ""
-        uuid: 3736908212671299135
+        uuid: 1297792550525902737
         tag: Untagged
         active: true
         isStatic: false
@@ -2073,7 +2077,7 @@ Children:
         Children: ~
       - name: PIVOTHEEL.L
         prefabPath: ""
-        uuid: 18001881121663308859
+        uuid: 17121473755837194066
         tag: Untagged
         active: true
         isStatic: false
@@ -2096,7 +2100,7 @@ Children:
         Children:
           - name: PIVOTTOE.L
             prefabPath: ""
-            uuid: 1137174505224802902
+            uuid: 15656348794501400677
             tag: Untagged
             active: true
             isStatic: false
@@ -2119,7 +2123,7 @@ Children:
             Children:
               - name: FOOT.L.001
                 prefabPath: ""
-                uuid: 8262652712401560516
+                uuid: 13508353647798247683
                 tag: Untagged
                 active: true
                 isStatic: false
@@ -2142,7 +2146,7 @@ Children:
                 Children:
                   - name: IKLEG.L
                     prefabPath: ""
-                    uuid: 16359009426242598453
+                    uuid: 4606738928937917737
                     tag: Untagged
                     active: true
                     isStatic: false
@@ -2165,7 +2169,7 @@ Children:
                     Children: ~
       - name: KNEE.R
         prefabPath: ""
-        uuid: 134082721932436883
+        uuid: 10618727028134181290
         tag: Untagged
         active: true
         isStatic: false
@@ -2178,9 +2182,9 @@ Children:
               - -1.4599999189376831
               - 1.5136154890060425
             localRotation:
-              - -7.2220877389592355e-11
+              - -3.2604368250076696e-10
               - 89.690400378278369
-              - -179.99999134857478
+              - -179.99999134853385
             localScale:
               - 1
               - 1
@@ -2188,7 +2192,7 @@ Children:
         Children: ~
       - name: PIVOTHEEL.R
         prefabPath: ""
-        uuid: 6569471362236790935
+        uuid: 17421487148036181697
         tag: Untagged
         active: true
         isStatic: false
@@ -2211,7 +2215,7 @@ Children:
         Children:
           - name: PIVOTTOE.R
             prefabPath: ""
-            uuid: 11166269694806070737
+            uuid: 2928133371151568211
             tag: Untagged
             active: true
             isStatic: false
@@ -2234,7 +2238,7 @@ Children:
             Children:
               - name: FOOT.R.001
                 prefabPath: ""
-                uuid: 1420539834031010919
+                uuid: 6827265056122262304
                 tag: Untagged
                 active: true
                 isStatic: false
@@ -2257,7 +2261,7 @@ Children:
                 Children:
                   - name: IKLEG.R
                     prefabPath: ""
-                    uuid: 15513381364896826670
+                    uuid: 2773157139140604687
                     tag: Untagged
                     active: true
                     isStatic: false
@@ -2280,7 +2284,7 @@ Children:
                     Children: ~
   - name: SpeedBoostFX
     prefabPath: ""
-    uuid: 1591318300580864618
+    uuid: 2876559295148934975
     tag: Untagged
     active: true
     isStatic: false
@@ -2353,7 +2357,7 @@ Children:
     Children: ~
   - name: AmmunitionBlessingFX
     prefabPath: ""
-    uuid: 3471292115440822736
+    uuid: 9167475460277078939
     tag: Untagged
     active: true
     isStatic: false
@@ -2426,7 +2430,7 @@ Children:
     Children: ~
   - name: InactiveDashFX
     prefabPath: ""
-    uuid: 14843278576861869286
+    uuid: 7219096078186105947
     tag: Untagged
     active: true
     isStatic: false
@@ -2497,191 +2501,9 @@ Children:
           texturePath: Assets/Textures/Smoke30Frames.png
         particleType: 1
     Children: ~
-  - name: AimLaser
-    prefabPath: ""
-    uuid: 9455378644202122856
-    tag: Untagged
-    active: false
-    isStatic: false
-    Components:
-      Transform_Component:
-        name: Transform_Component
-        enabled: true
-        localPosition:
-          - 0
-          - 0
-          - 0
-        localRotation:
-          - 90
-          - -0
-          - 0
-        localScale:
-          - 0.05000000074505806
-          - 5
-          - 0.05000000074505806
-      MeshRenderer:
-        name: MeshRenderer
-        enabled: true
-        mesh:
-          name: 0
-        material:
-          name: ""
-          color:
-            - 1
-            - 0
-            - 0
-            - 1
-        color:
-          - 1
-          - 1
-          - 1
-      Shader:
-        name: Shader
-        enabled: true
-    Children: ~
-  - name: AimLaserEnd
-    prefabPath: ""
-    uuid: 1938234868609460992
-    tag: Untagged
-    active: false
-    isStatic: false
-    Components:
-      Transform_Component:
-        name: Transform_Component
-        enabled: true
-        localPosition:
-          - 0
-          - 0
-          - 0
-        localRotation:
-          - 90
-          - -0
-          - 0
-        localScale:
-          - 0.20000000298023224
-          - 0.30000001192092896
-          - 0.20000000298023224
-      MeshRenderer:
-        name: MeshRenderer
-        enabled: true
-        mesh:
-          name: 0
-        material:
-          name: ""
-          color:
-            - 1
-            - 0
-            - 0
-            - 1
-        color:
-          - 1
-          - 1
-          - 1
-      Shader:
-        name: Shader
-        enabled: true
-      LightComponent:
-        name: LightComponent
-        enabled: true
-        light_type: 1
-        ambient:
-          - 1
-          - 0
-          - 0
-        diffuse:
-          - 1
-          - 0
-          - 0
-        specular:
-          - 1
-          - 0
-          - 0
-        constant: 1
-        linear: 0.0900000036
-        quadratic: 0.0320000015
-        radius: 10
-        intensity: 100
-        direction:
-          - -1
-          - -1
-          - 0
-    Children: ~
-  - name: RedThirstFX
-    prefabPath: ""
-    uuid: 16409861770339590909
-    tag: Untagged
-    active: false
-    isStatic: false
-    Components:
-      Transform_Component:
-        name: Transform_Component
-        enabled: true
-        localPosition:
-          - 0.68289697170257568
-          - 1.6957192420959473
-          - -0.5456656813621521
-        localRotation:
-          - -5.007607779345889e-06
-          - -1.2404165759860938e-13
-          - 2.0747774946907138e-06
-        localScale:
-          - 0.99999994039535522
-          - 1
-          - 0.99999994039535522
-      ParticleFX:
-        name: ParticleFX
-        enabled: true
-        emitterShape: 0
-        emissionRate: 1
-        particlesPerSecond: 1
-        minLifetime: 1
-        maxLifetime: 1
-        minSpeed: 0
-        maxSpeed: 0
-        startSize: 0.800000012
-        endSize: 5
-        minSize: 5
-        maxSize: 5
-        startColor:
-          - 1
-          - 1
-          - 1
-        endColor:
-          - 1
-          - 1
-          - 1
-        startAlpha: 1
-        endAlpha: 1
-        rotationSpeed: 0
-        gravity:
-          - 0
-          - 0.00100000005
-          - 0
-        shapeParam1: 0.200000003
-        shapeParam2: 1
-        shapeParam3: 20
-        isOneShot: false
-        isPlaying: false
-        isPaused: false
-        burstEmitted: false
-        spriteSize:
-          - 640
-          - 360
-        useAnimation: true
-        animSpeed: 0.100000001
-        startRotation: 0
-        randomRotation: false
-        material:
-          billboardType: 0
-          particleType: 32
-          softness: 0
-          useColorGradient: false
-          texturePath: Assets/Textures/Red_Thirst_Sprite_sheet.png
-        particleType: 32
-    Children: ~
   - name: WalkingFX
     prefabPath: ""
-    uuid: 14253663289370555946
+    uuid: 3558559183425928682
     tag: Untagged
     active: true
     isStatic: false
@@ -2751,4 +2573,123 @@ Children:
           useColorGradient: false
           texturePath: Assets/Textures/Smoke30Frames.png
         particleType: 53
+    Children: ~
+  - name: RedThirstFX
+    prefabPath: ""
+    uuid: 8209926369605714351
+    tag: Untagged
+    active: false
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 3
+          - -1
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      ParticleFX:
+        name: ParticleFX
+        enabled: true
+        emitterShape: 0
+        emissionRate: 1
+        particlesPerSecond: 1
+        minLifetime: 1
+        maxLifetime: 1
+        minSpeed: 0
+        maxSpeed: 0
+        startSize: 0.800000012
+        endSize: 5
+        minSize: 5
+        maxSize: 5
+        startColor:
+          - 1
+          - 1
+          - 1
+        endColor:
+          - 1
+          - 1
+          - 1
+        startAlpha: 1
+        endAlpha: 1
+        rotationSpeed: 0
+        gravity:
+          - 0
+          - 0.00100000005
+          - 0
+        shapeParam1: 0.200000003
+        shapeParam2: 1
+        shapeParam3: 20
+        isOneShot: false
+        isPlaying: false
+        isPaused: false
+        burstEmitted: false
+        spriteSize:
+          - 640
+          - 360
+        useAnimation: true
+        animSpeed: 0.100000001
+        startRotation: 0
+        randomRotation: false
+        material:
+          billboardType: 0
+          particleType: 32
+          softness: 0
+          useColorGradient: false
+          texturePath: Assets/Textures/Red_Thirst_Sprite_sheet.png
+        particleType: 32
+    Children: ~
+  - name: AimLaser
+    prefabPath: ""
+    uuid: 10536007065216245538
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: AimLaserEnd
+    prefabPath: ""
+    uuid: 6819706601792338584
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
     Children: ~

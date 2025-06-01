@@ -64,8 +64,6 @@ bool Root::Start()
 {
 	//resourceManager->LoadResources(); // Esto no se mutea
 	//resourceManager->CreateDefaultCube(); // Esto no se mutea
-	//resourceManager->LoadTextures();
-	//resourceManager->UpdateTextures();
 	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
@@ -421,7 +419,7 @@ bool Root::Start()
 	//player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 	//player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
 	//player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-	////player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
+	//player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
 	//
 	//auto riffleShotFX = CreateGameObject("RiffleShotFX");
 	//riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
@@ -467,10 +465,14 @@ bool Root::Start()
 	//inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 	//inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
 	//
-	/*auto walkingFX = CreateGameObject("WalkingFX2");
-	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
-	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(51);*/
-	
+	//auto walkingFX = CreateGameObject("WalkingFX2");
+	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
+	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(53);
+
+	//auto redThirstFX = CreateGameObject("RedThirstFX");
+	//redThirstFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
+	//redThirstFX->AddComponent<ParticleFX>()->ApplyPreset(32);
+	//
 	////ARMAS NO TOCAR
 	//
 	//auto boltgun = CreateGameObject("Boltgun");
@@ -490,7 +492,7 @@ bool Root::Start()
 	//shotgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	//shotgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//ParentGameObject(*shotgunMesh, *shotgun);
-	////
+	//
 	//auto railgun = CreateGameObject("Railgun");
 	//railgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//auto railgunMesh = CreateGameObjectWithPath("Assets/railgun.fbx");

@@ -122,6 +122,13 @@ public class MenuButtons : MonoBehaviour
             Engineson.print("ERROR: Buttons array is null or empty.");
             return;
         }
+
+        if ((optionsCanvas != null && optionsCanvas.IsActive()) ||
+        (creditsCanvas != null && creditsCanvas.IsActive()))
+        {
+            return;
+        }
+
         long currentTime = DateTime.Now.Ticks;
 
         if (currentInputMethod != InputMethod.Mouse && currentTime - lastInputTime < 2500000)
@@ -208,14 +215,14 @@ public class MenuButtons : MonoBehaviour
         }
 
         // Detectar clic del rat�n
-        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1)|| Input.GetControllerButtonDown(ControllerButton.A))
+        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1) ||
+            Input.GetControllerButtonDown(ControllerButton.A))
         {
-            UIButton selectedButton = buttons[selectedButtonIndex];
-            selectedButton.SetState(ButtonState.CLICKED);
 
-            if (selectedButton == button_newGameButton)
+            if (selectedButtonIndex >= 0 && selectedButtonIndex < buttons.Length)
             {
-                Audio.PlayOneShot(ConfirmSFX);
+                UIButton selectedButton = buttons[selectedButtonIndex];
+                selectedButton.SetState(ButtonState.CLICKED);
                 
 
                 GameObject cinematicObj = GameObject.Find("CinematicManager");
@@ -235,9 +242,17 @@ public class MenuButtons : MonoBehaviour
                     SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
                 }
          
-            }
-            else if (selectedButton == button_continueButton)
-            {
+            
+            
+
+                if (selectedButton == button_newGameButton)
+                {
+                    Audio.PlayOneShot(ConfirmSFX);
+                    Audio.Stop(MainMenuMusic);
+                    SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
+                }
+                else if (selectedButton == button_continueButton)
+            
                 //sound?.Play(buttonStartGameFX);
                 if (SceneManager.isLevel2)
                 {
@@ -258,25 +273,23 @@ public class MenuButtons : MonoBehaviour
                     SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl1");
                 }
                 
-            }
-            else if (selectedButton == button_optionsButton)
-            {
-                //sound?.Play(buttonClickedFX);
-                Audio.PlayOneShot(MenuSFX);
-                optionsCanvas.SetActive(true);
-            }
-            else if (selectedButton == button_creditsButton)
-            {
-                Audio.PlayOneShot(MenuSFX);
-                creditsCanvas.SetActive(true);
-
-            }
-            else if (selectedButton == button_quitButton)
-            {
-                Audio.PlayOneShot(ConfirmSFX);
+            
+                else if (selectedButton == button_optionsButton)
+                {
+                    Audio.PlayOneShot(MenuSFX);
+                    optionsCanvas.SetActive(true);
+                }
+                else if (selectedButton == button_creditsButton)
+                {
+                    Audio.PlayOneShot(MenuSFX);
+                    creditsCanvas.SetActive(true);
+                }
+                else if (selectedButton == button_quitButton)
+                {
+                    Audio.PlayOneShot(ConfirmSFX);
+                }
             }
         }
-        
     }
 
     private bool IsMouseOverButton(UIButton button)

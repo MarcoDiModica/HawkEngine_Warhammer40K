@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
+using System;
 using static Railgun;
 
 public class PlayerShooting : MonoBehaviour
@@ -105,9 +106,14 @@ public class PlayerShooting : MonoBehaviour
         }
 
         rifleShotFX = GameObject.Find("RiffleShotFX").GetComponent<ParticleFX>();
+        rifleShotFX.ApplyPreset(8);
+        rifleShotFX.SetParticleStartRotation(90f);
         shotgunShotFX = GameObject.Find("ShotgunShotFX").GetComponent<ParticleFX>();
+        shotgunShotFX.ApplyPreset(8);
         railgunShotSemiFX = GameObject.Find("RailgunShotSemiFX").GetComponent<ParticleFX>();
+        railgunShotSemiFX.ApplyPreset(8);
         railgunShotAutoFX = GameObject.Find("RailgunShotAutoFX").GetComponent<ParticleFX>();
+        railgunShotAutoFX.ApplyPreset(8);
 
         boltgunMesh = GameObject.Find("Boltgun");
         shotgunMesh = GameObject.Find("Shotgun");
@@ -266,31 +272,85 @@ public class PlayerShooting : MonoBehaviour
     {
         try
         {
-            switch (currentGun)
+            Vector3 lookDir = playerInput.GetCurrentLookDirection();
+
+            if (lookDir == Vector3.Zero)
             {
-                case GunType.BOLTGUN:
-                    boltgun?.Shoot();
-                    shotgunShotFX.Stop();
-                    railgunShotAutoFX.Stop();
-                    railgunShotSemiFX.Stop();
-                    break;
-                case GunType.SHOTGUN:
-                    shotgun?.Shoot();
-                    rifleShotFX.Stop();
-                    railgunShotAutoFX.Stop();
-                    railgunShotSemiFX.Stop();
-                    break;
-                case GunType.RAILGUN:
-                    railgun?.Shoot();
-                    break;
+                lookDir = playerInput.GetCurrentMoveDirection();
             }
 
+            if (lookDir != Vector3.Zero)
+            {
+                lookDir = Vector3.Normalize(lookDir);
+                float angle = (float)(Math.Atan2(lookDir.X, lookDir.Z) * (180.0 / Math.PI)) - 45;
+                
+
+                switch (currentGun)
+                {
+                    case GunType.BOLTGUN:
+                        rifleShotFX.SetParticleStartRotation(angle);
+                        rifleShotFX.EmitBurst(1);
+                        boltgun?.Shoot();
+                        shotgunShotFX.Stop();
+                        railgunShotAutoFX.Stop();
+                        railgunShotSemiFX.Stop();
+                        break;
+
+                    case GunType.SHOTGUN:
+                        shotgunShotFX.SetParticleStartRotation(angle);
+                        shotgunShotFX.EmitBurst(1);
+                        shotgun?.Shoot();
+                        rifleShotFX.Stop();
+                        railgunShotAutoFX.Stop();
+                        railgunShotSemiFX.Stop();
+                        break;
+
+                    case GunType.RAILGUN:
+                        if (railgun.railgunMode == Railgun.RailgunMode.SEMIAUTOMATIC)
+                        {
+                            railgunShotSemiFX.SetParticleStartRotation(angle);
+                            railgunShotSemiFX.EmitBurst(1);
+                        }
+                        else
+                        {
+                            railgunShotAutoFX.SetParticleStartRotation(angle);
+                            railgunShotAutoFX.EmitBurst(1);
+                        }
+                        railgun?.Shoot();
+                        break;
+                }
+            }
+            else
+            {
+                // Si no hay direccion valida, disparar sin rotar el efecto
+                switch (currentGun)
+                {
+                    case GunType.BOLTGUN:
+                        boltgun?.Shoot();
+                        shotgunShotFX.Stop();
+                        railgunShotAutoFX.Stop();
+                        railgunShotSemiFX.Stop();
+                        break;
+
+                    case GunType.SHOTGUN:
+                        shotgun?.Shoot();
+                        rifleShotFX.Stop();
+                        railgunShotAutoFX.Stop();
+                        railgunShotSemiFX.Stop();
+                        break;
+
+                    case GunType.RAILGUN:
+                        railgun?.Shoot();
+                        break;
+                }
+            }
         }
         catch (System.Exception e)
         {
-            Engineson.print($"Error creating projectile: {e.Message}");
+            Engineson.print($"Error during Shoot(): {e.Message}");
         }
     }
+
 
     private void Reload()
     {

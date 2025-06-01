@@ -1,0 +1,139 @@
+name: Spikes
+prefabPath: Assets/Prefabs/Spikes.prefab.yaml
+uuid: 13345155798579821218
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 530.5323486328125
+      - -1.0310828685760498
+      - 24.133029937744141
+    localRotation:
+      - 176.63459894145618
+      - -35.640590521017515
+      - 179.25427369917594
+    localScale:
+      - 0.014738554716132455
+      - 0.014738549536149661
+      - 0.014738555901951189
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 6148010759548331664
+    material:
+      name: tyranid_spike_lowpoly_DefaultMaterial_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+        - 1
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  SkeletalAnimationComponent:
+    name: SkeletalAnimationComponent
+    enabled: true
+    bone_names: ~
+    animation_file: skeletal_anim_Spikes
+Children:
+  - name: 4
+    prefabPath: ""
+    uuid: 314668438701982786
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: 2
+    prefabPath: ""
+    uuid: 2156481590359834443
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: 3
+    prefabPath: ""
+    uuid: 5818726571193539247
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: 1
+    prefabPath: ""
+    uuid: 5695269947358964431
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+    Children: ~

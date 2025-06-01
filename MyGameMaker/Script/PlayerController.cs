@@ -705,7 +705,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.H))
         {
-            SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Bossfight");
+            SceneManager.LoadSceneFromCheckpoint("BossFight_Alpha1_Release");
         }
 
         if (Input.GetKeyDown(KeyCode.K))

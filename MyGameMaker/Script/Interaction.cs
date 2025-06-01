@@ -107,6 +107,11 @@ public class Interaction : MonoBehaviour
     public override void Update(float deltaTime)
     {
         timer += deltaTime;
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Audio.PlayOneShot(TextSFX);
+            SpawnDialogueText(true);
+        }
 
         if (hasChoices)
         {

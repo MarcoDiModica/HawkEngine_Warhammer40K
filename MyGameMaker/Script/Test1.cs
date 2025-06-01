@@ -62,6 +62,18 @@ public class Test1 : MonoBehaviour
             Audio.PlayOneShot(SFX_JUMP);
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            int attackId = Audio.PlayOneShot(SFX_ATTACK);
+            //soundEffects["attack"] = attackId;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            int audioo = Audio.PlayOneShot(SFX_ATTACK);
+            //soundEffects["collect"] = collectId;
+        }
+
         bool isMoving = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
                     Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
 

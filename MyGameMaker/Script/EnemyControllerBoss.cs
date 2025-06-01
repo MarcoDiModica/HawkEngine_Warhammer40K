@@ -38,8 +38,7 @@ public class EnemyControllerBoss : EnemyController
     private const string ClawClip = "Assets/Audio/Mawloc_Claw_Attack.wav";
     private const string AcidClip = "Assets/Audio/Mawloc_Acid_Attack.wav";
     private const string DeathClip = "Assets/Audio/Mawloc_Death.wav";
-    private const string BossTheme = "Assets/Audio/Music/Level2_BossFight_BossTheme_Gold.ogg";
-    private const string BossThemePhase2 = "Assets/Audio/Music/Level2_MainTheme_BossFight_Gold.ogg";
+    private const string BossTheme = "Assets/Audio/Music/Warhammer_Level2BossThemeBossFight.ogg";
 
     private bool isBossMusicPlaying = false;
     //stats
@@ -192,9 +191,7 @@ public class EnemyControllerBoss : EnemyController
                 else if (currentHealth < 1000)
                 {
                     currentPhase = BossPhase.PHASE2;
-                    Audio.Stop(BossTheme);
-                    Audio.Play(BossThemePhase2, true);
-            }
+                }
 
                 switch (currentPhase)
                 {

@@ -516,7 +516,7 @@ namespace ParticlePresets {
 	glm::vec2(641,361),			   // Sprite size
 	true,						   // Use animation
 	true,						   // Random animation Index
-	0.05f,						   // Animation speed
+	0.001f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
 	5.0f,						   // Min scale

@@ -28,6 +28,7 @@ public class Ball : MonoBehaviour
         GetComponent<Transform>().SetScale(2.0f, 2.0f, 2.0f);
         AddComponent<BoxCollider>();
         AddComponent<Rigidbody>();
+        AddComponent<ParticleFX>();
         rigidbody = GetComponent<Rigidbody>();
         rigidbody.SetMass(0.05f);
         rigidbody.SetGravity(new Vector3(0.0f, 0.0f, 0.0f) * 20);
@@ -63,21 +64,33 @@ public class Ball : MonoBehaviour
         {
             case "Melee":
                 other.GetComponent<EnemyControllerMelee>()?.TakeDamage(damage);
+                GetComponent<ParticleFX>().ApplyPreset(50);
+                GetComponent<ParticleFX>().EmitBurst(1);
                 break;
             case "Ranged":
                 other.GetComponent<EnemyControllerRanged>()?.TakeDamage(damage);
+                GetComponent<ParticleFX>().ApplyPreset(50);
+                GetComponent<ParticleFX>().EmitBurst(1);
                 break;
             case "Stalker":
                 other.GetComponent<EnemyControllerStalker>()?.TakeDamage(damage);
+                GetComponent<ParticleFX>().ApplyPreset(50);
+                GetComponent<ParticleFX>().EmitBurst(1);
                 break;
             case "Boss":
                 other.GetComponent<EnemyControllerBoss>()?.TakeDamage(damage);
+                GetComponent<ParticleFX>().ApplyPreset(50);
+                GetComponent<ParticleFX>().EmitBurst(1);
                 break;
             case "Warrior":
                 other.GetComponent<EnemyControllerWarrior>()?.TakeDamage(damage);
+                GetComponent<ParticleFX>().ApplyPreset(50);
+                GetComponent<ParticleFX>().EmitBurst(1);
                 break;
             case "Destroyable":
                 other.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
+                GetComponent<ParticleFX>().ApplyPreset(50);
+                GetComponent<ParticleFX>().EmitBurst(1);
                 break;
         }
     }

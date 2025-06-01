@@ -39,7 +39,7 @@ public class EnemyControllerBoss : EnemyController
     private const string ClawClip = "Assets/Audio/Mawloc_Claw_Attack.wav";
     private const string AcidClip = "Assets/Audio/Mawloc_Acid_Attack.wav";
     private const string DeathClip = "Assets/Audio/Mawloc_Death.wav";
-    private const string BossTheme = "Assets/Audio/Music/Warhammer_Level2BossThemeBossFight.ogg";
+    private const string BossTheme = "Assets/Audio/Music/Warhammer_Level2_BossFight_Part1.ogg";
 
     private bool isBossMusicPlaying = false;
     //stats

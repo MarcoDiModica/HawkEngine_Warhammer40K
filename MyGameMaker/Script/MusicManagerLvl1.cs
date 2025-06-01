@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 public class MusicManagerLvl1 : MonoBehaviour
 {
     
-    private string lvl1music = "Assets/Audio/Music/Warhammer_Level1.ogg";
-    private string lvl1townmusic = "Assets/Audio/Music/Warhammer_Level1Church.ogg";
-    private string lvl1pathmusic = "Assets/Audio/Music/Warhammer_Level1Boss.ogg";
-    private string lvl1crashsmusic = "Assets/Audio/Music/Warhammer_Level1Boss.ogg";
+    private string lvl1music = "Assets/Audio/Music/Warhammer_Level1_RuinedCity.ogg";
+    private string lvl1townmusic = "Assets/Audio/Music/Warhammer_Level1_RuinedTown.ogg";
+    private string lvl1pathmusic = "Assets/Audio/Music/Warhammer_Level1_Pathway.ogg";
+    private string lvl1crashsmusic = "Assets/Audio/Music/Warhammer_Level1_CrashedShip.ogg";
 
     private GameObject townGO;
     private GameObject pathGO;
@@ -17,8 +17,8 @@ public class MusicManagerLvl1 : MonoBehaviour
     public override void Start()
     {
         Audio.Play(lvl1music, true);
-        townGO = GameObject.Find("churchCollider");
-        crashGO = GameObject.Find("hallwayBossCollider");
+        townGO = GameObject.Find("townCollider");
+        crashGO = GameObject.Find("crashCollider");
         pathGO = GameObject.Find("pathCollider");
 
     }

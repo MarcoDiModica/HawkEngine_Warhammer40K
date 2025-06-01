@@ -1129,9 +1129,9 @@ GameObject10:
             - -11.527710914611816
             - 144.69508361816406
           localRotation:
-            - 90.000038965520773
-            - 81.889368191963001
-            - -179.9999182386461
+            - 90.000064823300008
+            - 81.889443872189503
+            - -179.99989580453587
           localScale:
             - 4.3183484077453613
             - 6.8110980987548828
@@ -1423,9 +1423,9 @@ GameObject10:
             - -35.877773284912109
             - 3.1861171722412109
           localRotation:
-            - -90.000006947022655
-            - -68.954342120760089
-            - -6.9470226572472448e-06
+            - -89.99999966693828
+            - -68.954355277239088
+            - -9.0168396474099158e-06
           localScale:
             - 6.9018840789794922
             - 6.9018840789794922
@@ -3337,9 +3337,9 @@ GameObject12:
             - 24.198019027709961
             - 139.26609802246094
           localRotation:
-            - -146.79526645871428
-            - 87.994926185944038
-            - 17.006653621160503
+            - -146.79526487349568
+            - 87.994775936021156
+            - 17.006674252564441
           localScale:
             - 51.601947784423828
             - 51.601947784423828
@@ -3421,9 +3421,9 @@ GameObject12:
             - 30.123611450195312
             - 142.57989501953125
           localRotation:
-            - 37.038516034537885
-            - 81.597561563440877
-            - -128.79308894643566
+            - 37.038513938623765
+            - 81.59748094594292
+            - -128.79307543072335
           localScale:
             - 45.338413238525391
             - 45.338409423828125
@@ -3463,9 +3463,9 @@ GameObject12:
             - 12.570405006408691
             - 129.93734741210938
           localRotation:
-            - -146.79471929269874
-            - 87.995718689591115
-            - 17.007177041512527
+            - -146.79477356122942
+            - 87.995680150861276
+            - 17.00716641086251
           localScale:
             - 51.601955413818359
             - 51.601959228515625
@@ -4087,7 +4087,7 @@ GameObject22:
   prefabPath: Assets\Prefabs\Canvas_HUD.prefab.yaml
   uuid: 8130023804441661030
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -4964,7 +4964,7 @@ GameObject22:
             - 1
             - 1
       Children: ~
-    - name: boltgun_ability_1
+    - name: boltgun_ability
       prefabPath: ""
       uuid: 7226111253171644170
       tag: Untagged
@@ -4990,16 +4990,16 @@ GameObject22:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.848999977
-            - 0.889999986
+            - 0.856999993
+            - 0.864000022
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.023
-            - 0.0500000007
+            - 0.0399999991
+            - 0.0799999982
             - 1
           pivot_offset:
             - 0
@@ -5028,135 +5028,7 @@ GameObject22:
             - 1
             - 1
       Children: ~
-    - name: boltgun_ability_2
-      prefabPath: ""
-      uuid: 6889533685794486519
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.875999987
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_chainballs.png
-          use_animation: false
-          sprite_size:
-            - 114
-            - 125
-          sheet_size:
-            - 114
-            - 125
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: shotgun_ability_1
-      prefabPath: ""
-      uuid: 3246280818281522766
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.848999977
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_hook.png
-          use_animation: false
-          sprite_size:
-            - 0
-            - 0
-          sheet_size:
-            - 116
-            - 125
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: shotgun_ability_2
+    - name: shotgun_ability
       prefabPath: ""
       uuid: 5991966621356209688
       tag: Untagged
@@ -5182,16 +5054,16 @@ GameObject22:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.875999987
-            - 0.889999986
+            - 0.856999993
+            - 0.864000022
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.023
-            - 0.0500000007
+            - 0.0399999991
+            - 0.0799999982
             - 1
           pivot_offset:
             - 0
@@ -5220,71 +5092,7 @@ GameObject22:
             - 1
             - 1
       Children: ~
-    - name: railgun_ability_1
-      prefabPath: ""
-      uuid: 12941715311931944973
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.848999977
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_railgun_reload.png
-          use_animation: false
-          sprite_size:
-            - 0
-            - 0
-          sheet_size:
-            - 114
-            - 125
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: railgun_ability_2a
+    - name: railgun_ability
       prefabPath: ""
       uuid: 7228281880689251386
       tag: Untagged
@@ -5310,16 +5118,16 @@ GameObject22:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.875999987
-            - 0.889999986
+            - 0.856999993
+            - 0.864000022
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.023
-            - 0.0500000007
+            - 0.0399999991
+            - 0.0799999982
             - 1
           pivot_offset:
             - 0
@@ -5329,70 +5137,6 @@ GameObject22:
           name: UIImageComponent
           enabled: true
           texture_path: Library/Textures/UI/powerup_railgun_Eball.png
-          use_animation: false
-          sprite_size:
-            - 0
-            - 0
-          sheet_size:
-            - 114
-            - 125
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: railgun_ability_2b
-      prefabPath: ""
-      uuid: 15743453786480257795
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.875999987
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_railgun_shot.png
           use_animation: false
           sprite_size:
             - 0
@@ -5464,70 +5208,6 @@ GameObject22:
           sheet_size:
             - 326
             - 161
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: frames
-      prefabPath: ""
-      uuid: 4488032847570964638
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.847000003
-            - 0.887000024
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0529999994
-            - 0.057
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_frame.png
-          use_animation: false
-          sprite_size:
-            - 292
-            - 152
-          sheet_size:
-            - 292
-            - 152
           sprite_offset:
             - 0
             - 0
@@ -6169,10 +5849,10 @@ GameObject22:
             - 1225
             - 40
           sprite_offset:
-            - 350
+            - 175
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 1
           anim_index_limit: 6
           color:
             - 1
@@ -6297,10 +5977,10 @@ GameObject22:
             - 250
             - 80
           sprite_offset:
-            - 150
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 3
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 1
@@ -6425,10 +6105,10 @@ GameObject22:
             - 250
             - 80
           sprite_offset:
-            - 150
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 3
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 1
@@ -7467,6 +7147,134 @@ GameObject22:
           spriteOffset:
             - 0
             - 0
+      Children: ~
+    - name: CDBar
+      prefabPath: ""
+      uuid: 18236396951390873568
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.856999993
+            - 0.940999985
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0430000015
+            - 0.0759999901
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/default.png
+          use_animation: false
+          sprite_size:
+            - 1024
+            - 1024
+          sheet_size:
+            - 1024
+            - 1024
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 0
+            - 0
+            - 0
+            - 0.671000004
+      Children: ~
+    - name: frames
+      prefabPath: ""
+      uuid: 4488032847570964638
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.853999972
+            - 0.860000014
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0469999984
+            - 0.0869999975
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\powerup_frame2.png
+          use_animation: false
+          sprite_size:
+            - 136
+            - 152
+          sheet_size:
+            - 136
+            - 152
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
 GameObject23:
   name: Canvas_Interaction
@@ -10838,6 +10646,7 @@ GameObject27:
         fields:
           enabled: false
           cooldown: 0
+          hudGO: Canvas_HUD
           canThrow: true
           needsDestroy: false
       Script9:

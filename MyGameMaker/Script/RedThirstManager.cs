@@ -203,6 +203,16 @@ public class RedThirstManager : MonoBehaviour
         playerController.playerData.blackRageSpeed = redThirstBonus;
         playerController.playerDash.canDash = false;
         Angy.Play();
+        GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
+        gameObject.AddChild(redThirstVFX);
+        redThirstVFX.AddComponent<ParticleFX>();
+        ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
+        if (particleFX != null)
+        {
+            particleFX.ApplyPreset(32);
+            //particleFX.EmitBurst(100);
+            particleFX.EmitBurst(10);
+        }
 
     }
     private void DeactivateBlackRage()

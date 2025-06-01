@@ -64,11 +64,11 @@ bool Root::Start()
 	//resourceManager->LoadResources();
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
-	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
 	
 	//Application->scene_serializer->DeSerialize("Library/Scenes/lijt.scene");
 
-	return true;
+	//return true;
 	
 	auto env = CreateGameObjectWithPath("Assets/FBX/Level2_Zone1.fbx");
 	env->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));

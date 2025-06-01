@@ -79,42 +79,42 @@ protected:
         return node;
     }
 
-    bool decode(const YAML::Node& node) override {
-        if (node["mesh"]) {
-            std::shared_ptr<Mesh> loadedMesh = std::make_shared<Mesh>();
-            YAML::Node matnode = node["mesh"];
-            std::string name = matnode["name"].as<std::string>();
-            if (Application->root->GetResourceManager()->GetMesh(std::stoull(name)) != nullptr)
-            {
-                SetMesh(Application->root->GetResourceManager()->GetMesh(std::stoull(name)));
-            }
-            else
-            {
+	/*bool decode(const YAML::Node& node) override {
+		if (node["mesh"]) {
+			std::shared_ptr<Mesh> loadedMesh = std::make_shared<Mesh>();
+			YAML::Node matnode = node["mesh"];
+			std::string name = matnode["name"].as<std::string>();
+			if (Application->root->GetResourceManager()->GetMesh(std::stoull(name)) != nullptr)
+			{
+				SetMesh(Application->root->GetResourceManager()->GetMesh(std::stoull(name)));
+			}
+			else
+			{
 				loadedMesh = std::make_shared<Mesh>();
-                if (!loadedMesh->decode(node["mesh"])) {
-                    LOG(LogType::LOG_ERROR, "Failed to decode mesh in MeshRenderer");
-                    return false;
-                }
-                SetMesh(Application->root->GetResourceManager()->AddMesh(loadedMesh));
-            }
-        }
+				if (!loadedMesh->decode(node["mesh"])) {
+					LOG(LogType::LOG_ERROR, "Failed to decode mesh in MeshRenderer");
+					return false;
+				}
+				SetMesh(Application->root->GetResourceManager()->AddMesh(loadedMesh));
+			}
+		}
 
-        if (node["material"]) {
-            std::shared_ptr<Material> loadedMaterial;
+		if (node["material"]) {
+			std::shared_ptr<Material> loadedMaterial;
 			YAML::Node matnode = node["material"];
-            std::string name = matnode["name"].as<std::string>();
-            loadedMaterial = std::make_shared<Material>();
-            if (!loadedMaterial->decode(node["material"])) {
-                LOG(LogType::LOG_ERROR, "Failed to decode material in MeshRenderer");
-                return false;
-            } 
-            SetMaterial(loadedMaterial);
-        }
+			std::string name = matnode["name"].as<std::string>();
+			loadedMaterial = std::make_shared<Material>();
+			if (!loadedMaterial->decode(node["material"])) {
+				LOG(LogType::LOG_ERROR, "Failed to decode material in MeshRenderer");
+				return false;
+			}
+			SetMaterial(loadedMaterial);
+		}
 
 		node["color"] = std::vector<float>{ color.x, color.y, color.z };
 
 		return node;
-	}
+	}*/
 
 	bool decode(const YAML::Node& node) override {
 		if (node["meshID"] && !node["meshID"].as<std::string>().empty()) {

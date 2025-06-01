@@ -146,10 +146,10 @@ void TextComponent::Render() const {
     }
 
     customShader->Bind();
-    customShader->SetUniform("projection", orthoProjection);
-    customShader->SetUniform("view", viewMatrix);
-    customShader->SetUniform("model", modelMatrix);
-    customShader->SetUniform("modColor", glm::vec4(m_color, 1.0f));
+    customShader->SetUniformMat4("projection", orthoProjection);
+    customShader->SetUniformMat4("view", viewMatrix);
+    customShader->SetUniformMat4("model", modelMatrix);
+    customShader->SetUniformVec4("modColor", glm::vec4(m_color, 1.0f));
 
     FontManager::GetInstance().RenderTextBoxedWithShader(customShader, m_text, renderPosition.x, renderPosition.y, scaleFactor, m_spaceWidth, m_boxSize);
     customShader->UnBind();

@@ -174,7 +174,7 @@ protected:
 			}
 		}
 
-		while (fin.peek() != EOF) {
+		/*while (fin.peek() != EOF) {
 			char type[4];
 			fin.read(type, 3);
 			type[3] = '\0';
@@ -207,7 +207,7 @@ protected:
 			else if (strcmp(type, "AOM") == 0) {
 				setAoMap(img);
 			}
-		}
+		}*/
 
 		//LOG(LogType::LOG_INFO, "Material loaded successfully: %s", fullPath.c_str());
 

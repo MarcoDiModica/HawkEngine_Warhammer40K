@@ -102,9 +102,9 @@ protected:
        YAML::Node node = Component::encode();  
 
        node["use_animation"] = useAnimation;  
-       node["sprite_size"] = std::vector<float>{spriteSize.x, spriteSize.y};  
-       node["sheet_size"] = std::vector<float>{sheetSize.x, sheetSize.y};  
-       node["sprite_offset"] = std::vector<float>{spriteOffset.x, spriteOffset.y};  
+       node["sprite_size"] = std::vector<float>{ material->spriteSize.x, material->spriteSize.y};
+       node["sheet_size"] = std::vector<float>{ material->sheetSize.x, material->sheetSize.y};
+       node["sprite_offset"] = std::vector<float>{ material->spriteOffset.x, material->spriteOffset.y};
        node["anim_speed"] = animSpeed; 
 	   node["anim_index"] = animIndex;
 	   node["anim_index_limit"] = anim1IndexLimit;

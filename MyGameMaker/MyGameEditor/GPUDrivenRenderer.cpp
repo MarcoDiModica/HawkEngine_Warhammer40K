@@ -294,6 +294,7 @@ void GPUDrivenRenderer::RenderShadowBatch(const ShaderBatch& batch, glm::mat4 li
 	shader->SetUniformMat4("lightSpaceMatrix", lightSpaceMatrix);
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 7, BindlessManager::GetInstance().GetBoneMatricesBuffer());
 
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
 		uint32_t meshIndex = batch.meshIndices[i];
@@ -301,9 +302,6 @@ void GPUDrivenRenderer::RenderShadowBatch(const ShaderBatch& batch, glm::mat4 li
 		
 		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
 		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
-		
-
-
 
 		if (!meshData || !materialData) continue;
 
@@ -482,6 +480,7 @@ void GPUDrivenRenderer::RenderPBRBatch(
 	LOG(LogType::LOG_INFO, "Forward+ Uniform State: %d", uniformCheck);
 
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetInstanceBuffer());
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 7, BindlessManager::GetInstance().GetBoneMatricesBuffer());
 
 	bindlessErrorDetected = true;
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {

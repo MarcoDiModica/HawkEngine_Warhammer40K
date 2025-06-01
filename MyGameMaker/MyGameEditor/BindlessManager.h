@@ -62,9 +62,11 @@ struct GPUInstance {
 	uint32_t meshIndex;
 	uint32_t materialIndex;
 	uint32_t objectId;
-	uint32_t flags;
-	glm::mat4 boneMatrices[200];
-	};
+	uint32_t flags;     
+	uint32_t boneOffset;
+	uint32_t boneCount; 
+	uint32_t padding[2];
+};
 
 //int isAnimated;
 
@@ -132,7 +134,12 @@ public:
 		return false;
 	}
 
-	glm::mat4 realBonesMatrices[200]; // Matrices for bone animations, size can be adjusted as needed
+	uint32_t AllocateBoneMatrices(uint32_t count);
+	void UpdateBoneMatrices(uint32_t offset, const std::vector<glm::mat4>& matrices);
+	void ResetBoneMatricesPool();
+	GLuint GetBoneMatricesBuffer() const { return boneMatricesBuffer; }
+
+	glm::mat4 realBonesMatrices[200];
 
 private:
 	BindlessManager() = default;
@@ -149,11 +156,13 @@ private:
 	GLuint meshBuffer = 0;
 	GLuint materialBuffer = 0;
 	GLuint instanceBuffer = 0;
+	GLuint boneMatricesBuffer = 0;
 	GLsync fence = nullptr;
 
 	std::vector<GPUMesh> meshes;
 	std::vector<GPUMaterial> materials;
 	std::vector<GPUInstance> instances;
+	std::vector<glm::mat4> boneMatrices;
 
 	std::unordered_map<const Mesh*, uint32_t> meshIndices;
 	std::unordered_map<const Material*, uint32_t> materialIndices;
@@ -161,6 +170,9 @@ private:
 
 	std::unordered_map<const Material*, uint64_t> materialHashes;
 
+	uint32_t currentBoneOffset = 0;
+
+	static constexpr size_t MAX_BONE_MATRICES = 10000;
 	static constexpr size_t MAX_MESHES = 1024;
 	static constexpr size_t MAX_MATERIALS = 1024;
 	static constexpr size_t MAX_INSTANCES = 1000;

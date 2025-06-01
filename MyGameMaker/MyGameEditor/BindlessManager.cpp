@@ -24,6 +24,7 @@ bool BindlessManager::Initialize() {
 	meshes.reserve(MAX_MESHES);
 	materials.reserve(MAX_MATERIALS);
 	instances.reserve(MAX_INSTANCES);
+	boneMatrices.reserve(MAX_BONE_MATRICES);
 
 	meshBuffer = CreateStorageBuffer(MAX_MESHES * sizeof(GPUMesh),
 		GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
@@ -31,8 +32,10 @@ bool BindlessManager::Initialize() {
 		GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
 	instanceBuffer = CreateStorageBuffer(MAX_INSTANCES * sizeof(GPUInstance),
 		GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
+	boneMatricesBuffer = CreateStorageBuffer(MAX_BONE_MATRICES * sizeof(glm::mat4),
+		GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
 
-	if (!meshBuffer || !materialBuffer || !instanceBuffer) {
+	if (!meshBuffer || !materialBuffer || !instanceBuffer || !boneMatricesBuffer) {
 		LOG(LogType::LOG_ERROR, "Error: No se pudieron crear los buffers de almacenamiento");
 		Shutdown();
 		return false;
@@ -55,6 +58,7 @@ void BindlessManager::Shutdown() {
 	if (meshBuffer) glDeleteBuffers(1, &meshBuffer);
 	if (materialBuffer) glDeleteBuffers(1, &materialBuffer);
 	if (instanceBuffer) glDeleteBuffers(1, &instanceBuffer);
+	if (boneMatricesBuffer) glDeleteBuffers(1, &boneMatricesBuffer);
 
 	if (fence) {
 		glDeleteSync(fence);
@@ -64,6 +68,7 @@ void BindlessManager::Shutdown() {
 	meshBuffer = 0;
 	materialBuffer = 0;
 	instanceBuffer = 0;
+	boneMatricesBuffer = 0;
 
 	if (fallbackTextureID) {
 		glDeleteTextures(1, &fallbackTextureID);
@@ -91,6 +96,9 @@ void BindlessManager::Shutdown() {
 	meshIndices.clear();
 	materialIndices.clear();
 	materialHashes.clear();
+	boneMatrices.clear();
+	
+	currentBoneOffset = 0;
 }
 
 uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
@@ -639,6 +647,19 @@ void BindlessManager::UpdateBuffers() {
 				glGetError());
 		}
 	}
+
+	if (!boneMatrices.empty() && currentBoneOffset > 0) {
+		size_t requiredSize = currentBoneOffset * sizeof(glm::mat4);
+		void* mappedData = glMapNamedBuffer(boneMatricesBuffer, GL_WRITE_ONLY);
+		if (mappedData) {
+			memcpy(mappedData, boneMatrices.data(), requiredSize);
+			glUnmapNamedBuffer(boneMatricesBuffer);
+		}
+		else {
+			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de matrices de huesos (Error: 0x%X)",
+				glGetError());
+		}
+	}
 }
 
 void BindlessManager::EndFrame() {
@@ -650,6 +671,7 @@ void BindlessManager::EndFrame() {
 
 void BindlessManager::ClearInstances() {
 	instances.clear();
+	ResetBoneMatricesPool();
 }
 
 GLuint BindlessManager::CreateStorageBuffer(size_t size, GLenum usage) {
@@ -814,4 +836,33 @@ void BindlessManager::CreateFallbackCubeMesh() {
 	fallbackMesh.vertexCount = 8;
 	fallbackMesh.meshId = UINT32_MAX;
 	fallbackMesh.attributeFlags = (1 << 0) | (1 << 1) | (1 << 2); // Has positions, normals, texcoords
+}
+
+uint32_t BindlessManager::AllocateBoneMatrices(uint32_t count) {
+	if (currentBoneOffset + count > MAX_BONE_MATRICES) {
+		LOG(LogType::LOG_WARNING, "Warning: No hay espacio suficiente para %u matrices de huesos", count);
+		return UINT32_MAX;
+	}
+
+	uint32_t offset = currentBoneOffset;
+	currentBoneOffset += count;
+
+	if (boneMatrices.size() < currentBoneOffset) {
+		boneMatrices.resize(currentBoneOffset);
+	}
+
+	return offset;
+}
+
+void BindlessManager::UpdateBoneMatrices(uint32_t offset, const std::vector<glm::mat4>& matrices) {
+	if (offset == UINT32_MAX || offset + matrices.size() > boneMatrices.size()) {
+		LOG(LogType::LOG_ERROR, "Error: Offset de matrices de huesos inválido");
+		return;
+	}
+
+	std::copy(matrices.begin(), matrices.end(), boneMatrices.begin() + offset);
+}
+
+void BindlessManager::ResetBoneMatricesPool() {
+	currentBoneOffset = 0;
 }

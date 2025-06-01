@@ -251,20 +251,41 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 				instance.meshIndex = meshIndex;
 				instance.materialIndex = materialIndex;
 				instance.objectId = gameObject->GetID().GetValue();
-				instance.flags = 0;
-			//	instance.isAnimated = 0;
-				
-				if (gameObject->HasComponent<SkeletalAnimationComponent>()) 
-				{
-					//instance.isAnimated = 1;
-                    instance.flags = 1;
-					for (int i = 0; i < MAX_BONES; ++i) {
-						instance.boneMatrices[i] = gameObject->GetComponent<SkeletalAnimationComponent>()->GetAnimator()->GetFinalBoneMatrices().at(i);
+
+				if (gameObject->HasComponent<SkeletalAnimationComponent>()) {
+					instance.flags = 1;
+
+					auto* skelAnim = gameObject->GetComponent<SkeletalAnimationComponent>();
+					auto* animator = skelAnim->GetAnimator();
+
+					if (animator) {
+						const auto& bones = animator->GetFinalBoneMatrices();
+
+						instance.boneOffset = BindlessManager::GetInstance().AllocateBoneMatrices(bones.size());
+						instance.boneCount = bones.size();
+
+						if (instance.boneOffset != UINT32_MAX) {
+							BindlessManager::GetInstance().UpdateBoneMatrices(instance.boneOffset, bones);
+						}
+						else {
+							instance.flags = 0;
+							instance.boneOffset = 0;
+							instance.boneCount = 0;
+						}
 					}
+					else {
+						instance.flags = 0;
+						instance.boneOffset = 0;
+						instance.boneCount = 0;
+					}
+				}
+				else {
+					instance.flags = 0;
+					instance.boneOffset = 0;
+					instance.boneCount = 0;
 				}
 
 				MeshMaterialKey key{ meshIndex, materialIndex };
-
 				instanceGroups[key].push_back(instance);
 			}
 		}
@@ -291,9 +312,10 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 					instance.materialIndex = materialIndex;
 					instance.objectId = gameObject->GetID().GetValue();
 					instance.flags = 0;
+					instance.boneOffset = 0;
+					instance.boneCount = 0;
 
 					MeshMaterialKey key{ meshIndex, materialIndex };
-
 					instanceGroups[key].push_back(instance);
 				}
 			}

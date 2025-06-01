@@ -19,11 +19,17 @@ struct InstanceData {
     uint materialIndex;
     uint objectId;
     uint flags;
-    mat4 boneMatrices[200];
+    uint boneOffset;
+    uint boneCount;
+    uint padding[2];
 };
 
 layout(std430, binding = 0) readonly buffer InstanceBuffer {
     InstanceData instances[]; 
+};
+
+layout(std430, binding = 7) readonly buffer BoneMatricesBuffer {
+    mat4 boneMatrices[];
 };
 
 uniform mat4 view;
@@ -53,25 +59,47 @@ void main() {
     
     vec4 tPos = vec4(position, 1.0);
     vec3 tNormal = normal;
+    vec3 tTangent = tangent;
+    vec3 tBitangent = bitangent;
 
-    if (data.flags == 1) { // Check if the instance is animated
-        // Apply bone transformations to the position
-        mat4 BoneTransform = data.boneMatrices[boneIds[0]] * weights[0];
-        BoneTransform += data.boneMatrices[boneIds[1]] * weights[1];
-        BoneTransform += data.boneMatrices[boneIds[2]] * weights[2];
-        BoneTransform += data.boneMatrices[boneIds[3]] * weights[3];
-        tPos = BoneTransform * vec4(position, 1.0);
-
-        // Apply bone transformations to the normal
-        tNormal = mat3(BoneTransform) * normal;
-    
-
+    if ((data.flags & 1u) == 1u) {
+        uint boneBase = data.boneOffset;
+        
+        vec4 normalizedWeights = weights;
+        float weightSum = weights[0] + weights[1] + weights[2] + weights[3];
+        
+        if (weightSum > 0.0) {
+            normalizedWeights /= weightSum;
+            
+            mat4 BoneTransform = mat4(0.0);
+            
+            for (int i = 0; i < 4; i++) {
+                if (normalizedWeights[i] > 0.001) {
+                    uint boneIndex = uint(boneIds[i]);
+                    if (boneIndex < data.boneCount) {
+                        BoneTransform += boneMatrices[boneBase + boneIndex] * normalizedWeights[i];
+                    }
+                }
+            }
+            
+            if (BoneTransform[3][3] == 0.0) {
+                BoneTransform = mat4(1.0);
+            }
+            
+            tPos = BoneTransform * vec4(position, 1.0);
+            
+            mat3 normalTransform = mat3(BoneTransform);
+            tNormal = normalTransform * normal;
+            tTangent = normalTransform * tangent;
+            tBitangent = normalTransform * bitangent;
+        }
     }
+    
     vs_out.TexCoord = texCoord;
     
     vs_out.Normal = normalize(normalMatrix * tNormal);
-    vs_out.Tangent = normalize(normalMatrix * tangent);
-    vs_out.Bitangent = normalize(normalMatrix * bitangent);
+    vs_out.Tangent = normalize(normalMatrix * tTangent);
+    vs_out.Bitangent = normalize(normalMatrix * tBitangent);
     vs_out.TBN = mat3(vs_out.Tangent, vs_out.Bitangent, vs_out.Normal);
 
     vs_out.CameraPos = cameraPos;
@@ -80,11 +108,11 @@ void main() {
     
     if (u_HasHeightMap == 1 && heightScale > 0.0) {
         float height = texture(heightMap, texCoord).r;
-        vec3 normal = normalize(normal);
-        positionOffset += normal * (height * heightScale);
+        positionOffset += tNormal * (height * heightScale);
     }
+    
     vs_out.FragPos = vec3(model * vec4(positionOffset, 1.0));
     vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
     
-    gl_Position = projection * view * model * tPos;
+    gl_Position = projection * view * vec4(vs_out.FragPos, 1.0);
 }

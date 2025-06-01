@@ -6,6 +6,7 @@
 #include <string>
 #include <memory>
 #include <glm/glm.hpp>
+#include <unordered_set>
 #include "Log.h"
 #include "MyGameEngine/Model.h"
 #include "../MyGameEngine/Shaders.h" 
@@ -68,8 +69,10 @@ struct GPUInstance {
 	uint32_t padding[2];
 };
 
-//int isAnimated;
-
+struct BufferUpdateRange {
+	uint32_t offset;
+	uint32_t count;
+};
 
 class BindlessManager {
 public:
@@ -141,6 +144,14 @@ public:
 
 	glm::mat4 realBonesMatrices[200];
 
+	//dirty funcs
+	void MarkMaterialDirty(uint32_t index);
+	void MarkMeshDirty(uint32_t index);
+	void AddInstanceUpdateRange(uint32_t offset, uint32_t count);
+	void AddBoneMatrixUpdateRange(uint32_t offset, uint32_t count);
+	void UpdateBuffersIncremental();
+	void NextFrame();
+
 private:
 	BindlessManager() = default;
 	~BindlessManager() = default;
@@ -177,7 +188,20 @@ private:
 	static constexpr size_t MAX_MATERIALS = 1024;
 	static constexpr size_t MAX_INSTANCES = 1000;
 
+	//dirty buffers
+	std::unordered_set<uint32_t> dirtyMaterials;
+	std::unordered_set<uint32_t> dirtyMeshes;
 
+	std::vector<BufferUpdateRange> instanceUpdateRanges;
+	std::vector<BufferUpdateRange> boneMatrixUpdateRanges;
+
+	bool meshBufferDirty = false;
+	bool materialBufferDirty = false;
+	bool instanceBufferDirty = false;
+	bool boneBufferDirty = false;
+
+	uint32_t currentFrameIndex = 0;
+	static constexpr uint32_t FRAME_COUNT = 3;
 
 	GLuint fallbackTextureID = 0;
 	BindlessHandle fallbackTextureHandle;

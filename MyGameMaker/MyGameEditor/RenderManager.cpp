@@ -329,7 +329,6 @@ void RenderManager::CreateInstanceGroups() {
 		const auto& instances = group.second;
 
 		if (!instances.empty()) {
-
 			GPUDrivenRenderer::GetInstance().AddInstanceGroup(
 				key.meshIndex,
 				key.materialIndex,

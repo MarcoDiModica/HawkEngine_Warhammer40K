@@ -434,6 +434,7 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 		if (HasMaterialChanged(material)) {
 			LOG(LogType::LOG_INFO, "Material registrado ha cambiado, actualizando: Idx=%u", it->second);
 			UpdateMaterial(material);
+			MarkMaterialDirty(it->second);
 		}
 		return it->second;
 	}
@@ -451,6 +452,8 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 	materialIndices[material] = index;
 
 	materialHashes[material] = CalculateMaterialHash(material);
+
+	MarkMaterialDirty(index);
 
 	return index;
 }
@@ -474,6 +477,8 @@ bool BindlessManager::UpdateMaterial(const Material* material) {
 
 	materialHashes[material] = CalculateMaterialHash(material);
 
+	MarkMaterialDirty(materialIndex);
+
 	return true;
 }
 
@@ -490,6 +495,9 @@ uint32_t BindlessManager::AddInstance(const GPUInstance& instance) {
 
 	uint32_t index = static_cast<uint32_t>(instances.size());
 	instances.push_back(instance);
+
+	AddInstanceUpdateRange(index, 1);
+
 	return index;
 }
 
@@ -598,68 +606,11 @@ void BindlessManager::ReleaseTextureHandle(BindlessHandle& handle) {
 }
 
 void BindlessManager::UpdateBuffers() {
-	if (fence) {
-		GLenum result = glClientWaitSync(fence, GL_SYNC_FLUSH_COMMANDS_BIT, 16666000); // 16.6ms timeout (60fps)
+	UpdateBuffersIncremental();
+}
 
-		if (result == GL_TIMEOUT_EXPIRED) {
-			LOG(LogType::LOG_WARNING, "UpdateBuffers: Timeout esperando a que la GPU libere el buffer");
-		}
-
-		glDeleteSync(fence);
-		fence = nullptr;
-	}
-
-	if (!meshes.empty()) {
-		size_t requiredSize = meshes.size() * sizeof(GPUMesh);
-		void* mappedData = glMapNamedBuffer(meshBuffer, GL_WRITE_ONLY);
-		if (mappedData) {
-			memcpy(mappedData, meshes.data(), requiredSize);
-			glUnmapNamedBuffer(meshBuffer);
-		}
-		else {
-			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de mallas (Error: 0x%X)",
-				glGetError());
-		}
-	}
-
-	if (!materials.empty()) {
-		size_t requiredSize = materials.size() * sizeof(GPUMaterial);
-		void* mappedData = glMapNamedBuffer(materialBuffer, GL_WRITE_ONLY);
-		if (mappedData) {
-			memcpy(mappedData, materials.data(), requiredSize);
-			glUnmapNamedBuffer(materialBuffer);
-		}
-		else {
-			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de materiales (Error: 0x%X)",
-				glGetError());
-		}
-	}
-
-	if (!instances.empty()) {
-		size_t requiredSize = instances.size() * sizeof(GPUInstance);
-		void* mappedData = glMapNamedBuffer(instanceBuffer, GL_WRITE_ONLY);
-		if (mappedData) {
-			memcpy(mappedData, instances.data(), requiredSize);
-			glUnmapNamedBuffer(instanceBuffer);
-		}
-		else {
-			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de instancias (Error: 0x%X)",
-				glGetError());
-		}
-	}
-
-	if (!boneMatrices.empty() && currentBoneOffset > 0) {
-		size_t requiredSize = currentBoneOffset * sizeof(glm::mat4);
-		void* mappedData = glMapNamedBuffer(boneMatricesBuffer, GL_WRITE_ONLY);
-		if (mappedData) {
-			memcpy(mappedData, boneMatrices.data(), requiredSize);
-			glUnmapNamedBuffer(boneMatricesBuffer);
-		}
-		else {
-			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de matrices de huesos (Error: 0x%X)",
-				glGetError());
-		}
-	}
+void BindlessManager::NextFrame() {
+	currentFrameIndex = (currentFrameIndex + 1) % FRAME_COUNT;
 }
 
 void BindlessManager::EndFrame() {
@@ -861,8 +812,145 @@ void BindlessManager::UpdateBoneMatrices(uint32_t offset, const std::vector<glm:
 	}
 
 	std::copy(matrices.begin(), matrices.end(), boneMatrices.begin() + offset);
+
+	AddBoneMatrixUpdateRange(offset, matrices.size());
 }
 
 void BindlessManager::ResetBoneMatricesPool() {
 	currentBoneOffset = 0;
+}
+
+void BindlessManager::MarkMaterialDirty(uint32_t index) {
+	if (index < materials.size()) {
+		dirtyMaterials.insert(index);
+		materialBufferDirty = true;
+	}
+}
+
+void BindlessManager::MarkMeshDirty(uint32_t index) {
+	if (index < meshes.size()) {
+		dirtyMeshes.insert(index);
+		meshBufferDirty = true;
+	}
+}
+
+void BindlessManager::AddInstanceUpdateRange(uint32_t offset, uint32_t count) {
+	for (auto& range : instanceUpdateRanges) {
+		if (offset == range.offset + range.count) {
+			range.count += count;
+			instanceBufferDirty = true;
+			return;
+		}
+		else if (offset + count == range.offset) {
+			range.offset = offset;
+			range.count += count;
+			instanceBufferDirty = true;
+			return;
+		}
+	}
+
+	instanceUpdateRanges.push_back({ offset, count });
+	instanceBufferDirty = true;
+}
+
+void BindlessManager::AddBoneMatrixUpdateRange(uint32_t offset, uint32_t count) {
+	boneMatrixUpdateRanges.push_back({ offset, count });
+	boneBufferDirty = true;
+}
+
+void BindlessManager::UpdateBuffersIncremental() {
+	if (fence) {
+		GLenum result = glClientWaitSync(fence, GL_SYNC_FLUSH_COMMANDS_BIT, 0);
+		if (result == GL_TIMEOUT_EXPIRED) {
+			return;
+		}
+		glDeleteSync(fence);
+		fence = nullptr;
+	}
+
+	if (meshBufferDirty && !dirtyMeshes.empty()) {
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, meshBuffer);
+
+		for (uint32_t index : dirtyMeshes) {
+			if (index < meshes.size()) {
+				glBufferSubData(GL_SHADER_STORAGE_BUFFER,
+					index * sizeof(GPUMesh),
+					sizeof(GPUMesh),
+					&meshes[index]);
+			}
+		}
+
+		dirtyMeshes.clear();
+		meshBufferDirty = false;
+	}
+
+	if (materialBufferDirty && !dirtyMaterials.empty()) {
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, materialBuffer);
+
+		for (uint32_t index : dirtyMaterials) {
+			if (index < materials.size()) {
+				glBufferSubData(GL_SHADER_STORAGE_BUFFER,
+					index * sizeof(GPUMaterial),
+					sizeof(GPUMaterial),
+					&materials[index]);
+			}
+		}
+
+		dirtyMaterials.clear();
+		materialBufferDirty = false;
+	}
+
+	if (instanceBufferDirty && !instanceUpdateRanges.empty()) {
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, instanceBuffer);
+
+		std::sort(instanceUpdateRanges.begin(), instanceUpdateRanges.end(),
+			[](const BufferUpdateRange& a, const BufferUpdateRange& b) {
+				return a.offset < b.offset;
+			});
+
+		std::vector<BufferUpdateRange> mergedRanges;
+		mergedRanges.push_back(instanceUpdateRanges[0]);
+
+		for (size_t i = 1; i < instanceUpdateRanges.size(); i++) {
+			auto& last = mergedRanges.back();
+			auto& current = instanceUpdateRanges[i];
+
+			if (last.offset + last.count >= current.offset) {
+				last.count = std::max(last.offset + last.count, current.offset + current.count) - last.offset;
+			}
+			else {
+				mergedRanges.push_back(current);
+			}
+		}
+
+		for (const auto& range : mergedRanges) {
+			if (range.offset + range.count <= instances.size()) {
+				glBufferSubData(GL_SHADER_STORAGE_BUFFER,
+					range.offset * sizeof(GPUInstance),
+					range.count * sizeof(GPUInstance),
+					&instances[range.offset]);
+			}
+		}
+
+		instanceUpdateRanges.clear();
+		instanceBufferDirty = false;
+	}
+
+	if (boneBufferDirty && !boneMatrixUpdateRanges.empty()) {
+		glBindBuffer(GL_SHADER_STORAGE_BUFFER, boneMatricesBuffer);
+
+		for (const auto& range : boneMatrixUpdateRanges) {
+			if (range.offset + range.count <= boneMatrices.size()) {
+				glBufferSubData(GL_SHADER_STORAGE_BUFFER,
+					range.offset * sizeof(glm::mat4),
+					range.count * sizeof(glm::mat4),
+					&boneMatrices[range.offset]);
+			}
+		}
+
+		boneMatrixUpdateRanges.clear();
+		boneBufferDirty = false;
+	}
+
+	glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }

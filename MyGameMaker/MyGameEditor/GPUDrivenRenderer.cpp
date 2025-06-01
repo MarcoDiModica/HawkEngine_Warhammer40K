@@ -112,6 +112,7 @@ void GPUDrivenRenderer::BeginFrame() {
 }
 
 void GPUDrivenRenderer::EndFrame() {
+	BindlessManager::GetInstance().NextFrame();
 }
 
 void GPUDrivenRenderer::AddInstanceGroup(
@@ -124,12 +125,12 @@ void GPUDrivenRenderer::AddInstanceGroup(
 	}
 
 	if (materialIndex >= BindlessManager::GetInstance().GetMaterialCount()) {
-		LOG(LogType::LOG_WARNING, "Warning: �ndice de material inv�lido: %u", materialIndex);
+		LOG(LogType::LOG_WARNING, "Warning: Índice de material inválido: %u", materialIndex);
 		return;
 	}
 
 	if (cullData.size() >= MAX_DRAW_COMMANDS) {
-		LOG(LogType::LOG_WARNING, "Warning: Alcanzado l�mite m�ximo de comandos de dibujo");
+		LOG(LogType::LOG_WARNING, "Warning: Alcanzado límite máximo de comandos de dibujo");
 		return;
 	}
 
@@ -139,6 +140,8 @@ void GPUDrivenRenderer::AddInstanceGroup(
 	cullItem.materialIndex = materialIndex;
 	cullItem.instanceOffset = currentInstanceOffset;
 	cullItem.instanceCount = static_cast<uint32_t>(instances.size());
+
+	uint32_t startIndex = BindlessManager::GetInstance().GetInstanceCount();
 
 	for (const auto& instance : instances) {
 		BindlessManager::GetInstance().AddInstance(instance);

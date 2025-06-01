@@ -14,7 +14,9 @@ struct InstanceData {
     uint materialIndex;
     uint objectId;
     uint flags;
-    mat4 boneMatrices[200];
+    uint boneOffset;
+    uint boneCount;
+    uint padding[2];
 };
 
 layout(std430, binding = 0) readonly buffer InstanceBuffer {

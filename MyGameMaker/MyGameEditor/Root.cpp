@@ -64,7 +64,6 @@ bool Root::Start()
 {
 	//resourceManager->LoadResources(); // Esto no se mutea
 	//resourceManager->CreateDefaultCube(); // Esto no se mutea
-
 	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
@@ -266,19 +265,19 @@ bool Root::Start()
 	//BoltgunBullets->SetTag("Ammunition");
 	//
 	////Lictor
-	//auto lictor = CreateGameObject("Lictor");
-	//lictor->SetTag("Enemy");
-	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
-	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.6, 1.3, 0.5));
-	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -0.7, 0));
-	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor.fbx");
-	//lictorMesh->SetName("LictorMesh");
-	//lictorMesh->AddComponent<ScriptComponent>()->LoadScript("LictorAnimation");
-	//lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
-	//ParentGameObject(*lictorMesh, *lictor);
-	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
+	/*auto lictor = CreateGameObject("Lictor");
+	lictor->SetTag("Enemy");
+	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
+	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.6, 1.3, 0.5));
+	lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -0.7, 0));
+	auto lictorMesh = CreateGameObjectWithPath("Assets/FBX/LictorFinal.fbx");
+	lictorMesh->SetName("LictorMesh");
+	lictorMesh->AddComponent<ScriptComponent>()->LoadScript("LictorAnimation");
+	lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
+	ParentGameObject(*lictorMesh, *lictor);
+	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");*/
 	//
 	//Climbing Hormagaunt
 	//auto hormagaunt = CreateGameObject("Hormagaunt");

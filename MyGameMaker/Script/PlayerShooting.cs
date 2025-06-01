@@ -50,6 +50,9 @@ public class PlayerShooting : MonoBehaviour
 
     private float changeWeaponDelay = 0.5f;
     private float currentdelay = 0.5f;
+    private bool autoReloading = false;
+    private float autoReloadTimer = 0f;
+    private const float autoReloadDelay = 2f;
 
     private enum GunType
     {
@@ -211,7 +214,7 @@ public class PlayerShooting : MonoBehaviour
             ChangeWeaponRight();
             currentdelay = 0f;
         }
-        else if (playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.Z))
+        else if (playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.C))
         {
             ChangeWeaponLeft();
             currentdelay = 0f;
@@ -271,6 +274,24 @@ public class PlayerShooting : MonoBehaviour
         {
             //Engineson.print("Ability 2 pressed");
             //UseAbility2();
+        }
+        if (!autoReloading && GetCurrentAmmo() == 0 && currentGun != GunType.RAILGUN)
+        {
+            autoReloading = true;
+            autoReloadTimer = 0f;
+        }
+        if (autoReloading)
+        {
+            autoReloadTimer += deltaTime;
+            if (autoReloadTimer >= autoReloadDelay)
+            {
+                Reload();
+                autoReloading = false;
+            }
+        }
+        if (playerInput?.IsReloading() == true && currentGun != GunType.RAILGUN)
+        {
+            autoReloading = false;
         }
     }
 

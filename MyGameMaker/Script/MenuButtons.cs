@@ -208,16 +208,40 @@ public class MenuButtons : MonoBehaviour
         }
 
         // Detectar clic del rat�n
-        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1)|| Input.GetControllerButtonDown(ControllerButton.A))
+        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse)|| Input.GetControllerButtonDown(ControllerButton.A))
         {
+            if(selectedButtonIndex == -1)
+                return;
+            
             UIButton selectedButton = buttons[selectedButtonIndex];
             selectedButton.SetState(ButtonState.CLICKED);
 
             if (selectedButton == button_newGameButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
-                Audio.Stop(MainMenuMusic);
-                SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
+                
+
+                GameObject cinematicObj = GameObject.Find("CinematicManager");
+                CinematicManager manager = cinematicObj?.GetComponent<CinematicManager>();
+                FadeController fadeController = GameObject.Find("FadeController")?.GetComponent<FadeController>();
+                SceneManager.isNewGame = true;
+                SceneManager.isLevel2 = false;
+                SceneManager.isBossFight = false;
+                if (manager != null && fadeController != null)
+                {
+                    fadeController.FadeIn(1.0f, () =>
+                    {
+                        manager.StartCinematic(LoadLevel1);
+                        fadeController.FadeOut(0.5f);
+                    });
+                }
+                else
+                {
+                    Audio.Stop(MainMenuMusic);
+                    SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
+                }
+         
+               
             }
             else if (selectedButton == button_continueButton)
             {
@@ -306,6 +330,18 @@ public class MenuButtons : MonoBehaviour
         //         }
 
         NavigateMenu();
+    }
+
+    private void LoadLevel1()
+    {
+       
+        FadeController fadeController = GameObject.Find("FadeController")?.GetComponent<FadeController>();
+        fadeController.FadeIn(2.0f, () =>
+        {
+            fadeController.SetAlpha(0.0f);
+            Audio.Stop(MainMenuMusic);
+            SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
+        });   
     }
 }
 

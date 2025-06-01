@@ -245,7 +245,7 @@ public class PlayerController : MonoBehaviour
                     }
 
                     int audioDeath = Audio.PlayOneShot(DeathAudio);
-                    SceneManager.LoadScene("LoseScene");
+                    //SceneManager.LoadScene("LoseScene");
                 }
                 else
                 {

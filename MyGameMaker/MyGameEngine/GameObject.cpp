@@ -434,7 +434,12 @@ std::string GameObject::GetTag() const
         return "";
 	}
 
-	return tag;
+    if (tag.size() > 1024) {
+        LOG(LogType::LOG_WARNING, "Tag size is abnormally large (%zu), returning empty tag", tag.size());
+        return "";
+    }
+
+    return tag;
 }
 
 bool GameObject::CompareTag(const std::string& tag) const

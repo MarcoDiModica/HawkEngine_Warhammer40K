@@ -144,10 +144,10 @@ GameObject1:
             - 10253
             - 9612
           sprite_offset:
-            - 5126.49902
+            - 6835.33203
             - 2883.6001
           anim_speed: 0.5
-          anim_index: 21
+          anim_index: 22
           anim_index_limit: 60
           color:
             - 1
@@ -4588,7 +4588,7 @@ GameObject3:
             - 0
             - 0
       Children: ~
-    - name: Ivo_Montes
+    - name: Pol_Celaya
       prefabPath: ""
       uuid: 1776296715053871525
       tag: Untagged
@@ -4632,7 +4632,7 @@ GameObject3:
         TextComponent:
           name: TextComponent
           enabled: true
-          text: Ivo Montes
+          text: Pol Celaya
           position:
             - 0
             - 0
@@ -4642,7 +4642,7 @@ GameObject3:
             - 0.114125334
           fontSize: 15
           boxSize:
-            - 133.5
+            - 145.5
             - 16.5
           spriteSize:
             - 0
@@ -4851,4 +4851,299 @@ GameObject3:
           spriteOffset:
             - 0
             - 0
+      Children: ~
+    - name: Ivo_Montes
+      prefabPath: ""
+      uuid: 9871433525383801112
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.75
+            - 0.275000006
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        TextComponent:
+          name: TextComponent
+          enabled: true
+          text: Ivo Montes
+          position:
+            - 0
+            - 0
+          color:
+            - 0.709803939
+            - 0.128141299
+            - 0.114125334
+          fontSize: 15
+          boxSize:
+            - 133.5
+            - 16.5
+          spriteSize:
+            - 0
+            - 0
+          sheetSize:
+            - 0
+            - 0
+          spriteOffset:
+            - 0
+            - 0
+      Children: ~
+GameObject4:
+  name: CanvasCinematic
+  prefabPath: ""
+  uuid: 14645508196647998947
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+  Children:
+    - name: CinematicManager
+      prefabPath: ""
+      uuid: 16210432024970194970
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 1
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/FadeToBlackImage.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 0
+            - 0
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 0
+            - 0
+            - 0
+            - 0
+        ScriptComponents:
+          Script0:
+            name: CinematicManager
+            fields:
+              imageCooldown: 0.0410000011
+      Children: ~
+GameObject5:
+  name: CanvasFade
+  prefabPath: ""
+  uuid: 15971780212265548051
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+  Children:
+    - name: FadeController
+      prefabPath: ""
+      uuid: 11097303880844808094
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 1
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/FadeToBlackImage.png
+          use_animation: false
+          sprite_size:
+            - 0
+            - 0
+          sheet_size:
+            - 0
+            - 0
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 0
+            - 0
+            - 0
+            - 0
+        ScriptComponents:
+          Script0:
+            name: FadeController
+            fields: ~
       Children: ~

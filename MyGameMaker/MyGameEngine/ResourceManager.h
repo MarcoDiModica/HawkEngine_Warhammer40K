@@ -114,6 +114,8 @@ public:
 		}
 	}
 
+	void LoadImage(std::string id);
+
 	int GetImageCount() const {
 		return images.size();
 	}

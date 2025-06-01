@@ -1,7 +1,7 @@
-name: TWarriorBColliderPrefab
-prefabPath: ""
-uuid: 3022763289238618408
-tag: Enemy
+name: TWarriorBColliderPrefab_Instance
+prefabPath: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
+uuid: 14484042400935160439
+tag: Warrior
 active: true
 isStatic: false
 Components:
@@ -9,25 +9,75 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
+      - 323.38180541992188
       - 0
-      - 0
-      - 0
+      - 30.761920928955078
     localRotation:
       - 0
       - -0
       - 0
     localScale:
-      - 1
-      - 1
-      - 1
-  BoxColliderComponent:
+      - 1.5
+      - 1.5
+      - 1.5
+  ParticleFX:
+    name: ParticleFX
+    enabled: true
+    emitterShape: 2
+    emissionRate: 15
+    particlesPerSecond: 15
+    minLifetime: 2
+    maxLifetime: 4
+    minSpeed: 0.5
+    maxSpeed: 1.5
+    startSize: 0.5
+    endSize: 2
+    minSize: 0.5
+    maxSize: 0
+    startColor:
+      - 0.800000012
+      - 0.800000012
+      - 0.800000012
+    endColor:
+      - 0.200000003
+      - 0.200000003
+      - 0.200000003
+    startAlpha: 0.699999988
+    endAlpha: 0
+    rotationSpeed: 0.200000003
+    gravity:
+      - 0
+      - -0.100000001
+      - 0
+    shapeParam1: 0.200000003
+    shapeParam2: 1
+    shapeParam3: 20
+    isOneShot: false
+    isPlaying: false
+    isPaused: false
+    burstEmitted: false
+    spriteSize:
+      - 256
+      - 256
+    useAnimation: true
+    animSpeed: 0.5
+    startRotation: 0
+    randomRotation: true
+    material:
+      billboardType: 0
+      particleType: 1
+      softness: 0
+      useColorGradient: false
+      texturePath: Assets/Textures/Smoke30Frames.png
+    particleType: 1
+  CapsuleColliderComponent:
     size:
-      - 2.29999995
-      - 3.70000005
-      - 1.79999995
+      - 1.20000005
+      - 2
+      - 1
     offset:
       - 0
-      - 2.0999999
+      - 0
       - 0
     isTrigger: false
   RigidbodyComponent:
@@ -54,8 +104,8 @@ Components:
         currentMagazineAmmo: 0
         maxAmmo: 0
         currentTotalAmmo: 0
-        range: 0
-        timeToLerp: 0.400000006
+        range: 100
+        timeToLerp: 0.100000001
 Children:
   - name: TyranidWarriorMesh
     prefabPath: ""
@@ -72,9 +122,9 @@ Children:
           - 0
           - 0
         localRotation:
-          - -1.3660378005559652e-05
-          - 6.5367021841000603e-07
-          - -4.6857504432419561e-07
+          - -1.3660377528476352e-05
+          - 6.5367018849739474e-07
+          - -4.685750164813548e-07
         localScale:
           - 0.0099999997764825821
           - 0.0099999997764825821

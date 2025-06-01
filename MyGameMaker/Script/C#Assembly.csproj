@@ -129,6 +129,7 @@
     <Compile Include="CapsuleCollider.cs" />
     <Compile Include="ChapterStandard.cs" />
     <Compile Include="Checkpoint.cs" />
+    <Compile Include="CinematicManager.cs" />
     <Compile Include="Collider.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -251,6 +252,7 @@
     <Compile Include="WaitForSeconds.cs" />
     <Compile Include="WarriorAnimation.cs" />
     <Compile Include="WinScreen.cs" />
+    <Compile Include="ZoneController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

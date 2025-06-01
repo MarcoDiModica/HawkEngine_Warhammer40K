@@ -21,7 +21,7 @@ public class PlayerData
     public bool hasBoltgun = true;
     public bool hasShotgun = false;
     public bool hasRailgun = false;
-    public bool BoltgunUpgraded = false;
+    public bool BoltgunUpgraded = true;
     public bool ShotgunUpgraded = false;
     public bool RailgunUpgraded = false;
     private string HealthSFX = "Assets/Audio/UI/Lose_Temporary_heart_2.wav";

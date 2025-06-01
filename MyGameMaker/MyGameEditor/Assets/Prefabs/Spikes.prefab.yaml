@@ -1,6 +1,6 @@
 name: Spikes
-prefabPath: Assets/Prefabs/Spikes.prefab.yaml
-uuid: 13345155798579821218
+prefabPath: ""
+uuid: 2504786962989834304
 tag: Untagged
 active: true
 isStatic: false
@@ -9,22 +9,22 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 530.5323486328125
-      - -1.0310828685760498
-      - 24.133029937744141
+      - 534.3057861328125
+      - -2.1537909507751465
+      - 22.450485229492188
     localRotation:
-      - 176.63459894145618
-      - -35.640590521017515
-      - 179.25427369917594
+      - 0
+      - 32.799082071241962
+      - 0
     localScale:
-      - 0.014738554716132455
-      - 0.014738549536149661
-      - 0.014738555901951189
+      - 0.015792124389872667
+      - 0.015792122110724449
+      - 0.015792124389872667
   MeshRenderer:
     name: MeshRenderer
     enabled: true
     mesh:
-      name: 6148010759548331664
+      name: 17503220316710404104
     material:
       name: tyranid_spike_lowpoly_DefaultMaterial_BaseColor
       color:
@@ -47,7 +47,7 @@ Components:
 Children:
   - name: 4
     prefabPath: ""
-    uuid: 314668438701982786
+    uuid: 12910885905224391271
     tag: Untagged
     active: true
     isStatic: false
@@ -70,7 +70,7 @@ Children:
     Children: ~
   - name: 2
     prefabPath: ""
-    uuid: 2156481590359834443
+    uuid: 383943440558671859
     tag: Untagged
     active: true
     isStatic: false
@@ -93,7 +93,7 @@ Children:
     Children: ~
   - name: 3
     prefabPath: ""
-    uuid: 5818726571193539247
+    uuid: 9244607859270701059
     tag: Untagged
     active: true
     isStatic: false
@@ -116,7 +116,7 @@ Children:
     Children: ~
   - name: 1
     prefabPath: ""
-    uuid: 5695269947358964431
+    uuid: 10752047599420758192
     tag: Untagged
     active: true
     isStatic: false

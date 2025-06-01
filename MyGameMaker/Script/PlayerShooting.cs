@@ -107,6 +107,7 @@ public class PlayerShooting : MonoBehaviour
 
         rifleShotFX = GameObject.Find("RiffleShotFX").GetComponent<ParticleFX>();
         rifleShotFX.ApplyPreset(8);
+        rifleShotFX.SetParticleStartRotation(90f);
         shotgunShotFX = GameObject.Find("ShotgunShotFX").GetComponent<ParticleFX>();
         shotgunShotFX.ApplyPreset(8);
         railgunShotSemiFX = GameObject.Find("RailgunShotSemiFX").GetComponent<ParticleFX>();
@@ -271,19 +272,24 @@ public class PlayerShooting : MonoBehaviour
     {
         try
         {
-            // Obtener direccion de la mirada
             Vector3 lookDir = playerInput.GetCurrentLookDirection();
+
+            if (lookDir == Vector3.Zero)
+            {
+                lookDir = playerInput.GetCurrentMoveDirection();
+            }
 
             if (lookDir != Vector3.Zero)
             {
                 lookDir = Vector3.Normalize(lookDir);
-                float angle = (float)(Math.Atan2(lookDir.Z, lookDir.X) * (180.0 / Math.PI));
+                float angle = (float)(Math.Atan2(lookDir.X, lookDir.Z) * (180.0 / Math.PI)) - 45;
+                
 
                 switch (currentGun)
                 {
                     case GunType.BOLTGUN:
                         rifleShotFX.SetParticleStartRotation(angle);
-                        rifleShotFX.EmitBurst(1); // Reemisión con rotación aplicada
+                        rifleShotFX.EmitBurst(1);
                         boltgun?.Shoot();
                         shotgunShotFX.Stop();
                         railgunShotAutoFX.Stop();
@@ -316,7 +322,7 @@ public class PlayerShooting : MonoBehaviour
             }
             else
             {
-                // Si no hay dirección válida, disparar sin rotar el efecto
+                // Si no hay direccion valida, disparar sin rotar el efecto
                 switch (currentGun)
                 {
                     case GunType.BOLTGUN:
@@ -344,6 +350,7 @@ public class PlayerShooting : MonoBehaviour
             Engineson.print($"Error during Shoot(): {e.Message}");
         }
     }
+
 
     private void Reload()
     {

@@ -208,8 +208,11 @@ public class MenuButtons : MonoBehaviour
         }
 
         // Detectar clic del rat�n
-        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1)|| Input.GetControllerButtonDown(ControllerButton.A))
+        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse)|| Input.GetControllerButtonDown(ControllerButton.A))
         {
+            if(selectedButtonIndex == -1)
+                return;
+            
             UIButton selectedButton = buttons[selectedButtonIndex];
             selectedButton.SetState(ButtonState.CLICKED);
 
@@ -221,8 +224,11 @@ public class MenuButtons : MonoBehaviour
                 GameObject cinematicObj = GameObject.Find("CinematicManager");
                 CinematicManager manager = cinematicObj?.GetComponent<CinematicManager>();
                 FadeController fadeController = GameObject.Find("FadeController")?.GetComponent<FadeController>();
+                SceneManager.isNewGame = true;
+                SceneManager.isLevel2 = false;
+                SceneManager.isBossFight = false;
                 if (manager != null && fadeController != null)
-                {              
+                {
                     fadeController.FadeIn(1.0f, () =>
                     {
                         manager.StartCinematic(LoadLevel1);
@@ -235,6 +241,7 @@ public class MenuButtons : MonoBehaviour
                     SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
                 }
          
+               
             }
             else if (selectedButton == button_continueButton)
             {

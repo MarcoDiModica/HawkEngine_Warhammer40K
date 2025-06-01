@@ -12,6 +12,8 @@ public class AmmunitionBlessing : PickUp
     public float floatHeight = 0.5f;
     public float rotationSpeed = 50f;
     public float lifeTime = 10f;
+    private const string PowerUpDown = "Assets/Audio/PowerUps/PowerUpDown.wav";
+    private bool hasPlayedSound = false;
 
     public override void Awake()
     {
@@ -32,17 +34,17 @@ public class AmmunitionBlessing : PickUp
     {
         elapsedTime += deltaTime;
         PowerUpMovment(elapsedTime, deltaTime);
-        if (elapsedTime >= lifeTime)
+        if (elapsedTime >= lifeTime && !hasPlayedSound)
         {
-            //Destroy();
+            Audio.PlayOneShot(PowerUpDown);
+            hasPlayedSound = true;
+            DestroyPickUp();
         }
     }
-   // public void Destroy()
-   // {
-   //     GameObject player = GameObject.Find("Player");
-   //     Transform.position = new Vector3(0, -100, 0);
-   //     //player.GetComponent<PickUpManager>().DestroyPickUp(gameObject);
-   // }
+    public void DestroyPickUp()
+    {
+        Engineson.Destroy(this.gameObject);
+    }
 
     public void PowerUpMovment(float time, float dt)
     {

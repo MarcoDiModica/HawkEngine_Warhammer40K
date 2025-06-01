@@ -48,7 +48,39 @@ namespace ParticlePresets {
 		"Assets/Textures/Smoke30Frames.png", // Texture path
 		false						   // Is Local Space
 	};
-
+	const ParticlePreset Footsteps = {
+		ParticleType::FOOTSTEPS,
+		true,						   // PlayOnAwake
+		5.0f,						   // Duration (only if one-shot)
+		glm::vec3(0.8f, 0.8f, 0.8f),   // Start color (light gray)
+		glm::vec3(0.8f, 0.8f, 0.8f),    // End color (dark gray)
+		0.7f,                          // Alpha start
+		0.0f,                          // Alpha end
+		0.0f,                          // Size start
+		2.0f,                          // Size end
+		0.15f,                          // Min lifetime
+		0.15f,                          // Max lifetime
+		5.55f,                          // Min speed
+		5.55f,                          // Max speed
+		4.0f,						   // End Speed
+		glm::vec3(0.0f,-5.33f,0.0f),	   // Gravity (negative for upward)
+		0.2f,                          // Rotation speed
+		120.0f,                         // Emission rate (particles per second)
+		EmitterShape::CONE,            // Shape
+		0.2f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(256,256),			   // Sprite size
+		true,						   // Use animation
+		true,						   // Random animation Index
+		0.5f,						   // Animation speed
+		0.0f,						   // Start rotation
+		true,						   // Random rotation
+		0.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/Smoke30Frames.png", // Texture path
+		false						   // Is Local Space
+	};
 	const ParticlePreset Fire = {
 		ParticleType::FIRE,
 		true,						   // PlayOnAwake
@@ -155,16 +187,16 @@ namespace ParticlePresets {
 	const ParticlePreset Explosion = {
 		ParticleType::EXPLOSION,
 		false,						   // PlayOnAwake
-		0.2f,						   // Duration (only if one-shot)
+		0.1f,						   // Duration (only if one-shot)
 		glm::vec3(1.0f, 0.5f, 0.0f),   // Start color (orange)
 		glm::vec3(0.5f, 1.0f, 0.0f),   // End color (dark red)
 		1.0f,                          // Alpha start
 		0.0f,                          // Alpha end
 		1.0f,                          // Size start
 		3.0f,                          // Size end
-		0.2f,                          // Min lifetime
-		1.0f,                          // Max lifetime
-		5.0f,                          // Min speed
+		0.35f,                          // Min lifetime
+		0.35f,                          // Max lifetime
+		5.0f ,                          // Min speed
 		10.0f,                         // Max speed
 		4.0f,						   // End Speed
 		glm::vec3(0.0f,-0.5f,0.0f),	   // Gravity (negative for upward)
@@ -257,21 +289,21 @@ namespace ParticlePresets {
 	const ParticlePreset Environment_Explosion = {
 		ParticleType::ENVIRONMENT_EXPLOSION,
 		true,						   // PlayOnAwake
-		5,						   // Duration (only if one-shot)
+		0.01f,						   // Duration (only if one-shot)
 		glm::vec3(1,1,1),   // Start color (light gray)
 		glm::vec3(1,1,1),   // End color (dark gray)
 		1.0f,                          // Alpha start
 		1.0f,                          // Alpha end
-		1,                          // Size start
-		1,                          // Size end
-		1,                          // Min lifetime
-		1,                          // Max lifetime
+		12.0f,                          // Size start
+		8.0f ,                          // Size end
+		0.35f,                          // Min lifetime
+		0.35f,                          // Max lifetime
 		0.0f,                          // Min speed
 		0.0f,                          // Max speed
 		0.0f,						   // End Speed
 		glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
 		0,                          // Rotation speed
-		1,                         // Emission rate (particles per second)
+		0.2f,                         // Emission rate (particles per second)
 		EmitterShape::POINT,            // Shape
 		0.2f,                          // Cone base radius
 		1.0f,                          // Cone height
@@ -279,11 +311,11 @@ namespace ParticlePresets {
 		glm::vec2(640,360),			   // Sprite size
 		true,						   // Use animation
 		false,						   // Random animation Index
-		0.05f,						   // Animation speed
+		0.07f,						   // Animation speed
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
-		1.0f,						   // Min scale
-		1.0f,						   // Max scale
+		12.0f,						   // Min scale
+		12.0f,						   // Max scale
 		"Assets/Textures/ixplosion.png", // Texture path
 		false						   // Is Local Space
 	};
@@ -297,10 +329,10 @@ namespace ParticlePresets {
 		glm::vec3(1,1,1),   // End color (dark gray)
 		1.0f,                          // Alpha start
 		1.0f,                          // Alpha end
-		1,                          // Size start
-		1,                          // Size end
-		0.25f,                          // Min lifetime
-		0.25f,                          // Max lifetime
+		2,                          // Size start
+		5,                          // Size end
+		0.250f,                          // Min lifetime
+		0.250f,                          // Max lifetime
 		0.0f,                          // Min speed
 		0.0f,                          // Max speed
 		0.0f,						   // End Speed
@@ -314,11 +346,11 @@ namespace ParticlePresets {
 		glm::vec2(1920,1080),			   // Sprite size
 		true,						   // Use animation
 		false,						   // Random animation Index
-		0.05f,						   // Animation speed
+		0.07f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
-		1.0f,						   // Min scale
-		1.0f,						   // Max scale
+		2.0f,						   // Min scale
+		2.0f,						   // Max scale
 		"Assets/Textures/muzzle.png", // Texture path
 		true						   // Is Local Space
 	};
@@ -360,21 +392,21 @@ namespace ParticlePresets {
 	const ParticlePreset Enemy_Dash = {
 		ParticleType::ENEMY_DASH,
 		true,						   // PlayOnAwake
-		1.0f,						   // Duration (only if one-shot)
+		0.01f,						   // Duration (only if one-shot)
 		glm::vec3(1,1,1),   // Start color (light gray)
 		glm::vec3(1,1,1),   // End color (dark gray)
 		1.0f,                          // Alpha start
 		1.0f,                          // Alpha end
-		2,                          // Size start
-		2,                          // Size end
-		1,                          // Min lifetime
-		1,                          // Max lifetime
+		17,                          // Size start
+		17,                          // Size end
+		0.35f,                          // Min lifetime
+		0.35f,                          // Max lifetime
 		0.0f,                          // Min speed
 		0.0f,                          // Max speed
 		0.0f,						   // End Speed
 		glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
 		0,                          // Rotation speed
-		1,                         // Emission rate (particles per second)
+		0.2f,                         // Emission rate (particles per second)
 		EmitterShape::POINT,            // Shape
 		0.2f,                          // Cone base radius
 		1.0f,                          // Cone height
@@ -385,8 +417,8 @@ namespace ParticlePresets {
 		0.05f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
-		1.0f,						   // Min scale
-		1.0f,						   // Max scale
+		17.0f,						   // Min scale
+		17.0f,						   // Max scale
 		"Assets/Textures/EnemyDash.png", // Texture path
 		false						   // Is Local Space
 	};
@@ -400,8 +432,8 @@ namespace ParticlePresets {
 	glm::vec3(1,1,1),   // End color (dark gray)
 	1.0f,                          // Alpha start
 	1.0f,                          // Alpha end
-	1,                          // Size start
-	1,                          // Size end
+	10,                          // Size start
+	10,                          // Size end
 	1,                          // Min lifetime
 	1,                          // Max lifetime
 	0.0f,                          // Min speed
@@ -420,10 +452,10 @@ namespace ParticlePresets {
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
-	1.0f,						   // Min scale
-	1.0f,						   // Max scale
+	10.0f,						   // Min scale
+	10.0f,						   // Max scale
 	"Assets/Textures/Acid_Splash.png", // Texture path
-	false						   // Is Local Space
+	true				   // Is Local Space
 	};
 
 	const ParticlePreset Acid_Puddle = {
@@ -488,8 +520,8 @@ namespace ParticlePresets {
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
-	1.0f,						   // Min scale
-	1.0f,						   // Max scale
+	5.0f,						   // Min scale
+	5.0f,						   // Max scale
 	"Assets/Textures/ElectricityBall.png", // Texture path
 	true						   // Is Local Space
 	};
@@ -502,8 +534,8 @@ namespace ParticlePresets {
 	glm::vec3(1,1,1),   // End color (dark gray)
 	1.0f,                          // Alpha start
 	1.0f,                          // Alpha end
-	1,                          // Size start
-	1,                          // Size end
+	10.0f,                          // Size start
+	10.0f,                          // Size end
 	1,                          // Min lifetime
 	1,                          // Max lifetime
 	0.0f,                          // Min speed
@@ -522,44 +554,44 @@ namespace ParticlePresets {
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
-	1.0f,						   // Min scale
-	1.0f,						   // Max scale
+	10.0f,						   // Min scale
+	10.0f,						   // Max scale
 	"Assets/Textures/RailGunAuto.png", // Texture path
 	true						   // Is Local Space
 	};
 
 	const ParticlePreset RailGun_Semi = {
 	ParticleType::RAILGUN_SEMI,
-	true,						   // PlayOnAwake
-	5,						   // Duration (only if one-shot)
+	true,                           // PlayOnAwake
+	5,                           // Duration (only if one-shot)
 	glm::vec3(1,1,1),   // Start color (light gray)
 	glm::vec3(1,1,1),   // End color (dark gray)
-	0.8f,                          // Alpha start
+	1.0f,                          // Alpha start
 	1.0f,                          // Alpha end
-	0.3f,                          // Size start
-	0.4f,                          // Size end
+	2.5f,                          // Size start
+	2.5f,                          // Size end
 	3.5f,                          // Min lifetime
 	4.0f,                          // Max lifetime
 	0.0f,                          // Min speed
 	0.0f,                          // Max speed
-	0.0f,						   // End Speed
-	glm::vec3(0.0f,0.001f,1.2f),	   // Gravity (negative for upward)
+	0.0f,                           // End Speed
+	glm::vec3(0.0f,0.001f,1.2f),       // Gravity (negative for upward)
 	0,                          // Rotation speed
 	26,                         // Emission rate (particles per second)
 	EmitterShape::CONE,            // Shape
 	0.1f,                          // Cone base radius
 	1.0f,                          // Cone height
 	20.0f,                         // Cone angle in degrees
-	glm::vec2(641,361),			   // Sprite size
-	true,						   // Use animation
-	true,						   // Random animation Index
-	0.05f,						   // Animation speed
-	0.0f,						   // Start rotation
-	false,						   // Random rotation
-	1.0f,						   // Min scale
-	1.0f,						   // Max scale
+	glm::vec2(641,361),               // Sprite size
+	true,                           // Use animation
+	true,                           // Random animation Index
+	0.05f,                           // Animation speed
+	0.0f,                           // Start rotation
+	false,                           // Random rotation
+	2.5f,                           // Min scale
+	2.5f,                           // Max scale
 	"Assets/Textures/RailGunSemi.png", // Texture path
-	true						   // Is Local Space
+	true                           // Is Local Space
 	};
 
 	const ParticlePreset Environment_Dropplet = {
@@ -697,6 +729,7 @@ namespace ParticlePresets {
 		"Assets/Textures/Medicae_Stim.png", // Texture path
 		false 						   // Is Local Space
 	};
+
 	const ParticlePreset Medicae_Stim_Speed = {
 		ParticleType::MEDICAE_STIM_SPEED,
 			false,						   // PlayOnAwake
@@ -730,6 +763,7 @@ namespace ParticlePresets {
 		"Assets/Textures/Project3_Velocity_effect.png", // Texture path
 		false 						   // Is Local Space
 	};
+
 	const ParticlePreset Ammunition_Blessing = {
 		ParticleType::AMMUNITION_BLESSING,
 			false,						   // PlayOnAwake
@@ -763,6 +797,7 @@ namespace ParticlePresets {
 		"Assets/Textures/Project3_AmmunitionBlessing_effect_Yiwei.png", // Texture path
 		true 						   // Is Local Space
 	};
+
 	const ParticlePreset Blood_Splash = {
 		ParticleType::DEFAULT,
 		false,                         // PlayOnAwake
@@ -795,6 +830,1029 @@ namespace ParticlePresets {
 		5.0f,                          // Max scale
 		"Assets/Textures/BloodSplash_decals1_Yiwei.png", // Texture path
 		false						   // Is Local Space
+	};
+
+	const ParticlePreset Environment_Fire = {
+		ParticleType::ENVIRONMENT_FIRE,
+		false,                         // PlayOnAwake
+		2.0f,                          // Duration (only if one-shot)
+		glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+		glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+		1.0f,                          // Alpha start
+		1.0f,                          // Alpha end
+		16.0f,                          // Size start
+		16.0f,                          // Size end
+		1.0f,                          // Min lifetime
+		1.0f,                          // Max lifetime
+		1.0f,                         // Min speed
+		0.01f,                         // Max speed
+		0.01f,                         // End Speed
+		glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+		0.0f,                          // Rotation speed
+		1.0f,                         // Emission rate (particles per second)
+		EmitterShape::POINT,           // Shape
+		0.0f,                          // Unused for point
+		0.0f,                          // Unused for point
+		0.0f,                          // Unused for point
+		glm::vec2(180.0f, 120.0f),     // Sprite size
+		true,                         // Use animation
+		false,                         // Random animation Index
+		0.001f,                          // Animation speed
+		190.0f,                          // Start rotation
+		false,                          // Random rotation
+		16.0f,                         // Min scale
+		16.0f,                          // Max scale
+		"Assets/Textures/fireSpritesheetpx2.png", // Texture path
+		false						   // Is Local Space
+	};
+
+	const ParticlePreset Mawloc_Slam = {
+		ParticleType::MAWLOC_SLAM,
+		false,                         // PlayOnAwake
+		2.0f,                          // Duration (only if one-shot)
+		glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+		glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+		1.0f,                          // Alpha start
+		1.0f,                          // Alpha end
+		26.0f,                          // Size start
+		26.0f,                          // Size end
+		1.0f,                          // Min lifetime
+		1.0f,                          // Max lifetime
+		1.0f,                         // Min speed
+		0.01f,                         // Max speed
+		0.01f,                         // End Speed
+		glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+		0.0f,                          // Rotation speed
+		1.0f,                         // Emission rate (particles per second)
+		EmitterShape::POINT,           // Shape
+		0.0f,                          // Unused for point
+		0.0f,                          // Unused for point
+		0.0f,                          // Unused for point
+		glm::vec2(241.0f, 136.0f),     // Sprite size
+		true,                         // Use animation
+		false,                         // Random animation Index
+		0.02f,                          // Animation speed
+		190.0f,                          // Start rotation
+		false,                          // Random rotation
+		26.0f,                         // Min scale
+		26.0f,                          // Max scale
+		"Assets/Textures/MawlocSmokeSpritesheet.png", // Texture path
+		true						   // Is Local Space
+	};
+
+	// use emit burst
+	const ParticlePreset Mawloc_Rocks = {
+	ParticleType::MAWLOC_ROCKS,
+	false,                         // PlayOnAwake
+	2.0f,                          // Duration (only if one-shot)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	4.0f,                          // Size start
+	3.0f,                          // Size end
+	1.0f,                          // Min lifetime
+	1.0f,                          // Max lifetime
+	1.0f,                         // Min speed
+	-40.0f,                         // Max speed
+	-40.0f,                         // End Speed
+	glm::vec3(4.0f,4.0f,4.0f),   // Gravity
+	0.0f,                          // Rotation speed
+	50.0f,                         // Emission rate (particles per second)
+	EmitterShape::POINT,           // Shape
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	glm::vec2(216.0f , 216.0f),     // Sprite size
+	false,                         // Use animation
+	false,                         // Random animation Index
+	0.02f,                          // Animation speed
+	190.0f,                          // Start rotation
+	true,                          // Random rotation
+	4.0f,                         // Min scale
+	8.0f,                          // Max scale
+	"Assets/Textures/rock.png", // Texture path
+	true						   // Is Local Space
+	};
+
+	const ParticlePreset Lictor_leap = {
+	ParticleType::LICTOR_LEAP,
+	false,						   // PlayOnAwake
+	1,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   				   // Start color (white)
+	glm::vec3(1,1,1),   				   // End color (white)
+	1.0f,                          			   // Alpha start
+	1.0f,                          			   // Alpha end
+	0.8f,                          			   // Size start
+	15.0f,                          		   // Size end
+	1,                          			   // Min lifetime
+	1,                         			   // Max lifetime
+	0.0f,                          			   // Min speed
+	0.0f,                          			   // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+	0,                          			   // Rotation speed
+	1.f,                         			   // Emission rate (particles per second)
+	EmitterShape::POINT,            		   // Shape
+	0.2f,                          			   // Cone base radius
+	1.0f,                          			   // Cone height
+	20.0f,                         			   // Cone angle in degrees
+	glm::vec2(222,222),			   	   // Sprite size
+	true,						   // Use animation
+	false,						   // Random animation Index
+	0.1f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/VFX_lictor_leap.png", 		   // Texture path
+	false 						   // Is Local Space
+	};
+
+	const ParticlePreset Lictor_dodge = {
+	ParticleType::LICTOR_DODGE,
+	false,						   // PlayOnAwake
+	1,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   				   // Start color (white)
+	glm::vec3(1,1,1),   				   // End color (white)
+	1.0f,                          			   // Alpha start
+	1.0f,                          			   // Alpha end
+	0.8f,                          			   // Size start
+	15.0f,                          		   // Size end
+	1,                          			   // Min lifetime
+	1,                         			   // Max lifetime
+	0.0f,                          			   // Min speed
+	0.0f,                          			   // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+	0,                          			   // Rotation speed
+	1.f,                         			   // Emission rate (particles per second)
+	EmitterShape::POINT,            		   // Shape
+	0.2f,                          			   // Cone base radius
+	1.0f,                          			   // Cone height
+	20.0f,                         			   // Cone angle in degrees
+	glm::vec2(227,227),			   	   // Sprite size
+	true,						   // Use animation
+	false,						   // Random animation Index
+	0.1f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/VFX_lictor_dodge_cue.png", 	   // Texture path
+	true						   // Is Local Space
+	};
+
+	const ParticlePreset Magnet_Area = {
+	ParticleType::MAGNET_AREA,
+	false,						   // PlayOnAwake
+	1,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   				   // Start color (white)
+	glm::vec3(1,1,1),   				   // End color (white)
+	1.0f,                          			   // Alpha start
+	1.0f,                          			   // Alpha end
+	0.8f,                          			   // Size start
+	15.0f,                          		   // Size end
+	1,                          			   // Min lifetime
+	1,                         			   // Max lifetime
+	0.0f,                          			   // Min speed
+	0.0f,                          			   // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+	0,                          			   // Rotation speed
+	1.f,                         			   // Emission rate (particles per second)
+	EmitterShape::POINT,            		   // Shape
+	0.2f,                          			   // Cone base radius
+	1.0f,                          			   // Cone height
+	20.0f,                         			   // Cone angle in degrees
+	glm::vec2(500,500),		   	   // Sprite size
+	true,						   // Use animation
+	false,						   // Random animation Index
+	0.1f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/Magnet_Area_animation_SpriteSheet_Yiwei.png", 	   // Texture path
+	false 						   // Is Local Space
+	};
+
+	const ParticlePreset Environment_Tree = {
+	ParticleType::ENVIRONMENT_TREE,
+	false,                         // PlayOnAwake
+	1.0f,                          // Duration (only if one-shot)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	46.0f,                          // Size start
+	46.0f,                          // Size end
+	5.0f,                          // Min lifetime
+	5.0f,                          // Max lifetime
+	0.0f,                         // Min speed
+	0.0f,                         // Max speed
+	0.0f,                         // End Speed
+	glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+	0.0f,                          // Rotation speed
+	0.2f,                         // Emission rate (particles per second)
+	EmitterShape::POINT,           // Shape
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	glm::vec2(480.0f , 270.0f),     // Sprite size
+	true,                         // Use animation
+	true,                         // Random animation Index
+	0.050f,                          // Animation speed
+	190.0f,                          // Start rotation
+	false,                          // Random rotation
+	46.0f,                         // Min scale
+	46.0f,                          // Max scale
+	"Assets/Textures/TreeSpritesheet.png", // Texture path
+	false						   // Is Local Space
+	};
+
+	const ParticlePreset Environment2_Tree = {
+	ParticleType::ENVIRONMENT2_TREE,
+	false,                         // PlayOnAwake
+	1.0f,                          // Duration (only if one-shot)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	36.0f,                          // Size start
+	36.0f,                          // Size end
+	5.0f,                          // Min lifetime
+	5.0f,                          // Max lifetime
+	0.0f,                         // Min speed
+	0.0f,                         // Max speed
+	0.0f,                         // End Speed
+	glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+	0.0f,                          // Rotation speed
+	0.2f,                         // Emission rate (particles per second)
+	EmitterShape::POINT,           // Shape
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	glm::vec2(480.0f , 270.0f),     // Sprite size
+	true,                         // Use animation
+	true,                         // Random animation Index
+	0.050f,                          // Animation speed
+	190.0f,                          // Start rotation
+	false,                          // Random rotation
+	36.0f,                         // Min scale
+	36.0f,                          // Max scale
+	"Assets/Textures/Tree2Spritesheet.png", // Texture path
+	false						   // Is Local Space
+	};
+
+	const ParticlePreset Environment3_Tree = {
+	ParticleType::ENVIRONMENT3_TREE,
+	false,                         // PlayOnAwake
+	1.0f,                          // Duration (only if one-shot)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	36.0f,                          // Size start
+	36.0f,                          // Size end
+	5.0f,                          // Min lifetime
+	5.0f,                          // Max lifetime
+	0.0f,                         // Min speed
+	0.0f,                         // Max speed
+	0.0f,                         // End Speed
+	glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+	0.0f,                          // Rotation speed
+	0.2f,                         // Emission rate (particles per second)
+	EmitterShape::POINT,           // Shape
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	glm::vec2(480.0f , 270.0f),     // Sprite size
+	true,                         // Use animation
+	true,                         // Random animation Index
+	0.050f,                          // Animation speed
+	190.0f,                          // Start rotation
+	false,                          // Random rotation
+	36.0f,                         // Min scale
+	36.0f,                          // Max scale
+	"Assets/Textures/Tree3Spritesheet.png", // Texture path
+	false						   // Is Local Space
+	};
+
+	const ParticlePreset Red_Thirst = {
+	ParticleType::RED_THIRST,
+	false,						   // PlayOnAwake
+	1,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   				   // Start color (white)
+	glm::vec3(1,1,1),   				   // End color (white)
+	1.0f,                          			   // Alpha start
+	1.0f,                          			   // Alpha end
+	0.8f,                          			   // Size start
+	5.0f,                          		   // Size end
+	1,                          			   // Min lifetime
+	1,                         			   // Max lifetime
+	0.0f,                          			   // Min speed
+	0.0f,                          			   // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+	0,                          			   // Rotation speed
+	1.0f,                         			   // Emission rate (particles per second)
+	EmitterShape::POINT,            		   // Shape
+	0.2f,                          			   // Cone base radius
+	1.0f,                          			   // Cone height
+	20.0f,                         			   // Cone angle in degrees
+	glm::vec2(640,360),		   	   // Sprite size
+	true,						   // Use animation
+	false,						   // Random animation Index
+	0.1f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	5.0f,						   // Min scale
+	5.0f,						   // Max scale
+	"Assets/Textures/Red_Thirst_Sprite_sheet.png", 	   // Texture path
+	true 						   // Is Local Space
+	};
+
+	const ParticlePreset Envitoment_Fog ={
+	ParticleType::EnVIRONMENT_Fog,
+	true,									   // PlayOnAwake
+	1,										   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   					   // Start color (white)
+	glm::vec3(1,1,1),   					   // End color (white)
+	0.23f,                          		   // Alpha start
+	0.23f,                          		   // Alpha end
+	150.0f,                          		   // Size start
+	150.0f,                          		   // Size end
+	5,                          			   // Min lifetime
+	5,                         				   // Max lifetime
+	0.0f,                          			   // Min speed
+	0.0f,                          			   // Max speed
+	0.0f,									   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+	0,                          			   // Rotation speed
+	1.f,                         			   // Emission rate (particles per second)
+	EmitterShape::POINT,            		   // Shape
+	0.2f,                          			   // Cone base radius
+	1.0f,                          			   // Cone height
+	20.0f,                         			   // Cone angle in degrees
+	glm::vec2(256,256),		   				   // Sprite size
+	true,									   // Use animation
+	false,									   // Random animation Index
+	7.2f,									   // Animation speed
+	0.0f,									   // Start rotation
+	true,									   // Random rotation
+	1.0f,									   // Min scale
+	1.0f,									   // Max scale
+	"Assets/Textures/niebla30Frames.png", 	   // Texture path
+	false 									   // Is Local Space
+	};
+
+	const ParticlePreset Lictor_Slash = {
+		ParticleType::LICTOR_SLASH,
+		false,						   // PlayOnAwake
+		0.01,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   				   // Start color (white)
+		glm::vec3(1,1,1),   				   // End color (white)
+		1.0f,                          			   // Alpha start
+		1.0f,                          			   // Alpha end
+		0.8f,                          			   // Size start
+		8.0f,                          		   // Size end
+		1,                          			   // Min lifetime
+		1,                         			   // Max lifetime
+		0.0f,                          			   // Min speed
+		0.0f,                          			   // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+		0,                          			   // Rotation speed
+		1.0f,                         			   // Emission rate (particles per second)
+		EmitterShape::POINT,            		   // Shape
+		0.2f,                          			   // Cone base radius
+		1.0f,                          			   // Cone height
+		20.0f,                         			   // Cone angle in degrees
+		glm::vec2(480,270),		   	   // Sprite size
+		true,						   // Use animation
+		false,						   // Random animation Index
+		0.1f,						   // Animation speed
+		90.0f,						   // Start rotation
+		false,						   // Random rotation
+		8.0f,						   // Min scale
+		8.0f,						   // Max scale
+		"Assets/Textures/LictorSlashSpritesheetv6.png", 	   // Texture path
+		true 						   // Is Local Space
+	};
+
+	const ParticlePreset Lictor_Blood = {
+		ParticleType::LICTOR_BLOOD,
+		false,						   // PlayOnAwake
+		0.01,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   				   // Start color (white)
+		glm::vec3(1,1,1),   				   // End color (white)
+		1.0f,                          			   // Alpha start
+		1.0f,                          			   // Alpha end
+		0.8f,                          			   // Size start
+		16.0f,                          		   // Size end
+		1,                          			   // Min lifetime
+		1,                         			   // Max lifetime
+		0.0f,                          			   // Min speed
+		0.0f,                          			   // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+		0,                          			   // Rotation speed
+		1.0f,                         			   // Emission rate (particles per second)
+		EmitterShape::POINT,            		   // Shape
+		0.2f,                          			   // Cone base radius
+		1.0f,                          			   // Cone height
+		20.0f,                         			   // Cone angle in degrees
+		glm::vec2(321,181),		   	   // Sprite size
+		true,						   // Use animation
+		false,						   // Random animation Index
+		0.01f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		16.0f,						   // Min scale
+		16.0f,						   // Max scale
+		"Assets/Textures/Lictor-blood.png", 	   // Texture path
+		true 						   // Is Local Space
+	};
+
+	const ParticlePreset MawlocSwipe = {
+		ParticleType::MAWLOC_SWIPE,
+		false,						   // PlayOnAwake
+		0.001,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   				   // Start color (white)
+		glm::vec3(1,1,1),   				   // End color (white)
+		1.0f,                          			   // Alpha start
+		1.0f,                          			   // Alpha end
+		0.8f,                          			   // Size start
+		16.0f,                          		   // Size end
+		1,                          			   // Min lifetime
+		1,                         			   // Max lifetime
+		0.0f,                          			   // Min speed
+		0.0f,                          			   // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+		0,                          			   // Rotation speed
+		1.0f,                         			   // Emission rate (particles per second)
+		EmitterShape::POINT,            		   // Shape
+		0.2f,                          			   // Cone base radius
+		1.0f,                          			   // Cone height
+		20.0f,                         			   // Cone angle in degrees
+		glm::vec2(400,225),		   	   // Sprite size
+		true,						   // Use animation
+		false,						   // Random animation Index
+		0.06f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		16.0f,						   // Min scale
+		16.0f,						   // Max scale
+		"Assets/Textures/MawlocSlashSpritesheet.png", 	   // Texture path
+		true 						   // Is Local Space
+	};
+
+	const ParticlePreset DashReady = {
+		ParticleType::DASH_READY,
+		false,						   // PlayOnAwake
+		0,						   // Duration (only if one-shot)
+		glm::vec3(255/255.0f,107/255.0f,0.0f),   				   // Start color (white)
+		glm::vec3(58/255.0f,58/255.0f,58/255.0f),   				   // End color (white)
+		70.0f,                          			   // Alpha start
+		25.0f,                          			   // Alpha end
+		0.2f,                          			   // Size start
+		0.2f,                          		   // Size end
+		0.2,                          			   // Min lifetime
+		0.25,                         			   // Max lifetime
+		1.0f,                          			   // Min speed
+		1.0f,                          			   // Max speed
+		1.0f,						   // End Speed
+		glm::vec3(0.0f,-30.0f,0.0f),	   		   // Gravity (negative for upward)
+		1,                          			   // Rotation speed
+		300.0f,                         			   // Emission rate (particles per second)
+		EmitterShape::BOX,            		   // Shape
+		0.5f,                          			   // Cone base radius
+		0.5f,                          			   // Cone height
+		0.0f,                         			   // Cone angle in degrees
+		glm::vec2(70,80),		   	   // Sprite size
+		false,						   // Use animation
+		false,						   // Random animation Index
+		0.1f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		0.2f,						   // Min scale
+		0.2f,						   // Max scale
+		"Assets/Textures/niebla30Frames.png", 	   // Texture path
+		true 						   // Is Local Space
+	};
+
+	const ParticlePreset EnvironmentCinder = {
+		ParticleType::ENVIRONMENT_CINDER,
+		false,						   // PlayOnAwake
+		0,						   // Duration (only if one-shot)
+		glm::vec3(255 / 255.0f,107 / 255.0f,0.0f),   				   // Start color (white)
+		glm::vec3(58 / 255.0f,58 / 255.0f,58 / 255.0f),   				   // End color (white)
+		20.0f,                          			   // Alpha start
+		50.0f,                          			   // Alpha end
+		0.01f,                          			   // Size start
+		0.2f,                          		   // Size end
+		15,                          			   // Min lifetime
+		40,                         			   // Max lifetime
+		1.0f,                          			   // Min speed
+		1.0f,                          			   // Max speed
+		1.0f,						   // End Speed
+		glm::vec3(0.0f,0.0f,0.0f),	   		   // Gravity (negative for upward)
+		1,                          			   // Rotation speed
+		300.0f,                         			   // Emission rate (particles per second)
+		EmitterShape::BOX,            		   // Shape
+		150.0f,                          			   // Cone base radius
+		150.0f,                          			   // Cone height
+		0.0f,                         			   // Cone angle in degrees
+		glm::vec2(70,80),		   	   // Sprite size
+		false,						   // Use animation
+		false,						   // Random animation Index
+		0.1f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		0.2f,						   // Min scale
+		0.2f,						   // Max scale
+		"Assets/Textures/rock.png", // Texture path
+		true 						   // Is Local Space
+	};
+
+
+	const ParticlePreset EnviromentDrippingWater = {
+		ParticleType::Enviroment_Dripping_Water,
+		true,											 // PlayOnAwake
+		0,												 // Duration (only if one-shot)
+		glm::vec3(1/1/1),							   	 // Start color (white)
+		glm::vec3(1 / 1 / 1),							 // End color (white)
+		0.8f,                          					 // Alpha start
+		0.8f,                          					 // Alpha end
+		0.8f,                          			         // Size start
+		0.3f,                          					 // Size end
+		1,                          				     // Min lifetime
+		5,                         			   		     // Max lifetime
+		1.0f,                          				     // Min speed
+		1.0f,                          				     // Max speed
+		1.0f,											 // End Speed
+		glm::vec3(0.0f,-20.0f,0.0f),	   				 // Gravity (negative for upward)
+		0,                          					 // Rotation speed
+		3.0f,                         			         // Emission rate (particles per second)
+		EmitterShape::POINT,            				 // Shape
+		150.0f,                          				 // Cone base radius
+		150.0f,                          				 // Cone height
+		0.0f,                         					 // Cone angle in degrees
+		glm::vec2(72,91),		   						 // Sprite size
+		false,											 // Use animation
+		false,											 // Random animation Index
+		0.1f,											 // Animation speed
+		180.0f,											 // Start rotation
+		false,											 // Random rotation
+		0.8f,                          			         // Size start
+		0.3f,  											 // Max scale
+		"Assets/Textures/dropplet.png",					 // Texture path
+		true 											 // Is Local Space
+	};
+
+
+	const ParticlePreset EnviromentGrass = {
+		ParticleType::Enviroment_Grass,
+		false,											 // PlayOnAwake
+		1,												 // Duration (only if one-shot)
+		glm::vec3(1 / 1 / 1),							 // Start color (white)
+		glm::vec3(1 / 1 / 1),							 // End color (white)
+		1.0f,                          					 // Alpha start
+		0.65f,                          				 // Alpha end
+		0.8f,                          			         // Size start
+		0.3f,                          					 // Size end
+		1,                          				     // Min lifetime
+		5,                         			   		     // Max lifetime
+		1.0f,                          				     // Min speed
+		1.0f,                          				     // Max speed
+		1.0f,											 // End Speed
+		glm::vec3(0.0f,0.01f,0.0f),	   				 // Gravity (negative for upward)
+		0,                          					 // Rotation speed
+		2.0f,                         			         // Emission rate (particles per second)
+		EmitterShape::POINT,            				 // Shape
+		150.0f,                          				 // Cone base radius
+		150.0f,                          				 // Cone height
+		0.0f,                         					 // Cone angle in degrees
+		glm::vec2(72,91),		   						 // Sprite size
+		false,											 // Use animation
+		false,											 // Random animation Index
+		0.1f,											 // Animation speed
+		180.0f,											 // Start rotation
+		true,											 // Random rotation
+		0.5f,                          			         // Size start
+		0.5f,  											 // Max scale
+		"Assets/Textures/leaf3.png",					 // Texture path
+		true 											 // Is Local Space
+	};
+
+
+	const ParticlePreset EnviromentLeaves = {
+		ParticleType::Enviroment_Leaves,
+		true,											 // PlayOnAwake
+		1,												 // Duration (only if one-shot)
+		glm::vec3(1 / 1 / 1),							 // Start color (white)
+		glm::vec3(1 / 1 / 1),							 // End color (white)
+		0.4f,                          					 // Alpha start
+		0.4f,                          					 // Alpha end
+		1.0f,                          			         // Size start
+		1.0f,                          					 // Size end
+		2,                          				     // Min lifetime
+		5,                         			   		     // Max lifetime
+		1.0f,                          				     // Min speed
+		1.0f,                          				     // Max speed
+		1.0f,											 // End Speed
+		glm::vec3(5.0f,-5.0f,5.0f),	   					 // Gravity (negative for upward)
+		1.5f,                          					 // Rotation speed
+		2.0f,                         			         // Emission rate (particles per second)
+		EmitterShape::POINT,            				 // Shape
+		150.0f,                          				 // Cone base radius
+		150.0f,                          				 // Cone height
+		0.0f,                         					 // Cone angle in degrees
+		glm::vec2(200,200),		   						 // Sprite size
+		false,											 // Use animation
+		false,											 // Random animation Index
+		0.1f,											 // Animation speed
+		0.0f,											 // Start rotation
+		true,											 // Random rotation
+		1.0f,                          			         // Size start
+		1.0f,  											 // Max scale
+		"Assets/Textures/leaf3.png",					 // Texture path
+		true 											 // Is Local Space
+	};
+
+	const ParticlePreset AbiltyRecharged = {
+		ParticleType::ABILITY_RECHARGED,
+		true,										// PlayOnAwake
+		1,											// Duration (only if one-shot)
+		glm::vec3(1,1,1),   						// Start color (white)
+		glm::vec3(1,1,1),   						// End color (white)
+		1.0f,                          			// Alpha start
+		1.0f,                          			// Alpha end
+		3.0f,                          			// Size start
+		3.0f,                          			// Size end
+		5,                          				// Min lifetime
+		5,                         					// Max lifetime
+		0.0f,                          				// Min speed
+		0.0f,                          				// Max speed
+		0.0f,										// End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   			// Gravity (negative for upward)
+		0,                          				// Rotation speed
+		1.f,                         				// Emission rate (particles per second)
+		EmitterShape::POINT,            			// Shape
+		0.2f,                          				// Cone base radius
+		1.0f,                          				// Cone height
+		20.0f,                         				// Cone angle in degrees
+		glm::vec2(95,87),		   					// Sprite size
+		true,										// Use animation
+		false,										// Random animation Index
+		0.2f,										// Animation speed
+		0.0f,										// Start rotation
+		false,										// Random rotation
+		1.0f,										// Min scale
+		1.0f,										// Max scale
+		"Assets/Textures/Ability_recharge_vfx.png", // Texture path
+		false 									    // Is Local Space
+	};
+
+	const ParticlePreset GrenadeShot = {
+	ParticleType::GRENADE_SHOT,
+	true,										 // PlayOnAwake
+	1,											 // Duration (only if one-shot)
+	glm::vec3(1,1,1),   						 // Start color (white)
+	glm::vec3(1,1,1),   						 // End color (white)
+	1.0f,                          			 // Alpha start
+	1.0f,                          			 // Alpha end
+	10.0f,                          			 // Size start
+	10.0f,                          			 // Size end
+	5,                          				 // Min lifetime
+	5,                         					 // Max lifetime
+	0.0f,                          				 // Min speed
+	0.0f,                          				 // Max speed
+	0.0f,										 // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   			 // Gravity (negative for upward)
+	0,                          				 // Rotation speed
+	1.f,                         				 // Emission rate (particles per second)
+	EmitterShape::POINT,            			 // Shape
+	0.2f,                          				 // Cone base radius
+	1.0f,                          				 // Cone height
+	20.0f,                         				 // Cone angle in degrees
+	glm::vec2(256,256),		   					 // Sprite size
+	true,										 // Use animation
+	false,										 // Random animation Index
+	7.2f,										 // Animation speed
+	0.0f,										 // Start rotation
+	false,										 // Random rotation
+	1.0f,										 // Min scale
+	1.0f,										 // Max scale
+	"Assets/Textures/grenade_shot_smoke_vfx.png",// Texture path
+	false 									     // Is Local Space
+	};
+
+	const ParticlePreset BulletEject = {
+	ParticleType::BULLET_EJECT,
+	true,										 // PlayOnAwake
+	1,											 // Duration (only if one-shot)
+	glm::vec3(1,1,1),   						 // Start color (white)
+	glm::vec3(1,1,1),   						 // End color (white)
+	1.0f,                          			 // Alpha start
+	1.0f,                          			     // Alpha end
+	1.0f,                          			 // Size start
+	1.0f,                          			     // Size end
+	5,                          				 // Min lifetime
+	5,                         					 // Max lifetime
+	0.0f,                          				 // Min speed
+	0.0f,                          				 // Max speed
+	0.0f,										 // End Speed
+	glm::vec3(0.0f,-5.00f,4.0f),	   			 // Gravity (negative for upward)
+	0,                          			 // Rotation speed
+	1.f,                         				 // Emission rate (particles per second)
+	EmitterShape::POINT,            			 // Shape
+	0.2f,                          				 // Cone base radius
+	1.0f,                          				 // Cone height
+	20.0f,                         				 // Cone angle in degrees
+	glm::vec2(100,100),		   					 // Sprite size
+	true,										 // Use animation
+	false,										 // Random animation Index
+	7.2f,										 // Animation speed
+	0.0f,										 // Start rotation
+	true,										 // Random rotation
+	1.0f,										 // Min scale
+	1.0f,										 // Max scale
+	"Assets/Textures/Bullet Eject vfx.png",      // Texture path
+	false 									     // Is Local Space
+	};
+
+	const ParticlePreset BloodThirstLost = {
+	ParticleType::BLOOD_THIRST_LOST,
+	true,										 // PlayOnAwake
+	1,											 // Duration (only if one-shot)
+	glm::vec3(1,1,1),   						 // Start color (white)
+	glm::vec3(1,1,1),   						 // End color (white)
+	1.0f,		                     			 // Alpha start
+	1.0f,		                     			 // Alpha end
+	5.0f,		                     			 // Size start
+	5.0f,		                       			 // Size end
+	5,                          				 // Min lifetime
+	5,                         					 // Max lifetime
+	0.0f,                          				 // Min speed
+	0.0f,                          				 // Max speed
+	0.0f,										 // End Speed
+	glm::vec3(0.0f,-1.00f,0.0f),	   			 // Gravity (negative for upward)
+	0,                          				 // Rotation speed
+	1.f,                         				 // Emission rate (particles per second)
+	EmitterShape::POINT,            			 // Shape
+	0.2f,                          				 // Cone base radius
+	1.0f,                          				 // Cone height
+	20.0f,                         				 // Cone angle in degrees
+	glm::vec2(180,180),		   					 // Sprite size
+	true,										 // Use animation
+	false,										 // Random animation Index
+	1.0f,										 // Animation speed
+	180.0f,										 // Start rotation
+	false,										 // Random rotation
+	1.0f,										 // Min scale
+	1.0f,										 // Max scale
+	"Assets/Textures/Red_thirst_lost_vfx.png",   // Texture path
+	false 									     // Is Local Space
+	};
+
+	const ParticlePreset TermagauntSlash = {
+	ParticleType::TERMAGAUNT_SLASH,
+	false,										 // PlayOnAwake
+	1,											 // Duration (only if one-shot)
+	glm::vec3(1,1,1),   						 // Start color (white)
+	glm::vec3(1,1,1),   						 // End color (white)
+	1.0f,		                     			 // Alpha start
+	1.0f,		                     			 // Alpha end
+	10.0f,		                     			 // Size start
+	10.0f,		                       			 // Size end
+	1,                          				 // Min lifetime
+	1,                         					 // Max lifetime
+	1.0f,                          				 // Min speed
+	1.0f,                          				 // Max speed
+	1.0f,										 // End Speed
+	glm::vec3(0.0f,0.01f,0.0f),	   			 // Gravity (negative for upward)
+	0,                          				 // Rotation speed
+	1.f,                         				 // Emission rate (particles per second)
+	EmitterShape::POINT,            			 // Shape
+	0.2f,                          				 // Cone base radius
+	1.0f,                          				 // Cone height
+	20.0f,                         				 // Cone angle in degrees
+	glm::vec2(138,127),		   					 // Sprite size
+	true,										 // Use animation
+	false,										 // Random animation Index
+	0.1f,										 // Animation speed
+	0.0f,										 // Start rotation
+	false,										 // Random rotation
+	1.0f,										 // Min scale
+	1.0f,										 // Max scale
+	"Assets/Textures/termagaunt_slash.png",   // Texture path
+	false 									     // Is Local Space
+	};
+
+	const ParticlePreset BloodSquirt1 = {
+	ParticleType::BLOOD_SQUIRT_1,
+	false,										 // PlayOnAwake
+	1,											 // Duration (only if one-shot)
+	glm::vec3(1,1,1),   						 // Start color (white)
+	glm::vec3(1,1,1),   						 // End color (white)
+	1.0f,		                     			 // Alpha start
+	1.0f,		                     			 // Alpha end
+	5.0f,		                     			 // Size start
+	5.0f,		                       			 // Size end
+	1,                          				 // Min lifetime
+	1,                         					 // Max lifetime
+	0.0f,                          				 // Min speed
+	0.0f,                          				 // Max speed
+	0.0f,										 // End Speed
+	glm::vec3(0.0f,0.01f,0.0f),	   			 // Gravity (negative for upward)
+	0,                          				 // Rotation speed
+	1.f,                         				 // Emission rate (particles per second)
+	EmitterShape::POINT,            			 // Shape
+	0.2f,                          				 // Cone base radius
+	1.0f,                          				 // Cone height
+	20.0f,                         				 // Cone angle in degrees
+	glm::vec2(320,320),		   					 // Sprite size
+	true,										 // Use animation
+	false,										 // Random animation Index
+	0.04f,										 // Animation speed
+	180.0f,										 // Start rotation
+	false,										 // Random rotation
+	1.0f,										 // Min scale
+	1.0f,										 // Max scale
+	"Assets/Textures/blood_splash_1.png",   // Texture path
+	false 									     // Is Local Space
+	};
+
+	const ParticlePreset BloodSquirt2 = {
+	ParticleType::BLOOD_SQUIRT_2,
+	false,										 // PlayOnAwake
+	1,											 // Duration (only if one-shot)
+	glm::vec3(1,1,1),   						 // Start color (white)
+	glm::vec3(1,1,1),   						 // End color (white)
+	1.0f,		                     			 // Alpha start
+	1.0f,		                     			 // Alpha end
+	5.0f,		                     			 // Size start
+	5.0f,		                       			 // Size end
+	1,                          				 // Min lifetime
+	1,                         					 // Max lifetime
+	0.0f,                          				 // Min speed
+	0.0f,                          				 // Max speed
+	0.0f,										 // End Speed
+	glm::vec3(0.0f,0.01f,0.0f),	   			 // Gravity (negative for upward)
+	0,                          				 // Rotation speed
+	1.f,                         				 // Emission rate (particles per second)
+	EmitterShape::POINT,            			 // Shape
+	0.2f,                          				 // Cone base radius
+	1.0f,                          				 // Cone height
+	20.0f,                         				 // Cone angle in degrees
+	glm::vec2(335,335),		   					 // Sprite size
+	true,										 // Use animation
+	false,										 // Random animation Index
+	0.04f,										 // Animation speed
+	180.0f,										 // Start rotation
+	false,										 // Random rotation
+	1.0f,										 // Min scale
+	1.0f,										 // Max scale
+	"Assets/Textures/blood_splash_2.png",   // Texture path
+	false 									     // Is Local Space
+	};
+	const ParticlePreset RailgunCharge = {
+	ParticleType::RAILGUN_CHARGE,
+	false,                         // PlayOnAwake
+	1.0f,                          // Duration (only if one-shot)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+	glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	1.0f,                          // Size start
+	1.0f,                          // Size end
+	5.0f,                          // Min lifetime
+	5.0f,                          // Max lifetime
+	0.0f,                         // Min speed
+	0.0f,                         // Max speed
+	0.0f,                         // End Speed
+	glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+	0.0f,                          // Rotation speed
+	0.2f,                         // Emission rate (particles per second)
+	EmitterShape::POINT,           // Shape
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	0.0f,                          // Unused for point
+	glm::vec2(160.0f , 160.0f),     // Sprite size
+	true,                         // Use animation
+	true,                         // Random animation Index
+	0.050f,                          // Animation speed
+	180.0f,                          // Start rotation
+	false,                          // Random rotation
+	2.0f,                         // Min scale
+	2.0f,                          // Max scale
+	"Assets/Textures/RailgunChargeVFX.png",   // Texture path
+	false 									     // Is Local Space
+	};
+	const ParticlePreset EnergyBallHitting = {
+ParticleType::ENERGY_BALL_HITING,
+false,                         // PlayOnAwake
+1.0f,                          // Duration (only if one-shot)
+glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+1.0f,                          // Alpha start
+1.0f,                          // Alpha end
+1.0f,                          // Size start
+1.0f,                          // Size end
+5.0f,                          // Min lifetime
+5.0f,                          // Max lifetime
+0.0f,                         // Min speed
+0.0f,                         // Max speed
+0.0f,                         // End Speed
+glm::vec3(0.0f, 0.001f, 0.0f),   // Gravity
+0.0f,                          // Rotation speed
+0.2f,                         // Emission rate (particles per second)
+EmitterShape::POINT,           // Shape
+0.0f,                          // Unused for point
+0.0f,                          // Unused for point
+0.0f,                          // Unused for point
+glm::vec2(160.0f , 160.0f),     // Sprite size
+true,                         // Use animation
+true,                         // Random animation Index
+0.050f,                          // Animation speed
+180.0f,                          // Start rotation
+false,                          // Random rotation
+2.0f,                         // Min scale
+2.0f,                          // Max scale
+"Assets/Textures/EnergyBallHittingVFX.png",   // Texture path
+false 									     // Is Local Space
+	};
+
+
+	const ParticlePreset Bullet = {
+ParticleType::REGULAR_BULLET,
+false,										 // PlayOnAwake
+5,											 // Duration (only if one-shot)
+glm::vec3(1,1,1),   						 // Start color (white)
+glm::vec3(1,1,1),   						 // End color (white)
+1.0f,		                     			 // Alpha start
+1.0f,		                     			 // Alpha end
+2.0f,		                     			 // Size start
+2.0f,		                       			 // Size end
+5,                          				 // Min lifetime
+5,                         					 // Max lifetime
+0.0f,                          				 // Min speed
+0.01f,                          			 // Max speed
+0.0f,										 // End Speed
+glm::vec3(0.0f,0.01f,0.0f),	   			 // Gravity (negative for upward)
+0,                          				 // Rotation speed
+0.5f,                         				 // Emission rate (particles per second)
+EmitterShape::POINT,            			 // Shape
+0.2f,                          				 // Cone base radius
+1.0f,                          				 // Cone height
+20.0f,                         				 // Cone angle in degrees
+glm::vec2(226 , 275),		   					 // Sprite size
+true,										 // Use animation
+false,										 // Random animation Index
+0.1f,										 // Animation speed
+180.0f,										 // Start rotation
+false,										 // Random rotation
+2.0f,										 // Min scale
+2.0f,										 // Max scale
+"Assets/Textures/bullet.png",   // Texture path
+true 									     // Is Local Space
+	};
+
+	const ParticlePreset Gun_trail = {
+ParticleType::GUN_TRAIL,
+false,										 // PlayOnAwake
+0.8f,											 // Duration (only if one-shot)
+glm::vec3(1,1,1),   						 // Start color (white)
+glm::vec3(1,1,1),   						 // End color (white)
+1.0f,		                     			 // Alpha start
+0.0f,		                     			 // Alpha end
+2.0f,		                     			 // Size start
+0.01f,		                       			 // Size end
+0.5f,                          				 // Min lifetime
+0.5f,                         					 // Max lifetime
+0.0f,                          				 // Min speed
+0.01f,                          			 // Max speed
+0.0f,										 // End Speed
+glm::vec3(0.0f,0.01f,0.0f),	   			 // Gravity (negative for upward)
+0,                          				 // Rotation speed
+100.0f,                         				 // Emission rate (particles per second)
+EmitterShape::POINT,            			 // Shape
+0.2f,                          				 // Cone base radius
+1.0f,                          				 // Cone height
+20.0f,                         				 // Cone angle in degrees
+glm::vec2(336 , 330 ),		   					 // Sprite size
+true,										 // Use animation
+false,										 // Random animation Index
+0.1f,										 // Animation speed
+180.0f,										 // Start rotation
+false,										 // Random rotation
+2.0f,										 // Min scale
+2.0f,										 // Max scale
+"Assets/Textures/smoke.png",   // Texture path
+true 									     // Is Local Space
 	};
 
 }
@@ -1306,6 +2364,130 @@ void ParticleFX::ApplyPreset(int particleID) {
 		preset = ParticlePresets::Ammunition_Blessing;
 		SetOneShot(false);
 		break;
+	case ParticleType::ENVIRONMENT_FIRE:
+		preset = ParticlePresets::Environment_Fire;
+		SetOneShot(false);
+		break;
+	case ParticleType::MAWLOC_SLAM:
+		preset = ParticlePresets::Mawloc_Slam;
+		SetOneShot(false);
+		break;
+	case ParticleType::MAWLOC_ROCKS :
+		preset = ParticlePresets::Mawloc_Rocks;
+		SetOneShot(false);
+		break;
+	case ParticleType::LICTOR_LEAP:
+		preset = ParticlePresets::Lictor_leap;
+		SetOneShot(false);
+		break;
+	case ParticleType::LICTOR_DODGE:
+		preset = ParticlePresets::Lictor_dodge;
+		SetOneShot(false);
+		break;
+	case ParticleType::MAGNET_AREA:
+		preset = ParticlePresets::Magnet_Area;
+		SetOneShot(false);
+		break;
+	case ParticleType::ENVIRONMENT_TREE:
+		preset = ParticlePresets::Environment_Tree;
+		SetOneShot(false);
+		break;
+	case ParticleType::ENVIRONMENT2_TREE:
+		preset = ParticlePresets::Environment2_Tree;
+		SetOneShot(false);
+		break;
+	case ParticleType::ENVIRONMENT3_TREE:
+		preset = ParticlePresets::Environment3_Tree;
+		SetOneShot(false);
+		break;
+	case ParticleType::RED_THIRST:
+		preset = ParticlePresets::Red_Thirst;
+		SetOneShot(false);
+		break;
+	case ParticleType::EnVIRONMENT_Fog:
+		preset = ParticlePresets::Envitoment_Fog;
+		SetOneShot(false);
+		break;
+	case ParticleType::LICTOR_SLASH:
+		preset = ParticlePresets::Lictor_Slash;
+		SetOneShot(true);
+		break;
+	case ParticleType::LICTOR_BLOOD : 
+		preset = ParticlePresets::Lictor_Blood;
+		SetOneShot(true);
+		break;
+	case ParticleType::MAWLOC_SWIPE:
+		preset = ParticlePresets::MawlocSwipe;
+		SetOneShot(true);
+		break;
+	case ParticleType::DASH_READY:
+		preset = ParticlePresets::DashReady;
+		SetOneShot(false);
+		break;
+	case ParticleType::ENVIRONMENT_CINDER:
+		preset = ParticlePresets::EnvironmentCinder;
+		SetOneShot(false);
+		break;
+	case ParticleType::Enviroment_Dripping_Water:
+		preset = ParticlePresets::EnviromentDrippingWater;
+		SetOneShot(false);
+		break;
+	case ParticleType::Enviroment_Grass:
+		preset = ParticlePresets::EnviromentGrass;
+		SetOneShot(false);
+		break;
+	case ParticleType::Enviroment_Leaves:
+		preset = ParticlePresets::EnviromentLeaves;
+		SetOneShot(false);
+		break;
+	case ParticleType::ABILITY_RECHARGED:
+		preset = ParticlePresets::AbiltyRecharged;
+		SetOneShot(false);
+		break;
+	case ParticleType::GRENADE_SHOT:
+		preset = ParticlePresets::GrenadeShot;
+		SetOneShot(false);
+		break;
+	case ParticleType::BULLET_EJECT:
+		preset = ParticlePresets::BulletEject;
+		SetOneShot(false);
+		break;
+	case ParticleType::BLOOD_THIRST_LOST:
+		preset = ParticlePresets::BloodThirstLost;
+		SetOneShot(false);
+		break;
+	case ParticleType::TERMAGAUNT_SLASH:
+		preset = ParticlePresets::TermagauntSlash;
+		SetOneShot(false);
+		break;
+	case ParticleType::BLOOD_SQUIRT_1:
+		preset = ParticlePresets::BloodSquirt1;
+		SetOneShot(false);
+		break;
+	case ParticleType::BLOOD_SQUIRT_2:
+		preset = ParticlePresets::BloodSquirt2;
+		SetOneShot(false);
+		break;
+	case ParticleType::RAILGUN_CHARGE:	
+		preset = ParticlePresets::RailgunCharge;
+		SetOneShot(false);
+		break;
+	case ParticleType::ENERGY_BALL_HITING:
+		preset = ParticlePresets::EnergyBallHitting;
+		SetOneShot(false);
+		break;
+	case ParticleType::FOOTSTEPS:
+		preset = ParticlePresets::Footsteps;
+		SetOneShot(false);
+		break;
+	case ParticleType::REGULAR_BULLET:
+		preset = ParticlePresets::Bullet;
+		SetOneShot(false);
+		break;
+	case ParticleType::GUN_TRAIL:
+		preset = ParticlePresets::Gun_trail;
+		SetOneShot(false);
+		break;
 	default:
 		preset = ParticlePresets::Medicae_Stim;
 		SetOneShot(false);
@@ -1484,33 +2666,53 @@ void ParticleFX::SetShapeParameters(float param1, float param2, float param3) {
 
 MonoObject* ParticleFX::GetSharp()
 {
-	if (CsharpReference) {
+	if (CsharpReference != nullptr) {
 		return CsharpReference;
 	}
+
 	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "ParticleFX");
 	if (!klass) {
 		return nullptr;
 	}
+
 	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
 	if (!monoObject) {
 		return nullptr;
 	}
+
 	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.ParticleFX:.ctor(uintptr,HawkEngine.GameObject)", true);
-	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
-	if (!method)
-	{
+	if (!constructorDesc) {
 		return nullptr;
 	}
+
+	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+	mono_method_desc_free(constructorDesc);
+
+	if (!method) {
+		return nullptr;
+	}
+
 	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
 	MonoObject* ownerGo = owner ? owner->GetSharp() : nullptr;
-	if (!ownerGo)
-	{
+	if (!ownerGo) {
 		return nullptr;
 	}
+
 	void* args[2];
 	args[0] = &componentPtr;
 	args[1] = ownerGo;
-	mono_runtime_invoke(method, monoObject, args, NULL);
+
+	MonoObject* exception = nullptr;
+	mono_runtime_invoke(method, monoObject, args, &exception);
+
+	if (exception) {
+		LOG(LogType::LOG_ERROR, "Exception creating C# object for %s %s", name, owner->GetName());
+		return nullptr;
+	}
+
 	CsharpReference = monoObject;
+
+	MonoManager::GetInstance().RegisterMonoObject(this, CsharpReference);
+
 	return CsharpReference;
 }

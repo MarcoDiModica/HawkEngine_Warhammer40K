@@ -3,7 +3,7 @@ SceneMetadata:
 GameObject0:
   name: DirectionalLight
   prefabPath: ""
-  uuid: 853048331652959539
+  uuid: 17990031654234608408
   tag: Untagged
   active: true
   isStatic: false
@@ -52,7 +52,7 @@ GameObject0:
 GameObject1:
   name: DirectionalLight_1
   prefabPath: ""
-  uuid: 17990031654234608408
+  uuid: 1040429512849899743
   tag: Untagged
   active: true
   isStatic: false
@@ -101,7 +101,7 @@ GameObject1:
 GameObject2:
   name: DirectionalLight_1_1
   prefabPath: ""
-  uuid: 1040429512849899743
+  uuid: 10586913381447907312
   tag: Untagged
   active: true
   isStatic: false
@@ -150,7 +150,7 @@ GameObject2:
 GameObject3:
   name: DirectionalLight_1_1_1
   prefabPath: ""
-  uuid: 10586913381447907312
+  uuid: 16850431031402373856
   tag: Untagged
   active: true
   isStatic: false
@@ -199,7 +199,7 @@ GameObject3:
 GameObject4:
   name: DirectionalLight_1_1_1_1
   prefabPath: ""
-  uuid: 16850431031402373856
+  uuid: 1896030769444306454
   tag: Untagged
   active: true
   isStatic: false
@@ -248,7 +248,7 @@ GameObject4:
 GameObject5:
   name: DirectionalLight_1_1_1_1_1
   prefabPath: ""
-  uuid: 1896030769444306454
+  uuid: 11760664552701255738
   tag: Untagged
   active: true
   isStatic: false
@@ -297,7 +297,7 @@ GameObject5:
 GameObject6:
   name: DirectionalLight_1_1_1_1_1_1
   prefabPath: ""
-  uuid: 11760664552701255738
+  uuid: 7616709109421273983
   tag: Untagged
   active: true
   isStatic: false
@@ -346,7 +346,7 @@ GameObject6:
 GameObject7:
   name: DirectionalLight_1_1_1_1_1_1_1
   prefabPath: ""
-  uuid: 7616709109421273983
+  uuid: 14469215804274306847
   tag: Untagged
   active: true
   isStatic: false
@@ -395,7 +395,7 @@ GameObject7:
 GameObject8:
   name: DirectionalLight_1_1_1_1_1_1_1_1
   prefabPath: ""
-  uuid: 14469215804274306847
+  uuid: 3615139411090315146
   tag: Untagged
   active: true
   isStatic: false
@@ -444,55 +444,6 @@ GameObject8:
 GameObject9:
   name: DirectionalLight_1_1_1_1_1_1_1_1_1
   prefabPath: ""
-  uuid: 3615139411090315146
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 10
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    LightComponent:
-      name: LightComponent
-      enabled: true
-      light_type: 2
-      ambient:
-        - 0.20000000298023224
-        - 0.20000000298023224
-        - 0.20000000298023224
-      diffuse:
-        - 0.5
-        - 0.5
-        - 0.5
-      specular:
-        - -0.20000000298023224
-        - -1
-        - -0.30000001192092896
-      constant: 1
-      linear: 0.0900000036
-      quadratic: 0.0320000015
-      radius: 1
-      intensity: 3
-      direction:
-        - -1
-        - -1
-        - 0
-  Children: ~
-GameObject10:
-  name: DirectionalLight_1_1_1_1_1_1_1_1_1_1
-  prefabPath: ""
   uuid: 240514130708936449
   tag: Untagged
   active: true
@@ -539,7 +490,7 @@ GameObject10:
         - -1
         - 0
   Children: ~
-GameObject11:
+GameObject10:
   name: AllLevel
   prefabPath: ""
   uuid: 12812841670872833864
@@ -2213,7 +2164,7 @@ GameObject11:
           name: Shader
           enabled: true
       Children: ~
-GameObject12:
+GameObject11:
   name: MainCamera
   prefabPath: ""
   uuid: 6313965168594688666
@@ -2256,7 +2207,7 @@ GameObject12:
           returnDelay: 0.200000003
           dashFOV: 35
   Children: ~
-GameObject13:
+GameObject12:
   name: Player
   prefabPath: ""
   uuid: 14067941166690577276
@@ -4786,7 +4737,7 @@ GameObject13:
             texturePath: Assets/Textures/Smoke30Frames.png
           particleType: 1
       Children: ~
-GameObject14:
+GameObject13:
   name: Canvas_HUD
   prefabPath: Assets\Prefabs\Canvas_HUD.prefab.yaml
   uuid: 14795525889963718800
@@ -7572,7 +7523,7 @@ GameObject14:
             - 0
           anim_speed: 0
       Children: ~
-GameObject15:
+GameObject14:
   name: Canvas_TitleBoT
   prefabPath: Assets\Prefabs\Canvas_TitleBoT.prefab.yaml
   uuid: 10699595856064252445
@@ -7679,7 +7630,7 @@ GameObject15:
             - 0
           anim_speed: 0
       Children: ~
-GameObject16:
+GameObject15:
   name: Canvas_Interaction
   prefabPath: Assets\Prefabs\Canvas_Interaction.prefab.yaml
   uuid: 15539872200045749534
@@ -7900,7 +7851,7 @@ GameObject16:
             - 0
           anim_speed: 0
       Children: ~
-GameObject17:
+GameObject16:
   name: Canvas_PauseMenu
   prefabPath: Assets\Prefabs\Canvas_PauseMenu.prefab.yaml
   uuid: 12899880479308707529
@@ -8251,7 +8202,7 @@ GameObject17:
           enabled: true
           state: 1
       Children: ~
-GameObject18:
+GameObject17:
   name: Canvas_OptionsMenu
   prefabPath: Assets\Prefabs\Canvas_OptionsMenu.prefab.yaml
   uuid: 4112152805761866741
@@ -10048,7 +9999,7 @@ GameObject18:
             - 0
           anim_speed: 0
       Children: ~
-GameObject19:
+GameObject18:
   name: Mawloc
   prefabPath: ""
   uuid: 4260498089218704817
@@ -12493,7 +12444,7 @@ GameObject19:
                         - 1.0000000864842993
                         - 1.000000024054988
                   Children: ~
-GameObject20:
+GameObject19:
   name: MawlocTail
   prefabPath: ""
   uuid: 2104470791175661429

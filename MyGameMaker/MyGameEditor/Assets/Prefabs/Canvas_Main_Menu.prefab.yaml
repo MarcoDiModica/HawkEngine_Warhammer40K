@@ -1,6 +1,6 @@
 name: Canvas_Main_Menu
-prefabPath: ""
-uuid: 17410387335041980135
+prefabPath: Assets\Prefabs\Canvas_Main_Menu.prefab.yaml
+uuid: 11863825442647452231
 tag: Untagged
 active: true
 isStatic: false
@@ -20,12 +20,6 @@ Components:
       - 1
       - 1
       - 1
-  UICanvasComponent:
-    name: UICanvasComponent
-    enabled: true
-  SoundComponent:
-    name: SoundComponent
-    enabled: true
   UITransformComponent:
     name: UITransformComponent
     enabled: true
@@ -45,6 +39,9 @@ Components:
       - 0
       - 1
       - 0
+  UICanvasComponent:
+    name: UICanvasComponent
+    enabled: true
   ScriptComponents:
     Script0:
       name: MenuButtons
@@ -94,18 +91,25 @@ Children:
       UIImageComponent:
         name: UIImageComponent
         enabled: true
-        texture_path: Library/Textures/UI/menu_bg.png
-        use_animation: false
+        texture_path: Library\Textures\UI\BG_Spritesheet.png
+        use_animation: true
         sprite_size:
-          - 2560
-          - 1440
+          - 1708.83301
+          - 961.200012
         sheet_size:
-          - 2560
-          - 1440
+          - 10253
+          - 9612
         sprite_offset:
-          - 0
-          - 0
-        anim_speed: 0
+          - 3417.66602
+          - 1922.40002
+        anim_speed: 0.5
+        anim_index: 14
+        anim_index_limit: 60
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: title
     prefabPath: ""
@@ -133,16 +137,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.0140000004
-          - 0.0869999975
+          - 0.0219999999
+          - -0.0149999997
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.386999995
-          - 0.184
+          - 0.5
+          - 0.5
           - 1
         pivot_offset:
           - 0
@@ -151,18 +155,25 @@ Children:
       UIImageComponent:
         name: UIImageComponent
         enabled: true
-        texture_path: Library/Textures/UI/title.png
+        texture_path: Library\Textures\UI\Title_BloodAndThunder.png
         use_animation: false
         sprite_size:
-          - 931
-          - 187
+          - 1920
+          - 1080
         sheet_size:
-          - 931
-          - 187
+          - 1920
+          - 1080
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: new_game_button
     prefabPath: ""
@@ -190,17 +201,17 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.177000001
-          - 0.361000001
+          - 0.266000003
+          - 0.425999999
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.181999996
-          - 0.0719999969
-          - 1
+          - 0.181999981
+          - 0.0700000077
+          - 0.400000006
         pivot_offset:
           - 0.5
           - 0.5
@@ -220,6 +231,13 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
       UIButtonComponent:
         name: UIButtonComponent
         enabled: true
@@ -251,17 +269,17 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.177000001
-          - 0.469000012
+          - 0.266000003
+          - 0.524999976
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.181999996
-          - 0.0719999969
-          - 1
+          - 0.181999981
+          - 0.0700000077
+          - 0.400000006
         pivot_offset:
           - 0.5
           - 0.5
@@ -281,6 +299,13 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
       UIButtonComponent:
         name: UIButtonComponent
         enabled: true
@@ -312,17 +337,17 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.177000001
-          - 0.565999985
+          - 0.266000003
+          - 0.625
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.181999996
-          - 0.0719999969
-          - 1
+          - 0.181999981
+          - 0.0700000077
+          - 0.400000006
         pivot_offset:
           - 0.5
           - 0.5
@@ -342,6 +367,13 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
       UIButtonComponent:
         name: UIButtonComponent
         enabled: true
@@ -373,17 +405,17 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.177000001
-          - 0.66900003
+          - 0.266000003
+          - 0.824999988
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.181999996
-          - 0.0719999969
-          - 1
+          - 0.181999981
+          - 0.0700000077
+          - 0.400000006
         pivot_offset:
           - 0.5
           - 0.5
@@ -403,8 +435,83 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
       UIButtonComponent:
         name: UIButtonComponent
         enabled: true
         state: 1
+    Children: ~
+  - name: credits_button
+    prefabPath: ""
+    uuid: 5583414161430186459
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.266000003
+          - 0.725000024
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.181999996
+          - 0.0700000003
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\menu_credits.png
+        use_animation: false
+        sprite_size:
+          - 469
+          - 103
+        sheet_size:
+          - 469
+          - 103
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~

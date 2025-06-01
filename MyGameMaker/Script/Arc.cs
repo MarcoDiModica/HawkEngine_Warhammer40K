@@ -12,6 +12,8 @@ public class Arc : MonoBehaviour
     Rigidbody rigidbody;
     bool isExploded = false;
     GameObject explosion;
+    GameObject explosionFX;
+    ParticleFX particleFX;
     float deathtimer = 0.2f;
     public bool needsDestroy = false;
     float deathTimerPrevention = 0;
@@ -39,7 +41,7 @@ public class Arc : MonoBehaviour
 
     public void Init(Vector3 pos, Vector3 dir)
     {
-        AddComponent<MeshRenderer>();
+        //AddComponent<MeshRenderer>();
         GetComponent<Transform>().position = pos + dir * 3.0f + new Vector3(0, 2, 0);
         GetComponent<Transform>().SetScale(0.25f, 0.25f, 0.25f);
         AddComponent<CapsuleCollider>();
@@ -49,18 +51,15 @@ public class Arc : MonoBehaviour
         rigidbody.SetGravity(new Vector3(0.0f, 0.0f, 0.0f) * 20);
         rigidbody.AddForce(dir * 140);
         rigidbody.SetFriction(0.5f);
+        gameObject.AddComponent<ParticleFX>();
+        particleFX = gameObject.GetComponent<ParticleFX>();
+        particleFX.ApplyPreset(14);
+        particleFX.EmitBurst(1);
 
     }
 
     public override void Update(float deltaTime)
     {
-
-        // ESTO PETA EN RELEASE. SE HA DE ARREGLAR
-        if (explosion == null)
-        {
-            return;
-        }
-
         if (isExploded)
         {
             deathtimer -= deltaTime;
@@ -69,24 +68,24 @@ public class Arc : MonoBehaviour
                 if (explosion != null)
                 {
                     Engineson.Destroy(explosion);
-                    explosion = null; // Asegurarse de que no se acceda a un objeto destruido
+                    Engineson.Destroy(gameObject);
+                    Engineson.print("Destroyed");
+                    isExploded = false;
                 }
-                return;
             }
         }
-
         deathTimerPrevention += deltaTime;
+        //Engineson.print(deathTimerPrevention.ToString());
 
         if (deathTimerPrevention > .1f)
         {
             if (explosion != null)
             {
-                Engineson.Destroy(explosion);
-                explosion = null; // Asegurarse de que no se acceda a un objeto destruido
-                needsDestroy = true;
-                return;
+                //Engineson.Destroy(explosion);
+                //isExploded = false;
             }
         }
+
     }
 
 
@@ -97,51 +96,53 @@ public class Arc : MonoBehaviour
     {
         rigidbody.SetVelocity(new Vector3(0, 0, 0));
         explosion = Engineson.CreateGameObject("Explosion", null);
+        Audio.PlayOneShot(arcExplosion);
         explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
-        var explosionFX = Engineson.CreateGameObject("ExplosionFX", null);
-        gameObject.AddChild(explosionFX);
-        explosionFX.AddComponent<ParticleFX>().ApplyPreset(17);
+        gameObject.AddChild(explosion);
+        explosionFX = Engineson.CreateGameObject("ExplosionGranadeFX", null);
+        gameObject.AddChild(explosionFX); explosionFX.AddComponent<ParticleFX>().ApplyPreset(17);
         explosionFX.GetComponent<ParticleFX>().EmitBurst(1);
         explosionFX.GetComponent<Transform>().SetPosition(
             GetComponent<Transform>().GetPosition().X,
             GetComponent<Transform>().GetPosition().Y,
             GetComponent<Transform>().GetPosition().Z
         );
-        Engineson.print("Explosion");
-        
-        Audio.PlayOneShot(arcExplosion);
         isExploded = true;
-
-        for (int i = 0; i < collisionNames.Count; i++)
-        {
-            var enemy = GameObject.Find(collisionNames[i]);
-            if (enemy.tag == "Melee")
-            {
-                enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
-            }
-            if (enemy.tag == "Ranged")
-            {
-                enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
-            }
-            if (enemy.tag == "Stalker")
-            {
-                //enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
-            }
-            if (enemy.tag == "Boss")
-            {
-                enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
-            }
-            if (enemy.tag == "Destroyable")
-            {
-                enemy.GetComponent<DestroyEnviormentObject>().DestroyObject();
-            }
-        }
     }
 
     public override void OnCollisionEnter(GameObject other)
     {
-        Explode();
+        if (other.tag != "Player")
+        {
+            Explode();
+        }
+
+        switch (other.tag)
+        {
+            case "Melee":
+                other.GetComponent<EnemyControllerMelee>()?.TakeDamage(damage);
+                other.GetComponent<EnemyControllerMelee>()?.getSlowed();
+                break;
+            case "Ranged":
+                other.GetComponent<EnemyControllerRanged>()?.TakeDamage(damage);
+                other.GetComponent<EnemyControllerRanged>()?.getSlowed();
+                break;
+            case "Stalker":
+                other.GetComponent<EnemyControllerStalker>()?.TakeDamage(damage);
+                other.GetComponent<EnemyControllerStalker>()?.getSlowed();
+                break;
+            case "Boss":
+                other.GetComponent<EnemyControllerBoss>()?.TakeDamage(damage);
+                break;
+            case "Warrior":
+                other.GetComponent<EnemyControllerWarrior>()?.TakeDamage(damage);
+                other.GetComponent<EnemyControllerWarrior>()?.getSlowed();
+                break;
+            case "Destroyable":
+                other.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
+                break;
+        }
     }
 
 }

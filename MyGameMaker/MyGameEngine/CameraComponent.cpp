@@ -236,6 +236,10 @@ void CameraComponent::Shake(float intensity, float duration, float frequency)
 
 MonoObject* CameraComponent::GetSharp()
 {
+	if (CsharpReference != nullptr) {
+		return CsharpReference;
+	}
+
 	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Camera");
 	if (!klass) {
 		return nullptr;
@@ -247,16 +251,20 @@ MonoObject* CameraComponent::GetSharp()
 	}
 
 	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Camera:.ctor(uintptr,HawkEngine.GameObject)", true);
+	if (!constructorDesc) {
+		return nullptr;
+	}
+
 	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
-	if (!method)
-	{
+	mono_method_desc_free(constructorDesc);
+
+	if (!method) {
 		return nullptr;
 	}
 
 	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
-	MonoObject* ownerGo = owner->GetSharp();
-	if (!ownerGo)
-	{
+	MonoObject* ownerGo = owner ? owner->GetSharp() : nullptr;
+	if (!ownerGo) {
 		return nullptr;
 	}
 
@@ -264,7 +272,17 @@ MonoObject* CameraComponent::GetSharp()
 	args[0] = &componentPtr;
 	args[1] = ownerGo;
 
-	mono_runtime_invoke(method, monoObject, args, NULL);
+	MonoObject* exception = nullptr;
+	mono_runtime_invoke(method, monoObject, args, &exception);
 
-	return monoObject;
+	if (exception) {
+		LOG(LogType::LOG_ERROR, "Exception creating C# object for %s %s", name, owner->GetName());
+		return nullptr;
+	}
+
+	CsharpReference = monoObject;
+
+	MonoManager::GetInstance().RegisterMonoObject(this, CsharpReference);
+
+	return CsharpReference;
 }

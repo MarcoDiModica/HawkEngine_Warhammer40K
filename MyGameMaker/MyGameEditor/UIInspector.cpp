@@ -45,6 +45,7 @@
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "../MyUIEngine/TextComponent.h"
 #include "mono/metadata/debug-helpers.h"
 #include "../MyUIEngine/UIButtonComponent.h"
 
@@ -2643,6 +2644,96 @@ private:
 	}
 	#pragma endregion
 
+	#pragma region TextComponent
+	static void DrawTextComponent(TextComponent* textComponent) {
+		if (!textComponent) return;
+
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Text")) return;
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				textComponent->GetOwner()->RemoveComponent<TextComponent>();
+			}
+			ImGui::EndPopup();
+		}
+
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+
+		ImGui::BeginGroup();
+
+		// Text Content
+		std::string text = textComponent->GetText();
+		char buffer[256];
+		strncpy(buffer, text.c_str(), sizeof(buffer));
+		buffer[sizeof(buffer) - 1] = '\0';
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Text");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::InputText("##Text", buffer, sizeof(buffer))) {
+			textComponent->SetText(buffer);
+		}
+		ImGui::PopItemWidth();
+
+		float fontSize = textComponent->GetFontSize();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Font Size");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##FontSize", &fontSize, 0.1f, 1.0f, 100.0f)) {
+			textComponent->SetFontSize(fontSize);
+		}
+		ImGui::PopItemWidth();
+
+		glm::vec3 color = textComponent->GetColor();
+		float colorArray[3] = { color.r, color.g, color.b };
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Color");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::ColorEdit3("##TextColor", colorArray)) {
+			textComponent->SetColor(glm::vec3(colorArray[0], colorArray[1], colorArray[2]));
+		}
+		ImGui::PopItemWidth();
+
+		float Boxsize[2] = { textComponent->GetBoxSize().x, textComponent->GetBoxSize().y };
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Box Size");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat2("##BoxSize", Boxsize, 0.1f, 0.1f, 100.0f)) {
+			textComponent->SetBoxSize(Boxsize[0], Boxsize[1]);
+		}
+		static std::unordered_map<TextComponent*, bool> drawBoxState;
+		if (drawBoxState.find(textComponent) == drawBoxState.end()) {
+			drawBoxState[textComponent] = false;
+		}
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Draw Box");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::Checkbox("##DrawBoxSize", &drawBoxState[textComponent])) {
+			textComponent->SetDebugDrawBox(drawBoxState[textComponent]);
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Space Width");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		float spaceSize = textComponent->GetSpaceWidth();
+		if (ImGui::DragFloat("##SpaceWidth", &spaceSize, 0.1f, 0.1f, 100.0f)) {
+			textComponent->SetSpaceWidth(spaceSize);
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
+	}
+#pragma endregion
 public:
 	#pragma region DrawComponents
 	static void DrawComponents(GameObject* gameObject, bool& snap, float& snapValue) {
@@ -2751,6 +2842,10 @@ public:
 		if (gameObject->HasComponent<UIImageComponent>()) {
 			UIImageComponent* uiImageComponent = gameObject->GetComponent<UIImageComponent>();
 			DrawImageComponent(uiImageComponent);
+		}
+		if (gameObject->HasComponent<TextComponent>()) {
+			TextComponent* textComponent = gameObject->GetComponent<TextComponent>();
+			DrawTextComponent(textComponent);
 		}
 	}
 
@@ -2933,8 +3028,12 @@ public:
 					gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
 				}
 				}, !gameObject->HasComponent<UIButtonComponent>());
-
-			
+			DrawComponentButton(gameObject, "Text", [gameObject]() {
+				if (!gameObject->HasComponent<UITransformComponent>()) {
+					gameObject->AddComponent<UITransformComponent>();
+				}
+				gameObject->AddComponent<TextComponent>();
+				}, !gameObject->HasComponent<TextComponent>());
 
 			break;
 
@@ -3265,6 +3364,17 @@ bool UIInspector::Draw() {
 			PrefabManager::SavePrefab(selectedObject->shared_from_this(), selectedObject->GetPrefabSourcePath());
 		}
 		ImGui::PopStyleColor();
+
+		ImGui::SameLine();
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 1.0f, 1.0f)); 
+		if (ImGui::Button("Load From Prefab")) {
+			const std::string& prefabPath = selectedObject->GetPrefabSourcePath();
+			if (!PrefabManager::ApplyPrefabToGameObject(selectedObject, prefabPath)) {
+				LOG(LogType::LOG_ERROR, "[Inspector] Failed to apply prefab to GameObject.");
+			}
+		}
+		ImGui::PopStyleColor();
+
 	}
 
     ComponentDrawer::DrawComponents(selectedObject, snap, snapValue);

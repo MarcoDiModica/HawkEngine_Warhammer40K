@@ -24,6 +24,7 @@
 #include "../MyUIEngine/UITransformComponent.h"
 #include "MyAnimationEngine/SkeletalAnimationComponent.h"
 #include "External/Optick/include/optick.h"
+#include "MyPhysicsEngine/RigidBodyComponent.h"
 
 GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)), m_UUID(), active(true)
 {
@@ -250,6 +251,17 @@ void GameObject::Update(float deltaTime)
 		return;
 	}
 
+    /*if (this->tag == "Melee") {
+        if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+            auto btRigidBody = this->GetComponent<RigidbodyComponent>();
+            auto rb = btRigidBody->GetRigidBody();
+            if (rb) {
+                btVector3 velocity(1, 0, 1);
+                rb->setLinearVelocity(velocity);
+            }
+        }
+    }*/
+
 	for (auto it = components.begin(); it != components.end(); ) {
 		if (!it->second) {
 			it = components.erase(it);
@@ -308,6 +320,11 @@ void GameObject::Destroy()
 
 	destroyed = true;
 
+	if (CsharpReference != nullptr) {
+		MonoManager::GetInstance().UnregisterMonoObject(this);
+		CsharpReference = nullptr;
+	}
+
 	for (auto& component : components) {
 		component.second->Destroy();
 	}
@@ -361,7 +378,17 @@ void GameObject::SetTag(const std::string& tag)
 
 std::string GameObject::GetTag() const
 {
-	return tag;
+    if (!this || destroyed) {
+        LOG(LogType::LOG_ERROR, "GameObject %s has no owner set, returning empty tag", name.c_str());
+        return "";
+	}
+
+    if (tag.size() > 1024) {
+        LOG(LogType::LOG_WARNING, "Tag size is abnormally large (%zu), returning empty tag", tag.size());
+        return "";
+    }
+
+    return tag;
 }
 
 bool GameObject::CompareTag(const std::string& tag) const
@@ -370,7 +397,7 @@ bool GameObject::CompareTag(const std::string& tag) const
 }
 
 Transform_Component* GameObject::GetTransform() const {
-	if (destroyed) {
+	if (destroyed || !this) {
 		return nullptr;
 	}
 
@@ -553,11 +580,16 @@ void GameObject::RemoveChild(GameObject* child)
 
 
 MonoObject* GameObject::GetSharp() {
-    //Obtenemos el nombre del GO, creamos el string en mono y llamamos a la funcion que crea el GO
-    MonoString* monoString = mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
-    CsharpReference = EngineBinds::CreateGameObjectSharp(monoString, this);
+	if (CsharpReference != nullptr) {
+		return CsharpReference;
+	}
 
-    return CsharpReference;
+	CsharpReference = EngineBinds::CreateGameObjectSharp(
+		mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str()),
+		this
+	);
+
+	return CsharpReference;
 }
 
 

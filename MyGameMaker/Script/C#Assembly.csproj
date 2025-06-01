@@ -61,9 +61,39 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.4\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Pipelines, Version=9.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Pipelines.9.0.4\lib\net462\System.IO.Pipelines.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=9.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.9.0.4\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=9.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.9.0.4\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -77,6 +107,8 @@
     <Compile Include="Arc.cs" />
     <Compile Include="ArcSnare.cs" />
     <Compile Include="Audio.cs" />
+    <Compile Include="AudioLevel1.cs" />
+    <Compile Include="AudioLevel2.cs" />
     <Compile Include="Ball.cs" />
     <Compile Include="Barrage.cs" />
     <Compile Include="BarrageBullet.cs" />
@@ -87,26 +119,39 @@
     <Compile Include="BoltgunBullets.cs" />
     <Compile Include="BoltgunPickUp.cs" />
     <Compile Include="BoltgunUpgradePickUp.cs" />
-    <Compile Include="BoxCollider.cs" />
+    <Compile Include="BoxCollider.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="BulletData.cs" />
-    <Compile Include="Camera.cs" />
+    <Compile Include="Camera.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CapsuleCollider.cs" />
     <Compile Include="ChapterStandard.cs" />
-    <Compile Include="Collider.cs" />
+    <Compile Include="Checkpoint.cs" />
+    <Compile Include="CinematicManager.cs" />
+    <Compile Include="Collider.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Component.cs" />
     <Compile Include="Coroutine.cs" />
     <Compile Include="CoroutineManager.cs" />
     <Compile Include="DestroyEnviormentObject.cs" />
+    <Compile Include="DestructibleWall.cs" />
     <Compile Include="DropManager.cs" />
     <Compile Include="EnemyController.cs" />
     <Compile Include="EnemyControllerBoss.cs" />
     <Compile Include="EnemyControllerStalker.cs" />
     <Compile Include="EnemyControllerBossTail.cs" />
     <Compile Include="EnemyControllerWarrior.cs" />
+    <Compile Include="EnemySpawner.cs" />
     <Compile Include="EnergyBall.cs" />
     <Compile Include="EnemyControllerMelee.cs" />
     <Compile Include="EnemyControllerRanged.cs" />
     <Compile Include="Engineson.cs" />
+    <Compile Include="Explosion.cs" />
+    <Compile Include="ExplosiveBarrel.cs" />
+    <Compile Include="FadeController.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Grenade.cs" />
     <Compile Include="GrenadeLauncher.cs" />
@@ -126,6 +171,8 @@
     <Compile Include="LoseScreen.cs" />
     <Compile Include="Magnet.cs" />
     <Compile Include="Mathf.cs" />
+    <Compile Include="MawlocAnimation.cs" />
+    <Compile Include="MawlocTailAnimation.cs" />
     <Compile Include="MedicaeStimm.cs" />
     <Compile Include="IInteractable.cs" />
     <Compile Include="ImageAsSlider.cs" />
@@ -133,10 +180,15 @@
     <Compile Include="InteractionSystem.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="MenuButtons.cs" />
-    <Compile Include="MeshCollider.cs" />
-    <Compile Include="MeshRenderer.cs" />
+    <Compile Include="MeshCollider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MeshRenderer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="BaseAbilities.cs" />
+    <Compile Include="MusicManager.cs" />
     <Compile Include="OptionMenu.cs" />
     <Compile Include="Pathfinding.cs" />
     <Compile Include="PauseMenu.cs" />
@@ -160,11 +212,14 @@
     <Compile Include="RailgunUpgradePickUp.cs" />
     <Compile Include="RedThirstManager.cs" />
     <Compile Include="RayCast.cs" />
-    <Compile Include="Rigidbody.cs" />
+    <Compile Include="Rigidbody.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Scene1ToScene2.cs" />
     <Compile Include="Scene2ToMenu.cs" />
     <Compile Include="Scene2ToScene3.cs" />
     <Compile Include="SceneAudio.cs" />
+    <Compile Include="ShakeManager.cs" />
     <Compile Include="Shotgun.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="ShotgunPickUp.cs" />
@@ -173,10 +228,15 @@
     <Compile Include="SkeletalAnimation.cs" />
     <Compile Include="SoundEnvironmentController.cs" />
     <Compile Include="SoundTrigger.cs" />
+    <Compile Include="TermagauntAnimation.cs" />
+    <Compile Include="TyranidTentaclesAnim.cs" />
     <Compile Include="Test1.cs" />
     <Compile Include="Test2.cs" />
+    <Compile Include="TextComponent.cs" />
     <Compile Include="ToggleMode.cs" />
-    <Compile Include="Transform.cs" />
+    <Compile Include="Transform.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Tweening.cs" />
     <Compile Include="TyranidCorpse.cs" />
     <Compile Include="TyranidTentacles.cs" />
@@ -184,9 +244,17 @@
     <Compile Include="UICanvas.cs" />
     <Compile Include="UIGameplay.cs" />
     <Compile Include="UIImage.cs" />
-    <Compile Include="UITransform.cs" />
+    <Compile Include="UITransform.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WaitForSeconds.cs" />
+    <Compile Include="WarriorAnimation.cs" />
     <Compile Include="WinScreen.cs" />
+    <Compile Include="ZoneController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

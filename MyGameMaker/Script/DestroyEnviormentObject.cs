@@ -6,10 +6,29 @@ using HawkEngine;
 public class DestroyEnviormentObject : MonoBehaviour
 {
 
+    public DropManager dropManager;
+    public bool onlyMedicaeStimm = false;
+
     public void DestroyObject()
     {
         //gameObject.GetComponent<Transform>().position = new Vector3(0, -100, 0);
         //gameObject.GetComponent<Collider>().SetTrigger(true);
+        if(dropManager != null)
+        {
+            if (onlyMedicaeStimm)
+            {
+                dropManager.SpawnMedicaeStimm(gameObject.transform.position);
+            }
+            else
+            {
+                dropManager.SpawnPrefabFromDestroyableObject(gameObject.transform.position);
+            }
+            
+        }
+        else
+        {
+            Engineson.print("DropManager not found");
+        }
         Engineson.Destroy(gameObject);
     }
 
@@ -20,6 +39,11 @@ public class DestroyEnviormentObject : MonoBehaviour
     public override void Start()
     {
         //base.Start();
+        dropManager = GameObject.Find("DropManager").GetComponent<DropManager>();
+        if (dropManager == null)
+        {
+           Engineson.print("DropManager not found");
+        }
     }
 
     public override void Update(float deltaTime)

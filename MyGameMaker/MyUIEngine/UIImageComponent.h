@@ -102,10 +102,13 @@ protected:
        YAML::Node node = Component::encode();  
 
        node["use_animation"] = useAnimation;  
-       node["sprite_size"] = std::vector<float>{ material->spriteSize.x, material->spriteSize.y};
-       node["sheet_size"] = std::vector<float>{ material->sheetSize.x, material->sheetSize.y};
-       node["sprite_offset"] = std::vector<float>{ material->spriteOffset.x, material->spriteOffset.y};
-       node["anim_speed"] = animSpeed;
+       node["sprite_size"] = std::vector<float>{spriteSize.x, spriteSize.y};  
+       node["sheet_size"] = std::vector<float>{sheetSize.x, sheetSize.y};  
+       node["sprite_offset"] = std::vector<float>{spriteOffset.x, spriteOffset.y};  
+       node["anim_speed"] = animSpeed; 
+	   node["anim_index"] = animIndex;
+	   node["anim_index_limit"] = anim1IndexLimit;
+       node["color"] = std::vector<float>{color.r, color.g, color.b, color.a};
 
 	   if (texture) {
 		   node["texture_path"] = texturePath;
@@ -136,10 +139,21 @@ protected:
 			material->sheetSize = glm::vec2(sheetSizeVec[0], sheetSizeVec[1]);
 		}
 
-		if (node["sprite_offset"]) {
-			auto spriteOffsetVec = node["sprite_offset"].as<std::vector<float>>();
-			material->spriteOffset = glm::vec2(spriteOffsetVec[0], spriteOffsetVec[1]);
-		}
+	   if (node["anim_index"]) {
+		   animIndex = node["anim_index"].as<int>();
+	   }
+
+	   if (node["anim_index_limit"]) {
+		   anim1IndexLimit = node["anim_index_limit"].as<int>();
+	   }
+
+	   if (node["color"]) {
+		   auto colorVec = node["color"].as<std::vector<float>>();
+		   color = glm::vec4(colorVec[0], colorVec[1], colorVec[2], colorVec[3]);
+	   }
+
+       /*shader = node["shader"].as<Shaders*>();*/  
+       /*mesh = node["mesh"].as<std::shared_ptr<Mesh>>();*/  
 
 		if (node["anim_speed"]) {
 			animSpeed = node["anim_speed"].as<float>();

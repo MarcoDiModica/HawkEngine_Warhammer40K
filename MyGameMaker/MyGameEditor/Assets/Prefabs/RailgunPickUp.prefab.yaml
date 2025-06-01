@@ -1,0 +1,84 @@
+name: bOLTER.012_Instance
+prefabPath: Assets\Prefabs\RailgunPickUp.prefab.yaml
+uuid: 8085693448819786001
+tag: Weapon
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 836.23590087890625
+      - 2
+      - -185.1197509765625
+    localRotation:
+      - 0
+      - 0
+      - -24.781442265162212
+    localScale:
+      - 0.0029999990643983076
+      - 0.0029999990643983076
+      - 0.0030000000260770321
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 5139834007055871956
+    material:
+      name: railgun_DefaultMaterial_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+        - 1
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.20000000298023224
+      - 0.20000000298023224
+      - 0.20000000298023224
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - -0.20000000298023224
+      - -1
+      - -0.30000001192092896
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 4.69999981
+    intensity: 3
+    direction:
+      - -1
+      - -1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: RailgunPickUp
+      fields:
+        floatSpeed: 1
+        floatHeight: 0.5
+        rotationSpeed: 50
+Children: ~

@@ -20,6 +20,7 @@
 #include "MyUIEngine/UITransformComponent.h"
 #include "MyUIEngine/UIImageComponent.h"
 #include "MyUIEngine/UIButtonComponent.h"
+#include "MyUIEngine/TextComponent.h"
 #include "MyParticlesEngine/ParticleFX.h"
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
 #include <MyScriptingEngine/MonoManager.h>
@@ -120,6 +121,65 @@ void SceneSerializer::SerializeChildren(YAML::Node& parentNode, GameObject& game
 
 	if (!children.empty()) {
 		parentNode["Children"] = childrenNode;
+	}
+}
+
+void SceneSerializer::ApplyComponentDelta(GameObject* gameObject, const YAML::Node& prefabComponents) {
+	if (!prefabComponents || !prefabComponents.IsMap()) return;
+
+	for (auto it = gameObject->components.begin(); it != gameObject->components.end();) {
+		if (it->second && it->second->GetName() != "Transform_Component") {
+			it = gameObject->components.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+
+	for (auto it = prefabComponents.begin(); it != prefabComponents.end(); ++it) {
+		const std::string& compName = it->first.as<std::string>();
+		if (compName == "ScriptComponents" || compName == "Transform_Component") continue;
+
+		YAML::Node singleComp;
+		singleComp[compName] = it->second;
+		DeserializeComponents(gameObject, singleComp);
+	}
+
+	if (prefabComponents["ScriptComponents"] && prefabComponents["ScriptComponents"].IsMap()) {
+		const YAML::Node& scriptNodeMap = prefabComponents["ScriptComponents"];
+
+		std::set<std::string> existingScripts;
+		for (auto& sc : gameObject->scriptComponents) {
+			if (sc && !sc->currentScriptName.empty()) {
+				existingScripts.insert(sc->currentScriptName);
+			}
+		}
+
+		for (auto it = scriptNodeMap.begin(); it != scriptNodeMap.end(); ++it) {
+			const YAML::Node& scriptNode = it->second;
+			if (!scriptNode || !scriptNode.IsMap() || !scriptNode["name"]) continue;
+
+			std::string scriptName = scriptNode["name"].as<std::string>();
+			if (scriptName.empty()) continue;
+
+			if (existingScripts.find(scriptName) == existingScripts.end()) {
+				auto newScript = gameObject->AddComponent<ScriptComponent>();
+				if (!newScript->decode(scriptNode)) {
+					LOG(LogType::LOG_WARNING, "Failed to deserialize script: %s", scriptName.c_str());
+				}
+			}
+		}
+	}
+}
+
+void SceneSerializer::RemoveComponentByName(GameObject* gameObject, const std::string& name) {
+	for (auto it = gameObject->components.begin(); it != gameObject->components.end();) {
+		if (it->second && it->second->GetName() == name) {
+			it = gameObject->components.erase(it);
+		}
+		else {
+			++it;
+		}
 	}
 }
 
@@ -350,6 +410,10 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			auto button = gameObject->AddComponent<UIButtonComponent>();
 			button->decode(componentData);
 		}
+		else if (componentName == "TextComponent") {
+			auto text = gameObject->AddComponent<TextComponent>();
+			text->decode(componentData);
+		}
 		else if (componentName == "ParticleFX") {
 			auto particle = gameObject->AddComponent<ParticleFX>();
 			particle->decode(componentData);
@@ -448,6 +512,7 @@ std::string SceneSerializer::GetComponentTypeName(ComponentType type) {
 	case ComponentType::CANVAS: return "UICanvasComponent";
 	case ComponentType::IMAGE: return "UIImageComponent";
 	case ComponentType::BUTTON: return "UIButtonComponent";
+	case ComponentType::TEXT: return "TextComponent";
 	//mas casos/componentes
 	default: return "Unknown";
 	}
@@ -467,6 +532,7 @@ ComponentType SceneSerializer::GetComponentTypeFromName(const std::string& name)
 	if (name == "UICanvasComponent") return ComponentType::CANVAS;
 	if (name == "UIImageComponent") return ComponentType::IMAGE;
 	if (name == "UIButtonComponent") return ComponentType::BUTTON;
+	if (name == "TextComponent") return ComponentType::TEXT;
 	//mas mapeos aqui
 	return ComponentType::NONE;
 }

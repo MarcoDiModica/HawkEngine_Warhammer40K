@@ -5,14 +5,13 @@ using System.Runtime.InteropServices;
 
 public class MenuButtons : MonoBehaviour
 {
-    //Referencia el boton y los componentes que quieras usar aqui
-
     private GameObject newGameButton;
     private GameObject continueButton;
     private GameObject optionsButton;
     private GameObject creditsButton;
     private GameObject quitButton;
     private GameObject optionsCanvas;
+    private GameObject creditsCanvas;
 
     private UIButton button_newGameButton;
     private UIButton button_continueButton;
@@ -29,23 +28,29 @@ public class MenuButtons : MonoBehaviour
     private ButtonState prevState_newGameButton = ButtonState.DEFAULT;
     private ButtonState prevState_continueButton = ButtonState.DEFAULT;
     private ButtonState prevState_optionsButton = ButtonState.DEFAULT;
+    private ButtonState prevState_creditsButton = ButtonState.DEFAULT;
     private ButtonState prevState_quitButton = ButtonState.DEFAULT;
 
     private bool[] hasPlayedHoverSound;
+    private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
+    private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
+    private string MainMenuMusic = "Assets/Audio/Music/MainTheme_BetaBuild2.ogg";
 
-//     private AudioSource sound;
-//     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
-//     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
-//     private string buttonStartGame = "Assets/Audio/SFX/UI/UI_Confirm.wav"; 
-//     private AudioClip buttonHoveredFX;
-//     private AudioClip buttonClickedFX;
-//     private AudioClip buttonStartGameFX;
+    //     private AudioSource sound;
+    //     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
+    //     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+    //     private string buttonStartGame = "Assets/Audio/SFX/UI/UI_Confirm.wav"; 
+    //     private AudioClip buttonHoveredFX;
+    //     private AudioClip buttonClickedFX;
+    //     private AudioClip buttonStartGameFX;
 
     private int selectedButtonIndex = -1;
     private UIButton[] buttons;
     private UITransform[] transforms;
 
     private long lastInputTime = 0;
+
+    private bool isMainMenuMusicPlaying = false;
     private enum InputMethod
     {
         None,
@@ -65,21 +70,25 @@ public class MenuButtons : MonoBehaviour
         continueButton = GameObject.Find("continue_button");
         optionsButton = GameObject.Find("options_button");
         quitButton = GameObject.Find("exit_button");
+        creditsButton = GameObject.Find("credits_button");
         optionsCanvas = GameObject.Find("Canvas_OptionsMenu");
-       // sound = gameObject.GetComponent<AudioSource>();
+        creditsCanvas = GameObject.Find("Canvas_CreditMenu");
+        // sound = gameObject.GetComponent<AudioSource>();
 
         button_newGameButton = newGameButton.GetComponent<UIButton>();
         button_continueButton = continueButton.GetComponent<UIButton>();
         button_optionsButton = optionsButton.GetComponent<UIButton>();
         button_quitButton = quitButton.GetComponent<UIButton>();
+        button_creditsButton = creditsButton.GetComponent<UIButton>();
 
         transform_newGameButton = newGameButton.GetComponent<UITransform>();
         transform_continueButton = continueButton.GetComponent<UITransform>();
         transform_optionsButton = optionsButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
+        transform_creditsButton = creditsButton.GetComponent<UITransform>();
 
-        buttons = new UIButton[] { button_newGameButton, button_continueButton, button_optionsButton, button_quitButton };
-        transforms = new UITransform[] { transform_newGameButton, transform_continueButton, transform_optionsButton, transform_quitButton };
+        buttons = new UIButton[] { button_newGameButton, button_continueButton, button_optionsButton, button_creditsButton, button_quitButton };
+        transforms = new UITransform[] { transform_newGameButton, transform_continueButton, transform_optionsButton, transform_creditsButton, transform_quitButton };
 
         hasPlayedHoverSound = new bool[buttons.Length];
 
@@ -93,12 +102,17 @@ public class MenuButtons : MonoBehaviour
             optionsCanvas.SetActive(false);
         }
 
-//         buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false, false);
-//         buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
-//         buttonStartGameFX = new AudioClip(buttonStartGame, "ButtonStartGameFX", false, false);
-//         sound.LoadAudioClip(buttonHoveredFX);
-//         sound.LoadAudioClip(buttonClickedFX);
-//         sound.LoadAudioClip(buttonStartGameFX);
+        if (creditsCanvas != null)
+        {
+            creditsCanvas.SetActive(false);
+        }
+
+        //         buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false, false);
+        //         buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
+        //         buttonStartGameFX = new AudioClip(buttonStartGame, "ButtonStartGameFX", false, false);
+        //         sound.LoadAudioClip(buttonHoveredFX);
+        //         sound.LoadAudioClip(buttonClickedFX);
+        //         sound.LoadAudioClip(buttonStartGameFX);
     }
 
     private void NavigateMenu()
@@ -152,7 +166,7 @@ public class MenuButtons : MonoBehaviour
             currentInputMethod = InputMethod.None;
         }
 
-        // Detectar si el ratón está sobre un botón
+        // Detectar si el rat n est  sobre un bot n
         for (int i = 0; i < buttons.Length; i++)
         {
             if (buttons[i] == null)
@@ -193,33 +207,83 @@ public class MenuButtons : MonoBehaviour
             }
         }
 
-        // Detectar clic del ratón
-        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1)|| Input.GetControllerButtonDown(ControllerButton.A))
+        // Detectar clic del rat n
+        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse) || Input.GetControllerButtonDown(ControllerButton.A))
         {
+            if (selectedButtonIndex == -1)
+                return;
+
             UIButton selectedButton = buttons[selectedButtonIndex];
             selectedButton.SetState(ButtonState.CLICKED);
 
             if (selectedButton == button_newGameButton)
             {
-                //sound?.Play(buttonStartGameFX);
-                SceneManager.LoadScene("Lvl1Alpha1Release");
+                Audio.PlayOneShot(ConfirmSFX);
+
+
+                GameObject cinematicObj = GameObject.Find("CinematicManager");
+                CinematicManager manager = cinematicObj?.GetComponent<CinematicManager>();
+                FadeController fadeController = GameObject.Find("FadeController")?.GetComponent<FadeController>();
+                SceneManager.isNewGame = true;
+                SceneManager.isLevel2 = false;
+                SceneManager.isBossFight = false;
+                if (manager != null && fadeController != null)
+                {
+                    fadeController.FadeIn(1.0f, () =>
+                    {
+                        manager.StartCinematic(LoadLevel1);
+                        fadeController.FadeOut(0.5f);
+                    });
+                }
+                else
+                {
+                    Audio.Stop(MainMenuMusic);
+                    SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
+                }
+
+
             }
             else if (selectedButton == button_continueButton)
             {
                 //sound?.Play(buttonStartGameFX);
-                SceneManager.LoadScene("Lvl2AlphaRelease");
+                if (SceneManager.isLevel2)
+                {
+                    Audio.PlayOneShot(ConfirmSFX);
+                    Audio.Stop(MainMenuMusic);
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl2");
+                }
+                else if (SceneManager.isBossFight)
+                {
+                    Audio.PlayOneShot(ConfirmSFX);
+                    Audio.Stop(MainMenuMusic);
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Bossfight");
+                }
+                else
+                {
+                    Audio.PlayOneShot(ConfirmSFX);
+                    Audio.Stop(MainMenuMusic);
+                    SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl1");
+                }
+
             }
             else if (selectedButton == button_optionsButton)
             {
                 //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(MenuSFX);
                 optionsCanvas.SetActive(true);
+            }
+            else if (selectedButton == button_creditsButton)
+            {
+                Audio.PlayOneShot(MenuSFX);
+                creditsCanvas.SetActive(true);
+
             }
             else if (selectedButton == button_quitButton)
             {
-                //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(ConfirmSFX);
             }
         }
-        
+
     }
 
     private bool IsMouseOverButton(UIButton button)
@@ -239,13 +303,45 @@ public class MenuButtons : MonoBehaviour
             Engineson.print("ERROR: No Canvas object found");
             return;
         }
-//         if (sound == null)
-//         {
-//             Engineson.print("ERROR: Audio not found");
-//             return;
-//         }
+        if (creditsCanvas == null)
+        {
+            Engineson.print("ERROR: No Canvas object found");
+            return;
+        }
+
+        if (creditsCanvas.IsActive() == true)
+        {
+            if (Input.GetKeyDown(KeyCode.ESCAPE) || Input.GetControllerButtonDown(ControllerButton.B))
+            {
+                creditsCanvas.SetActive(false);
+                Audio.PlayOneShot(ConfirmSFX);
+            }
+        }
+
+        if (!isMainMenuMusicPlaying)
+        {
+            Audio.Play(MainMenuMusic, true);
+            isMainMenuMusicPlaying = true;
+        }
+        //         if (sound == null)
+        //         {
+        //             Engineson.print("ERROR: Audio not found");
+        //             return;
+        //         }
 
         NavigateMenu();
+    }
+
+    private void LoadLevel1()
+    {
+
+        FadeController fadeController = GameObject.Find("FadeController")?.GetComponent<FadeController>();
+        fadeController.FadeIn(2.0f, () =>
+        {
+            fadeController.SetAlpha(0.0f);
+            Audio.Stop(MainMenuMusic);
+            SceneManager.LoadScene("BetaRelease_Week1_Lvl1");
+        });
     }
 }
 

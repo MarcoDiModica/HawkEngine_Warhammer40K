@@ -6,25 +6,46 @@ using System.Diagnostics;
 using System.Net;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using HawkEngine;
 
 public class EnemyControllerBoss : EnemyController
 {
     private float hurtboxDuration = 0.5f; 
-    private Vector3 slamHurtboxSize = new Vector3(3.0f, 1.0f, 10.0f); 
+    private Vector3 slamHurtboxSize = new Vector3(8.0f, 10.0f, 15.0f);
     private GameObject slamHurtboxObject;
 
     private List<GameObject> clawHurtboxObjects = new List<GameObject>();
 
+    private Random rng = new Random();
+
     //audio
-//     private AudioSource music;
-//     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
-//     private AudioClip musicClip;
-   
+    //     private AudioSource music;
+    //     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+    //     private AudioClip musicClip;
+
+    private List<string> roarClips = new List<string>
+    {
+        "Assets/Audio/Mawloc_Growl_1.wav",
+        "Assets/Audio/Mawloc_Growl_2.wav",
+        "Assets/Audio/Mawloc_Growl_3.wav",
+
+    };
+
+    private const string BurrowClip = "Assets/Audio/Mawloc_Underground_move.wav";
+    private const string UnburrowClip = "Assets/Audio/Mawloc_Underground_Attack.wav";
+    private const string SlamClip = "Assets/Audio/Mawloc_Slam_Atack.wav";
+    private const string ClawClip = "Assets/Audio/Mawloc_Claw_Attack.wav";
+    private const string AcidClip = "Assets/Audio/Mawloc_Acid_Attack.wav";
+    private const string DeathClip = "Assets/Audio/Mawloc_Death.wav";
+    private const string BossTheme = "Assets/Audio/Music/Level2_BossFight_BossTheme_Gold.ogg";
+    private const string BossThemePhase2 = "Assets/Audio/Music/Level2_MainTheme_BossFight_Gold.ogg";
+
+    private bool isBossMusicPlaying = false;
     //stats
     bool isCombatMusicPlaying = false;
     private float health = 1500.0f;
-    private float damage = 25.0f;
+    private float contactDamage = 10.0f;
 
     // unburrowing attack stats
     private float unburrowingAttackCooldown = 5.0f;
@@ -32,13 +53,15 @@ public class EnemyControllerBoss : EnemyController
     private float restAfterThirdAttack = 4.0f;
     private float timer = 0.0f;
     private int attackCount = 0;
-    public bool isBuried = true;
+    public bool isBuried = true; 
 
     // phase 2 unburrowing/slam stats
     private float unburrowingAttackCooldownPhase2 = 5.0f;
     private float postAttackDelay = 2.0f;
     private float burrowTime = 2.0f;
     private bool isPreparingAttack = false;
+    private float slamDamage = 10.0f;
+    private float strikeDamage = 15.0f;
     //private Vector3[] fixedPositions = new Vector3[]
     //{
     //    new Vector3(10,-21.807f,1020),
@@ -67,9 +90,18 @@ public class EnemyControllerBoss : EnemyController
     private bool phase3Started = false;
     private bool hasTeleportedToCenter = false;
     private bool isPhase3Attacking = false;
+    private float metalSlideDamage = 8.0f;
+    private bool metalSlideDamageApplied = false;
 
     private EnemyControllerBossTail tailController;
     private bool hasUnburiedInPhase2 = false;
+    private bool clawDamageAppliedThisFrame = false;
+    private bool slamDamageAppliedThisFrame = false;
+
+    private MawlocAnimation anim;
+    private PlayerController pc;
+    private float deathTimer = 0f;
+    private float deathCoolodown = 5f;
 
     private enum BossPhase
     {
@@ -89,26 +121,34 @@ public class EnemyControllerBoss : EnemyController
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
-        rb.SetMass(1000.0f);
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
+        rb.SetMass(100000.0f);
         tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
         tailController?.gameObject.SetActive(false);
-        currentHealth = maxHealth;
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
         }
-        collider = gameObject.GetComponent<BoxCollider>();
+        collider = gameObject.GetComponent<CapsuleCollider>();
         collider.SetSize(new Vector3(3.0f, 2.0f, 3.0f));
         if (collider == null)
         {
             Engineson.print("ERROR: PlayerMovement requires a Collider component!");
             return;
         }
-//         sound = gameObject.GetComponent<AudioSource>();
-//         if (sound == null)
-//         {
-//             Engineson.print("PlayerShooting: Audio component not found");
-//         }
+        //         sound = gameObject.GetComponent<AudioSource>();
+        //         if (sound == null)
+        //         {
+        //             Engineson.print("PlayerShooting: Audio component not found");
+        //         }
+
+        anim = gameObject.GetChild("MawlocMesh").GetComponent<MawlocAnimation>();
+        if (anim == null)
+        {
+            Engineson.print("ERROR: Mawloc animation requires a script component!");
+            return;
+        }
+
         enemyTransform = gameObject.GetComponent<Transform>();
         if (enemyTransform == null)
         {
@@ -127,7 +167,14 @@ public class EnemyControllerBoss : EnemyController
     {
         if (!isDead)
         {
-                float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+            if (!isBossMusicPlaying)
+            {
+                Audio.Play(BossTheme, true);
+                isBossMusicPlaying = true;
+            }
+
+            float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+            
 
                 if (playerTransform != null)
                 {
@@ -145,7 +192,9 @@ public class EnemyControllerBoss : EnemyController
                 else if (currentHealth < 1000)
                 {
                     currentPhase = BossPhase.PHASE2;
-                }
+                    Audio.Stop(BossTheme);
+                    Audio.Play(BossThemePhase2, true);
+            }
 
                 switch (currentPhase)
                 {
@@ -164,7 +213,9 @@ public class EnemyControllerBoss : EnemyController
                             if (isBuried && timer >= unburrowingAttackCooldown)
                             {
                                 UnburrowingAttack();
-                                timer = 0.0f;
+                                
+
+                            timer = 0.0f;
                             }
                             else if (!isBuried && timer >= postUnburrowingAttackDelay)
                             {
@@ -174,6 +225,7 @@ public class EnemyControllerBoss : EnemyController
                                     {
                                         Burrow();
                                         timer = 0.0f;
+                                        
                                     }
                                 }
                                 else
@@ -293,26 +345,100 @@ public class EnemyControllerBoss : EnemyController
                 }
 
                 UpdateMetalSlide(deltaTime);
+                CheckBossHurtboxes();
             }
-            if (isDead)
+        if (isDead)
+        {
+            collider.SetActive(false);
+            Audio.Stop(BossTheme); 
+            if (anim.isAnimFinished)
             {
-                collider.SetActive(false);
-                //if (isCombatMusicPlaying == true)
-                //{
-                //    sound?.Stop();
-                //    isCombatMusicPlaying = false;
-                //}
+                deathTimer += deltaTime;
+                if (deathTimer >= deathCoolodown)
+                {
+                    Audio.Stop(BossTheme);
+                    Engineson.Destroy(gameObject);
+                    SceneManager.LoadSceneWithFade("WinScene", 0.5f);
+                }
             }
+        }
     }
 
+    public override void ResetEnemyCheckPoint()
+    {
+        
+    }
     override public void OnCollisionEnter(GameObject other)
     {
-
+        if (other.tag == "Player")
+        {
+            pc.playerData.TakeDamage(contactDamage);
+            pc.StartFlashColor(pc.flashColor, pc.flashDuration);
+        }
     }
 
     public override void Attack()
     {
 
+    }
+
+    private void CheckBossHurtboxes()
+    {
+        if (pc == null || pc.playerData == null) return;
+
+        Vector3 playerPos = playerTransform.position;
+
+        if (slamHurtboxObject != null && IsPlayerInCollider(slamHurtboxObject, playerPos) && !slamDamageAppliedThisFrame)
+        {
+            ApplyBossDamage(slamDamage);
+            slamDamageAppliedThisFrame = true;
+        }
+
+        if (clawHurtboxObjects != null && !clawDamageAppliedThisFrame)
+        {
+            foreach (GameObject claw in clawHurtboxObjects)
+            {
+                if (claw != null && IsPlayerInCollider(claw, playerPos))
+                {
+                    ApplyBossDamage(strikeDamage);
+                    clawDamageAppliedThisFrame = true;
+                    break;
+                }
+            }
+        }
+
+        if (metalSlideObject != null && IsPlayerInCollider(metalSlideObject, playerPos))
+        { 
+            if(!metalSlideDamageApplied)
+            {
+                ApplyBossDamage(metalSlideDamage);
+                metalSlideDamageApplied = true;
+            }
+        }
+    }
+
+    private bool IsPlayerInCollider(GameObject hurtbox, Vector3 playerPos)
+    {
+        var bc = hurtbox.GetComponent<BoxCollider>();
+        Vector3 halfSize = bc.GetSize() * 0.5f;
+        Vector3 center = hurtbox.GetComponent<Transform>().position;
+
+        return (playerPos.X >= center.X - halfSize.X && playerPos.X <= center.X + halfSize.X) &&
+               (playerPos.Y >= center.Y - halfSize.Y && playerPos.Y <= center.Y + halfSize.Y) &&
+               (playerPos.Z >= center.Z - halfSize.Z && playerPos.Z <= center.Z + halfSize.Z);
+    }
+
+    private void ApplyBossDamage(float amount)
+    {
+        if (pc.redThirstManager.redThirstBonus < amount)
+        {
+            pc.playerData.TakeDamage(amount - pc.redThirstManager.redThirstBonus);
+            pc.StartFlashColor(pc.flashColor, pc.flashDuration);
+        }
+        else
+        {
+            pc.playerData.TakeDamage(0.0f);
+        }
     }
 
     public override void TakeDamage(float damage)
@@ -327,16 +453,21 @@ public class EnemyControllerBoss : EnemyController
         //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
         //sound?.Play();
     }
+
     private void UnburrowingAttack()
     {
         if (isDead == false)
         {
             if (playerTransform != null)
-            {
+            {      
                 Engineson.print("Unburrowing Attack");
                 enemyTransform.position = playerTransform.position;
                 collider.SetPosition(playerTransform.position);
+                anim.SetUnBurrowHeadAnimation();
+                AddComponent<ParticleFX>().ApplyPreset(25);
+                GetComponent<ParticleFX>().EmitBurst(25);
             }
+            Audio.PlayOneShot(UnburrowClip);
             attackCount++;
             isBuried = false;
         }
@@ -351,7 +482,12 @@ public class EnemyControllerBoss : EnemyController
                 enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
                 collider.SetPosition(enemyTransform.position);
                 Engineson.print("Unburrowing Attack Phase 2");
+                anim.SetUnburrowingAnimation();
+                AddComponent<ParticleFX>().ApplyPreset(25);
+                GetComponent<ParticleFX>().EmitBurst(25);
             }
+            Audio.PlayOneShot(UnburrowClip);
+            Engineson.print("PlaySound Attack Phase 2");
             isBuried = false;
         }
     }
@@ -360,8 +496,12 @@ public class EnemyControllerBoss : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(UnburrowClip);
             enemyTransform.position = fixedPositions[2];
             collider.SetPosition(enemyTransform.position);
+            anim.SetUnburrowingAnimation();
+            AddComponent<ParticleFX>().ApplyPreset(25);
+            GetComponent<ParticleFX>().EmitBurst(25);
         }
         isBuried = false;
     }
@@ -370,10 +510,12 @@ public class EnemyControllerBoss : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(SlamClip);
             CreateSlamHurtbox();
             hurtboxDuration = 0.0f;
             isSlamActive = true;
             slamAttackTimer = 0.0f;
+            anim.SetSlamAnimation();
         }
     }
 
@@ -381,10 +523,13 @@ public class EnemyControllerBoss : EnemyController
     {
         if (isDead == false)
         {
+            Audio.PlayOneShot(ClawClip);
             CreateClawHurtbox();
             slamAttackTimer = 0.0f;
+            anim.SetClawStrikeAnimation();
         }
     }
+
 
     private void MetalSlide()
     {
@@ -394,8 +539,9 @@ public class EnemyControllerBoss : EnemyController
 
             Vector3 spawnPosition = playerTransform.position + metalSlideStartOffset;
 
+            anim.SetRoarAnimation();
             metalSlideObject = Engineson.CreateGameObject("MetalSlide", null);
-            metalSlideObject.AddComponent<MeshRenderer>();
+            //metalSlideObject.AddComponent<MeshRenderer>();
             metalSlideObject.AddComponent<BoxCollider>();
             metalSlideObject.GetComponent<BoxCollider>().SetTrigger(true);
             metalSlideObject.tag = "EnemyAttack";
@@ -403,6 +549,10 @@ public class EnemyControllerBoss : EnemyController
             var transform = metalSlideObject.GetComponent<Transform>();
             transform.position = spawnPosition;
             transform.SetScale(3, 3, 3);
+            metalSlideObject.AddComponent<ParticleFX>();
+            metalSlideObject.GetComponent<ParticleFX>().ApplyPreset(25);
+            metalSlideObject.GetComponent<ParticleFX>().EmitBurst(50);
+            Audio.PlayOneShot(AcidClip);
         }
     }
 
@@ -420,6 +570,7 @@ public class EnemyControllerBoss : EnemyController
             {
                 Engineson.Destroy(metalSlideObject);
                 metalSlideObject = null;
+                metalSlideDamageApplied = false;
             }
         }
     }
@@ -455,23 +606,51 @@ public class EnemyControllerBoss : EnemyController
         return closestIndex;
     }
 
+    public void Roar()
+    {
+        string selectedRoar = roarClips[rng.Next(roarClips.Count)];
+
+        if (currentPhase == BossPhase.PHASE1)
+        {
+            Audio.SchedulePlay(selectedRoar, 0.25f);
+        }
+        else if (currentPhase == BossPhase.PHASE2)
+        {
+            Audio.SchedulePlay(selectedRoar, 0.5f);
+        }
+        else
+        {
+            Audio.PlayOneShot(selectedRoar);
+        }
+    }
+   
     private void Burrow()
     {
         if (isDead == false)
         {
             Engineson.print("Burrowed");
+            Engineson.print("PlaySound Burrowed");
+            Audio.PlayOneShot(BurrowClip);
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
             collider.SetPosition(enemyTransform.position);
+            if (currentPhase != BossPhase.PHASE1)
+            {
+                anim.SetBurrowingAnimation();
+            }
+            AddComponent<ParticleFX>().ApplyPreset(25);
+            GetComponent<ParticleFX>().EmitBurst(25);
             isBuried = true;
         }
     }
 
     private void Die()
     {
+        anim.SetDeathAnimation();
         tailController.Die();
-        Engineson.Destroy(GetGameObject());
+        //Engineson.Destroy(GetGameObject());
         isDead = true;
-        SceneManager.LoadScene("WinScene");
+        Audio.PlayOneShot(DeathClip);
+        //SceneManager.LoadScene("WinScene");
     }
 
     private void CreateSlamHurtbox()
@@ -479,22 +658,27 @@ public class EnemyControllerBoss : EnemyController
         if (enemyTransform == null) return;
 
         slamHurtboxObject = Engineson.CreateGameObject("SlamHurtbox", null);
-        slamHurtboxObject.AddComponent<MeshRenderer>();
+        //slamHurtboxObject.AddComponent<MeshRenderer>();
         slamHurtboxObject.AddComponent<BoxCollider>();
         slamHurtboxObject.GetComponent<BoxCollider>().SetTrigger(true);
+        slamHurtboxObject.AddComponent<ParticleFX>();
+        slamHurtboxObject.GetComponent<ParticleFX>().ApplyPreset(24);
+        slamHurtboxObject.GetComponent<ParticleFX>().EmitBurst(1);
         slamHurtboxObject.tag = "EnemyAttack";
-
+        slamDamageAppliedThisFrame = false;
         Vector3 forward = enemyTransform.forward;
         Vector3 bossPosition = enemyTransform.position;
 
         float halfLength = slamHurtboxSize.Z / 2.0f;
         float offset = 5.0f;
 
-        Vector3 hurtboxPosition = bossPosition + forward * (halfLength + offset) + new Vector3(0, 2, 0);
+        Vector3 hurtboxPosition = bossPosition + forward * (halfLength + offset) + new Vector3(0, 5, 0);
 
         var hurtboxTransform = slamHurtboxObject.GetComponent<Transform>();
         hurtboxTransform.position = hurtboxPosition;
         hurtboxTransform.SetScale(slamHurtboxSize.X, slamHurtboxSize.Y, slamHurtboxSize.Z);
+        var hurtboxCollider = slamHurtboxObject.GetComponent<BoxCollider>();
+        hurtboxCollider.SetSize(slamHurtboxSize);
 
         float angle = (float)Math.Atan2(forward.X, forward.Z);
         Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, angle);
@@ -510,7 +694,7 @@ public class EnemyControllerBoss : EnemyController
         float segmentLength = 1.5f;
         float height = 1.0f;
         float spacing = 1.0f;
-
+        clawDamageAppliedThisFrame = false;
         Vector3 forward = Vector3.Normalize(enemyTransform.forward);
         Vector3 origin = enemyTransform.position;
 
@@ -524,7 +708,7 @@ public class EnemyControllerBoss : EnemyController
             Vector3 position = origin + offset + new Vector3(0, 2, 0);
 
             GameObject clawSegment = Engineson.CreateGameObject("ClawHurtbox", null);
-            clawSegment.AddComponent<MeshRenderer>();
+            //clawSegment.AddComponent<MeshRenderer>();
             clawSegment.AddComponent<BoxCollider>();
             clawSegment.GetComponent<BoxCollider>().SetTrigger(true);
             clawSegment.tag = "EnemyAttack";
@@ -532,6 +716,8 @@ public class EnemyControllerBoss : EnemyController
             var hurtboxTransform = clawSegment.GetComponent<Transform>();
             hurtboxTransform.position = position;
             hurtboxTransform.SetScale(size.X, size.Y, size.Z);
+            var hurtboxCollider = clawSegment.GetComponent<BoxCollider>();
+            hurtboxCollider.SetSize(slamHurtboxSize);
 
             float angle = (float)Math.Atan2(forward.X, forward.Z);
             Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, angle);

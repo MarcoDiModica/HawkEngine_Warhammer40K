@@ -1,0 +1,168 @@
+name: shotgun_Instance
+prefabPath: Assets\Prefabs\ShotgunPickUp.prefab.yaml
+uuid: 15749538981690564962
+tag: Weapon
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 297.38861083984375
+      - 2
+      - 34.265037536621094
+    localRotation:
+      - 0
+      - 0
+      - -34.819204954921958
+    localScale:
+      - 0.0029999984249120533
+      - 0.0029999984249120533
+      - 0.0030000000260770321
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 0
+    material:
+      name: Abeto_Low_1001_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+        - 1
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.20000000298023224
+      - 0.20000000298023224
+      - 0.20000000298023224
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - -0.20000000298023224
+      - -1
+      - -0.30000001192092896
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 6
+    intensity: 3
+    direction:
+      - -1
+      - -1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: ShotgunPickUp
+      fields:
+        floatSpeed: 1
+        floatHeight: 0.5
+        rotationSpeed: 50
+Children:
+  - name: bOLTER.010
+    prefabPath: ""
+    uuid: 6196318924992102555
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - -168.35948181152344
+          - 265.19198608398438
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 12445246452344068261
+        material:
+          name: shotgun_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~
+  - name: Cone
+    prefabPath: ""
+    uuid: 989901120173885559
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - -168.35948181152344
+          - 265.19198608398438
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 5508932554690171827
+        material:
+          name: ""
+          color:
+            - 1
+            - 0
+            - 0
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~

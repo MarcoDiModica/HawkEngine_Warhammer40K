@@ -31,9 +31,7 @@ public class ArcSnare : BaseAbilities
     }
     public override void Start()
     {
-        //Audio.MasterVolume = 0.8f;
-        //Audio.MusicVolume = 0.6f;
-        //Audio.SfxVolume = 1.0f;
+        
     }
 
     public override void Update(float deltaTime)
@@ -77,8 +75,9 @@ public class ArcSnare : BaseAbilities
             Audio.PlayOneShot(arcLaunch);
             grenade = Engineson.CreateGameObject("Arc", null);
 
-            if (arcSnare == null)
+            if (grenade == null)
             {
+                Engineson.print("Error snare");
                 return;
             }
 

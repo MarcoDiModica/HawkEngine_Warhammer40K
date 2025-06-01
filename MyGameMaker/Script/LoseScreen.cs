@@ -15,6 +15,7 @@ public class LoseScreen : MonoBehaviour
     private UITransform transform_quitButton;
 
     //private AudioSource sound;
+    private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
 
     private ButtonState prevState_loadLastCheckpoint = ButtonState.DEFAULT;
     private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
@@ -174,7 +175,7 @@ public class LoseScreen : MonoBehaviour
 
         }
 
-        // Detectar clic del ratón
+        // Detectar clic del ratï¿½n
         if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1) || Input.GetControllerButtonDown(ControllerButton.A))
         {
             UIButton selectedButton = buttons[selectedButtonIndex];
@@ -182,18 +183,18 @@ public class LoseScreen : MonoBehaviour
 
             if (selectedButton == button_loadLastCheckpoint)
             {
-                //sound?.Play(buttonClickedFX);
-                SceneManager.LoadScene("SpaceShip");
+                Audio.PlayOneShot(ConfirmSFX);
+                SceneManager.LoadScene("BetaRelease_Week1_Lvl2");
             }
             else if (selectedButton == button_mainMenuButton)
             {
-                //sound?.Play(buttonClickedFX);
+                Audio.PlayOneShot(ConfirmSFX);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)
             {
-                //sound?.Play(buttonClickedFX);
-                // Aquí puedes agregar la lógica para salir del juego
+                Audio.PlayOneShot(ConfirmSFX);
+                // Aquï¿½ puedes agregar la lï¿½gica para salir del juego
             }
         }
     }
@@ -208,12 +209,6 @@ public class LoseScreen : MonoBehaviour
             Engineson.print("ERROR: No Button or object found");
             return;
         }
-
-//         if (sound == null)
-//         {
-//             Engineson.print("ERROR: Audio not found");
-//             return;
-//         }
 
         NavigateMenu();
     }

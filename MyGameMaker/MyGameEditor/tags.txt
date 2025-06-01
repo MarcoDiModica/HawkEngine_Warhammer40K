@@ -3,3 +3,10 @@ Interactable
 Player
 Collider
 Destroyable
+Checkpoint
+Enemy
+Melee
+ExplosiveBarrel
+DestructibleWall
+Spawner
+Barrier

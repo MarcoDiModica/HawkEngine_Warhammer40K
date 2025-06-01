@@ -70,6 +70,7 @@ public:
     std::shared_ptr<GameObject> FindGOByName(std::string name);
 
     std::shared_ptr<GameObject> FindGOByID(const uint64_t& id) const;
+    std::vector<GameObject*> FindGOsByTag(std::string tag);
 
     std::shared_ptr<Scene> currentScene = nullptr;
 

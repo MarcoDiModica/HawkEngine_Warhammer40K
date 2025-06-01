@@ -1,0 +1,107 @@
+name: BoltgunUpgrade_Instance
+prefabPath: Assets\Prefabs\BoltgunUpgrade.prefab.yaml
+uuid: 10755132678500486360
+tag: Upgrade
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 557.064697265625
+      - 2
+      - 33.655048370361328
+    localRotation:
+      - 0
+      - 0
+      - -19.585680213836135
+    localScale:
+      - 1.6800000935079304
+      - 1.6800000935079304
+      - 1.6800000667572021
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.20000000298023224
+      - 0.20000000298023224
+      - 0.20000000298023224
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - -0.20000000298023224
+      - -1
+      - -0.30000001192092896
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 5.69999981
+    intensity: 3
+    direction:
+      - -1
+      - -1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: BoltgunUpgradePickUp
+      fields:
+        floatSpeed: 1.95817602
+        floatHeight: 0.5
+        rotationSpeed: 75.0654068
+Children:
+  - name: boltgunMesh
+    prefabPath: ""
+    uuid: 17675691866770397337
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0.70353788137435913
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 0.0015566733200103045
+          - 0.0015566733200103045
+          - 0.0015566733200103045
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 15519798888640081881
+        material:
+          name: boltgun_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~

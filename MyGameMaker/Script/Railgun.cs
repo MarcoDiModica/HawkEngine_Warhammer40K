@@ -16,11 +16,12 @@ public class Railgun : BaseWeapon
     public EnergyBall energyBall;
     LaserBeam laserBeam;
     public PlayerData playerData;
+    public PlayerInput playerInput;
 
     private RedThirstManager redThirstManager;
 
-    private const string  railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
-    private const string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
+    private const string  railgunReload = "Assets/Audio/SFX/Weapons/Railgun/Energy_Ball_dissapear.wav";
+    private const string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/Energy_ball_hit.wav";
 
     private float timeSinceLastShot = 0.0f;
 
@@ -30,6 +31,11 @@ public class Railgun : BaseWeapon
     private List<float> bulletLifetimes = new List<float>();
     private float bulletSpeed = 90f;
     private float maxLifetime = 1.5f;
+
+    //private ShakeManager shakeManager;
+    public float shakeIntensity = 0.4f;
+    public float shakeDuration = 0.25f;
+    public float shakeSpeed = 0.2f;
     public enum RailgunMode
     {
         SEMIAUTOMATIC,
@@ -45,7 +51,7 @@ public class Railgun : BaseWeapon
     public override void Start()
     {
         damage = 100.0f;
-        shootCadence = 0.66f;
+        shootCadence = 0.16f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 0;
@@ -61,11 +67,21 @@ public class Railgun : BaseWeapon
         energyBall = gameObject.GetComponent<EnergyBall>();
         laserBeam = gameObject.GetComponent<LaserBeam>();
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
+        playerInput = gameObject.GetComponent<PlayerInput>();
+        //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
+        //if (shakeManager == null)
+        //{
+        //    Engineson.print("ERROR: ShakeManager not found");
+        //}
+
     }
 
     public override void Update(float deltaTime)
     {
-        timeSinceLastShot += deltaTime;
+        if (timeSinceLastShot <= shootCadence + 0.5f)
+        {
+            timeSinceLastShot += deltaTime;
+        }
 
         if (railgunMode == RailgunMode.AUTOMATIC)
         {
@@ -155,6 +171,9 @@ public class Railgun : BaseWeapon
                             case "Destroyable":
                                 hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
                                 break;
+                            case "ExplosiveBarrel":
+                                hitObject.GetComponent<ExplosiveBarrel>()?.Explode();
+                                break;
                         }
                     }
 
@@ -182,26 +201,44 @@ public class Railgun : BaseWeapon
         };
     }
 
+    public int GetCurrentAmmo()
+    {
+        return currentMagazineAmmo;
+    }
+
+    public int GetMaxAmmo()
+    {
+        return currentTotalAmmo;
+    }
     public override void Shoot()
     {
         isReloading = false;
 
         if (currentMagazineAmmo > 0 && !isCooling && isRecharged && timeSinceLastShot >= shootCadence)
         {
+            //shakeManager.ApplyShake(shakeIntensity, shakeDuration, shakeSpeed);
+
             timeSinceLastShot = 0f;
             if (!playerData.infiniteBullets)
                 currentMagazineAmmo--;
 
             int audio = Audio.PlayOneShot(railgunShot);
 
-            Vector3 localOffset = new Vector3(0f, 2.5f, 0.5f);
+            Vector3 localOffset = new Vector3(-0.18f, 2.5f, 2f);
             Vector3 bulletStart = transform.position +
                                   (transform.right * localOffset.X) +
                                   (transform.up * localOffset.Y) +
                                   (transform.forward * localOffset.Z);
 
             bulletStart.Y += 0.5f;
-            Vector3 direction = Vector3.Normalize(transform.forward);
+            Vector3 direction;
+            if (playerInput.GetCurrentLookDirection() != Vector3.Zero)
+            {
+                direction = playerInput.GetCurrentLookDirection();
+            } else
+            {
+                direction = Vector3.Normalize(transform.forward);
+            }
 
             float yaw = (float)(System.Math.Atan2(direction.X, direction.Z) * (180.0 / System.Math.PI));
             float pitch = (float)(-System.Math.Asin(direction.Y) * (180.0 / System.Math.PI));
@@ -259,20 +296,20 @@ public class Railgun : BaseWeapon
         }
     }
 
-    public override void UseAbility1()
+    public override void UseAbility2()
     {
         toggleMode.TriggerAbility();
     }
 
-    public override void UseAbility2()
+    public override void UseAbility1()
     {
-        if (railgunMode == RailgunMode.AUTOMATIC)
-        {
-            laserBeam.TriggerAbility();
-        }
-        else
+        if (railgunMode == RailgunMode.SEMIAUTOMATIC)
         {
             energyBall.TriggerAbility();
+        } 
+        else
+        {
+            laserBeam.TriggerAbility();
         }
     }
 

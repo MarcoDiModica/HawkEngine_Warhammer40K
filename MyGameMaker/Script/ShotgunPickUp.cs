@@ -39,6 +39,7 @@ public class ShotgunPickUp : PickUp
         {
             Engineson.print("Shotgun Picked Up");
             playerController.playerShooting.hasShotgun = true;
+            playerController.playerData.hasShotgun = true;
         }
     }
 }

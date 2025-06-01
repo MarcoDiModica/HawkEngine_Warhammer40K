@@ -40,10 +40,6 @@ namespace HawkEngine
             {
                 return 4;
             }
-//             else if(type == typeof(AudioSource))
-//             {
-//                 return 5;
-//             }
             else if (type == typeof(SkeletalAnimation))
             {
                 return 6;
@@ -60,12 +56,12 @@ namespace HawkEngine
             {
                 return 13;
             }
-
-
-
+            else if (type == typeof(UIText))
+            {
+                return 14;
+            }
 
             return -1;
         }
-
     }
 }

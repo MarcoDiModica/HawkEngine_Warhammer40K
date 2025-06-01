@@ -30,9 +30,17 @@ public class RedThirstManager : MonoBehaviour
     private bool boltgunUsed = false;
     private bool shotgunUsed = false;
     private bool railgunUsed = false;
+
+    private ParticleFX Angy;
+    
     public override void Awake()
     {
         playerController = gameObject.GetComponent<PlayerController>();
+        Angy = GameObject.Find("RedThirstFX").GetComponent<ParticleFX>();
+        if (Angy != null)
+        {
+            Angy.ApplyPreset(32);
+        }
     }
 
     public override void Start()
@@ -70,6 +78,17 @@ public class RedThirstManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.U))
         {
             AddRedThirstPoint(1);
+            GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
+            gameObject.AddChild(redThirstVFX);
+            redThirstVFX.AddComponent<ParticleFX>();
+            ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
+            if (particleFX != null)
+            {
+                particleFX.ApplyPreset(32);
+                //particleFX.EmitBurst(100);
+                particleFX.EmitBurst(1);
+            }
+
         }
     }
 
@@ -83,6 +102,16 @@ public class RedThirstManager : MonoBehaviour
             ResetAbilityCombo();
         }
         lastActionTime = 0f;
+        GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
+        gameObject.AddChild(redThirstVFX);
+        redThirstVFX.AddComponent<ParticleFX>();
+        ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
+        if (particleFX != null)
+        {
+            particleFX.ApplyPreset(32);
+            //particleFX.EmitBurst(100);
+            particleFX.EmitBurst(1);
+        }
     }
 
     public void OnWeaponUsed()
@@ -100,11 +129,22 @@ public class RedThirstManager : MonoBehaviour
         //    ResetWeaponCombo();
         //}
         //lastActionTime = 0f;
+        GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
+        gameObject.AddChild(redThirstVFX);
+        redThirstVFX.AddComponent<ParticleFX>();
+        ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
+        if (particleFX != null)
+        {
+            particleFX.ApplyPreset(32);
+            //particleFX.EmitBurst(100);
+            particleFX.EmitBurst(1);
+        }
     }
     public void OnBoltgunUsed()
     {
         boltgunUsed = true;
         OnWeaponUsed();
+
     }
     public void OnShotgunUsed()
     {
@@ -162,7 +202,17 @@ public class RedThirstManager : MonoBehaviour
         Engineson.print("Black Rage Activated!");
         playerController.playerData.blackRageSpeed = redThirstBonus;
         playerController.playerDash.canDash = false;
-
+        Angy.Play();
+        GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
+        gameObject.AddChild(redThirstVFX);
+        redThirstVFX.AddComponent<ParticleFX>();
+        ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
+        if (particleFX != null)
+        {
+            particleFX.ApplyPreset(32);
+            //particleFX.EmitBurst(100);
+            particleFX.EmitBurst(10);
+        }
 
     }
     private void DeactivateBlackRage()

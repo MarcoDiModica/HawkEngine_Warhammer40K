@@ -1,0 +1,172 @@
+name: ShotgunUpgrade_Instance
+prefabPath: Assets\Prefabs\ShotgunUpgrade.prefab.yaml
+uuid: 10856747983184288736
+tag: Upgrade
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 738.51513671875
+      - 1.7701622247695923
+      - -43.398029327392578
+    localRotation:
+      - 0
+      - 0
+      - -31.820664007031404
+    localScale:
+      - 2.3799991306004213
+      - 2.3799991306004213
+      - 2.380000114440918
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.20000000298023224
+      - 0.20000000298023224
+      - 0.20000000298023224
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - -0.20000000298023224
+      - -1
+      - -0.30000001192092896
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 4.19999981
+    intensity: 3
+    direction:
+      - -1
+      - -1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: ShotgunUpgradePickUp
+      fields:
+        floatSpeed: 1.04640114
+        floatHeight: 0.5
+        rotationSpeed: 44.4768028
+Children:
+  - name: shotgunMesh
+    prefabPath: ""
+    uuid: 17871972314470701135
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - -1.1102230246251565e-16
+          - -0.15398107469081879
+          - 0.35462698340415955
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 0.0011699044844135642
+          - 0.0011699044844135642
+          - 0.0011699044844135642
+    Children:
+      - name: bOLTER.010
+        prefabPath: ""
+        uuid: 9966619135436539910
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0
+              - 0
+              - 0
+            localRotation:
+              - 0
+              - -0
+              - 0
+            localScale:
+              - 1
+              - 1
+              - 1
+          MeshRenderer:
+            name: MeshRenderer
+            enabled: true
+            mesh:
+              name: 12445246452344068261
+            material:
+              name: shotgun_DefaultMaterial_BaseColor
+              color:
+                - 1
+                - 1
+                - 1
+                - 1
+            color:
+              - 1
+              - 1
+              - 1
+          Shader:
+            name: Shader
+            enabled: true
+        Children: ~
+      - name: Cone
+        prefabPath: ""
+        uuid: 6576207487336592542
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - 0
+              - 0
+              - 0
+            localRotation:
+              - 0
+              - -0
+              - 0
+            localScale:
+              - 1
+              - 1
+              - 1
+          MeshRenderer:
+            name: MeshRenderer
+            enabled: true
+            mesh:
+              name: 5508932554690171827
+            material:
+              name: ""
+              color:
+                - 1
+                - 0
+                - 0
+                - 1
+            color:
+              - 1
+              - 1
+              - 1
+          Shader:
+            name: Shader
+            enabled: true
+        Children: ~

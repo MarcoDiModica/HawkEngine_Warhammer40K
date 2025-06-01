@@ -5,21 +5,18 @@ using HawkEngine;
 
 public class EnemyControllerWarrior : EnemyController
 {
-    // Enemy Stats
     private float health = 100.0f;
     private float projectileDamage = 15.0f;
-    private float swordDamage = 25.0f;
+    private float swordDamage = 15.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
 
-    // Hurtbox
-    private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
+    private float hurtboxActivationTime = 1.5f;
     private float hurtboxTimer = 0f;
-    private Vector3 hurtboxSize = new Vector3(10.0f, 10.0f, 10.0f); // Tamaño de la hurtbox
-    private Vector3 hurtboxOffset = new Vector3(5.0f, -3.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
+    private Vector3 hurtboxSize = new Vector3(10.0f, 10.0f, 10.0f);
+    private Vector3 hurtboxOffset = new Vector3(5.0f, -3.0f, 0.0f);
     private GameObject hurtboxObject;
 
-    // Shooting
     private float projectileRange = 30;
     private List<BulletData> activeProjectiles = new List<BulletData>();
     public float shootCooldown = 2.0f;
@@ -27,364 +24,848 @@ public class EnemyControllerWarrior : EnemyController
     public float projectileLifetime = 0.5f;
     protected float shootTimer = 0f;
 
-    // Perfect Dodge
     private bool dodgewindow = false;
     private float dodgeActivationTime = 0.5f;
     private float dodgeTimer = 0f;
-    //private TyranidWarriorAnimation animation
     private PlayerController pc;
+    private Transform transform;
 
-    // Audio
     bool isCombatMusicPlaying = false;
-    //private Audio music;
     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+    private string WalkSound = "Assets/Audio/TyranidWarrior/Tyranid_WAR_Walk.wav";
+    private string MeleeAttackSound = "Assets/Audio/TyranidWarrior/Tyranid_WAR_Melee_Atack_1.wav";
+    private string RangedAttackSound = "Assets/Audio/TyranidWarrior/Tyranid_WAR_Ranged_Atack_1.wav";
+    private string DeathSound = "Assets/Audio/TyranidWarrior/TyranidWAR_Death.wav";
+    private string GrowlSound = "Assets/Audio/TyranidWarrior/Tyranid_WAR_Grwol_1.wav";
+    private string HitSound = "Assets/Audio/TyranidWarrior/Tyranid_WAR_Hit_1.wav";
 
+    private bool hasPlayedDeathSound = false;
+    private WarriorAnimation anim;
+    private List<Vector3> bulletDirections = new List<Vector3>();
+    List<HashSet<GameObject>> bulletHitEnemies = new List<HashSet<GameObject>>();
+    private List<Vector3> bulletStartPositions = new List<Vector3>();
+    private List<float> bulletLifetimes = new List<float>();
+    public List<BulletData> bullets = new List<BulletData>();
+    public List<Vector3> bulletsPos = new List<Vector3>();
+    public List<Vector3> hitPoints = new List<Vector3>();
+    public List<string> collisionNames = new List<string>();
+    public List<GameObject> bulletsObjects = new List<GameObject>();
+    public List<float> bulletIntervals = new List<float>();
+    public int magazineSize;
+    public int currentMagazineAmmo;
+    public int maxAmmo;
+    public int currentTotalAmmo;
+    public float range;
+    public float timeToLerp = 0.4f;
+
+    private bool componentsInitialized = false;    
+    // Death
+    private float deathTimer = 0f;
+    private float deathCooldown = 2f;
+
+    public void SetVFX(int id = 34)
+    {
+        var vfx = AddComponent<ParticleFX>();
+        vfx.ApplyPreset(id);
+        vfx.Play();
+    }
     public override void Awake()
     {
-        //music = gameObject.GetComponent<Audio>();
+        try
+        {
+            Transform enemyTransform = gameObject.GetComponent<Transform>();
+            if (enemyTransform != null)
+            {
+                startPosition = enemyTransform.position;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in EnemyControllerWarrior.Awake: {e.Message}");
+        }
     }
 
     public override void Start()
     {
-        pc = GameObject.Find("Player").GetComponent<PlayerController>();
-        playerTransform = GameObject.Find("Player").GetComponent<Transform>();
-        rb = gameObject.GetComponent<Rigidbody>();
-        if (playerTransform == null)
+        try
         {
-            Engineson.print("ERROR: Player not found!");
-        }
-
-        collider = gameObject.GetComponent<BoxCollider>();
-        if (collider == null)
-        {
-            Engineson.print("ERROR: Tyranid Warrior Collider not found!");
-            return;
-        }
-
-        //sound = gameObject.GetComponent<Audio>();
-        //if (sound == null)
-        //{
-        //    Engineson.print("ERROR: Tyranid Warrior Sound not found!");
-        //}
-
-        enemyTransform = gameObject.transform;
-        if (enemyTransform == null)
-        {
-            Engineson.print("ERROR: Tyranid Warrior transform not found!");
-            return;
-        }
-
-        //anim = GameObject.Find("TyranidWarriorMesh").GetComponent<TyranidWarriorAnimation>();
-        //if (anim == null)
-        //{
-        //    Engineson.print("ERROR: TyranidWarriorAnimation requires SkeletalANimation component");
-        //    return;
-        //}
-
-        //particles = gameObject.GetComponent<ParticleFX>();
-        //particles.ApplyPreset(9);
-
-        maxHealth = health;
-        currentHealth = maxHealth;
-        gameObject.tag = "Warrior";
-    }
-
-    public override void Update(float deltaTime)
-    {
-        if (currentState != EnemyState.DEAD)
-        {
-            if (currentHealth <= 0)
+            GameObject playerObj = GameObject.Find("Player");
+            if (playerObj == null)
             {
-                currentState = EnemyState.DEAD;
-                //anim.SetDeathAnimation();
-                //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
-                //sound?.Play();
+                Engineson.print("ERROR: Player not found!");
                 return;
             }
 
-            if (currentState != EnemyState.STUNNED)
+            pc = playerObj.GetComponent<PlayerController>();
+            playerTransform = playerObj.GetComponent<Transform>();
+
+            if (playerTransform == null)
             {
-                distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
-
-                if (distanceToPlayer < distToChase)
-                {
-                    // Attack
-                    if (IsPlayerInHurtbox(playerTransform.position))
-                    {
-                        currentState = EnemyState.ATTACK;
-                        isAttacking = true;
-                    }
-                    // Shooting
-                    else if (distanceToPlayer < projectileRange)
-                    {
-                        currentState = EnemyState.ATTACK;
-                        isShooting = true;
-                    }
-                    // Chase
-                    else
-                    {
-                        currentState = EnemyState.CHASE;
-                    }
-
-                    // Rotation
-                    if (moveDirection != Vector3.Zero)
-                    {
-                        currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-                        float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-                        float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
-
-                        while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-                        while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
-
-                        currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
-
-                        Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-                        Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                            eulerRotation.Y * ((float)Math.PI / 180.0f),
-                            eulerRotation.X * ((float)Math.PI / 180.0f),
-                            eulerRotation.Z * ((float)Math.PI / 180.0f)
-                        );
-
-                        collider.SetRotation(newRotation);
-                    }
-                }
-                else
-                {
-                    if (currentState != EnemyState.IDLE)
-                    {
-                        currentState = EnemyState.IDLE;
-                        rb.SetVelocity(Vector3.Zero);
-                        //anim.SetStandardIdleAnimation();
-                    }
-                }
+                Engineson.print("ERROR: Player Transform not found!");
+                return;
             }
-        }
 
-        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
-
-        switch (currentState)
-        {
-            case EnemyState.IDLE:
-                isFootstepPlaying = false;
-                if (!hasStoppedFootsteps)
-                {
-                    //sound?.Stop();
-                    hasStoppedFootsteps = true;
-                }
-                break;
-
-            case EnemyState.CHASE:
-                if (!isFootstepPlaying)
-                {
-                    //sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
-                    //sound?.Play(true);
-                    isFootstepPlaying = true;
-                    hasStoppedFootsteps = false;
-                }
-                if (isCombatMusicPlaying == false)
-                {
-                    //sound?.LoadAudio(combatMusic);
-                    //sound?.Play(true);
-                    isCombatMusicPlaying = true;
-                }
-
-                Vector3 currentVelocity = rb.GetVelocity();
-                moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
-                Vector3 desiredVelocity = moveDirection * speedMovement;
-
-                //anim.SetRunningAnimation();
-                if (desiredVelocity.LengthSquared() > 0)
-                {
-                    desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                }
-
-                Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
-                break;
-
-            case EnemyState.ATTACK:
-                if (isAttacking)
-                {
-                    hurtboxTimer += deltaTime;
-                    if (dodgewindow)
-                    {
-                        dodgeTimer += deltaTime;
-                    }
-                    if (hurtboxTimer >= hurtboxActivationTime)
-                    {
-                        //CreateHurtbox();
-                        //anim.SetRandomAttackAnimation();
-                        hurtboxTimer = 0f;
-                        dodgeTimer = 0f;
-                        dodgewindow = true;
-                    }
-                    else if (dodgeTimer >= dodgeActivationTime && dodgewindow)
-                    {
-                        Attack();
-
-                        //DestroyHurtbox();
-                        hurtboxTimer = 0f;
-                        dodgeTimer = 0f;
-                        dodgewindow = false;
-                        isAttacking = false;
-                    }
-                }
-                else if (isShooting)
-                {
-                    shootTimer += deltaTime;
-                    if (shootTimer >= shootCooldown)
-                    {
-                        Attack();
-                        //sound?.Play();
-                        shootTimer = 0;
-                    }
-                }
-                break;
-            case EnemyState.STUNNED:
-                break;
-            case EnemyState.DEAD:
-                if ((!hasDropped))
-                {
-                    GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
-                }
-                hasDropped = true;
-                collider.SetActive(false);
-                break;
-            default:
-                break;
-        }
-
-        UpdateProjectiles(deltaTime);
-        CleanupProjectiles();
-    }
-
-    public override void Attack()
-    {
-        if (isAttacking)
-        {
-            //Engineson.print("Melee attack executed!");
-            if (pc.redThirstManager.IsInBlackRage())
+            rb = gameObject.GetComponent<Rigidbody>();
+            if (rb == null)
             {
-                if (pc.redThirstManager.redThirstBonus < swordDamage)
+                Engineson.print("ERROR: Rigidbody not found!");
+                return;
+            }
+
+            collider = gameObject.GetComponent<CapsuleCollider>();
+            if (collider == null)
+            {
+                Engineson.print("ERROR: Tyranid Warrior Collider not found!");
+                return;
+            }
+
+            transform = gameObject.GetComponent<Transform>();
+            if (transform == null)
+            {
+                Engineson.print("ERROR: Transform component not found!");
+                return;
+            }
+
+            enemyTransform = transform;
+
+            GameObject meshObject = gameObject.GetChild("TyranidWarriorMesh");
+            if (meshObject != null)
+            {
+                anim = meshObject.GetComponent<WarriorAnimation>();
+                if (anim == null)
                 {
-                    pc.playerData.TakeDamage(swordDamage - pc.redThirstManager.redThirstBonus);
-                }
-                else
-                {
-                    pc.playerData.TakeDamage(0);
+                    Engineson.print("ERROR: WarriorAnimation component not found!");
+                    return;
                 }
             }
             else
             {
-                pc.playerData.TakeDamage(swordDamage);
+                Engineson.print("ERROR: TyranidWarriorMesh not found!");
+                return;
             }
 
-            //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
-            //sound?.Play();
-        }
-        else if (isShooting)
-        {
-            try
+            particles = gameObject.AddComponent<ParticleFX>();
+            if (particles != null)
             {
-                GameObject projectile = Engineson.CreateGameObject("Projectile", null);
-                Engineson.print("Projectile created!" + enemyTransform.forward);
-                // TODO: add custom mesh to the projectile
-                projectile.AddComponent<MeshRenderer>();
-                projectile.AddComponent<BoxCollider>();
-                //sound?.Play();
-                projectile.tag = "EnemyAttack";
+                particles.ApplyPreset(19);
+            }
 
-                if (projectile != null)
+            maxHealth = health;
+            currentHealth = maxHealth;
+            gameObject.tag = "Warrior";
+            projectileDamage = 20.0f;
+            range = 100f;
+            timeToLerp = 0.1f;
+
+            componentsInitialized = true;
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in EnemyControllerWarrior.Start: {e.Message}");
+        }
+    }
+
+    public override void Update(float deltaTime)
+    {
+        if (!componentsInitialized)
+            return;
+
+        try
+        {
+            if (currentState == EnemyState.DEAD)
+            {
+                HandleDeadState(deltaTime);
+                return;
+            }
+
+            if (currentHealth <= 0)
+            {
+                currentState = EnemyState.DEAD;
+                return;
+            }
+
+            if (currentState == EnemyState.STUNNED)
+            {
+                HandleStunnedState(deltaTime);
+                return;
+            }
+
+            if (isSlowed)
+            {
+                HandleSlowedState(deltaTime);
+            }
+
+            UpdateBullets(deltaTime);
+            UpdatePlayerDetection();
+
+            switch (currentState)
+            {
+                case EnemyState.IDLE:
+                    HandleIdleState();
+                    break;
+
+                case EnemyState.CHASE:
+                    HandleChaseState(deltaTime);
+                    break;
+
+                case EnemyState.ATTACK:
+                    HandleAttackState(deltaTime);
+                    break;
+
+                default:
+                    break;
+            }
+
+            CleanupProjectiles();
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in EnemyControllerWarrior.Update: {e.Message}");
+        }
+    }
+
+    private void HandleIdleState()
+    {
+        try
+        {
+            isFootstepPlaying = false;
+            if (!hasStoppedFootsteps)
+            {
+                hasStoppedFootsteps = true;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in HandleIdleState: {e.Message}");
+        }
+    }
+
+    private void HandleChaseState(float deltaTime)
+    {
+        try
+        {
+            if (!isFootstepPlaying)
+            {
+                Audio.PlayOneShot(GrowlSound);
+                Audio.SchedulePlay(WalkSound, 0.5f);
+                isFootstepPlaying = true;
+                hasStoppedFootsteps = false;
+            }
+
+            if (!isCombatMusicPlaying)
+            {
+                isCombatMusicPlaying = true;
+            }
+
+            Vector3 currentVelocity = rb.GetVelocity();
+            moveDirection = Vector3.Normalize(playerTransform.position - transform.position);
+            Vector3 desiredVelocity;
+            if (isSlowed)
+            {
+                desiredVelocity = moveDirection * slowedSpeed;
+            }
+            else
+            {
+                desiredVelocity = moveDirection * speedMovement;
+            }
+
+            if (anim != null)
+            {
+                anim.SetRunAnimation();
+            }
+
+            if (desiredVelocity.LengthSquared() > 0)
+            {
+                desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+            }
+
+            Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+            rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+
+            UpdateRotation(deltaTime);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in HandleChaseState: {e.Message}");
+        }
+    }
+
+    private void HandleAttackState(float deltaTime)
+    {
+        try
+        {
+            if (isAttacking)
+            {
+                hurtboxTimer += deltaTime;
+                if (dodgewindow)
                 {
-                    Transform projTransform = projectile.GetComponent<Transform>();
-                    BoxCollider projectileCollider = projectile.GetComponent<BoxCollider>();
-                    if (projTransform != null)
-                    {
-                        Vector3 forward = moveDirection;
-                        Vector3 spawnPos = enemyTransform.position + forward * 1.0f;
-                        projTransform.position = spawnPos;
-                        projTransform.SetScale(0.1f, 0.1f, 0.1f);
+                    dodgeTimer += deltaTime;
+                }
 
-                        projectile.AddScript("BulletData");
-                        projectile.GetComponent<BulletData>().Init(projTransform, forward, gameObject);
-                        activeProjectiles.Add(projectile.GetComponent<BulletData>());
-                        projectileCollider.SetPosition(projTransform.position);
-                        Engineson.print("Projectile fired!");
-                    }
+                if (hurtboxTimer >= hurtboxActivationTime)
+                {
+                    hurtboxTimer = 0f;
+                    dodgeTimer = 0f;
+                    dodgewindow = true;
+                }
+                else if (dodgeTimer >= dodgeActivationTime && dodgewindow)
+                {
+                    Attack();
+                    hurtboxTimer = 0f;
+                    dodgeTimer = 0f;
+                    dodgewindow = false;
+                    isAttacking = false;
                 }
             }
-            catch (System.Exception e)
+            else if (isShooting)
             {
-                Engineson.print($"Error creating projectile: {e.Message}");
+                shootTimer += deltaTime;
+                if (shootTimer >= shootCooldown)
+                {
+                    Attack();
+                    shootTimer = 0;
+                }
             }
+
+            UpdateRotation(deltaTime);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in HandleAttackState: {e.Message}");
+        }
+    }
+
+    private void HandleStunnedState(float deltaTime)
+    {
+        try
+        {
+            stunTimer += deltaTime;
+            if (stunTimer >= stunDuration)
+            {
+                currentState = EnemyState.IDLE;
+                isStunned = false;
+                stunTimer = 0.0f;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in HandleStunnedState: {e.Message}");
+        }
+    }
+
+    private void HandleDeadState(float deltaTime)
+    {
+        try
+        {
+            if (!hasPlayedDeathSound)
+            {
+                Audio.PlayOneShot(DeathSound);
+                hasPlayedDeathSound = true;
+            }
+
+            if (!hasDropped)
+            {
+                GameObject dropManager = GameObject.Find("DropManager");
+                if (dropManager != null)
+                {
+                    DropManager dropComponent = dropManager.GetComponent<DropManager>();
+                    if (dropComponent != null)
+                    {
+                        dropComponent.SpawnPrefab(this);
+                    }
+                }
+                hasDropped = true;
+            }
+
+            if (anim != null)
+            {
+                anim.SetDeathAnimation();
+            }
+
+            if (collider != null)
+            {
+                collider.SetActive(false);
+            }
+
+            if (anim.isAnimFinished)
+            {
+                deathTimer += deltaTime;
+                if (deathTimer >= deathCooldown)
+                {
+                    Engineson.Destroy(gameObject);
+                    return;
+                }
+            }
+
+            isDead = true;
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in HandleDeadState: {e.Message}");
+        }
+    }
+
+    private void UpdateRotation(float deltaTime)
+    {
+        try
+        {
+            if (transform == null || collider == null || moveDirection == Vector3.Zero)
+                return;
+
+            currentRotationAngle = transform.eulerAngles.Y;
+            float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+            float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
+
+            while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+            while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+
+            currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+
+            Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+            Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                eulerRotation.Y * ((float)Math.PI / 180.0f),
+                eulerRotation.X * ((float)Math.PI / 180.0f),
+                eulerRotation.Z * ((float)Math.PI / 180.0f)
+            );
+
+            collider.SetRotation(newRotation);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in UpdateRotation: {e.Message}");
+        }
+    }
+    private void HandleSlowedState(float deltaTime)
+    {
+        try
+        {
+            slowedTimer += deltaTime;
+            if (slowedTimer >= slowedDuration)
+            {
+                isSlowed = false;
+                slowedTimer = 0.0f;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"Error in HandleSlowedState: {e.Message}");
+        }
+    }
+    private void UpdatePlayerDetection()
+    {
+        try
+        {
+            if (playerTransform == null || enemyTransform == null)
+                return;
+
+            distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+
+            if (distanceToPlayer < distToChase)
+            {
+                if (IsPlayerInHurtbox(playerTransform.position))
+                {
+                    currentState = EnemyState.ATTACK;
+                    isAttacking = true;
+                }
+                else if (distanceToPlayer < projectileRange)
+                {
+                    if (rb != null)
+                    {
+                        rb.SetVelocity(Vector3.Zero);
+                    }
+                    currentState = EnemyState.ATTACK;
+                    isShooting = true;
+                }
+                else
+                {
+                    currentState = EnemyState.CHASE;
+                }
+            }
+            else if (currentState != EnemyState.IDLE)
+            {
+                currentState = EnemyState.IDLE;
+                if (rb != null)
+                {
+                    rb.SetVelocity(Vector3.Zero);
+                }
+                if (anim != null)
+                {
+                    anim.SetIdleAnimation();
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in UpdatePlayerDetection: {e.Message}");
+        }
+    }
+
+    private void UpdateBullets(float deltaTime)
+    {
+        try
+        {
+            if (bulletsObjects.Count != bulletsPos.Count ||
+                bulletsObjects.Count != bulletDirections.Count ||
+                bulletsObjects.Count != bulletIntervals.Count ||
+                bulletsObjects.Count != bulletLifetimes.Count ||
+                bulletsObjects.Count != bulletHitEnemies.Count ||
+                bulletsObjects.Count != bulletStartPositions.Count)
+            {
+                CleanAllBullets();
+                return;
+            }
+
+            for (int i = bulletsObjects.Count - 1; i >= 0; i--)
+            {
+                if (i >= bulletsObjects.Count || bulletsObjects[i] == null)
+                {
+                    RemoveBulletAtIndex(i);
+                    continue;
+                }
+
+                bulletIntervals[i] += deltaTime;
+                bulletLifetimes[i] += deltaTime;
+
+                Vector3 currentPos = bulletsPos[i];
+                Vector3 direction = bulletDirections[i];
+                float speed = projectileRange / timeToLerp;
+                Vector3 displacement = direction * speed * deltaTime;
+                Vector3 newPos = currentPos + displacement;
+                bool shouldDestroy = false;
+
+                GameObject hitObject = null;
+                RayCast ray = new RayCast();
+                ray.PerformRaycast(currentPos, direction, displacement.Length());
+
+                if (ray.hit.isHit)
+                {
+                    hitObject = ray.hit.gameObject;
+                }
+
+                if (hitObject != null)
+                {
+                    string tag = hitObject.tag;
+
+                    if (tag != "PowerUp" && tag != "Ammunition" && tag != "Warrior")
+                    {
+                        if (!bulletHitEnemies[i].Contains(hitObject))
+                        {
+                            bulletHitEnemies[i].Add(hitObject);
+
+                            if (tag == "Player" && pc != null && pc.playerData != null)
+                            {
+                                pc.playerData.TakeDamage(projectileDamage);
+
+                                pc.StartFlashColor(pc.flashColor, pc.flashDuration);
+                            }
+
+                            shouldDestroy = true;
+                        }
+                    }
+                }
+
+                bulletsPos[i] = newPos;
+
+                Transform bulletTransform = bulletsObjects[i].GetComponent<Transform>();
+                if (bulletTransform != null)
+                {
+                    bulletTransform.position = newPos;
+                }
+
+                float distanceTraveled = Vector3.Distance(bulletStartPositions[i], newPos);
+                if (distanceTraveled > projectileRange || shouldDestroy || bulletLifetimes[i] > 2.0f)
+                {
+                    RemoveBulletAtIndex(i);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in UpdateBullets: {e.Message}");
+        }
+    }
+
+    private void RemoveBulletAtIndex(int index)
+    {
+        try
+        {
+            if (index < 0 || index >= bulletsObjects.Count)
+                return;
+
+            if (bulletsObjects[index] != null)
+            {
+                Engineson.Destroy(bulletsObjects[index]);
+            }
+
+            bulletsObjects.RemoveAt(index);
+            bulletsPos.RemoveAt(index);
+            bulletDirections.RemoveAt(index);
+            bulletIntervals.RemoveAt(index);
+            bulletLifetimes.RemoveAt(index);
+            bulletHitEnemies.RemoveAt(index);
+            bulletStartPositions.RemoveAt(index);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR removing bullet at index {index}: {e.Message}");
+            CleanAllBullets();
+        }
+    }
+
+    private void CleanAllBullets()
+    {
+        try
+        {
+            foreach (GameObject bullet in bulletsObjects)
+            {
+                if (bullet != null)
+                {
+                    Engineson.Destroy(bullet);
+                }
+            }
+
+            bulletsObjects.Clear();
+            bulletsPos.Clear();
+            bulletDirections.Clear();
+            bulletIntervals.Clear();
+            bulletLifetimes.Clear();
+            bulletHitEnemies.Clear();
+            bulletStartPositions.Clear();
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in CleanAllBullets: {e.Message}");
+        }
+    }
+
+    public override void ResetEnemyCheckPoint()
+    {
+        try
+        {
+            if (isDead)
+                return;
+
+            currentHealth = maxHealth;
+
+            if (gameObject.GetComponent<Collider>() != null)
+            {
+                gameObject.GetComponent<Collider>().SetPosition(startPosition);
+            }
+
+            if (rb != null)
+            {
+                rb.SetVelocity(Vector3.Zero);
+            }
+
+            currentState = EnemyState.IDLE;
+            isAttacking = false;
+            isShooting = false;
+            hasPlayedDeathSound = false;
+            hasDropped = false;
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in ResetEnemyCheckPoint: {e.Message}");
+        }
+    }
+
+    public override void Attack()
+    {
+        try
+        {
+            if (isAttacking)
+            {
+                Audio.PlayOneShot(MeleeAttackSound);
+                SetVFX();
+
+                if (pc != null && pc.playerData != null)
+                {
+                    if (pc.redThirstManager != null && pc.redThirstManager.IsInBlackRage())
+                    {
+                        if (pc.redThirstManager.redThirstBonus < swordDamage)
+                        {
+                            pc.playerData.TakeDamage(swordDamage - pc.redThirstManager.redThirstBonus);
+
+                            pc.StartFlashColor(pc.flashColor, pc.flashDuration);
+                        }
+                        else
+                        {
+                            pc.playerData.TakeDamage(0);
+                        }
+                    }
+                    else
+                    {
+                        pc.playerData.TakeDamage(swordDamage);
+
+                        pc.StartFlashColor(pc.flashColor, pc.flashDuration);
+                    }
+                }
+
+                if (anim != null)
+                {
+                    anim.SetMeleeAnimation();
+                }
+            }
+            else if (isShooting && transform != null)
+            {
+                Vector3 localOffset = new Vector3(0f, 0f, 0f);
+                Vector3 bulletStart = transform.position +
+                                      (transform.right * localOffset.X) +
+                                      (transform.up * localOffset.Y) +
+                                      (transform.forward * localOffset.Z);
+                bulletStart.Y += 0.5f;
+
+                Vector3 direction = Vector3.Normalize(transform.forward);
+                float yaw = (float)(Math.Atan2(direction.X, direction.Z) * (180.0 / Math.PI));
+                float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
+
+                GameObject projectile = Engineson.CreateGameObject("WarriorProjectile", null);
+                if (projectile == null)
+                {
+                    Engineson.print("ERROR: Failed to create projectile");
+                    return;
+                }
+
+                Transform projectileTransform = projectile.GetComponent<Transform>();
+                if (projectileTransform != null)
+                {
+                    projectileTransform.SetScale(0.25f, 0.25f, 0.25f);
+                    projectileTransform.position = bulletStart;
+                    projectileTransform.SetRotation(pitch, yaw, 0f);
+                }
+
+                ParticleFX particleFX = projectile.AddComponent<ParticleFX>();
+                if (particleFX != null)
+                {
+                    particleFX.ApplyPreset(10);
+                    particleFX.EmitBurst(1);
+                }
+
+                if (anim != null)
+                {
+                    anim.SetShootAnimation();
+                }
+
+                bulletsObjects.Add(projectile);
+                bulletsPos.Add(bulletStart);
+                bulletDirections.Add(direction);
+                bulletIntervals.Add(0);
+                bulletLifetimes.Add(0);
+                bulletHitEnemies.Add(new HashSet<GameObject>());
+                bulletStartPositions.Add(bulletStart);
+
+                Audio.PlayOneShot(RangedAttackSound);
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in Attack: {e.Message}");
         }
     }
 
     public override void TakeDamage(float damage)
     {
-        if (currentHealth > 0)
+        try
         {
+
+            if (particles != null)
+            {
+                EnemySquirting();
+            }
+
+            if (currentHealth <= 0)
+                return;
+
+            Audio.PlayOneShot(HitSound);
             currentHealth -= damage;
+
+            if (anim != null)
+            {
+                anim.SetHurtAnimation();
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in TakeDamage: {e.Message}");
         }
     }
 
     private bool IsPlayerInHurtbox(Vector3 playerPos)
     {
-        Vector3 hurtboxCenter = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X) + (Vector3.UnitY * hurtboxOffset.Y);
-        Vector3 halfSize = hurtboxSize * 0.5f;
+        try
+        {
+            if (enemyTransform == null)
+                return false;
 
-        return (playerPos.X >= hurtboxCenter.X - halfSize.X && playerPos.X <= hurtboxCenter.X + halfSize.X) &&
-               (playerPos.Y >= hurtboxCenter.Y - halfSize.Y && playerPos.Y <= hurtboxCenter.Y + halfSize.Y) &&
-               (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
+            Vector3 hurtboxCenter = enemyTransform.position +
+                                   (enemyTransform.forward * hurtboxOffset.X) +
+                                   (Vector3.UnitY * hurtboxOffset.Y);
+            Vector3 halfSize = hurtboxSize * 0.5f;
+
+            return (playerPos.X >= hurtboxCenter.X - halfSize.X && playerPos.X <= hurtboxCenter.X + halfSize.X) &&
+                   (playerPos.Y >= hurtboxCenter.Y - halfSize.Y && playerPos.Y <= hurtboxCenter.Y + halfSize.Y) &&
+                   (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in IsPlayerInHurtbox: {e.Message}");
+            return false;
+        }
     }
 
     private void UpdateProjectiles(float deltaTime)
     {
-        foreach (var proj in activeProjectiles)
+        try
         {
-            if (proj.markedForDestruction) continue;
-
-            proj.lifetime += deltaTime;
-
-            if (proj.lifetime >= projectileLifetime)
+            foreach (BulletData proj in activeProjectiles)
             {
-                proj.markedForDestruction = true;
-                continue;
-            }
+                if (proj == null || proj.markedForDestruction)
+                    continue;
 
-            try
-            {
+                proj.lifetime += deltaTime;
+
+                if (proj.lifetime >= projectileLifetime)
+                {
+                    proj.markedForDestruction = true;
+                    continue;
+                }
+
                 if (proj.transform != null)
                 {
                     proj.transform.position += proj.direction * projectileSpeed * deltaTime;
                 }
             }
-            catch (System.Exception e)
-            {
-                proj.markedForDestruction = true;
-                Engineson.print($"Error updating projectile: {e.Message}");
-            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in UpdateProjectiles: {e.Message}");
         }
     }
 
     private void CleanupProjectiles()
     {
-        for (int i = activeProjectiles.Count - 1; i >= 0; i--)
+        try
         {
-            var proj = activeProjectiles[i];
-            if (proj.markedForDestruction)
+            for (int i = activeProjectiles.Count - 1; i >= 0; i--)
             {
-                try
+                if (i >= activeProjectiles.Count)
+                    continue;
+
+                BulletData proj = activeProjectiles[i];
+                if (proj == null || proj.markedForDestruction)
                 {
-                    Engineson.Destroy(proj.gameObject);
-                    activeProjectiles.RemoveAt(i);
-                }
-                catch (System.Exception e)
-                {
-                    Engineson.print($"Error destroying projectile: {e.Message}");
+                    if (proj != null && proj.gameObject != null)
+                    {
+                        Engineson.Destroy(proj.gameObject);
+                    }
+
                     activeProjectiles.RemoveAt(i);
                 }
             }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in CleanupProjectiles: {e.Message}");
         }
     }
 }

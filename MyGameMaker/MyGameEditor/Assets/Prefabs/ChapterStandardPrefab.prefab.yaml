@@ -1,6 +1,6 @@
-name: estandarte.001_1_1_Instance
+name: estandarte.001_1_1_Instance_Instance
 prefabPath: Assets\Prefabs\ChapterStandardPrefab.prefab.yaml
-uuid: 1608509582278439579
+uuid: 11017546273344798488
 tag: PowerUp
 active: true
 isStatic: false
@@ -9,17 +9,17 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 0.67105412483215332
-      - 3
-      - -15.855119705200195
+      - 7.9313750267028809
+      - 2.5069775581359863
+      - 5.7417173385620117
     localRotation:
-      - 0
-      - -0
-      - 0
+      - -133.34330609603737
+      - -71.277428061608433
+      - 120.49717930131865
     localScale:
-      - 0.0020000000949949026
-      - 0.0020000000949949026
-      - 0.0020000000949949026
+      - 0.0027348003563859463
+      - 0.0027347978656903152
+      - 0.0027347995853872725
   MeshRenderer:
     name: MeshRenderer
     enabled: true
@@ -31,6 +31,9 @@ Components:
       - 1
       - 1
       - 1
+  Shader:
+    name: Shader
+    enabled: true
   BoxColliderComponent:
     size:
       - 1
@@ -70,8 +73,8 @@ Components:
     Script0:
       name: ChapterStandard
       fields:
-        floatSpeed: 1.16855896
+        floatSpeed: 0.747108757
         floatHeight: 0.5
-        rotationSpeed: 67.070488
+        rotationSpeed: 94.7728119
         lifeTime: 10
 Children: ~

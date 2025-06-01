@@ -333,3 +333,8 @@ std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
 
 	return mat;
 }
+
+std::shared_ptr<Image> Material::CheckImageResource(const std::string& name) {
+	auto it = Application->root->GetResourceManager()->GetImage(name);
+	return it;
+}

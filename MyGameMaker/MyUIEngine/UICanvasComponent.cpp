@@ -13,6 +13,7 @@
 #include "UIButtonComponent.h"
 #include "UITransformComponent.h"
 #include "UISliderComponent.h"
+#include "TextComponent.h"
 
 #include <SDL2/SDL.h>
 
@@ -76,6 +77,12 @@ void UICanvasComponent::Update(float deltaTime)
 		if (object->HasComponent<UISliderComponent>())
 		{
 			object->GetComponent<UISliderComponent>()->SetProjection(projection);
+		}
+
+		if (object->HasComponent<TextComponent>())
+		{
+			object->GetComponent<TextComponent>()->SetProjection(projection);
+			object->GetComponent<TextComponent>()->Update(deltaTime);
 		}
 
     }

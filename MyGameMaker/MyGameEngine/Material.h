@@ -106,6 +106,8 @@ public:
 
 	std::string matName = "";
 
+	std::shared_ptr<Image> CheckImageResource(const std::string& path);
+
 protected:
 	static unsigned int next_id;
 	
@@ -122,6 +124,9 @@ protected:
 
         std::string name = matName;
         node["name"] = name;
+
+		node["color"] = std::vector<float>{ color.r, color.g, color.b, color.a };
+
 
 		SaveBinary(name);
 
@@ -162,9 +167,51 @@ protected:
 		heightMapPtr = loadedMaterial->heightMapPtr;
 		emissiveMapPtr = loadedMaterial->emissiveMapPtr;
 
-		matID = loadedMaterial->matID;
+		if (node["color"]) {
+			auto colorValues = node["color"].as<std::vector<float>>();
+			if (colorValues.size() == 4) {
+				color = glm::vec4(colorValues[0], colorValues[1], colorValues[2], colorValues[3]);
+			}
+		}
 
-		return true;
-	}
+		while (fin.peek() != EOF) {
+			char type[4];
+			fin.read(type, 3);
+			type[3] = '\0';
+
+			uint32_t pathLen;
+			fin.read(reinterpret_cast<char*>(&pathLen), sizeof(pathLen));
+
+			std::string texturePath(pathLen, '\0');
+			fin.read(&texturePath[0], pathLen);
+
+			std::shared_ptr<Image> img = CheckImageResource(texturePath);
+
+			if (img == nullptr)
+			{
+				img = Image::LoadBinary(texturePath);
+			}
+
+			if (strcmp(type, "IMG") == 0) {
+				setImage(img);
+			}
+			else if (strcmp(type, "NML") == 0) {
+				setNormalMap(img);
+			}
+			else if (strcmp(type, "MTL") == 0) {
+				setMetallicMap(img);
+			}
+			else if (strcmp(type, "RGL") == 0) {
+				setRoughnessMap(img);
+			}
+			else if (strcmp(type, "AOM") == 0) {
+				setAoMap(img);
+			}
+		}
+
+		//LOG(LogType::LOG_INFO, "Material loaded successfully: %s", fullPath.c_str());
+
+        return true;
+    }
 
 };

@@ -69,18 +69,47 @@ protected:
 			node["meshID"] = "";
 		}
 
-		if (material) {
-			std::string materialName = material->GetMatName();
-			node["materialName"] = materialName.empty() ? "" : materialName;
-			if (material->matID == 0) {
-				std::hash<std::string> hasher;
-				material->matID = static_cast<unsigned int>(hasher(materialName));
-			}
-			material->SaveBinary(materialName);
-		}
-		else {
-			node["materialName"] = "";
-		}
+        if (material)
+            node["material"] = material->encode();
+        else
+            node["material"] = YAML::Node();
+
+        node["color"] = std::vector<float>{ color.x, color.y, color.z };
+
+        return node;
+    }
+
+    bool decode(const YAML::Node& node) override {
+        if (node["mesh"]) {
+            std::shared_ptr<Mesh> loadedMesh = std::make_shared<Mesh>();
+            YAML::Node matnode = node["mesh"];
+            std::string name = matnode["name"].as<std::string>();
+            if (Application->root->GetResourceManager()->GetMesh(std::stoull(name)) != nullptr)
+            {
+                SetMesh(Application->root->GetResourceManager()->GetMesh(std::stoull(name)));
+            }
+            else
+            {
+				loadedMesh = std::make_shared<Mesh>();
+                if (!loadedMesh->decode(node["mesh"])) {
+                    LOG(LogType::LOG_ERROR, "Failed to decode mesh in MeshRenderer");
+                    return false;
+                }
+                SetMesh(Application->root->GetResourceManager()->AddMesh(loadedMesh));
+            }
+        }
+
+        if (node["material"]) {
+            std::shared_ptr<Material> loadedMaterial;
+			YAML::Node matnode = node["material"];
+            std::string name = matnode["name"].as<std::string>();
+            loadedMaterial = std::make_shared<Material>();
+            if (!loadedMaterial->decode(node["material"])) {
+                LOG(LogType::LOG_ERROR, "Failed to decode material in MeshRenderer");
+                return false;
+            } 
+            SetMaterial(loadedMaterial);
+        }
 
 		node["color"] = std::vector<float>{ color.x, color.y, color.z };
 

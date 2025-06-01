@@ -1,0 +1,86 @@
+name: boolets
+prefabPath: ""
+uuid: 13784929532252427420
+tag: Ammunition
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - -1.8844938278198242
+      - 0.83912754058837891
+      - 6.5341987609863281
+    localRotation:
+      - -90.000009334669201
+      - 0
+      - 0
+    localScale:
+      - 0.11023577302694321
+      - 0.11023577302694466
+      - 0.11023577302694466
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 16487624941274455335
+    material:
+      name: boolets rifle_DefaultMaterial_BaseColor
+      color:
+        - 0.940741003
+        - 1
+        - 0.198443592
+        - 1
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.95719844102859497
+      - 0.86234664916992188
+      - 0.2607155442237854
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - -0.20000000298023224
+      - -1
+      - -0.30000001192092896
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 3.9000001
+    intensity: 4.5
+    direction:
+      - -1
+      - -1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: BoltgunBullets
+      fields:
+        floatSpeed: 1
+        floatHeight: 0.5
+        rotationSpeed: 50
+        lifeTime: 10
+        isDetected: false
+Children: ~

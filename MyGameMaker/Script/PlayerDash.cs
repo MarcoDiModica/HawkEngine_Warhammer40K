@@ -3,7 +3,7 @@ using HawkEngine;
 
 public class PlayerDash : MonoBehaviour
 {
-    public float dashSpeed = 1600.0f;
+    public float dashSpeed = 160000.0f;
     public float dashDuration = 0.05f;
     public float dashCooldown = 1.25f;
     public bool canDash = true;
@@ -24,6 +24,7 @@ public class PlayerDash : MonoBehaviour
     private float targetFOV;
     private float zoomSpeed = 0.5f;
     private const string DashSound = "Assets/Audio/SFX/Player/PlayerDash_ready.wav";
+    private const string DashRecharge = "Assets/Audio/Player/Jetpack_Charge.wav";
 
 
 
@@ -38,7 +39,8 @@ public class PlayerDash : MonoBehaviour
         lastDashTime = -dashCooldown;
 
         playerCamera = GameObject.Find("MainCamera");
-        playerCamera.GetComponent<PlayerCamera>();    
+        playerCamera.GetComponent<PlayerCamera>();
+        dashSpeed = 160000.0f;
     }
 
     public override void Update(float deltaTime)
@@ -48,6 +50,7 @@ public class PlayerDash : MonoBehaviour
             HandleActiveDash(deltaTime);
             
         }
+
 
        
 
@@ -61,10 +64,13 @@ public class PlayerDash : MonoBehaviour
 
     public void InitiateDash(Vector3 direction, float currentTime)
     {
-        if (!CanDash(currentTime)) return;
+        if (!CanDash(currentTime))
+        {
+            Audio.PlayOneShot(DashRecharge);
+            return;
+        }
 
-        
-        isDashing = true;
+            isDashing = true;
         currentDashTime = dashDuration;
         dashDirection = direction == Vector3.Zero ? gameObject.GetComponent<Transform>().forward : Vector3.Normalize(direction);
         lastDashTime = currentTime;

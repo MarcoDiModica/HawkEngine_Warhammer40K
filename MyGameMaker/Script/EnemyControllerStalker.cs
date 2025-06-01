@@ -6,9 +6,9 @@ using HawkEngine;
 public class EnemyControllerStalker : EnemyController
 {
     // Enemy Stats
-    private float health = 350.0f;
-    private float clawDamage = 25.0f;
-    private float pounceDamage = 35.0f;
+    private float health = 250.0f;
+    private float clawDamage = 8.0f;
+    private float pounceDamage = 10.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
 
@@ -29,10 +29,12 @@ public class EnemyControllerStalker : EnemyController
     // Audio
     bool isCombatMusicPlaying = false;
     private const string MUSIC_COMBAT = "Assets/Audio/PlaceHolder_CombatMusic.wav";
-    private const string SFX_DEATH = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav";
+    private const string SFX_DEATH = "Assets/Audio/Lictor/Death_2.wav";
     private const string SFX_FOOTSTEP = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav";
-    private const string SFX_ATTACK = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav";
-    private const string SFX_HIT = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav";
+    private const string SFX_ATTACK = "Assets/Audio/Lictor/Meele_Atk_SFX.wav";
+    private const string SFX_HIT = "Assets/Audio/Lictor/Hit_3.wav";
+    private const string SFX_POUNCE = "Assets/Audio/Lictor/Jump_FULL.wav";
+    private bool hasPlayedDeathSound = false;
 
     // Invisibility
     private float invisibilityRange = 50.0f;
@@ -48,9 +50,13 @@ public class EnemyControllerStalker : EnemyController
     private bool isPouncing = false;
     private bool hasMissed = true;
 
+    // Death
+    private float deathTimer = 0f;
+    private float deathCooldown = 2f;
+
     public override void Awake()
     {
-
+        startPosition = gameObject.GetComponent<Transform>().position;
     }
 
     public override void Start()
@@ -70,7 +76,7 @@ public class EnemyControllerStalker : EnemyController
             return;
         }
 
-        collider = gameObject.GetComponent<BoxCollider>();
+        collider = gameObject.GetComponent<CapsuleCollider>();
         if (collider == null)
         { 
             Engineson.print("ERROR: Lictor Collider not found!"); 
@@ -84,7 +90,7 @@ public class EnemyControllerStalker : EnemyController
             return;
         }
 
-        anim = GameObject.Find("LictorMesh").GetComponent<LictorAnimation>();
+        anim = gameObject.GetChild("LictorMesh").GetComponent<LictorAnimation>();
         if (anim == null)
         {
             Engineson.print("ERROR: LictorAnimation requires SkeletalANimation component");
@@ -117,6 +123,12 @@ public class EnemyControllerStalker : EnemyController
             {
                 distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
+
+                if (isSlowed)
+                {
+                    HandleSlowedState(deltaTime);
+                }
+
                 if (distanceToPlayer < distToChase)
                 {
                     // Attack
@@ -129,28 +141,6 @@ public class EnemyControllerStalker : EnemyController
                     if (distanceToPlayer > minDistToChase)
                     {
                         currentState = EnemyState.CHASE;
-                    }
-
-                    // Rotation
-                    if (moveDirection != Vector3.Zero)
-                    {
-                        currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-                        float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-                        float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
-
-                        while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-                        while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
-
-                        currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
-
-                        Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-                        Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                            eulerRotation.Y * ((float)Math.PI / 180.0f),
-                            eulerRotation.X * ((float)Math.PI / 180.0f),
-                            eulerRotation.Z * ((float)Math.PI / 180.0f)
-                        );
-
-                        collider.SetRotation(newRotation);
                     }
                 }
                 else
@@ -165,7 +155,7 @@ public class EnemyControllerStalker : EnemyController
             }
         }
 
-        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
+        //Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
 
         switch (currentState)
         {
@@ -187,13 +177,21 @@ public class EnemyControllerStalker : EnemyController
                 }
                 if (isCombatMusicPlaying == false)
                 {
-                    Audio.Play(MUSIC_COMBAT, true);
+                    //Audio.Play(MUSIC_COMBAT, true);
                     isCombatMusicPlaying = true;
                 }
 
                 Vector3 currentVelocity = rb.GetVelocity();
                 moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
-                Vector3 desiredVelocity = moveDirection * speedMovement;
+                Vector3 desiredVelocity;
+                if (isSlowed)
+                {
+                    desiredVelocity = moveDirection * slowedSpeed;
+                }
+                else
+                {
+                    desiredVelocity = moveDirection * speedMovement;
+                }
 
                 anim.SetWalkToPlayerAnimation();
                 if (desiredVelocity.LengthSquared() > 0)
@@ -220,6 +218,23 @@ public class EnemyControllerStalker : EnemyController
                 {
                     anticipationTimer = 0;
                 }
+                currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
+
+                while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+
+                currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+
+                Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                    eulerRotation.Y * ((float)Math.PI / 180.0f),
+                    eulerRotation.X * ((float)Math.PI / 180.0f),
+                    eulerRotation.Z * ((float)Math.PI / 180.0f)
+                );
+
+                collider.SetRotation(newRotation);
                 break;
 
             case EnemyState.ATTACK:
@@ -247,6 +262,23 @@ public class EnemyControllerStalker : EnemyController
                     dodgewindow = false;
                     isAttacking = false;
                 }
+                currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                float targetAttackAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                float targetAttackAngleDegrees = targetAttackAngle * (180.0f / (float)Math.PI);
+
+                while (targetAttackAngleDegrees - currentRotationAngle > 180.0f) targetAttackAngleDegrees -= 360.0f;
+                while (targetAttackAngleDegrees - currentRotationAngle < -180.0f) targetAttackAngleDegrees += 360.0f;
+
+                currentRotationAngle = Lerp(currentRotationAngle, targetAttackAngleDegrees, rotationSpeed * deltaTime);
+
+                Vector3 eulerAttackRotation = new Vector3(0, currentRotationAngle, 0);
+                Quaternion newAttackRotation = Quaternion.CreateFromYawPitchRoll(
+                    eulerAttackRotation.Y * ((float)Math.PI / 180.0f),
+                    eulerAttackRotation.X * ((float)Math.PI / 180.0f),
+                    eulerAttackRotation.Z * ((float)Math.PI / 180.0f)
+                );
+
+                collider.SetRotation(newAttackRotation);
                 break;
 
             case EnemyState.STUNNED:
@@ -261,9 +293,22 @@ public class EnemyControllerStalker : EnemyController
                 break;
 
             case EnemyState.DEAD:
+                if (!hasPlayedDeathSound)
+                {
+                    Audio.PlayOneShot(SFX_DEATH);
+                    hasPlayedDeathSound = true;
+                }
                 if ((!hasDropped))
                 {
                     GameObject.Find("DropManager").GetComponent<DropManager>().SpawnPrefab(this);
+                }
+                if (anim.isAnimFinished)
+                {
+                    deathTimer += deltaTime;
+                    if (deathTimer >= deathCooldown)
+                    {
+                        Engineson.Destroy(gameObject);
+                    }
                 }
                 hasDropped = true;
                 collider.SetActive(false);
@@ -274,6 +319,44 @@ public class EnemyControllerStalker : EnemyController
         }
     }
 
+    public override void ResetEnemyCheckPoint()
+    {
+        if (!isDead)
+        {
+            currentHealth = maxHealth;
+            currentState = EnemyState.IDLE;
+            rb.SetVelocity(Vector3.Zero);
+            anim.SetIdleAnimation();
+            isStunned = false;
+            hasPlayedDeathSound = false;
+            hasDropped = false;
+            dodgewindow = false;
+            hasPounce = true;
+            isPouncing = false;
+            lictorMesh.SetActive(true);
+            
+
+            //gameObject.GetComponent<Collider>().SetPosition(startPosition);
+        }
+        
+    }
+
+    private void HandleSlowedState(float deltaTime)
+    {
+        try
+        {
+            slowedTimer += deltaTime;
+            if (slowedTimer >= slowedDuration)
+            {
+                isSlowed = false;
+                slowedTimer = 0.0f;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"Error in HandleSlowedState: {e.Message}");
+        }
+    }
     public override void Attack()
     {
         //Engineson.print("Melee attack executed!");
@@ -282,6 +365,7 @@ public class EnemyControllerStalker : EnemyController
             if (pc.redThirstManager.redThirstBonus < clawDamage)
             {
                 pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
+                pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
             else
             {
@@ -291,9 +375,12 @@ public class EnemyControllerStalker : EnemyController
         else
         {
             pc.playerData.TakeDamage(clawDamage);
+            pc.StartFlashColor(pc.flashColor, pc.flashDuration);
         }
 
         Audio.PlayOneShot(SFX_ATTACK);
+        AddComponent<ParticleFX>().ApplyPreset(27);
+        GetComponent<ParticleFX>().EmitBurst(1);
     }
 
     public override void TakeDamage(float damage)
@@ -325,7 +412,9 @@ public class EnemyControllerStalker : EnemyController
         {
             hasPounce = false;
             isPouncing = true;
-
+            Audio.PlayOneShot(SFX_POUNCE);
+            AddComponent<ParticleFX>().ApplyPreset(35);
+            GetComponent<ParticleFX>().EmitBurst(1);
             Engineson.print("Pouncing");
             anim.SetLeapAnimation();
             rb.SetVelocity(rb.GetVelocity() * 120f);
@@ -370,6 +459,7 @@ public class EnemyControllerStalker : EnemyController
                 if (pc.redThirstManager.redThirstBonus < pounceDamage)
                 {
                     pc.playerData.TakeDamage(pounceDamage - pc.redThirstManager.redThirstBonus);
+                    pc.StartFlashColor(pc.flashColor, pc.flashDuration);
                 }
                 else
                 {
@@ -379,6 +469,7 @@ public class EnemyControllerStalker : EnemyController
             else
             {
                 pc.playerData.TakeDamage(pounceDamage);
+                pc.StartFlashColor(pc.flashColor, pc.flashDuration);
             }
         }
     }

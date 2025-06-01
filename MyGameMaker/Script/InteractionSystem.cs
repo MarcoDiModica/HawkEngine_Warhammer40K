@@ -18,7 +18,8 @@ public class InteractionSystem : MonoBehaviour
     private Transform cachedTransform;
 
     private float interactionCooldown = 0.5f; 
-    private float interactionTimer = 0.0f; 
+    private float interactionTimer = 0.0f;
+    private string TextSFX = "Assets/Audio/UI/Dialog_Beeps.wav";
 
     public override void Awake() { }
 
@@ -92,18 +93,21 @@ public class InteractionSystem : MonoBehaviour
                 isInteracting = true;
                 ShowInteractionMessage(false);
                 currentInteractable = interactable.gameObject;
-                playerInput.BlockMovement();
+                playerInput.BlockInput();
                 interactable.Interact();
+                Audio.PlayOneShot(TextSFX);
                 interaction?.SpawnDialogueText(true);
+                interaction?.SetDialogueText(interactable.text);
                 interactionTimer = 0.0f; 
             }
             else if (interactionTimer > interactionCooldown)
             {
                 if(Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B))
                 {
+                    Audio.PlayOneShot(TextSFX);
                     isInteracting = false;
                     interaction?.SpawnDialogueText(false);
-                    playerInput.UnblockMovement();
+                    playerInput.UnBlockInput();
                 }     
             }
         }

@@ -57,6 +57,15 @@ public class HUD : MonoBehaviour
     private GameObject canister4;
     private GameObject canister5;
 
+    private GameObject boltgunAmmoTextGO;
+    private UIText boltgunAmmoText;
+
+    private GameObject shotgunAmmoTextGO;
+    private UIText shotgunAmmoText;
+
+    private GameObject railgunAmmoTextGO;
+    private UIText railtgunAmmoText;
+
     private PlayerPowerUp playerPowerUp;
 
     private GameObject pauseMenu;
@@ -65,6 +74,13 @@ public class HUD : MonoBehaviour
     private UIImage hpBarAnimImage;
     private UIImage hpTempBarAnimImage;
     private UIImage redThirstBarAnimImage;
+
+    private GameObject Text;
+    private UIText text;
+
+    private GameObject fadeCanvas;
+
+    private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
 
 
     void win()
@@ -81,7 +97,7 @@ public class HUD : MonoBehaviour
     {
         float hp = playerData.GetHealth();
         float maxHp = playerData.GetMaxHealth();
-        float width = (hp / maxHp) * 0.2f;
+        float width = (hp / maxHp) * 0.3f;
         return width;
     }
 
@@ -89,7 +105,7 @@ public class HUD : MonoBehaviour
     {
         float hp = playerData.GetHealth();
         float maxHp = playerData.GetMaxHealth();
-        float pos = (hp / maxHp) * 0.2f + 0.043f;
+        float pos = (hp / maxHp) * 0.3f + 0.063f;
         return pos;
     }
 
@@ -97,7 +113,7 @@ public class HUD : MonoBehaviour
     {
         float hpTemp = playerData.GetHealthTemp();
         float maxHpTemp = playerData.GetMaxHealthTemp();
-        float width = (hpTemp / maxHpTemp) * 0.138f;
+        float width = (hpTemp / maxHpTemp) * 0.207f;
         return width;
     }
 
@@ -105,7 +121,7 @@ public class HUD : MonoBehaviour
     {
         float hpTemp = playerData.GetHealthTemp();
         float maxHpTemp = playerData.GetMaxHealthTemp();
-        float pos = (hpTemp / maxHpTemp) * 0.138f + 0.057f;
+        float pos = (hpTemp / maxHpTemp) * 0.207f + 0.085f;
         return pos;
     }
 
@@ -114,7 +130,7 @@ public class HUD : MonoBehaviour
     {
         float redThirst = redThirstManager.GetRedThirstPoints();
         float maxRedThirst = 5;
-        float height = (redThirst / maxRedThirst) * 0.08f;
+        float height = (redThirst / maxRedThirst) * 0.12f;
         return height;
     }
 
@@ -122,7 +138,7 @@ public class HUD : MonoBehaviour
     {
         float redThirst = redThirstManager.GetRedThirstPoints();
         float maxRedThirst = 5;
-        float pos = 0.961f - (redThirst / maxRedThirst) * 0.08f;
+        float pos = 0.934f - (redThirst / maxRedThirst) * 0.12f;
         return pos;
     }
 
@@ -132,6 +148,10 @@ public class HUD : MonoBehaviour
     }
     public override void Start()
     {
+
+        Text = GameObject.Find("HelloWorld");
+        text = Text.GetComponent<UIText>();
+        text.SetText("Hello World");
         hpBar = GameObject.Find("blood_bar1");
         hpTempBar = GameObject.Find("blood_bar2");
         if (hpBar == null || hpTempBar == null)
@@ -202,11 +222,17 @@ public class HUD : MonoBehaviour
             Engineson.print("ERROR: GunAbilities not found");
         }
 
-        railgunScript = playerShootingScript.railgun;
-
-        if (railgunScript == null)
+        if (playerShootingScript.hasRailgun)
         {
-            Engineson.print("ERROR: Railgun not found");
+            railgunScript = playerShootingScript.railgun;
+            if (railgunScript == null)
+            {
+                Engineson.print("ERROR: railgun unlocked but not instantiated!");
+            }
+            else
+            {
+                railgunScript.railgunMode = Railgun.RailgunMode.SEMIAUTOMATIC;
+            }
         }
 
         redThirstManager = Player.GetComponent<RedThirstManager>();
@@ -280,15 +306,65 @@ public class HUD : MonoBehaviour
         redThirstBarAnimImage.SetImageSpriteSize(175, 40);
         redThirstBarAnimImage.SetImageAnimationSpeed(0.5f);
         redThirstBarAnimImage.SetImageAnimationIndexLimit(6);
+
+        boltgunAmmoTextGO = GameObject.Find("boltgun_ammo_text");
+        if (boltgunAmmoTextGO != null)
+        {
+            boltgunAmmoText = boltgunAmmoTextGO.GetComponent<UIText>();
+            if (boltgunAmmoText == null)
+                Engineson.print("ERROR: TextComponent not found on boltgun_ammo_text");
+        }
+        else
+        {
+            Engineson.print("ERROR: boltgun_ammo_text GameObject not found");
+        }
+        shotgunAmmoTextGO = GameObject.Find("shotgun_ammo_text");
+        if (shotgunAmmoTextGO != null)
+        {
+            shotgunAmmoText = shotgunAmmoTextGO.GetComponent<UIText>();
+            if (shotgunAmmoText == null)
+                Engineson.print("ERROR: TextComponent not found on shotgun_ammo_text");
+        }
+        else
+        {
+            Engineson.print("ERROR: shotgun_ammo_text GameObject not found");
+        }
+        railgunAmmoTextGO = GameObject.Find("railgun_ammo_text");
+        if (railgunAmmoTextGO != null)
+        {
+            railtgunAmmoText = railgunAmmoTextGO.GetComponent<UIText>();
+            if (railtgunAmmoText == null)
+                Engineson.print("ERROR: TextComponent not found on railgun_ammo_text");
+        }
+        else
+        {
+            Engineson.print("ERROR: railgun_ammo_text GameObject not found");
+        }
+
+        fadeCanvas = GameObject.Find("Canvas_Fade");
+        if (fadeCanvas == null)
+        {
+            Engineson.print("ERROR: Fade_Canvas not found");
+        }
+        else
+        {
+            fadeCanvas.SetActive(true);
+        }
     }
     public override void Update(float deltaTime)
     {
-        transform_hpBar.SetScaleUI(new Vector3(CalculateHPBarWidth(), 0.032f, 1.0f));
+        transform_hpBar.SetScaleUI(new Vector3(CalculateHPBarWidth(), 0.045f, 1.0f));
         transform_hpBarAnim.DOMoveXUI(CalculateHPBarAnimPos(), 0f, Modes.LINEAR);
-        transform_hpTempBar.SetScaleUI(new Vector3(CalculateHPTempBarWidth(), 0.018f, 1.0f));
+        transform_hpTempBar.SetScaleUI(new Vector3(CalculateHPTempBarWidth(), 0.027f, 1.0f));
         transform_hpTempBarAnim.DOMoveXUI(CalculateHPTempBarAnimPos(), 0f, Modes.LINEAR);
-        transform_redThirstBar.SetScaleUI(new Vector3(0.037f, CalculateRedThirstBarHeight(), 1.0f));
+        transform_redThirstBar.SetScaleUI(new Vector3(0.056f, CalculateRedThirstBarHeight(), 1.0f));
         transform_redThirstBarAnim.DOMoveYUI(CalculateRedThirstBarAnimPos(), 0f, Modes.LINEAR);
+
+
+        if (playerShootingScript.hasRailgun && railgunScript == null)
+        {
+            railgunScript = playerShootingScript.railgun;
+        }
 
         if (redThirstManager.biblePages >= 1)
         {
@@ -385,6 +461,10 @@ public class HUD : MonoBehaviour
                 {
                     lockL.SetActive(true);
                 }
+                boltgunAmmoTextGO.SetActive(true);
+                shotgunAmmoTextGO.SetActive(false);
+                railgunAmmoTextGO.SetActive(false);
+                UpdateBoltgunAmmoUI();
 
                 break;
             case 1:
@@ -427,6 +507,10 @@ public class HUD : MonoBehaviour
                 {
                     lockL.SetActive(true);
                 }
+                shotgunAmmoTextGO.SetActive(true);
+                boltgunAmmoTextGO.SetActive(false);
+                railgunAmmoTextGO.SetActive(false);
+                UptateShotgunAmmoUI();
                 break;
             case 2:
                 //Railgun equipped
@@ -447,6 +531,11 @@ public class HUD : MonoBehaviour
                 shotgunAbility1.SetActive(false);
                 shotgunAbility2.SetActive(false);
                 railgunAbility1.SetActive(true);
+                if (railgunScript == null)
+                {
+                    Engineson.print("ERROR: Hud.Update – railgunScript is null!");
+                    break;
+                }
                 switch (railgunScript.railgunMode)
                 {
                     case Railgun.RailgunMode.SEMIAUTOMATIC:
@@ -467,6 +556,7 @@ public class HUD : MonoBehaviour
                 {
                     lockR.SetActive(true);
                 }
+
                 if (playerShootingScript.hasShotgun)
                 {
                     lockL.SetActive(false);
@@ -475,6 +565,11 @@ public class HUD : MonoBehaviour
                 {
                     lockL.SetActive(true);
                 }
+
+                railgunAmmoTextGO.SetActive(true);
+                boltgunAmmoTextGO.SetActive(false);
+                shotgunAmmoTextGO.SetActive(false);
+                UpdateRailgunAmmoUI();
                 break;
         }
 
@@ -521,6 +616,7 @@ public class HUD : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P) || Input.GetControllerButtonDown(ControllerButton.Start))
         {
+            Audio.PlayOneShot(MenuSFX);
             if (pauseMenu.IsActive())
             {
                 pauseMenu.SetActive(false);
@@ -540,5 +636,41 @@ public class HUD : MonoBehaviour
         {
             redThirstManager.AddRedThirstPoint(1);
         }
+
+    }
+
+    private void UpdateBoltgunAmmoUI()
+    {
+        if (boltgunAmmoText != null)
+        {
+            int currentAmmo = playerShootingScript.GetCurrentAmmo();
+            int maxAmmo = playerShootingScript.GetMaxAmmo();
+            boltgunAmmoText.SetText(currentAmmo + "/" + maxAmmo);
+        }
+        else
+        {
+            Engineson.print("ERROR: boltgunAmmoText is null");
+        }
+    }
+
+    private void UptateShotgunAmmoUI()
+    {
+        if (shotgunAmmoText != null)
+        {
+            int currentAmmo = playerShootingScript.GetCurrentAmmo();
+            int maxAmmo = playerShootingScript.GetMaxAmmo();
+            shotgunAmmoText.SetText(currentAmmo + "/" + maxAmmo);
+        }
+        else
+        {
+            Engineson.print("ERROR: shotgunAmmoText is null");
+        }
+    }
+
+    private void UpdateRailgunAmmoUI()
+    {
+
+            railtgunAmmoText.SetText( "-/-" );
+
     }
 }

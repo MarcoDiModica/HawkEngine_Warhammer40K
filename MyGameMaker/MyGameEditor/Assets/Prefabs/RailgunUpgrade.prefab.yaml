@@ -1,0 +1,102 @@
+name: RailgunUpgrade_Instance
+prefabPath: Assets\Prefabs\RailgunUpgrade.prefab.yaml
+uuid: 10539700971827334379
+tag: Upgrade
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 17.707366943359375
+      - 2
+      - -63.800304412841797
+    localRotation:
+      - 0
+      - 0
+      - -28.175270416798817
+    localScale:
+      - 2.7900013236317349
+      - 2.7900013236317349
+      - 2.7899999618530273
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.20000000298023224
+      - 0.20000000298023224
+      - 0.20000000298023224
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - -0.20000000298023224
+      - -1
+      - -0.30000001192092896
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 3.20000005
+    intensity: 3
+    direction:
+      - -1
+      - -1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: RailgunUpgradePickUp
+      fields:
+        floatSpeed: 0.615087867
+        floatHeight: 0.5
+        rotationSpeed: 75.5006332
+Children:
+  - name: railgunMesh
+    prefabPath: ""
+    uuid: 8462308081342982845
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - -0.09075501561164856
+          - 0.61142861843109131
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 0.0010000000474974513
+          - 0.0010000000474974513
+          - 0.0010000000474974513
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 5139834007055871956
+        material:
+          name: railgun_DefaultMaterial_BaseColor
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~

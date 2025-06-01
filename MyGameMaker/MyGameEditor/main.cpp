@@ -368,27 +368,14 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 	}
 
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
-
 	glm::vec3 rayDirection = Application->input->getMousePickRay();
 
 	if (rayDirection == glm::vec3(0, 0, -1) && Application->input->GetMouseButton(1) != KEY_DOWN) {
 		return;
 	}
 
-	bool selecting = false;
-	bool isMultiSelect = Application->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT ||
-		Application->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT;
 	bool isCtrlHeld = Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT ||
 		Application->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_REPEAT;
-
-	static Uint32 lastClickTime = 0;
-	static glm::vec2 lastClickPos(0, 0);
-	static int cyclicIndex = -1;
-
-	glm::vec2 currentMousePos(Application->input->GetMouseX(), Application->input->GetMouseY());
-	Uint32 currentTime = SDL_GetTicks();
-	bool isSamePosition = glm::distance(currentMousePos, lastClickPos) < 5.0f;
-	bool isDoubleClick = (currentTime - lastClickTime < 500) && isSamePosition;
 
 	std::vector<std::pair<GameObject*, float>> objectsHit;
 
@@ -398,49 +385,40 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 			return;
 		}
 
-		if (!isSamePosition) {
-			cyclicIndex = -1;
-			objectsHit.clear();
-		}
+		objectsHit.clear();
 
-		lastClickTime = currentTime;
-		lastClickPos = currentMousePos;
-
-		selecting = true;
-
-		if (isDoubleClick && !objectsHit.empty()) {
-			cyclicIndex = (cyclicIndex + 1) % objectsHit.size();
-		}
-		else {
-			objectsHit.clear();
-			cyclicIndex = 0;
-
-			for (auto & object : objects)
+		
+		for (auto& object : objects)
+		{
+			if (object->HasComponent<MeshRenderer>() && object->IsActive())
 			{
-				if (object->HasComponent<MeshRenderer>() && object->IsActive())
-				{
-					BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
-					bbox = object->GetTransform()->GetMatrix() * bbox;
-					glm::vec3 collisionPoint;
+				BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+				bbox = object->GetTransform()->GetMatrix() * bbox;
+				glm::vec3 collisionPoint;
 
-					if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
-					{
-						float distance = glm::distance(rayOrigin, collisionPoint);
-						objectsHit.emplace_back(object, distance);
-					}
+				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
+				{
+					float distance = glm::distance(rayOrigin, collisionPoint);
+					objectsHit.emplace_back(object, distance);
 				}
 			}
-
-			std::sort(objectsHit.begin(), objectsHit.end(),
-				[](const auto& a, const auto& b) {
-					return a.second < b.second;
-				});
 		}
 
-		if (!objectsHit.empty()) {
-			GameObject* selectedObject = objectsHit[cyclicIndex].first;
+	
+		std::sort(objectsHit.begin(), objectsHit.end(),
+			[](const auto& a, const auto& b) {
+				return a.second < b.second;
+			});
 
-			if (!isMultiSelect && !isCtrlHeld) {
+		if (!objectsHit.empty()) {
+			GameObject* selectedObject = objectsHit[0].first;
+
+
+			if (Application->input->IsGameObjectSelected(selectedObject) && objectsHit.size() > 1) {
+				selectedObject = objectsHit[1].first;
+			}
+
+			if (!isCtrlHeld) {
 				Application->input->ClearSelection();
 			}
 
@@ -452,7 +430,7 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 				Application->input->AddToSelection(selectedObject);
 			}
 		}
-		else if (!isMultiSelect && !isCtrlHeld) {
+		else if (!isCtrlHeld) {
 			Application->input->ClearSelection();
 		}
 	}
@@ -638,9 +616,9 @@ static void RenderEditor() {
 			}
 
 			// omit UI elements from rendering on this framebuffer
-			/*if (object->HasComponent<UICanvasComponent>() || object->HasComponent<UIImageComponent>()) {
+			if (object->HasComponent<UICanvasComponent>() || object->HasComponent<UIImageComponent>()) {
 				continue;
-			}*/
+			}
 
 			glm::mat4 viewMatrix = Application->camera->view();
 			glm::mat4 projMatrix = Application->camera->projection();

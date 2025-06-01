@@ -51,7 +51,6 @@ void ResourceManager::LoadTextures()
 
 void ResourceManager::LoadMaterials()
 {
-
 	std::string materialPath = std::filesystem::current_path().string() + "\\Library\\Materials\\";
 
 	fs::path materialeDir(materialPath);
@@ -131,3 +130,119 @@ void ResourceManager::CleanUp() {
 	ClearAllMaterials();
 	ClearAllMeshes();
 }
+
+void ResourceManager::LoadImage(std::string id)
+{
+	if (imageIndex.find(id) != imageIndex.end()) {
+		return; // Image already loaded
+	}
+
+	std::string texturePath = std::filesystem::current_path().string() + "\\Assets\\Textures\\";
+	std::string imageName = id;
+	std::shared_ptr<Image> image = std::make_shared<Image>();
+	texturePath += imageName + ".png";
+	image->LoadTexture(texturePath);
+	image->SaveBinary(imageName);
+	AddImage(image);
+}
+
+std::shared_ptr<Material> ResourceManager::GetDefaultMaterial() {
+	std::string materialPath = std::filesystem::current_path().string() + "\\Library\\Materials\\.mat";
+
+	fs::path materialeDir(materialPath);
+	std::ifstream fin(materialeDir, std::ios::binary);
+
+	std::shared_ptr<Material> loadedMaterial = std::make_shared<Material>();
+
+	loadedMaterial->matName = "";
+
+	fin.read(reinterpret_cast<char*>(&loadedMaterial->wrapMode), sizeof(loadedMaterial->wrapMode));
+	fin.read(reinterpret_cast<char*>(&loadedMaterial->filter), sizeof(loadedMaterial->filter));
+	fin.read(reinterpret_cast<char*>(&loadedMaterial->color), sizeof(loadedMaterial->color));
+	fin.read(reinterpret_cast<char*>(&loadedMaterial->shaderType), sizeof(loadedMaterial->shaderType));
+
+	while (fin.peek() != EOF) {
+		char type[4];
+		fin.read(type, 3);
+		type[3] = '\0';
+
+		uint32_t pathLen;
+		fin.read(reinterpret_cast<char*>(&pathLen), sizeof(pathLen));
+
+		std::string texturePath(pathLen, '\0');
+		fin.read(&texturePath[0], pathLen);
+
+		std::shared_ptr<Image> img;
+		if (GetImage(texturePath) != nullptr)
+		{
+			img = GetImage(texturePath);
+		}
+		else
+		{
+			img = Image::LoadBinary(texturePath);
+			AddImage(img);
+		}
+
+		if (strcmp(type, "IMG") == 0) {
+			loadedMaterial->setImage(img);
+		}
+		else if (strcmp(type, "NML") == 0) {
+			loadedMaterial->setNormalMap(img);
+		}
+		else if (strcmp(type, "MTL") == 0) {
+			loadedMaterial->setMetallicMap(img);
+		}
+		else if (strcmp(type, "RGL") == 0) {
+			loadedMaterial->setRoughnessMap(img);
+		}
+		else if (strcmp(type, "AOM") == 0) {
+			loadedMaterial->setAoMap(img);
+		}
+	}
+	AddMaterial(loadedMaterial);
+	return loadedMaterial;
+}
+
+void ResourceManager::DeleteAllUselessResources()
+{
+	std::string meshPath = std::filesystem::current_path().string() + "\\Library\\Mesh";
+	fs::path meshDir(meshPath);
+	for (const auto& entry : std::filesystem::directory_iterator(meshDir))
+	{
+		if (entry.path().extension() == ".mesh") {
+			std::string materialName = entry.path().stem().string();
+			size_t id = std::stoull(materialName);
+			if (GetMesh(id) == nullptr)
+			{
+				fs::remove(entry.path());
+			}
+		}
+	}
+
+	std::string materialPath = std::filesystem::current_path().string() + "\\Library\\Materials";
+	fs::path materialeDir(materialPath);
+	for (const auto& entry : std::filesystem::directory_iterator(materialeDir))
+	{
+		if (entry.path().extension() == ".mat") {
+			std::string materialName = entry.path().stem().string();
+			if (materialName != "" && GetMaterial(materialName) == nullptr)
+			{
+				fs::remove(entry.path());
+			}
+		}
+	}
+}
+
+void ResourceManager::UpdateTextures()
+{
+	std::string texturePath = std::filesystem::current_path().string() + "\\Assets\\Textures\\";
+	for (auto image : images)
+	{
+		std::string imageName = image->image_name;
+		texturePath += imageName + ".png";
+		image->LoadTexture(texturePath);
+		image->SaveBinary(imageName);
+		texturePath = std::filesystem::current_path().string() + "\\Assets\\Textures\\";
+	}
+}
+

@@ -1,28 +1,25 @@
-name: BiblePagePickUp
-prefabPath: ""
-uuid: 9871456235427851257
+name: BiblePagePickUp_Instance_1_Instance_Instance
+prefabPath: Assets\Prefabs\BiblePagePickUp.prefab.yaml
+uuid: 2428129195032936125
 tag: BiblePage
-active: false
+active: true
 isStatic: false
 Components:
   Transform_Component:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 12.384589195251465
-      - 2
-      - 12.173688888549805
+      - -173.69943237304688
+      - 2.8828797340393066
+      - 54.834514617919922
     localRotation:
-      - -38.566015935017774
-      - -32.943466287252335
-      - 1.1369850035054399e-14
+      - -38.566063220541864
+      - -32.943467975201102
+      - -1.1417434401897204e-06
     localScale:
-      - 0.51462657212302787
-      - 0.51462653863370611
-      - 0.51462652788457564
-  Shader:
-    name: Shader
-    enabled: true
+      - 1.0121674811729389
+      - 1.0121674613953686
+      - 1.0121673042598605
   MeshRenderer:
     name: MeshRenderer
     enabled: true
@@ -34,6 +31,9 @@ Components:
       - 1
       - 1
       - 1
+  Shader:
+    name: Shader
+    enabled: true
   BoxColliderComponent:
     size:
       - 1
@@ -44,11 +44,36 @@ Components:
       - 0
       - 0
     isTrigger: true
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.91828793287277222
+      - 0.46807670593261719
+      - 0.46807670593261719
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - -0.20000000298023224
+      - -1
+      - -0.30000001192092896
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 3.29999995
+    intensity: 8.80000019
+    direction:
+      - -1
+      - -1
+      - 0
   ScriptComponents:
     Script0:
       name: BiblePagePickUp
       fields:
-        floatSpeed: 1
+        floatSpeed: 1.64052975
         floatHeight: 0.5
-        rotationSpeed: 50
+        rotationSpeed: 90.4441223
 Children: ~

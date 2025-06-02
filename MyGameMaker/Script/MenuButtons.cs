@@ -133,6 +133,11 @@ public class MenuButtons : MonoBehaviour
         //         sound.LoadAudioClip(buttonStartGameFX);
     }
 
+    private bool IsBlockingMenuActive()
+    {
+        return (optionsCanvas != null && optionsCanvas.IsActive()) ||
+               (creditsCanvas != null && creditsCanvas.IsActive());
+    }
     private void NavigateMenu()
     {
         if (buttons == null || buttons.Length == 0)
@@ -140,6 +145,9 @@ public class MenuButtons : MonoBehaviour
             Engineson.print("ERROR: Buttons array is null or empty.");
             return;
         }
+
+        if (IsBlockingMenuActive()) return;
+
         long currentTime = DateTime.Now.Ticks;
 
         if (currentInputMethod != InputMethod.Mouse && currentTime - lastInputTime < 2500000)

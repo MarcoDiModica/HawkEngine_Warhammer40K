@@ -144,10 +144,10 @@ GameObject1:
             - 10253
             - 9612
           sprite_offset:
-            - 6835.33203
-            - 2883.6001
+            - 8544.16504
+            - 6728.3999
           anim_speed: 0.5
-          anim_index: 22
+          anim_index: 47
           anim_index_limit: 60
           color:
             - 1
@@ -254,7 +254,7 @@ GameObject1:
             - 0
           scale:
             - 0.181999981
-            - 0.0700000077
+            - 0.187000006
             - 0.400000006
           pivot_offset:
             - 0.5
@@ -263,14 +263,14 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/menu_newGame.png
+          texture_path: Library\Textures\UI\menu_new game.png
           use_animation: false
           sprite_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sheet_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -322,7 +322,7 @@ GameObject1:
             - 0
           scale:
             - 0.181999981
-            - 0.0700000077
+            - 0.187000006
             - 0.400000006
           pivot_offset:
             - 0.5
@@ -334,11 +334,11 @@ GameObject1:
           texture_path: Library/Textures/UI/menu_continue.png
           use_animation: false
           sprite_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sheet_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -390,7 +390,7 @@ GameObject1:
             - 0
           scale:
             - 0.181999981
-            - 0.0700000077
+            - 0.187000006
             - 0.400000006
           pivot_offset:
             - 0.5
@@ -402,11 +402,11 @@ GameObject1:
           texture_path: Library/Textures/UI/menu_options.png
           use_animation: false
           sprite_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sheet_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -458,7 +458,7 @@ GameObject1:
             - 0
           scale:
             - 0.181999981
-            - 0.0700000077
+            - 0.187000006
             - 0.400000006
           pivot_offset:
             - 0.5
@@ -470,11 +470,11 @@ GameObject1:
           texture_path: Library/Textures/UI/menu_exit.png
           use_animation: false
           sprite_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sheet_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -526,7 +526,7 @@ GameObject1:
             - 0
           scale:
             - 0.181999996
-            - 0.0700000003
+            - 0.187000006
             - 1
           pivot_offset:
             - 0.5
@@ -542,11 +542,11 @@ GameObject1:
           texture_path: Library\Textures\UI\menu_credits.png
           use_animation: false
           sprite_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sheet_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -4919,7 +4919,7 @@ GameObject3:
             - 0
       Children: ~
 GameObject4:
-  name: CanvasCinematic
+  name: Canvas_Cinematic
   prefabPath: ""
   uuid: 14645508196647998947
   tag: Untagged
@@ -5034,7 +5034,7 @@ GameObject4:
               imageCooldown: 0.0410000011
       Children: ~
 GameObject5:
-  name: CanvasFade
+  name: Canvas_Fade
   prefabPath: ""
   uuid: 15971780212265548051
   tag: Untagged

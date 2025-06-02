@@ -516,7 +516,7 @@ namespace ParticlePresets {
 	glm::vec2(641,361),			   // Sprite size
 	true,						   // Use animation
 	true,						   // Random animation Index
-	0.05f,						   // Animation speed
+	0.001f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
 	5.0f,						   // Min scale
@@ -807,8 +807,8 @@ namespace ParticlePresets {
 		0.0f,                          // Alpha end
 		1.0f,                          // Size start
 		1.0f,                          // Size end
-		0.5f,                          // Min lifetime
-		1.0f,                          // Max lifetime
+		0.30f,                          // Min lifetime
+		0.30f,                          // Max lifetime
 		20.0f,                         // Min speed
 		0.01f,                         // Max speed
 		0.01f,                         // End Speed
@@ -825,8 +825,8 @@ namespace ParticlePresets {
 		0.0f,                          // Animation speed
 		0.0f,                          // Start rotation
 		true,                          // Random rotation
-		10.0f,                         // Min scale
-		5.0f,                          // Max scale
+		2.0f,                         // Min scale
+		2.0f,                          // Max scale
 		"Assets/Textures/BloodSplash_decals1_Yiwei.png", // Texture path
 		false						   // Is Local Space
 	};
@@ -1574,7 +1574,7 @@ namespace ParticlePresets {
 	glm::vec2(100,100),		   					 // Sprite size
 	true,										 // Use animation
 	false,										 // Random animation Index
-	7.2f,										 // Animation speed
+	0.1f,										 // Animation speed
 	0.0f,										 // Start rotation
 	true,										 // Random rotation
 	1.0f,										 // Min scale

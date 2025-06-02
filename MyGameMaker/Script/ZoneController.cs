@@ -22,6 +22,7 @@ public class ZoneController : MonoBehaviour
     private bool _barrierUp;
 
     private List<Collider> _barriers = new List<Collider>();
+    private List<GameObject> _go = new List<GameObject>();
 
     public override void Start()
     {
@@ -60,6 +61,7 @@ public class ZoneController : MonoBehaviour
                 {
                     col.SetActive(false);
                     _barriers.Add(col);
+                    _go.Add(go);
                 }
             }
             else
@@ -93,6 +95,8 @@ public class ZoneController : MonoBehaviour
                     Engineson.print("[ZoneController] Raising ALL barriers.");
                     foreach (var c in _barriers)
                         c.SetActive(true);
+                    foreach (var go in _go)
+                        go.GetComponent<SpikeAnimation>().SetUnburrowAnimation();
                     _barrierUp = true;
                 }
             }
@@ -107,6 +111,8 @@ public class ZoneController : MonoBehaviour
                 Engineson.print("[ZoneController] All spawns done & fallback timer elapsed. Dropping barriers.");
                 foreach (var c in _barriers)
                     c.SetActive(false);
+                foreach (var go in _go)
+                    go.GetComponent<SpikeAnimation>().SetBurrowAnimation();
                 _barrierUp = false;
             }
         }

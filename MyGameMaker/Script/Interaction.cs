@@ -1,5 +1,6 @@
 using HawkEngine;
 using System;
+using System.Collections;
 using System.Numerics;
 
 public class Interaction : MonoBehaviour
@@ -18,6 +19,11 @@ public class Interaction : MonoBehaviour
     private UIButton choice2Button;
     private GameObject choice2Hover;
     private GameObject choice2TextGO;
+    private GameObject controllerMovementText;
+    private bool controllerTextVisible = true;
+    private float controllerTextDuration = 5f;
+    private float controllerTextTimer = 0f;
+
     private UIText choice2Text;
     bool hasChoices = false;
     private float timer = 0f;
@@ -88,70 +94,84 @@ public class Interaction : MonoBehaviour
         choice2Hover = GameObject.Find("Choice2Hover");
         choice2TextGO = GameObject.Find("Choice2Text");
         choice2Text = choice2TextGO.GetComponent<UIText>();
+        controllerMovementText = GameObject.Find("Controller_popup");
 
-        dialogueText.SetBoxSize(1200f, 200f);
+        dialogueText?.SetBoxSize(1200f, 200f);
 
+        Box?.SetActive(false);
+        Text?.SetActive(false);
+        dialogueTextGo?.SetActive(false);
+        interactText?.SetActive(false);
+        choice1?.SetActive(false);
+        choice1TextGO?.SetActive(false);
+        choice2?.SetActive(false);
+        choice2TextGO?.SetActive(false);
+        choice1Hover?.SetActive(false);
+        choice2Hover?.SetActive(false);
 
-        Box.SetActive(false);
-        Text.SetActive(false);
-        dialogueTextGo.SetActive(false);
-        interactText.SetActive(false);
-        choice1.SetActive(false);
-        choice1TextGO.SetActive(false);
-        choice2.SetActive(false);
-        choice2TextGO.SetActive(false);
-        choice1Hover.SetActive(false);
-        choice2Hover.SetActive(false);
+        controllerMovementText?.SetActive(true);
+        controllerTextVisible = true;
+        controllerTextTimer = 0f;
     }
 
     public override void Update(float deltaTime)
     {
-        timer += deltaTime;
+        //timer += deltaTime;
 
-        if (hasChoices)
-        {
-            choice1.SetActive(true);
-            choice1TextGO.SetActive(true);
-            choice2.SetActive(true);
-            choice2TextGO.SetActive(true);
-        }
-        else
-        {
-            choice1.SetActive(false);
-            choice1TextGO.SetActive(false);
-            choice2.SetActive(false);
-            choice2TextGO.SetActive(false);
-        }
+        //if (controllerTextVisible)
+        //{
+        //    controllerTextTimer += deltaTime;
+        //    if (controllerTextTimer >= controllerTextDuration)
+        //    {
+        //        controllerMovementText.SetActive(false);
+        //        controllerTextVisible = false;
+        //    }
+        //}
 
-        if (choice1Button.GetState() == ButtonState.CLICKED)
-        {
-            Audio.PlayOneShot(TextSFX);
-            choice1Button.SetState(ButtonState.DEFAULT);
-            Engineson.print("Choice 1 clicked");
-            //interaction.Choice1();
-        }
-        if (choice2Button.GetState() == ButtonState.CLICKED)
-        {
-            Audio.PlayOneShot(TextSFX);
-            choice2Button.SetState(ButtonState.DEFAULT);
-            Engineson.print("Choice 2 clicked");
-            //interaction.Choice2();
-        }
-        if(choice1Button.GetState() == ButtonState.HOVERED)
-        {
-            choice1Hover.SetActive(true);
-            choice2Hover.SetActive(false);
-        }
-        else if (choice2Button.GetState() == ButtonState.HOVERED)
-        {
-            choice2Hover.SetActive(true);
-            choice1Hover.SetActive(false);
-        }
-        else
-        {
-            choice1Hover.SetActive(false);
-            choice2Hover.SetActive(false);
-        }
+        //if (hasChoices)
+        //{
+        //    choice1.SetActive(true);
+        //    choice1TextGO.SetActive(true);
+        //    choice2.SetActive(true);
+        //    choice2TextGO.SetActive(true);
+        //}
+        //else
+        //{
+        //    choice1.SetActive(false);
+        //    choice1TextGO.SetActive(false);
+        //    choice2.SetActive(false);
+        //    choice2TextGO.SetActive(false);
+        //}
+
+        //if (choice1Button.GetState() == ButtonState.CLICKED)
+        //{
+        //    Audio.PlayOneShot(TextSFX);
+        //    choice1Button.SetState(ButtonState.DEFAULT);
+        //    Engineson.print("Choice 1 clicked");
+        //    //interaction.Choice1();
+        //}
+        //if (choice2Button.GetState() == ButtonState.CLICKED)
+        //{
+        //    Audio.PlayOneShot(TextSFX);
+        //    choice2Button.SetState(ButtonState.DEFAULT);
+        //    Engineson.print("Choice 2 clicked");
+        //    //interaction.Choice2();
+        //}
+        //if(choice1Button.GetState() == ButtonState.HOVERED)
+        //{
+        //    choice1Hover.SetActive(true);
+        //    choice2Hover.SetActive(false);
+        //}
+        //else if (choice2Button.GetState() == ButtonState.HOVERED)
+        //{
+        //    choice2Hover.SetActive(true);
+        //    choice1Hover.SetActive(false);
+        //}
+        //else
+        //{
+        //    choice1Hover.SetActive(false);
+        //    choice2Hover.SetActive(false);
+        //}
     }
 
     public bool isCanvasActive()

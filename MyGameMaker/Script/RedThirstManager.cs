@@ -31,6 +31,10 @@ public class RedThirstManager : MonoBehaviour
     private bool shotgunUsed = false;
     private bool railgunUsed = false;
 
+    private bool isActivatingIdle = false;
+    private bool isActivatingRunning = false;
+    private bool isActivatingWalking = false;
+
     private ParticleFX Angy;
     
     public override void Awake()
@@ -66,6 +70,20 @@ public class RedThirstManager : MonoBehaviour
                 ResetWeaponCombo();
             }
         }
+
+        if (isActivatingIdle)
+        {
+            FinishIdleBlackRageAnimation();
+        }
+        else if (isActivatingRunning)
+        {
+            FinishRunningBlackRageAnimation();
+        }
+        else if (isActivatingWalking)
+        {
+            FinishWalkingBlackRageAnimation();
+        }
+
         //redThirstDamageBonus = 5f + (biblePages * biblePages);
         if (isInBlackRage)
         {
@@ -89,6 +107,47 @@ public class RedThirstManager : MonoBehaviour
                 particleFX.EmitBurst(1);
             }
 
+        }
+    }
+
+    private void FinishIdleBlackRageAnimation()
+    {
+        if (playerController.playerAnimations.esk.IsAnimationFinished())
+        {
+            isActivatingIdle = false;
+            playerController.playerAnimations.ActiveBlackRageToIdleAnimation();
+        }
+    }
+
+    private void FinishRunningBlackRageAnimation()
+    {
+        if (playerController.playerAnimations.esk.IsAnimationFinished())
+        {
+            isActivatingRunning = false;
+            playerController.playerAnimations.ActiveBlackRageToRunningAnimation();
+        }
+    }
+
+    private void FinishWalkingBlackRageAnimation()
+    {
+        if (playerController.playerAnimations.esk.IsAnimationFinished())
+        {
+            isActivatingWalking = false;
+            switch(playerController.currentShootingDirection)
+            {
+                case PlayerController.ShootingDirection.Forward:
+                    playerController.playerAnimations.ActiveBlackRageToWalkingForwardAnimation();
+                    break;
+                case PlayerController.ShootingDirection.Backward:
+                    playerController.playerAnimations.ActiveBlackRageToWalkingBackwardsAnimation();
+                    break;
+                case PlayerController.ShootingDirection.Left:
+                    playerController.playerAnimations.ActiveBlackRageToWalkingLeftAnimation();
+                    break;
+                case PlayerController.ShootingDirection.Right:
+                    playerController.playerAnimations.ActiveBlackRageToWalkingRightAnimation();
+                    break;
+            }
         }
     }
 
@@ -183,6 +242,37 @@ public class RedThirstManager : MonoBehaviour
         if (redThirstPoints >= maxRedThirstPoints && isInBlackRage == false)
         {
             ActivateBlackRage();
+            
+            if (playerController.isIdle || playerController.isShootingStanding)
+            {
+                isActivatingIdle = true;
+                playerController.playerAnimations.ActivateBlackRageWhileIdleAnimation();
+            }
+            else if (playerController.isRunning)
+            {
+                isActivatingRunning = true;
+                playerController.playerAnimations.ActivateBlackRageWhileRunningAnimation();
+            }
+            else if (playerController.isShootingRunning)
+            {
+                isActivatingWalking = true;
+                switch (playerController.currentShootingDirection)
+                {
+                    case PlayerController.ShootingDirection.Forward:
+                        playerController.playerAnimations.ActivateBlackRageWhileWalkingStraightAnimation();
+                        break;
+                    case PlayerController.ShootingDirection.Backward:
+                        playerController.playerAnimations.ActivateBlackRageWhileWalkingBackwardsAnimation();
+                        break;
+                    case PlayerController.ShootingDirection.Left:
+                        playerController.playerAnimations.ActivateBlackRageWhileWalkingLeftAnimation();
+                        break;
+                    case PlayerController.ShootingDirection.Right:
+                        playerController.playerAnimations.ActivateBlackRageWhileWalkingRightAnimation();
+                        break;
+                }
+            }
+
         }
 
         redThirstDecayTimer = 0f;

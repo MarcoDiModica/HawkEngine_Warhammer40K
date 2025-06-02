@@ -189,6 +189,7 @@
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="BaseAbilities.cs" />
     <Compile Include="MusicManager.cs" />
+    <Compile Include="MusicManagerLvl1.cs" />
     <Compile Include="OptionMenu.cs" />
     <Compile Include="Pathfinding.cs" />
     <Compile Include="PauseMenu.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="SkeletalAnimation.cs" />
     <Compile Include="SoundEnvironmentController.cs" />
     <Compile Include="SoundTrigger.cs" />
+    <Compile Include="SpikeAnimation.cs" />
     <Compile Include="TermagauntAnimation.cs" />
     <Compile Include="TyranidTentaclesAnim.cs" />
     <Compile Include="Test1.cs" />

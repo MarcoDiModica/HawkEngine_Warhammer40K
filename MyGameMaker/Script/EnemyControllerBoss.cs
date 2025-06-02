@@ -14,6 +14,7 @@ public class EnemyControllerBoss : EnemyController
     private float hurtboxDuration = 0.5f; 
     private Vector3 slamHurtboxSize = new Vector3(8.0f, 10.0f, 15.0f);
     private GameObject slamHurtboxObject;
+    private BoxCollider boxcollider;
 
     private List<GameObject> clawHurtboxObjects = new List<GameObject>();
 
@@ -38,7 +39,8 @@ public class EnemyControllerBoss : EnemyController
     private const string ClawClip = "Assets/Audio/Mawloc_Claw_Attack.wav";
     private const string AcidClip = "Assets/Audio/Mawloc_Acid_Attack.wav";
     private const string DeathClip = "Assets/Audio/Mawloc_Death.wav";
-    private const string BossTheme = "Assets/Audio/Music/Level2_BossFight_BossTheme_Gold.ogg";
+    private const string BossTheme = "Assets/Audio/Music/Warhammer_Level2_BossFight_Part1.ogg";
+    //private const string BossTheme = "Assets/Audio/Music/Level2_BossFight_BossTheme_Gold.ogg";
     private const string BossThemePhase2 = "Assets/Audio/Music/Level2_MainTheme_BossFight_Gold.ogg";
 
     private bool isBossMusicPlaying = false;
@@ -122,16 +124,18 @@ public class EnemyControllerBoss : EnemyController
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
-        rb.SetMass(100000.0f);
+        rb.SetMass(10000.0f);
         tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
         tailController?.gameObject.SetActive(false);
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
         }
-        collider = gameObject.GetComponent<CapsuleCollider>();
-        collider.SetSize(new Vector3(3.0f, 2.0f, 3.0f));
-        if (collider == null)
+        //collider = gameObject.GetComponent<CapsuleCollider>();
+        //collider.SetActive(false);
+        boxcollider = gameObject.GetComponent<BoxCollider>();
+        //collider.SetSize(new Vector3(3.0f, 2.0f, 3.0f));
+        if (boxcollider == null)
         {
             Engineson.print("ERROR: PlayerMovement requires a Collider component!");
             return;
@@ -158,6 +162,7 @@ public class EnemyControllerBoss : EnemyController
         currentHealth = 1500.0f;
         gameObject.tag = "Boss";
         isDead = false;
+        
 //         musicClip = new AudioClip(combatMusic, "BossMusic", true, false);
 //         sound.LoadAudioClip(musicClip);
 
@@ -182,7 +187,7 @@ public class EnemyControllerBoss : EnemyController
                     float targetAngle = (float)Math.Atan2(directionToPlayer.X, directionToPlayer.Z) * (180.0f / (float)Math.PI);
                     Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(targetAngle * ((float)Math.PI / 180.0f), 0, 0);
                     enemyTransform.SetRotationQuat(newRotation);
-                    collider.SetRotation(newRotation);
+                    boxcollider.SetRotation(newRotation);
                 }
 
                 if (currentHealth < 500)
@@ -349,7 +354,7 @@ public class EnemyControllerBoss : EnemyController
             }
         if (isDead)
         {
-            collider.SetActive(false);
+            boxcollider.SetActive(false);
             Audio.Stop(BossTheme); 
             if (anim.isAnimFinished)
             {
@@ -462,7 +467,7 @@ public class EnemyControllerBoss : EnemyController
             {      
                 Engineson.print("Unburrowing Attack");
                 enemyTransform.position = playerTransform.position;
-                collider.SetPosition(playerTransform.position);
+                boxcollider.SetPosition(playerTransform.position);
                 anim.SetUnBurrowHeadAnimation();
                 AddComponent<ParticleFX>().ApplyPreset(25);
                 GetComponent<ParticleFX>().EmitBurst(25);
@@ -480,7 +485,7 @@ public class EnemyControllerBoss : EnemyController
             if (playerTransform != null)
             {
                 enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
-                collider.SetPosition(enemyTransform.position);
+                boxcollider.SetPosition(enemyTransform.position);
                 Engineson.print("Unburrowing Attack Phase 2");
                 anim.SetUnburrowingAnimation();
                 AddComponent<ParticleFX>().ApplyPreset(25);
@@ -498,7 +503,7 @@ public class EnemyControllerBoss : EnemyController
         {
             Audio.PlayOneShot(UnburrowClip);
             enemyTransform.position = fixedPositions[2];
-            collider.SetPosition(enemyTransform.position);
+            boxcollider.SetPosition(enemyTransform.position);
             anim.SetUnburrowingAnimation();
             AddComponent<ParticleFX>().ApplyPreset(25);
             GetComponent<ParticleFX>().EmitBurst(25);
@@ -580,7 +585,7 @@ public class EnemyControllerBoss : EnemyController
         if (isDead == false)
         {
             enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
-            collider.SetPosition(enemyTransform.position);
+            boxcollider.SetPosition(enemyTransform.position);
             Burrow();
         }
     }
@@ -632,7 +637,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("PlaySound Burrowed");
             Audio.PlayOneShot(BurrowClip);
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
-            collider.SetPosition(enemyTransform.position);
+            boxcollider.SetPosition(enemyTransform.position);
             if (currentPhase != BossPhase.PHASE1)
             {
                 anim.SetBurrowingAnimation();

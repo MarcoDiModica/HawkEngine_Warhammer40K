@@ -1,6 +1,6 @@
-name: SpawnerHormagaunt
-prefabPath: ""
-uuid: 4194914934457124607
+name: SpawnerHormagaunt_Instance
+prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
+uuid: 13127436435192144738
 tag: Untagged
 active: true
 isStatic: false
@@ -9,9 +9,9 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 587.01806640625
-      - 3.3515348434448242
-      - -32.780239105224609
+      - 587.68426513671875
+      - 0.69824838638305664
+      - -34.594791412353516
     localRotation:
       - 0
       - -0
@@ -25,15 +25,17 @@ Components:
       name: EnemySpawner
       fields:
         spawnTimer: 0
-        secondsBetweenSpawns: 7
+        secondsBetweenSpawns: 0
+        firstSpawnTime: 0
         currentEnemiesSpawned: 0
-        maxEnemiesToSpawn: 4
+        maxEnemiesToSpawn: 0
+        hasSpawnedFirst: false
         hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-        spawnHormagaunt: true
+        spawnHormagaunt: false
         spawnRanged: false
         spawnStalker: false
         spawnWarrior: false
         spawnClimberHormagaunt: false
         spawnerActive: false
-        spawnRadius: 15
+        spawnRadius: 5
 Children: ~

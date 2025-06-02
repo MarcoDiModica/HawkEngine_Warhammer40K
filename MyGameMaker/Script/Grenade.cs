@@ -35,6 +35,7 @@ public class Grenade : MonoBehaviour
         GetComponent<Transform>().SetScale(0.25f, 0.25f, 0.25f);
         AddComponent<CapsuleCollider>();
         AddComponent<Rigidbody>();
+        AddComponent<ParticleFX>();
         rigidbody = GetComponent<Rigidbody>();
         rigidbody.SetMass(0.05f);
         rigidbody.SetGravity(new Vector3(0.0f, -9.81f, 0.0f) * 20);
@@ -48,7 +49,7 @@ public class Grenade : MonoBehaviour
         {
 
 
-            particleFX.ApplyPreset(51);
+            particleFX.ApplyPreset(43);
             //    particleFX.EmitBurst(100);
             particleFX.EmitBurst(1);
 
@@ -114,21 +115,33 @@ public class Grenade : MonoBehaviour
         {
             case "Melee":
                 other.GetComponent<EnemyControllerMelee>()?.TakeDamage(damage);
+                GetComponent<ParticleFX>().ApplyPreset(43);
+                GetComponent<ParticleFX>().EmitBurst(1);
                 break;
             case "Ranged":
                 other.GetComponent<EnemyControllerRanged>()?.TakeDamage(damage);
+                GetComponent<ParticleFX>().ApplyPreset(43);
+                GetComponent<ParticleFX>().EmitBurst(1);
                 break;
             case "Stalker":
                 other.GetComponent<EnemyControllerStalker>()?.TakeDamage(damage);
+                GetComponent<ParticleFX>().ApplyPreset(43);
+                GetComponent<ParticleFX>().EmitBurst(1);
                 break;
             case "Boss":
                 other.GetComponent<EnemyControllerBoss>()?.TakeDamage(damage);
+                GetComponent<ParticleFX>().ApplyPreset(43);
+                GetComponent<ParticleFX>().EmitBurst(1);
                 break;
             case "Warrior":
                 other.GetComponent<EnemyControllerWarrior>()?.TakeDamage(damage);
+                GetComponent<ParticleFX>().ApplyPreset(43);
+                GetComponent<ParticleFX>().EmitBurst(1);
                 break;
             case "Destroyable":
                 other.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
+                GetComponent<ParticleFX>().ApplyPreset(43);
+                GetComponent<ParticleFX>().EmitBurst(1);
                 break;
         }
     }

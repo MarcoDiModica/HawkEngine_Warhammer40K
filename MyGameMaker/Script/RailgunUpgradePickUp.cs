@@ -39,6 +39,15 @@ public class RailgunUpgradePickUp : PickUp
 
     public override void OnPickUp(PlayerController playerController)
     {
-        playerController.playerData.RailgunUpgraded = true;
+        if (!playerController.playerShooting.hasRailgun)
+        {
+            playerController.playerShooting.hasRailgun = true;
+            playerController.playerData.hasRailgun = true;
+        }
+        else
+        {
+            playerController.playerData.RailgunUpgraded = true;
+        }
+     
     }
 }

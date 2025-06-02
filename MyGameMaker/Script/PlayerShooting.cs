@@ -49,6 +49,12 @@ public class PlayerShooting : MonoBehaviour
     public ParticleFX railgunShotSemiFX;
     public ParticleFX railgunShotAutoFX;
 
+    private float changeWeaponDelay = 0.5f;
+    private float currentdelay = 0.5f;
+    private bool autoReloading = false;
+    private float autoReloadTimer = 0f;
+    private const float autoReloadDelay = 2f;
+
     private enum GunType
     {
         BOLTGUN,
@@ -201,23 +207,32 @@ public class PlayerShooting : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        if(currentdelay < changeWeaponDelay)
+        {
+            currentdelay += deltaTime;            
+        }
+
+
         playerInput.UpdateLookDirection();
 
-        if (playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Q))
+        if (playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Q) )
         {
             ChangeWeaponRight();
+            currentdelay = 0f;
         }
         else if (playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.C))
         {
             ChangeWeaponLeft();
+            currentdelay = 0f;
         }
 
         if (playerInput.IsChangingRailgunMode() && currentGun == GunType.RAILGUN)
         {
             railgun?.ChangeMode();
+            currentdelay = 0f;
         }
 
-        if (playerInput?.IsShooting() == true)
+        if (playerInput?.IsShooting() == true && currentdelay >= changeWeaponDelay)
         {
             Shoot();
         }
@@ -265,6 +280,24 @@ public class PlayerShooting : MonoBehaviour
         {
             //Engineson.print("Ability 2 pressed");
             //UseAbility2();
+        }
+        if (!autoReloading && GetCurrentAmmo() == 0 && currentGun != GunType.RAILGUN)
+        {
+            autoReloading = true;
+            autoReloadTimer = 0f;
+        }
+        if (autoReloading)
+        {
+            autoReloadTimer += deltaTime;
+            if (autoReloadTimer >= autoReloadDelay)
+            {
+                Reload();
+                autoReloading = false;
+            }
+        }
+        if (playerInput?.IsReloading() == true && currentGun != GunType.RAILGUN)
+        {
+            autoReloading = false;
         }
     }
 

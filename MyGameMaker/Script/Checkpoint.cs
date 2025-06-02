@@ -22,33 +22,22 @@ public class Checkpoint : MonoBehaviour
     public class CheckpointData
     {
         public float playerCurrentHealth { get; set; }
-
         public float playerCurrentTemporalHealth { get; set; }
-
         public int boltgunCurrentAmmo { get; set; }
         public int shotgunCurrentAmmo { get; set; }
-
-        public bool hasBoltgun{ get; set; }
-        public bool hasShotgun{ get; set; }
+        public bool hasBoltgun { get; set; }
+        public bool hasShotgun { get; set; }
         public bool hasRailgun { get; set; }
-
-        public bool isBoltgunUpgraded{ get; set; }
-        public bool isShotgunUpgraded{ get; set; }
+        public bool isBoltgunUpgraded { get; set; }
+        public bool isShotgunUpgraded { get; set; }
         public bool isRailgunUpgraded { get; set; }
-
         public bool hasMedicaeStimm { get; set; }
         public bool hasAmmunitionBlessing { get; set; }
         public bool hasMagnet { get; set; }
         public bool hasPiercingBullets { get; set; }
-
-        public float playerSpawnX { get; set; }
-        public float playerSpawnY { get; set; }
-        public float playerSpawnZ { get; set; }
-
         public List<bool> areEnemiesDead { get; set; } = new List<bool>();
+        public string savedSceneName { get; set; }
     }
-
-    
 
     public override void Awake()
     {
@@ -60,57 +49,63 @@ public class Checkpoint : MonoBehaviour
         spawnPoint = GetComponent<Transform>().position;
         spawnPoint.Y = player.GetComponent<Transform>().position.Y;
 
-        Engineson.print(GameObject.FindGameObjectsWithTag("Melee").Length.ToString());
+        AddEnemiesByTag("Melee");
+        AddEnemiesByTag("Ranged");
+        AddEnemiesByTag("Warrior");
+        AddEnemiesByTag("Stalker");
 
-        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Melee").Length; i++)
+        if (SceneManager.isNewGame)
         {
-            enemies.Add(GameObject.FindGameObjectsWithTag("Melee")[i]);
-            Engineson.print(enemies[i].name);
-        }
+            // Reset logical data
+            playerData.hasBoltgun = false;
+            playerData.hasShotgun = false;
+            playerData.hasRailgun = false;
+            playerData.BoltgunUpgraded = false;
+            playerData.ShotgunUpgraded = false;
+            playerData.RailgunUpgraded = false;
 
-        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Ranged").Length; i++)
-        {
-            enemies.Add(GameObject.FindGameObjectsWithTag("Ranged")[i]);
-            Engineson.print(enemies[i].name);
-        }
+            // Opcional: también resetea upgrades o powerups si persisten en memoria
+            playerPowerUp.hasMedicaeStimm = false;
+            playerPowerUp.hasAmmunitionBlessing = false;
+            playerPowerUp.hasMagnet = false;
+            playerPowerUp.hasPiercingBullets = false;
 
-        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Warrior").Length; i++)
-        {
-            enemies.Add(GameObject.FindGameObjectsWithTag("Warrior")[i]);
-            Engineson.print(enemies[i].name);
-        }
+            // Reset player health
+            playerData.SetHealth(100f);
+            playerData.SetTempHealth(100f);
 
-        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Stalker").Length; i++)
-        {
-            enemies.Add(GameObject.FindGameObjectsWithTag("Stalker")[i]);
-            Engineson.print(enemies[i].name);
+            ResetCheckPointData();
+
+            SceneManager.isLoadedFromCheckpoint = true;
+            SceneManager.isNewGame = false;
         }
     }
 
-    
-    public override void Start()
+    private void AddEnemiesByTag(string tag)
     {
-        //ResetCheckPointData();
+        GameObject[] found = GameObject.FindGameObjectsWithTag(tag);
+        foreach (var enemy in found)
+        {
+            enemies.Add(enemy);
+            Engineson.print(enemy.name);
+        }
     }
 
     public override void Update(float deltatime)
     {
-
-        if (SceneManager.isLoadedFromCheckpoint == true)
+        if (SceneManager.isLoadedFromCheckpoint)
         {
-            loadSceneContinueTimer++;
-            if (loadSceneContinueTimer >= 3)
+            if (loadSceneContinueTimer >= 0)
             {
                 LoadCheckPointData();
                 SceneManager.isLoadedFromCheckpoint = false;
                 loadSceneContinueTimer = 0;
             }
-            
         }
 
         if (playerData.GetHealth() <= 0)
         {
-            LoadCheckPointData();
+            SaveCheckpointData();
         }
     }
 
@@ -118,93 +113,50 @@ public class Checkpoint : MonoBehaviour
 
     public void SaveCheckpointData()
     {
+        // Force-refresh weapon and data state before saving
+        playerData = PlayerData.Instance;
+        playerShooting = player.GetComponent<PlayerShooting>();
+
         checkpointData = new CheckpointData()
         {
-            playerSpawnX = spawnPoint.X,
-            playerSpawnY = spawnPoint.Y,
-            playerSpawnZ = spawnPoint.Z,
-            playerCurrentHealth = playerData.GetHealth(),
-            playerCurrentTemporalHealth = playerData.GetHealthTemp(),
-            boltgunCurrentAmmo = playerShooting.boltgun.currentTotalAmmo,
-            shotgunCurrentAmmo = playerShooting.shotgun.currentTotalAmmo,
-            hasBoltgun = playerData.hasBoltgun,
-            hasShotgun = playerData.hasShotgun,
-            hasRailgun = playerData.hasRailgun,
-            isBoltgunUpgraded = playerData.BoltgunUpgraded,
-            isShotgunUpgraded = playerData.ShotgunUpgraded,
-            isRailgunUpgraded = playerData.RailgunUpgraded,
-            hasMedicaeStimm = playerPowerUp.hasMedicaeStimm,
-            hasAmmunitionBlessing = playerPowerUp.hasAmmunitionBlessing,
-            hasMagnet = playerPowerUp.hasMagnet,
-            hasPiercingBullets = playerPowerUp.hasPiercingBullets
-           
-
-
+            playerCurrentHealth = 100f,
+            playerCurrentTemporalHealth = 100f,
+            boltgunCurrentAmmo = playerShooting?.boltgun?.currentTotalAmmo ?? 0,
+            shotgunCurrentAmmo = playerShooting?.shotgun?.currentTotalAmmo ?? 0,
+            hasBoltgun = playerData?.hasBoltgun ?? false,
+            hasShotgun = playerData?.hasShotgun ?? false,
+            hasRailgun = playerData?.hasRailgun ?? false,
+            isBoltgunUpgraded = playerData?.BoltgunUpgraded ?? false,
+            isShotgunUpgraded = playerData?.ShotgunUpgraded ?? false,
+            isRailgunUpgraded = playerData?.RailgunUpgraded ?? false,
+            hasMedicaeStimm = playerPowerUp?.hasMedicaeStimm ?? false,
+            hasAmmunitionBlessing = playerPowerUp?.hasAmmunitionBlessing ?? false,
+            hasMagnet = playerPowerUp?.hasMagnet ?? false,
+            hasPiercingBullets = playerPowerUp?.hasPiercingBullets ?? false,
+            savedSceneName = SceneManager.currentSceneName
         };
-        
-        for(int i = 0; i < enemies.Count; i++)
+
+        foreach (var enemy in enemies)
         {
-            if (enemies[i] != null)
+            if (enemy == null)
             {
-                if (enemies[i].tag == "Melee")
-                {
-                    if (enemies[i].GetComponent<EnemyControllerMelee>().isDead)
-                    {
-                        checkpointData.areEnemiesDead.Add(true);
-                    }
-                    else
-                    {
-                        checkpointData.areEnemiesDead.Add(false);
-                    }
-
-                }
-                else if (enemies[i].tag == "Ranged")
-                {
-                    if (enemies[i].GetComponent<EnemyControllerRanged>().isDead)
-                    {
-                        checkpointData.areEnemiesDead.Add(true);
-                    }
-                    else
-                    {
-                        checkpointData.areEnemiesDead.Add(false);
-                    }
-
-                }
-                else if (enemies[i].tag == "Stalker")
-                {
-                    if (enemies[i].GetComponent<EnemyControllerStalker>().isDead)
-                    {
-                        checkpointData.areEnemiesDead.Add(true);
-                    }
-                    else
-                    {
-                        checkpointData.areEnemiesDead.Add(false);
-                    }
-
-                }
-                else if (enemies[i].tag == "Warrior")
-                {
-                    if (enemies[i].GetComponent<EnemyControllerWarrior>().isDead)
-                    {
-                        checkpointData.areEnemiesDead.Add(true);
-                    }
-                    else
-                    {
-                        checkpointData.areEnemiesDead.Add(false);
-                    }
-
-                }
-                else
-                {
-                    checkpointData.areEnemiesDead.Add(false);
-                }
+                checkpointData.areEnemiesDead.Add(false);
+                continue;
             }
-            
+            bool dead = false;
+            if (enemy.tag == "Melee")
+                dead = enemy.GetComponent<EnemyControllerMelee>()?.isDead ?? false;
+            else if (enemy.tag == "Ranged")
+                dead = enemy.GetComponent<EnemyControllerRanged>()?.isDead ?? false;
+            else if (enemy.tag == "Stalker")
+                dead = enemy.GetComponent<EnemyControllerStalker>()?.isDead ?? false;
+            else if (enemy.tag == "Warrior")
+                dead = enemy.GetComponent<EnemyControllerWarrior>()?.isDead ?? false;
+            checkpointData.areEnemiesDead.Add(dead);
         }
 
-        string json = JsonSerializer.Serialize<CheckpointData>(checkpointData);
+        string json = JsonSerializer.Serialize(checkpointData);
         File.WriteAllText("Serialized/checkpointData.json", json);
-
         Engineson.print(json);
     }
 
@@ -214,79 +166,22 @@ public class Checkpoint : MonoBehaviour
 
         playerData.SetHealth(checkpointData.playerCurrentHealth);
         playerData.SetTempHealth(checkpointData.playerCurrentTemporalHealth);
+
         playerShooting.boltgun.currentTotalAmmo = checkpointData.boltgunCurrentAmmo;
         playerShooting.shotgun.currentTotalAmmo = checkpointData.shotgunCurrentAmmo;
+
         playerData.hasBoltgun = checkpointData.hasBoltgun;
         playerData.hasShotgun = checkpointData.hasShotgun;
         playerData.hasRailgun = checkpointData.hasRailgun;
+
         playerData.BoltgunUpgraded = checkpointData.isBoltgunUpgraded;
         playerData.ShotgunUpgraded = checkpointData.isShotgunUpgraded;
         playerData.RailgunUpgraded = checkpointData.isRailgunUpgraded;
+
         playerPowerUp.hasMedicaeStimm = checkpointData.hasMedicaeStimm;
         playerPowerUp.hasAmmunitionBlessing = checkpointData.hasAmmunitionBlessing;
         playerPowerUp.hasMagnet = checkpointData.hasMagnet;
         playerPowerUp.hasPiercingBullets = checkpointData.hasPiercingBullets;
-        Vector3 spawnPos = new Vector3(checkpointData.playerSpawnX, checkpointData.playerSpawnY, checkpointData.playerSpawnZ);
-        player.GetComponent<Collider>().SetPosition(spawnPos);
-
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            if (enemies[i] != null)
-            {
-                if (checkpointData.areEnemiesDead[i] == true)
-                {
-                    if (enemies[i].tag == "Melee")
-                    {
-                        enemies[i].GetComponent<EnemyControllerMelee>().isDead = true;
-                    }
-                    else if (enemies[i].tag == "Ranged")
-                    {
-                        enemies[i].GetComponent<EnemyControllerRanged>().isDead = true;
-
-                    }
-                    else if (enemies[i].tag == "Stalker")
-                    {
-                        enemies[i].GetComponent<EnemyControllerStalker>().isDead = true;
-
-                    }
-                    else if (enemies[i].tag == "Warrior")
-                    {
-                        enemies[i].GetComponent<EnemyControllerWarrior>().isDead = true;
-
-                    }
-                }
-                else
-                {
-                    if (enemies[i].tag == "Melee")
-                    {
-                        enemies[i].GetComponent<EnemyControllerMelee>().isDead = false;
-                        enemies[i].GetComponent<EnemyControllerMelee>().ResetEnemyCheckPoint();
-                    }
-                    else if (enemies[i].tag == "Ranged")
-                    {
-                        enemies[i].GetComponent<EnemyControllerRanged>().isDead = false;
-                        enemies[i].GetComponent<EnemyControllerRanged>().ResetEnemyCheckPoint();
-
-                    }
-                    else if (enemies[i].tag == "Stalker")
-                    {
-                        enemies[i].GetComponent<EnemyControllerStalker>().isDead = false;
-                        enemies[i].GetComponent<EnemyControllerStalker>().ResetEnemyCheckPoint();
-
-                    }
-                    else if (enemies[i].tag == "Warrior")
-                    {
-                        enemies[i].GetComponent<EnemyControllerWarrior>().isDead = false;
-                        enemies[i].GetComponent<EnemyControllerWarrior>().ResetEnemyCheckPoint();
-
-                    }
-                }
-
-                
-            }
-        }
-
-        Engineson.print(spawnPos.ToString());
     }
 
     public override void OnTriggerEnter(GameObject other)
@@ -296,20 +191,16 @@ public class Checkpoint : MonoBehaviour
             SaveCheckpointData();
             Engineson.print("PlayerDetected");
         }
-
     }
 
     public void ResetCheckPointData()
     {
         checkpointData = new CheckpointData()
         {
-            playerSpawnX = 0f,
-            playerSpawnY = 0f,
-            playerSpawnZ = 0f,
             playerCurrentHealth = 100f,
             playerCurrentTemporalHealth = 100f,
-            boltgunCurrentAmmo = 0,
-            shotgunCurrentAmmo = 0,
+            boltgunCurrentAmmo = 180,
+            shotgunCurrentAmmo = 24,
             hasBoltgun = false,
             hasShotgun = false,
             hasRailgun = false,
@@ -321,7 +212,7 @@ public class Checkpoint : MonoBehaviour
             hasMagnet = false,
             hasPiercingBullets = false
         };
-        
+
         string json = JsonSerializer.Serialize<CheckpointData>(checkpointData);
         File.WriteAllText("Serialized/checkpointData.json", json);
     }

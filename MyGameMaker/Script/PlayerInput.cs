@@ -40,14 +40,13 @@ public class PlayerInput : MonoBehaviour
             {
                 UpdateMovementDirection();
 
-                isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
+                isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerAxis(0, 4) > 0.5f;
             }
 
             isShootPressed = Input.GetKey(KeyCode.J) || Input.GetControllerAxis(0, 5) > 0.5f;
-            isInteractPressed = Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B);
+            isInteractPressed = Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.A);
             isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
             isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightShoulder);
-            isAbility2Pressed = Input.GetKeyDown(KeyCode.G) || Input.GetControllerButtonDown(ControllerButton.LeftShoulder);
         }
 
       
@@ -220,7 +219,7 @@ public class PlayerInput : MonoBehaviour
 
     public bool IsChangingWeaponRight()
     {
-        return Input.GetControllerButtonDown(ControllerButton.DPadRight);
+        return Input.GetControllerButtonDown(ControllerButton.DPadRight) || Input.GetControllerButtonDown(ControllerButton.LeftShoulder);
     }
 
     public bool IsChangingWeaponLeft()

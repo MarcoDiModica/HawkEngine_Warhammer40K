@@ -478,9 +478,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 0.686415792
+          floatSpeed: 1.9496969
           floatHeight: 0.5
-          rotationSpeed: 85.911499
+          rotationSpeed: 97.3410187
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -586,9 +586,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 1.34679246
+          floatSpeed: 1.74644387
           floatHeight: 0.5
-          rotationSpeed: 86.4377975
+          rotationSpeed: 81.9301453
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -14615,7 +14615,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -14657,7 +14657,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -14699,7 +14699,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -21568,7 +21568,7 @@ GameObject28:
             - 13.974271774291992
           localRotation:
             - -1.6902280382883206
-            - -30.665043002100798
+            - -30.665043002100795
             - 0.65932810957335963
           localScale:
             - 31.360137939453125
@@ -23968,7 +23968,7 @@ GameObject29:
             - -148.216064453125
           localRotation:
             - 179.99999499104374
-            - 25.858725770479122
+            - 25.858725770479126
             - 179.99999499104374
           localScale:
             - 10.84910774230957
@@ -24562,7 +24562,7 @@ GameObject29:
             - -57.019905090332031
           localRotation:
             - 0
-            - -21.351410654346925
+            - -21.351410654346921
             - 0
           localScale:
             - 6.2044053077697754
@@ -27289,9 +27289,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.45253098
+          floatSpeed: 0.520906627
           floatHeight: 0.5
-          rotationSpeed: 90.5862045
+          rotationSpeed: 58.044857
   Children: ~
 GameObject34:
   name: BiblePage_Pueblo
@@ -27374,9 +27374,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.65719402
+          floatSpeed: 1.20858276
           floatHeight: 0.5
-          rotationSpeed: 53.1141777
+          rotationSpeed: 73.0470581
   Children: ~
 GameObject35:
   name: BiblePage_Pasillo_Zona3
@@ -27459,9 +27459,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.40362132
+          floatSpeed: 0.992509484
           floatHeight: 0.5
-          rotationSpeed: 47.1442719
+          rotationSpeed: 69.3917694
   Children: ~
 GameObject36:
   name: BiblePage_Ciudad
@@ -27544,9 +27544,9 @@ GameObject36:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.99499214
+          floatSpeed: 1.35092843
           floatHeight: 0.5
-          rotationSpeed: 99.7537231
+          rotationSpeed: 98.4933395
   Children: ~
 GameObject37:
   name: Barril_Ciudad1
@@ -103795,10 +103795,10 @@ GameObject210:
             - 1225
             - 40
           sprite_offset:
-            - 525
+            - 875
             - 0
           anim_speed: 0.5
-          anim_index: 3
+          anim_index: 5
           anim_index_limit: 6
           color:
             - 1
@@ -103923,10 +103923,10 @@ GameObject210:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 1
@@ -104051,10 +104051,10 @@ GameObject210:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 1
@@ -105092,6 +105092,48 @@ GameObject210:
             - 0
           spriteOffset:
             - 0
+            - 0
+      Children: ~
+    - name: Controller_popup
+      prefabPath: ""
+      uuid: 299177235251689669
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
             - 0
       Children: ~
 GameObject211:
@@ -109859,7 +109901,7 @@ GameObject217:
                                         - 1080
                                       useAnimation: true
                                       animSpeed: 0.0700000003
-                                      startRotation: 0
+                                      startRotation: 90
                                       randomRotation: false
                                       material:
                                         billboardType: 0
@@ -109901,10 +109943,10 @@ GameObject217:
                                       maxLifetime: 0.25
                                       minSpeed: 0
                                       maxSpeed: 0
-                                      startSize: 1
-                                      endSize: 1
-                                      minSize: 1
-                                      maxSize: 1
+                                      startSize: 2
+                                      endSize: 5
+                                      minSize: 2
+                                      maxSize: 2
                                       startColor:
                                         - 1
                                         - 1
@@ -109928,19 +109970,19 @@ GameObject217:
                                       isPaused: false
                                       burstEmitted: false
                                       spriteSize:
-                                        - 1024
-                                        - 778
+                                        - 1920
+                                        - 1080
                                       useAnimation: true
-                                      animSpeed: 0.0500000007
+                                      animSpeed: 0.0700000003
                                       startRotation: 0
                                       randomRotation: false
                                       material:
                                         billboardType: 0
-                                        particleType: 20
+                                        particleType: 8
                                         softness: 0
                                         useColorGradient: false
-                                        texturePath: Assets/Textures/ShotGun Muzzle Flash_Spritesheet_Yiwei.png
-                                      particleType: 20
+                                        texturePath: Assets/Textures/muzzle.png
+                                      particleType: 8
                                   Children: ~
                                 - name: RailgunShotAutoFX
                                   prefabPath: ""
@@ -109970,14 +110012,14 @@ GameObject217:
                                       emitterShape: 0
                                       emissionRate: 1
                                       particlesPerSecond: 1
-                                      minLifetime: 1
-                                      maxLifetime: 1
+                                      minLifetime: 0.25
+                                      maxLifetime: 0.25
                                       minSpeed: 0
                                       maxSpeed: 0
-                                      startSize: 10
-                                      endSize: 10
-                                      minSize: 10
-                                      maxSize: 10
+                                      startSize: 2
+                                      endSize: 5
+                                      minSize: 2
+                                      maxSize: 2
                                       startColor:
                                         - 1
                                         - 1
@@ -110001,19 +110043,19 @@ GameObject217:
                                       isPaused: false
                                       burstEmitted: false
                                       spriteSize:
-                                        - 434
-                                        - 181
+                                        - 1920
+                                        - 1080
                                       useAnimation: true
-                                      animSpeed: 0.0500000007
+                                      animSpeed: 0.0700000003
                                       startRotation: 0
                                       randomRotation: false
                                       material:
                                         billboardType: 0
-                                        particleType: 13
+                                        particleType: 8
                                         softness: 0
                                         useColorGradient: false
-                                        texturePath: Assets/Textures/RailGunAuto.png
-                                      particleType: 13
+                                        texturePath: Assets/Textures/muzzle.png
+                                      particleType: 8
                                   Children: ~
                                 - name: RailgunShotSemiFX
                                   prefabPath: ""
@@ -110040,17 +110082,17 @@ GameObject217:
                                     ParticleFX:
                                       name: ParticleFX
                                       enabled: true
-                                      emitterShape: 2
-                                      emissionRate: 26
-                                      particlesPerSecond: 26
-                                      minLifetime: 3.5
-                                      maxLifetime: 4
+                                      emitterShape: 0
+                                      emissionRate: 1
+                                      particlesPerSecond: 1
+                                      minLifetime: 0.25
+                                      maxLifetime: 0.25
                                       minSpeed: 0
                                       maxSpeed: 0
-                                      startSize: 2.5
-                                      endSize: 2.5
-                                      minSize: 2.5
-                                      maxSize: 2.5
+                                      startSize: 2
+                                      endSize: 5
+                                      minSize: 2
+                                      maxSize: 2
                                       startColor:
                                         - 1
                                         - 1
@@ -110065,8 +110107,8 @@ GameObject217:
                                       gravity:
                                         - 0
                                         - 0.00100000005
-                                        - 1.20000005
-                                      shapeParam1: 0.100000001
+                                        - 0
+                                      shapeParam1: 0.200000003
                                       shapeParam2: 1
                                       shapeParam3: 20
                                       isOneShot: false
@@ -110074,19 +110116,19 @@ GameObject217:
                                       isPaused: false
                                       burstEmitted: false
                                       spriteSize:
-                                        - 641
-                                        - 361
+                                        - 1920
+                                        - 1080
                                       useAnimation: true
-                                      animSpeed: 0.0500000007
+                                      animSpeed: 0.0700000003
                                       startRotation: 0
                                       randomRotation: false
                                       material:
                                         billboardType: 0
-                                        particleType: 14
+                                        particleType: 8
                                         softness: 0
                                         useColorGradient: false
-                                        texturePath: Assets/Textures/RailGunSemi.png
-                                      particleType: 14
+                                        texturePath: Assets/Textures/muzzle.png
+                                      particleType: 8
                                   Children: ~
             - name: HIP.R
               prefabPath: ""

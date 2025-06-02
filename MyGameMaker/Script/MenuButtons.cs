@@ -184,7 +184,7 @@ public class MenuButtons : MonoBehaviour
             currentInputMethod = InputMethod.None;
         }
 
-        // Detectar si el rat�n est� sobre un bot�n
+        // Detectar si el rat n est  sobre un bot n
         for (int i = 0; i < buttons.Length; i++)
         {
             if (IsMouseOverButton(buttons[i]))
@@ -247,7 +247,7 @@ public class MenuButtons : MonoBehaviour
             }
         }
 
-        // Detectar clic del rat�n
+        // Detectar clic del rat n
         if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse) || Input.GetControllerButtonDown(ControllerButton.A))
         {
             if (selectedButtonIndex == -1)

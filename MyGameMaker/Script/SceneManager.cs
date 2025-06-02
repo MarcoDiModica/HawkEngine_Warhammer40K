@@ -57,7 +57,7 @@ namespace HawkEngine
 
         public static void LoadSceneWithFade(string sceneName, float fadeTime = 1.0f)
         {
-           
+
             GameObject player = GameObject.Find("Player");
             PlayerInput playerInput = player?.GetComponent<PlayerInput>();
             PlayerController playerController = player?.GetComponent<PlayerController>();
@@ -70,14 +70,14 @@ namespace HawkEngine
             }
 
             GameObject fadeObj = GameObject.Find("FadeController"); // debe tener UIImage + FadeController
-            fadeObj.SetActive(true); 
+            fadeObj.SetActive(true);
             FadeController fader = fadeObj?.GetComponent<FadeController>();
 
             if (fader != null)
             {
                 fader.StartFade(fadeTime, true, () =>
                 {
-                  
+
                     playerInput?.UnBlockInput();
                     if (playerController?.playerData != null)
                     {

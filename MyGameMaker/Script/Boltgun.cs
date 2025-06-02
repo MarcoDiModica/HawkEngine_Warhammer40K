@@ -287,7 +287,7 @@ public class Boltgun : BaseWeapon
 
 
                 particleFX.ApplyPreset(51);
-            //    particleFX.EmitBurst(100);
+                particleFX.SetParticleStartRotation(yaw);
                 particleFX.EmitBurst(1);
 
             }

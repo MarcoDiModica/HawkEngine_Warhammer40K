@@ -243,9 +243,7 @@
     <Compile Include="TyranidCorpse.cs" />
     <Compile Include="TyranidTentacles.cs" />
     <Compile Include="UIButton.cs" />
-    <Compile Include="UICanvas.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="UICanvas.cs" />
     <Compile Include="UIGameplay.cs" />
     <Compile Include="UIImage.cs" />
     <Compile Include="UITransform.cs">

@@ -32,6 +32,8 @@ public:
 
     void PlayAnimOnce(int index, float timeToTransitionAnim = 0.0f);
 
+    void PlayAnimOnceNoBlend(int index);
+
     void SetLoop(bool isLoop);
 
     ComponentType GetType() const override {

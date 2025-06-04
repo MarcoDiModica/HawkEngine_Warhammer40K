@@ -1405,6 +1405,14 @@ void EngineBinds::PlayAnimOnce(MonoObject* animationRef, int index, float timeTo
 	}
 }
 
+void EngineBinds::PlayAnimOnceNoBlend(MonoObject* animationRef, int index)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->PlayAnimOnceNoBlend(index);
+	}
+}
+
 //Tween
 // tienes que referenciar al componente que vas a usar o al gameobject que vas a usar, en el caso de que sea
 // un gameobject se usara el transform del gameobject
@@ -1962,6 +1970,8 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetLoop", (const void*)&EngineBinds::SetLoop);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::PlayAnimOnce", (const void*)&EngineBinds::PlayAnimOnce);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::IsAnimationFinished", (const void*)&EngineBinds::IsAnimationFinished);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::PlayAnimOnceNoBlend", (const void*)&EngineBinds::PlayAnimOnceNoBlend);
+
 
 	// Tween
     

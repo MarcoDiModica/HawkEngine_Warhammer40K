@@ -59,6 +59,12 @@ public class MenuButtons : MonoBehaviour
     private ButtonState[] previousStates;
     private string[] previousImagePaths;
     private bool isMainMenuMusicPlaying = false;
+    private GameObject creditsBG;
+    private UITransform creditsBGTransform;
+    private float scrollY = 0.0f;
+    private float scrollSpeed = 1.0f;
+    private float minScrollY = 1.0f;
+    private float maxScrollY = 2.0f;
     private enum InputMethod
     {
         None,
@@ -67,6 +73,14 @@ public class MenuButtons : MonoBehaviour
         Mouse
     }
     private InputMethod currentInputMethod = InputMethod.None;
+
+    private float Clamp(float value, float min, float max)
+    {
+        if (value<min) return min;
+        if (value > max) return max;
+        return value;
+    }
+
     public override void Awake()
     {
 
@@ -81,6 +95,7 @@ public class MenuButtons : MonoBehaviour
         creditsButton = GameObject.Find("credits_button");
         optionsCanvas = GameObject.Find("Canvas_OptionsMenu");
         creditsCanvas = GameObject.Find("Canvas_CreditMenu");
+        creditsBG = GameObject.Find("Credits_BG");
         // sound = gameObject.GetComponent<AudioSource>();
 
         button_newGameButton = newGameButton.GetComponent<UIButton>();
@@ -100,6 +115,7 @@ public class MenuButtons : MonoBehaviour
         transform_optionsButton = optionsButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
         transform_creditsButton = creditsButton.GetComponent<UITransform>();
+        creditsBGTransform = creditsBG.GetComponent<UITransform>();
 
         buttons = new UIButton[] { button_newGameButton, button_continueButton, button_optionsButton, button_creditsButton, button_quitButton };
         images = new UIImage[] { image_newGameButton, image_continueButton, image_optionsButton, image_creditsButton, image_quitButton };
@@ -264,7 +280,7 @@ public class MenuButtons : MonoBehaviour
             UIButton selectedButton = buttons[selectedButtonIndex];
             selectedButton.SetState(ButtonState.CLICKED);
 
-            if (selectedButton == button_newGameButton)
+            if (selectedButton == button_newGameButton && creditsCanvas.IsActive() == false)
             {
                 Audio.PlayOneShot(ConfirmSFX);
 
@@ -357,12 +373,31 @@ public class MenuButtons : MonoBehaviour
             return;
         }
 
-        if (creditsCanvas.IsActive() == true)
+        if (creditsCanvas.IsActive() == true && creditsBGTransform != null)
         {
+            float scrollInput = 0f;
+            Vector2 leftStick = Input.GetLeftStick();
+
+            if (Math.Abs(leftStick.Y) > 0.1f)
+                scrollInput = leftStick.Y;
+            else if (Input.GetControllerButton(ControllerButton.DPadUp))
+                scrollInput = 1f;
+            else if (Input.GetControllerButton(ControllerButton.DPadDown))
+                scrollInput = -1f;
+
+            if (scrollInput != 0f)
+            {
+                scrollY += scrollInput * scrollSpeed * deltaTime;
+                scrollY = Clamp(scrollY, minScrollY, maxScrollY);
+
+                creditsBGTransform.DOMoveYUI(scrollY, 0.1f, Modes.EASE_OUT);
+            }
+
             if (Input.GetKeyDown(KeyCode.ESCAPE) || Input.GetControllerButtonDown(ControllerButton.B))
             {
                 creditsCanvas.SetActive(false);
                 Audio.PlayOneShot(ConfirmSFX);
+                scrollY = 0f;
             }
         }
 

@@ -56,8 +56,8 @@ public class EnemySpawner : MonoBehaviour
             spawnTimer += deltaTime;
         }
 
-        if ((!hasSpawnedFirst && spawnTimer >= firstSpawnTime) ||
-            (hasSpawnedFirst && spawnTimer >= secondsBetweenSpawns && currentEnemiesSpawned < maxEnemiesToSpawn))
+        if ((!hasSpawnedFirst && spawnTimer >= firstSpawnTime && spawnerActive) ||
+            (hasSpawnedFirst && spawnTimer >= secondsBetweenSpawns && currentEnemiesSpawned < maxEnemiesToSpawn && spawnerActive))
         {
             SpawnEnemy();
             currentEnemiesSpawned++;

@@ -1,0 +1,41 @@
+name: SpawnerClimbingHormagauntLvl2
+prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
+uuid: 636941150971872450
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - -30.013008117675781
+      - 2.2122533321380615
+      - -71.855621337890625
+    localRotation:
+      - -179.99999499104422
+      - 0.14205708459091942
+      - -179.99999499104422
+    localScale:
+      - 1.0000002384185791
+      - 1
+      - 1.0000002384185791
+  ScriptComponents:
+    Script0:
+      name: EnemySpawner
+      fields:
+        spawnTimer: 0
+        secondsBetweenSpawns: 5
+        firstSpawnTime: 0
+        currentEnemiesSpawned: 0
+        maxEnemiesToSpawn: 2
+        hasSpawnedFirst: false
+        climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
+        spawnHormagaunt: false
+        spawnRanged: false
+        spawnStalker: false
+        spawnWarrior: false
+        spawnClimberHormagaunt: true
+        spawnerActive: false
+        spawnRadius: 60
+Children: ~

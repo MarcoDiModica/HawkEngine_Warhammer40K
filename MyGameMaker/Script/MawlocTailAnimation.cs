@@ -54,7 +54,8 @@ public class MawlocTailAnimation : MonoBehaviour
         if (mawlocTailesk?.GetAnimationIndex() != 0)
         {
             mawlocTailesk?.SetAnimationPlayState(true);
-            mawlocTailesk?.SetAnimation(0);
+            //mawlocTailesk?.SetAnimation(0);
+            mawlocTailesk?.PlayAnimOnceNoBlend(0);
             mawlocTailesk?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
         }

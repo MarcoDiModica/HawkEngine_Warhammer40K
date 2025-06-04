@@ -35,6 +35,8 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void SetScaleUI(Vector3 scale);
 
+        public extern void SetPosition(Vector3 position);
+
         //contructor
         private GameObject owner;
 

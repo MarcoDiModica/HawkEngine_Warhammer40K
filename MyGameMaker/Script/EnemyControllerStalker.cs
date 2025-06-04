@@ -7,8 +7,8 @@ public class EnemyControllerStalker : EnemyController
 {
     // Enemy Stats
     private float health = 250.0f;
-    private float clawDamage = 8.0f;
-    private float pounceDamage = 10.0f;
+    private float clawDamage = 10.0f;
+    private float pounceDamage = 7.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
 

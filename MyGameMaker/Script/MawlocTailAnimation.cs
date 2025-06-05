@@ -42,6 +42,7 @@ public class MawlocTailAnimation : MonoBehaviour
     {
         if (mawlocTailesk?.GetAnimationIndex() != 3)
         {
+            mawlocTailesk?.SetLoop(true);
             mawlocTailesk?.SetAnimationPlayState(true);
             mawlocTailesk?.SetAnimation(3);
             mawlocTailesk?.SetAnimationSpeed(1.0f);
@@ -51,6 +52,7 @@ public class MawlocTailAnimation : MonoBehaviour
 
     public void SetUnburrowingAnimation()
     {
+        mawlocTailesk?.SetAnimationPlayState(true);
         if (mawlocTailesk?.GetAnimationIndex() != 0)
         {
             mawlocTailesk?.SetAnimationPlayState(true);
@@ -66,6 +68,7 @@ public class MawlocTailAnimation : MonoBehaviour
         mawlocTailesk?.SetAnimationPlayState(true);
         if (mawlocTailesk?.GetAnimationIndex() != 1)
         {
+            mawlocTailesk?.SetLoop(true);
             mawlocTailesk?.SetAnimation(1);
             mawlocTailesk?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
@@ -77,6 +80,7 @@ public class MawlocTailAnimation : MonoBehaviour
         mawlocTailesk?.SetAnimationPlayState(true);
         if (mawlocTailesk?.GetAnimationIndex() != 2)
         {
+            mawlocTailesk?.SetLoop(true);
             mawlocTailesk?.SetAnimation(2);
             mawlocTailesk?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
@@ -88,6 +92,7 @@ public class MawlocTailAnimation : MonoBehaviour
         mawlocTailesk?.SetAnimationPlayState(true);
         if (mawlocTailesk?.GetAnimationIndex() != 4)
         {
+            mawlocTailesk?.SetLoop(true);
             mawlocTailesk?.SetAnimation(4);
             mawlocTailesk?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;

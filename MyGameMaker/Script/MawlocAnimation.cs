@@ -83,7 +83,7 @@ public class MawlocAnimation : MonoBehaviour
         {
             mawlocesk?.SetAnimationPlayState(true);
 
-            mawlocesk?.PlayAnimOnceNoBlend(3); // Set to play once and not loop
+            mawlocesk?.PlayAnimOnceNoBlend(3); 
             mawlocesk?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
         }

@@ -159,7 +159,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 1500f;
+        currentHealth = 501.0f;
         gameObject.tag = "Boss";
         isDead = false;
         

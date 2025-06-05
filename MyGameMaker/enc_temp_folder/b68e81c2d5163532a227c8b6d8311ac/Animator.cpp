@@ -77,9 +77,14 @@ void Animator::UpdateAnimation(float dt)
         return;
     }
 
+    if (!isLooping)
+    {
+        LOG(LogType::LOG_INFO, "Animation not looping no blend");
+       
+    }
+
     if (m_CurrentAnimation)
     {
-        animationFinished = false;
         m_CurrentTime += m_CurrentAnimation->GetTicksPerSecond() * dt * m_PlaySpeed;
         m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->GetDuration());
         CalculateBoneTransform(&m_CurrentAnimation->GetRootNode(), glm::mat4(1.0f));

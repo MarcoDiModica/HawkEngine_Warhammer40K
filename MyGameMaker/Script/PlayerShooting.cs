@@ -48,6 +48,10 @@ public class PlayerShooting : MonoBehaviour
     public ParticleFX shotgunShotFX;
     public ParticleFX railgunShotSemiFX;
     public ParticleFX railgunShotAutoFX;
+    public ParticleFX bulletcasingFX;
+    public ParticleFX grenadeShotFX;
+    
+
 
     private float changeWeaponDelay = 0.5f;
     private float currentdelay = 0.5f;
@@ -120,6 +124,11 @@ public class PlayerShooting : MonoBehaviour
         railgunShotSemiFX.ApplyPreset(8);
         railgunShotAutoFX = GameObject.Find("RailgunShotAutoFX").GetComponent<ParticleFX>();
         railgunShotAutoFX.ApplyPreset(8);
+        bulletcasingFX = GameObject.Find("BulletCasingFX").GetComponent<ParticleFX>();
+        bulletcasingFX.ApplyPreset(44);
+        grenadeShotFX = GameObject.Find("GrenadeShotFX").GetComponent<ParticleFX>();
+        grenadeShotFX.ApplyPreset(43);
+
 
         boltgunMesh = GameObject.Find("Boltgun");
         shotgunMesh = GameObject.Find("Shotgun");
@@ -324,6 +333,7 @@ public class PlayerShooting : MonoBehaviour
                         rifleShotFX.SetParticleStartRotation(angle);
                         rifleShotFX.EmitBurst(1);
                         boltgun?.Shoot();
+                        bulletcasingFX.Play();
                         shotgunShotFX.Stop();
                         railgunShotAutoFX.Stop();
                         railgunShotSemiFX.Stop();
@@ -361,6 +371,7 @@ public class PlayerShooting : MonoBehaviour
                     case GunType.BOLTGUN:
                         boltgun?.Shoot();
                         shotgunShotFX.Stop();
+                        bulletcasingFX.Play();
                         railgunShotAutoFX.Stop();
                         railgunShotSemiFX.Stop();
                         break;
@@ -368,6 +379,7 @@ public class PlayerShooting : MonoBehaviour
                     case GunType.SHOTGUN:
                         shotgun?.Shoot();
                         rifleShotFX.Stop();
+                        bulletcasingFX.Stop();
                         railgunShotAutoFX.Stop();
                         railgunShotSemiFX.Stop();
                         break;
@@ -556,6 +568,7 @@ public class PlayerShooting : MonoBehaviour
                 {
                     if (boltgun.grenadeLauncher.canThrow)
                     {
+                        grenadeShotFX.Play();
                         redThirstManager.OnAbilityUsed();
                     }
                     boltgun?.UseAbility1();

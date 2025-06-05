@@ -30,7 +30,7 @@ public:
     void UpdateFramebufferResolution();
     bool IsMouseOverWindow() const;
 
-	int msaaSamples = 8;
+	int msaaSamples = 0;
 private:
     const float iconSize = 25.0f;
     const float iconSpacing = 5.0f; //spacing between icons

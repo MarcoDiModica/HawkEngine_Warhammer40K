@@ -32,7 +32,7 @@ private:
 		GLuint multisampleFBO = 0;
 		GLuint multisampleColorBuffer = 0;
 		GLuint multisampleDepthBuffer = 0;
-		int msaaSamples = 8;
+		int msaaSamples = 0;
 	};
 
 	static FramebufferResource mainResource;

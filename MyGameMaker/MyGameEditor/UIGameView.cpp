@@ -32,7 +32,7 @@ void UIGameView::Init()
 
 	GLint maxSamples = 0;
 	glGetIntegerv(GL_MAX_SAMPLES, &maxSamples);
-	//msaaSamples = std::min(4, maxSamples);
+	msaaSamples = std::min(4, maxSamples);
 	useMSAA = msaaSamples > 0;
 
 	glGenFramebuffers(1, &Application->gui->fboGame);

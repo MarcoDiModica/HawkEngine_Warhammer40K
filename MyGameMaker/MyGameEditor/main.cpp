@@ -793,7 +793,7 @@ static void GameRelease() {
 	glGetIntegerv(GL_BLEND_DST_ALPHA, &lastBlendDstAlpha);
 	glGetFloatv(GL_COLOR_CLEAR_VALUE, lastClearColor);
 
-	static const int msaaSamples = 0;
+	static const int msaaSamples = 4;
 	static GLuint msaaFBO = 0;
 	static GLuint msaaColorRBO = 0;
 	static GLuint msaaDepthRBO = 0;

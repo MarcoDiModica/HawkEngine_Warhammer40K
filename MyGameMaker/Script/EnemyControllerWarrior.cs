@@ -16,6 +16,7 @@ public class EnemyControllerWarrior : EnemyController
     private Vector3 hurtboxSize = new Vector3(10.0f, 10.0f, 10.0f);
     private Vector3 hurtboxOffset = new Vector3(5.0f, -3.0f, 0.0f);
     private GameObject hurtboxObject;
+    private RedThirstManager redThirstManager;
 
     private float projectileRange = 30;
     private List<BulletData> activeProjectiles = new List<BulletData>();
@@ -158,6 +159,8 @@ public class EnemyControllerWarrior : EnemyController
             timeToLerp = 0.1f;
 
             componentsInitialized = true;
+
+            redThirstManager = playerObj.GetComponent<RedThirstManager>();
         }
         catch (Exception e)
         {
@@ -362,7 +365,7 @@ public class EnemyControllerWarrior : EnemyController
                 Audio.PlayOneShot(DeathSound);
                 hasPlayedDeathSound = true;
             }
-
+            redThirstManager.AddRedThirstPoint(1);
             if (!hasDropped)
             {
                 GameObject dropManager = GameObject.Find("DropManager");

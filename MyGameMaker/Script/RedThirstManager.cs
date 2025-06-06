@@ -54,23 +54,6 @@ public class RedThirstManager : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        if (abilityCount > 0)
-        {
-            abilityUseTimer += deltaTime;
-            if (abilityUseTimer >= abilityTimeLimit)
-            {
-                ResetAbilityCombo();
-            }
-        }
-        if (differentGunsUsed > 0)
-        {
-            differentGunsUsedTimer += deltaTime;
-            if (differentGunsUsedTimer >= differentGunsUsedTimeLimit)
-            {
-                ResetWeaponCombo();
-            }
-        }
-
         if (isActivatingIdle)
         {
             FinishIdleBlackRageAnimation();
@@ -151,84 +134,10 @@ public class RedThirstManager : MonoBehaviour
         }
     }
 
-    public void OnAbilityUsed()
+   public void ManageCombo()
     {
-        abilityCount++;
-
-        if (abilityCount == 2)
-        {
-            AddRedThirstPoint(1);
-            ResetAbilityCombo();
-        }
-        lastActionTime = 0f;
-        GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
-        gameObject.AddChild(redThirstVFX);
-        redThirstVFX.AddComponent<ParticleFX>();
-        ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
-        if (particleFX != null)
-        {
-            particleFX.ApplyPreset(32);
-            //particleFX.EmitBurst(100);
-            particleFX.EmitBurst(1);
-        }
-    }
-
-    public void OnWeaponUsed()
-    {
-        //differentGunsUsed++;
-        if (boltgunUsed && shotgunUsed || boltgunUsed && railgunUsed || shotgunUsed && railgunUsed)
-        {
-            AddRedThirstPoint(1);
-            ResetWeaponCombo();
-        }
-        lastActionTime = 0f;
-        //if (differentGunsUsed == 2)
-        //{
-        //    AddRedThirstPoint(1);
-        //    ResetWeaponCombo();
-        //}
-        //lastActionTime = 0f;
-        GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
-        gameObject.AddChild(redThirstVFX);
-        redThirstVFX.AddComponent<ParticleFX>();
-        ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
-        if (particleFX != null)
-        {
-            particleFX.ApplyPreset(32);
-            //particleFX.EmitBurst(100);
-            particleFX.EmitBurst(1);
-        }
-    }
-    public void OnBoltgunUsed()
-    {
-        boltgunUsed = true;
-        OnWeaponUsed();
 
     }
-    public void OnShotgunUsed()
-    {
-        shotgunUsed = true;
-        OnWeaponUsed();
-    }
-    public void OnRailgunUsed()
-    {
-        railgunUsed = true;
-        OnWeaponUsed();
-    }
-    private void ResetWeaponCombo()
-    {
-        differentGunsUsed = 0;
-        differentGunsUsedTimer = 0f;
-        boltgunUsed = false;
-        shotgunUsed = false;
-        railgunUsed = false;
-    }
-    private void ResetAbilityCombo()
-    {
-        abilityCount = 0;
-        abilityUseTimer = 0f;
-    }
-
     public void AddRedThirstPoint(int points)
     {
         //Actualizar el HUD por cada Red Thirst Point

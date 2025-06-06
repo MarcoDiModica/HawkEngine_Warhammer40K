@@ -11,6 +11,7 @@ public class EnemyControllerStalker : EnemyController
     private float pounceDamage = 7.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
+    private RedThirstManager redThirstManager;
 
     // Hurtbox
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
@@ -105,6 +106,8 @@ public class EnemyControllerStalker : EnemyController
         gameObject.tag = "Stalker";
 
         distToChase = 75f;
+
+        redThirstManager = GameObject.Find("Player").GetComponent<RedThirstManager>();
     }
 
     public override void Update(float deltaTime)
@@ -311,6 +314,7 @@ public class EnemyControllerStalker : EnemyController
                     }
                 }
                 hasDropped = true;
+                redThirstManager.AddRedThirstPoint(1);
                 collider.SetActive(false);
                 break;
 

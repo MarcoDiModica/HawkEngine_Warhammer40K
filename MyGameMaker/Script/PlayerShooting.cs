@@ -554,10 +554,7 @@ public class PlayerShooting : MonoBehaviour
 
                 if ((playerData.BoltgunUpgraded == true))
                 {
-                    if (boltgun.grenadeLauncher.canThrow)
-                    {
-                        redThirstManager.OnAbilityUsed();
-                    }
+
                     boltgun?.UseAbility1();
                 }
 
@@ -569,10 +566,7 @@ public class PlayerShooting : MonoBehaviour
 
                 if (playerData.ShotgunUpgraded == true)
                 {
-                    if (shotgun.barrage.canThrow)
-                    {
-                        redThirstManager.OnAbilityUsed();
-                    }
+
                     shotgun?.UseAbility1();
                 }
 
@@ -583,10 +577,7 @@ public class PlayerShooting : MonoBehaviour
 
                 if (playerData.RailgunUpgraded == true)
                 {
-                    if (railgun.energyBall.canThrow)
-                    {
-                        redThirstManager.OnAbilityUsed();
-                    }
+
                     railgun?.UseAbility1();
                 }
 
@@ -603,10 +594,7 @@ public class PlayerShooting : MonoBehaviour
 
                 if (playerData.RailgunUpgraded == true)
                 {
-                    if (boltgun.arcSnare.canThrow)
-                    {
-                        redThirstManager.OnAbilityUsed();
-                    }
+
                     boltgun?.UseAbility2();
                 }
 
@@ -617,10 +605,7 @@ public class PlayerShooting : MonoBehaviour
 
                 if (playerData.ShotgunUpgraded == true)
                 {
-                    if (shotgun.barrage.canThrow)
-                    {
-                        redThirstManager.OnAbilityUsed();
-                    }
+
                     shotgun?.UseAbility2();
                 }
 
@@ -630,10 +615,7 @@ public class PlayerShooting : MonoBehaviour
             case GunType.RAILGUN:
                 if (playerData.RailgunUpgraded == true)
                 {
-                    if (railgun.energyBall.canThrow)
-                    {
-                        redThirstManager.OnAbilityUsed();
-                    }
+
                     railgun?.UseAbility2();
                 }
 

@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
     private string Walkfootsteps = "Assets/Audio/Player/Player_Footsteps.wav";
     public const string HitAudio = "Assets/Audio/Player/PlayerHurt.wav";
     public const string DeathAudio = "Assets/Audio/Player/Player_Death.wav";
+
     private int audioRun;
     private int audioWalk;
 
@@ -389,10 +390,12 @@ public class PlayerController : MonoBehaviour
 
         if (playerInput.IsReloading())
         {
-            
+
+            if (playerShooting.GetCurrentAmmo() >= playerShooting.GetMaxMagazineAmmo())
+                return;
+
             if (playerShooting.GetCurrentGun() == 0)
             {
-
                 if (isIdle || isShootInput && !isShootingRunning)
                 {
                     isReloadingIdle = true;
@@ -429,7 +432,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(isReloadingIdle)
+        if (isReloadingIdle)
         {
             ReloadingIdleAnimationFinished();
         }

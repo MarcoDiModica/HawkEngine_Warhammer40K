@@ -147,10 +147,7 @@ public class PlayerShooting : MonoBehaviour
         hasShotgun = playerData.hasShotgun;
         hasRailgun = playerData.hasRailgun;
 
-        if (hasRailgun)
-        {
-            railgun.railgunMode = Railgun.RailgunMode.SEMIAUTOMATIC;
-        }
+       
 
         switch (currentGun)
         {
@@ -168,6 +165,8 @@ public class PlayerShooting : MonoBehaviour
                 shootTimer = 0;
                 break;
         }
+
+        playerData.ShotgunUpgraded = true;
 
     }
 
@@ -205,6 +204,18 @@ public class PlayerShooting : MonoBehaviour
         return 0;
     }
 
+    public int GetMaxMagazineAmmo()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                return boltgun.magazineSize; 
+            case GunType.SHOTGUN:
+                return shotgun.magazineSize;
+        }
+        return 0;
+    }
+
     public override void Update(float deltaTime)
     {
         if (currentdelay < changeWeaponDelay)
@@ -226,11 +237,7 @@ public class PlayerShooting : MonoBehaviour
             currentdelay = 0f;
         }
 
-        if (playerInput.IsChangingRailgunMode() && currentGun == GunType.RAILGUN)
-        {
-            railgun?.ChangeMode();
-            currentdelay = 0f;
-        }
+        
 
         if (playerInput?.IsShooting() == true && currentdelay >= changeWeaponDelay)
         {
@@ -339,16 +346,8 @@ public class PlayerShooting : MonoBehaviour
                         break;
 
                     case GunType.RAILGUN:
-                        if (railgun.railgunMode == Railgun.RailgunMode.SEMIAUTOMATIC)
-                        {
-                            railgunShotSemiFX.SetParticleStartRotation(angle);
-                            railgunShotSemiFX.EmitBurst(1);
-                        }
-                        else
-                        {
-                            railgunShotAutoFX.SetParticleStartRotation(angle);
-                            railgunShotAutoFX.EmitBurst(1);
-                        }
+                        railgunShotSemiFX.SetParticleStartRotation(angle);
+                        railgunShotSemiFX.EmitBurst(1);
                         railgun?.Shoot();
                         break;
                 }

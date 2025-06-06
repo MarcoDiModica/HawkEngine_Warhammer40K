@@ -229,10 +229,7 @@ public class HUD : MonoBehaviour
             {
                 Engineson.print("ERROR: railgun unlocked but not instantiated!");
             }
-            else
-            {
-                railgunScript.railgunMode = Railgun.RailgunMode.SEMIAUTOMATIC;
-            }
+           
         }
 
         redThirstManager = Player.GetComponent<RedThirstManager>();
@@ -536,17 +533,7 @@ public class HUD : MonoBehaviour
                     Engineson.print("ERROR: Hud.Update – railgunScript is null!");
                     break;
                 }
-                switch (railgunScript.railgunMode)
-                {
-                    case Railgun.RailgunMode.SEMIAUTOMATIC:
-                        railgunAbility2a.SetActive(true);
-                        railgunAbility2b.SetActive(false);
-                        break;
-                    case Railgun.RailgunMode.AUTOMATIC:
-                        railgunAbility2a.SetActive(false);
-                        railgunAbility2b.SetActive(true);
-                        break;
-                }
+                railgunAbility2a.SetActive(true);
 
                 if (playerShootingScript.hasBoltgun)
                 {

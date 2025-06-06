@@ -19,6 +19,8 @@ public class RedThirstManager : MonoBehaviour
     private const float RED_THIRST_DECAY_TIME = 5f;
 
     private float blackRageTimer = 0f;
+    private float comboTimer = 0f;
+    private const float COMBO_TIME_LIMIT = 3f;
     private const float BLACK_RAGE_DURATION = 5f;
     private const float BLACK_RAGE_EXTENSION = 2f;
     private PlayerController playerController;
@@ -66,7 +68,7 @@ public class RedThirstManager : MonoBehaviour
         {
             FinishWalkingBlackRageAnimation();
         }
-
+        HandleCombo(deltaTime);
         //redThirstDamageBonus = 5f + (biblePages * biblePages);
         if (isInBlackRage)
         {
@@ -134,13 +136,21 @@ public class RedThirstManager : MonoBehaviour
         }
     }
 
-   public void ManageCombo()
-    {
+   public void HandleCombo(float deltaTime)
+   {
+        comboTimer += deltaTime;
 
-    }
+        if (comboTimer >= COMBO_TIME_LIMIT)
+        {
+            redThirstPoints = 0;
+        }
+   }
     public void AddRedThirstPoint(int points)
     {
-        //Actualizar el HUD por cada Red Thirst Point
+        // Reiniciar comboTimer cada vez que se llama a esta función  
+        comboTimer = 0f;
+
+        // Actualizar el HUD por cada Red Thirst Point  
         redThirstPoints += points;
         if (redThirstPoints > maxRedThirstPoints)
         {
@@ -181,7 +191,6 @@ public class RedThirstManager : MonoBehaviour
                         break;
                 }
             }
-
         }
 
         redThirstDecayTimer = 0f;

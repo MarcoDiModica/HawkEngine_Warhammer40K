@@ -36,7 +36,7 @@ public class RedThirstManager : MonoBehaviour
     private bool isActivatingWalking = false;
 
     private ParticleFX Angy;
-    
+
     public override void Awake()
     {
         playerController = gameObject.GetComponent<PlayerController>();
@@ -49,7 +49,7 @@ public class RedThirstManager : MonoBehaviour
 
     public override void Start()
     {
-    
+
     }
 
     public override void Update(float deltaTime)
@@ -91,9 +91,9 @@ public class RedThirstManager : MonoBehaviour
         }
         else
         {
-           
+
         }
-        if(Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.U))
         {
             AddRedThirstPoint(1);
             GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
@@ -133,7 +133,7 @@ public class RedThirstManager : MonoBehaviour
         if (playerController.playerAnimations.esk.IsAnimationFinished())
         {
             isActivatingWalking = false;
-            switch(playerController.currentShootingDirection)
+            switch (playerController.currentShootingDirection)
             {
                 case PlayerController.ShootingDirection.Forward:
                     playerController.playerAnimations.ActiveBlackRageToWalkingForwardAnimation();
@@ -176,7 +176,7 @@ public class RedThirstManager : MonoBehaviour
     public void OnWeaponUsed()
     {
         //differentGunsUsed++;
-        if(boltgunUsed && shotgunUsed || boltgunUsed && railgunUsed || shotgunUsed && railgunUsed)
+        if (boltgunUsed && shotgunUsed || boltgunUsed && railgunUsed || shotgunUsed && railgunUsed)
         {
             AddRedThirstPoint(1);
             ResetWeaponCombo();
@@ -242,7 +242,7 @@ public class RedThirstManager : MonoBehaviour
         if (redThirstPoints >= maxRedThirstPoints && isInBlackRage == false)
         {
             ActivateBlackRage();
-            
+
             if (playerController.isIdle || playerController.isShootingStanding)
             {
                 isActivatingIdle = true;

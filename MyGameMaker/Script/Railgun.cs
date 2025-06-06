@@ -20,7 +20,7 @@ public class Railgun : BaseWeapon
 
     private RedThirstManager redThirstManager;
 
-    private const string  railgunReload = "Assets/Audio/SFX/Weapons/Railgun/Energy_Ball_dissapear.wav";
+    private const string railgunReload = "Assets/Audio/SFX/Weapons/Railgun/Energy_Ball_dissapear.wav";
     private const string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/Energy_ball_hit.wav";
 
     private float timeSinceLastShot = 0.0f;
@@ -235,7 +235,8 @@ public class Railgun : BaseWeapon
             if (playerInput.GetCurrentLookDirection() != Vector3.Zero)
             {
                 direction = playerInput.GetCurrentLookDirection();
-            } else
+            }
+            else
             {
                 direction = Vector3.Normalize(transform.forward);
             }
@@ -259,14 +260,14 @@ public class Railgun : BaseWeapon
                 projectile.AddComponent<ParticleFX>().ApplyPreset(14);
                 projectile.GetComponent<ParticleFX>().EmitBurst(1);
             }
-         
+
             bulletsObjects.Add(projectile);
             bulletsPos.Add(bulletStart);
             bulletDirections.Add(direction);
             bulletStartPositions.Add(bulletStart);
             bulletHitEnemies.Add(new HashSet<GameObject>());
             bulletLifetimes.Add(0f);
-          
+
         }
 
         if (currentMagazineAmmo <= 0)
@@ -306,7 +307,7 @@ public class Railgun : BaseWeapon
         if (railgunMode == RailgunMode.SEMIAUTOMATIC)
         {
             energyBall.TriggerAbility();
-        } 
+        }
         else
         {
             laserBeam.TriggerAbility();

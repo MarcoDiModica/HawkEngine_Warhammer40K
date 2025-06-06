@@ -58,7 +58,7 @@ public class EnemyControllerWarrior : EnemyController
     public float range;
     public float timeToLerp = 0.4f;
 
-    private bool componentsInitialized = false;    
+    private bool componentsInitialized = false;
     // Death
     private float deathTimer = 0f;
     private float deathCooldown = 2f;

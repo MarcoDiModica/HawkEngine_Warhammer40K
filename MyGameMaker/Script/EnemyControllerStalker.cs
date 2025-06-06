@@ -15,7 +15,7 @@ public class EnemyControllerStalker : EnemyController
     // Hurtbox
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
     private float hurtboxTimer = 0f;
-    private Vector3 hurtboxSize = new Vector3(10.0f, 10.0f, 10.0f); // Tamaño de la hurtbox
+    private Vector3 hurtboxSize = new Vector3(10.0f, 10.0f, 10.0f); // TamaÃ±o de la hurtbox
     private Vector3 hurtboxOffset = new Vector3(5.0f, -3.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
     private GameObject hurtboxObject;
 
@@ -78,9 +78,9 @@ public class EnemyControllerStalker : EnemyController
 
         collider = gameObject.GetComponent<CapsuleCollider>();
         if (collider == null)
-        { 
-            Engineson.print("ERROR: Lictor Collider not found!"); 
-            return; 
+        {
+            Engineson.print("ERROR: Lictor Collider not found!");
+            return;
         }
 
         enemyTransform = gameObject.transform;
@@ -334,11 +334,11 @@ public class EnemyControllerStalker : EnemyController
             hasPounce = true;
             isPouncing = false;
             lictorMesh.SetActive(true);
-            
+
 
             //gameObject.GetComponent<Collider>().SetPosition(startPosition);
         }
-        
+
     }
 
     private void HandleSlowedState(float deltaTime)

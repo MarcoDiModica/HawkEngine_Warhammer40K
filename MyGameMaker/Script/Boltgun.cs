@@ -218,10 +218,10 @@ public class Boltgun : BaseWeapon
         bulletHitEnemies.RemoveAt(index);
         bulletStartPositions.RemoveAt(index);
     }
-    
+
     public int GetCurrentAmmo()
     {
-       return currentMagazineAmmo;
+        return currentMagazineAmmo;
     }
 
     public int GetMaxAmmo()

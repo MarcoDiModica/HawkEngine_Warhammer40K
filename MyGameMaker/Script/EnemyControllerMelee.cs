@@ -319,7 +319,8 @@ public class EnemyControllerMelee : EnemyController
                 if (isSlowed)
                 {
                     desiredVelocity = directDir * slowedSpeed;
-                } else
+                }
+                else
                 {
                     desiredVelocity = directDir * speedMovement;
                 }
@@ -412,7 +413,7 @@ public class EnemyControllerMelee : EnemyController
         collider.SetActive(false);
         try
         {
- 
+
             spawnTimer += deltaTime;
             anim.SetClimbingAnimation();
 
@@ -448,7 +449,7 @@ public class EnemyControllerMelee : EnemyController
                 if (leapParticles != null)
                 {
                     //leapParticles.ApplyPreset(9);
-                   // leapParticles.EmitBurst(1);
+                    // leapParticles.EmitBurst(1);
                 }
             }
             catch (Exception particleEx)
@@ -480,7 +481,7 @@ public class EnemyControllerMelee : EnemyController
                 isSlowed = false;
                 slowedTimer = 0.0f;
             }
-        } 
+        }
         catch (Exception e)
         {
             Engineson.print($"Error in HandleSlowedState: {e.Message}");

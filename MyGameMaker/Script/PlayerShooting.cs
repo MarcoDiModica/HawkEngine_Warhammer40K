@@ -48,10 +48,6 @@ public class PlayerShooting : MonoBehaviour
     public ParticleFX shotgunShotFX;
     public ParticleFX railgunShotSemiFX;
     public ParticleFX railgunShotAutoFX;
-    public ParticleFX bulletcasingFX;
-    public ParticleFX grenadeShotFX;
-    
-
 
     private float changeWeaponDelay = 0.5f;
     private float currentdelay = 0.5f;
@@ -124,11 +120,6 @@ public class PlayerShooting : MonoBehaviour
         railgunShotSemiFX.ApplyPreset(8);
         railgunShotAutoFX = GameObject.Find("RailgunShotAutoFX").GetComponent<ParticleFX>();
         railgunShotAutoFX.ApplyPreset(8);
-        bulletcasingFX = GameObject.Find("BulletCasingFX").GetComponent<ParticleFX>();
-        bulletcasingFX.ApplyPreset(44);
-        grenadeShotFX = GameObject.Find("GrenadeShotFX").GetComponent<ParticleFX>();
-        grenadeShotFX.ApplyPreset(43);
-
 
         boltgunMesh = GameObject.Find("Boltgun");
         shotgunMesh = GameObject.Find("Shotgun");
@@ -186,13 +177,13 @@ public class PlayerShooting : MonoBehaviour
         {
             case GunType.BOLTGUN:
                 return boltgun.GetCurrentAmmo();
-                
+
             case GunType.SHOTGUN:
                 return shotgun.GetCurrentAmmo();
-                
+
             case GunType.RAILGUN:
                 return railgun.GetCurrentAmmo();
-                
+
         }
         return 0;
     }
@@ -203,28 +194,28 @@ public class PlayerShooting : MonoBehaviour
         {
             case GunType.BOLTGUN:
                 return boltgun.GetMaxAmmo();
-                
+
             case GunType.SHOTGUN:
                 return shotgun.GetMaxAmmo();
-               
+
             case GunType.RAILGUN:
                 return railgun.GetMaxAmmo();
-                
+
         }
         return 0;
     }
 
     public override void Update(float deltaTime)
     {
-        if(currentdelay < changeWeaponDelay)
+        if (currentdelay < changeWeaponDelay)
         {
-            currentdelay += deltaTime;            
+            currentdelay += deltaTime;
         }
 
 
         playerInput.UpdateLookDirection();
 
-        if (playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Q) )
+        if (playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Q))
         {
             ChangeWeaponRight();
             currentdelay = 0f;
@@ -325,7 +316,7 @@ public class PlayerShooting : MonoBehaviour
             {
                 lookDir = Vector3.Normalize(lookDir);
                 float angle = (float)(Math.Atan2(lookDir.X, lookDir.Z) * (180.0 / Math.PI)) - 45;
-                
+
 
                 switch (currentGun)
                 {
@@ -333,7 +324,6 @@ public class PlayerShooting : MonoBehaviour
                         rifleShotFX.SetParticleStartRotation(angle);
                         rifleShotFX.EmitBurst(1);
                         boltgun?.Shoot();
-                        bulletcasingFX.Play();
                         shotgunShotFX.Stop();
                         railgunShotAutoFX.Stop();
                         railgunShotSemiFX.Stop();
@@ -371,7 +361,6 @@ public class PlayerShooting : MonoBehaviour
                     case GunType.BOLTGUN:
                         boltgun?.Shoot();
                         shotgunShotFX.Stop();
-                        bulletcasingFX.Play();
                         railgunShotAutoFX.Stop();
                         railgunShotSemiFX.Stop();
                         break;
@@ -379,7 +368,6 @@ public class PlayerShooting : MonoBehaviour
                     case GunType.SHOTGUN:
                         shotgun?.Shoot();
                         rifleShotFX.Stop();
-                        bulletcasingFX.Stop();
                         railgunShotAutoFX.Stop();
                         railgunShotSemiFX.Stop();
                         break;
@@ -408,7 +396,7 @@ public class PlayerShooting : MonoBehaviour
                 shotgun?.Reload();
                 break;
             case GunType.RAILGUN:
-                
+
                 break;
         }
     }
@@ -446,7 +434,7 @@ public class PlayerShooting : MonoBehaviour
             {
                 currentGun = GunType.BOLTGUN;
             }
-           
+
         }
         else if (hasShotgun && hasRailgun)
         {
@@ -464,7 +452,7 @@ public class PlayerShooting : MonoBehaviour
             }
         }
 
-        
+
 
         switch (currentGun)
         {
@@ -568,19 +556,18 @@ public class PlayerShooting : MonoBehaviour
                 {
                     if (boltgun.grenadeLauncher.canThrow)
                     {
-                        grenadeShotFX.Play();
                         redThirstManager.OnAbilityUsed();
                     }
                     boltgun?.UseAbility1();
                 }
-                
 
-              
+
+
 
                 break;
             case GunType.SHOTGUN:
 
-                if(playerData.ShotgunUpgraded == true)
+                if (playerData.ShotgunUpgraded == true)
                 {
                     if (shotgun.barrage.canThrow)
                     {
@@ -588,9 +575,9 @@ public class PlayerShooting : MonoBehaviour
                     }
                     shotgun?.UseAbility1();
                 }
-               
 
-               
+
+
                 break;
             case GunType.RAILGUN:
 
@@ -608,8 +595,8 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
-     private void UseAbility2()
-     {
+    private void UseAbility2()
+    {
         switch (currentGun)
         {
             case GunType.BOLTGUN:
@@ -622,13 +609,13 @@ public class PlayerShooting : MonoBehaviour
                     }
                     boltgun?.UseAbility2();
                 }
-                   
-                
-               
+
+
+
                 break;
             case GunType.SHOTGUN:
-               
-                if(playerData.ShotgunUpgraded == true)
+
+                if (playerData.ShotgunUpgraded == true)
                 {
                     if (shotgun.barrage.canThrow)
                     {
@@ -636,12 +623,12 @@ public class PlayerShooting : MonoBehaviour
                     }
                     shotgun?.UseAbility2();
                 }
-                   
-                
-               
+
+
+
                 break;
             case GunType.RAILGUN:
-                if(playerData.RailgunUpgraded == true)
+                if (playerData.RailgunUpgraded == true)
                 {
                     if (railgun.energyBall.canThrow)
                     {
@@ -649,10 +636,10 @@ public class PlayerShooting : MonoBehaviour
                     }
                     railgun?.UseAbility2();
                 }
-                
+
                 break;
         }
-     }
+    }
 
     public void CounterAttack(GameObject target)
     {

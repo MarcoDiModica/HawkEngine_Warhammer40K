@@ -124,10 +124,10 @@ public class PlayerShooting : MonoBehaviour
         railgunShotSemiFX.ApplyPreset(8);
         railgunShotAutoFX = GameObject.Find("RailgunShotAutoFX").GetComponent<ParticleFX>();
         railgunShotAutoFX.ApplyPreset(8);
-        bulletcasingFX = GameObject.Find("BulletCasingFX").GetComponent<ParticleFX>();
-        bulletcasingFX.ApplyPreset(44);
-        grenadeShotFX = GameObject.Find("GrenadeShotFX").GetComponent<ParticleFX>();
-        grenadeShotFX.ApplyPreset(43);
+        //bulletcasingFX = GameObject.Find("BulletCasingFX").GetComponent<ParticleFX>();
+        //bulletcasingFX.ApplyPreset(44);
+        //grenadeShotFX = GameObject.Find("GrenadeShotFX").GetComponent<ParticleFX>();
+        //grenadeShotFX.ApplyPreset(43);
 
 
         boltgunMesh = GameObject.Find("Boltgun");

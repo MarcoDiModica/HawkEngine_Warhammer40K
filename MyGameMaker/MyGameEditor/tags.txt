@@ -11,3 +11,6 @@ DestructibleWall
 Spawner
 Barrier
 Spawned
+Metal
+Dirt
+Solid

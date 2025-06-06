@@ -46,8 +46,10 @@ public class PlayerController : MonoBehaviour
     //private AudioSource sound;
     private bool isFootstepPlaying = false;
     private bool hasStoppedFootsteps = false;
-    private const string Runfootsteps = "Assets/Audio/Player/Player_Footsteps.wav";
-    private const string Walkfootsteps = "Assets/Audio/Player/Player_Footsteps.wav";
+    private const string RunfootstepsSolid = "Assets/Audio/Player/Player_Footsteps.wav";
+    private const string RunfootstepsDirt = "Assets/Audio/Player/Player_Death.wav";
+    private const string RunfootstepsMetal = "Assets/Audio/Player/Player_Dash.wav";
+    private string Walkfootsteps = "Assets/Audio/Player/Player_Footsteps.wav";
     public const string HitAudio = "Assets/Audio/Player/PlayerHurt.wav";
     public const string DeathAudio = "Assets/Audio/Player/Player_Death.wav";
     private int audioRun;
@@ -76,6 +78,17 @@ public class PlayerController : MonoBehaviour
     private bool isChangingWeaponRunning = false;
     private bool isChangingWeaponWalking = false;
     private int frameCounter = 0;
+
+
+    public enum TerrainType
+    {
+        Solid,
+        Dirt,
+        Metal,
+    }
+
+    public TerrainType currentTerrainType = TerrainType.Solid;
+    public TerrainType previousTerrain = TerrainType.Solid;
 
     public enum LookingDirection
     {
@@ -269,6 +282,8 @@ public class PlayerController : MonoBehaviour
 
         HandleDebugControls();
 
+        CheckTerrain();
+
         ProcessInputAndState(deltaTime);
 
         ProcessDashLogic(deltaTime);
@@ -287,6 +302,48 @@ public class PlayerController : MonoBehaviour
                     }
                 }
                 isFlashingColor = false;
+            }
+        }
+    }
+
+    private void CheckTerrain()
+    {
+        RayCast ray = new RayCast();
+
+        Vector3 rayStart = transform.position + transform.forward * 3 + new Vector3(0, 3f, 0);
+        ray.PerformRaycast(rayStart, new Vector3(0, -1f, 0), 5f);
+
+        if (ray.hit.isHit)
+        {
+            string terrainTag = ray.hit.gameObject.tag;
+            Engineson.print($"Terrain hit: {terrainTag}");
+
+            switch (terrainTag)
+            {
+                case "Solid":
+                    currentTerrainType = TerrainType.Solid;
+                    break;
+                case "Dirt":
+                    currentTerrainType = TerrainType.Dirt;
+                    break;
+                case "Metal":
+                    currentTerrainType = TerrainType.Metal;
+                    break;
+                default:
+                    currentTerrainType = TerrainType.Solid; // Default case
+                    break;
+            }
+
+            if (currentTerrainType != previousTerrain)
+            {
+                Engineson.print($"Terrain changed from {previousTerrain} to {currentTerrainType}");
+                previousTerrain = currentTerrainType;
+
+                if (isFootstepPlaying)
+                {
+                    StopFootsteps();
+                    PlayFootstep();
+                }
             }
         }
     }
@@ -979,7 +1036,9 @@ public class PlayerController : MonoBehaviour
 
         if (!hasStoppedFootsteps)
         {
-            Audio.Stop(Runfootsteps);
+            Audio.Stop(RunfootstepsSolid);
+            Audio.Stop(RunfootstepsDirt);
+            Audio.Stop(RunfootstepsMetal);
             Audio.Stop(Walkfootsteps);
             hasStoppedFootsteps = true;
             isFootstepPlaying = false;
@@ -1291,33 +1350,42 @@ public class PlayerController : MonoBehaviour
     private string currentFootstep = "";
     private void PlayFootstep()
     {
-        string newFootstep = isRunning ? Runfootsteps : Walkfootsteps;
-
-        if (isFootstepPlaying && currentFootstep == newFootstep)
-            return;
+        
 
         StopFootsteps();
+        Engineson.print("PlayFootStep");
 
-        if (isRunning)
+        switch (currentTerrainType)
         {
-            audioRun = Audio.Play(Runfootsteps, true); 
+            case TerrainType.Solid:
+                Engineson.print("Playing solid footstep sound");
+                Audio.Play(RunfootstepsSolid, true);
+                break;
+            case TerrainType.Dirt:
+                Engineson.print("Playing dirt footstep sound");
+                Audio.Play(RunfootstepsDirt, true);
+                break;
+            case TerrainType.Metal:
+                Engineson.print("Playing metal footstep sound");
+                Audio.Play(RunfootstepsMetal, true);
+                break;
         }
-        else
-        {
-            audioWalk = Audio.Play(Walkfootsteps, true);
-        }
+        
+        
 
         isFootstepPlaying = true;
         hasStoppedFootsteps = false;
-        currentFootstep = newFootstep;
+        
     }
 
     private void StopFootsteps()
     {
         if (isFootstepPlaying)
         {
-            if (audioRun > 0) Audio.Stop(audioRun);
-            if (audioWalk > 0) Audio.Stop(audioWalk);
+            Audio.Stop(RunfootstepsSolid);
+            Audio.Stop(RunfootstepsDirt);
+            Audio.Stop(RunfootstepsMetal);
+            Audio.Stop(Walkfootsteps);
 
             audioRun = 0;
             audioWalk = 0;

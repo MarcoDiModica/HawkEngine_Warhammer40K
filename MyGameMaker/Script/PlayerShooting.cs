@@ -213,6 +213,18 @@ public class PlayerShooting : MonoBehaviour
         return 0;
     }
 
+    public int GetMaxMagazineAmmo()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                return boltgun.magazineSize; 
+            case GunType.SHOTGUN:
+                return shotgun.magazineSize;
+        }
+        return 0;
+    }
+
     public override void Update(float deltaTime)
     {
         if(currentdelay < changeWeaponDelay)

@@ -25,6 +25,7 @@ public class EnemyControllerStalker : EnemyController
     private float dodgeTimer = 0f;
     private LictorAnimation anim;
     PlayerController pc;
+    private RedThirstManager redThirstManager;
 
     // Audio
     bool isCombatMusicPlaying = false;
@@ -99,7 +100,11 @@ public class EnemyControllerStalker : EnemyController
 
         //particles = gameObject.GetComponent<ParticleFX>();
         //particles.ApplyPreset(9);
-
+        GameObject playerObj = GameObject.Find("Player");
+        if (redThirstManager == null)
+        {
+            redThirstManager = playerObj.GetComponent<RedThirstManager>();
+        }
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Stalker";
@@ -297,6 +302,7 @@ public class EnemyControllerStalker : EnemyController
                 {
                     Audio.PlayOneShot(SFX_DEATH);
                     hasPlayedDeathSound = true;
+                    redThirstManager.AddRedThirstPoint(1);
                 }
                 if ((!hasDropped))
                 {

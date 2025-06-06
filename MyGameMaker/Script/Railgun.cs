@@ -146,7 +146,6 @@ public class Railgun : BaseWeapon
                         bulletHitEnemies[i].Add(hitObject);
 
                         float finalDamage = damage;
-                        redThirstManager.OnShotgunUsed();
 
                         if (redThirstManager.IsInBlackRage())
                             finalDamage += redThirstManager.redThirstBonus;

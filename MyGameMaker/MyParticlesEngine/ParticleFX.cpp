@@ -1517,7 +1517,7 @@ namespace ParticlePresets {
 
 	const ParticlePreset GrenadeShot = {
 	ParticleType::GRENADE_SHOT,
-	true,										 // PlayOnAwake
+	false,										 // PlayOnAwake
 	1,											 // Duration (only if one-shot)
 	glm::vec3(1,1,1),   						 // Start color (white)
 	glm::vec3(1,1,1),   						 // End color (white)
@@ -1551,14 +1551,14 @@ namespace ParticlePresets {
 
 	const ParticlePreset BulletEject = {
 	ParticleType::BULLET_EJECT,
-	true,										 // PlayOnAwake
+	false,										 // PlayOnAwake
 	1,											 // Duration (only if one-shot)
 	glm::vec3(1,1,1),   						 // Start color (white)
 	glm::vec3(1,1,1),   						 // End color (white)
 	1.0f,                          			 // Alpha start
 	1.0f,                          			     // Alpha end
 	1.0f,                          			 // Size start
-	1.0f,                          			     // Size end
+	0.7f,                          			     // Size end
 	5,                          				 // Min lifetime
 	5,                         					 // Max lifetime
 	0.0f,                          				 // Min speed
@@ -1577,15 +1577,15 @@ namespace ParticlePresets {
 	0.1f,										 // Animation speed
 	0.0f,										 // Start rotation
 	true,										 // Random rotation
-	1.0f,										 // Min scale
-	1.0f,										 // Max scale
+	0.7f,										 // Min scale
+	0.7f,										 // Max scale
 	"Assets/Textures/Bullet Eject vfx.png",      // Texture path
 	false 									     // Is Local Space
 	};
 
 	const ParticlePreset BloodThirstLost = {
 	ParticleType::BLOOD_THIRST_LOST,
-	true,										 // PlayOnAwake
+	false,										 // PlayOnAwake
 	1,											 // Duration (only if one-shot)
 	glm::vec3(1,1,1),   						 // Start color (white)
 	glm::vec3(1,1,1),   						 // End color (white)

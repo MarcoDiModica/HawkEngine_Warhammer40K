@@ -47,8 +47,8 @@ public class PlayerController : MonoBehaviour
     private bool isFootstepPlaying = false;
     private bool hasStoppedFootsteps = false;
     private const string RunfootstepsSolid = "Assets/Audio/Player/Player_Footsteps.wav";
-    private const string RunfootstepsDirt = "Assets/Audio/Player/Player_Death.wav";
-    private const string RunfootstepsMetal = "Assets/Audio/Player/Player_Dash.wav";
+    private const string RunfootstepsDirt = "Assets/Audio/Player/PlayerDirtFootSteps.wav";
+    private const string RunfootstepsMetal = "Assets/Audio/Player/PlayerMetalFootSteps.wav";
     private string Walkfootsteps = "Assets/Audio/Player/Player_Footsteps.wav";
     public const string HitAudio = "Assets/Audio/Player/PlayerHurt.wav";
     public const string DeathAudio = "Assets/Audio/Player/Player_Death.wav";

@@ -323,6 +323,11 @@ public class Shotgun : BaseWeapon
                 int numProjectiles = 5;
                 float maxSpreadAngle = 5f;
 
+                if (strongShot)
+                {
+                    maxSpreadAngle = 25;
+                }
+
                 Random random = new Random();
 
                 for (int i = 0; i < numProjectiles; i++)
@@ -393,6 +398,8 @@ public class Shotgun : BaseWeapon
                     {
                         playerController.playerShooting.shotgunShotFX.EmitBurst(1);
                     }
+
+                    strongShot = false; // Reset strong shot after use
                 }
             }
         }

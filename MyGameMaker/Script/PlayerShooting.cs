@@ -175,7 +175,7 @@ public class PlayerShooting : MonoBehaviour
                 break;
         }
 
-        playerData.BoltgunUpgraded = true;
+        playerData.ShotgunUpgraded = true;
 
     }
 

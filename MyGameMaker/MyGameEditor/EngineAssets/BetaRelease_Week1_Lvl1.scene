@@ -478,9 +478,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 1.7921046
+          floatSpeed: 1.00624669
           floatHeight: 0.5
-          rotationSpeed: 66.8431778
+          rotationSpeed: 71.5719604
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -586,9 +586,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 0.751142085
+          floatSpeed: 1.42749834
           floatHeight: 0.5
-          rotationSpeed: 76.0967636
+          rotationSpeed: 74.1487503
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -27205,9 +27205,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.0367552
+          floatSpeed: 1.82087064
           floatHeight: 0.5
-          rotationSpeed: 97.6460037
+          rotationSpeed: 33.4119911
   Children: ~
 GameObject34:
   name: BiblePage_Pueblo
@@ -27290,9 +27290,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.73348695
+          floatSpeed: 1.70246267
           floatHeight: 0.5
-          rotationSpeed: 95.5481033
+          rotationSpeed: 39.140522
   Children: ~
 GameObject35:
   name: BiblePage_Pasillo_Zona3
@@ -27375,9 +27375,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.618892014
+          floatSpeed: 0.870500803
           floatHeight: 0.5
-          rotationSpeed: 47.2126465
+          rotationSpeed: 73.2796936
   Children: ~
 GameObject36:
   name: BiblePage_Ciudad
@@ -27460,9 +27460,9 @@ GameObject36:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.4931823
+          floatSpeed: 0.505218089
           floatHeight: 0.5
-          rotationSpeed: 80.8975677
+          rotationSpeed: 86.4638443
   Children: ~
 GameObject37:
   name: Barril_Ciudad1
@@ -103677,10 +103677,10 @@ GameObject209:
             - 1225
             - 40
           sprite_offset:
-            - 175
+            - 875
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 5
           anim_index_limit: 6
           color:
             - 1
@@ -108220,8 +108220,8 @@ GameObject216:
           shootCooldown: 8.33333397
           projectileSpeed: 90
           projectileLifetime: 0.5
-          hasShotgun: false
-          hasRailgun: false
+          hasShotgun: true
+          hasRailgun: true
           hasBoltgun: true
       Script1:
         name: PlayerMovement

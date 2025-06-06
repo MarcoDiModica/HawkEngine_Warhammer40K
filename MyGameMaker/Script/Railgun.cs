@@ -76,9 +76,9 @@ public class Railgun : BaseWeapon
             timeSinceLastShot += deltaTime;
         }
 
-        if (shootCadence <= 0.75f)
+        if (shootCadence <= 0.45f)
         {
-            shootCadence = 0.75f;
+            shootCadence = 0.45f;
             maxShotCadenceTimer += deltaTime;
 
             if (maxShotCadenceTimer >= 2f)
@@ -209,9 +209,9 @@ public class Railgun : BaseWeapon
         if (!isCooling && isRecharged && timeSinceLastShot >= shootCadence)
         {
 
-            if (shootCadence > 0.75f)
+            if (shootCadence > 0.45f)
             {
-                shootCadence -= 0.25f;
+                shootCadence -= 0.75f;
             }
             
 

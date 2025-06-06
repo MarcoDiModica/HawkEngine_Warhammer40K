@@ -16,7 +16,6 @@ public class EnemyControllerMelee : EnemyController
     private float dodgeTimer = 0f;
     private HormagauntAnimation anim;
     private PlayerController pc;
-    private RedThirstManager redThirstManager;
 
     private bool isCombatMusicPlaying = false;
     private const string MUSIC_COMBAT = "Assets/Audio/PlaceHolder_CombatMusic.wav";
@@ -192,11 +191,6 @@ public class EnemyControllerMelee : EnemyController
 
             componentsInitialized = true;
             Engineson.print("EnemyControllerMelee initialized successfully");
-
-            if(redThirstManager == null)
-            {
-                redThirstManager = playerObj.GetComponent<RedThirstManager>();
-            }
         }
         catch (Exception e)
         {
@@ -558,7 +552,7 @@ public class EnemyControllerMelee : EnemyController
         {
             currentState = EnemyState.DEAD;
             isDead = true;
-            redThirstManager.AddRedThirstPoint(1);
+
             renderer?.SetColor(new Vector4(1, 1, 1, 1));
 
             if (anim != null)

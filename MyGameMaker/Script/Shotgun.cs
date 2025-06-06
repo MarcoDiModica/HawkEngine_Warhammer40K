@@ -192,6 +192,7 @@ public class Shotgun : BaseWeapon
                                 float finalDamage = damage;
                                 if (redThirstManager != null)
                                 {
+                                    redThirstManager.OnShotgunUsed();
                                     if (redThirstManager.IsInBlackRage())
                                         finalDamage += redThirstManager.redThirstBonus;
                                 }

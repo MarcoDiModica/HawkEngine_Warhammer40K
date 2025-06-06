@@ -29,7 +29,6 @@ public class EnemyControllerWarrior : EnemyController
     private float dodgeTimer = 0f;
     private PlayerController pc;
     private Transform transform;
-    private RedThirstManager redThirstManager;
 
     bool isCombatMusicPlaying = false;
     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
@@ -159,11 +158,6 @@ public class EnemyControllerWarrior : EnemyController
             timeToLerp = 0.1f;
 
             componentsInitialized = true;
-
-            if (redThirstManager == null)
-            {
-                redThirstManager = playerObj.GetComponent<RedThirstManager>();
-            }
         }
         catch (Exception e)
         {
@@ -367,7 +361,6 @@ public class EnemyControllerWarrior : EnemyController
             {
                 Audio.PlayOneShot(DeathSound);
                 hasPlayedDeathSound = true;
-                redThirstManager.AddRedThirstPoint(1);
             }
 
             if (!hasDropped)

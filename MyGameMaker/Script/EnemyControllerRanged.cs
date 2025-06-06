@@ -27,7 +27,6 @@ public class EnemyControllerRanged : EnemyController
     public List<string> collisionNames = new List<string>();
     public List<GameObject> bulletsObjects = new List<GameObject>();
     public List<float> bulletIntervals = new List<float>();
-    private RedThirstManager redThirstManager;
 
     public int magazineSize;
     public int currentMagazineAmmo;
@@ -128,11 +127,6 @@ public class EnemyControllerRanged : EnemyController
 
             componentsInitialized = true;
             Engineson.print("EnemyControllerRanged initialized successfully");
-
-            if (redThirstManager == null)
-            {
-                redThirstManager = playerObj.GetComponent<RedThirstManager>();
-            }
         }
         catch (Exception e)
         {
@@ -161,7 +155,7 @@ public class EnemyControllerRanged : EnemyController
                 }
 
                 isDead = true;
-                redThirstManager.AddRedThirstPoint(1);
+
                 if (collider != null)
                 {
                     collider.SetActive(false);

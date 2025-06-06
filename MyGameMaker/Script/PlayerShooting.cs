@@ -156,10 +156,7 @@ public class PlayerShooting : MonoBehaviour
         hasShotgun = playerData.hasShotgun;
         hasRailgun = playerData.hasRailgun;
 
-        if (hasRailgun)
-        {
-            railgun.railgunMode = Railgun.RailgunMode.SEMIAUTOMATIC;
-        }
+       
 
         switch (currentGun)
         {
@@ -235,11 +232,7 @@ public class PlayerShooting : MonoBehaviour
             currentdelay = 0f;
         }
 
-        if (playerInput.IsChangingRailgunMode() && currentGun == GunType.RAILGUN)
-        {
-            railgun?.ChangeMode();
-            currentdelay = 0f;
-        }
+        
 
         if (playerInput?.IsShooting() == true && currentdelay >= changeWeaponDelay)
         {
@@ -349,16 +342,8 @@ public class PlayerShooting : MonoBehaviour
                         break;
 
                     case GunType.RAILGUN:
-                        if (railgun.railgunMode == Railgun.RailgunMode.SEMIAUTOMATIC)
-                        {
-                            railgunShotSemiFX.SetParticleStartRotation(angle);
-                            railgunShotSemiFX.EmitBurst(1);
-                        }
-                        else
-                        {
-                            railgunShotAutoFX.SetParticleStartRotation(angle);
-                            railgunShotAutoFX.EmitBurst(1);
-                        }
+                        railgunShotSemiFX.SetParticleStartRotation(angle);
+                        railgunShotSemiFX.EmitBurst(1);
                         railgun?.Shoot();
                         break;
                 }

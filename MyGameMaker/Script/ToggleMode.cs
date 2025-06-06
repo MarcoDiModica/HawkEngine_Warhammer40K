@@ -24,10 +24,7 @@ public class ToggleMode : BaseAbilities
 
     public override void TriggerAbility()
     {
-        if (railgun != null)
-        {
-            railgun.ChangeMode();
-        }
+        
     }
 
     public override void ResetCooldowns()

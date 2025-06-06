@@ -1,6 +1,6 @@
 name: Canvas_Interaction
 prefabPath: Assets\Prefabs\Canvas_Interaction.prefab.yaml
-uuid: 8171758255955888501
+uuid: 6315696557352060303
 tag: Untagged
 active: true
 isStatic: false
@@ -103,6 +103,13 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Text
     prefabPath: ""
@@ -160,6 +167,13 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: InteractText
     prefabPath: ""
@@ -195,8 +209,8 @@ Children:
           - 0
           - 0
         scale:
-          - 0.5
-          - 1
+          - 0.307999998
+          - 0.0850000009
           - 1
         pivot_offset:
           - 0.5
@@ -205,16 +219,23 @@ Children:
       UIImageComponent:
         name: UIImageComponent
         enabled: true
-        texture_path: Library\Textures\PressE.png
+        texture_path: Library\Textures\UI\Popups_press_A.png
         use_animation: false
         sprite_size:
-          - 433
-          - 577
+          - 890
+          - 134
         sheet_size:
-          - 433
-          - 577
+          - 890
+          - 134
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~

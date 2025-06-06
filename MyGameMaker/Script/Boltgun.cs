@@ -137,7 +137,6 @@ public class Boltgun : BaseWeapon
                         bulletHitEnemies[i].Add(hitObject);
 
                         float finalDamage = damage;
-                        redThirstManager.OnShotgunUsed();
 
                         if (redThirstManager.IsInBlackRage())
                             finalDamage += redThirstManager.redThirstBonus;
@@ -218,10 +217,10 @@ public class Boltgun : BaseWeapon
         bulletHitEnemies.RemoveAt(index);
         bulletStartPositions.RemoveAt(index);
     }
-    
+
     public int GetCurrentAmmo()
     {
-       return currentMagazineAmmo;
+        return currentMagazineAmmo;
     }
 
     public int GetMaxAmmo()

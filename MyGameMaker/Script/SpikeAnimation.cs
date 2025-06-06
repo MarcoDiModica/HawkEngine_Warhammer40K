@@ -15,7 +15,8 @@ public class SpikeAnimation : MonoBehaviour
             Engineson.print("ERROR: SpikeAnimation requires a SkeletalAnimation component!");
             return;
         }
-        spikeAnimation.SetAnimationPlayState(false);
+        spikeAnimation.SetLoop(false);
+        
     }
 
     public override void Update(float deltaTime)
@@ -28,10 +29,9 @@ public class SpikeAnimation : MonoBehaviour
                 Engineson.print("ERROR: Animation length is 0.0f");
             }
         }
-        if (spikeAnimation?.GetAnimationIndex() >= spikeAnimation?.GetAnimationLength() - 0.25f && !isAnimFinished)
+        if (spikeAnimation.IsAnimationFinished() && !isAnimFinished)
         {
-            spikeAnimation?.SetAnimationPlayState(false);
-            spikeAnimation?.SetLoop(false);
+            Engineson.print("FinishAnim");
             isAnimFinished = true;
         }
     }
@@ -41,7 +41,7 @@ public class SpikeAnimation : MonoBehaviour
         spikeAnimation?.SetAnimationPlayState(true);
         if (spikeAnimation?.GetAnimationIndex() != 0)
         {
-            spikeAnimation?.SetAnimation(0);
+            spikeAnimation?.PlayAnimOnce(0, 0.1f);
             spikeAnimation?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
         }
@@ -52,7 +52,7 @@ public class SpikeAnimation : MonoBehaviour
         spikeAnimation?.SetAnimationPlayState(true);
         if (spikeAnimation?.GetAnimationIndex() != 1)
         {
-            spikeAnimation?.SetAnimation(1);
+            spikeAnimation?.PlayAnimOnce(1, 0.1f);
             spikeAnimation?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
         }

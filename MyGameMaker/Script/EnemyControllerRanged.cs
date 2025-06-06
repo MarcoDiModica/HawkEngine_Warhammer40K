@@ -13,6 +13,7 @@ public class EnemyControllerRanged : EnemyController
     private PlayerController pc;
     private Transform transform;
     private TermagauntAnimation anim;
+    private RedThirstManager redThirstManager;
 
     private float health = 50.0f;
     private float damage = 10.0f;
@@ -127,6 +128,8 @@ public class EnemyControllerRanged : EnemyController
 
             componentsInitialized = true;
             Engineson.print("EnemyControllerRanged initialized successfully");
+
+            redThirstManager = playerObj.GetComponent<RedThirstManager>();
         }
         catch (Exception e)
         {
@@ -153,7 +156,7 @@ public class EnemyControllerRanged : EnemyController
                 {
                     anim.SetDeathAnimation();
                 }
-
+                redThirstManager.AddRedThirstPoint(1);
                 isDead = true;
 
                 if (collider != null)

@@ -75,6 +75,11 @@ public class PlayerController : MonoBehaviour
     private bool isChangingWeaponIdle = false;
     private bool isChangingWeaponRunning = false;
     private bool isChangingWeaponWalking = false;
+
+    private bool isHitIdle = false;
+    private bool isHitRunning = false;
+    private bool isHitShooting = false;
+
     private int frameCounter = 0;
 
     public enum LookingDirection
@@ -252,19 +257,35 @@ public class PlayerController : MonoBehaviour
                 {
                     if (isIdle)
                     {
+                        isHitIdle = true;
                         playerAnimations.IdleToHitAnimation();
                     }
                     else if (isRunning || isShootingRunning)
                     {
+                        isHitRunning = true;
                         playerAnimations.RunningToHitAnimation();
                     }
                     else if (isShootingStanding)
                     {
+                        isHitShooting = true;
                         playerAnimations.ShootingStandingToHitAnimation();
                     }
                 } 
                 }
             playerData.isHit = false;
+        }
+
+        if (isHitIdle)
+        {
+            HitIdleAnimationFinished();
+        }
+        else if (isHitRunning)
+        {
+            HitRunningAnimationFinished();
+        }
+        else if (isHitShooting)
+        {
+            HitShootingAnimationFinished();
         }
 
         HandleDebugControls();
@@ -288,6 +309,69 @@ public class PlayerController : MonoBehaviour
                 }
                 isFlashingColor = false;
             }
+        }
+    }
+
+    private void HitIdleAnimationFinished()
+    {
+
+
+        if (playerAnimations.esk.IsAnimationFinished())
+        {
+            Engineson.print("Hit animation finished");
+            isHitIdle = false;
+            playerAnimations.HitIdleToIdleAnimation();
+
+        }
+    }
+
+    private void HitRunningAnimationFinished()
+    {
+
+
+        if (playerAnimations.esk.IsAnimationFinished())
+        {
+            Engineson.print("Hit animation finished");
+            isHitRunning = false;
+            if (isShootingRunning)
+            {
+                playerAnimations.HitRunningToHitShootingRunningAnimation();
+            }
+            else
+            {
+                if (currentLookingDirection == LookingDirection.Forward)
+                {
+                    playerAnimations.HitRunningToRunningAnimation();
+                }
+                else if (currentLookingDirection == LookingDirection.Backward)
+                {
+                    playerAnimations.HitRunningToRunningBackwardsAnimation();
+                }
+            }
+            
+            
+
+        }
+    }
+
+    private void HitShootingAnimationFinished()
+    {
+
+
+        if (playerAnimations.esk.IsAnimationFinished())
+        {
+            Engineson.print("Hit animation finished");
+            isHitRunning = false;
+            if (isShootingStanding)
+            {
+                playerAnimations.HitShootingStandingToShootingAnimation();
+            }
+            else 
+            {
+                playerAnimations.HitShootingStandingToIdleAnimation();
+            }
+
+
         }
     }
 
@@ -387,21 +471,25 @@ public class PlayerController : MonoBehaviour
 
         if (playerInput.IsChangingWeaponLeft() || playerInput.IsChangingWeaponRight())
         {
-            if (isIdle || isShootInput && !isShootingRunning)
+            if (playerData.hasShotgun || playerData.hasRailgun)
             {
-                isChangingWeaponIdle = true;
-                playerAnimations.WeaponSwapWhileIdleAnimation();
+                if (isIdle || isShootInput && !isShootingRunning)
+                {
+                    isChangingWeaponIdle = true;
+                    playerAnimations.WeaponSwapWhileIdleAnimation();
+                }
+                else if (isRunning)
+                {
+                    isChangingWeaponRunning = true;
+                    playerAnimations.WeaponSwapWhileRunningAnimation();
+                }
+                else if (isWalking || isShootingRunning)
+                {
+                    isChangingWeaponWalking = true;
+                    playerAnimations.WeaponSwapWhileWalkingStraightAnimation();
+                }
             }
-            else if (isRunning)
-            {
-                isChangingWeaponRunning = true;
-                playerAnimations.WeaponSwapWhileRunningAnimation();
-            }
-            else if (isWalking || isShootingRunning)
-            {
-                isChangingWeaponWalking = true;
-                playerAnimations.WeaponSwapWhileWalkingStraightAnimation();
-            }
+            
         }
 
         if (isChangingWeaponIdle)

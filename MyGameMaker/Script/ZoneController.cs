@@ -24,6 +24,8 @@ public class ZoneController : MonoBehaviour
     private List<Collider> _barriers = new List<Collider>();
     private List<GameObject> _go = new List<GameObject>();
 
+    public bool isDoorZone = false;
+
     public override void Start()
     {
         var centerPos = GetComponent<Transform>().GetPosition();
@@ -96,7 +98,18 @@ public class ZoneController : MonoBehaviour
                     foreach (var c in _barriers)
                         c.SetActive(true);
                     foreach (var go in _go)
-                        go.GetComponent<SpikeAnimation>().SetUnburrowAnimation();
+                    {
+                        if (isDoorZone)
+                        {
+                            go.SetActive(true);
+                        }
+                        else if (!isDoorZone)
+                        {
+                            go.GetComponent<SpikeAnimation>().SetBurrowAnimation();
+                        }
+                        
+                    }
+                        
                     _barrierUp = true;
                 }
             }
@@ -112,7 +125,17 @@ public class ZoneController : MonoBehaviour
                 foreach (var c in _barriers)
                     c.SetActive(false);
                 foreach (var go in _go)
-                    go.GetComponent<SpikeAnimation>().SetBurrowAnimation();
+                {
+                    if (isDoorZone)
+                    {
+                        go.SetActive(false);
+                    }
+                    else if (!isDoorZone)
+                    {
+                        go.GetComponent<SpikeAnimation>().SetUnburrowAnimation();
+                    }
+                }
+                    
                 _barrierUp = false;
             }
         }

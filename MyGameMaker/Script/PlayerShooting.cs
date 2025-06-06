@@ -421,19 +421,22 @@ public class PlayerShooting : MonoBehaviour
 
     private void ChangeWeaponRight()
     {
+        if (hasBoltgun && !hasShotgun && !hasRailgun)
+        {
+            // No cambiar de arma si solo se tiene la Boltgun  
+            return;
+        }
 
         if (hasShotgun && !hasRailgun)
         {
             if (currentGun == GunType.BOLTGUN)
             {
                 currentGun = GunType.SHOTGUN;
-
             }
             else if (currentGun == GunType.SHOTGUN)
             {
                 currentGun = GunType.BOLTGUN;
             }
-
         }
         else if (hasShotgun && hasRailgun)
         {
@@ -450,8 +453,6 @@ public class PlayerShooting : MonoBehaviour
                 currentGun = GunType.BOLTGUN;
             }
         }
-
-
 
         switch (currentGun)
         {
@@ -485,6 +486,11 @@ public class PlayerShooting : MonoBehaviour
 
     private void ChangeWeaponLeft()
     {
+        if (hasBoltgun && !hasShotgun && !hasRailgun)
+        {
+            // No cambiar de arma si solo se tiene la Boltgun  
+            return;
+        }
 
         if (hasShotgun && !hasRailgun)
         {
@@ -496,7 +502,6 @@ public class PlayerShooting : MonoBehaviour
             {
                 currentGun = GunType.BOLTGUN;
             }
-
         }
         else if (hasShotgun && hasRailgun)
         {
@@ -542,7 +547,6 @@ public class PlayerShooting : MonoBehaviour
                 break;
         }
         Engineson.print("Changed weapon left");
-
     }
 
     private void UseAbility1()

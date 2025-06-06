@@ -51,7 +51,7 @@ public class RedThirstManager : MonoBehaviour
 
     public override void Start()
     {
-
+        redThirstBonus = 5f;
     }
 
     public override void Update(float deltaTime)
@@ -150,6 +150,12 @@ public class RedThirstManager : MonoBehaviour
         // Reiniciar comboTimer cada vez que se llama a esta función  
         comboTimer = 0f;
 
+        // Si está en Black Rage, reiniciar el temporizador  
+        if (isInBlackRage && blackRageTimer >= 3f)
+        {
+            blackRageTimer = 3f;
+        }
+
         // Actualizar el HUD por cada Red Thirst Point  
         redThirstPoints += points;
         if (redThirstPoints > maxRedThirstPoints)
@@ -200,7 +206,8 @@ public class RedThirstManager : MonoBehaviour
     public void AddBiblePages(float points)
     {
         biblePages += points;
-        redThirstBonus = 5f + (biblePages * biblePages);
+
+        redThirstBonus = redThirstBonus + 5;
     }
 
     private void ActivateBlackRage()
@@ -209,6 +216,7 @@ public class RedThirstManager : MonoBehaviour
         blackRageTimer = 0f;
         Engineson.print("Black Rage Activated!");
         playerController.playerData.blackRageSpeed = redThirstBonus;
+        Engineson.print($"Black Rage Speed: {playerController.playerData.blackRageSpeed}");
         playerController.playerDash.canDash = false;
         Angy.Play();
         GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);

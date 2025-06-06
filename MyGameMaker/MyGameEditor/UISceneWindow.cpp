@@ -20,223 +20,6 @@
 enum class ManipulationOperation { IDLE, TRANSLATE, ROTATE, SCALE };
 enum class TransformSpace { LOCAL, WORLD };
 
-class FramebufferCache {
-private:
-	struct FramebufferResource {
-		GLuint fbo = 0;
-		GLuint texture = 0;
-		GLuint rbo = 0;
-		int width = 0;
-		int height = 0;
-		bool isMultisample = false;
-		GLuint multisampleFBO = 0;
-		GLuint multisampleColorBuffer = 0;
-		GLuint multisampleDepthBuffer = 0;
-		int msaaSamples = 8;
-	};
-
-	static FramebufferResource mainResource;
-	static bool initialized;
-
-public:
-	static bool CheckMSAACompatibility(int requestedSamples) {
-		GLint maxSamples = 0;
-		glGetIntegerv(GL_MAX_SAMPLES, &maxSamples);
-
-		if (maxSamples <= 0) return false;
-
-		int msaaSamples = std::min(requestedSamples, maxSamples);
-
-		GLuint testFBO = 0, testColorRBO = 0, testDepthRBO = 0;
-
-		glGenFramebuffers(1, &testFBO);
-		glBindFramebuffer(GL_FRAMEBUFFER, testFBO);
-
-		glGenRenderbuffers(1, &testColorRBO);
-		glBindRenderbuffer(GL_RENDERBUFFER, testColorRBO);
-		glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA8, 64, 64); // Small test size
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, testColorRBO);
-
-		glGenRenderbuffers(1, &testDepthRBO);
-		glBindRenderbuffer(GL_RENDERBUFFER, testDepthRBO);
-		glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8, 64, 64);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, testDepthRBO);
-
-		bool isComplete = (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
-
-		bool renderTest = false;
-		if (isComplete) {
-			glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			GLubyte pixel[4];
-			glReadPixels(32, 32, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, pixel);
-
-			renderTest = (pixel[0] > 0);
-		}
-
-		glDeleteRenderbuffers(1, &testColorRBO);
-		glDeleteRenderbuffers(1, &testDepthRBO);
-		glDeleteFramebuffers(1, &testFBO);
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-		return isComplete && renderTest;
-	}
-
-	static void Initialize(int width, int height, int msaaSamples) {
-		if (initialized) {
-			Cleanup();
-		}
-
-		mainResource.width = width;
-		mainResource.height = height;
-		mainResource.msaaSamples = msaaSamples;
-		mainResource.isMultisample = (msaaSamples > 0);
-
-		glGenFramebuffers(1, &mainResource.fbo);
-		glBindFramebuffer(GL_FRAMEBUFFER, mainResource.fbo);
-
-		glGenTextures(1, &mainResource.texture);
-		glBindTexture(GL_TEXTURE_2D, mainResource.texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, nullptr);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		if (GLEW_EXT_texture_filter_anisotropic) {
-			GLfloat maxAniso = 0.0f;
-			glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAniso);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAniso);
-		}
-
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mainResource.texture, 0);
-
-		glGenRenderbuffers(1, &mainResource.rbo);
-		glBindRenderbuffer(GL_RENDERBUFFER, mainResource.rbo);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, mainResource.rbo);
-
-		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-			std::cerr << "Error: Main framebuffer is not complete!" << std::endl;
-		}
-
-		bool msaaCompatible = CheckMSAACompatibility(msaaSamples);
-
-		if (msaaCompatible) {
-			glGenFramebuffers(1, &mainResource.multisampleFBO);
-			glBindFramebuffer(GL_FRAMEBUFFER, mainResource.multisampleFBO);
-
-			glGenRenderbuffers(1, &mainResource.multisampleColorBuffer);
-			glBindRenderbuffer(GL_RENDERBUFFER, mainResource.multisampleColorBuffer);
-			glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA16F, width, height);
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, mainResource.multisampleColorBuffer);
-
-			glGenRenderbuffers(1, &mainResource.multisampleDepthBuffer);
-			glBindRenderbuffer(GL_RENDERBUFFER, mainResource.multisampleDepthBuffer);
-			glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8, width, height);
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, mainResource.multisampleDepthBuffer);
-
-			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-				std::cerr << "Error: MSAA framebuffer is not complete!" << std::endl;
-
-				glDeleteRenderbuffers(1, &mainResource.multisampleColorBuffer);
-				glDeleteRenderbuffers(1, &mainResource.multisampleDepthBuffer);
-				glDeleteFramebuffers(1, &mainResource.multisampleFBO);
-
-				mainResource.multisampleColorBuffer = 0;
-				mainResource.multisampleDepthBuffer = 0;
-				mainResource.multisampleFBO = 0;
-				mainResource.msaaSamples = 0;
-				mainResource.isMultisample = false;
-			}
-		}
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		initialized = true;
-	}
-
-	static void Resize(int width, int height) {
-		if (abs(mainResource.width - width) < 20 && abs(mainResource.height - height) < 20) {
-			return;
-		}
-
-		mainResource.width = width;
-		mainResource.height = height;
-
-		glBindTexture(GL_TEXTURE_2D, mainResource.texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_FLOAT, nullptr);
-
-		glBindRenderbuffer(GL_RENDERBUFFER, mainResource.rbo);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
-
-		if (mainResource.isMultisample && mainResource.multisampleFBO != 0) {
-			glBindRenderbuffer(GL_RENDERBUFFER, mainResource.multisampleColorBuffer);
-			glRenderbufferStorageMultisample(GL_RENDERBUFFER, mainResource.msaaSamples, GL_RGBA16F, width, height);
-
-			glBindRenderbuffer(GL_RENDERBUFFER, mainResource.multisampleDepthBuffer);
-			glRenderbufferStorageMultisample(GL_RENDERBUFFER, mainResource.msaaSamples, GL_DEPTH24_STENCIL8, width, height);
-		}
-	}
-
-	static void Cleanup() {
-		if (!initialized) return;
-
-		if (mainResource.multisampleColorBuffer != 0) {
-			glDeleteRenderbuffers(1, &mainResource.multisampleColorBuffer);
-			mainResource.multisampleColorBuffer = 0;
-		}
-
-		if (mainResource.multisampleDepthBuffer != 0) {
-			glDeleteRenderbuffers(1, &mainResource.multisampleDepthBuffer);
-			mainResource.multisampleDepthBuffer = 0;
-		}
-
-		if (mainResource.multisampleFBO != 0) {
-			glDeleteFramebuffers(1, &mainResource.multisampleFBO);
-			mainResource.multisampleFBO = 0;
-		}
-
-		if (mainResource.rbo != 0) {
-			glDeleteRenderbuffers(1, &mainResource.rbo);
-			mainResource.rbo = 0;
-		}
-
-		if (mainResource.texture != 0) {
-			glDeleteTextures(1, &mainResource.texture);
-			mainResource.texture = 0;
-		}
-
-		if (mainResource.fbo != 0) {
-			glDeleteFramebuffers(1, &mainResource.fbo);
-			mainResource.fbo = 0;
-		}
-
-		initialized = false;
-	}
-
-	static GLuint GetMainFBO() {
-		return mainResource.fbo;
-	}
-
-	static GLuint GetMainTexture() {
-		return mainResource.texture;
-	}
-
-	static GLuint GetMSAAFBO() {
-		return mainResource.multisampleFBO;
-	}
-
-	static bool IsMSAAEnabled() {
-		return mainResource.isMultisample && mainResource.multisampleFBO != 0;
-	}
-
-	static int GetMSAASamples() {
-		return mainResource.msaaSamples;
-	}
-};
-
-FramebufferCache::FramebufferResource FramebufferCache::mainResource;
-bool FramebufferCache::initialized = false;
-
 UISceneWindow::UISceneWindow(UIType type, std::string name) : UIElement(type, name)
 {
 	m_World.LoadTextureLocalPath("EngineAssets/global.png");
@@ -248,29 +31,210 @@ UISceneWindow::UISceneWindow(UIType type, std::string name) : UIElement(type, na
 
 UISceneWindow::~UISceneWindow()
 {
-	FramebufferCache::Cleanup();
+	CleanupFramebuffers();
+}
+
+void UISceneWindow::CleanupFramebuffers()
+{
+	if (Application && Application->gui) {
+		if (Application->gui->multisampleColorBuffer != 0) {
+			glDeleteRenderbuffers(1, &Application->gui->multisampleColorBuffer);
+			Application->gui->multisampleColorBuffer = 0;
+		}
+
+		if (Application->gui->multisampleDepthBuffer != 0) {
+			glDeleteRenderbuffers(1, &Application->gui->multisampleDepthBuffer);
+			Application->gui->multisampleDepthBuffer = 0;
+		}
+
+		if (Application->gui->multisampleFBO != 0) {
+			glDeleteFramebuffers(1, &Application->gui->multisampleFBO);
+			Application->gui->multisampleFBO = 0;
+		}
+
+		if (Application->gui->rbo != 0) {
+			glDeleteRenderbuffers(1, &Application->gui->rbo);
+			Application->gui->rbo = 0;
+		}
+
+		if (Application->gui->fboTexture != 0) {
+			glDeleteTextures(1, &Application->gui->fboTexture);
+			Application->gui->fboTexture = 0;
+		}
+
+		if (Application->gui->fbo != 0) {
+			glDeleteFramebuffers(1, &Application->gui->fbo);
+			Application->gui->fbo = 0;
+		}
+	}
 }
 
 void UISceneWindow::Init()
 {
+	GLint lastFBO = 0;
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFBO);
+
 	GLint maxSamples = 0;
 	glGetIntegerv(GL_MAX_SAMPLES, &maxSamples);
 
-	if (maxSamples <= 0) {
+	if (maxSamples <= 0 || msaaSamples <= 0) {
 		msaaSamples = 0;
+		useMSAA = false;
 	}
 	else {
 		msaaSamples = std::min(msaaSamples, maxSamples);
+		useMSAA = true;
 	}
 
-	FramebufferCache::Initialize(Application->window->width(), Application->window->height(), msaaSamples);
+	glGenFramebuffers(1, &Application->gui->fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 
-	Application->gui->fbo = FramebufferCache::GetMainFBO();
-	Application->gui->fboTexture = FramebufferCache::GetMainTexture();
-	Application->gui->multisampleFBO = FramebufferCache::GetMSAAFBO();
+	glGenTextures(1, &Application->gui->fboTexture);
+	glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, Application->window->width(),
+		Application->window->height(), 0, GL_RGBA, GL_FLOAT, nullptr);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	if (GLEW_EXT_texture_filter_anisotropic) {
+		GLfloat maxAniso = 0.0f;
+		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAniso);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAniso);
+	}
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+		Application->gui->fboTexture, 0);
+
+	glGenRenderbuffers(1, &Application->gui->rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8,
+		Application->window->width(), Application->window->height());
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
+		GL_RENDERBUFFER, Application->gui->rbo);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+		std::cerr << "Error: Main framebuffer is not complete!" << std::endl;
+		CleanupFramebuffers();
+		glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+		return;
+	}
+
+	if (useMSAA && TestMSAACompatibility(msaaSamples)) {
+		glGenFramebuffers(1, &Application->gui->multisampleFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->multisampleFBO);
+
+		glGenRenderbuffers(1, &Application->gui->multisampleColorBuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA16F,
+			Application->window->width(), Application->window->height());
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+			GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
+
+		glGenRenderbuffers(1, &Application->gui->multisampleDepthBuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8,
+			Application->window->width(), Application->window->height());
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
+			GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
+
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+			std::cerr << "MSAA framebuffer is not complete, disabling MSAA." << std::endl;
+
+			glDeleteRenderbuffers(1, &Application->gui->multisampleColorBuffer);
+			glDeleteRenderbuffers(1, &Application->gui->multisampleDepthBuffer);
+			glDeleteFramebuffers(1, &Application->gui->multisampleFBO);
+
+			Application->gui->multisampleColorBuffer = 0;
+			Application->gui->multisampleDepthBuffer = 0;
+			Application->gui->multisampleFBO = 0;
+
+			useMSAA = false;
+			msaaSamples = 0;
+		}
+	}
+	else {
+		Application->gui->multisampleFBO = 0;
+		Application->gui->multisampleColorBuffer = 0;
+		Application->gui->multisampleDepthBuffer = 0;
+		useMSAA = false;
+	}
 
 	lastWidth = Application->window->width();
 	lastHeight = Application->window->height();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+}
+
+bool UISceneWindow::TestMSAACompatibility(int samples)
+{
+	if (samples <= 0) return false;
+
+	GLuint testFBO = 0, testColorRBO = 0, testDepthRBO = 0;
+	bool isCompatible = false;
+
+	try {
+		glGenFramebuffers(1, &testFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, testFBO);
+
+		glGenRenderbuffers(1, &testColorRBO);
+		glBindRenderbuffer(GL_RENDERBUFFER, testColorRBO);
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, GL_RGBA8, 64, 64);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, testColorRBO);
+
+		glGenRenderbuffers(1, &testDepthRBO);
+		glBindRenderbuffer(GL_RENDERBUFFER, testDepthRBO);
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, GL_DEPTH24_STENCIL8, 64, 64);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, testDepthRBO);
+
+		isCompatible = (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+	}
+	catch (...) {
+		isCompatible = false;
+	}
+
+	if (testDepthRBO != 0) glDeleteRenderbuffers(1, &testDepthRBO);
+	if (testColorRBO != 0) glDeleteRenderbuffers(1, &testColorRBO);
+	if (testFBO != 0) glDeleteFramebuffers(1, &testFBO);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	return isCompatible;
+}
+
+void UISceneWindow::UpdateFramebufferResolution()
+{
+	if (winSize.x < 1 || winSize.y < 1) return;
+
+	if (abs((int)winSize.x - lastWidth) > 20 || abs((int)winSize.y - lastHeight) > 20) {
+		int newWidth = (int)winSize.x;
+		int newHeight = (int)winSize.y;
+
+		GLint lastFBO = 0;
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFBO);
+
+		glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, newWidth, newHeight, 0, GL_RGBA, GL_FLOAT, nullptr);
+
+		glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, newWidth, newHeight);
+
+		if (useMSAA && Application->gui->multisampleFBO != 0) {
+			glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
+			glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA16F, newWidth, newHeight);
+
+			glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
+			glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8, newWidth, newHeight);
+		}
+
+		Application->camera->UpdateCameraView(winSize.x, winSize.y, newWidth, newHeight);
+		Application->gui->camSize = vec2(newWidth, newHeight);
+
+		lastWidth = newWidth;
+		lastHeight = newHeight;
+
+		glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+	}
 }
 
 ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiConfigFlags_DockingEnable;
@@ -346,25 +310,6 @@ bool UISceneWindow::CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm:
 
 	collisionPoint = rayOrigin + t * rayDir;
 	return true;
-}
-
-void UISceneWindow::UpdateFramebufferResolution() {
-	if (winSize.x < 1 || winSize.y < 1) return;
-
-	if (abs((int)winSize.x - lastWidth) > 20 || abs((int)winSize.y - lastHeight) > 20) {
-		float scaleFactor = 1.0f;
-
-		int targetWidth = static_cast<int>(winSize.x * scaleFactor);
-		int targetHeight = static_cast<int>(winSize.y * scaleFactor);
-
-		FramebufferCache::Resize(targetWidth, targetHeight);
-
-		Application->camera->UpdateCameraView(winSize.x, winSize.y, targetWidth, targetHeight);
-		Application->gui->camSize = vec2(targetWidth, targetHeight);
-
-		lastWidth = targetWidth;
-		lastHeight = targetHeight;
-	}
 }
 
 bool UISceneWindow::Draw()

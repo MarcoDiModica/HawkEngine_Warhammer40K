@@ -533,7 +533,20 @@ static void RenderEditor() {
 	glGetFloatv(GL_COLOR_CLEAR_VALUE, lastClearColor);
 
 	UISceneWindow* sceneWindow = static_cast<UISceneWindow*>(Application->gui->UISceneWindowPanel);
-	bool useMSAA = sceneWindow->msaaSamples > 0;
+
+	if (Application->gui->fbo == 0) {
+		glUseProgram(lastProgram);
+		glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+		glViewport(lastViewport[0], lastViewport[1], lastViewport[2], lastViewport[3]);
+		if (lastDepthTest) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
+		if (lastCullFace) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
+		if (lastBlend) glEnable(GL_BLEND); else glDisable(GL_BLEND);
+		glBlendFuncSeparate(lastBlendSrcRGB, lastBlendDstRGB, lastBlendSrcAlpha, lastBlendDstAlpha);
+		glClearColor(lastClearColor[0], lastClearColor[1], lastClearColor[2], lastClearColor[3]);
+		return;
+	}
+
+	bool useMSAA = (sceneWindow->msaaSamples > 0 && Application->gui->multisampleFBO != 0);
 
 	if (useMSAA) {
 		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->multisampleFBO);
@@ -564,14 +577,11 @@ static void RenderEditor() {
 		glUseProgram(lastProgram);
 		glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
 		glViewport(lastViewport[0], lastViewport[1], lastViewport[2], lastViewport[3]);
-
 		if (lastDepthTest) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
 		if (lastCullFace) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
 		if (lastBlend) glEnable(GL_BLEND); else glDisable(GL_BLEND);
-
 		glBlendFuncSeparate(lastBlendSrcRGB, lastBlendDstRGB, lastBlendSrcAlpha, lastBlendDstAlpha);
 		glClearColor(lastClearColor[0], lastClearColor[1], lastClearColor[2], lastClearColor[3]);
-
 		return;
 	}
 
@@ -598,24 +608,20 @@ static void RenderEditor() {
 
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
-
 				RenderManager::GetInstance().EndFrame();
 
 				glUseProgram(lastProgram);
 				glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
 				glViewport(lastViewport[0], lastViewport[1], lastViewport[2], lastViewport[3]);
-
 				if (lastDepthTest) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
 				if (lastCullFace) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
 				if (lastBlend) glEnable(GL_BLEND); else glDisable(GL_BLEND);
-
 				glBlendFuncSeparate(lastBlendSrcRGB, lastBlendDstRGB, lastBlendSrcAlpha, lastBlendDstAlpha);
 				glClearColor(lastClearColor[0], lastClearColor[1], lastClearColor[2], lastClearColor[3]);
-
 				return;
 			}
 
-			// omit UI elements from rendering on this framebuffer
+			// Omitir elementos UI del renderizado en este framebuffer
 			if (object->HasComponent<UICanvasComponent>() || object->HasComponent<UIImageComponent>()) {
 				continue;
 			}
@@ -626,8 +632,6 @@ static void RenderEditor() {
 			RenderManager::GetInstance().SubmitGameObject(object, viewMatrix, projMatrix, frustumPlanes);
 		}
 	}
-
-	//Application->physicsModule->DrawDebugDrawer();
 
 	objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {

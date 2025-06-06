@@ -32,8 +32,15 @@ void UIGameView::Init()
 
 	GLint maxSamples = 0;
 	glGetIntegerv(GL_MAX_SAMPLES, &maxSamples);
-	msaaSamples = std::min(4, maxSamples);
-	useMSAA = msaaSamples > 0;
+
+	if (maxSamples <= 0) {
+		msaaSamples = 0;
+		useMSAA = false;
+	}
+	else {
+		msaaSamples = std::min(4, maxSamples);
+		useMSAA = (msaaSamples > 0);
+	}
 
 	glGenFramebuffers(1, &Application->gui->fboGame);
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
@@ -63,9 +70,11 @@ void UIGameView::Init()
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
 		LOG(LogType::LOG_ERROR, "Game View Framebuffer is not complete!");
+		glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+		return;
 	}
 
-	if (useMSAA) {
+	if (useMSAA && TestMSAACompatibility()) {
 		glGenFramebuffers(1, &msaaFbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, msaaFbo);
 
@@ -94,11 +103,54 @@ void UIGameView::Init()
 			useMSAA = false;
 		}
 	}
+	else {
+		msaaFbo = 0;
+		msaaColorRbo = 0;
+		msaaDepthRbo = 0;
+		useMSAA = false;
+	}
 
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+}
+
+bool UIGameView::TestMSAACompatibility()
+{
+	if (msaaSamples <= 0) return false;
+
+	GLuint testFBO = 0, testColorRBO = 0, testDepthRBO = 0;
+	bool isCompatible = false;
+
+	try {
+		glGenFramebuffers(1, &testFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, testFBO);
+
+		glGenRenderbuffers(1, &testColorRBO);
+		glBindRenderbuffer(GL_RENDERBUFFER, testColorRBO);
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA8, 64, 64);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, testColorRBO);
+
+		glGenRenderbuffers(1, &testDepthRBO);
+		glBindRenderbuffer(GL_RENDERBUFFER, testDepthRBO);
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8, 64, 64);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, testDepthRBO);
+
+		isCompatible = (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+	}
+	catch (...) {
+		isCompatible = false;
+	}
+
+	// Limpiar recursos de prueba
+	if (testDepthRBO != 0) glDeleteRenderbuffers(1, &testDepthRBO);
+	if (testColorRBO != 0) glDeleteRenderbuffers(1, &testColorRBO);
+	if (testFBO != 0) glDeleteFramebuffers(1, &testFBO);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	return isCompatible;
 }
 
 void UIGameView::UpdateFramebuffer()
@@ -144,12 +196,18 @@ void UIGameView::UpdateFramebuffer()
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
 		LOG(LogType::LOG_ERROR, "Game View Framebuffer is not complete!");
+		glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+		return;
 	}
 
-	if (useMSAA) {
-		if (msaaFbo != 0) {
+	if (useMSAA && msaaFbo != 0) {
+		if (msaaColorRbo != 0) {
 			glDeleteRenderbuffers(1, &msaaColorRbo);
+		}
+		if (msaaDepthRbo != 0) {
 			glDeleteRenderbuffers(1, &msaaDepthRbo);
+		}
+		if (msaaFbo != 0) {
 			glDeleteFramebuffers(1, &msaaFbo);
 		}
 
@@ -185,11 +243,11 @@ void UIGameView::UpdateFramebuffer()
 
 void UIGameView::BeginRender()
 {
-	if (!useMSAA) {
-		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
+	if (useMSAA && msaaFbo != 0) {
+		glBindFramebuffer(GL_FRAMEBUFFER, msaaFbo);
 	}
 	else {
-		glBindFramebuffer(GL_FRAMEBUFFER, msaaFbo);
+		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
 	}
 
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
@@ -198,7 +256,7 @@ void UIGameView::BeginRender()
 
 void UIGameView::EndRender()
 {
-	if (useMSAA) {
+	if (useMSAA && msaaFbo != 0) {
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, msaaFbo);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, Application->gui->fboGame);
 		glBlitFramebuffer(0, 0, Application->window->width(), Application->window->height(),
@@ -208,6 +266,7 @@ void UIGameView::EndRender()
 
 	glBindTexture(GL_TEXTURE_2D, Application->gui->fboTextureGame);
 	glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

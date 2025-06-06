@@ -101,7 +101,7 @@ public class ZoneController : MonoBehaviour
                     {
                         if (isDoorZone)
                         {
-                            go.SetActive(true);
+                            go.GetComponent<DoorAnimation>().SetCloseAnimation();
                         }
                         else if (!isDoorZone)
                         {
@@ -128,7 +128,7 @@ public class ZoneController : MonoBehaviour
                 {
                     if (isDoorZone)
                     {
-                        go.SetActive(false);
+                        go.GetComponent<DoorAnimation>().SetOpenAnimation();
                     }
                     else if (!isDoorZone)
                     {

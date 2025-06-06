@@ -138,6 +138,7 @@
     <Compile Include="CoroutineManager.cs" />
     <Compile Include="DestroyEnviormentObject.cs" />
     <Compile Include="DestructibleWall.cs" />
+    <Compile Include="DoorAnimation.cs" />
     <Compile Include="DropManager.cs" />
     <Compile Include="EnemyController.cs" />
     <Compile Include="EnemyControllerBoss.cs" />

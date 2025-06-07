@@ -22,6 +22,10 @@ namespace HawkEngine
         public static string currentLevel = "";
 
         public static bool isNewGame = false;
+        private static float playerHealthPausedTemp;
+        private static float playerHealthPaused;
+
+        public static bool isPaused = false;
 
         //funciones
         public static void LoadScene(string sceneName)
@@ -108,6 +112,39 @@ namespace HawkEngine
                     Engineson.print("Scene not found");
                 }
             }
+        }
+
+        public static void SetPause(bool pause)
+        {
+            isPaused = pause;
+            GameObject player = GameObject.Find("Player");
+            PlayerInput playerInput = player?.GetComponent<PlayerInput>();
+            PlayerController playerController = player?.GetComponent<PlayerController>();
+            if (pause)
+            {
+
+                playerInput?.BlockInput();
+                Audio.PauseAll();
+                if (playerController?.playerData != null)
+                {
+                    playerHealthPausedTemp = playerController.playerData.GetHealthTemp();
+                    playerHealthPaused = playerController.playerData.GetHealth();
+                    playerController.playerData.GodMode = true;
+
+                }
+
+            }
+            else
+            {
+                playerInput?.UnBlockInput();
+                if (playerController?.playerData != null)
+                {
+                    playerController.playerData.GodMode = false;
+                    playerController.playerData.SetTempHealth(playerHealthPausedTemp);
+                    playerController.playerData.SetHealth(playerHealthPaused);
+                }
+            }
+          
         }
 
 

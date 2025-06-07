@@ -67,6 +67,8 @@ public class EnemyControllerMelee : EnemyController
     public float spawnTimer = 0.0f;
     public float spawnDuration = 4.0f;
 
+    private bool hasChangedVelocity = false;
+
     private Vector3 GetDodgeDirection(Vector3 forward)
     {
         try
@@ -196,10 +198,25 @@ public class EnemyControllerMelee : EnemyController
         {
             Engineson.print($"ERROR in EnemyControllerMelee.Start: {e.Message}");
         }
+        rb.SetMass(2);
     }
 
     public override void Update(float deltaTime)
     {
+        if (SceneManager.isPaused)
+        {
+            if (!hasChangedVelocity && rb != null)
+            {
+                rb.SetVelocity(Vector3.Zero);
+                hasChangedVelocity = true;
+            }
+            return;
+        }
+        else if (hasChangedVelocity)
+        {
+            hasChangedVelocity = false;
+        }
+
         if (!componentsInitialized)
             return;
 

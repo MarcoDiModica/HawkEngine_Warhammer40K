@@ -40,6 +40,7 @@ public class EnemyControllerRanged : EnemyController
     private bool componentsInitialized = false;
     private float deathTimer = 0f;
     private float deathCooldown = 2f;
+    private bool hasChangedVelocity;
 
     public override void Awake()
     {
@@ -124,6 +125,7 @@ public class EnemyControllerRanged : EnemyController
             damage = 20.0f;
             range = 40f;
             timeToLerp = 0.5f;
+            rb.SetFriction(5);
 
             componentsInitialized = true;
             Engineson.print("EnemyControllerRanged initialized successfully");
@@ -136,6 +138,21 @@ public class EnemyControllerRanged : EnemyController
 
     public override void Update(float deltaTime)
     {
+        if (SceneManager.isPaused)
+        {
+            if (!hasChangedVelocity && rb != null)
+            {
+                rb.SetVelocity(Vector3.Zero);
+                hasChangedVelocity = true;
+            }
+            return;
+        }
+        else if (hasChangedVelocity)
+        {
+            hasChangedVelocity = false;
+        }
+
+
         if (!componentsInitialized)
             return;
 

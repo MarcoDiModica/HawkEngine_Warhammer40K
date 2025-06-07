@@ -8,6 +8,7 @@ public class DestroyEnviormentObject : MonoBehaviour
 
     public DropManager dropManager;
     public bool onlyMedicaeStimm = false;
+    public bool pawnDestroyedBarrel = false;
 
     public void DestroyObject()
     {
@@ -23,12 +24,17 @@ public class DestroyEnviormentObject : MonoBehaviour
             {
                 dropManager.SpawnPrefabFromDestroyableObject(gameObject.transform.position);
             }
-            
+
+            if (pawnDestroyedBarrel)
+            {
+                dropManager.SpawnDestroyedBarrel(gameObject.transform.position);
+            }
+
         }
         else
         {
             Engineson.print("DropManager not found");
-        }
+        }        
         Engineson.Destroy(gameObject);
     }
 

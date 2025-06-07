@@ -62,6 +62,7 @@ public class EnemyControllerWarrior : EnemyController
     // Death
     private float deathTimer = 0f;
     private float deathCooldown = 2f;
+    private bool hasChangedVelocity;
 
     public void SetVFX(int id = 34)
     {
@@ -156,6 +157,7 @@ public class EnemyControllerWarrior : EnemyController
             projectileDamage = 20.0f;
             range = 100f;
             timeToLerp = 0.1f;
+            rb.SetFriction(5);
 
             componentsInitialized = true;
         }
@@ -167,6 +169,20 @@ public class EnemyControllerWarrior : EnemyController
 
     public override void Update(float deltaTime)
     {
+        if (SceneManager.isPaused)
+        {
+            if (!hasChangedVelocity && rb != null)
+            {
+                rb.SetVelocity(Vector3.Zero);
+                hasChangedVelocity = true;
+            }
+            return;
+        }
+        else if (hasChangedVelocity)
+        {
+            hasChangedVelocity = false;
+        }
+
         if (!componentsInitialized)
             return;
 

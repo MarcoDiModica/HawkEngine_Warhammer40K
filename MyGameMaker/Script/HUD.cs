@@ -613,17 +613,18 @@ public class HUD : MonoBehaviour
             win();
         }
 
-
         if (Input.GetKeyDown(KeyCode.P) || Input.GetControllerButtonDown(ControllerButton.Start))
         {
             Audio.PlayOneShot(MenuSFX);
             if (pauseMenu.IsActive())
             {
                 pauseMenu.SetActive(false);
+                SceneManager.SetPause(false);
             }
             else
             {
                 pauseMenu.SetActive(true);
+                SceneManager.SetPause(true);
             }
             optionMenu.SetActive(false);
         }

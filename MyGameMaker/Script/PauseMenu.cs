@@ -216,6 +216,7 @@ public class PauseMenu : MonoBehaviour
             {
                 Audio.PlayOneShot(ConfirmSFX);
                 gameObject.SetActive(false);
+                SceneManager.SetPause(false);
             }
             else if (selectedButton == button_optionsMenuButton)
             {
@@ -226,10 +227,11 @@ public class PauseMenu : MonoBehaviour
             else if (selectedButton == button_mainMenuButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
+                SceneManager.SetPause(false);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)
-            {
+            {              
                 Audio.PlayOneShot(ConfirmSFX);
            
                 // Aquí puedes agregar la lógica para salir del juego

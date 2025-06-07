@@ -166,7 +166,7 @@ public class WinScreen : MonoBehaviour
             }
         }
 
-        // Detectar clic del ratón
+        // Detectar clic del ratï¿½n
         if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1) || Input.GetControllerButtonDown(ControllerButton.A))
         {
             UIButton selectedButton = buttons[selectedButtonIndex];
@@ -175,12 +175,13 @@ public class WinScreen : MonoBehaviour
             if (selectedButton == button_mainMenuButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
+                Audio.Stop(WinMusic);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
-                // Aquí puedes agregar la lógica para salir del juego
+                // Aquï¿½ puedes agregar la lï¿½gica para salir del juego
             }
         }
     }

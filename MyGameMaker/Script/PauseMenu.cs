@@ -32,6 +32,7 @@ public class PauseMenu : MonoBehaviour
 
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+    private string HoveredSFX = "Assets/Audio/UI/Hovered.wav";
 
     private int selectedButtonIndex = -1;
     private UIButton[] buttons;
@@ -186,8 +187,7 @@ public class PauseMenu : MonoBehaviour
 
                 if (!hasPlayedHoverSound[i])
                 {
-                    //sound?.LoadAudio(buttonHovered);
-                    //sound?.Play();
+                    Audio.Play(HoveredSFX);
                     hasPlayedHoverSound[i] = true;
                 }
             }

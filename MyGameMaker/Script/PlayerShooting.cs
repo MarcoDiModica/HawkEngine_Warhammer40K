@@ -249,6 +249,11 @@ public class PlayerShooting : MonoBehaviour
             canChangeWeapon = true;
         }
 
+        if (playerInput?.IsShooting() != true)
+        {
+            bulletcasingFX.Stop();
+        }
+
         playerInput.UpdateLookDirection();
 
         if((playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Q)) && weaponInputTimer >= weaponInputDelay)
@@ -351,14 +356,13 @@ public class PlayerShooting : MonoBehaviour
                 lookDir = Vector3.Normalize(lookDir);
                 float angle = (float)(Math.Atan2(lookDir.X, lookDir.Z) * (180.0 / Math.PI)) - 45;
 
-
                 switch (currentGun)
                 {
                     case GunType.BOLTGUN:
                         rifleShotFX.SetParticleStartRotation(angle);
-                        rifleShotFX.EmitBurst(1);
+                        rifleShotFX.Play();
                         boltgun?.Shoot();
-                        //bulletcasingFX.Play();
+                        bulletcasingFX.EmitBurst(1);
                         shotgunShotFX.Stop();
                         railgunShotAutoFX.Stop();
                         railgunShotSemiFX.Stop();
@@ -382,13 +386,12 @@ public class PlayerShooting : MonoBehaviour
             }
             else
             {
-                // Si no hay direccion valida, disparar sin rotar el efecto
                 switch (currentGun)
                 {
                     case GunType.BOLTGUN:
                         boltgun?.Shoot();
+                        bulletcasingFX.Play();
                         shotgunShotFX.Stop();
-                        //bulletcasingFX.Play();
                         railgunShotAutoFX.Stop();
                         railgunShotSemiFX.Stop();
                         break;
@@ -411,6 +414,7 @@ public class PlayerShooting : MonoBehaviour
             Engineson.print($"Error during Shoot(): {e.Message}");
         }
     }
+
 
 
     private void Reload()

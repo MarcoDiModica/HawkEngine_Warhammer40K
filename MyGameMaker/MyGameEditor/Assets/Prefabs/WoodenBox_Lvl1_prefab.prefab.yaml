@@ -1,4 +1,4 @@
-name: WoodenBox_Lvl1_prefab
+name: CajaMadera1
 prefabPath: Assets/Prefabs/WoodenBox_Lvl1_prefab.prefab.yaml
 uuid: 11917533091187017491
 tag: Destroyable
@@ -9,40 +9,21 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 40.205650329589844
-      - 0
-      - -1.3086915016174316
+      - -4.527277946472168
+      - 4.2351647362715017e-22
+      - 7.5031118392944336
     localRotation:
-      - -90.000009334667638
+      - -90.000009659346318
       - 0
       - 0
     localScale:
       - 1.25
-      - 1.2500000000000167
-      - 1.2500000000000167
-  MeshRenderer:
-    name: MeshRenderer
-    enabled: true
-    mesh:
-      name: 15390588685034517731
-    material:
-      name: wooden barrel and box low_DefaultMaterial_BaseColor
-      color:
-        - 1
-        - 1
-        - 1
-        - 1
-    color:
-      - 1
-      - 1
-      - 1
-  Shader:
-    name: Shader
-    enabled: true
+      - 1.25
+      - 1.25
   BoxColliderComponent:
     size:
-      - 1
-      - 1
+      - 1.60000002
+      - 1.89999998
       - 3.5999999
     offset:
       - 0
@@ -52,5 +33,90 @@ Components:
   ScriptComponents:
     Script0:
       name: DestroyEnviormentObject
-      fields: ~
-Children: ~
+      fields:
+        onlyMedicaeStimm: false
+Children:
+  - name: wooden box
+    prefabPath: ""
+    uuid: 9278833148931458
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0.029354477301239967
+          - -0.021857764571905136
+          - -0.51018112897872925
+        localRotation:
+          - -1.6364722258140834e-06
+          - 0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 15390588685034517731
+        material:
+          name: wooden barrel and box low_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~
+  - name: DestroyedBox
+    prefabPath: ""
+    uuid: 14973539240180780242
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0.0073143006302416325
+          - -1.3939307928085327
+          - -1.8728695749814506e-07
+        localRotation:
+          - 90.000009659346318
+          - -0
+          - 0
+        localScale:
+          - 0.0060000000521540642
+          - 0.0060000000521540642
+          - 0.0060000000521540642
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 798532158152224588
+        material:
+          name: CajaRota_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 0
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~

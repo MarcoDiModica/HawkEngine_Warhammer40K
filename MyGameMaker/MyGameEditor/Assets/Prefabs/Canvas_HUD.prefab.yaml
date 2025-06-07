@@ -905,16 +905,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.875999987
-          - 0.889999986
+          - 0.856999993
+          - 0.864000022
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.023
-          - 0.0500000007
+          - 0.0399999991
+          - 0.0799999982
           - 1
         pivot_offset:
           - 0
@@ -969,16 +969,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.875999987
-          - 0.889999986
+          - 0.856999993
+          - 0.864000022
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.023
-          - 0.0500000007
+          - 0.0399999991
+          - 0.0799999982
           - 1
         pivot_offset:
           - 0
@@ -1033,16 +1033,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.875999987
-          - 0.889999986
+          - 0.856999993
+          - 0.864000022
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.023
-          - 0.0500000007
+          - 0.0399999991
+          - 0.0799999982
           - 1
         pivot_offset:
           - 0
@@ -1123,70 +1123,6 @@ Children:
         sheet_size:
           - 326
           - 161
-        sprite_offset:
-          - 0
-          - 0
-        anim_speed: 0
-        anim_index: 0
-        anim_index_limit: 0
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-    Children: ~
-  - name: frames
-    prefabPath: ""
-    uuid: 4488032847570964638
-    tag: Untagged
-    active: true
-    isStatic: false
-    Components:
-      Transform_Component:
-        name: Transform_Component
-        enabled: true
-        localPosition:
-          - 0
-          - 0
-          - 0
-        localRotation:
-          - 0
-          - -0
-          - 0
-        localScale:
-          - 1
-          - 1
-          - 1
-      UITransformComponent:
-        name: UITransformComponent
-        enabled: true
-        position:
-          - 0.847000003
-          - 0.887000024
-          - 0
-        rotation:
-          - 0
-          - 0
-          - 0
-        scale:
-          - 0.0529999994
-          - 0.057
-          - 1
-        pivot_offset:
-          - 0
-          - 0
-          - 0
-      UIImageComponent:
-        name: UIImageComponent
-        enabled: true
-        texture_path: Library/Textures/UI/powerup_frame.png
-        use_animation: false
-        sprite_size:
-          - 292
-          - 152
-        sheet_size:
-          - 292
-          - 152
         sprite_offset:
           - 0
           - 0
@@ -3126,4 +3062,132 @@ Children:
         spriteOffset:
           - 0
           - 0
+    Children: ~
+  - name: CDBar
+    prefabPath: ""
+    uuid: 18236396951390873568
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.856999993
+          - 0.940999985
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.0430000015
+          - 0.0759999901
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Assets/default.png
+        use_animation: false
+        sprite_size:
+          - 1024
+          - 1024
+        sheet_size:
+          - 1024
+          - 1024
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 0
+          - 0
+          - 0
+          - 0.671000004
+    Children: ~
+  - name: frames
+    prefabPath: ""
+    uuid: 4488032847570964638
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.853999972
+          - 0.860000014
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.0469999984
+          - 0.0869999975
+          - 1
+        pivot_offset:
+          - 0
+          - 0
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\powerup_frame2.png
+        use_animation: false
+        sprite_size:
+          - 136
+          - 152
+        sheet_size:
+          - 136
+          - 152
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~

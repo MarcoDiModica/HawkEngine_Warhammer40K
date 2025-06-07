@@ -141,7 +141,7 @@ GameObject3:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 757.61553955078125
+        - 792.50701904296875
         - 313.69210815429688
         - -155.37333679199219
       localRotation:
@@ -188,15 +188,7 @@ GameObject4:
     ScriptComponents:
       Script0:
         name: DropManager
-        fields:
-          MagnetPrefab: Assets\Prefabs\magnetPrefab.prefab.yaml
-          BlackHeartPrefab: Assets\Prefabs\BlackHeartPrefab.prefab.yaml
-          AmmunitionBlessingPrefab: Assets\Prefabs\AmmunitionBlessingPrefab.prefab.yaml
-          ChapterStandardPrefab: Assets\Prefabs\ChapterStandardPrefab.prefab.yaml
-          ShotgunShellsPrefab: Assets\Prefabs\ShotgunShellsNew.prefab.yaml
-          BoltgunBulletsPrefab: Assets\Prefabs\BoltgunBulletsNew.prefab.yaml
-          MedicaeStimmPrefab: Assets\Prefabs\MedicaeStimmPrefab.prefab.yaml
-          PiercingBulletsPrefab: Assets\Prefabs\PiercingBulletsPrefab.prefab.yaml
+        fields: ~
   Children: ~
 GameObject5:
   name: Light_Next_Level
@@ -478,9 +470,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 0.786798716
+          floatSpeed: 1.94463181
           floatHeight: 0.5
-          rotationSpeed: 80.2742462
+          rotationSpeed: 44.8732338
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -586,9 +578,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 1.49676585
+          floatSpeed: 1.82976985
           floatHeight: 0.5
-          rotationSpeed: 81.669899
+          rotationSpeed: 99.8560638
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -3421,7 +3413,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.764716491463162
+            - 89.760817754253964
             - 0
           localScale:
             - 208.60295104980469
@@ -3672,9 +3664,9 @@ GameObject20:
             - 164.68646240234375
             - 1182.335205078125
           localRotation:
-            - -90.000038218417956
-            - 83.400708653284127
-            - -2.1114590061434899e-05
+            - -90.000052196467152
+            - 83.400692964791972
+            - -3.6803021822784831e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -3714,9 +3706,9 @@ GameObject20:
             - 158.47599792480469
             - 1061.107666015625
           localRotation:
-            - -90.000022329904013
-            - -76.296831728460759
-            - 2.0610074528317326e-05
+            - -90.000022329887898
+            - -76.296840882286389
+            - 2.0610058463586403e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -4680,9 +4672,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.994207611402629
-            - 89.846441578893305
-            - 179.99328211997025
+            - 89.993944301470421
+            - 89.851052787373249
+            - 179.99299831948102
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -4722,9 +4714,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.994207611402629
-            - 89.846441578893305
-            - 179.99328211997025
+            - 89.993944301470421
+            - 89.851052787373249
+            - 179.99299831948102
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5604,9 +5596,9 @@ GameObject20:
             - 201.60006713867188
             - -701.08270263671875
           localRotation:
-            - -90.000009777344786
-            - 80.789757877741891
-            - -1.1490422395121572e-05
+            - -89.99999657384474
+            - 80.78974981347659
+            - -3.4261552652453462e-06
           localScale:
             - 56
             - 56
@@ -5730,9 +5722,9 @@ GameObject20:
             - 109.05261993408203
             - 3582.95361328125
           localRotation:
-            - -8.5567701040473878
-            - -57.209905254181926
-            - -138.90944816177014
+            - -8.5567713767149858
+            - -57.209904822524862
+            - -138.90944749320749
           localScale:
             - 1
             - 1
@@ -6066,9 +6058,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360391534552
-            - 52.153760491639723
-            - -35.460575201138177
+            - 178.33360479206519
+            - 52.153761099889579
+            - -35.460576025032005
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6108,9 +6100,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360391534552
-            - 52.153760491639723
-            - -35.460575201138177
+            - 178.33360479206519
+            - 52.153761099889579
+            - -35.460576025032005
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6150,9 +6142,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360391534552
-            - 52.153760491639723
-            - -35.460575201138177
+            - 178.33360479206519
+            - 52.153761099889579
+            - -35.460576025032005
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -7452,9 +7444,9 @@ GameObject20:
             - 48.267116546630859
             - -1413.0146484375
           localRotation:
-            - 90.000047624140635
-            - 66.469451566834678
-            - -179.99998900386532
+            - 90.000051285823275
+            - 66.469449649343787
+            - 179.99999896010132
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -7578,9 +7570,9 @@ GameObject20:
             - 48.267116546630859
             - 1095.0556640625
           localRotation:
-            - 90.000014487692511
-            - -53.451699924936648
-            - 179.99999270525839
+            - 90.000014487691587
+            - -53.451692681090563
+            - 179.99999270525956
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -11472,9 +11464,9 @@ GameObject23:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.999790973613514
-            - 81.207661526594109
-            - 179.99989715394355
+            - 89.999797830480844
+            - 81.207694085187299
+            - 179.99991257373557
           localScale:
             - 41.956031799316406
             - 53.921905517578125
@@ -11640,9 +11632,9 @@ GameObject23:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.98173597131391
-            - -89.825394077211243
-            - -179.97264327156756
+            - 89.984565361303225
+            - -89.835302211815403
+            - -179.97547778542332
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -11986,9 +11978,9 @@ GameObject23:
             - 72.841552734375
             - 24.207195281982422
           localRotation:
-            - -90.00001575874326
-            - 36.689032293094087
-            - 1.3855652183305059e-05
+            - -90.000010515847961
+            - 36.689039409017241
+            - 1.4322029396627024e-05
           localScale:
             - 59.934867858886719
             - 59.934860229492188
@@ -12490,9 +12482,9 @@ GameObject23:
             - 22.607597351074219
             - -2101.2529296875
           localRotation:
-            - -179.9999913485772
-            - 84.241636004164036
-            - 2.1271356554776735e-05
+            - -179.99999134858226
+            - 84.2415855109587
+            - 2.1271347980752727e-05
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -12532,9 +12524,9 @@ GameObject23:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.1001190616293226
-            - -81.281074119239761
-            - -179.99999153745125
+            - 1.1001229012069618
+            - -81.281074351292119
+            - -179.99999166875196
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -13540,9 +13532,9 @@ GameObject23:
             - 72.816177368164062
             - 17.716598510742188
           localRotation:
-            - -90.000193737143292
-            - -82.523212292504823
-            - 1.5773549266366961e-05
+            - -90.000181498723933
+            - -82.523163076591089
+            - 1.8239280906533197e-06
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -13876,9 +13868,9 @@ GameObject23:
             - 84.565017700195312
             - -2966.651611328125
           localRotation:
-            - -89.995940071494445
-            - -89.76395024726915
-            - -0.0067390759159177286
+            - -89.996720034235324
+            - -89.766200786937063
+            - -0.0059693584004655628
           localScale:
             - 43.324676513671875
             - 43.324676513671875
@@ -14086,9 +14078,9 @@ GameObject23:
             - 148.99980163574219
             - 222.72898864746094
           localRotation:
-            - -15.158003019171982
-            - -65.712734709883506
-            - -74.316807628942172
+            - -15.158007319902184
+            - -65.712721843277919
+            - -74.31680329619185
           localScale:
             - 24.540990829467773
             - 24.540992736816406
@@ -14296,9 +14288,9 @@ GameObject23:
             - 27.166694641113281
             - -2728.593017578125
           localRotation:
-            - 89.999984343925831
-            - -71.216280295099537
-            - -179.99999472841014
+            - 90.000000905047273
+            - -71.216295125466445
+            - 179.9999904412162
           localScale:
             - 110.40802001953125
             - 110.40802001953125
@@ -14338,9 +14330,9 @@ GameObject23:
             - 27.166694641113281
             - -1073.0118408203125
           localRotation:
-            - 89.99997381074671
-            - -66.052893874802578
-            - -179.99996857417514
+            - 89.999980544396763
+            - -66.052905348130082
+            - -179.99997007125407
           localScale:
             - 49.639827728271484
             - 49.63983154296875
@@ -14531,7 +14523,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -14573,7 +14565,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -14615,7 +14607,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -16126,9 +16118,9 @@ GameObject24:
             - 451.7078857421875
             - 9679.166015625
           localRotation:
-            - 89.999974814588398
-            - 73.086972913931362
-            - 179.99999035143418
+            - 89.999983209705363
+            - 73.086970170615672
+            - 179.99999356760304
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -19546,7 +19538,7 @@ GameObject27:
             - 57.399997711181641
           localRotation:
             - 0
-            - 82.875066781348494
+            - 82.875057103326867
             - 0
           localScale:
             - 20.007547378540039
@@ -20568,9 +20560,9 @@ GameObject27:
             - 3.1512765884399414
             - 3.5392885208129883
           localRotation:
-            - 179.84665360680151
-            - -57.007541231787513
-            - -179.97224712510567
+            - 179.84665361984449
+            - -57.007680259566769
+            - -179.97224713057506
           localScale:
             - 4.1512908935546875
             - 8.0131254196166992
@@ -21451,7 +21443,7 @@ GameObject28:
             - 13.974271774291992
           localRotation:
             - -1.6902280382883206
-            - -30.665043002100798
+            - -30.665043002100795
             - 0.65932810957335963
           localScale:
             - 31.360137939453125
@@ -22894,7 +22886,7 @@ GameObject29:
             - -160.05094909667969
           localRotation:
             - 0
-            - 63.749226666872545
+            - 63.749229862193133
             - 0
           localScale:
             - 24.358108520507812
@@ -23092,7 +23084,7 @@ GameObject29:
             - -72.031135559082031
           localRotation:
             - 0
-            - -69.383029236251048
+            - -69.383040276432098
             - 0
           localScale:
             - 12.133749961853027
@@ -23851,7 +23843,7 @@ GameObject29:
             - -148.216064453125
           localRotation:
             - 179.99999499104374
-            - 25.858725770479122
+            - 25.858725770479126
             - 179.99999499104374
           localScale:
             - 10.84910774230957
@@ -24445,7 +24437,7 @@ GameObject29:
             - -57.019905090332031
           localRotation:
             - 0
-            - -21.351410654346925
+            - -21.351410654346921
             - 0
           localScale:
             - 6.2044053077697754
@@ -27138,9 +27130,9 @@ GameObject32:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.21053088
+          floatSpeed: 0.842956305
           floatHeight: 0.5
-          rotationSpeed: 53.6725616
+          rotationSpeed: 77.3092422
   Children: ~
 GameObject33:
   name: BiblePage_Pueblo
@@ -27223,9 +27215,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.64425504
+          floatSpeed: 1.49845195
           floatHeight: 0.5
-          rotationSpeed: 97.9647598
+          rotationSpeed: 98.7982712
   Children: ~
 GameObject34:
   name: BiblePage_Pasillo_Zona3
@@ -27308,9 +27300,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.724672735
+          floatSpeed: 1.95647991
           floatHeight: 0.5
-          rotationSpeed: 99.6249542
+          rotationSpeed: 63.6253014
   Children: ~
 GameObject35:
   name: BiblePage_Ciudad
@@ -27393,9 +27385,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.8983953
+          floatSpeed: 1.18856323
           floatHeight: 0.5
-          rotationSpeed: 87.6631622
+          rotationSpeed: 60.787632
   Children: ~
 GameObject36:
   name: Barril_Ciudad1
@@ -27454,7 +27446,6 @@ GameObject36:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
   Children: ~
 GameObject37:
   name: CajaMadera1
@@ -27513,2959 +27504,8 @@ GameObject37:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
   Children: ~
 GameObject38:
-  name: WoodenBox_Lvl1_prefab_1_Instance
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 9726286790553890997
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 2.7792112827301025
-        - 0
-        - 32.735343933105469
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject39:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 7509371015811957994
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 6.3597269058227539
-        - -0.75836801528930664
-        - 35.450756072998047
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject40:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance2
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 11706562384886485953
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 112.22414398193359
-        - -0.7485816478729248
-        - 183.5146484375
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject41:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance3
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 7857790858502353682
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 170.44773864746094
-        - -0.75836801528930664
-        - -120.97468566894531
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject42:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance4
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 15459000476893068880
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 170.33583068847656
-        - -0.75836801528930664
-        - -118.10614013671875
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject43:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance5
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 5900280760547387881
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 178.27116394042969
-        - -0.29769116640090942
-        - -193.10540771484375
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927782773971558
-        - 0.93927782773971558
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject44:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance7
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 12448204157250296454
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 121.72533416748047
-        - -0.48384988307952881
-        - -159.99073791503906
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927782773971558
-        - 0.93927782773971558
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject45:
-  name: WoodenBox_Lvl1_prefab_1_Instance2
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 6646766820661074240
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 109.69593811035156
-        - 0
-        - 179.3046875
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject46:
-  name: WoodenBox_Lvl1_prefab_1_Instance3
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 16056271152069202761
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 107.51467132568359
-        - 0
-        - 179.38980102539062
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject47:
-  name: WoodenBox_Lvl1_prefab_1_Instance4
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 17637745619214778594
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 125.39199829101562
-        - 0
-        - -165.59013366699219
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject48:
-  name: WoodenBox_Lvl1_prefab_1_Instance5
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 14511974425521706872
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 219.27943420410156
-        - 0
-        - -156.20794677734375
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject49:
-  name: WoodenBox_Lvl1_prefab_1_Instance6
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 18172351005379752944
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 219.33662414550781
-        - 0
-        - -158.94956970214844
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject50:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance6
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 17548476289829104061
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 258.02572631835938
-        - -0.75836801528930664
-        - -24.109403610229492
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject51:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance8
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 17890041756171014392
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 257.992919921875
-        - -0.75836801528930664
-        - -21.827489852905273
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject52:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance9
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 4611587163600872651
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 239.69972229003906
-        - -0.75836801528930664
-        - 100.12908172607422
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject53:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance10
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 11324525816701951823
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 236.84002685546875
-        - -0.75836801528930664
-        - 100.16268920898438
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject54:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance11
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 4464613921066834496
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 233.61639404296875
-        - -0.75836801528930664
-        - 97.212814331054688
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject55:
-  name: WoodenBox_Lvl1_prefab_1_Instance7
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 2642231037596584265
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 230.93203735351562
-        - -0.70651096105575562
-        - 93.790374755859375
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject56:
-  name: WoodenBox_Lvl1_prefab_1_Instance8
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 4110664580697386148
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 204.79583740234375
-        - 0
-        - -9.1236495971679688
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject57:
-  name: WoodenBox_Lvl1_prefab_1_Instance10
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 11083649627917969273
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 352.48831176757812
-        - -0.74600815773010254
-        - 35.540447235107422
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject58:
-  name: WoodenBox_Lvl1_prefab_1_Instance9
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 7028110019379960124
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 352.50997924804688
-        - -0.72083055973052979
-        - 29.828231811523438
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject59:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance12
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 751853074333066303
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 352.62344360351562
-        - -0.75836801528930664
-        - 35.986705780029297
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject60:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance13
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 18351686123061089948
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 309.0833740234375
-        - -0.75836801528930664
-        - 43.557201385498047
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject61:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance14
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 14966555036009694350
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 309.13693237304688
-        - -0.75836801528930664
-        - 40.437828063964844
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject62:
-  name: WoodenBox_Lvl1_prefab_1_Instance11
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 3297641706941653502
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 309.72940063476562
-        - 0
-        - 20.104602813720703
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject63:
-  name: WoodenBox_Lvl1_prefab_1_Instance12
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 8707151556399046270
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 515.2091064453125
-        - -0.35338044166564941
-        - 11.743616104125977
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject64:
-  name: WoodenBox_Lvl1_prefab_1_Instance13
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 2572722586186902458
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 518.5682373046875
-        - -0.44067096710205078
-        - 11.870915412902832
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject65:
-  name: WoodenBox_Lvl1_prefab_1_Instance14
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 15260479631605604105
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 539.6217041015625
-        - 0
-        - -0.13791513442993164
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject66:
-  name: WoodenBox_Lvl1_prefab_1_Instance15
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 1761705968656073743
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 533.363525390625
-        - 0
-        - 40.622840881347656
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject67:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance15
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 15685680589564239364
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 527.86065673828125
-        - -0.75836604833602905
-        - 39.086906433105469
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.9392777681350708
-        - 0.9392777681350708
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject68:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance16
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 2101947792869653559
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 614.91754150390625
-        - -0.47663795948028564
-        - -29.957344055175781
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject69:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance17
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 2467082204938493536
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 609.42919921875
-        - -0.4357140064239502
-        - -29.926408767700195
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject70:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance18
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 6851669711685218031
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 675.30438232421875
-        - -0.42959785461425781
-        - 16.094764709472656
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject71:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance19
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 9998104352371698596
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 677.24468994140625
-        - -0.23523664474487305
-        - -14.52475643157959
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject72:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance20
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 9714354382117276476
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 680.40704345703125
-        - -0.35196089744567871
-        - -11.545186042785645
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject73:
-  name: WoodenBox_Lvl1_prefab_1_Instance16
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 558428340058530888
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 753.93914794921875
-        - -0.19374275207519531
-        - -60.117321014404297
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject74:
-  name: WoodenBox_Lvl1_prefab_1_Instance17
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 12505659688192311053
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 757.03753662109375
-        - -0.21484410762786865
-        - -59.712287902832031
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject75:
-  name: WoodenBox_Lvl1_prefab_1_Instance18
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 15276765024367269796
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 770.14654541015625
-        - -0.14824485778808594
-        - -27.996465682983398
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject76:
-  name: WoodenBox_Lvl1_prefab_1_Instance19
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 12925926025229406409
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 826.3577880859375
-        - -0.30742931365966797
-        - -87.365646362304688
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject77:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance21
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 6504112867368702485
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 830.38177490234375
-        - -0.15692877769470215
-        - -84.72021484375
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject78:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance22
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 13039953132713225881
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 849.423828125
-        - -0.092464685440063477
-        - -113.17017364501953
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject79:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance23
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 6891093086614268275
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 881.715087890625
-        - -0.33859491348266602
-        - -133.05824279785156
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject80:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance24
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 10837150866028824432
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 882.47100830078125
-        - -0.17079097032546997
-        - -136.68092346191406
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject81:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance25
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 9416904133431861253
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 879.7322998046875
-        - -0.24787533283233643
-        - -135.47238159179688
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject82:
-  name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance26
-  prefabPath: Assets\Prefabs\barrel.prefab.yaml
-  uuid: 10642354337712912552
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 892.4476318359375
-        - -0.23356080055236816
-        - -175.58146667480469
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 0.93927830457687378
-        - 0.93927788734436035
-        - 0.93927788734436035
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2636676250237563408
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 2.5999999
-      offset:
-        - 0
-        - 1
-        - -1.39999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject83:
-  name: WoodenBox_Lvl1_prefab_1_Instance20
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 1432907323310651166
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 846.08282470703125
-        - 0
-        - -122.25711059570312
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject84:
-  name: WoodenBox_Lvl1_prefab_1_Instance21
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 8013950512391696716
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 844.816650390625
-        - 0
-        - -167.28361511230469
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject85:
-  name: WoodenBox_Lvl1_prefab_1_Instance22
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 14152872320684742304
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 843.83758544921875
-        - 0
-        - -163.38978576660156
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject86:
-  name: WoodenBox_Lvl1_prefab_1_Instance23
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 5652551112588917975
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 896.62030029296875
-        - -0.42864561080932617
-        - -177.27033996582031
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject87:
-  name: WoodenBox_Lvl1_prefab_1_Instance24
-  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-  uuid: 14058939959578519985
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 889.2530517578125
-        - -0.18463635444641113
-        - -179.27313232421875
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.25
-        - 1.25
-        - 1.25
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 15390588685034517731
-      material:
-        name: wooden barrel and box low_DefaultMaterial_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 3.5999999
-      offset:
-        - 0
-        - 1
-        - 1.89999998
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
-  Children: ~
-GameObject88:
   name: Libreria_Sergi_2
   prefabPath: ""
   uuid: 17767478740692298239
@@ -31890,9 +28930,9 @@ GameObject88:
             - 0
             - -25.443840026855469
           localRotation:
-            - 89.989763170018961
-            - 89.870911130330072
-            - 179.99088844437216
+            - 89.991087469328818
+            - 89.869206249280353
+            - 179.99220932865222
           localScale:
             - 86.512344360351562
             - 99.999984741210938
@@ -31932,9 +28972,9 @@ GameObject88:
             - 341.29437255859375
             - 124.93968963623047
           localRotation:
-            - 89.984230786029045
-            - 89.941151623018172
-            - 179.98400880485457
+            - 89.987352518093786
+            - 89.941301645768817
+            - 179.98712029163431
           localScale:
             - 96.124794006347656
             - 99.999984741210938
@@ -32353,7 +29393,7 @@ GameObject88:
             - -869.0504150390625
           localRotation:
             - 90
-            - 89.773028883927211
+            - 89.765165986091674
             - 0
           localScale:
             - 100
@@ -33066,9 +30106,9 @@ GameObject88:
             - 19.999998092651367
             - -924.02191162109375
           localRotation:
-            - -90.000024148367501
-            - 0.061903307796832042
-            - -1.2539520883426609e-09
+            - -90.000024148366222
+            - 0.061903395051714188
+            - 1.104269160071915e-09
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -33486,9 +30526,9 @@ GameObject88:
             - 0
             - -443.06002807617188
           localRotation:
-            - 89.999981116036011
-            - 78.583664532628461
-            - 179.99998454814906
+            - 89.999987980246857
+            - 78.58365251289834
+            - 179.99997768390736
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -33528,9 +30568,9 @@ GameObject88:
             - 0
             - -346.2620849609375
           localRotation:
-            - 90.000032238327037
-            - -74.941239767902985
-            - -179.99995473041133
+            - 90.000032238323755
+            - -74.941231903828864
+            - -179.99995473040573
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -33780,9 +30820,9 @@ GameObject88:
             - 0
             - -469.199462890625
           localRotation:
-            - -90.000056103600002
-            - 65.587224437805361
-            - -2.4656809638720077e-05
+            - -90.000059268101438
+            - 65.587229349345165
+            - -2.9568355432569616e-05
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -34704,9 +31744,9 @@ GameObject88:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075433400077898e-05
-            - -79.275327825096156
-            - -90.000097096917941
+            - 6.5631866030008525e-05
+            - -79.275324394992722
+            - -90.000117083456601
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -34746,9 +31786,9 @@ GameObject88:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075433400077898e-05
-            - -79.275327825096156
-            - -90.000097096917941
+            - 6.5631866030008525e-05
+            - -79.275324394992722
+            - -90.000117083456601
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -35151,7 +32191,7 @@ GameObject88:
           name: Shader
           enabled: true
       Children: ~
-GameObject89:
+GameObject39:
   name: MarcoMountain3
   prefabPath: ""
   uuid: 8915518843896011968
@@ -35194,7 +32234,7 @@ GameObject89:
       name: Shader
       enabled: true
   Children: ~
-GameObject90:
+GameObject40:
   name: MarcoMountain3_copy
   prefabPath: ""
   uuid: 13726513105440586735
@@ -35237,7 +32277,7 @@ GameObject90:
       name: Shader
       enabled: true
   Children: ~
-GameObject91:
+GameObject41:
   name: MarcoMountain2
   prefabPath: ""
   uuid: 14353319690858754280
@@ -35280,7 +32320,7 @@ GameObject91:
       name: Shader
       enabled: true
   Children: ~
-GameObject92:
+GameObject42:
   name: MarcoMountain2_copy
   prefabPath: ""
   uuid: 8276685103514901801
@@ -35323,7 +32363,7 @@ GameObject92:
       name: Shader
       enabled: true
   Children: ~
-GameObject93:
+GameObject43:
   name: Misil
   prefabPath: ""
   uuid: 1397582365289659554
@@ -35366,7 +32406,7 @@ GameObject93:
       name: Shader
       enabled: true
   Children: ~
-GameObject94:
+GameObject44:
   name: Pablo_Tree2.001
   prefabPath: ""
   uuid: 784030682861532702
@@ -35409,7 +32449,7 @@ GameObject94:
       name: Shader
       enabled: true
   Children: ~
-GameObject95:
+GameObject45:
   name: Pablo_Tree3.001
   prefabPath: ""
   uuid: 3252013751614114584
@@ -35452,7 +32492,7 @@ GameObject95:
       name: Shader
       enabled: true
   Children: ~
-GameObject96:
+GameObject46:
   name: Pablo_Tree2.001_copy
   prefabPath: ""
   uuid: 18135097142428503895
@@ -35495,7 +32535,7 @@ GameObject96:
       name: Shader
       enabled: true
   Children: ~
-GameObject97:
+GameObject47:
   name: Pablo_Tree2.001_copy_1
   prefabPath: ""
   uuid: 11214976717995630969
@@ -35538,7 +32578,7 @@ GameObject97:
       name: Shader
       enabled: true
   Children: ~
-GameObject98:
+GameObject48:
   name: Pablo_Tree3.001_copy
   prefabPath: ""
   uuid: 15862027785531824801
@@ -35581,7 +32621,7 @@ GameObject98:
       name: Shader
       enabled: true
   Children: ~
-GameObject99:
+GameObject49:
   name: Pablo_Tree2.001_copy_copy
   prefabPath: ""
   uuid: 5231950480646788899
@@ -35624,7 +32664,7 @@ GameObject99:
       name: Shader
       enabled: true
   Children: ~
-GameObject100:
+GameObject50:
   name: Collider_Edificio1_copy
   prefabPath: ""
   uuid: 7617393014618248412
@@ -35658,7 +32698,7 @@ GameObject100:
         - 0
       isTrigger: false
   Children: ~
-GameObject101:
+GameObject51:
   name: Collider_Edificio1_copy_copy
   prefabPath: ""
   uuid: 6670919086958937281
@@ -35692,7 +32732,7 @@ GameObject101:
         - 0
       isTrigger: false
   Children: ~
-GameObject102:
+GameObject52:
   name: Collider_Edificio2_copy
   prefabPath: ""
   uuid: 11693493890766305553
@@ -35726,7 +32766,7 @@ GameObject102:
         - 0
       isTrigger: false
   Children: ~
-GameObject103:
+GameObject53:
   name: Collider_Edificio2_copy_copy
   prefabPath: ""
   uuid: 14937727305374113894
@@ -35760,7 +32800,7 @@ GameObject103:
         - 0
       isTrigger: false
   Children: ~
-GameObject104:
+GameObject54:
   name: Collider_Edificio2_copy_copy_1
   prefabPath: ""
   uuid: 831026431805089753
@@ -35794,7 +32834,7 @@ GameObject104:
         - 0
       isTrigger: false
   Children: ~
-GameObject105:
+GameObject55:
   name: Collider_Edificio2_copy_copy_copy
   prefabPath: ""
   uuid: 4761233815932647963
@@ -35828,7 +32868,7 @@ GameObject105:
         - 0
       isTrigger: false
   Children: ~
-GameObject106:
+GameObject56:
   name: Collider_Edificio2_2_copy
   prefabPath: ""
   uuid: 747472004670192385
@@ -35862,7 +32902,7 @@ GameObject106:
         - 0
       isTrigger: false
   Children: ~
-GameObject107:
+GameObject57:
   name: Cube.001
   prefabPath: ""
   uuid: 18166192238654885154
@@ -35905,7 +32945,7 @@ GameObject107:
       name: Shader
       enabled: true
   Children: ~
-GameObject108:
+GameObject58:
   name: Statue ISE
   prefabPath: ""
   uuid: 13473198104926902521
@@ -35943,9 +32983,9 @@ GameObject108:
         name: Item
         fields:
           isTextVisible: false
-          dialogueText: There is an audio log./n"Here... kzzzt Soldier John Dou, 10th Infantry"./n"The Tyranids are taking more and more territory, we can't hold them back..."/n*Distant explosion. Gunfire in the background.*/n"(gasp) We're falling back. The library... It's the only safe place left"/n"We're entrenched, but I don't know how much longer we can hold..."/n*Tyranid noises in the distance.*/n"Retreat! Retreat!"/n"If anyone hears this... kzzzt may the Emperor protect us."/nThe transmission cuts off./f
+          dialogueText: Esto es parte 1/nAhora parte 2/nFinalmente parte 3/f
   Children: ~
-GameObject109:
+GameObject59:
   name: ClawsISE
   prefabPath: ""
   uuid: 5818929705644964628
@@ -35983,9 +33023,9 @@ GameObject109:
         name: Item
         fields:
           isTextVisible: false
-          dialogueText: The marks of a creature's attack./f
+          dialogueText: Esto es parte 1/nAhora parte 2/nFinalmente parte 3/f
   Children: ~
-GameObject110:
+GameObject60:
   name: Canvas_OptionsMenu
   prefabPath: Assets\Prefabs\Canvas_OptionsMenu.prefab.yaml
   uuid: 2164386902305167382
@@ -37992,7 +35032,7 @@ GameObject110:
             - 1
             - 1
       Children: ~
-GameObject111:
+GameObject61:
   name: TermagantBColliderPrefab_Instance
   prefabPath: Assets\Prefabs\TermagantBColliderPrefab.prefab.yaml
   uuid: 8770736101472636265
@@ -39603,7 +36643,7 @@ GameObject111:
                                     - 1
                                     - 1
                               Children: ~
-GameObject112:
+GameObject62:
   name: TWarriorBColliderPrefab_Instance
   prefabPath: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
   uuid: 14484042400935160439
@@ -41444,7 +38484,7 @@ GameObject112:
                                         - 1
                                         - 1
                                   Children: ~
-GameObject113:
+GameObject63:
   name: TermagantBColliderPrefab_Instance2
   prefabPath: Assets\Prefabs\TermagantBColliderPrefab (1).prefab.yaml
   uuid: 10640554401568185472
@@ -43055,7 +40095,7 @@ GameObject113:
                                     - 1
                                     - 1
                               Children: ~
-GameObject114:
+GameObject64:
   name: TWarriorBColliderPrefab_Instance2
   prefabPath: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
   uuid: 12161109127945049066
@@ -44896,7 +41936,7 @@ GameObject114:
                                         - 1
                                         - 1
                                   Children: ~
-GameObject115:
+GameObject65:
   name: TermagantBColliderPrefab_Instance3
   prefabPath: Assets\Prefabs\TermagantBColliderPrefab.prefab.yaml
   uuid: 12869994003619074492
@@ -46507,7 +43547,7 @@ GameObject115:
                                     - 1
                                     - 1
                               Children: ~
-GameObject116:
+GameObject66:
   name: TWarriorBColliderPrefab_Instance3
   prefabPath: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
   uuid: 6319486607026283397
@@ -48348,7 +45388,7 @@ GameObject116:
                                         - 1
                                         - 1
                                   Children: ~
-GameObject117:
+GameObject67:
   name: TWarriorBColliderPrefab_Instance4
   prefabPath: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
   uuid: 13188273245184250817
@@ -50189,7 +47229,7 @@ GameObject117:
                                         - 1
                                         - 1
                                   Children: ~
-GameObject118:
+GameObject68:
   name: TWarriorBColliderPrefab_Instance5
   prefabPath: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
   uuid: 8111797364521967134
@@ -52030,7 +49070,7 @@ GameObject118:
                                         - 1
                                         - 1
                                   Children: ~
-GameObject119:
+GameObject69:
   name: TermagantBColliderPrefab_Instance4
   prefabPath: Assets\Prefabs\TermagantBColliderPrefab.prefab.yaml
   uuid: 17830980644627765106
@@ -53641,7 +50681,7 @@ GameObject119:
                                     - 1
                                     - 1
                               Children: ~
-GameObject120:
+GameObject70:
   name: TermagantBColliderPrefab_Instance5
   prefabPath: Assets\Prefabs\TermagantBColliderPrefab.prefab.yaml
   uuid: 12864962186389674150
@@ -55252,7 +52292,7 @@ GameObject120:
                                     - 1
                                     - 1
                               Children: ~
-GameObject121:
+GameObject71:
   name: niebla
   prefabPath: ""
   uuid: 216413949403326497
@@ -55326,7 +52366,7 @@ GameObject121:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject122:
+GameObject72:
   name: niebla_1
   prefabPath: ""
   uuid: 2224171210041641758
@@ -55400,7 +52440,7 @@ GameObject122:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject123:
+GameObject73:
   name: niebla_2
   prefabPath: ""
   uuid: 10103092373147595627
@@ -55474,7 +52514,7 @@ GameObject123:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject124:
+GameObject74:
   name: niebla_3
   prefabPath: ""
   uuid: 9029708812861586945
@@ -55548,7 +52588,7 @@ GameObject124:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject125:
+GameObject75:
   name: niebla_4
   prefabPath: ""
   uuid: 10536053615790440960
@@ -55622,7 +52662,7 @@ GameObject125:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject126:
+GameObject76:
   name: niebla_5
   prefabPath: ""
   uuid: 731947215233105101
@@ -55696,7 +52736,7 @@ GameObject126:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject127:
+GameObject77:
   name: niebla_6
   prefabPath: ""
   uuid: 9508416278347018144
@@ -55770,7 +52810,7 @@ GameObject127:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject128:
+GameObject78:
   name: niebla_7
   prefabPath: ""
   uuid: 16077730398484303198
@@ -55844,7 +52884,7 @@ GameObject128:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject129:
+GameObject79:
   name: niebla_8
   prefabPath: ""
   uuid: 4645654447411526786
@@ -55918,7 +52958,7 @@ GameObject129:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject130:
+GameObject80:
   name: niebla_9
   prefabPath: ""
   uuid: 3244302606388155532
@@ -55992,7 +53032,7 @@ GameObject130:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject131:
+GameObject81:
   name: niebla_10
   prefabPath: ""
   uuid: 16932495380773345724
@@ -56066,7 +53106,7 @@ GameObject131:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject132:
+GameObject82:
   name: niebla_11
   prefabPath: ""
   uuid: 16106028467944845601
@@ -56140,7 +53180,7 @@ GameObject132:
         texturePath: Assets/Textures/niebla30Frames.png
       particleType: 33
   Children: ~
-GameObject133:
+GameObject83:
   name: Hormagaunt
   prefabPath: Assets/Prefabs/Hormagaunt.prefab.yaml
   uuid: 7417968142418403327
@@ -57810,7 +54850,7 @@ GameObject133:
                                     - 1.0000003390230661
                                     - 1.0000000839263274
                               Children: ~
-GameObject134:
+GameObject84:
   name: Hormagaunt_1_Instance
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 4148571943544012834
@@ -59417,7 +56457,7 @@ GameObject134:
                                     - 1
                                     - 1
                               Children: ~
-GameObject135:
+GameObject85:
   name: Hormagaunt_1_Instance2
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 6742478964426490707
@@ -61024,7 +58064,7 @@ GameObject135:
                                     - 1
                                     - 1
                               Children: ~
-GameObject136:
+GameObject86:
   name: Hormagaunt_1_Instance3
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 11440517040959366132
@@ -62631,7 +59671,7 @@ GameObject136:
                                     - 1
                                     - 1
                               Children: ~
-GameObject137:
+GameObject87:
   name: Hormagaunt_1_Instance4
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 8241453012028387906
@@ -64238,7 +61278,7 @@ GameObject137:
                                     - 1
                                     - 1
                               Children: ~
-GameObject138:
+GameObject88:
   name: Hormagaunt_1_Instance5
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 1771158132173550310
@@ -65845,7 +62885,7 @@ GameObject138:
                                     - 1
                                     - 1
                               Children: ~
-GameObject139:
+GameObject89:
   name: Hormagaunt_1_Instance6
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 574415872201069662
@@ -67452,7 +64492,7 @@ GameObject139:
                                     - 1
                                     - 1
                               Children: ~
-GameObject140:
+GameObject90:
   name: Hormagaunt_1_Instance7
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 7391176766029426896
@@ -69059,7 +66099,7 @@ GameObject140:
                                     - 1
                                     - 1
                               Children: ~
-GameObject141:
+GameObject91:
   name: Hormagaunt_1_Instance8
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 7292980984981196410
@@ -70666,7 +67706,7 @@ GameObject141:
                                     - 1
                                     - 1
                               Children: ~
-GameObject142:
+GameObject92:
   name: Hormagaunt_1_Instance9
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 10024796770625895607
@@ -72273,7 +69313,7 @@ GameObject142:
                                     - 1
                                     - 1
                               Children: ~
-GameObject143:
+GameObject93:
   name: Hormagaunt_1_Instance10
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 13060096831599190986
@@ -73880,7 +70920,7 @@ GameObject143:
                                     - 1
                                     - 1
                               Children: ~
-GameObject144:
+GameObject94:
   name: Hormagaunt_1_Instance11
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 1707640671069553277
@@ -75487,7 +72527,7 @@ GameObject144:
                                     - 1
                                     - 1
                               Children: ~
-GameObject145:
+GameObject95:
   name: Hormagaunt_1_Instance12
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 16686011334917666939
@@ -77094,7 +74134,7 @@ GameObject145:
                                     - 1
                                     - 1
                               Children: ~
-GameObject146:
+GameObject96:
   name: Hormagaunt_1_Instance13
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 6205087639851069783
@@ -78701,7 +75741,7 @@ GameObject146:
                                     - 1
                                     - 1
                               Children: ~
-GameObject147:
+GameObject97:
   name: Hormagaunt_1_Instance14
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 7308197113675174675
@@ -80308,7 +77348,7 @@ GameObject147:
                                     - 1
                                     - 1
                               Children: ~
-GameObject148:
+GameObject98:
   name: Hormagaunt_1_Instance15
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 16765757649118054933
@@ -81915,7 +78955,7 @@ GameObject148:
                                     - 1
                                     - 1
                               Children: ~
-GameObject149:
+GameObject99:
   name: Hormagaunt_1_Instance16
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 17996600457875003728
@@ -83522,7 +80562,7 @@ GameObject149:
                                     - 1
                                     - 1
                               Children: ~
-GameObject150:
+GameObject100:
   name: Hormagaunt_1_Instance17
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 18325591665860736127
@@ -85129,7 +82169,7 @@ GameObject150:
                                     - 1
                                     - 1
                               Children: ~
-GameObject151:
+GameObject101:
   name: Hormagaunt_1_Instance18
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 1926358541611559493
@@ -86736,7 +83776,7 @@ GameObject151:
                                     - 1
                                     - 1
                               Children: ~
-GameObject152:
+GameObject102:
   name: Hormagaunt_1_Instance19
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 3599268846492380028
@@ -88343,7 +85383,7 @@ GameObject152:
                                     - 1
                                     - 1
                               Children: ~
-GameObject153:
+GameObject103:
   name: Hormagaunt_1_Instance20
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 5260323047292257298
@@ -89950,7 +86990,7 @@ GameObject153:
                                     - 1
                                     - 1
                               Children: ~
-GameObject154:
+GameObject104:
   name: Hormagaunt_1_Instance21
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 8840209521303313163
@@ -91557,7 +88597,7 @@ GameObject154:
                                     - 1
                                     - 1
                               Children: ~
-GameObject155:
+GameObject105:
   name: Hormagaunt_1_Instance22
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 14732183213394411251
@@ -93164,7 +90204,7 @@ GameObject155:
                                     - 1
                                     - 1
                               Children: ~
-GameObject156:
+GameObject106:
   name: Hormagaunt_1_Instance23
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 13748905221402601075
@@ -94771,7 +91811,7 @@ GameObject156:
                                     - 1
                                     - 1
                               Children: ~
-GameObject157:
+GameObject107:
   name: Hormagaunt_1_Instance24
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 2865731208622186373
@@ -96378,7 +93418,7 @@ GameObject157:
                                     - 1
                                     - 1
                               Children: ~
-GameObject158:
+GameObject108:
   name: Hormagaunt_1_Instance25
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 1868009602320175666
@@ -97985,7 +95025,7 @@ GameObject158:
                                     - 1
                                     - 1
                               Children: ~
-GameObject159:
+GameObject109:
   name: Hormagaunt_1_Instance26
   prefabPath: Assets\Prefabs\Hormagaunt.prefab.yaml
   uuid: 4252913514676126513
@@ -99592,7 +96632,7 @@ GameObject159:
                                     - 1
                                     - 1
                               Children: ~
-GameObject160:
+GameObject110:
   name: SpawnerClimbingHormagaunt
   prefabPath: Assets/Prefabs/SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 6728732850253370239
@@ -99620,22 +96660,21 @@ GameObject160:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 5
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 2
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject161:
+GameObject111:
   name: SpawnerClimbingHormagaunt_1_Instance
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 1420409606034537124
@@ -99663,22 +96702,21 @@ GameObject161:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 5
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject162:
+GameObject112:
   name: SpawnerClimbingHormagaunt_1_Instance2
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 6986717565944475453
@@ -99706,22 +96744,21 @@ GameObject162:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 5
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 2
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject163:
+GameObject113:
   name: SpawnerClimbingHormagaunt_1_Instance3
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 15444110007630934330
@@ -99749,22 +96786,21 @@ GameObject163:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 10
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject164:
+GameObject114:
   name: SpawnerClimbingHormagaunt_1_Instance4
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 744731945026244590
@@ -99792,22 +96828,21 @@ GameObject164:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 2
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagaunt.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 65
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject165:
+GameObject115:
   name: SpawnerClimbingHormagaunt_1_Instance6
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 5193939022234906693
@@ -99835,22 +96870,21 @@ GameObject165:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 5
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagaunt.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject166:
+GameObject116:
   name: SpawnerClimbingHormagaunt_1_Instance7
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 5095157378474398078
@@ -99878,22 +96912,21 @@ GameObject166:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 2
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 65
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject167:
+GameObject117:
   name: SpawnerClimbingHormagaunt_1_Instance8
   prefabPath: Assets\Prefabs\SpawnerClimbingHormagaunt.prefab.yaml
   uuid: 15820258501899192178
@@ -99921,22 +96954,21 @@ GameObject167:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 2
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 65
+          spawnRadius: 5
           player: Player
   Children: ~
-GameObject168:
+GameObject118:
   name: Medkit
   prefabPath: Assets/Prefabs/Medkit.prefab.yaml
   uuid: 2395089655681620673
@@ -99993,9 +97025,8 @@ GameObject168:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
   Children: ~
-GameObject169:
+GameObject119:
   name: Medkit_1_Instance
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 9417299982244269123
@@ -100052,9 +97083,8 @@ GameObject169:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
   Children: ~
-GameObject170:
+GameObject120:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_Instance
   prefabPath: Assets\Prefabs\barrel.prefab.yaml
   uuid: 1394964808370497272
@@ -100111,9 +97141,8 @@ GameObject170:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
   Children: ~
-GameObject171:
+GameObject121:
   name: Medkit_1_Instance2
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 13558665426562903421
@@ -100170,9 +97199,8 @@ GameObject171:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
   Children: ~
-GameObject172:
+GameObject122:
   name: Medkit_1_Instance3
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 1835144200292419928
@@ -100229,9 +97257,8 @@ GameObject172:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
   Children: ~
-GameObject173:
+GameObject123:
   name: Medkit_1_Instance4
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 15789529315576345182
@@ -100288,9 +97315,8 @@ GameObject173:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
   Children: ~
-GameObject174:
+GameObject124:
   name: Medkit_1_Instance5
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 12034232093523455558
@@ -100347,9 +97373,8 @@ GameObject174:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
-          pawnDestroyedBarrel: false
   Children: ~
-GameObject175:
+GameObject125:
   name: CheckPoint_Instance6
   prefabPath: Assets\Prefabs\CheckPoint.prefab.yaml
   uuid: 6421311150561009010
@@ -100387,7 +97412,7 @@ GameObject175:
         name: Checkpoint
         fields: ~
   Children: ~
-GameObject176:
+GameObject126:
   name: CheckPoint_Instance7
   prefabPath: Assets\Prefabs\CheckPoint.prefab.yaml
   uuid: 14068703732000644303
@@ -100425,7 +97450,7 @@ GameObject176:
         name: Checkpoint
         fields: ~
   Children: ~
-GameObject177:
+GameObject127:
   name: L1Z1_stylized_rock_51.032_level1_copy
   prefabPath: ""
   uuid: 17653790614199481450
@@ -100468,7 +97493,7 @@ GameObject177:
       name: Shader
       enabled: true
   Children: ~
-GameObject178:
+GameObject128:
   name: L1Z1_stylized_rock_51.032_level1_copy_1
   prefabPath: ""
   uuid: 1890984661785808071
@@ -100511,7 +97536,7 @@ GameObject178:
       name: Shader
       enabled: true
   Children: ~
-GameObject179:
+GameObject129:
   name: L1Z1_stylized_rock_51.032_level1_copy_2
   prefabPath: ""
   uuid: 4414708348618523143
@@ -100527,9 +97552,9 @@ GameObject179:
         - 3.2896044254302979
         - 95.662101745605469
       localRotation:
-        - -9.4455227961361796
-        - -57.750504429274216
-        - -138.16007961232918
+        - -9.4455226469603577
+        - -57.750502882185728
+        - -138.16008338243279
       localScale:
         - 0.031276464462280273
         - 0.031276464462280273
@@ -100554,7 +97579,7 @@ GameObject179:
       name: Shader
       enabled: true
   Children: ~
-GameObject180:
+GameObject130:
   name: Collider_Edificio1
   prefabPath: ""
   uuid: 6901655663101121691
@@ -100588,7 +97613,7 @@ GameObject180:
         - 0
       isTrigger: false
   Children: ~
-GameObject181:
+GameObject131:
   name: Collider_Edificio1_copy_1
   prefabPath: ""
   uuid: 5139436668644921095
@@ -100622,7 +97647,7 @@ GameObject181:
         - 0
       isTrigger: false
   Children: ~
-GameObject182:
+GameObject132:
   name: Collider_Edificio1_copy_2
   prefabPath: ""
   uuid: 17997461632804195923
@@ -100656,7 +97681,7 @@ GameObject182:
         - 0
       isTrigger: false
   Children: ~
-GameObject183:
+GameObject133:
   name: Collider_Edificio1_copy_3
   prefabPath: ""
   uuid: 8287970801633723378
@@ -100690,7 +97715,7 @@ GameObject183:
         - 0
       isTrigger: false
   Children: ~
-GameObject184:
+GameObject134:
   name: L1Z1_stylized_rock_51.032_level1_copy_copy
   prefabPath: ""
   uuid: 1511911630058461561
@@ -100733,7 +97758,7 @@ GameObject184:
       name: Shader
       enabled: true
   Children: ~
-GameObject185:
+GameObject135:
   name: Collider_Edificio1_copy_4
   prefabPath: ""
   uuid: 14949878503491691145
@@ -100767,7 +97792,7 @@ GameObject185:
         - 0
       isTrigger: false
   Children: ~
-GameObject186:
+GameObject136:
   name: L1Z1_stylized_rock_51.032_level1_copy_copy_copy
   prefabPath: ""
   uuid: 2941671114678821643
@@ -100810,7 +97835,7 @@ GameObject186:
       name: Shader
       enabled: true
   Children: ~
-GameObject187:
+GameObject137:
   name: Collider_Edificio1_copy_4_copy
   prefabPath: ""
   uuid: 9880108591093153826
@@ -100844,7 +97869,7 @@ GameObject187:
         - 0
       isTrigger: false
   Children: ~
-GameObject188:
+GameObject138:
   name: Collider_Edificio1_copy_4_copy_1
   prefabPath: ""
   uuid: 5375421592587098862
@@ -100878,7 +97903,7 @@ GameObject188:
         - 0
       isTrigger: false
   Children: ~
-GameObject189:
+GameObject139:
   name: Collider_Edificio1_copy_4_copy_copy
   prefabPath: ""
   uuid: 10811469488891096497
@@ -100912,7 +97937,7 @@ GameObject189:
         - 0
       isTrigger: false
   Children: ~
-GameObject190:
+GameObject140:
   name: Collider_Edificio1_copy_4_copy_copy_copy
   prefabPath: ""
   uuid: 6006828437155950486
@@ -100946,7 +97971,7 @@ GameObject190:
         - 0
       isTrigger: false
   Children: ~
-GameObject191:
+GameObject141:
   name: Collider_Piedras_copy
   prefabPath: ""
   uuid: 2029998932891582860
@@ -100980,7 +98005,7 @@ GameObject191:
         - 0
       isTrigger: false
   Children: ~
-GameObject192:
+GameObject142:
   name: Collider_Pilar_1
   prefabPath: ""
   uuid: 10228753773789114147
@@ -101014,7 +98039,7 @@ GameObject192:
         - 0
       isTrigger: false
   Children: ~
-GameObject193:
+GameObject143:
   name: Collider_Pilar_2
   prefabPath: ""
   uuid: 11502327986428984019
@@ -101048,7 +98073,7 @@ GameObject193:
         - 0
       isTrigger: false
   Children: ~
-GameObject194:
+GameObject144:
   name: Collider_Pilar_3
   prefabPath: ""
   uuid: 11303474563928365470
@@ -101082,7 +98107,7 @@ GameObject194:
         - 0
       isTrigger: false
   Children: ~
-GameObject195:
+GameObject145:
   name: Collider_Pilar_4
   prefabPath: ""
   uuid: 9491118739533155679
@@ -101116,7 +98141,7 @@ GameObject195:
         - 0
       isTrigger: false
   Children: ~
-GameObject196:
+GameObject146:
   name: Collider_Pilar_5
   prefabPath: ""
   uuid: 12221860929665498082
@@ -101150,7 +98175,7 @@ GameObject196:
         - 0
       isTrigger: false
   Children: ~
-GameObject197:
+GameObject147:
   name: Collider_Pilar_6
   prefabPath: ""
   uuid: 6767918400856096539
@@ -101184,7 +98209,7 @@ GameObject197:
         - 0
       isTrigger: false
   Children: ~
-GameObject198:
+GameObject148:
   name: Collider_Pilar_7
   prefabPath: ""
   uuid: 12364788708448086590
@@ -101218,7 +98243,7 @@ GameObject198:
         - 0
       isTrigger: false
   Children: ~
-GameObject199:
+GameObject149:
   name: Empty_1
   prefabPath: ""
   uuid: 8924132653665476389
@@ -101252,7 +98277,7 @@ GameObject199:
         - 0
       isTrigger: false
   Children: ~
-GameObject200:
+GameObject150:
   name: Empty_1_copy
   prefabPath: ""
   uuid: 3471145572366966497
@@ -101286,7 +98311,7 @@ GameObject200:
         - 0
       isTrigger: false
   Children: ~
-GameObject201:
+GameObject151:
   name: Empty_1_copy_copy
   prefabPath: ""
   uuid: 14922611500417836264
@@ -101320,7 +98345,7 @@ GameObject201:
         - 0
       isTrigger: false
   Children: ~
-GameObject202:
+GameObject152:
   name: Empty_1_copy_copy_1
   prefabPath: ""
   uuid: 13447501969192581763
@@ -101354,7 +98379,7 @@ GameObject202:
         - 0
       isTrigger: false
   Children: ~
-GameObject203:
+GameObject153:
   name: Empty_1_copy_copy_2
   prefabPath: ""
   uuid: 10481528243400983740
@@ -101388,7 +98413,7 @@ GameObject203:
         - 0
       isTrigger: false
   Children: ~
-GameObject204:
+GameObject154:
   name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy
   prefabPath: ""
   uuid: 14537044896678886014
@@ -101422,7 +98447,7 @@ GameObject204:
         - 0
       isTrigger: false
   Children: ~
-GameObject205:
+GameObject155:
   name: WalkingFX2
   prefabPath: ""
   uuid: 1637197076729346390
@@ -101496,7 +98521,7 @@ GameObject205:
         texturePath: Assets/Textures/bullet.png
       particleType: 51
   Children: ~
-GameObject206:
+GameObject156:
   name: MarcoMountain2_copy_copy
   prefabPath: ""
   uuid: 11029981189555552814
@@ -101539,7 +98564,7 @@ GameObject206:
       name: Shader
       enabled: true
   Children: ~
-GameObject207:
+GameObject157:
   name: terrain.002
   prefabPath: ""
   uuid: 3494249896462899369
@@ -101582,7 +98607,7 @@ GameObject207:
       name: Shader
       enabled: true
   Children: ~
-GameObject208:
+GameObject158:
   name: puertas biblio
   prefabPath: ""
   uuid: 13625894733144353188
@@ -101748,7 +98773,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.861041809637314
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -101790,7 +98815,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.861041809637314
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -101832,7 +98857,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.861041809637314
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -101874,7 +98899,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.861041809637314
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -101916,7 +98941,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.861041809637314
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -101958,7 +98983,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.861041809637314
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -102000,7 +99025,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.861041809637314
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -102026,7 +99051,7 @@ GameObject208:
           name: Shader
           enabled: true
       Children: ~
-GameObject209:
+GameObject159:
   name: VFX_LEAVES
   prefabPath: ""
   uuid: 15542734458733252289
@@ -103364,7 +100389,7 @@ GameObject209:
             texturePath: Assets/Textures/leaf3.png
           particleType: 41
       Children: ~
-GameObject210:
+GameObject160:
   name: Player
   prefabPath: Assets\Prefabs\PlayerFinal.prefab.yaml
   uuid: 6978123148509558407
@@ -105316,7 +102341,7 @@ GameObject210:
                                       shapeParam3: 20
                                       isOneShot: false
                                       isPlaying: true
-                                      isPaused: true
+                                      isPaused: false
                                       burstEmitted: false
                                       spriteSize:
                                         - 100
@@ -106208,7 +103233,7 @@ GameObject210:
             - 1
             - 1
       Children: ~
-GameObject211:
+GameObject161:
   name: townCollider
   prefabPath: ""
   uuid: 14798579812827968759
@@ -106220,7 +103245,7 @@ GameObject211:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 591.57513427734375
+        - 385.5
         - 6.0285167694091797
         - 3.6136293411254883
       localRotation:
@@ -106241,8 +103266,12 @@ GameObject211:
         - 0
         - 0
       isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: MusicManagerLvl1
+        fields: ~
   Children: ~
-GameObject212:
+GameObject162:
   name: pathCollider
   prefabPath: ""
   uuid: 11359895694064491243
@@ -106254,9 +103283,9 @@ GameObject212:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 780.5279541015625
+        - 791
         - 6.0285158157348633
-        - -35.614780426025391
+        - -40
       localRotation:
         - 0
         - -62.050356439729917
@@ -106275,8 +103304,12 @@ GameObject212:
         - 0
         - 0
       isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: MusicManagerLvl1
+        fields: ~
   Children: ~
-GameObject213:
+GameObject163:
   name: crashCollider
   prefabPath: ""
   uuid: 16200001401736738501
@@ -106288,9 +103321,9 @@ GameObject213:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 870.907470703125
+        - 876
         - 6.0284852981567383
-        - -180.30986022949219
+        - -221.60000610351562
       localRotation:
         - 0
         - -40.765364872313604
@@ -106309,8 +103342,12 @@ GameObject213:
         - 0
         - 0
       isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: MusicManagerLvl1
+        fields: ~
   Children: ~
-GameObject214:
+GameObject164:
   name: Cylinder.543_copy
   prefabPath: ""
   uuid: 12763035150620271347
@@ -106353,7 +103390,7 @@ GameObject214:
       name: Shader
       enabled: true
   Children: ~
-GameObject215:
+GameObject165:
   name: L1Z1_stylized_rock_51.002_level1.001_copy
   prefabPath: ""
   uuid: 876239270237829724
@@ -106396,7 +103433,7 @@ GameObject215:
       name: Shader
       enabled: true
   Children: ~
-GameObject216:
+GameObject166:
   name: Cylinder.543_copy_copy
   prefabPath: ""
   uuid: 4808618033828530607
@@ -106439,7 +103476,7 @@ GameObject216:
       name: Shader
       enabled: true
   Children: ~
-GameObject217:
+GameObject167:
   name: L1Z1_Cube.034_level1.014_copy
   prefabPath: ""
   uuid: 14535169718227721254
@@ -106482,7 +103519,7 @@ GameObject217:
       name: Shader
       enabled: true
   Children: ~
-GameObject218:
+GameObject168:
   name: L1Z1_Cylinder.003_level1_copy
   prefabPath: ""
   uuid: 11913910730044421412
@@ -106525,7 +103562,7 @@ GameObject218:
       name: Shader
       enabled: true
   Children: ~
-GameObject219:
+GameObject169:
   name: SpawnCluster1
   prefabPath: ""
   uuid: 8152342458176817840
@@ -106554,9 +103591,9 @@ GameObject219:
         fields:
           spawnerTag: Spawner
           barrierTag: Barrier
-          zoneRadius: 75
-          colliderRadius: 150
-          fallbackDelay: 10
+          zoneRadius: 10
+          colliderRadius: 200
+          fallbackDelay: 5
           isDoorZone: false
   Children:
     - name: SpawnerHormagaunt_Instance
@@ -106586,19 +103623,18 @@ GameObject219:
             name: EnemySpawner
             fields:
               spawnTimer: 0
-              secondsBetweenSpawns: 5
-              firstSpawnTime: 1
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 2
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-              spawnHormagaunt: true
+              spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpikesEntrance
@@ -106944,19 +103980,18 @@ GameObject219:
             name: EnemySpawner
             fields:
               spawnTimer: 0
-              secondsBetweenSpawns: 5
-              firstSpawnTime: 1
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 2
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-              spawnHormagaunt: true
+              spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpawnerTermagant_Instance_Instance
@@ -106987,18 +104022,17 @@ GameObject219:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 13
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
               spawnHormagaunt: false
-              spawnRanged: true
+              spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpawnerTyranidWarrior_Instance_Instance
@@ -107029,18 +104063,17 @@ GameObject219:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 3
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              warriorEnemyPrefab: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
               spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
-              spawnWarrior: true
+              spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpawnerTyranidWarrior_Instance_Instance2
@@ -107071,18 +104104,17 @@ GameObject219:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 3
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              warriorEnemyPrefab: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
               spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
-              spawnWarrior: true
+              spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpawnerLictor_Instance_Instance
@@ -107113,18 +104145,17 @@ GameObject219:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 18
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              stalkerEnemyPrefab: Assets\Prefabs\LictorFinal.prefab.yaml
               spawnHormagaunt: false
               spawnRanged: false
-              spawnStalker: true
+              spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpawnerTermagant_Instance_Instance2
@@ -107155,21 +104186,20 @@ GameObject219:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 13
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
               spawnHormagaunt: false
-              spawnRanged: true
+              spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
+              spawnRadius: 5
               player: Player
       Children: ~
-GameObject220:
+GameObject170:
   name: SpawnCluster2
   prefabPath: ""
   uuid: 9093975599132112965
@@ -107198,9 +104228,9 @@ GameObject220:
         fields:
           spawnerTag: Spawner
           barrierTag: Barrier
-          zoneRadius: 75
-          colliderRadius: 150
-          fallbackDelay: 10
+          zoneRadius: 10
+          colliderRadius: 200
+          fallbackDelay: 5
           isDoorZone: false
   Children:
     - name: SpawnerHormagaunt_Instance4
@@ -107230,19 +104260,18 @@ GameObject220:
             name: EnemySpawner
             fields:
               spawnTimer: 0
-              secondsBetweenSpawns: 5
-              firstSpawnTime: 1
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 2
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-              spawnHormagaunt: true
+              spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 70
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpawnerHormagaunt_Instance3
@@ -107272,19 +104301,18 @@ GameObject220:
             name: EnemySpawner
             fields:
               spawnTimer: 0
-              secondsBetweenSpawns: 5
-              firstSpawnTime: 1
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 2
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-              spawnHormagaunt: true
+              spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 70
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpawnerHormagaunt_Instance6
@@ -107314,19 +104342,18 @@ GameObject220:
             name: EnemySpawner
             fields:
               spawnTimer: 0
-              secondsBetweenSpawns: 5
-              firstSpawnTime: 1
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 2
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-              spawnHormagaunt: true
+              spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 60
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpawnerTermagant_Instance5
@@ -107357,18 +104384,17 @@ GameObject220:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 13
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
               spawnHormagaunt: false
-              spawnRanged: true
+              spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 60
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpawnerTermagant_Instance6
@@ -107399,18 +104425,17 @@ GameObject220:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 13
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
               spawnHormagaunt: false
-              spawnRanged: true
+              spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 70
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpawnerTermagant_Instance3
@@ -107441,18 +104466,17 @@ GameObject220:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 13
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
               spawnHormagaunt: false
-              spawnRanged: true
+              spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 70
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpawnerTyranidWarrior_Instance4
@@ -107483,18 +104507,17 @@ GameObject220:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 3
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              warriorEnemyPrefab: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
               spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
-              spawnWarrior: true
+              spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 60
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpawnerTyranidWarrior_Instance6
@@ -107525,18 +104548,17 @@ GameObject220:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 3
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              warriorEnemyPrefab: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
               spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
-              spawnWarrior: true
+              spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 60
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpawnerLictor_Instance2
@@ -107567,18 +104589,17 @@ GameObject220:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 22
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              stalkerEnemyPrefab: Assets\Prefabs\LictorFinal.prefab.yaml
               spawnHormagaunt: false
               spawnRanged: false
-              spawnStalker: true
+              spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 60
+              spawnRadius: 5
               player: Player
       Children: ~
     - name: SpikesEntrance
@@ -107739,7 +104760,155 @@ GameObject220:
                 - 99.999968390005066
                 - 99.999968710129224
           Children: ~
-GameObject221:
+    - name: SpikesExit
+      prefabPath: Assets\Prefabs\Spikes.prefab.yaml
+      uuid: 18102741079386597959
+      tag: Barrier
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 4.9267578125
+            - -0.43140935897827148
+            - -57.789840698242188
+          localRotation:
+            - 179.99999499104513
+            - 75.55826852264201
+            - 179.99999499104513
+          localScale:
+            - 0.015792123973369598
+            - 0.015792122110724449
+            - 0.015792123973369598
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17503220316710404104
+          material:
+            name: tyranid_spike_lowpoly_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          bone_names:
+            - 4
+            - 2
+            - 3
+            - 1
+          animation_file: skeletal_anim_SpikesExit
+        ScriptComponents:
+          Script0:
+            name: SpikeAnimation
+            fields:
+              isAnimFinished: false
+      Children:
+        - name: 4
+          prefabPath: ""
+          uuid: 12910885905224391271
+          tag: Untagged
+          active: true
+          isStatic: false
+          Components:
+            Transform_Component:
+              name: Transform_Component
+              enabled: true
+              localPosition:
+                - -3.4055063053983758e-05
+                - -1148.6782130388344
+                - -400.00001913675078
+              localRotation:
+                - -5.182853726153466e-13
+                - 2.7512978363865295e-07
+                - 7.6370581182342784e-14
+              localScale:
+                - 99.999995739477583
+                - 99.99996839000508
+                - 99.999964616357857
+          Children: ~
+        - name: 2
+          prefabPath: ""
+          uuid: 383943440558671859
+          tag: Untagged
+          active: true
+          isStatic: false
+          Components:
+            Transform_Component:
+              name: Transform_Component
+              enabled: true
+              localPosition:
+                - -1.4643888619048084e-05
+                - -1098.2598384448584
+                - 99.999005017227319
+              localRotation:
+                - -5.182853726153466e-13
+                - 2.7512978363865295e-07
+                - 7.6370581182342784e-14
+              localScale:
+                - 99.999995739477583
+                - 99.99996839000508
+                - 99.999964616357857
+          Children: ~
+        - name: 3
+          prefabPath: ""
+          uuid: 9244607859270701059
+          tag: Untagged
+          active: true
+          isStatic: false
+          Components:
+            Transform_Component:
+              name: Transform_Component
+              enabled: true
+              localPosition:
+                - -4.1785573387187469e-05
+                - -1145.9580407027713
+                - -119.99801607503468
+              localRotation:
+                - -5.182853726153466e-13
+                - 2.7512978363865295e-07
+                - 7.6370581182342784e-14
+              localScale:
+                - 99.999995739477583
+                - 99.99996839000508
+                - 99.999964616357857
+          Children: ~
+        - name: 1
+          prefabPath: ""
+          uuid: 10752047599420758192
+          tag: Untagged
+          active: true
+          isStatic: false
+          Components:
+            Transform_Component:
+              name: Transform_Component
+              enabled: true
+              localPosition:
+                - -2.3818390957330848e-05
+                - -1161.7693955213413
+                - 380.00100789599674
+              localRotation:
+                - -5.182853726153466e-13
+                - 2.7512978363865295e-07
+                - 7.6370581182342784e-14
+              localScale:
+                - 99.999995739477583
+                - 99.99996839000508
+                - 99.999964616357857
+          Children: ~
+GameObject171:
   name: Ano
   prefabPath: ""
   uuid: 13110915549879427607
@@ -107782,7 +104951,7 @@ GameObject221:
       name: Shader
       enabled: true
   Children: ~
-GameObject222:
+GameObject172:
   name: Ano_copy
   prefabPath: ""
   uuid: 5308254961709806508
@@ -107825,7 +104994,7 @@ GameObject222:
       name: Shader
       enabled: true
   Children: ~
-GameObject223:
+GameObject173:
   name: Ano_copy_1
   prefabPath: ""
   uuid: 13708739269789140780
@@ -107868,7 +105037,7 @@ GameObject223:
       name: Shader
       enabled: true
   Children: ~
-GameObject224:
+GameObject174:
   name: Ano_copy_2
   prefabPath: ""
   uuid: 6969611220695514733
@@ -107911,7 +105080,7 @@ GameObject224:
       name: Shader
       enabled: true
   Children: ~
-GameObject225:
+GameObject175:
   name: Ano_copy_3
   prefabPath: ""
   uuid: 8785273455938726101
@@ -107954,7 +105123,7 @@ GameObject225:
       name: Shader
       enabled: true
   Children: ~
-GameObject226:
+GameObject176:
   name: Ano_copy_4
   prefabPath: ""
   uuid: 14506495824841310255
@@ -107997,7 +105166,7 @@ GameObject226:
       name: Shader
       enabled: true
   Children: ~
-GameObject227:
+GameObject177:
   name: Cinder_VFX
   prefabPath: ""
   uuid: 1296254901993967556
@@ -108071,7 +105240,7 @@ GameObject227:
         texturePath: Assets/Textures/rock.png
       particleType: 38
   Children: ~
-GameObject228:
+GameObject178:
   name: Cinder_VFX_copy
   prefabPath: ""
   uuid: 1989327862165780244
@@ -108145,35 +105314,7 @@ GameObject228:
         texturePath: Assets/Textures/rock.png
       particleType: 38
   Children: ~
-GameObject229:
-  name: MusicManager
-  prefabPath: ""
-  uuid: 7214311953670876149
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    ScriptComponents:
-      Script0:
-        name: MusicManagerLvl1
-        fields: ~
-  Children: ~
-GameObject230:
+GameObject179:
   name: ColliderGroundTierra
   prefabPath: ""
   uuid: 1405599282372821203
@@ -108207,7 +105348,7 @@ GameObject230:
         - 0
       isTrigger: false
   Children: ~
-GameObject231:
+GameObject180:
   name: ColliderGroundCiudad
   prefabPath: ""
   uuid: 2439158963238405299
@@ -108241,7 +105382,7 @@ GameObject231:
         - 0
       isTrigger: false
   Children: ~
-GameObject232:
+GameObject181:
   name: Canvas_HUD
   prefabPath: Assets\Prefabs\Canvas_HUD.prefab.yaml
   uuid: 10166634796133587650
@@ -109880,10 +107021,10 @@ GameObject232:
             - 1225
             - 40
           sprite_offset:
-            - 0
+            - 350
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 2
           anim_index_limit: 6
           color:
             - 0.262745112
@@ -110008,10 +107149,10 @@ GameObject232:
             - 250
             - 80
           sprite_offset:
-            - 150
+            - 50
             - 0
           anim_speed: 0.5
-          anim_index: 3
+          anim_index: 1
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -110136,10 +107277,10 @@ GameObject232:
             - 250
             - 80
           sprite_offset:
-            - 150
+            - 50
             - 0
           anim_speed: 0.5
-          anim_index: 3
+          anim_index: 1
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -111349,7 +108490,7 @@ GameObject232:
             - 1
             - 1
       Children: ~
-GameObject233:
+GameObject182:
   name: Canvas_Interaction
   prefabPath: Assets\Prefabs\Canvas_Interaction_Level1.prefab.yaml
   uuid: 6591346108623782193
@@ -112053,7 +109194,7 @@ GameObject233:
             - 0
             - 0
       Children: ~
-GameObject234:
+GameObject183:
   name: Canvas_TitleSM
   prefabPath: Assets\Prefabs\Canvas_TitleSM.prefab.yaml
   uuid: 15444793993539794259
@@ -112167,7 +109308,7 @@ GameObject234:
             - 1
             - 1
       Children: ~
-GameObject235:
+GameObject184:
   name: Canvas_PauseMenu
   prefabPath: Assets\Prefabs\Canvas_PauseMenu.prefab.yaml
   uuid: 15860094252941017456
@@ -112553,7 +109694,7 @@ GameObject235:
           enabled: true
           state: 1
       Children: ~
-GameObject236:
+GameObject185:
   name: Canvas_Fade
   prefabPath: Assets\Prefabs\CanvasFadeLvl1.prefab.yaml
   uuid: 11279144625943510511

@@ -1,6 +1,6 @@
-name: CajaMadera1
-prefabPath: Assets/Prefabs/WoodenBox_Lvl1_prefab.prefab.yaml
-uuid: 11917533091187017491
+name: CajaMadera1_1_Instance
+prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
+uuid: 12544303147130845223
 tag: Destroyable
 active: true
 isStatic: false
@@ -119,4 +119,81 @@ Children:
       Shader:
         name: Shader
         enabled: true
+    Children: ~
+  - name: VFX
+    prefabPath: ""
+    uuid: 15691253018671444475
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - -3.8146972647368216e-07
+          - -1.4305406380092087
+          - 0.91348860859283532
+        localRotation:
+          - 2.6349806741723203e-13
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1.0000000342285502
+          - 1.0000000342285502
+      ParticleFX:
+        name: ParticleFX
+        enabled: true
+        emitterShape: 2
+        emissionRate: 3
+        particlesPerSecond: 3
+        minLifetime: 0.200000003
+        maxLifetime: 0.400000006
+        minSpeed: 0.5
+        maxSpeed: 4
+        startSize: 0.5
+        endSize: 2
+        minSize: 0.5
+        maxSize: 0
+        startColor:
+          - 0.949999988
+          - 0.699999988
+          - 0.200000003
+        endColor:
+          - 0.949999988
+          - 0.699999988
+          - 0.200000003
+        startAlpha: 0.899999976
+        endAlpha: 0.899999976
+        rotationSpeed: 0.200000003
+        gravity:
+          - 0
+          - -0.100000001
+          - 0
+        shapeParam1: 0.200000003
+        shapeParam2: 1
+        shapeParam3: 20
+        isOneShot: false
+        isPlaying: false
+        isPaused: false
+        burstEmitted: false
+        spriteSize:
+          - 256
+          - 256
+        useAnimation: true
+        animSpeed: 0.5
+        startRotation: 0
+        randomRotation: true
+        material:
+          billboardType: 0
+          particleType: 54
+          softness: 0
+          useColorGradient: false
+          texturePath: Assets/Textures/niebla30Frames.png
+        particleType: 54
+      ScriptComponents:
+        Script0:
+          name: StopVFX
+          fields: ~
     Children: ~

@@ -1,17 +1,17 @@
-name: Medkit
-prefabPath: Assets/Prefabs/Medkit.prefab.yaml
-uuid: 2395089655681620673
+name: NewMedkit_Instance
+prefabPath: Assets\Prefabs\Medkit.prefab.yaml
+uuid: 999346568370045163
 tag: Destroyable
-active: false
+active: true
 isStatic: false
 Components:
   Transform_Component:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 37.904293060302734
-      - -0.30459201335906982
-      - 12.14385986328125
+      - -18.601165771484375
+      - -0.90630835294723511
+      - -2.7354280948638916
     localRotation:
       - -90.000009659346318
       - 0
@@ -20,30 +20,11 @@ Components:
       - 1.1974426507949829
       - 1.1974426507949829
       - 1.1974426507949829
-  MeshRenderer:
-    name: MeshRenderer
-    enabled: true
-    mesh:
-      name: 12044555390315367870
-    material:
-      name: Medkit_MedKit_BaseColor
-      color:
-        - 1
-        - 1
-        - 1
-        - 1
-    color:
-      - 1
-      - 1
-      - 1
-  Shader:
-    name: Shader
-    enabled: true
   BoxColliderComponent:
     size:
-      - 1.5
-      - 1.5
-      - 1.5
+      - 2.70000005
+      - 2.79999995
+      - 10.1000004
     offset:
       - 0
       - 1.29999995
@@ -54,4 +35,165 @@ Components:
       name: DestroyEnviormentObject
       fields:
         onlyMedicaeStimm: true
-Children: ~
+Children:
+  - name: wooden box
+    prefabPath: ""
+    uuid: 3313499871992032440
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0.070361040532588959
+          - -0.13425913453102112
+          - 0.36324918270111084
+        localRotation:
+          - -1.636468256481841e-06
+          - 0
+          - 0
+        localScale:
+          - 1.1067984104156494
+          - 1.1067984104156494
+          - 1.1067984104156494
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 12044555390315367870
+        material:
+          name: Medkit_MedKit_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~
+  - name: DestroyedBox
+    prefabPath: ""
+    uuid: 14185816508727052562
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0.73259711265563965
+          - -0.57099199295043945
+          - 0.37628436088562012
+        localRotation:
+          - -1.6365401115732046e-06
+          - 0
+          - 0
+        localScale:
+          - 0.65612155199050903
+          - 0.65612155199050903
+          - 0.65612155199050903
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 15027323567841409366
+        material:
+          name: Medkit_MedKit_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 0
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~
+  - name: VFX
+    prefabPath: ""
+    uuid: 1427979015486932156
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 1.7763568394002505e-15
+          - -0.15104235708713531
+          - 2.8615257740020752
+        localRotation:
+          - 2.1082499569916128e-13
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      ParticleFX:
+        name: ParticleFX
+        enabled: true
+        emitterShape: 2
+        emissionRate: 3
+        particlesPerSecond: 3
+        minLifetime: 0.200000003
+        maxLifetime: 0.400000006
+        minSpeed: 0.5
+        maxSpeed: 4
+        startSize: 0.5
+        endSize: 2
+        minSize: 0.5
+        maxSize: 0
+        startColor:
+          - 0.949999988
+          - 0.699999988
+          - 0.200000003
+        endColor:
+          - 0.949999988
+          - 0.699999988
+          - 0.200000003
+        startAlpha: 0.899999976
+        endAlpha: 0.899999976
+        rotationSpeed: 0.200000003
+        gravity:
+          - 0
+          - -0.100000001
+          - 0
+        shapeParam1: 0.200000003
+        shapeParam2: 1
+        shapeParam3: 20
+        isOneShot: false
+        isPlaying: false
+        isPaused: false
+        burstEmitted: false
+        spriteSize:
+          - 256
+          - 256
+        useAnimation: true
+        animSpeed: 0.5
+        startRotation: 0
+        randomRotation: true
+        material:
+          billboardType: 0
+          particleType: 54
+          softness: 0
+          useColorGradient: false
+          texturePath: Assets/Textures/niebla30Frames.png
+        particleType: 54
+      ScriptComponents:
+        Script0:
+          name: StopVFX
+          fields: ~
+    Children: ~

@@ -8,7 +8,6 @@ public class DestroyEnviormentObject : MonoBehaviour
 
     public DropManager dropManager;
     public bool onlyMedicaeStimm = false;
-
     public void DestroyObject()
     {
         //gameObject.GetComponent<Transform>().position = new Vector3(0, -100, 0);
@@ -32,7 +31,7 @@ public class DestroyEnviormentObject : MonoBehaviour
 
         GameObject normalMesh = gameObject.GetChild("wooden box");
         GameObject destroyedMesh = gameObject.GetChild("DestroyedBox");
-        //GameObject vfx = gameObject.GetChild("VFX");
+        GameObject vfx = gameObject.GetChild("VFX");
 
         if (normalMesh != null)
         {
@@ -46,7 +45,7 @@ public class DestroyEnviormentObject : MonoBehaviour
             Engineson.print("DestroyedMesh not found in " + gameObject.name);
             return;
         }
-        //vfx.GetComponent<ParticleFX>().EmitBurst(20);
+        vfx.GetComponent<ParticleFX>().EmitBurst(20);
         gameObject.GetComponent<Collider>().SetTrigger(true);
         Vector4 color = destroyedMesh.GetComponent<MeshRenderer>().GetColor();
         destroyedMesh.GetComponent<MeshRenderer>().SetColor(new Vector4(color.X, color.Y, color.Z, 255));

@@ -470,9 +470,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 1.94463181
+          floatSpeed: 0.799163401
           floatHeight: 0.5
-          rotationSpeed: 44.8732338
+          rotationSpeed: 50.5659637
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -578,9 +578,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 1.82976985
+          floatSpeed: 1.6843574
           floatHeight: 0.5
-          rotationSpeed: 99.8560638
+          rotationSpeed: 53.1341629
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -27130,9 +27130,9 @@ GameObject32:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.842956305
+          floatSpeed: 1.16053784
           floatHeight: 0.5
-          rotationSpeed: 77.3092422
+          rotationSpeed: 72.8596039
   Children: ~
 GameObject33:
   name: BiblePage_Pueblo
@@ -27215,9 +27215,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.49845195
+          floatSpeed: 0.987784207
           floatHeight: 0.5
-          rotationSpeed: 98.7982712
+          rotationSpeed: 55.8238106
   Children: ~
 GameObject34:
   name: BiblePage_Pasillo_Zona3
@@ -27300,9 +27300,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.95647991
+          floatSpeed: 1.7536937
           floatHeight: 0.5
-          rotationSpeed: 63.6253014
+          rotationSpeed: 92.9717178
   Children: ~
 GameObject35:
   name: BiblePage_Ciudad
@@ -27385,9 +27385,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.18856323
+          floatSpeed: 1.14317048
           floatHeight: 0.5
-          rotationSpeed: 60.787632
+          rotationSpeed: 34.3446541
   Children: ~
 GameObject36:
   name: Barril_Ciudad1
@@ -107021,10 +107021,10 @@ GameObject181:
             - 1225
             - 40
           sprite_offset:
-            - 350
+            - 175
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 1
           anim_index_limit: 6
           color:
             - 0.262745112
@@ -107149,10 +107149,10 @@ GameObject181:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -107277,10 +107277,10 @@ GameObject181:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -109808,3 +109808,31 @@ GameObject185:
             name: FadeController
             fields: ~
       Children: ~
+GameObject186:
+  name: MusicManager
+  prefabPath: ""
+  uuid: 12949293214739774867
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: MusicManagerLvl1
+        fields: ~
+  Children: ~

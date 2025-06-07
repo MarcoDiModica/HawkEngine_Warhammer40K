@@ -43,9 +43,7 @@ public class HUD : MonoBehaviour
 
     private RedThirstManager redThirstManager;
 
-    private GameObject nodash;
     private GameObject msup;
-    private GameObject defenseup;
     private GameObject attackup;
     private GameObject noreload;
     private GameObject asup;
@@ -253,14 +251,12 @@ public class HUD : MonoBehaviour
         {
             Engineson.print("ERROR: RedThirstBar not found");
         }
-        nodash = GameObject.Find("nodash");
         msup = GameObject.Find("msup");
-        defenseup = GameObject.Find("defenseup");
         attackup = GameObject.Find("attackup");
         noreload = GameObject.Find("noreload");
         asup = GameObject.Find("asup");
         magnet = GameObject.Find("magnet");
-        if (nodash == null || msup == null || defenseup == null || attackup == null || noreload == null || asup == null || magnet == null)
+        if ( msup == null || attackup == null || noreload == null || asup == null || magnet == null)
         {
             Engineson.print("ERROR: Buffs not found");
         }
@@ -431,15 +427,13 @@ public class HUD : MonoBehaviour
 
         if (redThirstManager.IsInBlackRage())
         {
-            nodash.SetActive(true);
             msup.SetActive(true);
-            defenseup.SetActive(true);
+            attackup.SetActive(true);
         }
         else
         {
-            nodash.SetActive(false);
             msup.SetActive(false);
-            defenseup.SetActive(false);
+            attackup.SetActive(false);
         }
 
         switch (playerShootingScript.GetCurrentGun())
@@ -594,10 +588,12 @@ public class HUD : MonoBehaviour
         if (playerPowerUp.GetHasMagnet())
         {
             magnet.SetActive(true);
+            asup.SetActive(true);
         }
         else
         {
             magnet.SetActive(false);
+            asup.SetActive(false);
         }
 
         if (playerData.GetHealth() <= 0 && SceneManager.isLoadedFromCheckpoint == false)

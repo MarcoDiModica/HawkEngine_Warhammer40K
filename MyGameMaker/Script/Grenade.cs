@@ -31,7 +31,7 @@ public class Grenade : MonoBehaviour
     public void Init(Vector3 pos, Vector3 dir)
     {
         //AddComponent<MeshRenderer>();      
-        GetComponent<Transform>().position = pos + dir * 4.0f + new Vector3(0, 2, 0);
+        GetComponent<Transform>().position = pos + dir * 4.0f + new Vector3(0, 3, 0);
         GetComponent<Transform>().SetScale(0.25f, 0.25f, 0.25f);
         AddComponent<CapsuleCollider>();
         AddComponent<Rigidbody>();
@@ -39,7 +39,7 @@ public class Grenade : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         rigidbody.SetMass(0.05f);
         rigidbody.SetGravity(new Vector3(0.0f, -9.81f, 0.0f) * 20);
-        rigidbody.AddForce(dir * 150);
+        rigidbody.AddForce(dir * 250);
         rigidbody.SetFriction(0.5f);
         granadeVFX = Engineson.CreateGameObject("ExplosionGranadeFX", null);
         gameObject.AddChild(granadeVFX);

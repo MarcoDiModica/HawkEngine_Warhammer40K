@@ -90,25 +90,51 @@ public class InteractionSystem : MonoBehaviour
         {
             if (!isInteracting)
             {
+                ShowInteractionMessage(false); 
+
                 isInteracting = true;
-                ShowInteractionMessage(false);
                 currentInteractable = interactable.gameObject;
                 playerInput.BlockInput();
                 interactable.Interact();
-                Audio.PlayOneShot(TextSFX);
-                interaction?.SpawnDialogueText(true);
-                interaction?.SetDialogueText(interactable.text);
-                interactionTimer = 0.0f; 
+
+                string firstText = interactable.GetNextDialogue();
+                if (!string.IsNullOrEmpty(firstText))
+                {
+                    interaction?.SpawnDialogueText(true);
+                    interaction?.SetDialogueText(firstText);
+                    Audio.PlayOneShot(TextSFX);
+                }
+                else
+                {
+                    EndInteraction(); // No hay texto válido
+                }
+
+                interactionTimer = 0.0f;
             }
             else if (interactionTimer > interactionCooldown)
             {
-                if(Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B))
+                if (Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B))
                 {
-                    Audio.PlayOneShot(TextSFX);
-                    isInteracting = false;
-                    interaction?.SpawnDialogueText(false);
-                    playerInput.UnBlockInput();
-                }     
+                    var item = currentInteractable.GetComponent<Item>();
+                    if (item != null)
+                    {
+                        string nextText = item.GetNextDialogue();
+
+                        if (!string.IsNullOrEmpty(nextText))
+                        {
+                            interaction?.SetDialogueText(nextText);
+                            Audio.PlayOneShot(TextSFX);
+                        }
+                        else
+                        {
+                            EndInteraction(); 
+                        }
+                    }
+                    else
+                    {
+                        EndInteraction();
+                    }
+                }
             }
         }
         else if (!isInteracting)
@@ -116,6 +142,15 @@ public class InteractionSystem : MonoBehaviour
             ShowInteractionMessage(true);
         }
     }
+
+    private void EndInteraction()
+    {
+        isInteracting = false;
+        interaction?.SpawnDialogueText(false);
+        playerInput.UnBlockInput();
+        currentInteractable = null;
+    }
+
 
     private void HandleAreaTriggers(Vector3 position)
     {

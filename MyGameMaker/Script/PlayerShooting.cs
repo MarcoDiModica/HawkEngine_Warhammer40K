@@ -48,6 +48,9 @@ public class PlayerShooting : MonoBehaviour
     public ParticleFX shotgunShotFX;
     public ParticleFX railgunShotSemiFX;
     public ParticleFX railgunShotAutoFX;
+    public ParticleFX bulletcasingFX;
+    public ParticleFX grenadeShotFX;
+
 
     private float changeWeaponDelay = 0.5f;
     private float currentdelay = 0.5f;
@@ -120,6 +123,11 @@ public class PlayerShooting : MonoBehaviour
         railgunShotSemiFX.ApplyPreset(8);
         railgunShotAutoFX = GameObject.Find("RailgunShotAutoFX").GetComponent<ParticleFX>();
         railgunShotAutoFX.ApplyPreset(8);
+        bulletcasingFX = GameObject.Find("BulletCasingFX").GetComponent<ParticleFX>();
+        bulletcasingFX.ApplyPreset(44);
+        grenadeShotFX = GameObject.Find("GrenadeShotFX").GetComponent<ParticleFX>();
+        grenadeShotFX.ApplyPreset(43);
+
 
         boltgunMesh = GameObject.Find("Boltgun");
         shotgunMesh = GameObject.Find("Shotgun");
@@ -147,10 +155,7 @@ public class PlayerShooting : MonoBehaviour
         hasShotgun = playerData.hasShotgun;
         hasRailgun = playerData.hasRailgun;
 
-        if (hasRailgun)
-        {
-            railgun.railgunMode = Railgun.RailgunMode.SEMIAUTOMATIC;
-        }
+       
 
         switch (currentGun)
         {
@@ -205,6 +210,18 @@ public class PlayerShooting : MonoBehaviour
         return 0;
     }
 
+    public int GetMaxMagazineAmmo()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                return boltgun.magazineSize; 
+            case GunType.SHOTGUN:
+                return shotgun.magazineSize;
+        }
+        return 0;
+    }
+
     public override void Update(float deltaTime)
     {
         if (currentdelay < changeWeaponDelay)
@@ -226,11 +243,7 @@ public class PlayerShooting : MonoBehaviour
             currentdelay = 0f;
         }
 
-        if (playerInput.IsChangingRailgunMode() && currentGun == GunType.RAILGUN)
-        {
-            railgun?.ChangeMode();
-            currentdelay = 0f;
-        }
+        
 
         if (playerInput?.IsShooting() == true && currentdelay >= changeWeaponDelay)
         {
@@ -324,6 +337,7 @@ public class PlayerShooting : MonoBehaviour
                         rifleShotFX.SetParticleStartRotation(angle);
                         rifleShotFX.EmitBurst(1);
                         boltgun?.Shoot();
+                        //bulletcasingFX.Play();
                         shotgunShotFX.Stop();
                         railgunShotAutoFX.Stop();
                         railgunShotSemiFX.Stop();
@@ -339,16 +353,8 @@ public class PlayerShooting : MonoBehaviour
                         break;
 
                     case GunType.RAILGUN:
-                        if (railgun.railgunMode == Railgun.RailgunMode.SEMIAUTOMATIC)
-                        {
-                            railgunShotSemiFX.SetParticleStartRotation(angle);
-                            railgunShotSemiFX.EmitBurst(1);
-                        }
-                        else
-                        {
-                            railgunShotAutoFX.SetParticleStartRotation(angle);
-                            railgunShotAutoFX.EmitBurst(1);
-                        }
+                        railgunShotSemiFX.SetParticleStartRotation(angle);
+                        railgunShotSemiFX.EmitBurst(1);
                         railgun?.Shoot();
                         break;
                 }
@@ -361,6 +367,7 @@ public class PlayerShooting : MonoBehaviour
                     case GunType.BOLTGUN:
                         boltgun?.Shoot();
                         shotgunShotFX.Stop();
+                        //bulletcasingFX.Play();
                         railgunShotAutoFX.Stop();
                         railgunShotSemiFX.Stop();
                         break;
@@ -422,19 +429,22 @@ public class PlayerShooting : MonoBehaviour
 
     private void ChangeWeaponRight()
     {
+        if (hasBoltgun && !hasShotgun && !hasRailgun)
+        {
+            // No cambiar de arma si solo se tiene la Boltgun  
+            return;
+        }
 
         if (hasShotgun && !hasRailgun)
         {
             if (currentGun == GunType.BOLTGUN)
             {
                 currentGun = GunType.SHOTGUN;
-
             }
             else if (currentGun == GunType.SHOTGUN)
             {
                 currentGun = GunType.BOLTGUN;
             }
-
         }
         else if (hasShotgun && hasRailgun)
         {
@@ -451,8 +461,6 @@ public class PlayerShooting : MonoBehaviour
                 currentGun = GunType.BOLTGUN;
             }
         }
-
-
 
         switch (currentGun)
         {
@@ -486,6 +494,11 @@ public class PlayerShooting : MonoBehaviour
 
     private void ChangeWeaponLeft()
     {
+        if (hasBoltgun && !hasShotgun && !hasRailgun)
+        {
+            // No cambiar de arma si solo se tiene la Boltgun  
+            return;
+        }
 
         if (hasShotgun && !hasRailgun)
         {
@@ -497,7 +510,6 @@ public class PlayerShooting : MonoBehaviour
             {
                 currentGun = GunType.BOLTGUN;
             }
-
         }
         else if (hasShotgun && hasRailgun)
         {
@@ -543,7 +555,6 @@ public class PlayerShooting : MonoBehaviour
                 break;
         }
         Engineson.print("Changed weapon left");
-
     }
 
     private void UseAbility1()
@@ -554,7 +565,7 @@ public class PlayerShooting : MonoBehaviour
 
                 if ((playerData.BoltgunUpgraded == true))
                 {
-
+                    //grenadeShotFX.Play();
                     boltgun?.UseAbility1();
                 }
 

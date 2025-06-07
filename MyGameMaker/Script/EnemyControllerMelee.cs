@@ -28,7 +28,7 @@ public class EnemyControllerMelee : EnemyController
 
     private float health = 50.0f;
     private float clawDamage = 7.0f;
-    private float leapDamage = 7.0f;
+    private float leapDamage = 0.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
 

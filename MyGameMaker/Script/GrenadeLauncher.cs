@@ -9,6 +9,7 @@ public class GrenadeLauncher : BaseAbilities
     public bool enabled;
     public float cooldown;
     GameObject explosion;
+    private HUD hud;
 
     private float yHeight = 0.0f;
     private float timer = 0;
@@ -48,6 +49,8 @@ public class GrenadeLauncher : BaseAbilities
         //explosionFX = new AudioClip(granadeExplosion, "GrenadeExplosionFX", false, false);
         //sound.LoadAudioClip(launchFX);
         //sound.LoadAudioClip(explosionFX);
+
+        hud = GameObject.Find("Canvas_HUD").GetComponent<HUD>();
     }
 
     public override void Update(float deltaTime)
@@ -120,6 +123,7 @@ public class GrenadeLauncher : BaseAbilities
 
         canThrow = false; // Inicia el cooldown
         abilityTimer = 0.0f;
+        hud.TriggerCooldown(abilityCooldown);
     }
 
     void Explode()

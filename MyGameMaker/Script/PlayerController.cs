@@ -547,7 +547,7 @@ public class PlayerController : MonoBehaviour
             ReloadingWalkingAnimationFinished();
         }
 
-        if (playerInput.IsChangingWeaponLeft() || playerInput.IsChangingWeaponRight())
+        if ((playerInput.IsChangingWeaponLeft() || playerInput.IsChangingWeaponRight()) && playerShooting.canChangeWeapon)
         {
             if (playerData.hasShotgun || playerData.hasRailgun)
             {

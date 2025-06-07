@@ -1830,7 +1830,7 @@ private:
 
 	static void DrawStringField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
 		std::string value = MonoFieldHelper::GetStringValue(monoScript, field);
-		char buffer[256];
+		char buffer[1024];
 		strcpy_s(buffer, value.c_str());
 
 		if (ImGui::InputText("##value", buffer, IM_ARRAYSIZE(buffer))) {

@@ -29,7 +29,28 @@ public class DestroyEnviormentObject : MonoBehaviour
         {
             Engineson.print("DropManager not found");
         }
-        Engineson.Destroy(gameObject);
+
+        GameObject normalMesh = gameObject.GetChild("wooden box");
+        GameObject destroyedMesh = gameObject.GetChild("DestroyedBox");
+        //GameObject vfx = gameObject.GetChild("VFX");
+
+        if (normalMesh != null)
+        {
+            Engineson.Destroy(normalMesh);
+        }
+
+        //Engineson.Destroy(gameObject);
+        
+        if (destroyedMesh == null)
+        {
+            Engineson.print("DestroyedMesh not found in " + gameObject.name);
+            return;
+        }
+        //vfx.GetComponent<ParticleFX>().EmitBurst(20);
+        gameObject.GetComponent<Collider>().SetTrigger(true);
+        Vector4 color = destroyedMesh.GetComponent<MeshRenderer>().GetColor();
+        destroyedMesh.GetComponent<MeshRenderer>().SetColor(new Vector4(color.X, color.Y, color.Z, 255));
+
     }
 
     public override void Awake()

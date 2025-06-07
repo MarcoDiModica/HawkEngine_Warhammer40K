@@ -6,6 +6,7 @@ public class HormagauntAnimation : MonoBehaviour
 {
     private SkeletalAnimation hormagauntesk;
     int animIndex = 0;
+    int prevanimIndex = 0;
     public bool isAnimFinished = false;
 
     public override void Awake()
@@ -24,7 +25,16 @@ public class HormagauntAnimation : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-      //  Engineson.print("Hormagaunt Anim");
+        if (SceneManager.isPaused)
+        {
+            if (hormagauntesk?.GetAnimationIndex() != 10)
+            {
+                hormagauntesk?.SetAnimation(10);
+                hormagauntesk?.SetAnimationSpeed(0.0f);
+            }
+            return;
+        }
+
         if (hormagauntesk != null)
         {
             float length = hormagauntesk.GetAnimationLength();
@@ -42,7 +52,6 @@ public class HormagauntAnimation : MonoBehaviour
                 isAnimFinished = true;
             }
         }
-     //   Engineson.print("Hormagaunt end Anim");
     }
 
     public void SetStandardIdleAnimation()

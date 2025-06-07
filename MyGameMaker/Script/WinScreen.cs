@@ -13,6 +13,7 @@ public class WinScreen : MonoBehaviour
 
     private string WinMusic = "Assets/Audio/Music/Warhammer_WinScreen.ogg";
     private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
+    private string HoveredSFX = "Assets/Audio/UI/Hovered.wav";
     //     private AudioSource sound;
     //     private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
     //     private ButtonState prevState_quitButton = ButtonState.DEFAULT;
@@ -146,7 +147,7 @@ public class WinScreen : MonoBehaviour
 
                 if (!hasPlayedHoverSound[i])
                 {
-                    //sound?.Play(buttonHoveredFX);
+                    Audio.Play(HoveredSFX);
                     hasPlayedHoverSound[i] = true;
                 }
             }

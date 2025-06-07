@@ -40,6 +40,7 @@ public class MenuButtons : MonoBehaviour
     private bool[] hasPlayedHoverSound;
     private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
     private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
+    private string HoveredSFX = "Assets/Audio/UI/Hovered.wav";
     private string MainMenuMusic = "Assets/Audio/Music/MainTheme_BetaBuild2.ogg";
 
     //     private AudioSource sound;
@@ -253,7 +254,7 @@ public class MenuButtons : MonoBehaviour
             {
                 if (!hasPlayedHoverSound[i])
                 {
-                    //sound?.Play(buttonHoveredFX);
+                   Audio.Play(HoveredSFX);
                     hasPlayedHoverSound[i] = true;
                 }
             }

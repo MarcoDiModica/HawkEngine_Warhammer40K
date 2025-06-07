@@ -22,6 +22,16 @@ public class WarriorAnimation : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        if (SceneManager.isPaused)
+        {
+            if (warrioresk?.GetAnimationIndex() != 0)
+            {
+                warrioresk?.SetAnimation(0);
+                warrioresk?.SetAnimationSpeed(0.0f);
+            }
+            return;
+        }
+
         if (warrioresk != null)
         {
             float length = warrioresk.GetAnimationLength();

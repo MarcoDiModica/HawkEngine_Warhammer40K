@@ -24,6 +24,8 @@ public class LoseScreen : MonoBehaviour
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
     private string LoseMusic = "Assets/Audio/Music/Warhammer_LoseScreen.ogg";
+    private string HoveredSFX = "Assets/Audio/UI/Hovered.wav";
+
     //     private AudioClip buttonHoveredFX;
     //     private AudioClip buttonClickedFX;
 
@@ -155,7 +157,7 @@ public class LoseScreen : MonoBehaviour
 
                 if (!hasPlayedHoverSound[i])
                 {
-                    //sound?.Play(buttonHoveredFX);
+                    Audio.Play(HoveredSFX);
                     hasPlayedHoverSound[i] = true;
                 }
             }

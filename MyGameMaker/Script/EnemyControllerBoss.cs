@@ -170,6 +170,9 @@ public class EnemyControllerBoss : EnemyController
 
     public override void Update(float deltaTime)
     {
+        if (SceneManager.isPaused)
+            return;
+        
         if (!isDead)
         {
             if (!isBossMusicPlaying)

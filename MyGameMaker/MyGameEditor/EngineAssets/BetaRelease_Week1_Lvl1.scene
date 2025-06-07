@@ -428,9 +428,9 @@ GameObject7:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 559.38055419921875
+        - 555.7200927734375
         - 2
-        - 28.837474822998047
+        - 21.322357177734375
       localRotation:
         - 0
         - 0
@@ -478,9 +478,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 0.713699877
+          floatSpeed: 0.786798716
           floatHeight: 0.5
-          rotationSpeed: 50.9516945
+          rotationSpeed: 80.2742462
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -586,9 +586,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 0.751089394
+          floatSpeed: 1.49676585
           floatHeight: 0.5
-          rotationSpeed: 97.0930328
+          rotationSpeed: 81.669899
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -3421,7 +3421,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.773492223524528
+            - 89.764716491463162
             - 0
           localScale:
             - 208.60295104980469
@@ -3672,9 +3672,9 @@ GameObject20:
             - 164.68646240234375
             - 1182.335205078125
           localRotation:
-            - -90.000052196467152
-            - 83.400692964791972
-            - -3.6803021822784831e-05
+            - -90.000038218417956
+            - 83.400708653284127
+            - -2.1114590061434899e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -3714,9 +3714,9 @@ GameObject20:
             - 158.47599792480469
             - 1061.107666015625
           localRotation:
-            - -90.000022329887898
-            - -76.296840882286389
-            - 2.0610058463586403e-05
+            - -90.000022329904013
+            - -76.296831728460759
+            - 2.0610074528317326e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -4680,9 +4680,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.993002592596909
-            - 89.842167109073316
-            - 179.99208051617961
+            - 89.994207611402629
+            - 89.846441578893305
+            - 179.99328211997025
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -4722,9 +4722,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.993002592596909
-            - 89.842167109073316
-            - 179.99208051617961
+            - 89.994207611402629
+            - 89.846441578893305
+            - 179.99328211997025
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5226,9 +5226,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999993288988833
-            - 66.695720103365531
-            - 179.99998980203466
+            - 89.999996775941923
+            - 66.695713392354193
+            - 179.99998631507907
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5268,9 +5268,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999993288988833
-            - 66.695720103365531
-            - 179.99998980203466
+            - 89.999996775941923
+            - 66.695713392354193
+            - 179.99998631507907
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5310,9 +5310,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999993288988833
-            - 66.695720103365531
-            - 179.99998980203466
+            - 89.999996775941923
+            - 66.695713392354193
+            - 179.99998631507907
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5604,9 +5604,9 @@ GameObject20:
             - 201.60006713867188
             - -701.08270263671875
           localRotation:
-            - -89.99999657384474
-            - 80.78974981347659
-            - -3.4261552652453462e-06
+            - -90.000009777344786
+            - 80.789757877741891
+            - -1.1490422395121572e-05
           localScale:
             - 56
             - 56
@@ -5730,9 +5730,9 @@ GameObject20:
             - 109.05261993408203
             - 3582.95361328125
           localRotation:
-            - -8.5567713767149858
-            - -57.209904822524862
-            - -138.90944749320749
+            - -8.5567701040473878
+            - -57.209905254181926
+            - -138.90944816177014
           localScale:
             - 1
             - 1
@@ -6066,9 +6066,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360479206519
-            - 52.153761099889579
-            - -35.460576025032005
+            - 178.33360391534552
+            - 52.153760491639723
+            - -35.460575201138177
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6108,9 +6108,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360479206519
-            - 52.153761099889579
-            - -35.460576025032005
+            - 178.33360391534552
+            - 52.153760491639723
+            - -35.460575201138177
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6150,9 +6150,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360479206519
-            - 52.153761099889579
-            - -35.460576025032005
+            - 178.33360391534552
+            - 52.153760491639723
+            - -35.460575201138177
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -7578,9 +7578,9 @@ GameObject20:
             - 48.267116546630859
             - 1095.0556640625
           localRotation:
-            - 90.000014487691587
-            - -53.451692681090563
-            - 179.99999270525956
+            - 90.000014487692511
+            - -53.451699924936648
+            - 179.99999270525839
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -11024,17 +11024,17 @@ GameObject22:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 6356.11669921875
-            - 29.419076919555664
+            - 6356.1171875
+            - -374.83346557617188
             - -336.87619018554688
           localRotation:
             - -90.000028978038969
             - 0
             - 0
           localScale:
-            - 419.99996948242188
-            - 419.99996948242188
-            - 419.99996948242188
+            - 420
+            - 419.99993896484375
+            - 419.99993896484375
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -11472,9 +11472,9 @@ GameObject23:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.999814962597753
-            - 81.207712930060339
-            - 179.99991771774972
+            - 89.999790973613514
+            - 81.207661526594109
+            - 179.99989715394355
           localScale:
             - 41.956031799316406
             - 53.921905517578125
@@ -11640,9 +11640,9 @@ GameObject23:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.980093109469934
-            - -89.826216471361008
-            - -179.9709765037625
+            - 89.98173597131391
+            - -89.825394077211243
+            - -179.97264327156756
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -11986,9 +11986,9 @@ GameObject23:
             - 72.841552734375
             - 24.207195281982422
           localRotation:
-            - -90.000010515847961
-            - 36.689039409017241
-            - 1.4322029396627024e-05
+            - -90.00001575874326
+            - 36.689032293094087
+            - 1.3855652183305059e-05
           localScale:
             - 59.934867858886719
             - 59.934860229492188
@@ -12532,9 +12532,9 @@ GameObject23:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.1001135504427582
-            - -81.281073770981081
-            - -179.99999158868002
+            - 1.1001190616293226
+            - -81.281074119239761
+            - -179.99999153745125
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -13540,9 +13540,9 @@ GameObject23:
             - 72.816177368164062
             - 17.716598510742188
           localRotation:
-            - -90.000181498723933
-            - -82.523163076591089
-            - 1.8239280906533197e-06
+            - -90.000193737143292
+            - -82.523212292504823
+            - 1.5773549266366961e-05
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -13876,9 +13876,9 @@ GameObject23:
             - 84.565017700195312
             - -2966.651611328125
           localRotation:
-            - -89.993940329048499
-            - -89.762105400253049
-            - -0.0087132051374479505
+            - -89.995940071494445
+            - -89.76395024726915
+            - -0.0067390759159177286
           localScale:
             - 43.324676513671875
             - 43.324676513671875
@@ -14086,9 +14086,9 @@ GameObject23:
             - 148.99980163574219
             - 222.72898864746094
           localRotation:
-            - -15.158007319902184
-            - -65.712721843277919
-            - -74.31680329619185
+            - -15.158003019171982
+            - -65.712734709883506
+            - -74.316807628942172
           localScale:
             - 24.540990829467773
             - 24.540992736816406
@@ -14296,9 +14296,9 @@ GameObject23:
             - 27.166694641113281
             - -2728.593017578125
           localRotation:
-            - 89.999993077010672
-            - -71.216278643695048
-            - 179.99999307701066
+            - 89.999984343925831
+            - -71.216280295099537
+            - -179.99999472841014
           localScale:
             - 110.40802001953125
             - 110.40802001953125
@@ -14338,9 +14338,9 @@ GameObject23:
             - 27.166694641113281
             - -1073.0118408203125
           localRotation:
-            - 89.999980544396763
-            - -66.052905348130082
-            - -179.99997007125407
+            - 89.99997381074671
+            - -66.052893874802578
+            - -179.99996857417514
           localScale:
             - 49.639827728271484
             - 49.63983154296875
@@ -16126,9 +16126,9 @@ GameObject24:
             - 451.7078857421875
             - 9679.166015625
           localRotation:
-            - 89.999983209705363
-            - 73.086970170615672
-            - 179.99999356760304
+            - 89.999974814588398
+            - 73.086972913931362
+            - 179.99999035143418
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -19546,7 +19546,7 @@ GameObject27:
             - 57.399997711181641
           localRotation:
             - 0
-            - 82.875057103326867
+            - 82.875066781348494
             - 0
           localScale:
             - 20.007547378540039
@@ -20568,9 +20568,9 @@ GameObject27:
             - 3.1512765884399414
             - 3.5392885208129883
           localRotation:
-            - 179.84665362354349
-            - -57.007354499096522
-            - -179.97224713124959
+            - 179.84665360680151
+            - -57.007541231787513
+            - -179.97224712510567
           localScale:
             - 4.1512908935546875
             - 8.0131254196166992
@@ -21054,9 +21054,9 @@ GameObject28:
             - 3.012509822845459
             - 20.509849548339844
           localRotation:
-            - -1.1131802133164455
-            - 14.358099854049241
-            - -2.8770356258105299
+            - -1.1131805760804401
+            - 14.358091978414031
+            - -2.8770356300186735
           localScale:
             - 14.270356178283691
             - 7.4319057464599609
@@ -22894,7 +22894,7 @@ GameObject29:
             - -160.05094909667969
           localRotation:
             - 0
-            - 63.749229862193133
+            - 63.749226666872545
             - 0
           localScale:
             - 24.358108520507812
@@ -23092,7 +23092,7 @@ GameObject29:
             - -72.031135559082031
           localRotation:
             - 0
-            - -69.383040276432098
+            - -69.383029236251048
             - 0
           localScale:
             - 12.133749961853027
@@ -23982,9 +23982,9 @@ GameObject29:
             - 3.0124197006225586
             - -194.1514892578125
           localRotation:
-            - 179.9999949910484
-            - 87.969567273503927
-            - 179.9999949910484
+            - 179.99999499104624
+            - 87.96954795149837
+            - 179.99999499104624
           localScale:
             - 12.215158462524414
             - 7.4319052696228027
@@ -27138,9 +27138,9 @@ GameObject32:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.988634408
+          floatSpeed: 1.21053088
           floatHeight: 0.5
-          rotationSpeed: 53.8106117
+          rotationSpeed: 53.6725616
   Children: ~
 GameObject33:
   name: BiblePage_Pueblo
@@ -27223,9 +27223,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.43844807
+          floatSpeed: 1.64425504
           floatHeight: 0.5
-          rotationSpeed: 36.2910271
+          rotationSpeed: 97.9647598
   Children: ~
 GameObject34:
   name: BiblePage_Pasillo_Zona3
@@ -27308,9 +27308,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.605804622
+          floatSpeed: 0.724672735
           floatHeight: 0.5
-          rotationSpeed: 63.3233681
+          rotationSpeed: 99.6249542
   Children: ~
 GameObject35:
   name: BiblePage_Ciudad
@@ -27393,9 +27393,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.11540174
+          floatSpeed: 1.8983953
           floatHeight: 0.5
-          rotationSpeed: 97.5954437
+          rotationSpeed: 87.6631622
   Children: ~
 GameObject36:
   name: Barril_Ciudad1
@@ -27454,6 +27454,7 @@ GameObject36:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject37:
   name: CajaMadera1
@@ -27512,6 +27513,7 @@ GameObject37:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject38:
   name: WoodenBox_Lvl1_prefab_1_Instance
@@ -27570,6 +27572,7 @@ GameObject38:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject39:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance
@@ -27628,6 +27631,7 @@ GameObject39:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject40:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance2
@@ -27686,6 +27690,7 @@ GameObject40:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject41:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance3
@@ -27744,6 +27749,7 @@ GameObject41:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject42:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance4
@@ -27802,6 +27808,7 @@ GameObject42:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject43:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance5
@@ -27860,6 +27867,7 @@ GameObject43:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject44:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance7
@@ -27918,6 +27926,7 @@ GameObject44:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject45:
   name: WoodenBox_Lvl1_prefab_1_Instance2
@@ -27976,6 +27985,7 @@ GameObject45:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject46:
   name: WoodenBox_Lvl1_prefab_1_Instance3
@@ -28034,6 +28044,7 @@ GameObject46:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject47:
   name: WoodenBox_Lvl1_prefab_1_Instance4
@@ -28092,6 +28103,7 @@ GameObject47:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject48:
   name: WoodenBox_Lvl1_prefab_1_Instance5
@@ -28150,6 +28162,7 @@ GameObject48:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject49:
   name: WoodenBox_Lvl1_prefab_1_Instance6
@@ -28208,6 +28221,7 @@ GameObject49:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject50:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance6
@@ -28266,6 +28280,7 @@ GameObject50:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject51:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance8
@@ -28324,6 +28339,7 @@ GameObject51:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject52:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance9
@@ -28382,6 +28398,7 @@ GameObject52:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject53:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance10
@@ -28440,6 +28457,7 @@ GameObject53:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject54:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance11
@@ -28498,6 +28516,7 @@ GameObject54:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject55:
   name: WoodenBox_Lvl1_prefab_1_Instance7
@@ -28556,6 +28575,7 @@ GameObject55:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject56:
   name: WoodenBox_Lvl1_prefab_1_Instance8
@@ -28614,6 +28634,7 @@ GameObject56:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject57:
   name: WoodenBox_Lvl1_prefab_1_Instance10
@@ -28672,6 +28693,7 @@ GameObject57:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject58:
   name: WoodenBox_Lvl1_prefab_1_Instance9
@@ -28730,6 +28752,7 @@ GameObject58:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject59:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance12
@@ -28788,6 +28811,7 @@ GameObject59:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject60:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance13
@@ -28846,6 +28870,7 @@ GameObject60:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject61:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance14
@@ -28904,6 +28929,7 @@ GameObject61:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject62:
   name: WoodenBox_Lvl1_prefab_1_Instance11
@@ -28962,6 +28988,7 @@ GameObject62:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject63:
   name: WoodenBox_Lvl1_prefab_1_Instance12
@@ -29020,6 +29047,7 @@ GameObject63:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject64:
   name: WoodenBox_Lvl1_prefab_1_Instance13
@@ -29078,6 +29106,7 @@ GameObject64:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject65:
   name: WoodenBox_Lvl1_prefab_1_Instance14
@@ -29136,6 +29165,7 @@ GameObject65:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject66:
   name: WoodenBox_Lvl1_prefab_1_Instance15
@@ -29194,6 +29224,7 @@ GameObject66:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject67:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance15
@@ -29252,6 +29283,7 @@ GameObject67:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject68:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance16
@@ -29310,6 +29342,7 @@ GameObject68:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject69:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance17
@@ -29368,6 +29401,7 @@ GameObject69:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject70:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance18
@@ -29426,6 +29460,7 @@ GameObject70:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject71:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance19
@@ -29484,6 +29519,7 @@ GameObject71:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject72:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance20
@@ -29542,6 +29578,7 @@ GameObject72:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject73:
   name: WoodenBox_Lvl1_prefab_1_Instance16
@@ -29600,6 +29637,7 @@ GameObject73:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject74:
   name: WoodenBox_Lvl1_prefab_1_Instance17
@@ -29658,6 +29696,7 @@ GameObject74:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject75:
   name: WoodenBox_Lvl1_prefab_1_Instance18
@@ -29716,6 +29755,7 @@ GameObject75:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject76:
   name: WoodenBox_Lvl1_prefab_1_Instance19
@@ -29774,6 +29814,7 @@ GameObject76:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject77:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance21
@@ -29832,6 +29873,7 @@ GameObject77:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject78:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance22
@@ -29890,6 +29932,7 @@ GameObject78:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject79:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance23
@@ -29948,6 +29991,7 @@ GameObject79:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject80:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance24
@@ -30006,6 +30050,7 @@ GameObject80:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject81:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance25
@@ -30064,6 +30109,7 @@ GameObject81:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject82:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance26
@@ -30122,6 +30168,7 @@ GameObject82:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject83:
   name: WoodenBox_Lvl1_prefab_1_Instance20
@@ -30180,6 +30227,7 @@ GameObject83:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject84:
   name: WoodenBox_Lvl1_prefab_1_Instance21
@@ -30238,6 +30286,7 @@ GameObject84:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject85:
   name: WoodenBox_Lvl1_prefab_1_Instance22
@@ -30296,6 +30345,7 @@ GameObject85:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject86:
   name: WoodenBox_Lvl1_prefab_1_Instance23
@@ -30354,6 +30404,7 @@ GameObject86:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject87:
   name: WoodenBox_Lvl1_prefab_1_Instance24
@@ -30412,6 +30463,7 @@ GameObject87:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject88:
   name: Libreria_Sergi_2
@@ -31838,9 +31890,9 @@ GameObject88:
             - 0
             - -25.443840026855469
           localRotation:
-            - 89.990127621706449
-            - 89.874292042599748
-            - 179.99128192436416
+            - 89.989763170018961
+            - 89.870911130330072
+            - 179.99088844437216
           localScale:
             - 86.512344360351562
             - 99.999984741210938
@@ -31880,9 +31932,9 @@ GameObject88:
             - 341.29437255859375
             - 124.93968963623047
           localRotation:
-            - 89.985265470919046
-            - 89.928065305794973
-            - 179.98506227275189
+            - 89.984230786029045
+            - 89.941151623018172
+            - 179.98400880485457
           localScale:
             - 96.124794006347656
             - 99.999984741210938
@@ -32301,7 +32353,7 @@ GameObject88:
             - -869.0504150390625
           localRotation:
             - 90
-            - 89.779079660697533
+            - 89.773028883927211
             - 0
           localScale:
             - 100
@@ -33015,8 +33067,8 @@ GameObject88:
             - -924.02191162109375
           localRotation:
             - -90.000024148367501
-            - 0.061903175735389539
-            - -1.2539242584762168e-09
+            - 0.061903307796832042
+            - -1.2539520883426609e-09
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -33434,9 +33486,9 @@ GameObject88:
             - 0
             - -443.06002807617188
           localRotation:
-            - 89.999987980246857
-            - 78.58365251289834
-            - 179.99997768390736
+            - 89.999981116036011
+            - 78.583664532628461
+            - 179.99998454814906
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -33476,9 +33528,9 @@ GameObject88:
             - 0
             - -346.2620849609375
           localRotation:
-            - 90.000032238323755
-            - -74.941231903828864
-            - -179.99995473040573
+            - 90.000032238327037
+            - -74.941239767902985
+            - -179.99995473041133
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -33728,9 +33780,9 @@ GameObject88:
             - 0
             - -469.199462890625
           localRotation:
-            - -90.000059268101438
-            - 65.587229349345165
-            - -2.9568355432569616e-05
+            - -90.000056103600002
+            - 65.587224437805361
+            - -2.4656809638720077e-05
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -35891,7 +35943,7 @@ GameObject108:
         name: Item
         fields:
           isTextVisible: false
-          dialogueText: There is an audio log/n"Here... kzzzt Soldier John Dou, 10th Infantry"./n"The Tyranids are taking more and more territory, we can't hold them back..."/n*Distant explosion. Gunfire in the background.*/nFinalmente parte 3/f
+          dialogueText: There is an audio log./n"Here... kzzzt Soldier John Dou, 10th Infantry"./n"The Tyranids are taking more and more territory, we can't hold them back..."/n*Distant explosion. Gunfire in the background.*/n"(gasp) We're falling back. The library... It's the only safe place left"/n"We're entrenched, but I don't know how much longer we can hold..."/n*Tyranid noises in the distance.*/n"Retreat! Retreat!"/n"If anyone hears this... kzzzt may the Emperor protect us."/nThe transmission cuts off./f
   Children: ~
 GameObject109:
   name: ClawsISE
@@ -35931,7 +35983,7 @@ GameObject109:
         name: Item
         fields:
           isTextVisible: false
-          dialogueText: Esto es parte 1/nAhora parte 2/nFinalmente parte 3/f
+          dialogueText: The marks of a creature's attack./f
   Children: ~
 GameObject110:
   name: Canvas_OptionsMenu
@@ -38027,7 +38079,7 @@ GameObject111:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -39638,7 +39690,7 @@ GameObject112:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -41479,7 +41531,7 @@ GameObject113:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -43090,7 +43142,7 @@ GameObject114:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -44931,7 +44983,7 @@ GameObject115:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -46542,7 +46594,7 @@ GameObject116:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -48383,7 +48435,7 @@ GameObject117:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -50224,7 +50276,7 @@ GameObject118:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -52065,7 +52117,7 @@ GameObject119:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -53676,7 +53728,7 @@ GameObject120:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -56172,7 +56224,7 @@ GameObject133:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -57842,7 +57894,7 @@ GameObject134:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -59449,7 +59501,7 @@ GameObject135:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -61056,7 +61108,7 @@ GameObject136:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -62663,7 +62715,7 @@ GameObject137:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -64270,7 +64322,7 @@ GameObject138:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -67484,7 +67536,7 @@ GameObject140:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -69091,7 +69143,7 @@ GameObject141:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -70698,7 +70750,7 @@ GameObject142:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -72305,7 +72357,7 @@ GameObject143:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -73912,7 +73964,7 @@ GameObject144:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -75519,7 +75571,7 @@ GameObject145:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -77126,7 +77178,7 @@ GameObject146:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -78733,7 +78785,7 @@ GameObject147:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -80340,7 +80392,7 @@ GameObject148:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -81947,7 +81999,7 @@ GameObject149:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -83554,7 +83606,7 @@ GameObject150:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -85161,7 +85213,7 @@ GameObject151:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -86768,7 +86820,7 @@ GameObject152:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -88375,7 +88427,7 @@ GameObject153:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -89982,7 +90034,7 @@ GameObject154:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -91589,7 +91641,7 @@ GameObject155:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -93196,7 +93248,7 @@ GameObject156:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -94803,7 +94855,7 @@ GameObject157:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -96410,7 +96462,7 @@ GameObject158:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -98017,7 +98069,7 @@ GameObject159:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -99941,6 +99993,7 @@ GameObject168:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject169:
   name: Medkit_1_Instance
@@ -99999,6 +100052,7 @@ GameObject169:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject170:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_Instance
@@ -100057,6 +100111,7 @@ GameObject170:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject171:
   name: Medkit_1_Instance2
@@ -100115,6 +100170,7 @@ GameObject171:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject172:
   name: Medkit_1_Instance3
@@ -100173,6 +100229,7 @@ GameObject172:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject173:
   name: Medkit_1_Instance4
@@ -100231,6 +100288,7 @@ GameObject173:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject174:
   name: Medkit_1_Instance5
@@ -100289,6 +100347,7 @@ GameObject174:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject175:
   name: CheckPoint_Instance6
@@ -100468,9 +100527,9 @@ GameObject179:
         - 3.2896044254302979
         - 95.662101745605469
       localRotation:
-        - -9.4455226469603577
-        - -57.750502882185728
-        - -138.16008338243279
+        - -9.4455227961361796
+        - -57.750504429274216
+        - -138.16007961232918
       localScale:
         - 0.031276464462280273
         - 0.031276464462280273
@@ -100647,9 +100706,9 @@ GameObject184:
         - 3.2896044254302979
         - 10.935238838195801
       localRotation:
-        - -2.6537749339577728
-        - -52.984219098736126
-        - -143.75537661231976
+        - -2.6537755044356541
+        - -52.98422465546026
+        - -143.75537507560193
       localScale:
         - 0.017827585339546204
         - 0.017827583476901054
@@ -101689,7 +101748,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861041809637314
             - 0
           localScale:
             - 208.60295104980469
@@ -101731,7 +101790,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861041809637314
             - 0
           localScale:
             - 208.60295104980469
@@ -101773,7 +101832,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861041809637314
             - 0
           localScale:
             - 208.60295104980469
@@ -101815,7 +101874,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861041809637314
             - 0
           localScale:
             - 208.60295104980469
@@ -101857,7 +101916,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861041809637314
             - 0
           localScale:
             - 208.60295104980469
@@ -101899,7 +101958,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861041809637314
             - 0
           localScale:
             - 208.60295104980469
@@ -101941,7 +102000,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861041809637314
             - 0
           localScale:
             - 208.60295104980469
@@ -103410,6 +103469,7 @@ GameObject210:
           hasShotgun: false
           hasRailgun: false
           hasBoltgun: true
+          canChangeWeapon: true
       Script1:
         name: PlayerMovement
         fields:
@@ -105256,7 +105316,7 @@ GameObject210:
                                       shapeParam3: 20
                                       isOneShot: false
                                       isPlaying: true
-                                      isPaused: false
+                                      isPaused: true
                                       burstEmitted: false
                                       spriteSize:
                                         - 100
@@ -106266,9 +106326,9 @@ GameObject214:
         - 5.1115894317626953
         - -15.587105751037598
       localRotation:
-        - 1.1204080168089887
-        - -57.876396358736798
-        - -109.09282938496749
+        - 1.1204058559448342
+        - -57.876399786845795
+        - -109.09283719961503
       localScale:
         - 1.5462901592254639
         - 1.0261286497116089
@@ -108513,16 +108573,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.922999978
-            - 0.79400003
+            - 0.904999971
+            - 0.727999985
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0250000004
-            - 0.0500000007
+            - 0.0299999993
+            - 0.0599999987
             - 1
           pivot_offset:
             - 0
@@ -108534,8 +108594,8 @@ GameObject232:
           texture_path: Library/Textures/UI/gun_boltgun_small_icon.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 130
+            - 142
           sheet_size:
             - 130
             - 142
@@ -108577,16 +108637,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.922999978
-            - 0.796000004
+            - 0.904999971
+            - 0.727999985
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0250000004
-            - 0.0500000007
+            - 0.0299999993
+            - 0.0600000024
             - 1
           pivot_offset:
             - 0
@@ -108641,16 +108701,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.922999978
-            - 0.792999983
+            - 0.904999971
+            - 0.727999985
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0250000004
-            - 0.0500000007
+            - 0.0299999993
+            - 0.0599999987
             - 1
           pivot_offset:
             - 0
@@ -108662,8 +108722,8 @@ GameObject232:
           texture_path: Library/Textures/UI/gun_shotgun_small_icon.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 125
+            - 139
           sheet_size:
             - 125
             - 139
@@ -108705,16 +108765,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.954999983
-            - 0.79400003
+            - 0.944999993
+            - 0.727999985
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0250000004
-            - 0.0500000007
+            - 0.0299999993
+            - 0.0599999987
             - 1
           pivot_offset:
             - 0
@@ -108769,16 +108829,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.954999983
-            - 0.796000004
+            - 0.944999993
+            - 0.727999985
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0250000004
-            - 0.0500000007
+            - 0.0299999993
+            - 0.0599999987
             - 1
           pivot_offset:
             - 0
@@ -108833,16 +108893,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.954999983
-            - 0.792999983
+            - 0.944999993
+            - 0.727999985
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0250000004
-            - 0.0500000007
+            - 0.0299999993
+            - 0.0599999987
             - 1
           pivot_offset:
             - 0
@@ -108897,16 +108957,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.917999983
-            - 0.84799999
+            - 0.899999976
+            - 0.796999991
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0689999983
-            - 0.104000002
+            - 0.0799999982
+            - 0.119000003
             - 1
           pivot_offset:
             - 0
@@ -108918,8 +108978,8 @@ GameObject232:
           texture_path: Library/Textures/UI/gun_railgun_icon_panel.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 322
+            - 266
           sheet_size:
             - 322
             - 266
@@ -108961,16 +109021,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.916000009
-            - 0.850000024
+            - 0.899999976
+            - 0.796999991
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0689999983
-            - 0.104000002
+            - 0.0799999982
+            - 0.119000003
             - 1
           pivot_offset:
             - 0
@@ -108982,8 +109042,8 @@ GameObject232:
           texture_path: Library/Textures/UI/gun_shotgun_icon_panel.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 322
+            - 266
           sheet_size:
             - 322
             - 266
@@ -109025,16 +109085,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.916000009
-            - 0.850000024
+            - 0.899999976
+            - 0.796999991
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0689999983
-            - 0.104000002
+            - 0.0799999982
+            - 0.11900001
             - 1
           pivot_offset:
             - 0
@@ -109063,7 +109123,7 @@ GameObject232:
             - 1
             - 1
       Children: ~
-    - name: boltgun_ability_1
+    - name: boltgun_ability
       prefabPath: ""
       uuid: 7226111253171644170
       tag: Untagged
@@ -109089,16 +109149,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.848999977
-            - 0.889999986
+            - 0.814999998
+            - 0.800000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.023
-            - 0.0500000007
+            - 0.0649999976
+            - 0.109999999
             - 1
           pivot_offset:
             - 0
@@ -109127,135 +109187,7 @@ GameObject232:
             - 1
             - 1
       Children: ~
-    - name: boltgun_ability_2
-      prefabPath: ""
-      uuid: 6889533685794486519
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.875999987
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_chainballs.png
-          use_animation: false
-          sprite_size:
-            - 114
-            - 125
-          sheet_size:
-            - 114
-            - 125
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: shotgun_ability_1
-      prefabPath: ""
-      uuid: 3246280818281522766
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.848999977
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_hook.png
-          use_animation: false
-          sprite_size:
-            - 0
-            - 0
-          sheet_size:
-            - 116
-            - 125
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: shotgun_ability_2
+    - name: shotgun_ability
       prefabPath: ""
       uuid: 5991966621356209688
       tag: Untagged
@@ -109281,16 +109213,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.875999987
-            - 0.889999986
+            - 0.814999998
+            - 0.800000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.023
-            - 0.0500000007
+            - 0.0649999976
+            - 0.109999999
             - 1
           pivot_offset:
             - 0
@@ -109302,8 +109234,8 @@ GameObject232:
           texture_path: Library/Textures/UI/powerup_explosion.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 114
+            - 125
           sheet_size:
             - 114
             - 125
@@ -109319,71 +109251,7 @@ GameObject232:
             - 1
             - 1
       Children: ~
-    - name: railgun_ability_1
-      prefabPath: ""
-      uuid: 12941715311931944973
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.848999977
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_railgun_reload.png
-          use_animation: false
-          sprite_size:
-            - 0
-            - 0
-          sheet_size:
-            - 114
-            - 125
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: railgun_ability_2a
+    - name: railgun_ability
       prefabPath: ""
       uuid: 7228281880689251386
       tag: Untagged
@@ -109409,16 +109277,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.875999987
-            - 0.889999986
+            - 0.814999998
+            - 0.800000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.023
-            - 0.0500000007
+            - 0.0649999976
+            - 0.109999999
             - 1
           pivot_offset:
             - 0
@@ -109430,72 +109298,8 @@ GameObject232:
           texture_path: Library/Textures/UI/powerup_railgun_Eball.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
-          sheet_size:
             - 114
             - 125
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: railgun_ability_2b
-      prefabPath: ""
-      uuid: 15743453786480257795
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.875999987
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_railgun_shot.png
-          use_animation: false
-          sprite_size:
-            - 0
-            - 0
           sheet_size:
             - 114
             - 125
@@ -109537,16 +109341,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.91900003
-            - 0.791999996
+            - 0.898999989
+            - 0.720000029
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.064000003
-            - 0.0540000014
+            - 0.0820000023
+            - 0.0670000017
             - 1
           pivot_offset:
             - 0
@@ -109575,9 +109379,9 @@ GameObject232:
             - 1
             - 1
       Children: ~
-    - name: frames
+    - name: lock_L
       prefabPath: ""
-      uuid: 4488032847570964638
+      uuid: 14076127763368232337
       tag: Untagged
       active: true
       isStatic: false
@@ -109601,72 +109405,8 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.847000003
-            - 0.887000024
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0529999994
-            - 0.057
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_frame.png
-          use_animation: false
-          sprite_size:
-            - 292
-            - 152
-          sheet_size:
-            - 292
-            - 152
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: lock_L
-      prefabPath: ""
-      uuid: 14076127763368232337
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.922999978
-            - 0.795000017
+            - 0.907999992
+            - 0.730000019
             - 0
           rotation:
             - 0
@@ -109686,8 +109426,8 @@ GameObject232:
           texture_path: Library/Textures/UI/lock.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 96
+            - 96
           sheet_size:
             - 96
             - 96
@@ -109707,7 +109447,7 @@ GameObject232:
       prefabPath: ""
       uuid: 12734898124471456503
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -109729,8 +109469,8 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.954999983
-            - 0.795000017
+            - 0.948000014
+            - 0.730000019
             - 0
           rotation:
             - 0
@@ -109750,75 +109490,11 @@ GameObject232:
           texture_path: Library/Textures/UI/lock.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 96
+            - 96
           sheet_size:
             - 96
             - 96
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: nodash
-      prefabPath: ""
-      uuid: 17150060484897842893
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.105999999
-            - 0.800000012
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0229999982
-            - 0.0299999993
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/status_nodash.png
-          use_animation: false
-          sprite_size:
-            - 51
-            - 40
-          sheet_size:
-            - 51
-            - 40
           sprite_offset:
             - 0
             - 0
@@ -109835,7 +109511,7 @@ GameObject232:
       prefabPath: ""
       uuid: 901689037527342971
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -109857,7 +109533,7 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.133000001
+            - 0.107000001
             - 0.800000012
             - 0
           rotation:
@@ -109899,7 +109575,7 @@ GameObject232:
       prefabPath: ""
       uuid: 7024405179481283790
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -109921,7 +109597,7 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.153999999
+            - 0.131999999
             - 0.800000012
             - 0
           rotation:
@@ -109959,75 +109635,11 @@ GameObject232:
             - 1
             - 1
       Children: ~
-    - name: defenseup
-      prefabPath: ""
-      uuid: 4108163678017308570
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.173999995
-            - 0.800000012
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0229999982
-            - 0.0299999993
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library\Textures\UI\powerup_shield.png
-          use_animation: false
-          sprite_size:
-            - 99
-            - 81
-          sheet_size:
-            - 99
-            - 81
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
     - name: asup
       prefabPath: ""
       uuid: 5943946144905729836
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -110049,7 +109661,7 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.196999997
+            - 0.158000007
             - 0.800000012
             - 0
           rotation:
@@ -110091,7 +109703,7 @@ GameObject232:
       prefabPath: ""
       uuid: 17898626938220245274
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -110113,7 +109725,7 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.222000003
+            - 0.185000002
             - 0.800000012
             - 0
           rotation:
@@ -110155,7 +109767,7 @@ GameObject232:
       prefabPath: ""
       uuid: 4693695904719673995
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -110177,7 +109789,7 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.248999998
+            - 0.211999997
             - 0.800000012
             - 0
           rotation:
@@ -110268,10 +109880,10 @@ GameObject232:
             - 1225
             - 40
           sprite_offset:
-            - 525
+            - 0
             - 0
           anim_speed: 0.5
-          anim_index: 3
+          anim_index: 0
           anim_index_limit: 6
           color:
             - 0.262745112
@@ -110396,10 +110008,10 @@ GameObject232:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 150
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 3
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -110524,10 +110136,10 @@ GameObject232:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 150
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 3
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -111073,16 +110685,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.920000017
-            - 0.971000016
+            - 0.898999989
+            - 0.944999993
             - 0
           rotation:
+            - 27328.3047
             - 0
-            - 0
-            - 0
+            - 10304.166
           scale:
-            - 0.0659999996
-            - 0.0299999993
+            - 0.0850000083
+            - 0.0350000001
             - 1
           pivot_offset:
             - 0
@@ -111137,16 +110749,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.920000017
-            - 0.967999995
+            - 0.897000015
+            - 0.949000001
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.063000001
-            - 0.0249999985
+            - 0.0850000009
+            - 0.0350000001
             - 1
           pivot_offset:
             - 0
@@ -111201,8 +110813,8 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.959999979
-            - 0.961000025
+            - 0.957000017
+            - 0.938000023
             - 0
           rotation:
             - 0
@@ -111210,7 +110822,7 @@ GameObject232:
             - 0
           scale:
             - 0.0289999992
-            - 0.0160000008
+            - 0.0249999985
             - 1
           pivot_offset:
             - 0
@@ -111266,15 +110878,15 @@ GameObject232:
           enabled: true
           position:
             - 0.99000001
-            - 0.980000019
+            - 0.963999987
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.152999997
-            - 0.131999999
+            - 0.200000018
+            - 0.184999987
             - 1
           pivot_offset:
             - 1
@@ -111396,7 +111008,7 @@ GameObject232:
           enabled: true
           position:
             - 0.961000025
-            - 0.0719999969
+            - 0.115000002
             - 0
           rotation:
             - 0
@@ -111421,10 +111033,10 @@ GameObject232:
             - 0.664203882
             - 0.797665358
             - 0
-          fontSize: 12.5
+          fontSize: 14
           boxSize:
-            - 53.75
-            - 13.75
+            - 60.1999969
+            - 15.3999996
           spriteSize:
             - 0
             - 0
@@ -111462,7 +111074,7 @@ GameObject232:
           enabled: true
           position:
             - 0.961000025
-            - 0.0719999969
+            - 0.115000002
             - 0
           rotation:
             - 0
@@ -111487,7 +111099,7 @@ GameObject232:
             - 0
             - 0.304168224
             - 0.797665358
-          fontSize: 12.5
+          fontSize: 14
           boxSize:
             - 53.75
             - 13.75
@@ -111528,7 +111140,7 @@ GameObject232:
           enabled: true
           position:
             - 0.961000025
-            - 0.0719999969
+            - 0.115000002
             - 0
           rotation:
             - 0
@@ -111553,7 +111165,7 @@ GameObject232:
             - 1
             - 0
             - 0
-          fontSize: 12.5
+          fontSize: 14
           boxSize:
             - 53.75
             - 13.75
@@ -111608,6 +111220,134 @@ GameObject232:
             - 0
             - 1
             - 0
+      Children: ~
+    - name: CDBar
+      prefabPath: ""
+      uuid: 15569205497635253671
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.810000002
+            - 0.899999976
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0649999976
+            - 0.100000001
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/default.png
+          use_animation: false
+          sprite_size:
+            - 1024
+            - 1024
+          sheet_size:
+            - 1024
+            - 1024
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 0
+            - 0
+            - 0
+            - 0.495000005
+      Children: ~
+    - name: frames
+      prefabPath: ""
+      uuid: 4488032847570964638
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.808000028
+            - 0.791000009
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.074000001
+            - 0.124000005
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/powerup_frame.png
+          use_animation: false
+          sprite_size:
+            - 136
+            - 152
+          sheet_size:
+            - 136
+            - 152
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
 GameObject233:
   name: Canvas_Interaction

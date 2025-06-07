@@ -61,9 +61,9 @@ GameObject1:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -50.606876373291016
-        - 30.703765869140625
-        - 28.026830673217773
+        - 255.521728515625
+        - 41.332180023193359
+        - 63.736782073974609
       localRotation:
         - -130.00001088995518
         - 44.999994761934246
@@ -244,7 +244,7 @@ GameObject6:
   prefabPath: Assets\Prefabs\ShotgunPickUp.prefab.yaml
   uuid: 17816855419032250650
   tag: Weapon
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -252,12 +252,12 @@ GameObject6:
       enabled: true
       localPosition:
         - 329.73062133789062
-        - 2
+        - 2.3589017391204834
         - 34.265037536621094
       localRotation:
-        - 0
-        - 0
-        - -34.819205031226268
+        - 35.821303768005244
+        - -40.079793543931316
+        - -48.266202978717573
       localScale:
         - 0.0029999983962625265
         - 0.0029999983962625265
@@ -328,7 +328,7 @@ GameObject6:
       prefabPath: ""
       uuid: 6196318924992102555
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -370,7 +370,7 @@ GameObject6:
       prefabPath: ""
       uuid: 989901120173885559
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -421,12 +421,12 @@ GameObject7:
       enabled: true
       localPosition:
         - 559.38055419921875
-        - 2
+        - 1.6169960498809814
         - 28.837474822998047
       localRotation:
-        - 0
-        - 0
-        - -19.585679672481248
+        - -2.0442905894233117
+        - 5.7252278490517963
+        - -19.687912492841686
       localScale:
         - 1.6800000667572021
         - 1.6800000667572021
@@ -470,9 +470,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 0.779799163
+          floatSpeed: 0.533084512
           floatHeight: 0.5
-          rotationSpeed: 93.4025574
+          rotationSpeed: 75.8857727
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -529,12 +529,12 @@ GameObject8:
       enabled: true
       localPosition:
         - 738.51513671875
-        - 1.7701622247695923
+        - 2.0711266994476318
         - -43.398029327392578
       localRotation:
-        - 0
-        - 0
-        - -31.820662858287644
+        - 74.662701377697076
+        - -57.241093289164994
+        - -77.011991053242852
       localScale:
         - 2.3799991607666016
         - 2.3799991607666016
@@ -578,9 +578,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 0.869574666
+          floatSpeed: 0.9529742
           floatHeight: 0.5
-          rotationSpeed: 64.863121
+          rotationSpeed: 73.1929855
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -3413,7 +3413,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.760366889382752
+            - 89.760817754253964
             - 0
           localScale:
             - 208.60295104980469
@@ -3527,7 +3527,7 @@ GameObject20:
       prefabPath: ""
       uuid: 10470541250042672216
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3569,7 +3569,7 @@ GameObject20:
       prefabPath: ""
       uuid: 924151128390048278
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3664,9 +3664,9 @@ GameObject20:
             - 164.68646240234375
             - 1182.335205078125
           localRotation:
-            - -90.000038218417956
-            - 83.400708653284127
-            - -2.1114590061434899e-05
+            - -90.000052196467152
+            - 83.400692964791972
+            - -3.6803021822784831e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -3706,9 +3706,9 @@ GameObject20:
             - 158.47599792480469
             - 1061.107666015625
           localRotation:
-            - -90.000022329904013
-            - -76.296831728460759
-            - 2.0610074528317326e-05
+            - -90.000022329887898
+            - -76.296840882286389
+            - 2.0610058463586403e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -3863,7 +3863,7 @@ GameObject20:
       prefabPath: ""
       uuid: 224079429312684627
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3905,7 +3905,7 @@ GameObject20:
       prefabPath: ""
       uuid: 15023981371496934547
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3947,7 +3947,7 @@ GameObject20:
       prefabPath: ""
       uuid: 2620490476499307762
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3989,7 +3989,7 @@ GameObject20:
       prefabPath: ""
       uuid: 16775662568344951680
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4031,7 +4031,7 @@ GameObject20:
       prefabPath: ""
       uuid: 4387168121134837323
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4073,7 +4073,7 @@ GameObject20:
       prefabPath: ""
       uuid: 7750017328361161292
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4157,7 +4157,7 @@ GameObject20:
       prefabPath: ""
       uuid: 15643082714427638178
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4199,7 +4199,7 @@ GameObject20:
       prefabPath: ""
       uuid: 13246366420385422105
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4672,9 +4672,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.99323536671217
-            - 89.849644307592087
-            - 179.99229450732685
+            - 89.993944301470421
+            - 89.851052787373249
+            - 179.99299831948102
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -4714,9 +4714,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.99323536671217
-            - 89.849644307592087
-            - 179.99229450732685
+            - 89.993944301470421
+            - 89.851052787373249
+            - 179.99299831948102
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -4955,7 +4955,7 @@ GameObject20:
       prefabPath: ""
       uuid: 2769644246278217879
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4997,7 +4997,7 @@ GameObject20:
       prefabPath: ""
       uuid: 16024929832032548850
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5218,9 +5218,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 90.000006711014862
-            - 66.695716879306701
-            - -179.99998980203085
+            - 89.999996775941923
+            - 66.695713392354193
+            - 179.99998631507907
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5260,9 +5260,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 90.000006711014862
-            - 66.695716879306701
-            - -179.99998980203085
+            - 89.999996775941923
+            - 66.695713392354193
+            - 179.99998631507907
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5302,9 +5302,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 90.000006711014862
-            - 66.695716879306701
-            - -179.99998980203085
+            - 89.999996775941923
+            - 66.695713392354193
+            - 179.99998631507907
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5375,7 +5375,7 @@ GameObject20:
       prefabPath: ""
       uuid: 2248977998079132844
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5543,7 +5543,7 @@ GameObject20:
       prefabPath: ""
       uuid: 14293412083437412771
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5585,7 +5585,7 @@ GameObject20:
       prefabPath: ""
       uuid: 4778883686646035246
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5596,9 +5596,9 @@ GameObject20:
             - 201.60006713867188
             - -701.08270263671875
           localRotation:
-            - -90.000019554685608
-            - 80.78974638732339
-            - -2.2980840868634173e-05
+            - -89.99999657384474
+            - 80.78974981347659
+            - -3.4261552652453462e-06
           localScale:
             - 56
             - 56
@@ -5627,7 +5627,7 @@ GameObject20:
       prefabPath: ""
       uuid: 9998378317629824216
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5669,7 +5669,7 @@ GameObject20:
       prefabPath: ""
       uuid: 12138834990389275246
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5722,9 +5722,9 @@ GameObject20:
             - 109.05261993408203
             - 3582.95361328125
           localRotation:
-            - -8.5567687024641774
-            - -57.209904152680842
-            - -138.90945258387796
+            - -8.5567713767149858
+            - -57.209904822524862
+            - -138.90944749320749
           localScale:
             - 1
             - 1
@@ -6058,9 +6058,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360391534552
-            - 52.153760491639723
-            - -35.460575201138177
+            - 178.33360479206519
+            - 52.153761099889579
+            - -35.460576025032005
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6100,9 +6100,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360391534552
-            - 52.153760491639723
-            - -35.460575201138177
+            - 178.33360479206519
+            - 52.153761099889579
+            - -35.460576025032005
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6142,9 +6142,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360391534552
-            - 52.153760491639723
-            - -35.460575201138177
+            - 178.33360479206519
+            - 52.153761099889579
+            - -35.460576025032005
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6425,7 +6425,7 @@ GameObject20:
       prefabPath: ""
       uuid: 12756864127904200681
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7444,9 +7444,9 @@ GameObject20:
             - 48.267116546630859
             - -1413.0146484375
           localRotation:
-            - 90.000054427585894
-            - 66.46946325622973
-            - -179.99998743299042
+            - 90.000051285823275
+            - 66.469449649343787
+            - 179.99999896010132
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -7570,9 +7570,9 @@ GameObject20:
             - 48.267116546630859
             - 1095.0556640625
           localRotation:
-            - 90.000009067532091
-            - -53.451692655642894
-            - 179.99999273070574
+            - 90.000014487691587
+            - -53.451692681090563
+            - 179.99999270525956
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -10481,7 +10481,7 @@ GameObject21:
       prefabPath: ""
       uuid: 15609629841872978329
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -10589,7 +10589,7 @@ GameObject22:
       prefabPath: ""
       uuid: 16772188935579574105
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -10631,7 +10631,7 @@ GameObject22:
       prefabPath: ""
       uuid: 3581794811936436890
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -10673,7 +10673,7 @@ GameObject22:
       prefabPath: ""
       uuid: 8006804088026082670
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -10715,7 +10715,7 @@ GameObject22:
       prefabPath: ""
       uuid: 1192872075516478081
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -10757,7 +10757,7 @@ GameObject22:
       prefabPath: ""
       uuid: 4344862525766749709
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -10799,7 +10799,7 @@ GameObject22:
       prefabPath: ""
       uuid: 2290570411550387032
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -10883,7 +10883,7 @@ GameObject22:
       prefabPath: ""
       uuid: 4830376995468723770
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -10925,7 +10925,7 @@ GameObject22:
       prefabPath: ""
       uuid: 17309537582964281939
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -11009,7 +11009,7 @@ GameObject22:
       prefabPath: ""
       uuid: 1491260440577114771
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -11051,7 +11051,7 @@ GameObject22:
       prefabPath: ""
       uuid: 13866353442709910836
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -11093,7 +11093,7 @@ GameObject22:
       prefabPath: ""
       uuid: 10130670167213621908
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -11135,7 +11135,7 @@ GameObject22:
       prefabPath: ""
       uuid: 10393604229979136144
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -11464,9 +11464,9 @@ GameObject23:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.999814962597753
-            - 81.207712930060339
-            - 179.99991771774972
+            - 89.999797830480844
+            - 81.207694085187299
+            - 179.99991257373557
           localScale:
             - 41.956031799316406
             - 53.921905517578125
@@ -11632,9 +11632,9 @@ GameObject23:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.98472651605843
-            - -89.832281542008502
-            - -179.97563210944043
+            - 89.984565361303225
+            - -89.835302211815403
+            - -179.97547778542332
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -11673,7 +11673,7 @@ GameObject23:
       prefabPath: ""
       uuid: 14837917837146009487
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -11715,7 +11715,7 @@ GameObject23:
       prefabPath: ""
       uuid: 14009392347333959006
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -11978,9 +11978,9 @@ GameObject23:
             - 72.841552734375
             - 24.207195281982422
           localRotation:
-            - -90.000004799060122
-            - 36.689036580682647
-            - 1.6217607092456565e-05
+            - -90.000010515847961
+            - 36.689039409017241
+            - 1.4322029396627024e-05
           localScale:
             - 59.934867858886719
             - 59.934860229492188
@@ -12482,9 +12482,9 @@ GameObject23:
             - 22.607597351074219
             - -2101.2529296875
           localRotation:
-            - -179.99999134858152
-            - 84.241650511540783
-            - 2.1271351066091105e-05
+            - -179.99999134858226
+            - 84.2415855109587
+            - 2.1271347980752727e-05
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -12524,9 +12524,9 @@ GameObject23:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.1001222935512416
-            - -81.281074306202228
-            - -179.99999178004791
+            - 1.1001229012069618
+            - -81.281074351292119
+            - -179.99999166875196
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -13532,9 +13532,9 @@ GameObject23:
             - 72.816177368164062
             - 17.716598510742188
           localRotation:
-            - -90.000181498260375
-            - -82.523170442382707
-            - 1.8234699104566091e-06
+            - -90.000181498723933
+            - -82.523163076591089
+            - 1.8239280906533197e-06
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -13868,9 +13868,9 @@ GameObject23:
             - 84.565017700195312
             - -2966.651611328125
           localRotation:
-            - -89.996756595982276
-            - -89.766111178186208
-            - -0.0059327965733518978
+            - -89.996720034235324
+            - -89.766200786937063
+            - -0.0059693584004655628
           localScale:
             - 43.324676513671875
             - 43.324676513671875
@@ -14078,9 +14078,9 @@ GameObject23:
             - 148.99980163574219
             - 222.72898864746094
           localRotation:
-            - -15.158006721752129
-            - -65.712729558661451
-            - -74.316805664969777
+            - -15.158007319902184
+            - -65.712721843277919
+            - -74.31680329619185
           localScale:
             - 24.540990829467773
             - 24.540992736816406
@@ -14288,9 +14288,9 @@ GameObject23:
             - 27.166694641113281
             - -2728.593017578125
           localRotation:
-            - 89.999993077010672
-            - -71.216278643695048
-            - 179.99999307701066
+            - 90.000000905047273
+            - -71.216295125466445
+            - 179.9999904412162
           localScale:
             - 110.40802001953125
             - 110.40802001953125
@@ -14330,9 +14330,9 @@ GameObject23:
             - 27.166694641113281
             - -1073.0118408203125
           localRotation:
-            - 89.999970568143496
-            - -66.052898862926241
-            - -179.99996358604818
+            - 89.999980544396763
+            - -66.052905348130082
+            - -179.99997007125407
           localScale:
             - 49.639827728271484
             - 49.63983154296875
@@ -16118,9 +16118,9 @@ GameObject24:
             - 451.7078857421875
             - 9679.166015625
           localRotation:
-            - 89.999995057496349
-            - 73.086982798943836
-            - 179.99999333118021
+            - 89.999983209705363
+            - 73.086970170615672
+            - 179.99999356760304
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -19538,7 +19538,7 @@ GameObject27:
             - 57.399997711181641
           localRotation:
             - 0
-            - 82.875088708094054
+            - 82.875057103326867
             - 0
           localScale:
             - 20.007547378540039
@@ -20560,9 +20560,9 @@ GameObject27:
             - 3.1512765884399414
             - 3.5392885208129883
           localRotation:
-            - 179.84665361441651
-            - -57.007653651166272
-            - -179.97224712604958
+            - 179.84665361984449
+            - -57.007680259566769
+            - -179.97224713057506
           localScale:
             - 4.1512908935546875
             - 8.0131254196166992
@@ -22886,7 +22886,7 @@ GameObject29:
             - -160.05094909667969
           localRotation:
             - 0
-            - 63.749234821424913
+            - 63.749229862193133
             - 0
           localScale:
             - 24.358108520507812
@@ -23084,7 +23084,7 @@ GameObject29:
             - -72.031135559082031
           localRotation:
             - 0
-            - -69.383034145159527
+            - -69.383040276432098
             - 0
           localScale:
             - 12.133749961853027
@@ -23974,9 +23974,9 @@ GameObject29:
             - 3.0124197006225586
             - -194.1514892578125
           localRotation:
-            - 179.99999499103757
-            - 87.969443060134608
-            - 179.99999499103757
+            - 179.99999499104624
+            - 87.96954795149837
+            - 179.99999499104624
           localScale:
             - 12.215158462524414
             - 7.4319052696228027
@@ -27130,9 +27130,9 @@ GameObject32:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.21116364
+          floatSpeed: 0.865911365
           floatHeight: 0.5
-          rotationSpeed: 73.185112
+          rotationSpeed: 32.823452
   Children: ~
 GameObject33:
   name: BiblePage_Pueblo
@@ -27215,9 +27215,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.43250024
+          floatSpeed: 1.74066806
           floatHeight: 0.5
-          rotationSpeed: 47.7675285
+          rotationSpeed: 34.8861542
   Children: ~
 GameObject34:
   name: BiblePage_Pasillo_Zona3
@@ -27300,9 +27300,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.668422818
+          floatSpeed: 1.31939805
           floatHeight: 0.5
-          rotationSpeed: 50.2967377
+          rotationSpeed: 75.4539719
   Children: ~
 GameObject35:
   name: BiblePage_Ciudad
@@ -27385,9 +27385,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.13952279
+          floatSpeed: 1.30963552
           floatHeight: 0.5
-          rotationSpeed: 70.4386597
+          rotationSpeed: 71.6181641
   Children: ~
 GameObject36:
   name: Barril_Ciudad1
@@ -28810,7 +28810,7 @@ GameObject60:
   prefabPath: Assets\Prefabs\barrel.prefab.yaml
   uuid: 18351686123061089948
   tag: Destroyable
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -28869,7 +28869,7 @@ GameObject61:
   prefabPath: Assets\Prefabs\barrel.prefab.yaml
   uuid: 14966555036009694350
   tag: Destroyable
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -28928,7 +28928,7 @@ GameObject62:
   prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
   uuid: 3297641706941653502
   tag: Destroyable
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -31882,9 +31882,9 @@ GameObject88:
             - 0
             - -25.443840026855469
           localRotation:
-            - 89.98808932613656
-            - 89.870491196000813
-            - 179.98921118542651
+            - 89.991087469328818
+            - 89.869206249280353
+            - 179.99220932865222
           localScale:
             - 86.512344360351562
             - 99.999984741210938
@@ -31924,9 +31924,9 @@ GameObject88:
             - 341.29437255859375
             - 124.93968963623047
           localRotation:
-            - 89.985628257252714
-            - 89.936755408458026
-            - 179.98540115342558
+            - 89.987352518093786
+            - 89.941301645768817
+            - 179.98712029163431
           localScale:
             - 96.124794006347656
             - 99.999984741210938
@@ -32345,7 +32345,7 @@ GameObject88:
             - -869.0504150390625
           localRotation:
             - 90
-            - 89.76617987064941
+            - 89.765165986091674
             - 0
           localScale:
             - 100
@@ -33059,8 +33059,8 @@ GameObject88:
             - -924.02191162109375
           localRotation:
             - -90.000024148366222
-            - 0.061903380902273916
-            - 1.1042721418430051e-09
+            - 0.061903395051714188
+            - 1.104269160071915e-09
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -33478,9 +33478,9 @@ GameObject88:
             - 0
             - -443.06002807617188
           localRotation:
-            - 89.999992274080967
-            - 78.583651658540646
-            - 179.99999055802445
+            - 89.999987980246857
+            - 78.58365251289834
+            - 179.99997768390736
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -33520,9 +33520,9 @@ GameObject88:
             - 0
             - -346.2620849609375
           localRotation:
-            - 90.000011830234257
-            - -74.941221082198908
-            - -179.99993604471325
+            - 90.000032238323755
+            - -74.941231903828864
+            - -179.99995473040573
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -33772,9 +33772,9 @@ GameObject88:
             - 0
             - -469.199462890625
           localRotation:
-            - -90.000056103600002
-            - 65.587224437805361
-            - -2.4656809638720077e-05
+            - -90.000059268101438
+            - 65.587229349345165
+            - -2.9568355432569616e-05
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -34696,9 +34696,9 @@ GameObject88:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075478576823292e-05
-            - -79.275294712142454
-            - -90.000097096965987
+            - 6.5631866030008525e-05
+            - -79.275324394992722
+            - -90.000117083456601
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -34738,9 +34738,9 @@ GameObject88:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 4.9075478576823292e-05
-            - -79.275294712142454
-            - -90.000097096965987
+            - 6.5631866030008525e-05
+            - -79.275324394992722
+            - -90.000117083456601
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -35148,7 +35148,7 @@ GameObject89:
   prefabPath: ""
   uuid: 8915518843896011968
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -35277,7 +35277,7 @@ GameObject92:
   prefabPath: ""
   uuid: 8276685103514901801
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -37997,7 +37997,7 @@ GameObject111:
       enabled: true
       localPosition:
         - 128.78068542480469
-        - 0
+        - 0.28351187705993652
         - -177.79510498046875
       localRotation:
         - 0
@@ -39607,12 +39607,12 @@ GameObject112:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 323.38180541992188
-        - 0
-        - 30.761920928955078
+        - 293.53762817382812
+        - 0.30928301811218262
+        - 32.75677490234375
       localRotation:
         - 0
-        - -0
+        - -67.977997345616345
         - 0
       localScale:
         - 1.5
@@ -39697,7 +39697,7 @@ GameObject112:
           shootCooldown: 2
           projectileSpeed: 90
           projectileLifetime: 0.5
-          shootTimer: 0
+          shootTimer: 1.43336248
           magazineSize: 0
           currentMagazineAmmo: 0
           maxAmmo: 0
@@ -39709,7 +39709,7 @@ GameObject112:
       prefabPath: ""
       uuid: 8997276279718950742
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -39755,7 +39755,7 @@ GameObject112:
           Script0:
             name: WarriorAnimation
             fields:
-              isAnimFinished: false
+              isAnimFinished: true
       Children:
         - name: Bone
           prefabPath: ""
@@ -41449,7 +41449,7 @@ GameObject113:
       enabled: true
       localPosition:
         - 335.95370483398438
-        - 0
+        - 0.28351211547851562
         - 30.72674560546875
       localRotation:
         - 0
@@ -43060,8 +43060,8 @@ GameObject114:
       enabled: true
       localPosition:
         - 472.87698364257812
-        - 0
-        - 31.134445190429688
+        - 0.30928182601928711
+        - 31.13444709777832
       localRotation:
         - 0
         - -0
@@ -44901,8 +44901,8 @@ GameObject115:
       enabled: true
       localPosition:
         - 488.7691650390625
-        - 0
-        - 25.150165557861328
+        - 0.28351163864135742
+        - 25.150161743164062
       localRotation:
         - 0
         - -0
@@ -46512,8 +46512,8 @@ GameObject116:
       enabled: true
       localPosition:
         - 666.45697021484375
-        - 0
-        - -4.6723031997680664
+        - 0.30928230285644531
+        - -4.6751327514648438
       localRotation:
         - 0
         - -0
@@ -48353,7 +48353,7 @@ GameObject117:
       enabled: true
       localPosition:
         - 766.9346923828125
-        - 0
+        - 0.30928158760070801
         - -16.375667572021484
       localRotation:
         - 0
@@ -50194,7 +50194,7 @@ GameObject118:
       enabled: true
       localPosition:
         - 825.57928466796875
-        - 0
+        - 0.30928158760070801
         - -74.615768432617188
       localRotation:
         - 0
@@ -52035,7 +52035,7 @@ GameObject119:
       enabled: true
       localPosition:
         - 837.60546875
-        - 0
+        - 0.28351140022277832
         - -84.996452331542969
       localRotation:
         - 0
@@ -53646,7 +53646,7 @@ GameObject120:
       enabled: true
       localPosition:
         - 832.5111083984375
-        - 0
+        - 0.28351163864135742
         - -74.994590759277344
       localRotation:
         - 0
@@ -56145,8 +56145,8 @@ GameObject133:
       enabled: true
       localPosition:
         - 52.802703857421875
-        - 0
-        - -2.7913699150085449
+        - 0.28351140022277832
+        - -2.7913694381713867
       localRotation:
         - 0
         - -0
@@ -56351,7 +56351,7 @@ GameObject133:
           Script0:
             name: HormagauntAnimation
             fields:
-              isAnimFinished: false
+              isAnimFinished: true
       Children:
         - name: root.x
           prefabPath: ""
@@ -56387,9 +56387,9 @@ GameObject133:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - 1.995955607014821e-06
-                    - 0.37227669751637738
-                    - 1.742522348635589e-08
+                    - 1.9955267269722299e-06
+                    - 0.37227671068708834
+                    - -4.7477913378557446e-08
                   localRotation:
                     - -1.0185717483361123
                     - -0.0023972453272543353
@@ -56410,9 +56410,9 @@ GameObject133:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -1.489444262148254e-06
-                        - 0.23583293192089871
-                        - -1.3059286829708583e-07
+                        - -1.4890127353339722e-06
+                        - 0.23583291759851543
+                        - -6.5934119275468106e-08
                       localRotation:
                         - -7.2929621185133096
                         - 0.0020287461910372556
@@ -56433,8 +56433,8 @@ GameObject133:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 5.2429077612714536e-07
-                            - 0.1709925087628914
+                            - 5.2429076902171801e-07
+                            - 0.17099250876289229
                             - 5.1444901671970911e-08
                           localRotation:
                             - -1.8293440797251439
@@ -56456,9 +56456,9 @@ GameObject133:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 5.3837616320606685e-07
-                                - 0.15294965219785706
-                                - 0.024442512564222696
+                                - 5.3837615965335317e-07
+                                - 0.15294965219785661
+                                - 0.02444251256422314
                               localRotation:
                                 - -20.059174684783631
                                 - 0.015278154826934762
@@ -56480,7 +56480,7 @@ GameObject133:
                                   enabled: true
                                   localPosition:
                                     - -1.4116609357017751e-06
-                                    - 0.11079005631639566
+                                    - 0.11079005631639621
                                     - 2.0848888127034115e-07
                                   localRotation:
                                     - -1.8027299222677311
@@ -56503,8 +56503,8 @@ GameObject133:
                                       enabled: true
                                       localPosition:
                                         - 3.5377072293840683e-07
-                                        - 0.11079030835402778
-                                        - -2.1913389014471818e-07
+                                        - 0.11079030835402746
+                                        - -2.1913388970062897e-07
                                       localRotation:
                                         - -28.358858036596082
                                         - 0.078328253386382149
@@ -56526,8 +56526,8 @@ GameObject133:
                                           enabled: true
                                           localPosition:
                                             - 0.11150131572301802
-                                            - 0.25231029137562255
-                                            - 0.25097452192040937
+                                            - 0.25231029137562277
+                                            - 0.2509745219204087
                                           localRotation:
                                             - 163.84642288131514
                                             - 7.8470200173022757
@@ -56548,7 +56548,7 @@ GameObject133:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 0.00041024221113872272
+                                                - 0.00041024221114582815
                                                 - -0.04100589444898084
                                                 - 0.033513368960780276
                                               localRotation:
@@ -56571,9 +56571,9 @@ GameObject133:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -0.001571181344882433
+                                                - -0.0015711813448788803
                                                 - -0.03532484284369275
-                                                - 0.013326403792511599
+                                                - 0.013326403792512487
                                               localRotation:
                                                 - -86.226799453152395
                                                 - -86.540581419296004
@@ -56594,9 +56594,9 @@ GameObject133:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 0.00088173083233655802
+                                                - 0.00088173083234011074
                                                 - -0.038136694196825083
-                                                - -0.011401932087601985
+                                                - -0.011401932087601097
                                               localRotation:
                                                 - -99.083913284287874
                                                 - -82.348235491243216
@@ -56617,9 +56617,9 @@ GameObject133:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 0.011415382115949058
-                                                - -0.047117464626223793
-                                                - -0.038730504389126175
+                                                - 0.01141538211595261
+                                                - -0.047117464626224681
+                                                - -0.038730504389125286
                                               localRotation:
                                                 - -90.243392525922147
                                                 - -85.644072939291092
@@ -56640,9 +56640,9 @@ GameObject133:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -0.10685133263853075
+                                            - -0.1068513326385272
                                             - 0.25865859509666511
-                                            - 0.25613519379120864
+                                            - 0.25613519379120819
                                           localRotation:
                                             - 159.79771753369286
                                             - -7.6007639744353162
@@ -56663,9 +56663,9 @@ GameObject133:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 0.00072717067373417876
-                                                - -0.044301703039734797
-                                                - 0.036526635678959057
+                                                - 0.00072717067374128419
+                                                - -0.044301703039733908
+                                                - 0.036526635678961056
                                               localRotation:
                                                 - 1.9775160004752699
                                                 - 89.999772710125171
@@ -56686,9 +56686,9 @@ GameObject133:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -0.00034133445037554111
-                                                - -0.044301580977601951
-                                                - 0.011863714084769023
+                                                - -0.00034133445036488297
+                                                - -0.044301580977601063
+                                                - 0.011863714084771021
                                               localRotation:
                                                 - 0.25299399816861112
                                                 - 89.998267069148937
@@ -56709,9 +56709,9 @@ GameObject133:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -0.0014057015789568084
+                                                - -0.0014057015789461502
                                                 - -0.044301646940454908
-                                                - -0.012744605857681529
+                                                - -0.012744605857679586
                                               localRotation:
                                                 - 0.10172517564549359
                                                 - 89.998510450502806
@@ -56732,9 +56732,9 @@ GameObject133:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -0.0024880127071043034
-                                                - -0.044301991214664938
-                                                - -0.037798689704875016
+                                                - -0.0024880127070936453
+                                                - -0.044301991214664049
+                                                - -0.037798689704873129
                                               localRotation:
                                                 - 0.072349471405148802
                                                 - 89.998964971719275
@@ -56756,8 +56756,8 @@ GameObject133:
                                           enabled: true
                                           localPosition:
                                             - -9.6952470940436797e-07
-                                            - 0.094657881209325723
-                                            - 0.037781199682497268
+                                            - 0.094657881209325945
+                                            - 0.037781199682496824
                                           localRotation:
                                             - 108.12366737423444
                                             - 0.82368653410137582
@@ -56779,7 +56779,7 @@ GameObject133:
                                               enabled: true
                                               localPosition:
                                                 - 0.080271414504935024
-                                                - 0.21143367906862442
+                                                - 0.2114336790686242
                                                 - 0.0062248533880468471
                                               localRotation:
                                                 - -89.999836582890566
@@ -56802,8 +56802,8 @@ GameObject133:
                                               enabled: true
                                               localPosition:
                                                 - -0.080267643480777195
-                                                - 0.21143353626669081
-                                                - 0.0062250489921609753
+                                                - 0.21143353626669037
+                                                - 0.0062250489921607532
                                               localRotation:
                                                 - -90.000047106556309
                                                 - -25.20532285543478
@@ -56824,9 +56824,9 @@ GameObject133:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 3.6787966095630509e-07
-                                                - 0.32400603321319776
-                                                - -0.027743451143668385
+                                                - 3.6787966806173245e-07
+                                                - 0.32400603321319754
+                                                - -0.027743451143668441
                                               localRotation:
                                                 - -89.999855903427246
                                                 - 25.204391409100829
@@ -56848,7 +56848,7 @@ GameObject133:
                                               enabled: true
                                               localPosition:
                                                 - -0.0004967695412894102
-                                                - -0.027589663875032144
+                                                - -0.027589663875032366
                                                 - 0.083491847355771476
                                               localRotation:
                                                 - -138.81511240009581
@@ -56871,8 +56871,8 @@ GameObject133:
                                                   enabled: true
                                                   localPosition:
                                                     - 1.260996640439771e-07
-                                                    - 0.11529760972293279
-                                                    - 8.4422402846229261e-08
+                                                    - 0.11529760972293257
+                                                    - 8.4422402180095446e-08
                                                   localRotation:
                                                     - -18.575009874787298
                                                     - -0.11694270291337033
@@ -56893,9 +56893,9 @@ GameObject133:
                                                       name: Transform_Component
                                                       enabled: true
                                                       localPosition:
-                                                        - -0.012753689149043623
-                                                        - 0.24791648051659276
-                                                        - 0.0088283381796143701
+                                                        - -0.012753689149057834
+                                                        - 0.24791648051659299
+                                                        - 0.0088283381796148142
                                                       localRotation:
                                                         - -21.81471317569601
                                                         - -5.2868706224246331
@@ -56916,9 +56916,9 @@ GameObject133:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 0.00039262776226323126
-                                            - 0.15781489340712707
-                                            - 0.34548564769326595
+                                            - 0.00039262776226678398
+                                            - 0.15781489340712729
+                                            - 0.34548564769326529
                                           localRotation:
                                             - -0.0059204734166807627
                                             - -89.999372414227651
@@ -56940,8 +56940,8 @@ GameObject133:
                                           enabled: true
                                           localPosition:
                                             - 0.091620620530417085
-                                            - 0.12279989992785256
-                                            - 0.22661934705136821
+                                            - 0.12279989992785278
+                                            - 0.22661934705136755
                                           localRotation:
                                             - 0.46701519881272369
                                             - -89.999949823090148
@@ -56963,8 +56963,8 @@ GameObject133:
                                           enabled: true
                                           localPosition:
                                             - -0.09066234294579445
-                                            - 0.11536455541112334
-                                            - 0.22835711878508413
+                                            - 0.11536455541112378
+                                            - 0.22835711878508369
                                           localRotation:
                                             - 0.89250970214206693
                                             - 89.999920447719134
@@ -56986,8 +56986,8 @@ GameObject133:
                                           enabled: true
                                           localPosition:
                                             - 0.10551236638987049
-                                            - 0.082733851344159337
-                                            - 0.077473068041837179
+                                            - 0.082733851344159559
+                                            - 0.077473068041836513
                                           localRotation:
                                             - 2.4582392966673585
                                             - -89.99994970700692
@@ -57008,8 +57008,8 @@ GameObject133:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 1.905931308332498e-07
-                                                - 0.0023590143864151703
+                                                - 1.9059313149938362e-07
+                                                - 0.0023590143864147262
                                                 - 0.00041219722431762307
                                               localRotation:
                                                 - -2.2694327451070382e-08
@@ -57031,9 +57031,9 @@ GameObject133:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -0.10550988761897173
-                                            - 0.08273371938901164
-                                            - 0.077473290598697675
+                                            - -0.10550988761896818
+                                            - 0.082733719389011862
+                                            - 0.077473290598697009
                                           localRotation:
                                             - 0.44757307194030804
                                             - 89.999920589871081
@@ -57054,8 +57054,8 @@ GameObject133:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -1.2142592176189737e-07
-                                                - 0.0023590168595259975
+                                                - -1.2142592131780816e-07
+                                                - 0.0023590168595257754
                                                 - 0.00041034287182029061
                                               localRotation:
                                                 - 7.9695210696187206e-09
@@ -57077,9 +57077,9 @@ GameObject133:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 0.049842198811955285
-                                - 0.032837129835215251
-                                - -0.058782798556483273
+                                - 0.04984219881194818
+                                - 0.032837129835214585
+                                - -0.058782798556482607
                               localRotation:
                                 - -163.01138962978041
                                 - -18.612223654721205
@@ -57100,8 +57100,8 @@ GameObject133:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - -1.1385701692567807e-07
-                                    - 0.1658488200585353
+                                    - -1.1385701625954425e-07
+                                    - 0.16584882005853885
                                     - -2.2958642986736777e-08
                                   localRotation:
                                     - -84.361338459189597
@@ -57124,7 +57124,7 @@ GameObject133:
                                       enabled: true
                                       localPosition:
                                         - 2.0680660561822606e-07
-                                        - 0.55363124155793653
+                                        - 0.55363124155793919
                                         - -1.8959079639557785e-07
                                       localRotation:
                                         - -9.1956295596073902e-06
@@ -57146,9 +57146,9 @@ GameObject133:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 7.8311511053641425e-08
+                                            - 7.8311515050444314e-08
                                             - 0.30724236116802217
-                                            - -1.4361719529176753e-06
+                                            - -1.4361719493649616e-06
                                           localRotation:
                                             - -3.4858706680941389
                                             - 0.2194020369022654
@@ -57169,9 +57169,9 @@ GameObject133:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -0.049842025098062237
-                                - 0.032837057214414989
-                                - -0.058782932508359087
+                                - -0.049842025098069342
+                                - 0.032837057214414767
+                                - -0.058782932508358865
                               localRotation:
                                 - -163.0113901298084
                                 - 18.612223624518364
@@ -57193,8 +57193,8 @@ GameObject133:
                                   enabled: true
                                   localPosition:
                                     - 5.3014779233251375e-09
-                                    - 0.16584760841191581
-                                    - 3.0519831284436805e-07
+                                    - 0.16584760841192292
+                                    - 3.0519831106801121e-07
                                   localRotation:
                                     - -84.217957438742502
                                     - 31.349033209986711
@@ -57215,9 +57215,9 @@ GameObject133:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 1.1340282490834852e-07
+                                        - 1.1340282313199168e-07
                                         - 0.55363092780487833
-                                        - -1.1156668477951825e-07
+                                        - -1.1156669543765929e-07
                                       localRotation:
                                         - 1.4113349149972518e-05
                                         - 6.6305983780167708e-06
@@ -57238,8 +57238,8 @@ GameObject133:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -4.0105145870938941e-08
-                                            - 0.30724194860971465
+                                            - -4.010514675911736e-08
+                                            - 0.30724194860971821
                                             - -3.2141019801201764e-07
                                           localRotation:
                                             - -4.8500186320569911
@@ -57261,9 +57261,9 @@ GameObject133:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 0.049172205760729781
-                            - 0.018627138142790489
-                            - -0.082905615239110331
+                            - 0.049172205760719123
+                            - 0.018627138142791377
+                            - -0.082905615239110553
                           localRotation:
                             - 164.62097356364382
                             - -15.339929168042952
@@ -57284,9 +57284,9 @@ GameObject133:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -8.0429047311092461e-08
+                                - -8.0429047144559007e-08
                                 - 0.12816750284243383
-                                - -2.1728337351589744e-07
+                                - -2.1728337529225428e-07
                               localRotation:
                                 - -50.674752995724269
                                 - 5.6597025147126674
@@ -57309,7 +57309,7 @@ GameObject133:
                                   localPosition:
                                     - -4.4694559164781822e-10
                                     - 0.22907175792932577
-                                    - 2.4288262423510787e-07
+                                    - 2.4288262778782155e-07
                                   localRotation:
                                     - 1.7594818380447981e-05
                                     - 2.2879507818527808e-05
@@ -57331,7 +57331,7 @@ GameObject133:
                                       enabled: true
                                       localPosition:
                                         - 7.9968028643406797e-08
-                                        - 0.20310355761365262
+                                        - 0.20310355761365173
                                         - 9.1025555093438015e-08
                                       localRotation:
                                         - -23.350905240446536
@@ -57353,9 +57353,9 @@ GameObject133:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -0.049170043996696222
-                            - 0.018627207552079916
-                            - -0.08290578601809151
+                            - -0.04917004399670688
+                            - 0.018627207552080804
+                            - -0.082905786018091732
                           localRotation:
                             - 164.62112316093018
                             - 15.339915412259851
@@ -57376,9 +57376,9 @@ GameObject133:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -1.1889649620400178e-07
+                                - -1.188964970921802e-07
                                 - 0.12816987093060561
-                                - 4.6693592814506246e-07
+                                - 4.6693592725688404e-07
                               localRotation:
                                 - -53.166007973604032
                                 - -30.706002080195443
@@ -57400,8 +57400,8 @@ GameObject133:
                                   enabled: true
                                   localPosition:
                                     - -1.6469875685487523e-07
-                                    - 0.22907183385100893
-                                    - -5.9105251892788147e-07
+                                    - 0.22907183385101071
+                                    - -5.9105250826974043e-07
                                   localRotation:
                                     - 2.228403783785851e-05
                                     - -1.4816067729180979e-05
@@ -57423,8 +57423,8 @@ GameObject133:
                                       enabled: true
                                       localPosition:
                                         - -3.2082052037196718e-07
-                                        - 0.20310362450664954
-                                        - -4.0471182671808492e-07
+                                        - 0.20310362450664865
+                                        - -4.0471183737622596e-07
                                       localRotation:
                                         - -14.145619573372782
                                         - 21.593193988041929
@@ -57445,9 +57445,9 @@ GameObject133:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - 1.0176553679741573e-06
-                    - -0.0062115441432539775
-                    - 7.5117693751458603e-05
+                    - 1.017655371526871e-06
+                    - -0.0062115441432535334
+                    - 7.5117693751236558e-05
                   localRotation:
                     - -175.86022080550009
                     - -0.40119983453108293
@@ -57468,9 +57468,9 @@ GameObject133:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -9.6163237373048105e-07
+                        - -9.6163237017776737e-07
                         - 0.40412502281587859
-                        - -1.7509156324813091e-07
+                        - -1.7509156369222012e-07
                       localRotation:
                         - 1.2157470515343696
                         - -0.024858468017678634
@@ -57491,9 +57491,9 @@ GameObject133:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 1.9449874706367609e-06
-                            - 0.33925442842419784
-                            - 1.0180674037130188e-07
+                            - 1.9449874599786199e-06
+                            - 0.33925442842419429
+                            - 1.0180674081539109e-07
                           localRotation:
                             - 0.67656574068488928
                             - -0.1026629026882544
@@ -57514,9 +57514,9 @@ GameObject133:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -1.8120134264165699e-06
-                                - 0.22678828296673537
-                                - 2.0744821427332027e-07
+                                - -1.6963507221134932e-06
+                                - 0.22678804604558778
+                                - 1.8161031256624938e-07
                               localRotation:
                                 - -4.4432779890512624
                                 - -0.83997487983665953
@@ -57537,9 +57537,9 @@ GameObject133:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 4.0212298202391139e-07
-                                    - 0.25114506770053069
-                                    - -1.3309399404803912e-07
+                                    - 1.0660711780019483e-07
+                                    - 0.25114549821668319
+                                    - -4.3457553555725781e-08
                                   localRotation:
                                     - 1.5508210641907703
                                     - 0.023494283606794095
@@ -57560,9 +57560,9 @@ GameObject133:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -6.7302915596201274e-07
-                                        - 0.23845394578783896
-                                        - 1.0910089498494813e-08
+                                        - -3.1901751995633276e-07
+                                        - 0.23845355961112702
+                                        - -6.8158828803177585e-08
                                       localRotation:
                                         - 2.1579996394627909
                                         - 0.11111021257171981
@@ -57583,8 +57583,8 @@ GameObject133:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - 0.038181181633600403
-                    - 0.16527502625737389
+                    - 0.038181181633603956
+                    - 0.16527502625737434
                     - 0.042036834385458688
                   localRotation:
                     - -157.36964475989828
@@ -57606,8 +57606,8 @@ GameObject133:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -3.1796077593071459e-07
-                        - 0.14963732234310001
+                        - -3.1796077770707143e-07
+                        - 0.14963732234308935
                         - -1.4362663947053989e-08
                       localRotation:
                         - -68.237312570876554
@@ -57629,7 +57629,7 @@ GameObject133:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -1.2524638748345754e-07
+                            - -1.2524638215438702e-07
                             - 0.37441010476612396
                             - 5.4667945903474912e-07
                           localRotation:
@@ -57652,9 +57652,9 @@ GameObject133:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -2.4860567515716525e-07
-                                - 0.35727348475926135
-                                - -7.9907349714858356e-07
+                                - -2.4860567826578972e-07
+                                - 0.35727348475925869
+                                - -7.9907350070129723e-07
                               localRotation:
                                 - -145.09630955954952
                                 - 81.170720792486989
@@ -57675,9 +57675,9 @@ GameObject133:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - -9.1875335783697665e-08
-                                    - 0.39389274143823849
-                                    - -2.2097252028174807e-08
+                                    - -9.0313758249749299e-08
+                                    - 0.39389274891160664
+                                    - -2.5297639538734984e-08
                                   localRotation:
                                     - 136.74192437061049
                                     - 15.063750816281415
@@ -57698,9 +57698,9 @@ GameObject133:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -0.038186876720391894
-                    - 0.16527510871122564
-                    - 0.042031075534860962
+                    - -0.03818687629149764
+                    - 0.16527509554051534
+                    - 0.042031140437997383
                   localRotation:
                     - -160.95746936084757
                     - -60.881723691452436
@@ -57721,8 +57721,8 @@ GameObject133:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 1.1066896732359055e-08
-                        - 0.14963675413734023
+                        - 1.1066897620537475e-08
+                        - 0.14963675413735089
                         - 5.1521871657911333e-08
                       localRotation:
                         - -71.180836006016719
@@ -57744,9 +57744,9 @@ GameObject133:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 3.0977894160955088e-07
-                            - 0.37441003700495656
-                            - 2.2114011954954549e-08
+                            - 2.6286321697099879e-07
+                            - 0.37440999315441381
+                            - 3.830314199149143e-08
                           localRotation:
                             - 1.5263886505650297
                             - 2.438648675689727
@@ -57767,9 +57767,9 @@ GameObject133:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 7.5413771227772486e-07
-                                - 0.35727335993856546
-                                - -1.6455717464225472e-06
+                                - 7.5413771050136802e-07
+                                - 0.35727335993856529
+                                - -1.6455717286589788e-06
                               localRotation:
                                 - -123.55686810829432
                                 - -69.01260736705126
@@ -57790,9 +57790,9 @@ GameObject133:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 6.7949873638895042e-07
-                                    - 0.39389270444307001
-                                    - -1.4309279539048703e-08
+                                    - 6.7949871862538203e-07
+                                    - 0.39389270444307156
+                                    - -1.4309278650870283e-08
                                   localRotation:
                                     - 121.93618736174641
                                     - -4.8584508063430469
@@ -57815,8 +57815,8 @@ GameObject134:
       enabled: true
       localPosition:
         - 55.880531311035156
-        - 0
-        - 10
+        - 0.28351163864135742
+        - 9.9999971389770508
       localRotation:
         - 0
         - -0
@@ -59422,7 +59422,7 @@ GameObject135:
       enabled: true
       localPosition:
         - 49.84503173828125
-        - 0
+        - 0.28351163864135742
         - 17.004941940307617
       localRotation:
         - 0
@@ -61029,7 +61029,7 @@ GameObject136:
       enabled: true
       localPosition:
         - 106.72278594970703
-        - 0
+        - 0.28351163864135742
         - -64.324752807617188
       localRotation:
         - 0
@@ -62636,7 +62636,7 @@ GameObject137:
       enabled: true
       localPosition:
         - 123.49516296386719
-        - 0
+        - 0.28351163864135742
         - -63.399570465087891
       localRotation:
         - 0
@@ -64243,7 +64243,7 @@ GameObject138:
       enabled: true
       localPosition:
         - 106.84564971923828
-        - 0
+        - 0.28351163864135742
         - 133.89192199707031
       localRotation:
         - 0
@@ -65850,7 +65850,7 @@ GameObject139:
       enabled: true
       localPosition:
         - 118.68709564208984
-        - 0
+        - 0.14821994304656982
         - 133.57373046875
       localRotation:
         - 0
@@ -67457,7 +67457,7 @@ GameObject140:
       enabled: true
       localPosition:
         - 149.57698059082031
-        - 0
+        - 0.28351187705993652
         - -152.99638366699219
       localRotation:
         - 0
@@ -69064,7 +69064,7 @@ GameObject141:
       enabled: true
       localPosition:
         - 163.30104064941406
-        - 0
+        - 0.28351140022277832
         - -149.05075073242188
       localRotation:
         - 0
@@ -70671,7 +70671,7 @@ GameObject142:
       enabled: true
       localPosition:
         - 164.15284729003906
-        - 0
+        - 0.28351163864135742
         - -175.67950439453125
       localRotation:
         - 0
@@ -72278,7 +72278,7 @@ GameObject143:
       enabled: true
       localPosition:
         - 165.76174926757812
-        - 0
+        - 0.28351211547851562
         - -185.76437377929688
       localRotation:
         - 0
@@ -73885,7 +73885,7 @@ GameObject144:
       enabled: true
       localPosition:
         - 202.340576171875
-        - 0
+        - 0.28351140022277832
         - -152.97288513183594
       localRotation:
         - 0
@@ -75492,7 +75492,7 @@ GameObject145:
       enabled: true
       localPosition:
         - 213.46897888183594
-        - 0
+        - 0.28351163864135742
         - -153.98007202148438
       localRotation:
         - 0
@@ -77098,13 +77098,13 @@ GameObject146:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 235.12236022949219
-        - 0
-        - 22.499725341796875
+        - 283.52935791015625
+        - 0.28351211547851562
+        - 41.669589996337891
       localRotation:
-        - 0
-        - -0
-        - 0
+        - -179.99999499104371
+        - -67.61961848194872
+        - -179.99999499104371
       localScale:
         - 1.7999999523162842
         - 1.7999999523162842
@@ -77196,7 +77196,7 @@ GameObject146:
       prefabPath: ""
       uuid: 17006855275563467050
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -78705,12 +78705,12 @@ GameObject147:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 233.51913452148438
-        - 0
-        - 33.991455078125
+        - 278.90646362304688
+        - 0.28351163864135742
+        - 34.943565368652344
       localRotation:
         - 0
-        - -0
+        - 4.7520714311235706
         - 0
       localScale:
         - 1.7999999523162842
@@ -78803,7 +78803,7 @@ GameObject147:
       prefabPath: ""
       uuid: 17006855275563467050
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -80312,13 +80312,13 @@ GameObject148:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 246.013427734375
-        - 0
-        - 29.8321533203125
+        - 274.86181640625
+        - 0.28351163864135742
+        - 44.808994293212891
       localRotation:
-        - 0
-        - -0
-        - 0
+        - -179.99999499104399
+        - 42.371870394856195
+        - -179.99999499104399
       localScale:
         - 1.7999999523162842
         - 1.7999999523162842
@@ -80410,7 +80410,7 @@ GameObject148:
       prefabPath: ""
       uuid: 17006855275563467050
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -81920,8 +81920,8 @@ GameObject149:
       enabled: true
       localPosition:
         - 472.1722412109375
-        - 0
-        - 21.00446891784668
+        - 0.28351163864135742
+        - 21.004465103149414
       localRotation:
         - 0
         - -0
@@ -83527,7 +83527,7 @@ GameObject150:
       enabled: true
       localPosition:
         - 481.2420654296875
-        - 0
+        - 0.28351140022277832
         - 28.972793579101562
       localRotation:
         - 0
@@ -85134,8 +85134,8 @@ GameObject151:
       enabled: true
       localPosition:
         - 483.17584228515625
-        - 0
-        - 19.094562530517578
+        - 0.28351211547851562
+        - 19.094554901123047
       localRotation:
         - 0
         - -0
@@ -86741,8 +86741,8 @@ GameObject152:
       enabled: true
       localPosition:
         - 671.165771484375
-        - 0
-        - 0.83295726776123047
+        - 0.28351187705993652
+        - 0.83293426036834717
       localRotation:
         - 0
         - -0
@@ -88348,8 +88348,8 @@ GameObject153:
       enabled: true
       localPosition:
         - 672.1837158203125
-        - 0
-        - -10.162577629089355
+        - 0.28351140022277832
+        - -10.168306350708008
       localRotation:
         - 0
         - -0
@@ -89955,8 +89955,8 @@ GameObject154:
       enabled: true
       localPosition:
         - 771.13592529296875
-        - 0
-        - -14.204128265380859
+        - 0.28351116180419922
+        - -14.204566955566406
       localRotation:
         - 0
         - -0
@@ -91562,8 +91562,8 @@ GameObject155:
       enabled: true
       localPosition:
         - 772.40948486328125
-        - 0
-        - -20.75328254699707
+        - 0.28351116180419922
+        - -20.753286361694336
       localRotation:
         - 0
         - -0
@@ -93169,7 +93169,7 @@ GameObject156:
       enabled: true
       localPosition:
         - 815.8162841796875
-        - 0
+        - 0.28351163864135742
         - -76.022010803222656
       localRotation:
         - 0
@@ -94776,7 +94776,7 @@ GameObject157:
       enabled: true
       localPosition:
         - 821.966552734375
-        - 0
+        - 0.28351140022277832
         - -68.887245178222656
       localRotation:
         - 0
@@ -96383,7 +96383,7 @@ GameObject158:
       enabled: true
       localPosition:
         - 828.4813232421875
-        - 0
+        - 0.28351092338562012
         - -81.547630310058594
       localRotation:
         - 0
@@ -97990,7 +97990,7 @@ GameObject159:
       enabled: true
       localPosition:
         - 828.46478271484375
-        - 0
+        - 0.28351092338562012
         - -68.056541442871094
       localRotation:
         - 0
@@ -100511,9 +100511,9 @@ GameObject179:
         - 3.2896044254302979
         - 95.662101745605469
       localRotation:
-        - -9.4455213653964876
-        - -57.750503321339771
-        - -138.16008406050872
+        - -9.4455226469603577
+        - -57.750502882185728
+        - -138.16008338243279
       localScale:
         - 0.031276464462280273
         - 0.031276464462280273
@@ -100679,7 +100679,7 @@ GameObject184:
   prefabPath: ""
   uuid: 1511911630058461561
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -100690,9 +100690,9 @@ GameObject184:
         - 3.2896044254302979
         - 10.935238838195801
       localRotation:
-        - -2.6537714672173385
-        - -52.984220574957796
-        - -143.75537715802534
+        - -2.6537755044356541
+        - -52.98422465546026
+        - -143.75537507560193
       localScale:
         - 0.017827585339546204
         - 0.017827583476901054
@@ -101485,7 +101485,7 @@ GameObject206:
   prefabPath: ""
   uuid: 11029981189555552814
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -101528,7 +101528,7 @@ GameObject207:
   prefabPath: ""
   uuid: 3494249896462899369
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -101732,7 +101732,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.85363611776387
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -101774,7 +101774,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.85363611776387
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -101816,7 +101816,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.85363611776387
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -101858,7 +101858,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.85363611776387
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -101900,7 +101900,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.85363611776387
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -101942,7 +101942,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.85363611776387
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -101984,7 +101984,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.85363611776387
+            - 89.849103680043044
             - 0
           localScale:
             - 208.60295104980469
@@ -103360,12 +103360,12 @@ GameObject210:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 244.73980712890625
-        - 0
-        - 9.8202724456787109
+        - 279.32156372070312
+        - -0.26781034469604492
+        - 39.93695068359375
       localRotation:
         - 0
-        - -0
+        - -49.387810311738491
         - 0
       localScale:
         - 1
@@ -103457,7 +103457,7 @@ GameObject210:
       Script1:
         name: PlayerMovement
         fields:
-          moveSpeed: 10
+          moveSpeed: 10.2639656
           walkSpeed: 10
           runSpeed: 25
           rotationSpeed: 30
@@ -103478,7 +103478,7 @@ GameObject210:
       Script4:
         name: PlayerController
         fields:
-          isIdle: false
+          isIdle: true
           isShootInput: false
           isRunning: false
           isShootingStanding: false
@@ -103503,7 +103503,7 @@ GameObject210:
       Script7:
         name: Shotgun
         fields:
-          timeSinceLastShot: 0
+          timeSinceLastShot: 0.900018275
           shakeIntensity: 0.400000006
           shakeDuration: 0.25
           shakeSpeed: 0.200000003
@@ -103691,17 +103691,17 @@ GameObject210:
               name: Transform_Component
               enabled: true
               localPosition:
-                - 2.8421709430404007e-14
-                - 0.1000004596743409
-                - 2.1847773311855319
+                - 9.0851871448194288e-06
+                - 0.10001132356373432
+                - 2.1847773311851606
               localRotation:
-                - 114.54408943432325
-                - 4.1535743197577339
-                - 1.8933174245505153
+                - 114.54409103933317
+                - 4.1535742538393281
+                - 1.8933153140525196
               localScale:
-                - 1.0000000296494311
-                - 0.99999993736331805
-                - 0.99999984580179369
+                - 1.0000000454918883
+                - 0.99999995035891343
+                - 0.99999988881016866
           Children:
             - name: HIP.L
               prefabPath: ""
@@ -103714,17 +103714,17 @@ GameObject210:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -6.5962694861809736e-08
-                    - 8.2646968024846512e-07
-                    - 6.704218664665974e-07
+                    - -3.4537265491962899e-08
+                    - 4.3261183435561179e-07
+                    - -1.9755481162064825e-07
                   localRotation:
-                    - -179.99992799624331
-                    - -80.537696807973376
-                    - 89.999996327028896
+                    - -179.9999136280714
+                    - -80.537693987029357
+                    - 89.999980650019268
                   localScale:
-                    - 0.99999981298964791
-                    - 0.99999984481029636
-                    - 1.0000000175054398
+                    - 0.99999981884590383
+                    - 0.99999984861831148
+                    - 1.0000000135766516
               Children:
                 - name: THIGH.L
                   prefabPath: ""
@@ -103737,17 +103737,17 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -4.4784317410062613e-07
-                        - 0.299993078094559
-                        - -4.7990324958391284e-07
+                        - 1.3846886275814542e-05
+                        - 0.299989709652067
+                        - 3.1210792315050644e-06
                       localRotation:
-                        - -51.797576834051881
-                        - -62.047269102438719
-                        - -35.421624651949571
+                        - -51.797580537335577
+                        - -62.047268566209695
+                        - -35.421619977571716
                       localScale:
-                        - 0.99999986452922207
-                        - 0.99999988010116303
-                        - 1.0000009676007524
+                        - 0.99999986258145124
+                        - 0.9999998567829832
+                        - 1.0000009874291378
                   Children:
                     - name: TIBIA.L
                       prefabPath: ""
@@ -103760,17 +103760,17 @@ GameObject210:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -1.6368562185675728e-06
-                            - 1.0392319653185851
-                            - 1.018480961079149e-05
+                            - -4.4048900349480391e-07
+                            - 1.0392292383926929
+                            - -2.1175567894715641e-06
                           localRotation:
-                            - -3.577087009842038
-                            - 12.215839673438282
-                            - 90.859387290370393
+                            - -3.5770874564147745
+                            - 12.21583871605069
+                            - 90.8593862684654
                           localScale:
-                            - 0.99999955967324849
-                            - 1.0000002037129827
-                            - 1.000000028301125
+                            - 0.99999956419607894
+                            - 1.0000002075625334
+                            - 1.0000000488688723
                       Children:
                         - name: FOOT.L
                           prefabPath: ""
@@ -103783,17 +103783,17 @@ GameObject210:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 3.9115138861234305e-07
-                                - 1.1680746105922319
-                                - -6.9793149179986366e-06
+                                - -6.8067517986492021e-06
+                                - 1.1680811427660558
+                                - 8.3457796904440329e-06
                               localRotation:
-                                - 8.2160540182876947
-                                - -3.774707104947852
-                                - -102.35018902222846
+                                - 8.2160525303663103
+                                - -3.7747051669701444
+                                - -102.35018693910719
                               localScale:
-                                - 1.0000005109531129
-                                - 1.0000005616486873
-                                - 0.99999990691540741
+                                - 1.0000005141845214
+                                - 1.0000006088637636
+                                - 0.99999988786831473
                           Children:
                             - name: TOE.L
                               prefabPath: ""
@@ -103806,17 +103806,17 @@ GameObject210:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 4.5703579676370509e-07
-                                    - 0.39319284180826219
-                                    - -1.2115204981455463e-06
+                                    - 4.2398497868134655e-06
+                                    - 0.39319957448387299
+                                    - -7.1430444847919716e-06
                                   localRotation:
-                                    - 0.23958915834419689
-                                    - 0.013137007559054982
-                                    - -6.2481757790678456
+                                    - 0.23959032438911732
+                                    - 0.013136150818388962
+                                    - -6.2481761977474459
                                   localScale:
-                                    - 0.99999952966106931
-                                    - 0.99999932138424508
-                                    - 0.99999986720191025
+                                    - 0.99999952056782626
+                                    - 0.99999924049242683
+                                    - 0.99999985195698715
                               Children: ~
             - name: SPINE
               prefabPath: ""
@@ -103829,17 +103829,17 @@ GameObject210:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -1.7831846435001355e-06
-                    - 0.60827631256985992
-                    - 1.6637707922484426e-07
+                    - -8.7440394906934671e-06
+                    - 0.60828033707218765
+                    - 1.0196670814366371e-05
                   localRotation:
-                    - -3.1217709626927839
-                    - -1.5902773792909209e-15
-                    - -3.9756932551946603e-16
+                    - -3.1217714560862384
+                    - 3.1805544743273659e-15
+                    - -1.5902772760310009e-15
                   localScale:
-                    - 1.0000000000000002
-                    - 1.0000000717350572
-                    - 1.0000000692164361
+                    - 0.99999999999999989
+                    - 1.0000000674177751
+                    - 1.0000000889053531
               Children:
                 - name: SHOULDER.L
                   prefabPath: ""
@@ -103852,17 +103852,17 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -5.5860215297798277e-06
-                        - 0.90553839882939258
-                        - 6.2388361143916882e-08
+                        - -3.8548491829715203e-06
+                        - 0.90553971080257156
+                        - 3.0664410815006704e-06
                       localRotation:
-                        - -5.8169497720457937
-                        - -14.283796094631148
-                        - -109.64381470393202
+                        - -5.8169503910016687
+                        - -14.283795755571017
+                        - -109.64381654690713
                       localScale:
-                        - 0.99999959505440295
-                        - 0.99999993246994279
-                        - 1.0000001374497294
+                        - 0.99999959577510922
+                        - 0.99999989193914274
+                        - 1.0000001044150524
                   Children:
                     - name: ARM.L
                       prefabPath: ""
@@ -103875,17 +103875,17 @@ GameObject210:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -1.1909854151781476e-06
-                            - 0.73520957209072446
-                            - 9.889848371358314e-07
+                            - 5.3615251260907826e-07
+                            - 0.73520346565351247
+                            - 4.5194738902409881e-06
                           localRotation:
-                            - -9.6580364064135313
-                            - 26.698151482097799
-                            - -47.734497802799154
+                            - -9.6580359757170218
+                            - 26.698152668126049
+                            - -47.734496211696872
                           localScale:
-                            - 0.99999983765397948
-                            - 0.99999986910470506
-                            - 0.99999963733229846
+                            - 0.99999988186176947
+                            - 0.99999987776631039
+                            - 0.99999964094006655
                       Children:
                         - name: FOREARM.L
                           prefabPath: ""
@@ -103898,17 +103898,17 @@ GameObject210:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -6.2161678044958535e-06
-                                - 0.80925538290091481
-                                - -1.1914977591231946e-06
+                                - -2.4996884349093307e-06
+                                - 0.80925799887847916
+                                - -7.7800533517802251e-06
                               localRotation:
-                                - 79.109756119516305
-                                - 10.162249092796372
-                                - 23.770220240583612
+                                - 79.109757264247222
+                                - 10.16224914365397
+                                - 23.770220669513197
                               localScale:
-                                - 1.000000132277606
-                                - 1.0000003030757922
-                                - 1.0000002659607137
+                                - 1.0000001458989349
+                                - 1.0000002909095802
+                                - 1.0000002774983285
                           Children:
                             - name: HAND.L
                               prefabPath: ""
@@ -103921,17 +103921,17 @@ GameObject210:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 7.7500166639765666e-07
-                                    - 0.69208749714902495
-                                    - 5.627568100408098e-07
+                                    - -4.3086694745397841e-07
+                                    - 0.69208403184961764
+                                    - -4.4691321079426424e-06
                                   localRotation:
-                                    - 169.06769304226393
-                                    - -37.71981535068236
-                                    - -165.96227721574837
+                                    - 169.06769848875385
+                                    - -37.719816018302986
+                                    - -165.96227988922149
                                   localScale:
-                                    - 1.0000006678606868
-                                    - 0.99999994375382184
-                                    - 1.0000007904712296
+                                    - 1.0000006822422576
+                                    - 0.99999992002038551
+                                    - 1.0000007331330607
                               Children:
                                 - name: INDEX1.L
                                   prefabPath: ""
@@ -103944,17 +103944,17 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.0084821782098281062
-                                        - 0.32837660693006399
-                                        - 0.058278412198546903
+                                        - 0.0084791626560445366
+                                        - 0.32837162628473493
+                                        - 0.05827873633921854
                                       localRotation:
-                                        - 6.8973026839951892
-                                        - 11.500654649627007
-                                        - -35.657236071956987
+                                        - 6.8973027787283048
+                                        - 11.500655391857402
+                                        - -35.657241318897469
                                       localScale:
-                                        - 0.99999980898863361
-                                        - 0.99999993072026372
-                                        - 0.99999974859570595
+                                        - 0.99999978923368171
+                                        - 0.99999995208821912
+                                        - 0.99999981393480664
                                   Children:
                                     - name: INDEX2.L
                                       prefabPath: ""
@@ -103967,17 +103967,17 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 6.7955277627262944e-08
-                                            - 0.13528179936617057
-                                            - 8.2811644119828998e-07
+                                            - -7.8380111467879487e-07
+                                            - 0.13529722280293299
+                                            - -1.456047183978626e-05
                                           localRotation:
-                                            - 0.59058796437515904
-                                            - -31.485112890609443
-                                            - -15.749565068201687
+                                            - 0.59059305532927775
+                                            - -31.485113318587221
+                                            - -15.74956773298676
                                           localScale:
-                                            - 1.0000001822684332
-                                            - 0.99999939156286766
-                                            - 0.99999983715618135
+                                            - 1.0000001791353095
+                                            - 0.99999938132563615
+                                            - 0.99999984009037546
                                       Children:
                                         - name: INDEX3.L
                                           prefabPath: ""
@@ -103990,17 +103990,17 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -3.928342138692642e-06
-                                                - 0.14030995454515249
-                                                - -6.3139907240383764e-06
+                                                - 3.118900082199616e-06
+                                                - 0.14030424211102854
+                                                - 1.5620320255038678e-06
                                               localRotation:
-                                                - 3.0021479673151665
-                                                - 6.9385061183344678
-                                                - 2.6219499259769181
+                                                - 3.0021461070288766
+                                                - 6.938506820976567
+                                                - 2.6219518813876039
                                               localScale:
-                                                - 0.99999981418845452
-                                                - 0.99999986270798114
-                                                - 0.99999999309652632
+                                                - 0.99999979903501113
+                                                - 0.99999986600859703
+                                                - 1.0000000069867545
                                           Children: ~
                                 - name: MIDDLE1.L
                                   prefabPath: ""
@@ -104013,17 +104013,17 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.034890215965415194
-                                        - 0.36481752944803958
-                                        - -0.017058000695698183
+                                        - 0.034891112620002218
+                                        - 0.36482016042486975
+                                        - -0.017061561329654751
                                       localRotation:
-                                        - -8.589590809370641
-                                        - -2.5416042896187285
-                                        - -26.291282689931464
+                                        - -8.5895927455637313
+                                        - -2.5416054525343634
+                                        - -26.291286810404969
                                       localScale:
-                                        - 0.9999999110200849
-                                        - 0.99999992264426751
-                                        - 0.99999977811801133
+                                        - 0.99999987865984497
+                                        - 0.99999997373228666
+                                        - 0.99999983634131606
                                   Children:
                                     - name: MIDDLE2.L
                                       prefabPath: ""
@@ -104036,17 +104036,17 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -1.4152825045243844e-06
-                                            - 0.14866252763923171
-                                            - -5.7634283621155191e-06
+                                            - 2.7778185796023536e-07
+                                            - 0.14865640227770882
+                                            - 2.8212555207574042e-06
                                           localRotation:
-                                            - 0.66838865530389624
-                                            - 4.5332450129491724
-                                            - -39.806936366739485
+                                            - 0.66838883075361133
+                                            - 4.5332468672836521
+                                            - -39.80693488691098
                                           localScale:
-                                            - 0.99999993723483538
-                                            - 1.0000001301046531
-                                            - 1.0000001436559622
+                                            - 0.99999992624069667
+                                            - 1.0000001448717057
+                                            - 1.0000001360866697
                                       Children:
                                         - name: MIDDLE3.L
                                           prefabPath: ""
@@ -104059,17 +104059,17 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -6.1023489905664974e-07
-                                                - 0.11445517659207471
-                                                - -1.6629769845621922e-06
+                                                - -2.4543610948057903e-06
+                                                - 0.11445845292990953
+                                                - 5.1889784913328185e-07
                                               localRotation:
-                                                - 6.1958773617577547
-                                                - -5.3819539857315375
-                                                - -46.925578973727852
+                                                - 6.19587858598344
+                                                - -5.3819535009192494
+                                                - -46.925579162680414
                                               localScale:
-                                                - 1.0000000340014306
-                                                - 1.0000002977965932
-                                                - 0.99999994207461873
+                                                - 1.0000000234949078
+                                                - 1.0000002967787034
+                                                - 0.9999999548518147
                                           Children: ~
                                 - name: RING1.L
                                   prefabPath: ""
@@ -104082,17 +104082,17 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.049477872199734207
-                                        - 0.33854751841496977
-                                        - -0.097664457797520754
+                                        - 0.049475457451848115
+                                        - 0.33854071174405931
+                                        - -0.097656151400201452
                                       localRotation:
-                                        - -20.830481745347786
-                                        - -9.1092592242430683
-                                        - -19.25662481450896
+                                        - -20.830483645404406
+                                        - -9.1092604440074094
+                                        - -19.25662750604976
                                       localScale:
-                                        - 0.99999967992061967
-                                        - 0.9999997674829858
-                                        - 0.99999969495590002
+                                        - 0.99999964721614809
+                                        - 0.99999975682970943
+                                        - 0.99999976794553413
                                   Children:
                                     - name: RING2.L
                                       prefabPath: ""
@@ -104105,17 +104105,17 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -1.0940973993456282e-06
-                                            - 0.13784240919630975
-                                            - -3.0512867681409261e-06
+                                            - -7.2381330085136142e-07
+                                            - 0.13784379222317966
+                                            - -2.4742872284377881e-06
                                           localRotation:
-                                            - -1.1652071611596666
-                                            - 6.5606704869986006
-                                            - -17.755880524791472
+                                            - -1.165203843945406
+                                            - 6.5606720513629471
+                                            - -17.755881654068144
                                           localScale:
-                                            - 0.99999961482072441
-                                            - 1.0000000110453537
-                                            - 0.99999981260273307
+                                            - 0.99999960719176983
+                                            - 1.0000000137444325
+                                            - 0.99999975532433127
                                       Children:
                                         - name: RING3.L
                                           prefabPath: ""
@@ -104128,17 +104128,17 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -4.2073375539075641e-07
-                                                - 0.10049957397067999
-                                                - -2.3597260678798193e-07
+                                                - -2.1648968129284185e-06
+                                                - 0.10050499998172313
+                                                - -2.1314253331183863e-06
                                               localRotation:
-                                                - 0.4280061804344043
-                                                - 0.62468687624929586
-                                                - -54.245450245457505
+                                                - 0.4280055770003508
+                                                - 0.62468235822745488
+                                                - -54.245451295708378
                                               localScale:
-                                                - 1.0000001628428283
-                                                - 1.0000001880297187
-                                                - 1.0000001345905425
+                                                - 1.0000002548266
+                                                - 1.0000002031236426
+                                                - 1.0000001953301751
                                           Children: ~
                                 - name: PINKY1.L
                                   prefabPath: ""
@@ -104151,17 +104151,17 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.068656199401988971
-                                        - 0.30464902709257302
-                                        - -0.17370577147943322
+                                        - 0.068657034202757927
+                                        - 0.30465309520698725
+                                        - -0.17371377159611257
                                       localRotation:
-                                        - -34.476389703153124
-                                        - -16.908078178453017
-                                        - -14.991634301792688
+                                        - -34.476390465622394
+                                        - -16.908078942823376
+                                        - -14.991638409868683
                                       localScale:
-                                        - 0.99999993158811684
-                                        - 1.0000000609259707
-                                        - 0.99999976824736336
+                                        - 0.99999988193124945
+                                        - 1.0000000526850921
+                                        - 0.99999980909693509
                                   Children:
                                     - name: PINKY2.L
                                       prefabPath: ""
@@ -104174,17 +104174,17 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -9.1187763473499217e-07
-                                            - 0.092198234914548038
-                                            - -1.6152482373854582e-06
+                                            - 2.2127382628411851e-06
+                                            - 0.092180138851119864
+                                            - 2.8181498450408071e-06
                                           localRotation:
-                                            - -3.2520196241609041
-                                            - -0.48837193420552782
-                                            - -17.077749767675176
+                                            - -3.2520182137605045
+                                            - -0.48837351465349571
+                                            - -17.077750811951244
                                           localScale:
-                                            - 0.9999998647014402
-                                            - 0.99999991523554754
-                                            - 0.99999979141254414
+                                            - 0.99999988983941679
+                                            - 0.9999999666717474
+                                            - 0.99999981251276004
                                       Children:
                                         - name: PINKY3.L
                                           prefabPath: ""
@@ -104197,17 +104197,17 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 3.7342064729273261e-06
-                                                - 0.076153808117553012
-                                                - 3.7662467207155714e-06
+                                                - -3.7003795085865931e-06
+                                                - 0.076164087464462682
+                                                - -1.8391225502512043e-06
                                               localRotation:
-                                                - -2.8262882072051632
-                                                - -0.36686900392418464
-                                                - -14.788923399801865
+                                                - -2.8262882671502267
+                                                - -0.36686875736963959
+                                                - -14.788924363799218
                                               localScale:
-                                                - 0.99999969666697675
-                                                - 0.99999971913976315
-                                                - 0.99999980636301677
+                                                - 0.99999971283479527
+                                                - 0.99999974223325949
+                                                - 0.99999983357460742
                                           Children: ~
                                 - name: THUMB1.L
                                   prefabPath: ""
@@ -104220,17 +104220,17 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.024536680976975589
-                                        - 0.2364318460801087
-                                        - 0.12960713572880422
+                                        - 0.024534754825836558
+                                        - 0.23642777435935614
+                                        - 0.12960991889829643
                                       localRotation:
-                                        - 18.723513771338727
-                                        - 26.238320027385441
-                                        - -36.985897764837361
+                                        - 18.723512919921141
+                                        - 26.238320812249746
+                                        - -36.985902438530168
                                       localScale:
-                                        - 0.99999966454745404
-                                        - 0.99999993552386135
-                                        - 0.99999980248066311
+                                        - 0.99999966182541589
+                                        - 0.9999999669584394
+                                        - 0.99999981969331209
                                   Children:
                                     - name: THUMB2.L
                                       prefabPath: ""
@@ -104243,17 +104243,17 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 2.012777997606463e-07
-                                            - 0.14899710611243933
-                                            - -5.5589515568499337e-07
+                                            - -1.4119789426558782e-07
+                                            - 0.14899485487694619
+                                            - 2.5036126203303866e-06
                                           localRotation:
-                                            - 34.183159394884889
-                                            - -0.66938250892899687
-                                            - -9.5659056075418682
+                                            - 34.183159457579414
+                                            - -0.66938251190733078
+                                            - -9.5659058462767685
                                           localScale:
-                                            - 0.99999993355913097
-                                            - 1.0000002212015393
-                                            - 1.0000001431694363
+                                            - 0.99999994385374558
+                                            - 1.0000002253847777
+                                            - 1.0000001565535823
                                       Children: ~
                 - name: HEAD
                   prefabPath: ""
@@ -104266,17 +104266,17 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -5.5860215297798277e-06
-                        - 0.90553839882939258
-                        - 6.2388361143916882e-08
+                        - -3.8548491829715203e-06
+                        - 0.90553971080257156
+                        - 3.0664410815006704e-06
                       localRotation:
-                        - 13.382677426158981
-                        - 1.3320429013077396e-05
-                        - 2.9610918658660932e-06
+                        - 13.382679349741759
+                        - 1.4008428319856518e-05
+                        - 2.9651650765305412e-06
                       localScale:
-                        - 0.9999998772987474
-                        - 0.99999949004072697
-                        - 0.99999958683514711
+                        - 0.99999993860265735
+                        - 0.99999952480154997
+                        - 0.99999958278826173
                   Children: ~
                 - name: SHOULDER.R
                   prefabPath: ""
@@ -104289,17 +104289,17 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -5.5860215297798277e-06
-                        - 0.90553839882939258
-                        - 6.2388361143916882e-08
+                        - -3.8548491829715203e-06
+                        - 0.90553971080257156
+                        - 3.0664410815006704e-06
                       localRotation:
-                        - -5.6563207130788937
-                        - 6.7628621870527539
-                        - 106.25288228182752
+                        - -5.6563203798804453
+                        - 6.7628614522790027
+                        - 106.25288156119129
                       localScale:
-                        - 1.0000000327195206
-                        - 1.0000000559024427
-                        - 0.99999986555350884
+                        - 1.0000000266372344
+                        - 1.0000000734547005
+                        - 0.99999983249606506
                   Children:
                     - name: ARM.R
                       prefabPath: ""
@@ -104312,17 +104312,17 @@ GameObject210:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 1.786538703640872e-07
-                            - 0.73520663340607939
-                            - 9.1644380972866202e-10
+                            - 7.4655392268141441e-07
+                            - 0.73520706224741161
+                            - 1.7538890517698746e-06
                           localRotation:
-                            - 71.180457598256439
-                            - -15.637694783894339
-                            - 20.743435293192711
+                            - 71.180461947016482
+                            - -15.637695523331894
+                            - 20.743433898143149
                           localScale:
-                            - 0.9999995894615431
-                            - 0.99999968465879163
-                            - 0.99999975731678115
+                            - 0.99999959252628878
+                            - 0.99999970662725535
+                            - 0.99999976584372618
                       Children:
                         - name: FOREARM.R
                           prefabPath: ""
@@ -104335,17 +104335,17 @@ GameObject210:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -1.1997626359061544e-06
-                                - 0.80925248247682913
-                                - 3.1151475639035202e-06
+                                - 4.3927083765993302e-06
+                                - 0.80925739093549964
+                                - -1.3445738034079113e-07
                               localRotation:
-                                - 74.49899881606936
-                                - -47.639002633840896
-                                - -5.6527845003106743
+                                - 74.498991573175161
+                                - -47.639001589955768
+                                - -5.6527778577733843
                               localScale:
-                                - 0.99999991089162377
-                                - 0.99999989750243024
-                                - 1.0000000725634801
+                                - 0.99999995307945788
+                                - 0.999999924105756
+                                - 1.0000000286621376
                           Children:
                             - name: HAND.R
                               prefabPath: ""
@@ -104358,17 +104358,17 @@ GameObject210:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 1.1185794761559009e-06
-                                    - 0.69209097723478408
-                                    - 2.3764495722389256e-06
+                                    - -1.2340168993318912e-06
+                                    - 0.6920856931752013
+                                    - 3.6316262708169234e-07
                                   localRotation:
-                                    - 24.331612684253354
-                                    - 54.686400639341294
-                                    - 1.2844997086468339
+                                    - 24.331615190100596
+                                    - 54.686397459325036
+                                    - 1.2845009729611443
                                   localScale:
-                                    - 1.0000002606815173
-                                    - 0.99999960150404854
-                                    - 1.0000002227347426
+                                    - 1.0000002863452315
+                                    - 0.99999955293329545
+                                    - 1.0000001822171081
                               Children:
                                 - name: INDEX1.R
                                   prefabPath: ""
@@ -104381,17 +104381,17 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.0084833163206710083
-                                        - 0.32837787713290822
-                                        - 0.058275010179926312
+                                        - -0.0085015091501361439
+                                        - 0.32838678157867207
+                                        - 0.058277642174566324
                                       localRotation:
-                                        - 10.409321707841547
-                                        - -8.4636422278786014
-                                        - 15.604440110626843
+                                        - 10.409321054247036
+                                        - -8.4636424785019013
+                                        - 15.604439035319324
                                       localScale:
-                                        - 1.0000000056192175
-                                        - 0.99999984200781988
-                                        - 0.99999999854772681
+                                        - 0.99999996467067442
+                                        - 0.99999983953794869
+                                        - 1.0000000010564356
                                   Children:
                                     - name: INDEX2.R
                                       prefabPath: ""
@@ -104404,17 +104404,17 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -1.2686533779060485e-07
-                                            - 0.13528543200280299
-                                            - -4.944400444628628e-09
+                                            - 6.220219944452765e-06
+                                            - 0.13527505190091915
+                                            - -8.5226627177803493e-07
                                           localRotation:
-                                            - -13.102785174900999
-                                            - 3.6254056534411405
-                                            - 20.706267887700118
+                                            - -13.102784507876933
+                                            - 3.6254058393199933
+                                            - 20.706268229827298
                                           localScale:
-                                            - 0.99999992685391037
-                                            - 0.99999946428090569
-                                            - 0.99999989455330529
+                                            - 0.9999999772816488
+                                            - 0.99999946798807238
+                                            - 0.99999989560945846
                                       Children:
                                         - name: INDEX3.R
                                           prefabPath: ""
@@ -104427,17 +104427,17 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -1.7147462045841169e-06
-                                                - 0.14030474935853479
-                                                - -1.2898776446945705e-06
+                                                - -2.3206929569141721e-06
+                                                - 0.14031394020372545
+                                                - 1.2574294032674516e-06
                                               localRotation:
-                                                - 10.55611613553279
-                                                - 7.4190266981507662
-                                                - 30.17466485379752
+                                                - 10.556115979244725
+                                                - 7.419027141808094
+                                                - 30.174663506259421
                                               localScale:
-                                                - 1.0000001575072124
-                                                - 0.99999997607128188
-                                                - 1.0000000403126987
+                                                - 1.0000001491955655
+                                                - 0.99999996327285545
+                                                - 1.0000000335273123
                                           Children: ~
                                 - name: MIDDLE1.R
                                   prefabPath: ""
@@ -104450,17 +104450,17 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.044997501223498659
-                                        - 0.38371262877984691
-                                        - -0.025199304668021227
+                                        - -0.04500923314392935
+                                        - 0.38371573422699612
+                                        - -0.02519793474291987
                                       localRotation:
-                                        - 16.025999532768957
-                                        - 2.6633215208694678
-                                        - 78.095415872478426
+                                        - 16.025999611025863
+                                        - 2.6633219311163772
+                                        - 78.095415846149962
                                       localScale:
-                                        - 0.99999997613248892
-                                        - 0.99999986407178121
-                                        - 1.0000000051459998
+                                        - 0.99999994106524381
+                                        - 0.99999987439638904
+                                        - 0.9999999936343178
                                   Children:
                                     - name: MIDDLE2.R
                                       prefabPath: ""
@@ -104473,17 +104473,17 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 7.5869337479161914e-07
-                                            - 0.14866054709452214
-                                            - 1.7290419229709642e-07
+                                            - -4.3033026031480404e-09
+                                            - 0.14865964433914769
+                                            - 2.1231645419561573e-07
                                           localRotation:
-                                            - 10.655599953381586
-                                            - -4.4731463986199813
-                                            - 35.654724396191249
+                                            - 10.655599083604647
+                                            - -4.473146455384577
+                                            - 35.654722798854792
                                           localScale:
-                                            - 0.99999961565789719
-                                            - 0.99999998480035512
-                                            - 1.0000001579389795
+                                            - 0.99999968343096612
+                                            - 1.000000019009617
+                                            - 1.0000001607713114
                                       Children:
                                         - name: MIDDLE3.R
                                           prefabPath: ""
@@ -104496,17 +104496,17 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -1.3383331037175596e-05
-                                                - 0.11445725985919354
-                                                - -3.4581562724511633e-07
+                                                - -1.2146615659958117e-05
+                                                - 0.1144481476015642
+                                                - 3.5665350139879597e-06
                                               localRotation:
-                                                - -3.638628282304754
-                                                - 2.3268201798870565
-                                                - 75.570747365292931
+                                                - -3.6386289437425785
+                                                - 2.3268202277771026
+                                                - 75.570750956703506
                                               localScale:
-                                                - 1.0000002589768953
-                                                - 1.0000003421068986
-                                                - 1.0000001263166871
+                                                - 1.000000250818929
+                                                - 1.0000003175389882
+                                                - 1.0000001218772034
                                           Children: ~
                                 - name: RING1.R
                                   prefabPath: ""
@@ -104519,17 +104519,17 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.052376825283950268
-                                        - 0.3386497604581109
-                                        - -0.097634256987383594
+                                        - -0.052395453382814594
+                                        - 0.33866184333470528
+                                        - -0.097631193495466562
                                       localRotation:
-                                        - 16.001038616448632
-                                        - 18.603695990960457
-                                        - 86.77460588706731
+                                        - 16.001040250104328
+                                        - 18.603695455327539
+                                        - 86.774606087559576
                                       localScale:
-                                        - 1.0000000202834807
-                                        - 0.9999998193685391
-                                        - 0.9999998688370233
+                                        - 1.0000000411911081
+                                        - 0.99999976759941533
+                                        - 0.99999985859206597
                                   Children:
                                     - name: RING2.R
                                       prefabPath: ""
@@ -104542,17 +104542,17 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -3.7419290208617895e-06
-                                            - 0.13783860914695367
-                                            - -1.6500235489047554e-06
+                                            - -1.4419414071653593e-06
+                                            - 0.13784121105175021
+                                            - -1.0213677352766128e-06
                                           localRotation:
-                                            - 5.3755798312883627
-                                            - -5.1066357915051945
-                                            - 47.755259719514321
+                                            - 5.3755797736850388
+                                            - -5.1066358035663075
+                                            - 47.755257679666869
                                           localScale:
-                                            - 0.9999998385995621
-                                            - 0.99999976905141108
-                                            - 0.99999977633434856
+                                            - 0.99999982708695567
+                                            - 0.99999976292408244
+                                            - 0.9999997846355213
                                       Children:
                                         - name: RING3.R
                                           prefabPath: ""
@@ -104565,17 +104565,17 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 1.7647494985340018e-06
-                                                - 0.10049809750148597
-                                                - 3.0128516925742588e-07
+                                                - -1.2529206003364381e-05
+                                                - 0.10049195391714251
+                                                - 2.4758068342123356e-06
                                               localRotation:
-                                                - 0.30419370949557561
-                                                - -0.6934686663136842
-                                                - 64.978096092719227
+                                                - 0.30419410442693978
+                                                - -0.69346718328648449
+                                                - 64.978095726154919
                                               localScale:
-                                                - 1.0000001448861937
-                                                - 1.0000002899378744
-                                                - 0.99999993036079937
+                                                - 1.0000001946844026
+                                                - 1.0000003422039232
+                                                - 0.99999990299112829
                                           Children: ~
                                 - name: PINKY1.R
                                   prefabPath: ""
@@ -104588,17 +104588,17 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.073669043415428348
-                                        - 0.29854201980350581
-                                        - -0.16958580856260141
+                                        - -0.073674458627777994
+                                        - 0.29854461298418755
+                                        - -0.16958503202293684
                                       localRotation:
-                                        - 8.2355532404941574
-                                        - 29.269782141435332
-                                        - 70.386305682672727
+                                        - 8.2355534872784588
+                                        - 29.269781483916926
+                                        - 70.386304092951391
                                       localScale:
-                                        - 0.99999979945307937
-                                        - 0.99999991380682007
-                                        - 0.99999990444008036
+                                        - 0.99999982144452859
+                                        - 0.99999989746975759
+                                        - 0.99999988481737156
                                   Children:
                                     - name: PINKY2.R
                                       prefabPath: ""
@@ -104611,17 +104611,17 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 1.1122880039238225e-06
-                                            - 0.092197447633736829
-                                            - 9.1060265106079896e-07
+                                            - 9.1926714418377742e-07
+                                            - 0.092193722962235825
+                                            - 7.7627668204627298e-07
                                           localRotation:
-                                            - 7.0835543376244603
-                                            - 2.042828240237748
-                                            - 46.92063734270215
+                                            - 7.0835547411597188
+                                            - 2.0428279478180942
+                                            - 46.920638358411161
                                           localScale:
-                                            - 1.0000000917421064
-                                            - 0.99999994913194357
-                                            - 0.99999980873583827
+                                            - 1.0000001259702815
+                                            - 0.99999994373041512
+                                            - 0.99999978348261254
                                       Children:
                                         - name: PINKY3.R
                                           prefabPath: ""
@@ -104634,17 +104634,17 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -8.798555171551925e-06
-                                                - 0.076157296702725308
-                                                - -4.4721314509388321e-06
+                                                - -8.0358151421933154e-07
+                                                - 0.076160366282209693
+                                                - -2.1712676314677996e-06
                                               localRotation:
-                                                - -0.73545967265934653
-                                                - 2.753523429384642
-                                                - 82.43814936012501
+                                                - -0.73545894069389361
+                                                - 2.7535240865258461
+                                                - 82.438150182992899
                                               localScale:
-                                                - 0.9999998422497467
-                                                - 1.0000001176203897
-                                                - 0.99999979491217339
+                                                - 0.99999981662905291
+                                                - 1.0000000417762724
+                                                - 0.99999980171879699
                                           Children: ~
                                 - name: THUMB1.R
                                   prefabPath: ""
@@ -104657,17 +104657,17 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.024536303726385711
-                                        - 0.23642899772926285
-                                        - 0.12960636704519146
+                                        - -0.024546763053422183
+                                        - 0.23643594602032181
+                                        - 0.12960810678656998
                                       localRotation:
-                                        - 26.977981497232392
-                                        - -26.23831838492859
-                                        - 36.985900381302869
+                                        - 26.977981193244904
+                                        - -26.238317780868385
+                                        - 36.985900530822072
                                       localScale:
-                                        - 0.99999978245905952
-                                        - 1.0000000058994578
-                                        - 1.0000000728589098
+                                        - 0.99999979924104232
+                                        - 1.0000000099404516
+                                        - 1.0000000737769958
                                   Children:
                                     - name: THUMB2.R
                                       prefabPath: ""
@@ -104680,17 +104680,17 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -1.8971645516785431e-06
-                                            - 0.14899420744643524
-                                            - 1.6212026991979658e-06
+                                            - -3.1295811879772373e-06
+                                            - 0.14900286064568036
+                                            - -4.9758234155206083e-07
                                           localRotation:
-                                            - -1.6071675850963711
-                                            - 0.66938587317795573
-                                            - 9.5659090684189891
+                                            - -1.6071676531778754
+                                            - 0.66938455873526592
+                                            - 9.5659088198708737
                                           localScale:
-                                            - 0.99999998344409724
-                                            - 1.0000000023736162
-                                            - 1.0000001412962929
+                                            - 0.99999994184573981
+                                            - 1.0000000032318368
+                                            - 1.0000001455530392
                                       Children: ~
                                 - name: Shotgun
                                   prefabPath: ""
@@ -104742,7 +104742,7 @@ GameObject210:
                                           prefabPath: ""
                                           uuid: 12418002066798083621
                                           tag: Untagged
-                                          active: false
+                                          active: true
                                           isStatic: false
                                           Components:
                                             Transform_Component:
@@ -104784,7 +104784,7 @@ GameObject210:
                                           prefabPath: ""
                                           uuid: 18356958387254418243
                                           tag: Untagged
-                                          active: false
+                                          active: true
                                           isStatic: false
                                           Components:
                                             Transform_Component:
@@ -104849,7 +104849,7 @@ GameObject210:
                                       prefabPath: ""
                                       uuid: 2514290170571567102
                                       tag: Untagged
-                                      active: false
+                                      active: true
                                       isStatic: false
                                       Components:
                                         Transform_Component:
@@ -104914,7 +104914,7 @@ GameObject210:
                                       prefabPath: ""
                                       uuid: 3976416577445253952
                                       tag: Untagged
-                                      active: false
+                                      active: true
                                       isStatic: false
                                       Components:
                                         Transform_Component:
@@ -105401,17 +105401,17 @@ GameObject210:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -6.5962694861809736e-08
-                    - 8.2646968024846512e-07
-                    - 6.704218664665974e-07
+                    - -3.4537265491962899e-08
+                    - 4.3261183435561179e-07
+                    - -1.9755481162064825e-07
                   localRotation:
-                    - -179.99991592708761
-                    - 80.537696219216699
-                    - -89.999961310903359
+                    - -179.99993348421762
+                    - 80.537694524508268
+                    - -89.999980133428437
                   localScale:
-                    - 1.0000001147234219
-                    - 0.99999976309624894
-                    - 1.0000003034321703
+                    - 1.0000000451183371
+                    - 0.9999997530015321
+                    - 1.0000002952662963
               Children:
                 - name: THIGH.R
                   prefabPath: ""
@@ -105424,17 +105424,17 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 4.9848254413120685e-07
-                        - 0.2999930884519415
-                        - -1.3471204241000123e-07
+                        - -1.0672270917666538e-05
+                        - 0.30000751613172838
+                        - 1.7897498558738789e-06
                       localRotation:
-                        - -90.770560613873201
-                        - -30.038999522805074
-                        - 0.9905404702093088
+                        - -90.77056188919093
+                        - -30.03899878314542
+                        - 0.99053844600549823
                       localScale:
-                        - 0.99999952515171497
-                        - 0.99999978492138619
-                        - 0.99999969699985802
+                        - 0.99999953668810893
+                        - 0.99999981538122795
+                        - 0.99999968811221163
                   Children:
                     - name: TIBIA.R
                       prefabPath: ""
@@ -105447,17 +105447,17 @@ GameObject210:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -3.0199834144539755e-07
-                            - 1.0392307499484199
-                            - 5.3562065147616531e-06
+                            - -7.7727462439725059e-06
+                            - 1.0392237305719192
+                            - 1.1955131896002058e-05
                           localRotation:
-                            - -0.11584662370102462
-                            - -1.2686346165594407
-                            - -0.37605857754585365
+                            - -0.11584366863122153
+                            - -1.2686348618567782
+                            - -0.37605754754294413
                           localScale:
-                            - 0.99999936899603692
-                            - 1.0000000758941678
-                            - 0.99999939688408912
+                            - 0.99999938615731498
+                            - 1.0000001068565665
+                            - 0.99999942603908065
                       Children:
                         - name: FOOT.R
                           prefabPath: ""
@@ -105470,17 +105470,17 @@ GameObject210:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 2.265481047203366e-07
-                                - 1.1680756296148758
-                                - -2.7492733636336197e-06
+                                - 1.5174965540154517e-05
+                                - 1.1680898019785388
+                                - -1.90022768720155e-05
                               localRotation:
-                                - -0.82989335159153965
-                                - 1.5314724881714399
-                                - 71.51451945399954
+                                - -0.82989497332237783
+                                - 1.5314728639229152
+                                - 71.514513728977519
                               localScale:
-                                - 1.0000002794301663
-                                - 0.99999991544754141
-                                - 1.0000000948778378
+                                - 1.0000003291583552
+                                - 0.99999988420909547
+                                - 1.0000000704444802
                           Children:
                             - name: TOE.R
                               prefabPath: ""
@@ -105493,17 +105493,17 @@ GameObject210:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - -1.7981988520432424e-07
-                                    - 0.39319209336267891
-                                    - -2.2373777426309971e-06
+                                    - -3.9122955683978944e-06
+                                    - 0.39319396356719949
+                                    - 1.4564956245521898e-06
                                   localRotation:
-                                    - 1.6764374661991961
-                                    - -0.15142960067606295
-                                    - 36.174030935575438
+                                    - 1.6764353938436918
+                                    - -0.15143005108963759
+                                    - 36.174036156954408
                                   localScale:
-                                    - 0.9999995350268156
-                                    - 1.0000000772447777
-                                    - 1.000000243602706
+                                    - 0.99999946112002414
+                                    - 1.0000001092675868
+                                    - 1.0000002628244107
                               Children: ~
         - name: KNEE.L
           prefabPath: ""
@@ -105516,17 +105516,17 @@ GameObject210:
               name: Transform_Component
               enabled: true
               localPosition:
-                - 0.25559997558596592
-                - -1.4600000356670595
-                - 1.5324516128566381
+                - 0.2556002902781529
+                - -1.4600012879766666
+                - 1.5324516128566814
               localRotation:
-                - 7.9737979787856657e-11
-                - -89.690064995183235
-                - -179.99997768828106
+                - 1.6846534269757437e-08
+                - -89.69006498888136
+                - -179.99997686711535
               localScale:
-                - 1.0000000021798594
-                - 0.99999997462397183
-                - 1.0000000269098046
+                - 1.0000000021804551
+                - 1.0000000200812527
+                - 1.0000000760402887
           Children: ~
         - name: FOOT.R.002
           prefabPath: ""
@@ -105539,17 +105539,17 @@ GameObject210:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.60000610351559658
-                - 0.38000013429348378
-                - 0.2000001905341921
+                - -0.59999357541650511
+                - 0.38000722123607034
+                - 0.20000019053394963
               localRotation:
-                - -73.329006641036827
-                - 82.371807152619326
-                - 106.81155713760822
+                - -73.329006578612479
+                - 82.37180610465289
+                - 106.81155861107673
               localScale:
-                - 1.0000000155483666
-                - 1.0000003147590113
-                - 1.0000018716027288
+                - 1.0000000179979973
+                - 1.0000003502218298
+                - 1.0000018725530426
           Children: ~
         - name: TOE.R.001
           prefabPath: ""
@@ -105562,17 +105562,17 @@ GameObject210:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.60000610351559658
-                - -0.52000047077052614
-                - 0.14000017219851793
+                - -0.59999877803480217
+                - -0.51999886914384774
+                - 0.14000017219846317
               localRotation:
-                - 152.94736996156644
-                - -87.529560586430435
-                - -152.96894318329242
+                - 152.94736728494328
+                - -87.529560504311007
+                - -152.9689413488943
               localScale:
-                - 0.99999990719842746
-                - 0.99999998779896382
-                - 1.0000000606254014
+                - 0.99999990726026433
+                - 1.0000000254781769
+                - 1.0000001150506583
           Children: ~
         - name: PIVOTHEEL.L
           prefabPath: ""
@@ -105585,17 +105585,17 @@ GameObject210:
               name: Transform_Component
               enabled: true
               localPosition:
-                - 0.54148864746096592
-                - 0.10346605626502914
-                - 0.54889829491339648
+                - 0.54149307508617994
+                - 0.10347742475445898
+                - 0.54889829491300757
               localRotation:
-                - -84.417685218837107
-                - -68.446256049434524
-                - -95.999082613384942
+                - -84.417685730046642
+                - -68.446254307360505
+                - -95.9990827789984
               localScale:
-                - 0.99999992290640571
-                - 0.99999996334700714
-                - 0.99999981858496167
+                - 0.99999993491618411
+                - 0.99999999124542416
+                - 0.99999979644392134
           Children:
             - name: PIVOTTOE.L
               prefabPath: ""
@@ -105608,17 +105608,17 @@ GameObject210:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - 0.090503743037474216
-                    - 0.9464060106447878
-                    - 0.0034778093814225031
+                    - 0.090506039772904501
+                    - 0.9464114790656879
+                    - 0.0034750080898220403
                   localRotation:
-                    - 8.5420372821365731e-09
-                    - 4.4008258011280077
-                    - -179.99997812192473
+                    - -3.0593646870361428e-07
+                    - 4.4008264345165902
+                    - -179.99997669552147
                   localScale:
-                    - 0.99999976400756152
-                    - 0.99999989795302735
-                    - 0.99999992704294549
+                    - 0.99999977429788767
+                    - 0.99999992129410453
+                    - 1.0000000101937605
               Children:
                 - name: FOOT.L.001
                   prefabPath: ""
@@ -105631,17 +105631,17 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 1.1470457472739783e-07
-                        - 0.51009864065283683
-                        - -1.7052721545951502e-07
+                        - -1.612793489869091e-06
+                        - 0.51009358151364381
+                        - -5.9656281052866689e-06
                       localRotation:
-                        - -0.23959910998908829
-                        - 0.013063913112728285
-                        - 6.2481413448978813
+                        - -0.2396005666631463
+                        - 0.01306460898096152
+                        - 6.2481408092112654
                       localScale:
-                        - 0.99999990996316812
-                        - 1.0000000302042376
-                        - 0.99999987046929573
+                        - 0.99999991422743384
+                        - 1.0000000353503729
+                        - 0.99999979596649591
                   Children:
                     - name: IKLEG.L
                       prefabPath: ""
@@ -105654,17 +105654,17 @@ GameObject210:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -1.2078457345410245e-08
-                            - 0.39319210771815355
-                            - -1.3075535321149803e-07
+                            - 1.3649386545466768e-06
+                            - 0.39319482872051026
+                            - 1.9911302899799921e-06
                           localRotation:
-                            - 2.2921086834373727e-07
-                            - 4.4007415744678546
-                            - -179.99997722454617
+                            - -1.4256711631544556e-07
+                            - 4.4007435590844137
+                            - -179.99997838122513
                           localScale:
-                            - 1.0000001031476222
-                            - 0.9999998080336574
-                            - 0.99999979934223326
+                            - 1.0000000932111652
+                            - 0.99999982701779822
+                            - 0.99999980670394617
                       Children: ~
         - name: KNEE.R
           prefabPath: ""
@@ -105677,17 +105677,17 @@ GameObject210:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.26562499999997158
-                - -1.4600000363117935
-                - 1.5136154715792751
+                - -0.2656347692519887
+                - -1.4600064524702532
+                - 1.5136154715794952
               localRotation:
-                - -3.6981827367697413e-10
-                - 89.690064995185608
-                - -179.99998133103406
+                - -4.9947893462179417e-06
+                - 89.690064978056796
+                - -179.99998443764065
               localScale:
-                - 1.0000000021798594
-                - 0.99999997462394907
-                - 1.000000026909782
+                - 1.0000000021814766
+                - 0.99999998128244083
+                - 1.000000037242047
           Children: ~
         - name: PIVOTHEEL.R
           prefabPath: ""
@@ -105700,17 +105700,17 @@ GameObject210:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.45172119140622158
-                - 1.9330464185989626
-                - 0.33572039501190981
+                - -0.45172374831329876
+                - 1.9330530621186881
+                - 0.33572039501168249
               localRotation:
-                - -84.316963950971839
-                - 68.793106690920951
-                - 96.092976520999869
+                - -84.316965355512309
+                - 68.793105419000838
+                - 96.092979222624876
               localScale:
-                - 0.99999974382241608
-                - 0.99999965609215724
-                - 0.99999977428680031
+                - 0.99999975243598793
+                - 0.99999968650406335
+                - 0.99999978182115112
           Children:
             - name: PIVOTTOE.R
               prefabPath: ""
@@ -105723,17 +105723,17 @@ GameObject210:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -0.090503867642654626
-                    - 0.94640628205903454
-                    - 0.0034795544268604321
+                    - -0.09050428051781978
+                    - 0.94640713929510412
+                    - 0.0034782802799213641
                   localRotation:
-                    - -7.516102552182569e-08
-                    - -4.4008267312868909
-                    - 179.99997853606027
+                    - -5.3597376647155209e-06
+                    - -4.4008282014144218
+                    - 179.99997888433805
                   localScale:
-                    - 0.99999972158482242
-                    - 0.99999976289300119
-                    - 0.99999983809478321
+                    - 0.99999972076605159
+                    - 0.99999978891362851
+                    - 0.9999998228915804
               Children:
                 - name: FOOT.R.001
                   prefabPath: ""
@@ -105746,17 +105746,17 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -1.8134958157389747e-07
-                        - 0.5100985555979527
-                        - -1.0881319951749902e-06
+                        - 2.2733429290155982e-06
+                        - 0.51009268260949625
+                        - 4.3425086460047169e-06
                       localRotation:
-                        - -1.4978613812307984
-                        - -0.58804124748112818
-                        - -42.867672970183627
+                        - -1.4978588275903162
+                        - -0.58803963039475582
+                        - -42.867672211402322
                       localScale:
-                        - 0.9999998785417672
-                        - 0.99999999705871678
-                        - 1.0000000001331582
+                        - 0.99999990994453625
+                        - 0.99999996975675476
+                        - 0.99999999593304256
                   Children:
                     - name: IKLEG.R
                       prefabPath: ""
@@ -105769,17 +105769,17 @@ GameObject210:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 8.0699109816784187e-07
-                            - 0.39319162504266236
-                            - -5.3427820034812612e-07
+                            - 7.0770870479464065e-06
+                            - 0.39318868059707768
+                            - 5.3421727272962016e-06
                           localRotation:
-                            - -4.498916613729111e-08
-                            - -4.4007419091464239
-                            - 179.99997740399522
+                            - 9.0999828473104289e-07
+                            - -4.4007418294226373
+                            - 179.99997738177711
                           localScale:
-                            - 0.99999995901571126
-                            - 1.0000000039559123
-                            - 0.99999986768125837
+                            - 0.99999995560305632
+                            - 1.0000000034375178
+                            - 0.99999989548442403
                       Children: ~
     - name: SpeedBoostFX
       prefabPath: ""
@@ -106150,7 +106150,7 @@ GameObject210:
       prefabPath: ""
       uuid: 10536007065216245538
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -106173,7 +106173,7 @@ GameObject210:
       prefabPath: ""
       uuid: 6819706601792338584
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -106209,12 +106209,12 @@ GameObject211:
         - 3.6136293411254883
       localRotation:
         - 0
-        - 9.2321870875124148
+        - 9.232187681700692
         - 0
       localScale:
-        - 209.91874995795948
+        - 209.91874694824219
         - 55.079788208007812
-        - 138.25906127960525
+        - 138.25906372070312
     BoxColliderComponent:
       size:
         - 1
@@ -106242,17 +106242,17 @@ GameObject212:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 780.5279541015625
+        - 791.17266845703125
         - 6.0285158157348633
-        - -35.614780426025391
+        - -40.753200531005859
       localRotation:
         - 0
-        - -62.050356439729917
+        - -62.050357839557009
         - 0
       localScale:
-        - 106.47043609619141
+        - 106.47043712296114
         - 55.079788208007812
-        - 136.57965087890625
+        - 136.57964571615088
     BoxColliderComponent:
       size:
         - 1
@@ -106280,17 +106280,17 @@ GameObject213:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 870.907470703125
+        - 875.91436767578125
         - 6.0284852981567383
-        - -180.30986022949219
+        - -221.66738891601562
       localRotation:
         - 0
-        - -40.765364872313604
+        - -40.765364497704297
         - 0
       localScale:
-        - 155.88911437988281
+        - 155.88911087280479
         - 55.079788208007812
-        - 167.6474609375
+        - 167.64745952694469
     BoxColliderComponent:
       size:
         - 1
@@ -106322,9 +106322,9 @@ GameObject214:
         - 5.1115894317626953
         - -15.587105751037598
       localRotation:
-        - 1.1204050453224212
-        - -57.87639720666283
-        - -109.09282585838542
+        - 1.1204058559448342
+        - -57.876399786845795
+        - -109.09283719961503
       localScale:
         - 1.5462901592254639
         - 1.0261286497116089
@@ -109463,7 +109463,7 @@ GameObject231:
       prefabPath: ""
       uuid: 901689037527342971
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -109527,7 +109527,7 @@ GameObject231:
       prefabPath: ""
       uuid: 7024405179481283790
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -109591,7 +109591,7 @@ GameObject231:
       prefabPath: ""
       uuid: 5943946144905729836
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -109655,7 +109655,7 @@ GameObject231:
       prefabPath: ""
       uuid: 17898626938220245274
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -109719,7 +109719,7 @@ GameObject231:
       prefabPath: ""
       uuid: 4693695904719673995
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -109806,7 +109806,7 @@ GameObject231:
           enabled: true
           position:
             - 0.0260000005
-            - 0.81400001
+            - 0.934000015
             - 0
           rotation:
             - 0
@@ -109832,10 +109832,10 @@ GameObject231:
             - 1225
             - 40
           sprite_offset:
-            - 875
+            - 175
             - 0
           anim_speed: 0.5
-          anim_index: 5
+          anim_index: 1
           anim_index_limit: 6
           color:
             - 0.262745112
@@ -109878,7 +109878,7 @@ GameObject231:
             - 0
           scale:
             - 0.0560000017
-            - 0.119999997
+            - 0
             - 1
           pivot_offset:
             - 0
@@ -109960,10 +109960,10 @@ GameObject231:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -110006,7 +110006,7 @@ GameObject231:
             - 0
           scale:
             - 0.300000012
-            - 0.0450000055
+            - 0.0450000018
             - 1
           pivot_offset:
             - 0
@@ -110061,7 +110061,7 @@ GameObject231:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.305999994
+            - 0.291999996
             - 0.897000015
             - 0
           rotation:
@@ -110088,10 +110088,10 @@ GameObject231:
             - 250
             - 80
           sprite_offset:
-            - 0
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -110133,7 +110133,7 @@ GameObject231:
             - 0
             - 0
           scale:
-            - 0.213
+            - 0.207000002
             - 0.0270000007
             - 1
           pivot_offset:
@@ -110977,7 +110977,7 @@ GameObject231:
         TextComponent:
           name: TextComponent
           enabled: true
-          text: hola
+          text: 40/180
           position:
             - 0
             - 0
@@ -110987,7 +110987,7 @@ GameObject231:
             - 0
           fontSize: 14
           boxSize:
-            - 60.1999969
+            - 78.4000015
             - 15.3999996
           spriteSize:
             - 0

@@ -141,7 +141,7 @@ GameObject3:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 757.61553955078125
+        - 792.50701904296875
         - 313.69210815429688
         - -155.37333679199219
       localRotation:
@@ -428,9 +428,9 @@ GameObject7:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 559.38055419921875
+        - 555.7200927734375
         - 2
-        - 28.837474822998047
+        - 21.322357177734375
       localRotation:
         - 0
         - 0
@@ -478,9 +478,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 1.64824975
+          floatSpeed: 0.786798716
           floatHeight: 0.5
-          rotationSpeed: 94.1298676
+          rotationSpeed: 80.2742462
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -586,9 +586,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 1.04396355
+          floatSpeed: 1.49676585
           floatHeight: 0.5
-          rotationSpeed: 71.6492081
+          rotationSpeed: 81.669899
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -3421,7 +3421,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.76617987064941
+            - 89.762726906456635
             - 0
           localScale:
             - 208.60295104980469
@@ -4680,9 +4680,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.993722270715551
-            - 89.841667010024693
-            - 179.99279507166531
+            - 89.993990158907067
+            - 89.849135589797172
+            - 179.99305783727959
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -4722,9 +4722,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.993722270715551
-            - 89.841667010024693
-            - 179.99279507166531
+            - 89.993990158907067
+            - 89.849135589797172
+            - 179.99305783727959
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5226,9 +5226,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.99999664449409
-            - 66.695725202350346
-            - 179.99999490101703
+            - 89.999996775941923
+            - 66.695713392354193
+            - 179.99998631507907
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5268,9 +5268,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.99999664449409
-            - 66.695725202350346
-            - 179.99999490101703
+            - 89.999996775941923
+            - 66.695713392354193
+            - 179.99998631507907
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5310,9 +5310,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.99999664449409
-            - 66.695725202350346
-            - 179.99999490101703
+            - 89.999996775941923
+            - 66.695713392354193
+            - 179.99998631507907
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5604,9 +5604,9 @@ GameObject20:
             - 201.60006713867188
             - -701.08270263671875
           localRotation:
-            - -90.000009777344786
-            - 80.789757877741891
-            - -1.1490422395121572e-05
+            - -90.000019554685608
+            - 80.78974638732339
+            - -2.2980840868634173e-05
           localScale:
             - 56
             - 56
@@ -5730,9 +5730,9 @@ GameObject20:
             - 109.05261993408203
             - 3582.95361328125
           localRotation:
-            - -8.5567701040473878
-            - -57.209905254181926
-            - -138.90944816177014
+            - -8.5567687024641774
+            - -57.209904152680842
+            - -138.90945258387796
           localScale:
             - 1
             - 1
@@ -7452,9 +7452,9 @@ GameObject20:
             - 48.267116546630859
             - -1413.0146484375
           localRotation:
-            - 90.000051112517212
-            - 66.469458196973463
-            - -179.99999249225044
+            - 90.000037852256185
+            - 66.469444936717551
+            - 179.99998727072264
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -7578,9 +7578,9 @@ GameObject20:
             - 48.267116546630859
             - 1095.0556640625
           localRotation:
-            - 90.000007192951131
-            - -53.451692681091934
-            - -179.99999280704887
+            - 90.000012613111224
+            - -53.451699950386711
+            - -179.99999283249653
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -11024,17 +11024,17 @@ GameObject22:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 6356.11669921875
-            - 29.419076919555664
+            - 6356.1171875
+            - -374.83346557617188
             - -336.87619018554688
           localRotation:
             - -90.000028978038969
             - 0
             - 0
           localScale:
-            - 419.99996948242188
-            - 419.99996948242188
-            - 419.99996948242188
+            - 420
+            - 419.99993896484375
+            - 419.99993896484375
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -11472,9 +11472,9 @@ GameObject23:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.999814962597753
-            - 81.207712930060339
-            - 179.99991771774972
+            - 89.999811538411748
+            - 81.20765811437316
+            - 179.99992114391046
           localScale:
             - 41.956031799316406
             - 53.921905517578125
@@ -11640,9 +11640,9 @@ GameObject23:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.98167823785117
-            - -89.823387606659651
-            - -179.97258553756285
+            - 89.984632498494079
+            - -89.83267747583244
+            - -179.97553809187607
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -11986,9 +11986,9 @@ GameObject23:
             - 72.841552734375
             - 24.207195281982422
           localRotation:
-            - -90.00001575874326
-            - 36.689032293094087
-            - 1.3855652183305059e-05
+            - -90.000004799060122
+            - 36.689036580682647
+            - 1.6217607092456565e-05
           localScale:
             - 59.934867858886719
             - 59.934860229492188
@@ -12490,9 +12490,9 @@ GameObject23:
             - 22.607597351074219
             - -2101.2529296875
           localRotation:
-            - -179.99999134857288
-            - 84.241575839430283
-            - 2.1271352770344651e-05
+            - -179.99999134856591
+            - 84.241571003659956
+            - 2.1271364354931249e-05
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -12532,9 +12532,9 @@ GameObject23:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.1001178841574411
-            - -81.28107403382576
-            - -179.99999172220353
+            - 1.1001213052771617
+            - -81.281074244615041
+            - -179.99999177560238
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -13540,9 +13540,9 @@ GameObject23:
             - 72.816177368164062
             - 17.716598510742188
           localRotation:
-            - -90.000193737143292
-            - -82.523212292504823
-            - 1.5773549266366961e-05
+            - -90.000181498260375
+            - -82.523170442382707
+            - 1.8234699104566091e-06
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -13876,9 +13876,9 @@ GameObject23:
             - 84.565017700195312
             - -2966.651611328125
           localRotation:
-            - -89.995138749871217
-            - -89.763294962558376
-            - -0.0075301522335590298
+            - -89.995863053068291
+            - -89.767272709651223
+            - -0.0068160941823746666
           localScale:
             - 43.324676513671875
             - 43.324676513671875
@@ -14086,9 +14086,9 @@ GameObject23:
             - 148.99980163574219
             - 222.72898864746094
           localRotation:
-            - -15.158003019171982
-            - -65.712734709883506
-            - -74.316807628942172
+            - -15.158006721752129
+            - -65.712729558661451
+            - -74.316805664969777
           localScale:
             - 24.540990829467773
             - 24.540992736816406
@@ -14296,9 +14296,9 @@ GameObject23:
             - 27.166694641113281
             - -2728.593017578125
           localRotation:
-            - 89.999993077010672
-            - -71.216278643695048
-            - 179.99999307701066
+            - 89.999984343933477
+            - -71.216273372114784
+            - -179.99999472841779
           localScale:
             - 110.40802001953125
             - 110.40802001953125
@@ -14338,9 +14338,9 @@ GameObject23:
             - 27.166694641113281
             - -1073.0118408203125
           localRotation:
-            - 89.99997381074671
-            - -66.052893874802578
-            - -179.99996857417514
+            - 89.999970568143496
+            - -66.052898862926241
+            - -179.99996358604818
           localScale:
             - 49.639827728271484
             - 49.63983154296875
@@ -16126,9 +16126,9 @@ GameObject24:
             - 451.7078857421875
             - 9679.166015625
           localRotation:
-            - 90.000001489878429
-            - 73.086993156850184
-            - -179.99998987854087
+            - 89.99999458460762
+            - 73.086972913935568
+            - -179.99998297328179
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -19546,7 +19546,7 @@ GameObject27:
             - 57.399997711181641
           localRotation:
             - 0
-            - 82.875066781348494
+            - 82.875088708094054
             - 0
           localScale:
             - 20.007547378540039
@@ -20568,9 +20568,9 @@ GameObject27:
             - 3.1512765884399414
             - 3.5392885208129883
           localRotation:
-            - 179.846653597451
-            - -57.007504074983153
-            - -179.9722471169585
+            - 179.84665360798877
+            - -57.00761649431368
+            - -179.9722471232846
           localScale:
             - 4.1512908935546875
             - 8.0131254196166992
@@ -22894,7 +22894,7 @@ GameObject29:
             - -160.05094909667969
           localRotation:
             - 0
-            - 63.749226666872545
+            - 63.749234821424913
             - 0
           localScale:
             - 24.358108520507812
@@ -23092,7 +23092,7 @@ GameObject29:
             - -72.031135559082031
           localRotation:
             - 0
-            - -69.383029236251048
+            - -69.383034145159527
             - 0
           localScale:
             - 12.133749961853027
@@ -23982,9 +23982,9 @@ GameObject29:
             - 3.0124197006225586
             - -194.1514892578125
           localRotation:
-            - -179.99999499104948
-            - 87.96957693443774
-            - -179.99999499104948
+            - -179.99999499104624
+            - 87.96954795149837
+            - -179.99999499104624
           localScale:
             - 12.215158462524414
             - 7.4319052696228027
@@ -27138,9 +27138,9 @@ GameObject32:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.515342891
+          floatSpeed: 1.21053088
           floatHeight: 0.5
-          rotationSpeed: 81.1886978
+          rotationSpeed: 53.6725616
   Children: ~
 GameObject33:
   name: BiblePage_Pueblo
@@ -27223,9 +27223,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.30008745
+          floatSpeed: 1.64425504
           floatHeight: 0.5
-          rotationSpeed: 95.5916748
+          rotationSpeed: 97.9647598
   Children: ~
 GameObject34:
   name: BiblePage_Pasillo_Zona3
@@ -27308,9 +27308,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.06087899
+          floatSpeed: 0.724672735
           floatHeight: 0.5
-          rotationSpeed: 71.3085938
+          rotationSpeed: 99.6249542
   Children: ~
 GameObject35:
   name: BiblePage_Ciudad
@@ -27393,9 +27393,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.25080669
+          floatSpeed: 1.8983953
           floatHeight: 0.5
-          rotationSpeed: 72.3938141
+          rotationSpeed: 87.6631622
   Children: ~
 GameObject36:
   name: Barril_Ciudad1
@@ -27454,6 +27454,7 @@ GameObject36:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject37:
   name: CajaMadera1
@@ -27512,6 +27513,7 @@ GameObject37:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject38:
   name: WoodenBox_Lvl1_prefab_1_Instance
@@ -27570,6 +27572,7 @@ GameObject38:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject39:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance
@@ -27628,6 +27631,7 @@ GameObject39:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject40:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance2
@@ -27686,6 +27690,7 @@ GameObject40:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject41:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance3
@@ -27744,6 +27749,7 @@ GameObject41:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject42:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance4
@@ -27802,6 +27808,7 @@ GameObject42:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject43:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance5
@@ -27860,6 +27867,7 @@ GameObject43:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject44:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance7
@@ -27918,6 +27926,7 @@ GameObject44:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject45:
   name: WoodenBox_Lvl1_prefab_1_Instance2
@@ -27976,6 +27985,7 @@ GameObject45:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject46:
   name: WoodenBox_Lvl1_prefab_1_Instance3
@@ -28034,6 +28044,7 @@ GameObject46:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject47:
   name: WoodenBox_Lvl1_prefab_1_Instance4
@@ -28092,6 +28103,7 @@ GameObject47:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject48:
   name: WoodenBox_Lvl1_prefab_1_Instance5
@@ -28150,6 +28162,7 @@ GameObject48:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject49:
   name: WoodenBox_Lvl1_prefab_1_Instance6
@@ -28208,6 +28221,7 @@ GameObject49:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject50:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance6
@@ -28266,6 +28280,7 @@ GameObject50:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject51:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance8
@@ -28324,6 +28339,7 @@ GameObject51:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject52:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance9
@@ -28382,6 +28398,7 @@ GameObject52:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject53:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance10
@@ -28440,6 +28457,7 @@ GameObject53:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject54:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance11
@@ -28498,6 +28516,7 @@ GameObject54:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject55:
   name: WoodenBox_Lvl1_prefab_1_Instance7
@@ -28556,6 +28575,7 @@ GameObject55:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject56:
   name: WoodenBox_Lvl1_prefab_1_Instance8
@@ -28614,6 +28634,7 @@ GameObject56:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject57:
   name: WoodenBox_Lvl1_prefab_1_Instance10
@@ -28672,6 +28693,7 @@ GameObject57:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject58:
   name: WoodenBox_Lvl1_prefab_1_Instance9
@@ -28730,6 +28752,7 @@ GameObject58:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject59:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance12
@@ -28788,6 +28811,7 @@ GameObject59:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject60:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance13
@@ -28846,6 +28870,7 @@ GameObject60:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject61:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance14
@@ -28904,6 +28929,7 @@ GameObject61:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject62:
   name: WoodenBox_Lvl1_prefab_1_Instance11
@@ -28962,6 +28988,7 @@ GameObject62:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject63:
   name: WoodenBox_Lvl1_prefab_1_Instance12
@@ -29020,6 +29047,7 @@ GameObject63:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject64:
   name: WoodenBox_Lvl1_prefab_1_Instance13
@@ -29078,6 +29106,7 @@ GameObject64:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject65:
   name: WoodenBox_Lvl1_prefab_1_Instance14
@@ -29136,6 +29165,7 @@ GameObject65:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject66:
   name: WoodenBox_Lvl1_prefab_1_Instance15
@@ -29194,6 +29224,7 @@ GameObject66:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject67:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance15
@@ -29252,6 +29283,7 @@ GameObject67:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject68:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance16
@@ -29310,6 +29342,7 @@ GameObject68:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject69:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance17
@@ -29368,6 +29401,7 @@ GameObject69:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject70:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance18
@@ -29426,6 +29460,7 @@ GameObject70:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject71:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance19
@@ -29484,6 +29519,7 @@ GameObject71:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject72:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance20
@@ -29542,6 +29578,7 @@ GameObject72:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject73:
   name: WoodenBox_Lvl1_prefab_1_Instance16
@@ -29600,6 +29637,7 @@ GameObject73:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject74:
   name: WoodenBox_Lvl1_prefab_1_Instance17
@@ -29658,6 +29696,7 @@ GameObject74:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject75:
   name: WoodenBox_Lvl1_prefab_1_Instance18
@@ -29716,6 +29755,7 @@ GameObject75:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject76:
   name: WoodenBox_Lvl1_prefab_1_Instance19
@@ -29774,6 +29814,7 @@ GameObject76:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject77:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance21
@@ -29832,6 +29873,7 @@ GameObject77:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject78:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance22
@@ -29890,6 +29932,7 @@ GameObject78:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject79:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance23
@@ -29948,6 +29991,7 @@ GameObject79:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject80:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance24
@@ -30006,6 +30050,7 @@ GameObject80:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject81:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance25
@@ -30064,6 +30109,7 @@ GameObject81:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject82:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance26
@@ -30122,6 +30168,7 @@ GameObject82:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject83:
   name: WoodenBox_Lvl1_prefab_1_Instance20
@@ -30180,6 +30227,7 @@ GameObject83:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject84:
   name: WoodenBox_Lvl1_prefab_1_Instance21
@@ -30238,6 +30286,7 @@ GameObject84:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject85:
   name: WoodenBox_Lvl1_prefab_1_Instance22
@@ -30296,6 +30345,7 @@ GameObject85:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject86:
   name: WoodenBox_Lvl1_prefab_1_Instance23
@@ -30354,6 +30404,7 @@ GameObject86:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject87:
   name: WoodenBox_Lvl1_prefab_1_Instance24
@@ -30412,6 +30463,7 @@ GameObject87:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject88:
   name: Libreria_Sergi_2
@@ -31838,9 +31890,9 @@ GameObject88:
             - 0
             - -25.443840026855469
           localRotation:
-            - 89.987141177902501
-            - 89.872277888484319
-            - 179.98825449943394
+            - 89.988727295186621
+            - 89.871961124025049
+            - 179.98985086200824
           localScale:
             - 86.512344360351562
             - 99.999984741210938
@@ -31880,9 +31932,9 @@ GameObject88:
             - 341.29437255859375
             - 124.93968963623047
           localRotation:
-            - 89.987570633197947
-            - 89.932046055395446
-            - 179.98735035956113
+            - 89.984104956225352
+            - 89.941397874915964
+            - 179.98388980524084
           localScale:
             - 96.124794006347656
             - 99.999984741210938
@@ -32301,7 +32353,7 @@ GameObject88:
             - -869.0504150390625
           localRotation:
             - 90
-            - 89.773492223524528
+            - 89.767940259951629
             - 0
           localScale:
             - 100
@@ -33015,8 +33067,8 @@ GameObject88:
             - -924.02191162109375
           localRotation:
             - -90.000024148367501
-            - 0.061903274781471417
-            - -1.2539451308760498e-09
+            - 0.061903354961632927
+            - -1.2539620275806766e-09
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -33434,9 +33486,9 @@ GameObject88:
             - 0
             - -443.06002807617188
           localRotation:
-            - 90.000011158021692
-            - 78.583679130119805
-            - -179.99999399014766
+            - 90.000004293803471
+            - 78.583667110382748
+            - -179.999987125914
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -33476,9 +33528,9 @@ GameObject88:
             - 0
             - -346.2620849609375
           localRotation:
-            - 90.000032238327037
-            - -74.941239767902985
-            - -179.99995473041133
+            - 90.000011830234257
+            - -74.941221082198908
+            - -179.99993604471325
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -34652,9 +34704,9 @@ GameObject88:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 5.90687453246757e-05
-            - -79.275337818401084
-            - -90.000105375176148
+            - 4.9075526628513449e-05
+            - -79.275334685310682
+            - -90.000097097011164
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -34694,9 +34746,9 @@ GameObject88:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 5.90687453246757e-05
-            - -79.275337818401084
-            - -90.000105375176148
+            - 4.9075526628513449e-05
+            - -79.275334685310682
+            - -90.000097097011164
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -38027,7 +38079,7 @@ GameObject111:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -39638,7 +39690,7 @@ GameObject112:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -41479,7 +41531,7 @@ GameObject113:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -43090,7 +43142,7 @@ GameObject114:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -44931,7 +44983,7 @@ GameObject115:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -46542,7 +46594,7 @@ GameObject116:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -48383,7 +48435,7 @@ GameObject117:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -50224,7 +50276,7 @@ GameObject118:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -52065,7 +52117,7 @@ GameObject119:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -53676,7 +53728,7 @@ GameObject120:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -56172,7 +56224,7 @@ GameObject133:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -56324,9 +56376,9 @@ GameObject133:
                 - 98.123992919921875
                 - -35.655208587646484
               localRotation:
-                - 78.538469470012075
-                - -1.4901985627225891
-                - -0.37117240092962772
+                - 78.538469472014398
+                - -1.4901985778033595
+                - -0.37117255114054648
               localScale:
                 - 100.00001525878906
                 - 99.999977111816406
@@ -56394,8 +56446,8 @@ GameObject133:
                             - 5.144490344832775e-08
                           localRotation:
                             - -1.829344108979754
-                            - -8.2422942700743318e-05
-                            - -2.5201849145018105e-07
+                            - -8.2422923161905594e-05
+                            - -2.520188033954548e-07
                           localScale:
                             - 1.0000001192092896
                             - 0.99999994039535522
@@ -56416,9 +56468,9 @@ GameObject133:
                                 - 0.15294964611530304
                                 - 0.024442512542009354
                               localRotation:
-                                - -20.059178519822247
-                                - 0.015278155023208168
-                                - 0.010839348991095088
+                                - -20.059180201274742
+                                - 0.015278154400885884
+                                - 0.010839348883987901
                               localScale:
                                 - 0.99999994039535522
                                 - 0.9999997615814209
@@ -56462,9 +56514,9 @@ GameObject133:
                                         - 0.11079030483961105
                                         - -2.1913389502969949e-07
                                       localRotation:
-                                        - -28.358858056467572
-                                        - 0.078328244930156304
-                                        - -0.041913198897739486
+                                        - -28.358858056471394
+                                        - 0.078328243296252154
+                                        - -0.04191320536463395
                                       localScale:
                                         - 1.0000001192092896
                                         - 1.0000001192092896
@@ -56485,9 +56537,9 @@ GameObject133:
                                             - 0.25231030583381653
                                             - 0.25097453594207764
                                           localRotation:
-                                            - 163.84641527098165
-                                            - 7.8470218085401209
-                                            - -169.70979322805681
+                                            - 163.84641561232903
+                                            - 7.8470253225826232
+                                            - -169.70979283977957
                                           localScale:
                                             - 1.0000002384185791
                                             - 1.0000001192092896
@@ -56508,9 +56560,9 @@ GameObject133:
                                                 - -0.041005894541740417
                                                 - 0.033513367176055908
                                               localRotation:
-                                                - 59.599542829805756
-                                                - -87.196876751455633
-                                                - -44.390617312810384
+                                                - 59.599485212346892
+                                                - -87.19668390751032
+                                                - -44.390561450347263
                                               localScale:
                                                 - 1.0000001192092896
                                                 - 1
@@ -56531,9 +56583,9 @@ GameObject133:
                                                 - -0.035324841737747192
                                                 - 0.013326403684914112
                                               localRotation:
-                                                - -86.226719692768313
-                                                - -86.540597402872038
-                                                - 89.15187018947185
+                                                - -86.226715502811942
+                                                - -86.540461064953362
+                                                - 89.151875783445661
                                               localScale:
                                                 - 1
                                                 - 1
@@ -56554,9 +56606,9 @@ GameObject133:
                                                 - -0.038136694580316544
                                                 - -0.011401931755244732
                                               localRotation:
-                                                - -99.083919631815064
-                                                - -82.348256724726852
-                                                - 86.968679430115628
+                                                - -99.083931188863673
+                                                - -82.348189188878848
+                                                - 86.968690476357395
                                               localScale:
                                                 - 0.99999994039535522
                                                 - 1
@@ -56577,9 +56629,9 @@ GameObject133:
                                                 - -0.047117464244365692
                                                 - -0.038730505853891373
                                               localRotation:
-                                                - -90.243425484699031
-                                                - -85.643969651168959
-                                                - 89.541041419155633
+                                                - -90.243423353798434
+                                                - -85.643938859905404
+                                                - 89.541046537865967
                                               localScale:
                                                 - 1.0000001192092896
                                                 - 1.0000002384185791
@@ -56600,9 +56652,9 @@ GameObject133:
                                             - 0.25865858793258667
                                             - 0.25613519549369812
                                           localRotation:
-                                            - 159.79771325217786
-                                            - -7.6007651625199015
-                                            - 170.28598686441237
+                                            - 159.79771181806538
+                                            - -7.6007680074274226
+                                            - 170.28598659431515
                                           localScale:
                                             - 1.0000003576278687
                                             - 1.0000003576278687
@@ -56623,9 +56675,9 @@ GameObject133:
                                                 - -0.044301703572273254
                                                 - 0.0365266352891922
                                               localRotation:
-                                                - -5.4635677640135087e-05
-                                                - 89.985009007469813
-                                                - 0
+                                                - -5.4631939547143712e-05
+                                                - 89.979477684074197
+                                                - 3.740395956623765e-09
                                               localScale:
                                                 - 0.99999994039535522
                                                 - 1.0000001192092896
@@ -56646,9 +56698,9 @@ GameObject133:
                                                 - -0.044301580637693405
                                                 - 0.011863714084029198
                                               localRotation:
-                                                - 0.00028338484593606986
-                                                - 89.985010296998283
-                                                - 0
+                                                - 0.00028335561496503826
+                                                - 89.979478626020708
+                                                - -2.9249394744448171e-08
                                               localScale:
                                                 - 1
                                                 - 1.0000001192092896
@@ -56669,9 +56721,9 @@ GameObject133:
                                                 - -0.044301647692918777
                                                 - -0.012744605541229248
                                               localRotation:
-                                                - 0.10156937743998591
-                                                - 89.949488873125929
-                                                - 0.1011755090542097
+                                                - 0.10156752603309403
+                                                - 89.923637557383316
+                                                - 0.10117363401511499
                                               localScale:
                                                 - 0.99999988079071045
                                                 - 1.0000002384185791
@@ -56692,9 +56744,9 @@ GameObject133:
                                                 - -0.044301990419626236
                                                 - -0.037798691540956497
                                               localRotation:
-                                                - -0.00015065371789306481
-                                                - 90
-                                                - 0
+                                                - -0.00015066025930788723
+                                                - 89.980172446894542
+                                                - -6.5241097123879127e-09
                                               localScale:
                                                 - 1.0000001192092896
                                                 - 1.0000001192092896
@@ -56715,9 +56767,9 @@ GameObject133:
                                             - 0.094657883048057556
                                             - 0.037781201303005219
                                           localRotation:
-                                            - 108.12364933628658
-                                            - 0.82368664114076862
-                                            - 0.32708484849264885
+                                            - 108.12364933578479
+                                            - 0.82368665302564636
+                                            - 0.32708477396564511
                                           localScale:
                                             - 1
                                             - 1.0000001192092896
@@ -56738,9 +56790,9 @@ GameObject133:
                                                 - 0.21143367886543274
                                                 - 0.0062248534522950649
                                               localRotation:
-                                                - -89.999842252266845
-                                                - 25.205329847994967
-                                                - 90.000157747733155
+                                                - -89.999842252242033
+                                                - 25.205344582124717
+                                                - 90.000157747757967
                                               localScale:
                                                 - 1
                                                 - 0.99999988079071045
@@ -56784,9 +56836,9 @@ GameObject133:
                                                 - 0.32400602102279663
                                                 - -0.027743451297283173
                                               localRotation:
-                                                - -89.999859720437215
-                                                - 25.204390211989097
-                                                - 90.000103099562168
+                                                - -89.999880174487942
+                                                - 25.204387351996942
+                                                - 90.000105525511827
                                               localScale:
                                                 - 1.0000001192092896
                                                 - 1.0000004768371582
@@ -56830,9 +56882,9 @@ GameObject133:
                                                     - 0.11529760807752609
                                                     - 8.4422403290318471e-08
                                                   localRotation:
-                                                    - -18.575013186687364
-                                                    - -0.11694265305472616
-                                                    - -0.065369719638131027
+                                                    - -18.575014871901519
+                                                    - -0.11694258524106463
+                                                    - -0.065369708777921573
                                                   localScale:
                                                     - 0.99999964237213135
                                                     - 0.99999994039535522
@@ -56853,9 +56905,9 @@ GameObject133:
                                                         - 0.24791647493839264
                                                         - 0.008828338235616684
                                                       localRotation:
-                                                        - -21.814708244971637
-                                                        - -5.2868703134490946
-                                                        - -3.1176101702010972
+                                                        - -21.814703207103832
+                                                        - -5.2868697110375429
+                                                        - -3.1176105100249973
                                                       localScale:
                                                         - 0.99999988079071045
                                                         - 1.0000002384185791
@@ -56876,9 +56928,9 @@ GameObject133:
                                             - 0.15781489014625549
                                             - 0.34548565745353699
                                           localRotation:
-                                            - -0.005917352700888375
-                                            - -90
-                                            - 0.0059174535155934842
+                                            - 1.0142441886724858e-07
+                                            - -89.980167689685317
+                                            - -2.0148385291411104e-11
                                           localScale:
                                             - 1
                                             - 1
@@ -56899,9 +56951,9 @@ GameObject133:
                                             - 0.12279990315437317
                                             - 0.22661934792995453
                                           localRotation:
-                                            - 1.1319547426571053e-07
-                                            - -89.963508756345959
-                                            - 0
+                                            - 1.1319923302509232e-07
+                                            - -89.960908509581927
+                                            - -3.7635302146514365e-12
                                           localScale:
                                             - 1.0000002384185791
                                             - 1
@@ -56922,9 +56974,9 @@ GameObject133:
                                             - 0.11536455899477005
                                             - 0.22835712134838104
                                           localRotation:
-                                            - 0.89488528806181988
-                                            - 89.98163894381203
-                                            - 0.89488543898883477
+                                            - 0.89501000986948576
+                                            - 89.959004150783926
+                                            - 0.89501016079685969
                                           localScale:
                                             - 1
                                             - 0.99999994039535522
@@ -56946,7 +56998,7 @@ GameObject133:
                                             - 0.077473066747188568
                                           localRotation:
                                             - 0
-                                            - -89.963508756345959
+                                            - -89.960908509581927
                                             - 0
                                           localScale:
                                             - 1
@@ -56991,9 +57043,9 @@ GameObject133:
                                             - 0.082733720541000366
                                             - 0.077473290264606476
                                           localRotation:
-                                            - 0.44767337494797138
-                                            - 89.962005881951811
-                                            - 0.44767348814338237
+                                            - 0.44785661037206048
+                                            - 89.973326579357618
+                                            - 0.44785674243339163
                                           localScale:
                                             - 0.99999994039535522
                                             - 1.0000001192092896
@@ -57014,8 +57066,8 @@ GameObject133:
                                                 - 0.0023590167984366417
                                                 - 0.00041034288005903363
                                               localRotation:
-                                                - 7.9695224533771985e-09
-                                                - 1.4181721105573711e-06
+                                                - 7.9695232485158682e-09
+                                                - 1.4181721105573639e-06
                                                 - 0.0010517749272164756
                                               localScale:
                                                 - 1
@@ -57060,9 +57112,9 @@ GameObject133:
                                     - 0.16584882140159607
                                     - -2.2958642986736777e-08
                                   localRotation:
-                                    - -84.361335975545799
-                                    - -23.782765597571412
-                                    - -12.586321167767846
+                                    - -84.361331008493707
+                                    - -23.782764044497263
+                                    - -12.586320277506312
                                   localScale:
                                     - 0.99999982118606567
                                     - 0.99999994039535522
@@ -57083,8 +57135,8 @@ GameObject133:
                                         - 0.5536312460899353
                                         - -1.8959079284286418e-07
                                       localRotation:
-                                        - -9.1956312919109507e-06
-                                        - 7.5399549494084831e-06
+                                        - -9.1956324133869774e-06
+                                        - 7.5399546882448372e-06
                                         - -116.21822218696785
                                       localScale:
                                         - 0.99999994039535522
@@ -57106,9 +57158,9 @@ GameObject133:
                                             - 0.30724236369132996
                                             - -1.4361719422595343e-06
                                           localRotation:
-                                            - -3.4858701648074741
-                                            - 0.21940179354474396
-                                            - 108.96700017025817
+                                            - -3.4858693959703868
+                                            - 0.21940181801672179
+                                            - 108.96700017098419
                                           localScale:
                                             - 1.0000001192092896
                                             - 1.0000001192092896
@@ -57152,9 +57204,9 @@ GameObject133:
                                     - 0.16584761440753937
                                     - 3.0519831284436805e-07
                                   localRotation:
-                                    - -84.217934259653688
-                                    - 31.349032675921009
-                                    - 13.565596137123153
+                                    - -84.217912505190455
+                                    - 31.349029037574692
+                                    - 13.565603302948277
                                   localScale:
                                     - 0.99999958276748657
                                     - 0.99999994039535522
@@ -57198,9 +57250,9 @@ GameObject133:
                                             - 0.30724194645881653
                                             - -3.2141019801201764e-07
                                           localRotation:
-                                            - -4.8500182640687939
-                                            - 4.4533834973014361
-                                            - -112.23363304973928
+                                            - -4.8500185274625318
+                                            - 4.4533832858183153
+                                            - -112.23363873694588
                                           localScale:
                                             - 1.0000005960464478
                                             - 1.0000003576278687
@@ -57221,9 +57273,9 @@ GameObject133:
                             - 0.018627138808369637
                             - -0.082905612885951996
                           localRotation:
-                            - 164.62097485309047
-                            - -15.339933732410845
-                            - 85.577782226047418
+                            - 164.62097500296161
+                            - -15.339938696842037
+                            - 85.577777845262816
                           localScale:
                             - 1
                             - 1
@@ -57290,9 +57342,9 @@ GameObject133:
                                         - 0.20310355722904205
                                         - 9.1025555093438015e-08
                                       localRotation:
-                                        - -23.350904248078916
-                                        - -12.772773188064772
-                                        - 79.901609762528665
+                                        - -23.350904888567534
+                                        - -12.772772656074709
+                                        - 79.901609722579352
                                       localScale:
                                         - 1.0000003576278687
                                         - 1
@@ -57359,8 +57411,8 @@ GameObject133:
                                     - 0.22907184064388275
                                     - -5.9105252603330882e-07
                                   localRotation:
-                                    - 2.2284035863292095e-05
-                                    - -1.4816068613493234e-05
+                                    - 2.2284032845201574e-05
+                                    - -1.4816071345720546e-05
                                     - 95.691960691087147
                                   localScale:
                                     - 1.0000015497207642
@@ -57382,9 +57434,9 @@ GameObject133:
                                         - 0.20310363173484802
                                         - -4.0471181250723021e-07
                                       localRotation:
-                                        - -14.14562162698599
-                                        - 21.593189865151455
-                                        - -77.933435554213986
+                                        - -14.145623674872787
+                                        - 21.593188225857091
+                                        - -77.933435742838384
                                       localScale:
                                         - 1
                                         - 1.0000001192092896
@@ -57405,9 +57457,9 @@ GameObject133:
                     - -0.0062115439213812351
                     - 7.5117692176718265e-05
                   localRotation:
-                    - -175.86021353411613
-                    - -0.40119979873699063
-                    - 8.2018748935787986
+                    - -175.86021353030927
+                    - -0.40119974554699717
+                    - 8.2018748954878653
                   localScale:
                     - 0.99999994039535522
                     - 1.0000002384185791
@@ -57428,9 +57480,9 @@ GameObject133:
                         - 0.40412503480911255
                         - -1.7509155725292658e-07
                       localRotation:
-                        - 1.2157467894885832
-                        - -0.024858482346456389
-                        - -8.2113754174031932
+                        - 1.2157464701631164
+                        - -0.024858505267121883
+                        - -8.2113754175771128
                       localScale:
                         - 1.0000001192092896
                         - 0.99999994039535522
@@ -57474,9 +57526,9 @@ GameObject133:
                                 - 0.22678828239440918
                                 - 2.0744820972140587e-07
                               localRotation:
-                                - -4.4432788334007132
-                                - -0.83997464740937866
-                                - -8.1686225163188819
+                                - -4.4432801402408195
+                                - -0.83997431341712581
+                                - -8.1686225197101034
                               localScale:
                                 - 0.9999997615814209
                                 - 0.99999982118606567
@@ -57497,9 +57549,9 @@ GameObject133:
                                     - 0.25114506483078003
                                     - -1.3309399093941465e-07
                                   localRotation:
-                                    - 1.5508208328792303
-                                    - 0.023494271624979149
-                                    - -8.2113704738525328
+                                    - 1.5508205141829168
+                                    - 0.023494247354285593
+                                    - -8.2113679192641484
                                   localScale:
                                     - 0.99999982118606567
                                     - 0.99999982118606567
@@ -57520,9 +57572,9 @@ GameObject133:
                                         - 0.2384539395570755
                                         - 1.0910089720539418e-08
                                       localRotation:
-                                        - 2.1579993762711025
-                                        - 0.11111019546667027
-                                        - -8.2106663825802126
+                                        - 2.1579991610259888
+                                        - 0.11111021344406066
+                                        - -8.2106663824502526
                                       localScale:
                                         - 0.99999994039535522
                                         - 0.99999994039535522
@@ -57589,9 +57641,9 @@ GameObject133:
                             - 0.37441009283065796
                             - 5.4667947324560373e-07
                           localRotation:
-                            - -13.765514349519021
-                            - 8.9131786237396309
-                            - 67.220739174099506
+                            - -13.765515749892341
+                            - 8.9131764999489889
+                            - 67.22073932135973
                           localScale:
                             - 0.99999964237213135
                             - 1.0000003576278687
@@ -57612,9 +57664,9 @@ GameObject133:
                                 - 0.35727348923683167
                                 - -7.9907351846486563e-07
                               localRotation:
-                                - -145.09632510256552
-                                - 81.170772460910754
-                                - 143.99106454926417
+                                - -145.09632741530001
+                                - 81.170805281358199
+                                - 143.99106504647227
                               localScale:
                                 - 0.99999988079071045
                                 - 0.99999988079071045
@@ -57658,9 +57710,9 @@ GameObject133:
                     - 0.16527511179447174
                     - 0.042031075805425644
                   localRotation:
-                    - -160.95747693540508
-                    - -60.881729482300329
-                    - -110.34021016052041
+                    - -160.95747875755313
+                    - -60.8817336809593
+                    - -110.34022066698806
                   localScale:
                     - 0.99999988079071045
                     - 0.99999964237213135
@@ -57681,9 +57733,9 @@ GameObject133:
                         - 0.14963676035404205
                         - 5.1521872990178963e-08
                       localRotation:
-                        - -71.180839971261847
-                        - -28.97345437545907
-                        - -9.3741452126120368
+                        - -71.180835063734733
+                        - -28.973442192355456
+                        - -9.3741451904367441
                       localScale:
                         - 0.99999988079071045
                         - 1.0000069141387939
@@ -57704,9 +57756,9 @@ GameObject133:
                             - 0.37441003322601318
                             - 2.2114011954954549e-08
                           localRotation:
-                            - 1.5263883303829724
-                            - 2.4386494968556836
-                            - -90.611347168481544
+                            - 1.5263877217476274
+                            - 2.4386503995464777
+                            - -90.611347169414387
                           localScale:
                             - 0.99999344348907471
                             - 1.0000004768371582
@@ -57727,9 +57779,9 @@ GameObject133:
                                 - 0.35727337002754211
                                 - -1.6455717286589788e-06
                               localRotation:
-                                - -123.55687013804359
-                                - -69.012633881796233
-                                - -179.9009055649158
+                                - -123.55687068954269
+                                - -69.012655501667268
+                                - -179.90090401368374
                               localScale:
                                 - 1.0000001192092896
                                 - 0.99999988079071045
@@ -57842,7 +57894,7 @@ GameObject134:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -59449,7 +59501,7 @@ GameObject135:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -61056,7 +61108,7 @@ GameObject136:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -62663,7 +62715,7 @@ GameObject137:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -64270,7 +64322,7 @@ GameObject138:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -67484,7 +67536,7 @@ GameObject140:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -69091,7 +69143,7 @@ GameObject141:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -70698,7 +70750,7 @@ GameObject142:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -72305,7 +72357,7 @@ GameObject143:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -73912,7 +73964,7 @@ GameObject144:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -75519,7 +75571,7 @@ GameObject145:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -77126,7 +77178,7 @@ GameObject146:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -78733,7 +78785,7 @@ GameObject147:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -80340,7 +80392,7 @@ GameObject148:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -81947,7 +81999,7 @@ GameObject149:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -83554,7 +83606,7 @@ GameObject150:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -85161,7 +85213,7 @@ GameObject151:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -86768,7 +86820,7 @@ GameObject152:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -88375,7 +88427,7 @@ GameObject153:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -89982,7 +90034,7 @@ GameObject154:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -91589,7 +91641,7 @@ GameObject155:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -93196,7 +93248,7 @@ GameObject156:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -94803,7 +94855,7 @@ GameObject157:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -96410,7 +96462,7 @@ GameObject158:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -98017,7 +98069,7 @@ GameObject159:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -99941,6 +99993,7 @@ GameObject168:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject169:
   name: Medkit_1_Instance
@@ -99999,6 +100052,7 @@ GameObject169:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject170:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_Instance
@@ -100057,6 +100111,7 @@ GameObject170:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject171:
   name: Medkit_1_Instance2
@@ -100115,6 +100170,7 @@ GameObject171:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject172:
   name: Medkit_1_Instance3
@@ -100173,6 +100229,7 @@ GameObject172:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject173:
   name: Medkit_1_Instance4
@@ -100231,6 +100288,7 @@ GameObject173:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject174:
   name: Medkit_1_Instance5
@@ -100289,6 +100347,7 @@ GameObject174:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject175:
   name: CheckPoint_Instance6
@@ -100468,9 +100527,9 @@ GameObject179:
         - 3.2896044254302979
         - 95.662101745605469
       localRotation:
-        - -9.4455227961361796
-        - -57.750504429274216
-        - -138.16007961232918
+        - -9.4455213653964876
+        - -57.750503321339771
+        - -138.16008406050872
       localScale:
         - 0.031276464462280273
         - 0.031276464462280273
@@ -100647,9 +100706,9 @@ GameObject184:
         - 3.2896044254302979
         - 10.935238838195801
       localRotation:
-        - -2.6537738700059132
-        - -52.984219813431402
-        - -143.75537597419421
+        - -2.6537755044356541
+        - -52.98422465546026
+        - -143.75537507560193
       localScale:
         - 0.017827585339546204
         - 0.017827583476901054
@@ -101689,7 +101748,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.857458721676167
             - 0
           localScale:
             - 208.60295104980469
@@ -101731,7 +101790,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.857458721676167
             - 0
           localScale:
             - 208.60295104980469
@@ -101773,7 +101832,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.857458721676167
             - 0
           localScale:
             - 208.60295104980469
@@ -101815,7 +101874,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.857458721676167
             - 0
           localScale:
             - 208.60295104980469
@@ -101857,7 +101916,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.857458721676167
             - 0
           localScale:
             - 208.60295104980469
@@ -101899,7 +101958,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.857458721676167
             - 0
           localScale:
             - 208.60295104980469
@@ -101941,7 +102000,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.857458721676167
             - 0
           localScale:
             - 208.60295104980469
@@ -103410,6 +103469,7 @@ GameObject210:
           hasShotgun: false
           hasRailgun: false
           hasBoltgun: true
+          canChangeWeapon: true
       Script1:
         name: PlayerMovement
         fields:
@@ -103651,9 +103711,9 @@ GameObject210:
                 - 0.10000045597553253
                 - 2.1847772598266602
               localRotation:
-                - 114.54408063985292
-                - 4.1535750132219134
-                - 1.8933175806909284
+                - 114.54408063253354
+                - 4.1535760921383842
+                - 1.8933168876747422
               localScale:
                 - 1
                 - 0.99999994039535522
@@ -103674,9 +103734,9 @@ GameObject210:
                     - 8.2646965893218294e-07
                     - 6.7042185492027784e-07
                   localRotation:
-                    - -179.9999209006136
-                    - -80.537659176171175
-                    - 89.99999628957174
+                    - -179.99992090106019
+                    - -80.537566370172883
+                    - 89.999996290022821
                   localScale:
                     - 0.99999982118606567
                     - 0.99999982118606567
@@ -103697,9 +103757,9 @@ GameObject210:
                         - 0.30000069737434387
                         - 1.1894658058508867e-07
                       localRotation:
-                        - -51.797582275028354
-                        - -62.047270226845967
-                        - -35.421616921848468
+                        - -51.797582121824092
+                        - -62.047276808450995
+                        - -35.421615273233002
                       localScale:
                         - 0.99999988079071045
                         - 0.99999988079071045
@@ -103720,9 +103780,9 @@ GameObject210:
                             - 1.0392309427261353
                             - -9.9444082479749341e-07
                           localRotation:
-                            - -3.5770863821279417
-                            - 12.215839497726355
-                            - 90.859391788482952
+                            - -3.5770858449372946
+                            - 12.215838320177919
+                            - 90.859387002400936
                           localScale:
                             - 0.99999958276748657
                             - 1.0000002384185791
@@ -103743,9 +103803,9 @@ GameObject210:
                                 - 1.1680756807327271
                                 - 5.2435592579058721e-07
                               localRotation:
-                                - 8.216053962453616
-                                - -3.7747063681976418
-                                - -102.35018931578311
+                                - 8.21605422904838
+                                - -3.7747060365712763
+                                - -102.35018930073056
                               localScale:
                                 - 1.0000004768371582
                                 - 1.0000005960464478
@@ -103766,9 +103826,9 @@ GameObject210:
                                     - 0.3931928277015686
                                     - -1.2115204981455463e-06
                                   localRotation:
-                                    - 0.23958911735527372
-                                    - 0.013137002603603409
-                                    - -6.2481758430720991
+                                    - 0.23958903752399485
+                                    - 0.013136996576410881
+                                    - -6.2481758430938514
                                   localScale:
                                     - 0.9999995231628418
                                     - 0.99999934434890747
@@ -103812,9 +103872,9 @@ GameObject210:
                         - 0.90553897619247437
                         - 9.5318476667216601e-08
                       localRotation:
-                        - -5.8169511642279756
-                        - -14.283795419605307
-                        - -109.64379944513981
+                        - -5.8169530853207343
+                        - -14.283797572768247
+                        - -109.64377826458755
                       localScale:
                         - 0.99999958276748657
                         - 0.99999994039535522
@@ -103835,9 +103895,9 @@ GameObject210:
                             - 0.73520612716674805
                             - 2.3663292836317851e-07
                           localRotation:
-                            - -9.6580358313753027
-                            - 26.698150455055664
-                            - -47.734500214462322
+                            - -9.6580338833525552
+                            - 26.698149958164006
+                            - -47.734506103537541
                           localScale:
                             - 0.99999982118606567
                             - 0.99999988079071045
@@ -103858,9 +103918,9 @@ GameObject210:
                                 - 0.80925273895263672
                                 - 2.2957146939006634e-07
                               localRotation:
-                                - 79.109748132815909
-                                - 10.162249545445874
-                                - 23.770219595185626
+                                - 79.109748668996716
+                                - 10.162252447905177
+                                - 23.770218771036639
                               localScale:
                                 - 1.0000001192092896
                                 - 1.0000003576278687
@@ -103927,9 +103987,9 @@ GameObject210:
                                             - 0.13528174161911011
                                             - -2.9859877486160258e-06
                                           localRotation:
-                                            - 0.59058855306942037
-                                            - -31.485101897532392
-                                            - -15.749569107965586
+                                            - 0.59058965689459253
+                                            - -31.485092596838218
+                                            - -15.749573663606183
                                           localScale:
                                             - 1.0000002384185791
                                             - 0.99999940395355225
@@ -103950,9 +104010,9 @@ GameObject210:
                                                 - 0.14031009376049042
                                                 - 2.4867276238182967e-07
                                               localRotation:
-                                                - 3.0021475318393693
-                                                - 6.9385061720234971
-                                                - 2.621949810860877
+                                                - 3.0021473302277646
+                                                - 6.938506171268239
+                                                - 2.6219500124724817
                                               localScale:
                                                 - 0.99999982118606567
                                                 - 0.99999988079071045
@@ -103973,9 +104033,9 @@ GameObject210:
                                         - 0.36481752991676331
                                         - -0.017057999968528748
                                       localRotation:
-                                        - -8.5895894506026984
-                                        - -2.5416047855939325
-                                        - -26.291282871099913
+                                        - -8.5895849158239344
+                                        - -2.541605468548751
+                                        - -26.291282919865193
                                       localScale:
                                         - 0.99999994039535522
                                         - 0.99999994039535522
@@ -104019,9 +104079,9 @@ GameObject210:
                                                 - 0.11445517838001251
                                                 - -1.6629769561404828e-06
                                               localRotation:
-                                                - 6.1958768300121241
-                                                - -5.3819542769479973
-                                                - -46.925577971349171
+                                                - 6.1958758996266639
+                                                - -5.3819537453723179
+                                                - -46.9255778990414
                                               localScale:
                                                 - 1
                                                 - 1.0000002384185791
@@ -104042,9 +104102,9 @@ GameObject210:
                                         - 0.33854752779006958
                                         - -0.09766446053981781
                                       localRotation:
-                                        - -20.83047925752015
-                                        - -9.1092632319346318
-                                        - -19.256623544838646
+                                        - -20.830478915556746
+                                        - -9.1092671577451796
+                                        - -19.256619410482539
                                       localScale:
                                         - 0.99999970197677612
                                         - 0.9999997615814209
@@ -104065,9 +104125,9 @@ GameObject210:
                                             - 0.13784058392047882
                                             - 9.1686224834575114e-08
                                           localRotation:
-                                            - -1.1652069119609458
-                                            - 6.5606704387756691
-                                            - -17.755879972365094
+                                            - -1.1652065941135556
+                                            - 6.5606704882431313
+                                            - -17.755879954650826
                                           localScale:
                                             - 0.99999964237213135
                                             - 1
@@ -104088,9 +104148,9 @@ GameObject210:
                                                 - 0.10049811750650406
                                                 - 3.0464934752671979e-06
                                               localRotation:
-                                                - 0.42800622195420196
-                                                - 0.62468681257466729
-                                                - -54.245447903976384
+                                                - 0.42800629493535514
+                                                - 0.62468667009218948
+                                                - -54.245447904110705
                                               localScale:
                                                 - 1.0000001192092896
                                                 - 1.0000002384185791
@@ -104111,9 +104171,9 @@ GameObject210:
                                         - 0.30464977025985718
                                         - -0.17370949685573578
                                       localRotation:
-                                        - -34.476389384003262
-                                        - -16.908074008727571
-                                        - -14.991639166031785
+                                        - -34.47638921016253
+                                        - -16.908072898630301
+                                        - -14.991641333751156
                                       localScale:
                                         - 0.99999994039535522
                                         - 1.0000001192092896
@@ -104134,9 +104194,9 @@ GameObject210:
                                             - 0.092195779085159302
                                             - 8.3910106241091853e-07
                                           localRotation:
-                                            - -3.2520195442628292
-                                            - -0.48837182724607137
-                                            - -17.077749401099435
+                                            - -3.2520195680038855
+                                            - -0.48837166900027856
+                                            - -17.077749405490348
                                           localScale:
                                             - 0.99999988079071045
                                             - 0.99999994039535522
@@ -104157,9 +104217,9 @@ GameObject210:
                                                 - 0.076157838106155396
                                                 - -8.8304830114793731e-07
                                               localRotation:
-                                                - -2.8262886219761478
-                                                - -0.36686894492722749
-                                                - -14.788920627359726
+                                                - -2.8262892853446218
+                                                - -0.36686888953357388
+                                                - -14.788917238827871
                                               localScale:
                                                 - 0.99999970197677612
                                                 - 0.99999970197677612
@@ -104180,9 +104240,9 @@ GameObject210:
                                         - 0.23643259704113007
                                         - 0.12960341572761536
                                       localRotation:
-                                        - 18.723514204530286
-                                        - 26.238325597542236
-                                        - -36.9858935202761
+                                        - 18.723512023355653
+                                        - 26.238327141109508
+                                        - -36.985895773011109
                                       localScale:
                                         - 0.99999964237213135
                                         - 0.99999994039535522
@@ -104203,9 +104263,9 @@ GameObject210:
                                             - 0.14899791777133942
                                             - 3.0366136343218386e-06
                                           localRotation:
-                                            - 34.183166862586894
-                                            - -0.66938209546891658
-                                            - -9.5659035065626306
+                                            - 34.183176652676273
+                                            - -0.669381795749451
+                                            - -9.5659016861992594
                                           localScale:
                                             - 0.99999994039535522
                                             - 1.0000002384185791
@@ -104272,9 +104332,9 @@ GameObject210:
                             - 0.73520660400390625
                             - 9.1644736244234082e-10
                           localRotation:
-                            - 71.18047340781429
-                            - -15.637695830405388
-                            - 20.743434340905868
+                            - 71.18048362632058
+                            - -15.637693575100474
+                            - 20.743433819402078
                           localScale:
                             - 0.99999958276748657
                             - 0.99999970197677612
@@ -104295,9 +104355,9 @@ GameObject210:
                                 - 0.80925339460372925
                                 - 4.9897803222620496e-08
                               localRotation:
-                                - 74.49900197102474
-                                - -47.639003179051109
-                                - -5.6527879234550769
+                                - 74.498989564398897
+                                - -47.639007813465646
+                                - -5.6527859218047167
                               localScale:
                                 - 0.99999994039535522
                                 - 0.99999988079071045
@@ -104318,9 +104378,9 @@ GameObject210:
                                     - 0.69208788871765137
                                     - 3.5864513847627677e-07
                                   localRotation:
-                                    - 24.331607605130156
-                                    - 54.686419136261108
-                                    - 1.2844965942494349
+                                    - 24.331598926198261
+                                    - 54.686423224211651
+                                    - 1.284491869068938
                                   localScale:
                                     - 1.0000002384185791
                                     - 0.99999958276748657
@@ -104341,9 +104401,9 @@ GameObject210:
                                         - 0.32837787270545959
                                         - 0.0582750104367733
                                       localRotation:
-                                        - 10.409320303615125
-                                        - -8.4636395596869765
-                                        - 15.604439902230915
+                                        - 10.409319785455644
+                                        - -8.4636368919311753
+                                        - 15.604440181939198
                                       localScale:
                                         - 1
                                         - 0.99999982118606567
@@ -104364,9 +104424,9 @@ GameObject210:
                                             - 0.13528162240982056
                                             - 1.4498235145765648e-07
                                           localRotation:
-                                            - -13.102785638551001
-                                            - 3.6254045701527748
-                                            - 20.706267015879305
+                                            - -13.102788547500666
+                                            - 3.6254033814183324
+                                            - 20.706263675854814
                                           localScale:
                                             - 0.99999994039535522
                                             - 0.99999946355819702
@@ -104410,9 +104470,9 @@ GameObject210:
                                         - 0.38370537757873535
                                         - -0.025200383737683296
                                       localRotation:
-                                        - 16.025999810844084
-                                        - 2.6633212647680078
-                                        - 78.095422943811329
+                                        - 16.025999395856644
+                                        - 2.6633194161642004
+                                        - 78.095422674261357
                                       localScale:
                                         - 1
                                         - 0.99999988079071045
@@ -104433,9 +104493,9 @@ GameObject210:
                                             - 0.14866054058074951
                                             - 1.7290419407345325e-07
                                           localRotation:
-                                            - 10.655601405015998
-                                            - -4.4731440482124807
-                                            - 35.65472357975576
+                                            - 10.655602732878366
+                                            - -4.4731426916746999
+                                            - 35.654723654660771
                                           localScale:
                                             - 0.99999964237213135
                                             - 1
@@ -104502,9 +104562,9 @@ GameObject210:
                                             - 0.13784195482730865
                                             - 8.1378846061852528e-07
                                           localRotation:
-                                            - 5.3755796687533381
-                                            - -5.1066363046740717
-                                            - 47.755259481664631
+                                            - 5.3755804123387794
+                                            - -5.1066378033085629
+                                            - 47.755259378364471
                                           localScale:
                                             - 0.99999982118606567
                                             - 0.9999997615814209
@@ -104525,9 +104585,9 @@ GameObject210:
                                                 - 0.10049924999475479
                                                 - -7.3634095087982132e-07
                                               localRotation:
-                                                - 0.30419379016809339
-                                                - -0.69346860726091453
-                                                - 64.978096278593071
+                                                - 0.30419383518043597
+                                                - -0.69346863592527264
+                                                - 64.978096278244578
                                               localScale:
                                                 - 1.0000001192092896
                                                 - 1.0000002384185791
@@ -104571,9 +104631,9 @@ GameObject210:
                                             - 0.092197448015213013
                                             - 9.1060269369336311e-07
                                           localRotation:
-                                            - 7.0835537900420489
-                                            - 2.0428281503974435
-                                            - 46.920644845358659
+                                            - 7.0835537617853044
+                                            - 2.0428279809783878
+                                            - 46.920647972157433
                                           localScale:
                                             - 1.0000001192092896
                                             - 0.99999994039535522
@@ -104617,9 +104677,9 @@ GameObject210:
                                         - 0.23643262684345245
                                         - 0.12960690259933472
                                       localRotation:
-                                        - 26.977985189135623
-                                        - -26.238316350120009
-                                        - 36.985898421554218
+                                        - 26.97798566539851
+                                        - -26.238314672315589
+                                        - 36.985898698412356
                                       localScale:
                                         - 0.9999997615814209
                                         - 1
@@ -104640,9 +104700,9 @@ GameObject210:
                                             - 0.14899730682373047
                                             - -7.4440585251522862e-08
                                           localRotation:
-                                            - -1.6071674205963442
-                                            - 0.66938594038385868
-                                            - 9.5659091326610604
+                                            - -1.6071669907684862
+                                            - 0.6693859579284327
+                                            - 9.5659091349253558
                                           localScale:
                                             - 1
                                             - 1
@@ -105361,9 +105421,9 @@ GameObject210:
                     - 8.2646965893218294e-07
                     - 6.7042185492027784e-07
                   localRotation:
-                    - -179.99991561876331
-                    - 80.537648895787029
-                    - -89.999960166784021
+                    - -179.99993460789068
+                    - 80.53761619980061
+                    - -89.999982582683657
                   localScale:
                     - 1.0000001192092896
                     - 0.9999997615814209
@@ -105384,9 +105444,9 @@ GameObject210:
                         - 0.30000069737434387
                         - -7.3357688279429567e-07
                       localRotation:
-                        - -90.770546404379047
-                        - -30.039006063430612
-                        - 0.99053878096421266
+                        - -90.770521583634476
+                        - -30.039007658122429
+                        - 0.99053957974254681
                       localScale:
                         - 0.9999995231628418
                         - 0.9999997615814209
@@ -105407,9 +105467,9 @@ GameObject210:
                             - 1.0392302274703979
                             - -2.2539795736520318e-06
                           localRotation:
-                            - -0.11584665111921563
-                            - -1.2686345102919478
-                            - -0.37605862942340934
+                            - -0.11584669055592035
+                            - -1.2686345104796506
+                            - -0.37605868235046747
                           localScale:
                             - 0.99999934434890747
                             - 1.0000001192092896
@@ -105430,9 +105490,9 @@ GameObject210:
                                 - 1.1680759191513062
                                 - 1.0565606771706371e-06
                               localRotation:
-                                - -0.82989309804292488
-                                - 1.531472639229186
-                                - 71.514534751118234
+                                - -0.82989264571510701
+                                - 1.5314729716443025
+                                - 71.514544289644348
                               localScale:
                                 - 1.0000002384185791
                                 - 0.99999994039535522
@@ -105453,9 +105513,9 @@ GameObject210:
                                     - 0.39319208264350891
                                     - 1.5742459709144896e-06
                                   localRotation:
-                                    - 1.6764375195185752
-                                    - -0.15142965680462481
-                                    - 36.17403789571199
+                                    - 1.6764376961220231
+                                    - -0.15142976830750085
+                                    - 36.174047633984216
                                   localScale:
                                     - 0.9999995231628418
                                     - 1.0000001192092896
@@ -105476,9 +105536,9 @@ GameObject210:
                 - -1.4600000381469727
                 - 1.5324516296386719
               localRotation:
-                - 8.9667259020941124e-11
-                - -89.690569557126366
-                - -179.99999134859311
+                - 1.3612290454756173e-10
+                - -89.690719324221519
+                - -179.99999134859667
               localScale:
                 - 1
                 - 1
@@ -105499,9 +105559,9 @@ GameObject210:
                 - 0.38000014424324036
                 - 0.20000019669532776
               localRotation:
-                - -73.329016760236328
-                - 82.371748283651471
-                - 106.81154832244079
+                - -73.329034078540786
+                - 82.371798502337441
+                - 106.81151647109085
               localScale:
                 - 1
                 - 1.0000003576278687
@@ -105522,9 +105582,9 @@ GameObject210:
                 - -0.52000045776367188
                 - 0.14000017940998077
               localRotation:
-                - 152.94737897779876
-                - -87.529713659262356
-                - -152.96893519531713
+                - 152.94738590354174
+                - -87.529408328383369
+                - -152.96894091517862
               localScale:
                 - 0.99999988079071045
                 - 1
@@ -105545,9 +105605,9 @@ GameObject210:
                 - 0.10346605628728867
                 - 0.54889827966690063
               localRotation:
-                - -84.41769470714145
-                - -68.446292100093416
-                - -95.999095116707309
+                - -84.417692678679245
+                - -68.446298237701697
+                - -95.999099603345201
               localScale:
                 - 0.99999994039535522
                 - 0.99999994039535522
@@ -105591,9 +105651,9 @@ GameObject210:
                         - 0.51009863615036011
                         - -1.7052724388122442e-07
                       localRotation:
-                        - -0.2395991081321871
-                        - 0.013063914694693325
-                        - 6.2481415222441221
+                        - -0.2395991080867487
+                        - 0.013063915527215759
+                        - 6.2481415222423866
                       localScale:
                         - 0.99999988079071045
                         - 1
@@ -105637,9 +105697,9 @@ GameObject210:
                 - -1.4600000381469727
                 - 1.5136154890060425
               localRotation:
-                - -3.2201588590175737e-10
-                - 89.690569557126366
-                - -179.99999134857384
+                - -3.5187810685401209e-10
+                - 89.690719324221519
+                - -179.99999134859422
               localScale:
                 - 1
                 - 1
@@ -105706,9 +105766,9 @@ GameObject210:
                         - 0.51009857654571533
                         - 2.7237540507485392e-06
                       localRotation:
-                        - -1.497861135618709
-                        - -0.58804123840423328
-                        - -42.867666312053707
+                        - -1.4978607986115031
+                        - -0.58804122072646958
+                        - -42.867666314013903
                       localScale:
                         - 0.99999988079071045
                         - 1
@@ -106266,9 +106326,9 @@ GameObject214:
         - 5.1115894317626953
         - -15.587105751037598
       localRotation:
-        - 1.1204101716112511
-        - -57.876393512245606
-        - -109.09283504997228
+        - 1.1204058559448342
+        - -57.876399786845795
+        - -109.09283719961503
       localScale:
         - 1.5462901592254639
         - 1.0261286497116089
@@ -107678,6 +107738,154 @@ GameObject220:
                 - 99.999992370605469
                 - 99.999969482421875
                 - 99.999969482421875
+          Children: ~
+    - name: SpikesExit
+      prefabPath: Assets\Prefabs\Spikes.prefab.yaml
+      uuid: 18102741079386597959
+      tag: Barrier
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 4.9267578125
+            - -0.43140935897827148
+            - -57.789840698242188
+          localRotation:
+            - -179.99999499104513
+            - 75.55826852264201
+            - -179.99999499104513
+          localScale:
+            - 0.015792123973369598
+            - 0.015792122110724449
+            - 0.015792123973369598
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17503220316710404104
+          material:
+            name: tyranid_spike_lowpoly_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          bone_names:
+            - 4
+            - 2
+            - 3
+            - 1
+          animation_file: skeletal_anim_SpikesExit
+        ScriptComponents:
+          Script0:
+            name: SpikeAnimation
+            fields:
+              isAnimFinished: false
+      Children:
+        - name: 4
+          prefabPath: ""
+          uuid: 12910885905224391271
+          tag: Untagged
+          active: true
+          isStatic: false
+          Components:
+            Transform_Component:
+              name: Transform_Component
+              enabled: true
+              localPosition:
+                - 0
+                - 0
+                - 0
+              localRotation:
+                - 0
+                - -0
+                - 0
+              localScale:
+                - 1
+                - 1
+                - 1
+          Children: ~
+        - name: 2
+          prefabPath: ""
+          uuid: 383943440558671859
+          tag: Untagged
+          active: true
+          isStatic: false
+          Components:
+            Transform_Component:
+              name: Transform_Component
+              enabled: true
+              localPosition:
+                - 0
+                - 0
+                - 0
+              localRotation:
+                - 0
+                - -0
+                - 0
+              localScale:
+                - 1
+                - 1
+                - 1
+          Children: ~
+        - name: 3
+          prefabPath: ""
+          uuid: 9244607859270701059
+          tag: Untagged
+          active: true
+          isStatic: false
+          Components:
+            Transform_Component:
+              name: Transform_Component
+              enabled: true
+              localPosition:
+                - 0
+                - 0
+                - 0
+              localRotation:
+                - 0
+                - -0
+                - 0
+              localScale:
+                - 1
+                - 1
+                - 1
+          Children: ~
+        - name: 1
+          prefabPath: ""
+          uuid: 10752047599420758192
+          tag: Untagged
+          active: true
+          isStatic: false
+          Components:
+            Transform_Component:
+              name: Transform_Component
+              enabled: true
+              localPosition:
+                - 0
+                - 0
+                - 0
+              localRotation:
+                - 0
+                - -0
+                - 0
+              localScale:
+                - 1
+                - 1
+                - 1
           Children: ~
 GameObject221:
   name: Ano
@@ -109820,10 +110028,10 @@ GameObject232:
             - 1225
             - 40
           sprite_offset:
-            - 0
+            - 175
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 1
           anim_index_limit: 6
           color:
             - 0.262745112
@@ -109948,10 +110156,10 @@ GameObject232:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 0
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 0
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -110076,10 +110284,10 @@ GameObject232:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 0
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 0
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -111165,7 +111373,7 @@ GameObject232:
       prefabPath: ""
       uuid: 15569205497635253671
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -112498,7 +112706,7 @@ GameObject236:
   prefabPath: Assets\Prefabs\CanvasFadeLvl1.prefab.yaml
   uuid: 11279144625943510511
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:

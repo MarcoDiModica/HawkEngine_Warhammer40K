@@ -392,6 +392,7 @@ public class PlayerShooting : MonoBehaviour
                         boltgun?.Shoot();
                         bulletcasingFX.Play();
                         shotgunShotFX.Stop();
+                        //bulletcasingFX.Play();
                         railgunShotAutoFX.Stop();
                         railgunShotSemiFX.Stop();
                         break;

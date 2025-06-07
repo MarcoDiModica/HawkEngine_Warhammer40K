@@ -118,6 +118,12 @@ public class EnemyControllerRanged : EnemyController
                 Engineson.print("ERROR: TermagauntMesh child object not found!");
             }
 
+            renderer = meshObject?.GetComponent<MeshRenderer>();
+            if (renderer == null)
+            {
+                Engineson.print("ERROR: Renderer component not found!");
+            }
+
             particles = gameObject.AddComponent<ParticleFX>();
 
             maxHealth = health;
@@ -163,6 +169,7 @@ public class EnemyControllerRanged : EnemyController
         {
             if (isDead)
             {
+                renderer?.SetColor(new Vector4(1, 1, 1, 1));
                 return;
             }
 
@@ -180,6 +187,8 @@ public class EnemyControllerRanged : EnemyController
                 {
                     collider.SetActive(false);
                 }
+
+                enemyTransform.DOScale(new Vector3(0,0,0), 1.0f, Modes.EASE_OUT);
 
                 if (anim.isAnimFinished)
                 {
@@ -301,6 +310,16 @@ public class EnemyControllerRanged : EnemyController
         catch (Exception e)
         {
             Engineson.print($"ERROR in EnemyControllerRanged.Update: {e.Message}");
+        }
+
+        if (isFlashingColor)
+        {
+            flashTimer -= deltaTime;
+            if (flashTimer <= 0.0f && renderer != null)
+            {
+                renderer.SetColor(originalColor);
+                isFlashingColor = false;
+            }
         }
     }
 
@@ -597,6 +616,8 @@ public class EnemyControllerRanged : EnemyController
                 EnemySquirting();
             }
 
+            StartFlashColor(flashColor, flashDuration);
+
             if (anim != null)
             {
                 anim.SetHitAnimation();
@@ -641,6 +662,23 @@ public class EnemyControllerRanged : EnemyController
         catch (Exception e)
         {
             Engineson.print($"ERROR in UpdateProjectiles: {e.Message}");
+        }
+    }
+
+    public void StartFlashColor(Vector4 color, float duration)
+    {
+        try
+        {
+            if (renderer != null)
+            {
+                renderer?.SetColor(color);
+                isFlashingColor = true;
+                flashTimer = duration;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in StartFlashColor: {e.Message}");
         }
     }
 

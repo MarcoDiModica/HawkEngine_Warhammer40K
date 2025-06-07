@@ -146,6 +146,13 @@ public class EnemyControllerWarrior : EnemyController
                 return;
             }
 
+            renderer = meshObject?.GetComponent<MeshRenderer>();
+            if (renderer == null)
+            {
+                Engineson.print("ERROR: MeshRenderer component not found!");
+                return;
+            }
+
             particles = gameObject.AddComponent<ParticleFX>();
             if (particles != null)
             {
@@ -233,6 +240,16 @@ public class EnemyControllerWarrior : EnemyController
 
                 default:
                     break;
+            }
+
+            if (isFlashingColor)
+            {
+                flashTimer -= deltaTime;
+                if (flashTimer <= 0.0f && renderer != null)
+                {
+                    renderer.SetColor(originalColor);
+                    isFlashingColor = false;
+                }
             }
 
             CleanupProjectiles();
@@ -376,6 +393,8 @@ public class EnemyControllerWarrior : EnemyController
     {
         try
         {
+            renderer?.SetColor(new Vector4(1, 1, 1, 1));
+
             if (!hasPlayedDeathSound)
             {
                 Audio.PlayOneShot(DeathSound);
@@ -792,6 +811,8 @@ public class EnemyControllerWarrior : EnemyController
                 EnemySquirting();
             }
 
+            StartFlashColor(flashColor, flashDuration);
+
             if (currentHealth <= 0)
                 return;
 
@@ -858,6 +879,22 @@ public class EnemyControllerWarrior : EnemyController
         catch (Exception e)
         {
             Engineson.print($"ERROR in UpdateProjectiles: {e.Message}");
+        }
+    }
+    public void StartFlashColor(Vector4 color, float duration)
+    {
+        try
+        {
+            if (renderer != null)
+            {
+                renderer.SetColor(color);
+                isFlashingColor = true;
+                flashTimer = duration;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in StartFlashColor: {e.Message}");
         }
     }
 

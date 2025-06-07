@@ -78,6 +78,13 @@ public class EnemyControllerStalker : EnemyController
             return;
         }
 
+        renderer = lictorMesh?.GetComponent<MeshRenderer>();
+        if (renderer == null)
+        {
+            Engineson.print("ERROR: Lictor MeshRenderer not found!");
+            return;
+        }
+
         collider = gameObject.GetComponent<CapsuleCollider>();
         if (collider == null)
         {
@@ -133,6 +140,7 @@ public class EnemyControllerStalker : EnemyController
         {
             if (currentHealth <= 0)
             {
+                renderer?.SetColor(new Vector4(1, 1, 1, 1));
                 currentState = EnemyState.DEAD;
                 anim.SetDefeatAnimation();
                 Audio.PlayOneShot(SFX_DEATH);
@@ -172,6 +180,16 @@ public class EnemyControllerStalker : EnemyController
                         anim.SetIdleAnimation();
                     }
                 }
+            }
+        }
+
+        if (isFlashingColor)
+        {
+            flashTimer -= deltaTime;
+            if (flashTimer <= 0.0f && renderer != null)
+            {
+                renderer.SetColor(originalColor);
+                isFlashingColor = false;
             }
         }
 
@@ -408,6 +426,7 @@ public class EnemyControllerStalker : EnemyController
     {
         if (currentHealth > 0)
         {
+            StartFlashColor(flashColor, flashDuration);
             currentHealth -= damage;
             anim.SetStunnedAnimation();
             //particles.ApplyPreset(19);
@@ -514,6 +533,23 @@ public class EnemyControllerStalker : EnemyController
         if (hurtboxObject != null)
         {
             Engineson.Destroy(hurtboxObject);
+        }
+    }
+
+    public void StartFlashColor(Vector4 color, float duration)
+    {
+        try
+        {
+            if (renderer != null)
+            {
+                renderer.SetColor(color);
+                isFlashingColor = true;
+                flashTimer = duration;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in StartFlashColor: {e.Message}");
         }
     }
 }

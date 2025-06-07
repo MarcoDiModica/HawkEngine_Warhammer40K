@@ -208,9 +208,9 @@ public class DropManager : MonoBehaviour
         Random randomGeneral = new Random();
         float randomValueGeneral = randomGeneral.Next(0, 100);
 
-        if (randomValueGeneral < 12.5f) 
+        if (randomValueGeneral < 35f) 
         {
-            if (randomValueGeneral < 6.25f) 
+            if (randomValueGeneral < 17.5f) 
             {
                 // 12.5% chance
                 SpawnShotgunShells(position);

@@ -70,8 +70,15 @@ public class HUD : MonoBehaviour
     private GameObject optionMenu;
 
     private UIImage hpBarAnimImage;
+    private UIImage hpBarImage;
+    private UIImage tempHpBarImage;
     private UIImage hpTempBarAnimImage;
     private UIImage redThirstBarAnimImage;
+
+    private float previousHealth;
+    private float previousTempHealth;
+    private float damageFlashTimer = 0f;
+    private const float damageFlashDuration = 0.1f;
 
     private GameObject Text;
     private UIText text;
@@ -191,6 +198,16 @@ public class HUD : MonoBehaviour
         {
             Engineson.print("ERROR: UITransform not found");
         }
+
+        hpBarImage = hpBar.GetComponent<UIImage>();
+        tempHpBarImage = hpTempBar.GetComponent<UIImage>();
+
+        if (hpBarImage == null || tempHpBarImage == null)
+        {
+            Engineson.print("ERROR: hpBar or hpTempBar UIImage component not found");
+        }
+
+        previousHealth = playerData.GetHealth();
 
         //transform_hpBar.SetScaleUI(new Vector3(1, 1, 1));
 
@@ -378,6 +395,62 @@ public class HUD : MonoBehaviour
         transform_redThirstBar.SetScaleUI(new Vector3(0.056f, CalculateRedThirstBarHeight(), 1.0f));
         transform_redThirstBarAnim.DOMoveYUI(CalculateRedThirstBarAnimPos(), 0f, Modes.LINEAR);
 
+        float currentHealth = playerData.GetHealth();
+        float currentHealthTemp = playerData.GetHealthTemp();
+
+        // Si currentHealthTemp es 0, usar currentHealth para el flash y actualizar previousHealth
+        if (currentHealthTemp == 0f)
+        {
+            if (currentHealth < previousHealth)
+            {
+                damageFlashTimer = damageFlashDuration;
+
+                if (hpBarImage != null) hpBarImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+                if (hpBarAnimImage != null) hpBarAnimImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+                if (tempHpBarImage != null) tempHpBarImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+                if (hpTempBarAnimImage != null) hpTempBarAnimImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+            }
+
+            if (damageFlashTimer > 0f)
+            {
+                damageFlashTimer -= deltaTime;
+                if (damageFlashTimer <= 0f)
+                {
+                    if (hpBarImage != null) hpBarImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                    if (hpBarAnimImage != null) hpBarAnimImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                    if (tempHpBarImage != null) tempHpBarImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                    if (hpTempBarAnimImage != null) hpTempBarAnimImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                }
+            }
+
+            previousHealth = currentHealth;
+        }
+        else
+        {
+            if (currentHealthTemp < previousHealth)
+            {
+                damageFlashTimer = damageFlashDuration;
+
+                if (hpBarImage != null) hpBarImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+                if (hpBarAnimImage != null) hpBarAnimImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+                if (tempHpBarImage != null) tempHpBarImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+                if (hpTempBarAnimImage != null) hpTempBarAnimImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+            }
+
+            if (damageFlashTimer > 0f)
+            {
+                damageFlashTimer -= deltaTime;
+                if (damageFlashTimer <= 0f)
+                {
+                    if (hpBarImage != null) hpBarImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                    if (hpBarAnimImage != null) hpBarAnimImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                    if (tempHpBarImage != null) tempHpBarImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                    if (hpTempBarAnimImage != null) hpTempBarAnimImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                }
+            }
+
+            previousHealth = currentHealthTemp;
+        }
 
         if (playerShootingScript.hasRailgun && railgunScript == null)
         {

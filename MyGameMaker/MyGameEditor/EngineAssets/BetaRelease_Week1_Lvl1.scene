@@ -478,9 +478,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 1.23441601
+          floatSpeed: 1.40699291
           floatHeight: 0.5
-          rotationSpeed: 65.4736633
+          rotationSpeed: 56.5021553
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -586,9 +586,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 0.61596483
+          floatSpeed: 1.3680371
           floatHeight: 0.5
-          rotationSpeed: 41.8947487
+          rotationSpeed: 95.4927063
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -3421,7 +3421,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.758891674996235
+            - 89.754083347745265
             - 0
           localScale:
             - 208.60295104980469
@@ -3672,9 +3672,9 @@ GameObject20:
             - 164.68646240234375
             - 1182.335205078125
           localRotation:
-            - -90.00002081954193
-            - 83.400682702463925
-            - -8.8468622306910861e-06
+            - -90.000038218417956
+            - 83.400708653284127
+            - -2.1114590061434899e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -4680,9 +4680,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.993194324684296
-            - 89.850092972195426
-            - 179.99224663510381
+            - 89.992561255939734
+            - 89.853259073383782
+            - 179.99158453810253
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -4722,9 +4722,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.993194324684296
-            - 89.850092972195426
-            - 179.99224663510381
+            - 89.992561255939734
+            - 89.853259073383782
+            - 179.99158453810253
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5226,9 +5226,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.99999664449409
-            - 66.695725202350346
-            - 179.99999490101703
+            - 89.999993288988833
+            - 66.695720103365531
+            - 179.99998980203466
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5268,9 +5268,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.99999664449409
-            - 66.695725202350346
-            - 179.99999490101703
+            - 89.999993288988833
+            - 66.695720103365531
+            - 179.99998980203466
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5310,9 +5310,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.99999664449409
-            - 66.695725202350346
-            - 179.99999490101703
+            - 89.999993288988833
+            - 66.695720103365531
+            - 179.99998980203466
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5604,9 +5604,9 @@ GameObject20:
             - 201.60006713867188
             - -701.08270263671875
           localRotation:
-            - -90.000009777344786
-            - 80.789757877741891
-            - -1.1490422395121572e-05
+            - -89.99999657384474
+            - 80.78974981347659
+            - -3.4261552652453462e-06
           localScale:
             - 56
             - 56
@@ -5730,9 +5730,9 @@ GameObject20:
             - 109.05261993408203
             - 3582.95361328125
           localRotation:
-            - -8.5567701040473878
-            - -57.209905254181926
-            - -138.90944816177014
+            - -8.5567713767149858
+            - -57.209904822524862
+            - -138.90944749320749
           localScale:
             - 1
             - 1
@@ -7452,9 +7452,9 @@ GameObject20:
             - 48.267116546630859
             - -1413.0146484375
           localRotation:
-            - 90.000037852256185
-            - 66.469444936717551
-            - 179.99998727072264
+            - 90.000051112527103
+            - 66.469444936709394
+            - -179.99999249224322
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -7578,9 +7578,9 @@ GameObject20:
             - 48.267116546630859
             - 1095.0556640625
           localRotation:
-            - 90.000014487692511
-            - -53.451699924936648
-            - 179.99999270525839
+            - 90.000014487691587
+            - -53.451692681090563
+            - 179.99999270525956
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -11472,9 +11472,9 @@ GameObject23:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.999814963221354
-            - 81.207692379002467
-            - 179.99991771837333
+            - 89.999811538411748
+            - 81.20765811437316
+            - 179.99992114391046
           localScale:
             - 41.956031799316406
             - 53.921905517578125
@@ -11640,9 +11640,9 @@ GameObject23:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.984301194848172
-            - -89.836368745640584
-            - -179.97522727936035
+            - 89.983865995340281
+            - -89.837528610002252
+            - -179.97479037270918
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -11986,9 +11986,9 @@ GameObject23:
             - 72.841552734375
             - 24.207195281982422
           localRotation:
-            - -90.00001575874326
-            - 36.689032293094087
-            - 1.3855652183305059e-05
+            - -90.000010515847961
+            - 36.689039409017241
+            - 1.4322029396627024e-05
           localScale:
             - 59.934867858886719
             - 59.934860229492188
@@ -12490,9 +12490,9 @@ GameObject23:
             - 22.607597351074219
             - -2101.2529296875
           localRotation:
-            - -179.99999134856591
-            - 84.241571003659956
-            - 2.1271364354931249e-05
+            - -179.9999913485768
+            - 84.241609689708582
+            - 2.1271352877904838e-05
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -12532,9 +12532,9 @@ GameObject23:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.1001237759623608
-            - -81.281074398583129
-            - -179.99999178671618
+            - 1.1001254854108413
+            - -81.281074519556739
+            - -179.99999156634709
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -13540,9 +13540,9 @@ GameObject23:
             - 72.816177368164062
             - 17.716598510742188
           localRotation:
-            - -90.000193737143292
-            - -82.523212292504823
-            - 1.5773549266366961e-05
+            - -90.000181498723933
+            - -82.523163076591089
+            - 1.8239280906533197e-06
           localScale:
             - 59.93487548828125
             - 59.93487548828125
@@ -13876,9 +13876,9 @@ GameObject23:
             - 84.565017700195312
             - -2966.651611328125
           localRotation:
-            - -89.995919046215704
-            - -89.766220769534513
-            - -0.0067737614415851952
+            - -89.994620200043698
+            - -89.765758110324214
+            - -0.008070900183069326
           localScale:
             - 43.324676513671875
             - 43.324676513671875
@@ -14086,9 +14086,9 @@ GameObject23:
             - 148.99980163574219
             - 222.72898864746094
           localRotation:
-            - -15.158003019171982
-            - -65.712734709883506
-            - -74.316807628942172
+            - -15.158007319902184
+            - -65.712721843277919
+            - -74.31680329619185
           localScale:
             - 24.540990829467773
             - 24.540992736816406
@@ -14296,9 +14296,9 @@ GameObject23:
             - 27.166694641113281
             - -2728.593017578125
           localRotation:
-            - 89.999989615516
-            - -71.216282105193741
-            - 179.999989615516
+            - 89.999984343933477
+            - -71.216273372114784
+            - -179.99999472841779
           localScale:
             - 110.40802001953125
             - 110.40802001953125
@@ -14338,9 +14338,9 @@ GameObject23:
             - 27.166694641113281
             - -1073.0118408203125
           localRotation:
-            - 89.99997381074671
-            - -66.052893874802578
-            - -179.99996857417514
+            - 89.999980544396763
+            - -66.052905348130082
+            - -179.99997007125407
           localScale:
             - 49.639827728271484
             - 49.63983154296875
@@ -14531,7 +14531,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556832
+            - -37.029465936556825
             - 30.029442018358075
           localScale:
             - 100
@@ -14573,7 +14573,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556832
+            - -37.029465936556825
             - 30.029442018358075
           localScale:
             - 100
@@ -14615,7 +14615,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556832
+            - -37.029465936556825
             - 30.029442018358075
           localScale:
             - 100
@@ -16126,9 +16126,9 @@ GameObject24:
             - 451.7078857421875
             - 9679.166015625
           localRotation:
-            - 89.999974814588398
-            - 73.086972913931362
-            - 179.99999035143418
+            - 89.999983209705363
+            - 73.086970170615672
+            - 179.99999356760304
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -19546,7 +19546,7 @@ GameObject27:
             - 57.399997711181641
           localRotation:
             - 0
-            - 82.875066781348494
+            - 82.875057103326867
             - 0
           localScale:
             - 20.007547378540039
@@ -20568,9 +20568,9 @@ GameObject27:
             - 3.1512765884399414
             - 3.5392885208129883
           localRotation:
-            - 179.84665360323774
-            - -57.007701356518034
-            - -179.9722471207451
+            - 179.84665360533677
+            - -57.007755047810733
+            - -179.9722471207383
           localScale:
             - 4.1512908935546875
             - 8.0131254196166992
@@ -21451,7 +21451,7 @@ GameObject28:
             - 13.974271774291992
           localRotation:
             - -1.6902280382883206
-            - -30.665043002100795
+            - -30.665043002100798
             - 0.65932810957335963
           localScale:
             - 31.360137939453125
@@ -22894,7 +22894,7 @@ GameObject29:
             - -160.05094909667969
           localRotation:
             - 0
-            - 63.749226666872545
+            - 63.749229862193133
             - 0
           localScale:
             - 24.358108520507812
@@ -23092,7 +23092,7 @@ GameObject29:
             - -72.031135559082031
           localRotation:
             - 0
-            - -69.383029236251048
+            - -69.383040276432098
             - 0
           localScale:
             - 12.133749961853027
@@ -23851,7 +23851,7 @@ GameObject29:
             - -148.216064453125
           localRotation:
             - 179.99999499104374
-            - 25.858725770479126
+            - 25.858725770479122
             - 179.99999499104374
           localScale:
             - 10.84910774230957
@@ -23982,9 +23982,9 @@ GameObject29:
             - 3.0124197006225586
             - -194.1514892578125
           localRotation:
-            - 179.99999499104948
-            - 87.96957693443774
-            - 179.99999499104948
+            - 179.9999949910484
+            - 87.969567273503927
+            - 179.9999949910484
           localScale:
             - 12.215158462524414
             - 7.4319052696228027
@@ -24445,7 +24445,7 @@ GameObject29:
             - -57.019905090332031
           localRotation:
             - 0
-            - -21.351410654346921
+            - -21.351410654346925
             - 0
           localScale:
             - 6.2044053077697754
@@ -27138,9 +27138,9 @@ GameObject32:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.4062413
+          floatSpeed: 1.58957458
           floatHeight: 0.5
-          rotationSpeed: 60.5106697
+          rotationSpeed: 52.7069397
   Children: ~
 GameObject33:
   name: BiblePage_Pueblo
@@ -27223,9 +27223,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.31925952
+          floatSpeed: 1.56082392
           floatHeight: 0.5
-          rotationSpeed: 61.5202751
+          rotationSpeed: 88.5617447
   Children: ~
 GameObject34:
   name: BiblePage_Pasillo_Zona3
@@ -27308,9 +27308,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.23619783
+          floatSpeed: 1.75688601
           floatHeight: 0.5
-          rotationSpeed: 58.502327
+          rotationSpeed: 95.9757233
   Children: ~
 GameObject35:
   name: BiblePage_Ciudad
@@ -27393,9 +27393,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.98629391
+          floatSpeed: 0.920182645
           floatHeight: 0.5
-          rotationSpeed: 52.4398193
+          rotationSpeed: 57.2837029
   Children: ~
 GameObject36:
   name: Barril_Ciudad1
@@ -28938,9 +28938,9 @@ GameObject38:
             - 0
             - -25.443840026855469
           localRotation:
-            - 89.991930583314755
-            - 89.870768653766774
-            - 179.99304731994292
+            - 89.99262302181225
+            - 89.873559551076553
+            - 179.99375512632506
           localScale:
             - 86.512344360351562
             - 99.999984741210938
@@ -28980,9 +28980,9 @@ GameObject38:
             - 341.29437255859375
             - 124.93968963623047
           localRotation:
-            - 89.984398848592178
-            - 89.931610478918856
-            - 179.98417003720724
+            - 89.984653972589115
+            - 89.940255899832749
+            - 179.98443882160458
           localScale:
             - 96.124794006347656
             - 99.999984741210938
@@ -29401,7 +29401,7 @@ GameObject38:
             - -869.0504150390625
           localRotation:
             - 90
-            - 89.764491418707365
+            - 89.762726906456635
             - 0
           localScale:
             - 100
@@ -30114,9 +30114,9 @@ GameObject38:
             - 19.999998092651367
             - -924.02191162109375
           localRotation:
-            - -90.000024148366222
-            - 0.061903413917634542
-            - 1.1042651843771284e-09
+            - -90.000024148367501
+            - 0.061903449291234723
+            - -1.2539819060567081e-09
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -30534,9 +30534,9 @@ GameObject38:
             - 0
             - -443.06002807617188
           localRotation:
-            - 89.999981116036011
-            - 78.583664532628461
-            - 179.99998454814906
+            - 89.999987980246857
+            - 78.58365251289834
+            - 179.99997768390736
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -30576,9 +30576,9 @@ GameObject38:
             - 0
             - -346.2620849609375
           localRotation:
-            - 90.000032238327037
-            - -74.941239767902985
-            - -179.99995473041133
+            - 90.000032238323755
+            - -74.941231903828864
+            - -179.99995473040573
           localScale:
             - 100.00000762939453
             - 100.00000762939453
@@ -31224,846 +31224,6 @@ GameObject38:
               - 1
               - 1
               - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.001
-      prefabPath: ""
-      uuid: 7489577739063496312
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -952.643798828125
-            - 339.62506103515625
-            - -528.64208984375
-          localRotation:
-            - -90.000008699843988
-            - 45.000001151094779
-            - 4.2378072924343831e-06
-          localScale:
-            - 80.000007629394531
-            - 80
-            - 79.999992370605469
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13378919965328654837
-          material:
-            name: cuadros_DefaultMaterial_BaseColor
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.001
-      prefabPath: ""
-      uuid: 5057858668338905181
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -952.643798828125
-            - 339.62506103515625
-            - -528.93634033203125
-          localRotation:
-            - -90.000008699843988
-            - 45.000001151094779
-            - 4.2378072924343831e-06
-          localScale:
-            - 80.000007629394531
-            - 80
-            - 79.999992370605469
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 5874340571453640466
-          material:
-            name: ""
-            color:
-              - 1
-              - 0
-              - 0
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.023
-      prefabPath: ""
-      uuid: 9384442841502402788
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -952.64385986328125
-            - 235.62507629394531
-            - -528.64215087890625
-          localRotation:
-            - -90.000008699843988
-            - 45.000001151094779
-            - 4.2378072924343831e-06
-          localScale:
-            - 80.000007629394531
-            - 80.000007629394531
-            - 79.999992370605469
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13378919965328654837
-          material:
-            name: cuadros_DefaultMaterial_BaseColor
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.023
-      prefabPath: ""
-      uuid: 11689578020915392534
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -952.64385986328125
-            - 235.62507629394531
-            - -528.64215087890625
-          localRotation:
-            - -90.000008699843988
-            - 45.000001151094779
-            - 4.2378072924343831e-06
-          localScale:
-            - 80.000007629394531
-            - 80.000007629394531
-            - 79.999992370605469
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 17276331165493284064
-          material:
-            name: ""
-            color:
-              - 1
-              - 0
-              - 0
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.025
-      prefabPath: ""
-      uuid: 7387425143926166414
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -952.55535888671875
-            - 130
-            - -528.8642578125
-          localRotation:
-            - -90.000008699843988
-            - 45.000001151094779
-            - 4.2378072924343831e-06
-          localScale:
-            - 80.000007629394531
-            - 80.000007629394531
-            - 79.999992370605469
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13378919965328654837
-          material:
-            name: cuadros_DefaultMaterial_BaseColor
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.025
-      prefabPath: ""
-      uuid: 1826771620873792110
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -952.55535888671875
-            - 130
-            - -528.8642578125
-          localRotation:
-            - -90.000008699843988
-            - 45.000001151094779
-            - 4.2378072924343831e-06
-          localScale:
-            - 80.000007629394531
-            - 80.000007629394531
-            - 79.999992370605469
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 17276331165493284064
-          material:
-            name: ""
-            color:
-              - 1
-              - 0
-              - 0
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.026
-      prefabPath: ""
-      uuid: 17044352694059675414
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 200.58877563476562
-            - 103.53261566162109
-            - -919.582763671875
-          localRotation:
-            - -90.000000157850181
-            - 1.8042355441531802e-06
-            - -10.000001573656473
-          localScale:
-            - 51.999996185302734
-            - 52
-            - 51.999996185302734
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13378919965328654837
-          material:
-            name: cuadros_DefaultMaterial_BaseColor
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.026
-      prefabPath: ""
-      uuid: 13397565482182254916
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 200.58877563476562
-            - 103.53261566162109
-            - -919.582763671875
-          localRotation:
-            - -90.000000157850181
-            - 1.8042355441531802e-06
-            - -10.000001573656473
-          localScale:
-            - 51.999996185302734
-            - 52
-            - 51.999996185302734
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 17276331165493284064
-          material:
-            name: ""
-            color:
-              - 1
-              - 0
-              - 0
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.030
-      prefabPath: ""
-      uuid: 9346668957055784018
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 919.26214599609375
-            - 141.856201171875
-            - -240.04762268066406
-          localRotation:
-            - -179.99989657155089
-            - -82.434947142801306
-            - 89.999922240677549
-          localScale:
-            - 62.413867950439453
-            - 62.413871765136719
-            - 62.413867950439453
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13378919965328654837
-          material:
-            name: cuadros_DefaultMaterial_BaseColor
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.030
-      prefabPath: ""
-      uuid: 17898785831204202915
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 919.26214599609375
-            - 141.856201171875
-            - -240.04762268066406
-          localRotation:
-            - -179.99989657155089
-            - -82.434947142801306
-            - 89.999922240677549
-          localScale:
-            - 62.413867950439453
-            - 62.413871765136719
-            - 62.413867950439453
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 17276331165493284064
-          material:
-            name: ""
-            color:
-              - 1
-              - 0
-              - 0
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.034
-      prefabPath: ""
-      uuid: 12331715940041137779
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -197.53692626953125
-            - 87.316635131835938
-            - -919.582763671875
-          localRotation:
-            - -90.000014489018881
-            - 0
-            - 0
-          localScale:
-            - 48
-            - 48
-            - 48
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13378919965328654837
-          material:
-            name: cuadros_DefaultMaterial_BaseColor
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.034
-      prefabPath: ""
-      uuid: 14366452018071427589
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -197.53692626953125
-            - 87.316635131835938
-            - -919.582763671875
-          localRotation:
-            - -90.000014489018881
-            - 0
-            - 0
-          localScale:
-            - 48
-            - 48
-            - 48
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 17276331165493284064
-          material:
-            name: ""
-            color:
-              - 1
-              - 0
-              - 0
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.038
-      prefabPath: ""
-      uuid: 1214055448792917292
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 918.82464599609375
-            - 155.99456787109375
-            - -659.51934814453125
-          localRotation:
-            - 4.9075526628513449e-05
-            - -79.275334685310682
-            - -90.000097097011164
-          localScale:
-            - 54.569847106933594
-            - 54.569839477539062
-            - 54.569847106933594
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13378919965328654837
-          material:
-            name: cuadros_DefaultMaterial_BaseColor
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.038
-      prefabPath: ""
-      uuid: 119706579103842970
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 918.82464599609375
-            - 155.99456787109375
-            - -659.51934814453125
-          localRotation:
-            - 4.9075526628513449e-05
-            - -79.275334685310682
-            - -90.000097097011164
-          localScale:
-            - 54.569847106933594
-            - 54.569839477539062
-            - 54.569847106933594
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 17276331165493284064
-          material:
-            name: ""
-            color:
-              - 1
-              - 0
-              - 0
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.041
-      prefabPath: ""
-      uuid: 10510179597687920656
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -197.53692626953125
-            - 224.00003051757812
-            - -919.582763671875
-          localRotation:
-            - -89.999999987795562
-            - 3.0160772577769342e-07
-            - 4.6343761417862019
-          localScale:
-            - 47.999996185302734
-            - 48
-            - 47.999996185302734
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13378919965328654837
-          material:
-            name: cuadros_DefaultMaterial_BaseColor
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.041
-      prefabPath: ""
-      uuid: 4223478906341307076
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -197.53692626953125
-            - 224.00003051757812
-            - -919.582763671875
-          localRotation:
-            - -89.999999987795562
-            - 3.0160772577769342e-07
-            - 4.6343761417862019
-          localScale:
-            - 47.999996185302734
-            - 48
-            - 47.999996185302734
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 17276331165493284064
-          material:
-            name: ""
-            color:
-              - 1
-              - 0
-              - 0
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.043
-      prefabPath: ""
-      uuid: 11395415859625687106
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 659.99993896484375
-            - 1.1081897020339966
-            - -850
-          localRotation:
-            - -3.9520811673627332e-05
-            - 50.781167730499725
-            - 179.99995036744113
-          localScale:
-            - 76.499992370605469
-            - 76.500007629394531
-            - 76.499992370605469
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13378919965328654837
-          material:
-            name: cuadros_DefaultMaterial_BaseColor
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.043
-      prefabPath: ""
-      uuid: 17362191954337502649
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 659.99993896484375
-            - 1.1081897020339966
-            - -850
-          localRotation:
-            - -3.9520811673627332e-05
-            - 50.781167730499725
-            - 179.99995036744113
-          localScale:
-            - 76.499992370605469
-            - 76.500007629394531
-            - 76.499992370605469
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 17276331165493284064
-          material:
-            name: ""
-            color:
-              - 1
-              - 0
-              - 0
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.046
-      prefabPath: ""
-      uuid: 13453217448418160004
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 199.50935363769531
-            - 222.50935363769531
-            - -919.582763671875
-          localRotation:
-            - -90.000000039500122
-            - -9.0470180736643554e-07
-            - 4.9999985904587447
-          localScale:
-            - 48
-            - 48
-            - 48
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 13378919965328654837
-          material:
-            name: cuadros_DefaultMaterial_BaseColor
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.046
-      prefabPath: ""
-      uuid: 9571098534988521204
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 199.50935363769531
-            - 222.50935363769531
-            - -919.582763671875
-          localRotation:
-            - -90.000000039500122
-            - -9.0470180736643554e-07
-            - 4.9999985904587447
-          localScale:
-            - 48
-            - 48
-            - 48
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 17276331165493284064
-          material:
-            name: ""
-            color:
-              - 1
-              - 0
-              - 0
               - 1
           color:
             - 1
@@ -96985,64 +96145,6 @@ GameObject117:
           player: Player
   Children: ~
 GameObject118:
-  name: Medkit
-  prefabPath: Assets/Prefabs/Medkit.prefab.yaml
-  uuid: 2395089655681620673
-  tag: Destroyable
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 181.54179382324219
-        - -0.90633773803710938
-        - -194.78416442871094
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1.1974426507949829
-        - 1.1974426507949829
-        - 1.1974426507949829
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 12044555390315367870
-      material:
-        name: Medkit_MedKit_BaseColor
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1.5
-        - 1.5
-        - 1.5
-      offset:
-        - 0
-        - 1.29999995
-        - 0
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: DestroyEnviormentObject
-        fields:
-          onlyMedicaeStimm: false
-  Children: ~
-GameObject119:
   name: Medkit_1_Instance
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 9417299982244269123
@@ -97100,7 +96202,7 @@ GameObject119:
         fields:
           onlyMedicaeStimm: false
   Children: ~
-GameObject120:
+GameObject119:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_Instance
   prefabPath: Assets\Prefabs\barrel.prefab.yaml
   uuid: 1394964808370497272
@@ -97158,7 +96260,7 @@ GameObject120:
         fields:
           onlyMedicaeStimm: false
   Children: ~
-GameObject121:
+GameObject120:
   name: Medkit_1_Instance2
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 13558665426562903421
@@ -97216,7 +96318,7 @@ GameObject121:
         fields:
           onlyMedicaeStimm: false
   Children: ~
-GameObject122:
+GameObject121:
   name: Medkit_1_Instance3
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 1835144200292419928
@@ -97274,7 +96376,7 @@ GameObject122:
         fields:
           onlyMedicaeStimm: false
   Children: ~
-GameObject123:
+GameObject122:
   name: Medkit_1_Instance4
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 15789529315576345182
@@ -97332,7 +96434,7 @@ GameObject123:
         fields:
           onlyMedicaeStimm: false
   Children: ~
-GameObject124:
+GameObject123:
   name: Medkit_1_Instance5
   prefabPath: Assets\Prefabs\Medkit.prefab.yaml
   uuid: 12034232093523455558
@@ -97390,7 +96492,7 @@ GameObject124:
         fields:
           onlyMedicaeStimm: false
   Children: ~
-GameObject125:
+GameObject124:
   name: CheckPoint_Instance6
   prefabPath: Assets\Prefabs\CheckPoint.prefab.yaml
   uuid: 6421311150561009010
@@ -97428,7 +96530,7 @@ GameObject125:
         name: Checkpoint
         fields: ~
   Children: ~
-GameObject126:
+GameObject125:
   name: CheckPoint_Instance7
   prefabPath: Assets\Prefabs\CheckPoint.prefab.yaml
   uuid: 14068703732000644303
@@ -97466,7 +96568,7 @@ GameObject126:
         name: Checkpoint
         fields: ~
   Children: ~
-GameObject127:
+GameObject126:
   name: L1Z1_stylized_rock_51.032_level1_copy
   prefabPath: ""
   uuid: 17653790614199481450
@@ -97509,7 +96611,7 @@ GameObject127:
       name: Shader
       enabled: true
   Children: ~
-GameObject128:
+GameObject127:
   name: L1Z1_stylized_rock_51.032_level1_copy_1
   prefabPath: ""
   uuid: 1890984661785808071
@@ -97552,7 +96654,7 @@ GameObject128:
       name: Shader
       enabled: true
   Children: ~
-GameObject129:
+GameObject128:
   name: L1Z1_stylized_rock_51.032_level1_copy_2
   prefabPath: ""
   uuid: 4414708348618523143
@@ -97568,9 +96670,9 @@ GameObject129:
         - 3.2896044254302979
         - 95.662101745605469
       localRotation:
-        - -9.4455227961361796
-        - -57.750504429274216
-        - -138.16007961232918
+        - -9.4455226469603577
+        - -57.750502882185728
+        - -138.16008338243279
       localScale:
         - 0.031276464462280273
         - 0.031276464462280273
@@ -97595,7 +96697,7 @@ GameObject129:
       name: Shader
       enabled: true
   Children: ~
-GameObject130:
+GameObject129:
   name: Collider_Edificio1
   prefabPath: ""
   uuid: 6901655663101121691
@@ -97629,7 +96731,7 @@ GameObject130:
         - 0
       isTrigger: false
   Children: ~
-GameObject131:
+GameObject130:
   name: Collider_Edificio1_copy_1
   prefabPath: ""
   uuid: 5139436668644921095
@@ -97663,7 +96765,7 @@ GameObject131:
         - 0
       isTrigger: false
   Children: ~
-GameObject132:
+GameObject131:
   name: Collider_Edificio1_copy_2
   prefabPath: ""
   uuid: 17997461632804195923
@@ -97697,7 +96799,7 @@ GameObject132:
         - 0
       isTrigger: false
   Children: ~
-GameObject133:
+GameObject132:
   name: Collider_Edificio1_copy_3
   prefabPath: ""
   uuid: 8287970801633723378
@@ -97731,7 +96833,7 @@ GameObject133:
         - 0
       isTrigger: false
   Children: ~
-GameObject134:
+GameObject133:
   name: L1Z1_stylized_rock_51.032_level1_copy_copy
   prefabPath: ""
   uuid: 1511911630058461561
@@ -97747,9 +96849,9 @@ GameObject134:
         - 3.2896044254302979
         - 10.935238838195801
       localRotation:
-        - -2.6537738700059132
-        - -52.984219813431402
-        - -143.75537597419421
+        - -2.6537749339577728
+        - -52.984219098736126
+        - -143.75537661231976
       localScale:
         - 0.017827585339546204
         - 0.017827583476901054
@@ -97774,7 +96876,7 @@ GameObject134:
       name: Shader
       enabled: true
   Children: ~
-GameObject135:
+GameObject134:
   name: Collider_Edificio1_copy_4
   prefabPath: ""
   uuid: 14949878503491691145
@@ -97808,7 +96910,7 @@ GameObject135:
         - 0
       isTrigger: false
   Children: ~
-GameObject136:
+GameObject135:
   name: L1Z1_stylized_rock_51.032_level1_copy_copy_copy
   prefabPath: ""
   uuid: 2941671114678821643
@@ -97851,7 +96953,7 @@ GameObject136:
       name: Shader
       enabled: true
   Children: ~
-GameObject137:
+GameObject136:
   name: Collider_Edificio1_copy_4_copy
   prefabPath: ""
   uuid: 9880108591093153826
@@ -97885,7 +96987,7 @@ GameObject137:
         - 0
       isTrigger: false
   Children: ~
-GameObject138:
+GameObject137:
   name: Collider_Edificio1_copy_4_copy_1
   prefabPath: ""
   uuid: 5375421592587098862
@@ -97919,7 +97021,7 @@ GameObject138:
         - 0
       isTrigger: false
   Children: ~
-GameObject139:
+GameObject138:
   name: Collider_Edificio1_copy_4_copy_copy
   prefabPath: ""
   uuid: 10811469488891096497
@@ -97953,7 +97055,7 @@ GameObject139:
         - 0
       isTrigger: false
   Children: ~
-GameObject140:
+GameObject139:
   name: Collider_Edificio1_copy_4_copy_copy_copy
   prefabPath: ""
   uuid: 6006828437155950486
@@ -97987,7 +97089,7 @@ GameObject140:
         - 0
       isTrigger: false
   Children: ~
-GameObject141:
+GameObject140:
   name: Collider_Piedras_copy
   prefabPath: ""
   uuid: 2029998932891582860
@@ -98021,7 +97123,7 @@ GameObject141:
         - 0
       isTrigger: false
   Children: ~
-GameObject142:
+GameObject141:
   name: Collider_Pilar_1
   prefabPath: ""
   uuid: 10228753773789114147
@@ -98055,7 +97157,7 @@ GameObject142:
         - 0
       isTrigger: false
   Children: ~
-GameObject143:
+GameObject142:
   name: Collider_Pilar_2
   prefabPath: ""
   uuid: 11502327986428984019
@@ -98089,7 +97191,7 @@ GameObject143:
         - 0
       isTrigger: false
   Children: ~
-GameObject144:
+GameObject143:
   name: Collider_Pilar_3
   prefabPath: ""
   uuid: 11303474563928365470
@@ -98123,7 +97225,7 @@ GameObject144:
         - 0
       isTrigger: false
   Children: ~
-GameObject145:
+GameObject144:
   name: Collider_Pilar_4
   prefabPath: ""
   uuid: 9491118739533155679
@@ -98157,7 +97259,7 @@ GameObject145:
         - 0
       isTrigger: false
   Children: ~
-GameObject146:
+GameObject145:
   name: Collider_Pilar_5
   prefabPath: ""
   uuid: 12221860929665498082
@@ -98191,7 +97293,7 @@ GameObject146:
         - 0
       isTrigger: false
   Children: ~
-GameObject147:
+GameObject146:
   name: Collider_Pilar_6
   prefabPath: ""
   uuid: 6767918400856096539
@@ -98225,7 +97327,7 @@ GameObject147:
         - 0
       isTrigger: false
   Children: ~
-GameObject148:
+GameObject147:
   name: Collider_Pilar_7
   prefabPath: ""
   uuid: 12364788708448086590
@@ -98259,7 +97361,7 @@ GameObject148:
         - 0
       isTrigger: false
   Children: ~
-GameObject149:
+GameObject148:
   name: Empty_1
   prefabPath: ""
   uuid: 8924132653665476389
@@ -98293,7 +97395,7 @@ GameObject149:
         - 0
       isTrigger: false
   Children: ~
-GameObject150:
+GameObject149:
   name: Empty_1_copy
   prefabPath: ""
   uuid: 3471145572366966497
@@ -98327,7 +97429,7 @@ GameObject150:
         - 0
       isTrigger: false
   Children: ~
-GameObject151:
+GameObject150:
   name: Empty_1_copy_copy
   prefabPath: ""
   uuid: 14922611500417836264
@@ -98361,7 +97463,7 @@ GameObject151:
         - 0
       isTrigger: false
   Children: ~
-GameObject152:
+GameObject151:
   name: Empty_1_copy_copy_1
   prefabPath: ""
   uuid: 13447501969192581763
@@ -98395,7 +97497,7 @@ GameObject152:
         - 0
       isTrigger: false
   Children: ~
-GameObject153:
+GameObject152:
   name: Empty_1_copy_copy_2
   prefabPath: ""
   uuid: 10481528243400983740
@@ -98429,7 +97531,7 @@ GameObject153:
         - 0
       isTrigger: false
   Children: ~
-GameObject154:
+GameObject153:
   name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy
   prefabPath: ""
   uuid: 14537044896678886014
@@ -98463,7 +97565,7 @@ GameObject154:
         - 0
       isTrigger: false
   Children: ~
-GameObject155:
+GameObject154:
   name: WalkingFX2
   prefabPath: ""
   uuid: 1637197076729346390
@@ -98537,7 +97639,7 @@ GameObject155:
         texturePath: Assets/Textures/bullet.png
       particleType: 51
   Children: ~
-GameObject156:
+GameObject155:
   name: MarcoMountain2_copy_copy
   prefabPath: ""
   uuid: 11029981189555552814
@@ -98580,7 +97682,7 @@ GameObject156:
       name: Shader
       enabled: true
   Children: ~
-GameObject157:
+GameObject156:
   name: terrain.002
   prefabPath: ""
   uuid: 3494249896462899369
@@ -98623,7 +97725,7 @@ GameObject157:
       name: Shader
       enabled: true
   Children: ~
-GameObject158:
+GameObject157:
   name: puertas biblio
   prefabPath: ""
   uuid: 13625894733144353188
@@ -98789,7 +97891,7 @@ GameObject158:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.847345113825909
+            - 89.848409553747416
             - 0
           localScale:
             - 208.60295104980469
@@ -98831,7 +97933,7 @@ GameObject158:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.847345113825909
+            - 89.848409553747416
             - 0
           localScale:
             - 208.60295104980469
@@ -98873,7 +97975,7 @@ GameObject158:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.847345113825909
+            - 89.848409553747416
             - 0
           localScale:
             - 208.60295104980469
@@ -98915,7 +98017,7 @@ GameObject158:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.847345113825909
+            - 89.848409553747416
             - 0
           localScale:
             - 208.60295104980469
@@ -98957,7 +98059,7 @@ GameObject158:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.847345113825909
+            - 89.848409553747416
             - 0
           localScale:
             - 208.60295104980469
@@ -98999,7 +98101,7 @@ GameObject158:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.847345113825909
+            - 89.848409553747416
             - 0
           localScale:
             - 208.60295104980469
@@ -99041,7 +98143,7 @@ GameObject158:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.847345113825909
+            - 89.848409553747416
             - 0
           localScale:
             - 208.60295104980469
@@ -99067,7 +98169,7 @@ GameObject158:
           name: Shader
           enabled: true
       Children: ~
-GameObject159:
+GameObject158:
   name: VFX_LEAVES
   prefabPath: ""
   uuid: 15542734458733252289
@@ -100405,7 +99507,7 @@ GameObject159:
             texturePath: Assets/Textures/leaf3.png
           particleType: 41
       Children: ~
-GameObject160:
+GameObject159:
   name: Player
   prefabPath: Assets\Prefabs\PlayerFinal.prefab.yaml
   uuid: 6978123148509558407
@@ -100417,9 +99519,9 @@ GameObject160:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 883.66693115234375
+        - 114.15957641601562
         - 0
-        - -143.95046997070312
+        - -31.138542175292969
       localRotation:
         - 0
         - -0
@@ -100748,9 +99850,9 @@ GameObject160:
               name: Transform_Component
               enabled: true
               localPosition:
-                - 1.1368683772161603e-13
-                - 0.10000618172045961
-                - 2.184777331185336
+                - 1.4210854715202004e-14
+                - 0.10000045967433735
+                - 2.1847773311855319
               localRotation:
                 - 114.54408943432325
                 - 4.1535743197577339
@@ -100771,9 +99873,9 @@ GameObject160:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -3.4537379178800627e-08
-                    - 4.3261186100096443e-07
-                    - -1.9755478319893885e-07
+                    - -3.4537364967945912e-08
+                    - 4.326118414610392e-07
+                    - -1.9755479030436621e-07
                   localRotation:
                     - -179.99992799624331
                     - -80.537696807973376
@@ -100794,9 +99896,9 @@ GameObject160:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 1.2843697760445139e-05
-                        - 0.30002305895754944
-                        - 5.3567636868478985e-06
+                        - 1.493666832885765e-06
+                        - 0.30000062044791775
+                        - 6.1055624689387855e-07
                       localRotation:
                         - -51.797576834051881
                         - -62.047269102438719
@@ -100817,9 +99919,9 @@ GameObject160:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 3.8931547123866039e-06
-                            - 1.0392235539398484
-                            - -3.4836095892387675e-05
+                            - -1.2926277150882015e-06
+                            - 1.0392298061288354
+                            - 2.6306746718773866e-06
                           localRotation:
                             - -3.577087009842038
                             - 12.215839673438282
@@ -100840,9 +99942,9 @@ GameObject160:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -1.1310325476188156e-07
-                                - 1.1680765452950086
-                                - 3.9238000113073219e-05
+                                - 1.1120326064428811e-06
+                                - 1.1680740100352696
+                                - -6.8085592204170106e-06
                               localRotation:
                                 - 8.2160540182876947
                                 - -3.774707104947852
@@ -100863,9 +99965,9 @@ GameObject160:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 5.2093159297328384e-07
-                                    - 0.39318966486976592
-                                    - -4.7036487444529484e-05
+                                    - 1.5120268770374423e-07
+                                    - 0.39319280837555937
+                                    - 6.4116629374666445e-06
                                   localRotation:
                                     - 0.23958915834419689
                                     - 0.013137007559054982
@@ -100886,9 +99988,9 @@ GameObject160:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -2.0660124846472176e-06
-                    - 0.60827985729041079
-                    - 7.9781669626299862e-06
+                    - -1.8146099591831446e-06
+                    - 0.60827670642769871
+                    - 1.0343537262258453e-06
                   localRotation:
                     - -3.1217709626927839
                     - -1.5902773792909209e-15
@@ -100909,9 +100011,9 @@ GameObject160:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 9.7500827678231872e-06
-                        - 0.9055382272172352
-                        - -3.424300786036838e-06
+                        - 2.019180016077371e-06
+                        - 0.90553900503307516
+                        - 9.5318483772643958e-08
                       localRotation:
                         - -5.8169497720457937
                         - -14.283796094631148
@@ -100932,9 +100034,9 @@ GameObject160:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -7.9279615192717773e-06
-                            - 0.73522133291658076
-                            - 1.1349218752343406e-05
+                            - -1.01812484842867e-06
+                            - 0.73521005264488803
+                            - -8.487217844077578e-07
                           localRotation:
                             - -9.6580364064135313
                             - 26.698151482097799
@@ -100955,9 +100057,9 @@ GameObject160:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 2.3987206532183336e-05
-                                - 0.80924740562716124
-                                - -1.2781911209458485e-06
+                                - 4.9342837371568748e-07
+                                - 0.8092523735381647
+                                - 1.0539957528976629e-06
                               localRotation:
                                 - 79.109756119516305
                                 - 10.162249092796372
@@ -100978,9 +100080,9 @@ GameObject160:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - -7.5654228339772089e-06
-                                    - 0.69208282924819287
-                                    - -1.1670972412503033e-05
+                                    - 2.0753572727016945e-07
+                                    - 0.69208817921973775
+                                    - 9.1240920596646902e-07
                                   localRotation:
                                     - 169.06769304226393
                                     - -37.71981535068236
@@ -101001,9 +100103,9 @@ GameObject160:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.0084778888138976605
-                                        - 0.32838020421223746
-                                        - 0.058248276384460951
+                                        - 0.0084809762316533366
+                                        - 0.32837730809723809
+                                        - 0.058270850407723174
                                       localRotation:
                                         - 6.8973026839951892
                                         - 11.500654649627007
@@ -101024,9 +100126,9 @@ GameObject160:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -1.1537018893559292e-06
-                                            - 0.13529552711557358
-                                            - 3.1153664849625784e-05
+                                            - 6.7955281402021228e-08
+                                            - 0.13528179936617235
+                                            - 8.281163701440164e-07
                                           localRotation:
                                             - 0.59058796437515904
                                             - -31.485112890609443
@@ -101047,9 +100149,9 @@ GameObject160:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -1.5864634917761578e-05
-                                                - 0.14029768201314141
-                                                - -3.4455354693818663e-05
+                                                - -3.1825003077301517e-07
+                                                - 0.14031099651505841
+                                                - 3.9411202124028932e-07
                                               localRotation:
                                                 - 3.0021479673151665
                                                 - 6.9385061183344678
@@ -101070,9 +100172,9 @@ GameObject160:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.034893845582400385
-                                        - 0.364823077742642
-                                        - -0.017057221249388022
+                                        - 0.034889697448677204
+                                        - 0.36481673683449856
+                                        - -0.017058112045162943
                                       localRotation:
                                         - -8.589590809370641
                                         - -2.5416042896187285
@@ -101093,9 +100195,9 @@ GameObject160:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -8.0667077497764694e-06
-                                            - 0.14866921239706699
-                                            - -3.4850059819291346e-05
+                                            - 1.8825985037551618e-07
+                                            - 0.14866039950852183
+                                            - 1.3855095346571034e-06
                                           localRotation:
                                             - 0.66838865530389624
                                             - 4.5332450129491724
@@ -101116,9 +100218,9 @@ GameObject160:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 4.4035491555405315e-06
-                                                - 0.11445776790802142
-                                                - 2.8869139782727871e-05
+                                                - -6.1023489195122238e-07
+                                                - 0.11445517659207738
+                                                - -1.6629769277187734e-06
                                               localRotation:
                                                 - 6.1958773617577547
                                                 - -5.3819539857315375
@@ -101139,9 +100241,9 @@ GameObject160:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.049480464783284273
-                                        - 0.33855148148251146
-                                        - -0.097663901050168533
+                                        - 0.049477353682997993
+                                        - 0.33854672580142875
+                                        - -0.097664569146957092
                                       localRotation:
                                         - -20.830481745347786
                                         - -9.1092592242430683
@@ -101162,9 +100264,9 @@ GameObject160:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 4.2405801821132627e-06
-                                            - 0.1378375894086048
-                                            - 1.0708318654906179e-05
+                                            - 1.451814274133767e-06
+                                            - 0.13783958283622155
+                                            - 3.630563710999013e-06
                                           localRotation:
                                             - -1.1652071611596666
                                             - 6.5606704869986006
@@ -101185,9 +100287,9 @@ GameObject160:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -9.8168652584718075e-06
-                                                - 0.10050007142825734
-                                                - -3.1803233355276461e-05
+                                                - -3.529214254172075e-07
+                                                - 0.10049871477878014
+                                                - -6.4424433787735325e-07
                                               localRotation:
                                                 - 0.4280061804344043
                                                 - 0.62468687624929586
@@ -101208,9 +100310,9 @@ GameObject160:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.068656388029223248
-                                        - 0.30465439249445581
-                                        - -0.17372033831384215
+                                        - 0.068654997423810649
+                                        - 0.30464972825976133
+                                        - -0.17371333327028537
                                       localRotation:
                                         - -34.476389703153124
                                         - -16.908078178453017
@@ -101231,9 +100333,9 @@ GameObject160:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -1.2953931445736089e-05
-                                            - 0.092219321512970964
-                                            - -2.0197596882098878e-05
+                                            - 2.2563522605878461e-06
+                                            - 0.09219332832873306
+                                            - 3.2934503551018679e-06
                                           localRotation:
                                             - -3.2520196241609041
                                             - -0.48837193420552782
@@ -101254,9 +100356,9 @@ GameObject160:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 4.1005696402862668e-06
-                                                - 0.076156846060143835
-                                                - 6.0440963807195658e-06
+                                                - -7.7691784383659979e-07
+                                                - 0.076157838181742932
+                                                - -8.8304829404250995e-07
                                               localRotation:
                                                 - -2.8262882072051632
                                                 - -0.36686900392418464
@@ -101277,9 +100379,9 @@ GameObject160:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.024535314054060731
-                                        - 0.23643483364145368
-                                        - 0.1295922348459726
+                                        - 0.024536680976955161
+                                        - 0.23643184608009449
+                                        - 0.12960713572881843
                                       localRotation:
                                         - 18.723513771338727
                                         - 26.238320027385441
@@ -101300,9 +100402,9 @@ GameObject160:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -2.2047973402550269e-07
-                                            - 0.14900077902467501
-                                            - -1.4959753116272623e-06
+                                            - 4.1215657375914816e-07
+                                            - 0.14899526965633569
+                                            - -8.5855120346423064e-08
                                           localRotation:
                                             - 34.183159394884889
                                             - -0.66938250892899687
@@ -101323,9 +100425,9 @@ GameObject160:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 9.7500827678231872e-06
-                        - 0.9055382272172352
-                        - -3.424300786036838e-06
+                        - 2.019180016077371e-06
+                        - 0.90553900503307516
+                        - 9.5318483772643958e-08
                       localRotation:
                         - 13.382677426158981
                         - 1.3320429013077396e-05
@@ -101346,9 +100448,9 @@ GameObject160:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 9.7500827678231872e-06
-                        - 0.9055382272172352
-                        - -3.424300786036838e-06
+                        - 2.019180016077371e-06
+                        - 0.90553900503307516
+                        - 9.5318483772643958e-08
                       localRotation:
                         - -5.6563207130788937
                         - 6.7628621870527539
@@ -101369,9 +100471,9 @@ GameObject160:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 2.0879178066479653e-06
-                            - 0.73522225920123674
-                            - -2.7842608574246697e-06
+                            - -5.5358597705890134e-08
+                            - 0.73520679063526018
+                            - -9.1013362890635108e-07
                           localRotation:
                             - 71.180457598256439
                             - -15.637694783894339
@@ -101392,9 +100494,9 @@ GameObject160:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -1.460156340726826e-05
-                                - 0.80925087426271614
-                                - 3.1528806289315987e-05
+                                - -1.1997626501170091e-06
+                                - 0.80925248247681492
+                                - 3.1151475496926655e-06
                               localRotation:
                                 - 74.49899881606936
                                 - -47.639002633840896
@@ -101415,9 +100517,9 @@ GameObject160:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - -6.1033810823118984e-06
-                                    - 0.69207688884739582
-                                    - -1.4879052514515934e-06
+                                    - -7.4629329205322392e-07
+                                    - 0.69208477692812664
+                                    - -1.6591593094972268e-06
                                   localRotation:
                                     - 24.331612684253354
                                     - 54.686400639341294
@@ -101438,9 +100540,9 @@ GameObject160:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.008465033522838894
-                                        - 0.32833605927226017
-                                        - 0.058268285167315526
+                                        - -0.0084833163206639028
+                                        - 0.32837787713293665
+                                        - 0.058275010179883679
                                       localRotation:
                                         - 10.409321707841547
                                         - -8.4636422278786014
@@ -101461,9 +100563,9 @@ GameObject160:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -5.6375138228759178e-06
-                                            - 0.13530076036897756
-                                            - 4.9175727578898442e-07
+                                            - -1.7925552242559209e-07
+                                            - 0.13527780867723041
+                                            - 2.9490910868901215e-07
                                           localRotation:
                                             - -13.102785174900999
                                             - 3.6254056534411405
@@ -101484,9 +100586,9 @@ GameObject160:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 2.9206235581114019e-06
-                                                - 0.14031896661822432
-                                                - 1.8918797763944897e-06
+                                                - 1.9236099859654136e-06
+                                                - 0.14031139922127525
+                                                - -1.8600943008095785e-09
                                               localRotation:
                                                 - 10.55611613553279
                                                 - 7.4190266981507662
@@ -101507,9 +100609,9 @@ GameObject160:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.044978306285202052
-                                        - 0.38367108604188616
-                                        - -0.025206072136398916
+                                        - -0.044994454090513614
+                                        - 0.38370565913645294
+                                        - -0.025200425503509649
                                       localRotation:
                                         - 16.025999532768957
                                         - 2.6633215208694678
@@ -101530,9 +100632,9 @@ GameObject160:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 1.3482344797921542e-05
-                                            - 0.14866901013215283
-                                            - 6.4842668123787917e-07
+                                            - 2.9985055505221681e-07
+                                            - 0.148661356224423
+                                            - -3.7494358284817508e-08
                                           localRotation:
                                             - 10.655599953381586
                                             - -4.4731463986199813
@@ -101553,9 +100655,9 @@ GameObject160:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 1.689477846866794e-05
-                                                - 0.11445332704300172
-                                                - -4.0115706667620548e-07
+                                                - 1.7146732176342996e-06
+                                                - 0.11445485907410814
+                                                - -1.811186614020244e-07
                                               localRotation:
                                                 - -3.638628282304754
                                                 - 2.3268201798870565
@@ -101576,9 +100678,9 @@ GameObject160:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.052371973863614585
-                                        - 0.33866700121666327
-                                        - -0.097632524785694841
+                                        - -0.052376825283943163
+                                        - 0.33864976045812512
+                                        - -0.097634256987422674
                                       localRotation:
                                         - 16.001038616448632
                                         - 18.603695990960457
@@ -101599,9 +100701,9 @@ GameObject160:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -5.031997716287151e-06
-                                            - 0.13784198096823275
-                                            - -2.8822869637679105e-06
+                                            - 2.6555339189826555e-06
+                                            - 0.13784195725592951
+                                            - 8.1378846417123896e-07
                                           localRotation:
                                             - 5.3755798312883627
                                             - -5.1066357915051945
@@ -101622,9 +100724,9 @@ GameObject160:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -2.801379650918534e-05
-                                                - 0.1005034513042915
-                                                - -5.9145327782061941e-06
+                                                - 2.1429074053003205e-06
+                                                - 0.10049886728829449
+                                                - -1.1575306047006961e-07
                                               localRotation:
                                                 - 0.30419370949557561
                                                 - -0.6934686663136842
@@ -101645,9 +100747,9 @@ GameObject160:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.073647112055482467
-                                        - 0.29850130243335116
-                                        - -0.16959270339830823
+                                        - -0.073669043415428348
+                                        - 0.29854201980353423
+                                        - -0.1695858085626476
                                       localRotation:
                                         - 8.2355532404941574
                                         - 29.269782141435332
@@ -101668,9 +100770,9 @@ GameObject160:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -5.0547797059152799e-06
-                                            - 0.092206143632097337
-                                            - -3.2504360092389106e-06
+                                            - -3.6884148499893854e-06
+                                            - 0.092192487935392364
+                                            - -2.3393805648197485e-06
                                           localRotation:
                                             - 7.0835543376244603
                                             - 2.042828240237748
@@ -101691,9 +100793,9 @@ GameObject160:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 4.3737021087508765e-05
-                                                - 0.076152403655697753
-                                                - 2.738750708886073e-05
+                                                - 4.9545783582516378e-06
+                                                - 0.076158744082203356
+                                                - 2.0468301542564404e-06
                                               localRotation:
                                                 - -0.73545967265934653
                                                 - 2.753523429384642
@@ -101714,9 +100816,9 @@ GameObject160:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.024534479445435409
-                                        - 0.2364295479745806
-                                        - 0.12960628213372161
+                                        - -0.024536303726378605
+                                        - 0.23642899772926285
+                                        - 0.12960636704515238
                                       localRotation:
                                         - 26.977981497232392
                                         - -26.23831838492859
@@ -101737,9 +100839,9 @@ GameObject160:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -1.2540219898937723e-05
-                                            - 0.14896888318435234
-                                            - 1.4949379988138391e-05
+                                            - 1.7426296352596184e-06
+                                            - 0.14899992626583017
+                                            - -2.0070528421456406e-06
                                           localRotation:
                                             - -1.6071675850963711
                                             - 0.66938587317795573
@@ -102458,9 +101560,9 @@ GameObject160:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -3.4537379178800627e-08
-                    - 4.3261186100096443e-07
-                    - -1.9755478319893885e-07
+                    - -3.4537364967945912e-08
+                    - 4.326118414610392e-07
+                    - -1.9755479030436621e-07
                   localRotation:
                     - -179.99991592708761
                     - 80.537696219216699
@@ -102481,9 +101583,9 @@ GameObject160:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -1.8655653946098028e-06
-                        - 0.30002360353967106
-                        - -1.792757267082834e-06
+                        - -3.2275858430352855e-07
+                        - 0.30000072508025255
+                        - -4.8777216887785357e-07
                       localRotation:
                         - -90.770560613873201
                         - -30.038999522805074
@@ -102504,9 +101606,9 @@ GameObject160:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 2.392350424429424e-06
-                            - 1.0392334460503678
-                            - 5.2030874257980039e-06
+                            - -2.0230229935691571e-07
+                            - 1.0392302181135806
+                            - -2.2539796304954511e-06
                           localRotation:
                             - -0.11584662370102462
                             - -1.2686346165594407
@@ -102527,9 +101629,9 @@ GameObject160:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -1.0187500620872925e-05
-                                - 1.1680623568664572
-                                - -4.7643578454881208e-05
+                                - 9.6001639349196921e-07
+                                - 1.1680768239327737
+                                - 4.8106811476600342e-06
                               localRotation:
                                 - -0.82989335159153965
                                 - 1.5314724881714399
@@ -102550,9 +101652,9 @@ GameObject160:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 1.0452591823195689e-06
-                                    - 0.39319205800501322
-                                    - 2.8255611482563836e-05
+                                    - -1.7981988165161056e-07
+                                    - 0.39319209336267846
+                                    - -2.2373776573658688e-06
                                   localRotation:
                                     - 1.6764374661991961
                                     - -0.15142960067606295
@@ -102573,9 +101675,9 @@ GameObject160:
               name: Transform_Component
               enabled: true
               localPosition:
-                - 0.25561523437511369
-                - -1.460006711387507
-                - 1.5324516128568666
+                - 0.25559997558595171
+                - -1.4599990819927129
+                - 1.5324516128566055
               localRotation:
                 - 7.9737979787856657e-11
                 - -89.690064995183235
@@ -102596,9 +101698,9 @@ GameObject160:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.59997558593738631
-                - 0.38000490266523457
-                - 0.2000001905340289
+                - -0.59999847412107954
+                - 0.37999918061913363
+                - 0.20000019053422477
               localRotation:
                 - -73.329006641036827
                 - 82.371807152619326
@@ -102619,9 +101721,9 @@ GameObject160:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.59997558593738631
-                - -0.52000428546790545
-                - 0.14000017219864849
+                - -0.59999847412107954
+                - -0.52000047077052969
+                - 0.14000017219851793
               localRotation:
                 - 152.94736996156644
                 - -87.529560586430435
@@ -102642,9 +101744,9 @@ GameObject160:
               name: Transform_Component
               enabled: true
               localPosition:
-                - 0.54150390625011369
-                - 0.1034698709624422
-                - 0.54889829491326603
+                - 0.54148864746095171
+                - 0.10346605626502736
+                - 0.54889829491339648
               localRotation:
                 - -84.417685218837107
                 - -68.446256049434524
@@ -102665,9 +101767,9 @@ GameObject160:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - 0.090507227400848933
-                    - 0.94641488706136556
-                    - 0.0034779432658069709
+                    - 0.090503743037473328
+                    - 0.94640601064478957
+                    - 0.0034778093813798705
                   localRotation:
                     - 8.5420372821365731e-09
                     - 4.4008258011280077
@@ -102688,9 +101790,9 @@ GameObject160:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -5.8216900455931874e-07
-                        - 0.51009686536960441
-                        - -1.9730271105800059e-07
+                        - 1.1470456851014889e-07
+                        - 0.51009864065283861
+                        - -1.7052721545951502e-07
                       localRotation:
                         - -0.23959910998908829
                         - 0.013063913112728285
@@ -102711,9 +101813,9 @@ GameObject160:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 5.7465334251105568e-06
-                            - 0.39320308469851289
-                            - 9.0503704086586381e-08
+                            - -4.5504859791378754e-07
+                            - 0.39319126333505855
+                            - -1.4777523915654458e-07
                           localRotation:
                             - 2.2921086834373727e-07
                             - 4.4007415744678546
@@ -102734,9 +101836,9 @@ GameObject160:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.26562499999988631
-                - -1.4600067120322251
-                - 1.5136154715795036
+                - -0.26563262939451704
+                - -1.4599990826374452
+                - 1.5136154715792425
               localRotation:
                 - -3.6981827367697413e-10
                 - 89.690064995185608
@@ -102757,9 +101859,9 @@ GameObject160:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.45172119140613631
-                - 1.933044511250273
-                - 0.33572039501197509
+                - -0.45172882080076704
+                - 1.9330483259476594
+                - 0.33572039501184453
               localRotation:
                 - -84.316963950971839
                 - 68.793106690920951
@@ -102780,9 +101882,9 @@ GameObject160:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -0.090505582794484965
-                    - 0.94641073079975524
-                    - 0.0034796203393625551
+                    - -0.090504210673021404
+                    - 0.94640717180718437
+                    - 0.0034795676093750676
                   localRotation:
                     - -7.516102552182569e-08
                     - -4.4008267312868909
@@ -102803,9 +101905,9 @@ GameObject160:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -5.2438053899095394e-07
-                        - 0.51009944534621354
-                        - -1.0749536158982664e-06
+                        - 8.4774327291370355e-07
+                        - 0.51009588635327674
+                        - -1.1276670051074689e-06
                       localRotation:
                         - -1.4978613812307984
                         - -0.58804124748112818
@@ -102826,9 +101928,9 @@ GameObject160:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -9.4714730209943809e-06
-                            - 0.39319664148032984
-                            - -1.3937324183643796e-07
+                            - -2.6191636166572607e-06
+                            - 0.39319329718857077
+                            - -4.0264309575377411e-07
                           localRotation:
                             - -4.498916613729111e-08
                             - -4.4007419091464239
@@ -103249,7 +102351,7 @@ GameObject160:
             - 1
             - 1
       Children: ~
-GameObject161:
+GameObject160:
   name: townCollider
   prefabPath: ""
   uuid: 14798579812827968759
@@ -103287,7 +102389,7 @@ GameObject161:
         name: MusicManagerLvl1
         fields: ~
   Children: ~
-GameObject162:
+GameObject161:
   name: pathCollider
   prefabPath: ""
   uuid: 11359895694064491243
@@ -103325,7 +102427,7 @@ GameObject162:
         name: MusicManagerLvl1
         fields: ~
   Children: ~
-GameObject163:
+GameObject162:
   name: crashCollider
   prefabPath: ""
   uuid: 16200001401736738501
@@ -103363,7 +102465,7 @@ GameObject163:
         name: MusicManagerLvl1
         fields: ~
   Children: ~
-GameObject164:
+GameObject163:
   name: Cylinder.543_copy
   prefabPath: ""
   uuid: 12763035150620271347
@@ -103379,9 +102481,9 @@ GameObject164:
         - 5.1115894317626953
         - -15.587105751037598
       localRotation:
-        - 1.1204101716112511
-        - -57.876393512245606
-        - -109.09283504997228
+        - 1.1204080168089887
+        - -57.876396358736798
+        - -109.09282938496749
       localScale:
         - 1.5462901592254639
         - 1.0261286497116089
@@ -103406,7 +102508,7 @@ GameObject164:
       name: Shader
       enabled: true
   Children: ~
-GameObject165:
+GameObject164:
   name: L1Z1_stylized_rock_51.002_level1.001_copy
   prefabPath: ""
   uuid: 876239270237829724
@@ -103449,7 +102551,7 @@ GameObject165:
       name: Shader
       enabled: true
   Children: ~
-GameObject166:
+GameObject165:
   name: Cylinder.543_copy_copy
   prefabPath: ""
   uuid: 4808618033828530607
@@ -103492,7 +102594,7 @@ GameObject166:
       name: Shader
       enabled: true
   Children: ~
-GameObject167:
+GameObject166:
   name: L1Z1_Cube.034_level1.014_copy
   prefabPath: ""
   uuid: 14535169718227721254
@@ -103535,7 +102637,7 @@ GameObject167:
       name: Shader
       enabled: true
   Children: ~
-GameObject168:
+GameObject167:
   name: L1Z1_Cylinder.003_level1_copy
   prefabPath: ""
   uuid: 11913910730044421412
@@ -103578,7 +102680,7 @@ GameObject168:
       name: Shader
       enabled: true
   Children: ~
-GameObject169:
+GameObject168:
   name: SpawnCluster1
   prefabPath: ""
   uuid: 8152342458176817840
@@ -104222,7 +103324,7 @@ GameObject169:
               spawnRadius: 65
               player: Player
       Children: ~
-GameObject170:
+GameObject169:
   name: SpawnCluster2
   prefabPath: ""
   uuid: 9093975599132112965
@@ -104940,7 +104042,7 @@ GameObject170:
                 - 99.99996839000508
                 - 99.999964616357857
           Children: ~
-GameObject171:
+GameObject170:
   name: Ano
   prefabPath: ""
   uuid: 13110915549879427607
@@ -104983,7 +104085,7 @@ GameObject171:
       name: Shader
       enabled: true
   Children: ~
-GameObject172:
+GameObject171:
   name: Ano_copy
   prefabPath: ""
   uuid: 5308254961709806508
@@ -105026,7 +104128,7 @@ GameObject172:
       name: Shader
       enabled: true
   Children: ~
-GameObject173:
+GameObject172:
   name: Ano_copy_1
   prefabPath: ""
   uuid: 13708739269789140780
@@ -105069,7 +104171,7 @@ GameObject173:
       name: Shader
       enabled: true
   Children: ~
-GameObject174:
+GameObject173:
   name: Ano_copy_2
   prefabPath: ""
   uuid: 6969611220695514733
@@ -105112,7 +104214,7 @@ GameObject174:
       name: Shader
       enabled: true
   Children: ~
-GameObject175:
+GameObject174:
   name: Ano_copy_3
   prefabPath: ""
   uuid: 8785273455938726101
@@ -105155,7 +104257,7 @@ GameObject175:
       name: Shader
       enabled: true
   Children: ~
-GameObject176:
+GameObject175:
   name: Ano_copy_4
   prefabPath: ""
   uuid: 14506495824841310255
@@ -105198,7 +104300,7 @@ GameObject176:
       name: Shader
       enabled: true
   Children: ~
-GameObject177:
+GameObject176:
   name: Cinder_VFX
   prefabPath: ""
   uuid: 1296254901993967556
@@ -105272,7 +104374,7 @@ GameObject177:
         texturePath: Assets/Textures/rock.png
       particleType: 38
   Children: ~
-GameObject178:
+GameObject177:
   name: Cinder_VFX_copy
   prefabPath: ""
   uuid: 1989327862165780244
@@ -105346,7 +104448,7 @@ GameObject178:
         texturePath: Assets/Textures/rock.png
       particleType: 38
   Children: ~
-GameObject179:
+GameObject178:
   name: ColliderGroundTierra
   prefabPath: ""
   uuid: 1405599282372821203
@@ -105380,7 +104482,7 @@ GameObject179:
         - 0
       isTrigger: false
   Children: ~
-GameObject180:
+GameObject179:
   name: ColliderGroundCiudad
   prefabPath: ""
   uuid: 2439158963238405299
@@ -105414,7 +104516,7 @@ GameObject180:
         - 0
       isTrigger: false
   Children: ~
-GameObject181:
+GameObject180:
   name: Canvas_HUD
   prefabPath: Assets\Prefabs\Canvas_HUD.prefab.yaml
   uuid: 10166634796133587650
@@ -107053,10 +106155,10 @@ GameObject181:
             - 1225
             - 40
           sprite_offset:
-            - 525
+            - 350
             - 0
           anim_speed: 0.5
-          anim_index: 3
+          anim_index: 2
           anim_index_limit: 6
           color:
             - 0.262745112
@@ -107181,10 +106283,10 @@ GameObject181:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 50
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 1
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -107309,10 +106411,10 @@ GameObject181:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 50
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 1
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -108522,7 +107624,7 @@ GameObject181:
             - 1
             - 1
       Children: ~
-GameObject182:
+GameObject181:
   name: Canvas_Interaction
   prefabPath: Assets\Prefabs\Canvas_Interaction_Level1.prefab.yaml
   uuid: 6591346108623782193
@@ -109226,7 +108328,7 @@ GameObject182:
             - 0
             - 0
       Children: ~
-GameObject183:
+GameObject182:
   name: Canvas_TitleSM
   prefabPath: Assets\Prefabs\Canvas_TitleSM.prefab.yaml
   uuid: 15444793993539794259
@@ -109340,7 +108442,7 @@ GameObject183:
             - 1
             - 1
       Children: ~
-GameObject184:
+GameObject183:
   name: Canvas_PauseMenu
   prefabPath: Assets\Prefabs\Canvas_PauseMenu.prefab.yaml
   uuid: 15860094252941017456
@@ -109726,7 +108828,7 @@ GameObject184:
           enabled: true
           state: 1
       Children: ~
-GameObject185:
+GameObject184:
   name: Canvas_Fade
   prefabPath: Assets\Prefabs\CanvasFadeLvl1.prefab.yaml
   uuid: 11279144625943510511
@@ -109838,5 +108940,1377 @@ GameObject185:
         ScriptComponents:
           Script0:
             name: FadeController
+            fields: ~
+      Children: ~
+GameObject185:
+  name: Cuadro1
+  prefabPath: ""
+  uuid: 3062433640086499538
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 117.18450164794922
+        - 19.111127853393555
+        - -177.7381591796875
+      localRotation:
+        - 0
+        - 45.083313374504009
+        - 0
+      localScale:
+        - 0.039999999105930328
+        - 0.039999999105930328
+        - 0.039999999105930328
+  Children:
+    - name: Plane
+      prefabPath: ""
+      uuid: 1918351257754325094
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 36
+            - 51.000003814697266
+            - 30.000001907348633
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 18208302357217048971
+          material:
+            name: cuadro1
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.001_1
+      prefabPath: ""
+      uuid: 11602346095131416008
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 9.0949470177292824e-13
+            - -1.7053025658242404e-13
+            - 0
+          localRotation:
+            - -90.000014489018881
+            - -1.6638564834049771e-06
+            - -5.5243001315108456e-15
+          localScale:
+            - 100
+            - 100
+            - 100
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 13378919965328654837
+          material:
+            name: cuadros_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject186:
+  name: Cuadro2
+  prefabPath: ""
+  uuid: 4349309018489698351
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 117.18499755859375
+        - 12.945964813232422
+        - -177.73800659179688
+      localRotation:
+        - 0
+        - 45.083005640046423
+        - 0
+      localScale:
+        - 0.039999999105930328
+        - 0.039999999105930328
+        - 0.039999999105930328
+  Children:
+    - name: Plane
+      prefabPath: ""
+      uuid: 15129748349487296595
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 36
+            - 51.000003814697266
+            - 30.000001907348633
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 18208302357217048971
+          material:
+            name: cuadro2
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.001_1
+      prefabPath: ""
+      uuid: 6815340490456746966
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100
+            - 100
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 13378919965328654837
+          material:
+            name: cuadros_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject187:
+  name: Cuadro3
+  prefabPath: ""
+  uuid: 14509388703563675948
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 135.53515625
+        - 10.854400634765625
+        - -197.55854797363281
+      localRotation:
+        - 9.7907015957933279
+        - 53.140387939740243
+        - 12.837548341210304
+      localScale:
+        - 0.040000002831220627
+        - 0.039999999105930328
+        - 0.03999999538064003
+  Children:
+    - name: Plane
+      prefabPath: ""
+      uuid: 1888146615058357080
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 36
+            - 51.000003814697266
+            - 30.000001907348633
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 18208302357217048971
+          material:
+            name: cuadro3
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.001_1
+      prefabPath: ""
+      uuid: 14308281037600307154
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100
+            - 100
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 13378919965328654837
+          material:
+            name: cuadros_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject188:
+  name: Cuadro4
+  prefabPath: ""
+  uuid: 481181990092567872
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 181.59635925292969
+        - 12.587868690490723
+        - -199.47640991210938
+      localRotation:
+        - 0
+        - -0
+        - 1.8005990300047696
+      localScale:
+        - 0.025599991902709007
+        - 0.026054399088025093
+        - 0.026054397225379944
+  Children:
+    - name: Plane
+      prefabPath: ""
+      uuid: 3954040494600481732
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 36
+            - 51.000003814697266
+            - 30.000001907348633
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 18208302357217048971
+          material:
+            name: cuadro4
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.001_1
+      prefabPath: ""
+      uuid: 483671384177139288
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100
+            - 100
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 13378919965328654837
+          material:
+            name: cuadros_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject189:
+  name: Cuadro5
+  prefabPath: ""
+  uuid: 3662450576708606082
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 204.10017395019531
+        - 15.851168632507324
+        - -199.33126831054688
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.02194800041615963
+        - 0.02194800041615963
+        - 0.02194800041615963
+  Children:
+    - name: Plane
+      prefabPath: ""
+      uuid: 6380283205907751753
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 36
+            - 51.000003814697266
+            - 30.000001907348633
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 18208302357217048971
+          material:
+            name: cuadro5
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.001_1
+      prefabPath: ""
+      uuid: 10150283299001303628
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100
+            - 100
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 13378919965328654837
+          material:
+            name: cuadros_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject190:
+  name: Cuadro6
+  prefabPath: ""
+  uuid: 7794239139499399677
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 117.18499755859375
+        - 6.8491487503051758
+        - -177.73800659179688
+      localRotation:
+        - 0
+        - 46.017206528459404
+        - 0
+      localScale:
+        - 0.03999999538064003
+        - 0.039999999105930328
+        - 0.03999999538064003
+  Children:
+    - name: Plane
+      prefabPath: ""
+      uuid: 12724399587527896341
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 36
+            - 51.000003814697266
+            - 30.000001907348633
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 18208302357217048971
+          material:
+            name: cuadro6
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.001_1
+      prefabPath: ""
+      uuid: 17515587858781697584
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100
+            - 100
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 13378919965328654837
+          material:
+            name: cuadros_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject191:
+  name: Cuadro7
+  prefabPath: ""
+  uuid: 5979405581785544213
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 221.92691040039062
+        - 5.9713506698608398
+        - -185.03988647460938
+      localRotation:
+        - -98.888469488903354
+        - -83.440930166257914
+        - 98.946082834814419
+      localScale:
+        - 0.028000000864267349
+        - 0.027999997138977051
+        - 0.028000002726912498
+  Children:
+    - name: Plane
+      prefabPath: ""
+      uuid: 14537240366816479828
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 36
+            - 51.000003814697266
+            - 30.000001907348633
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 18208302357217048971
+          material:
+            name: cuadro7
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.001_1
+      prefabPath: ""
+      uuid: 10303204902544913011
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100
+            - 100
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 13378919965328654837
+          material:
+            name: cuadros_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject192:
+  name: Cuadro8
+  prefabPath: ""
+  uuid: 8779770104840024723
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 221.82130432128906
+        - 13.822661399841309
+        - -184.87846374511719
+      localRotation:
+        - -179.99999499104374
+        - -88.712572243265782
+        - -179.99999499104374
+      localScale:
+        - 0.039999999105930328
+        - 0.039999999105930328
+        - 0.039999999105930328
+  Children:
+    - name: Plane
+      prefabPath: ""
+      uuid: 14389999626746833739
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 36
+            - 51.000003814697266
+            - 30.000001907348633
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 18208302357217048971
+          material:
+            name: cuadro8
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.001_1
+      prefabPath: ""
+      uuid: 3704688192064165641
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100
+            - 100
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 13378919965328654837
+          material:
+            name: cuadros_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject193:
+  name: Cuadro9
+  prefabPath: ""
+  uuid: 4371700637269133465
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 198.01783752441406
+        - 0.17673391103744507
+        - -185.34733581542969
+      localRotation:
+        - -85.752123139162435
+        - 32.785704905797331
+        - -2.5100289720077713e-07
+      localScale:
+        - 0.039999999105930328
+        - 0.040000006556510925
+        - 0.040000006556510925
+  Children:
+    - name: Plane
+      prefabPath: ""
+      uuid: 15364333226272917582
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 36
+            - 51.000003814697266
+            - 30.000001907348633
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 18208302357217048971
+          material:
+            name: cuadro9
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.001_1
+      prefabPath: ""
+      uuid: 16490324932206227536
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -90.000014489018881
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100
+            - 100
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 13378919965328654837
+          material:
+            name: cuadros_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject194:
+  name: Medkit
+  prefabPath: Assets/Prefabs/Medkit.prefab.yaml
+  uuid: 2395089655681620673
+  tag: Destroyable
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -12.365196228027344
+        - -0.90633761882781982
+        - 7.9802036285400391
+      localRotation:
+        - -90.000009659346318
+        - 0
+        - 0
+      localScale:
+        - 1.1974426507949829
+        - 1.1974426507949829
+        - 1.1974426507949829
+    BoxColliderComponent:
+      size:
+        - 3.20000005
+        - 2.79999995
+        - 5.69999981
+      offset:
+        - 0
+        - 1.29999995
+        - 0
+      isTrigger: false
+    ScriptComponents:
+      Script0:
+        name: DestroyEnviormentObject
+        fields:
+          onlyMedicaeStimm: false
+  Children:
+    - name: DestroyedBox
+      prefabPath: ""
+      uuid: 8711457255530275004
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.77442222833633423
+            - -0.35619750618934631
+            - 0.13559897243976593
+          localRotation:
+            - -1.6364761951463261e-06
+            - 0
+            - 0
+          localScale:
+            - 0.56424576044082642
+            - 0.56424576044082642
+            - 0.56424576044082642
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 15027323567841409366
+          material:
+            name: Medkit_MedKit_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 0
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: wooden box
+      prefabPath: ""
+      uuid: 17930656982922370141
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.149735227227211
+            - 0.099699355661869049
+            - 0.15741488337516785
+          localRotation:
+            - -1.6364730400360821e-06
+            - 0
+            - 0
+          localScale:
+            - 1.1251431703567505
+            - 1.1251431703567505
+            - 1.1251431703567505
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 12044555390315367870
+          material:
+            name: Medkit_MedKit_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: VFX
+      prefabPath: ""
+      uuid: 11978395648145460149
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -1.7763568394002505e-15
+            - -3.7844753819626931e-07
+            - 2.8166921138763428
+          localRotation:
+            - -1.4506341146299293e-14
+            - 0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 2
+          emissionRate: 3
+          particlesPerSecond: 3
+          minLifetime: 0.200000003
+          maxLifetime: 0.400000006
+          minSpeed: 0.5
+          maxSpeed: 4
+          startSize: 0.5
+          endSize: 2
+          minSize: 0.5
+          maxSize: 0
+          startColor:
+            - 0.949999988
+            - 0.699999988
+            - 0.200000003
+          endColor:
+            - 0.949999988
+            - 0.699999988
+            - 0.200000003
+          startAlpha: 0.899999976
+          endAlpha: 0.899999976
+          rotationSpeed: 0.200000003
+          gravity:
+            - 0
+            - -0.100000001
+            - 0
+          shapeParam1: 0.200000003
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: true
+          isPaused: true
+          burstEmitted: false
+          spriteSize:
+            - 256
+            - 256
+          useAnimation: true
+          animSpeed: 0.5
+          startRotation: 0
+          randomRotation: true
+          material:
+            billboardType: 0
+            particleType: 54
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/niebla30Frames.png
+          particleType: 54
+        ScriptComponents:
+          Script0:
+            name: StopVFX
+            fields: ~
+      Children: ~
+GameObject195:
+  name: CajaMadera1_1_Instance_Instance
+  prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
+  uuid: 4066584519814058147
+  tag: Destroyable
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -4.527277946472168
+        - 4.2351647362715017e-22
+        - 7.5031118392944336
+      localRotation:
+        - -90.000009659346318
+        - 0
+        - 0
+      localScale:
+        - 1.25
+        - 1.25
+        - 1.25
+    BoxColliderComponent:
+      size:
+        - 1.60000002
+        - 1.89999998
+        - 3.5999999
+      offset:
+        - 0
+        - 1
+        - 1.89999998
+      isTrigger: false
+    ScriptComponents:
+      Script0:
+        name: DestroyEnviormentObject
+        fields:
+          onlyMedicaeStimm: false
+  Children:
+    - name: wooden box
+      prefabPath: ""
+      uuid: 9278833148931458
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.029354477301239967
+            - -0.021857764571905136
+            - -0.51018112897872925
+          localRotation:
+            - -1.6364722258140834e-06
+            - 0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 15390588685034517731
+          material:
+            name: wooden barrel and box low_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 1
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: DestroyedBox
+      prefabPath: ""
+      uuid: 14973539240180780242
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.0073143006302416325
+            - -1.3939307928085327
+            - -1.8728695749814506e-07
+          localRotation:
+            - 90.000009659346318
+            - -0
+            - 0
+          localScale:
+            - 0.0060000000521540642
+            - 0.0060000000521540642
+            - 0.0060000000521540642
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 798532158152224588
+          material:
+            name: CajaRota_DefaultMaterial_BaseColor
+            color:
+              - 1
+              - 1
+              - 1
+              - 0
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: VFX
+      prefabPath: ""
+      uuid: 15691253018671444475
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -3.8146973224684189e-07
+            - -1.4305406808853149
+            - 0.91348862648010254
+          localRotation:
+            - 2.6349807946960217e-13
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 2
+          emissionRate: 3
+          particlesPerSecond: 3
+          minLifetime: 0.200000003
+          maxLifetime: 0.400000006
+          minSpeed: 0.5
+          maxSpeed: 4
+          startSize: 0.5
+          endSize: 2
+          minSize: 0.5
+          maxSize: 0
+          startColor:
+            - 0.949999988
+            - 0.699999988
+            - 0.200000003
+          endColor:
+            - 0.949999988
+            - 0.699999988
+            - 0.200000003
+          startAlpha: 0.899999976
+          endAlpha: 0.899999976
+          rotationSpeed: 0.200000003
+          gravity:
+            - 0
+            - -0.100000001
+            - 0
+          shapeParam1: 0.200000003
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: true
+          isPaused: true
+          burstEmitted: false
+          spriteSize:
+            - 256
+            - 256
+          useAnimation: true
+          animSpeed: 0.5
+          startRotation: 0
+          randomRotation: true
+          material:
+            billboardType: 0
+            particleType: 54
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/niebla30Frames.png
+          particleType: 54
+        ScriptComponents:
+          Script0:
+            name: StopVFX
             fields: ~
       Children: ~

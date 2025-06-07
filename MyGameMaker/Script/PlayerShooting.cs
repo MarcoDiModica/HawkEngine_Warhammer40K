@@ -38,6 +38,8 @@ public class PlayerShooting : MonoBehaviour
     public bool hasRailgun = false;
     public bool hasBoltgun = true;
 
+    public bool canChangeWeapon = true;
+
     //private AudioSource sound;
     private const string boltgunEquiped = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunEqquiped.wav";
     private const string shotgunEquiped = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunEqquiped.wav";
@@ -58,6 +60,10 @@ public class PlayerShooting : MonoBehaviour
     private bool autoReloading = false;
     private float autoReloadTimer = 0f;
     private const float autoReloadDelay = 2f;
+
+    private float weaponInputDelay = 1f;
+    private float weaponInputTimer = 1f;
+
 
     private enum GunType
     {
@@ -218,21 +224,36 @@ public class PlayerShooting : MonoBehaviour
     {
         if(currentdelay < changeWeaponDelay)
         {
-            currentdelay += deltaTime;            
+            currentdelay += deltaTime;         
         }
+      
 
+        if (weaponInputTimer < weaponInputDelay)
+        {
+            weaponInputTimer += deltaTime;
+            if (canChangeWeapon)
+            {
+                canChangeWeapon = false;
+            }
+        }
+        else if (!canChangeWeapon)
+        {
+            canChangeWeapon = true;
+        }
 
         playerInput.UpdateLookDirection();
 
-        if (playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Q) )
+        if((playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Q)) && weaponInputTimer >= weaponInputDelay)
         {
             ChangeWeaponRight();
             currentdelay = 0f;
+            weaponInputTimer = 0f;
         }
-        else if (playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.C))
+        else if((playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.C)) && weaponInputTimer >= weaponInputDelay)
         {
             ChangeWeaponLeft();
             currentdelay = 0f;
+            weaponInputTimer = 0f;
         }
 
         if (playerInput.IsChangingRailgunMode() && currentGun == GunType.RAILGUN)
@@ -287,8 +308,8 @@ public class PlayerShooting : MonoBehaviour
 
         if (playerInput?.IsAbility2Pressed() == true)
         {
-            //Engineson.print("Ability 2 pressed");
-            //UseAbility2();
+            //Engineson.print("Ability 2 pressed");  
+            //UseAbility2();  
         }
         if (!autoReloading && GetCurrentAmmo() == 0 && currentGun != GunType.RAILGUN)
         {

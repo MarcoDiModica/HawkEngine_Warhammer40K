@@ -207,8 +207,10 @@ public class PauseMenu : MonoBehaviour
         }
 
         // Detectar clic del ratón
-        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1) || Input.GetControllerButtonDown(ControllerButton.A))
+        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse) || Input.GetControllerButtonDown(ControllerButton.A))
         {
+            if(selectedButtonIndex == -1) return;
+            
             UIButton selectedButton = buttons[selectedButtonIndex];
             selectedButton.SetState(ButtonState.CLICKED);
 

@@ -21,6 +21,11 @@ public class Scene1ToScene2 : MonoBehaviour
     {
         if (changeScene) {
             changeScene = false;
+            // Stop Level 1 music before transitioning to Level 2
+            Audio.Stop("Assets/Audio/Music/Warhammer_Level1_RuinedCity.ogg");
+            Audio.Stop("Assets/Audio/Music/Warhammer_Level1_RuinedTown.ogg");
+            Audio.Stop("Assets/Audio/Music/Warhammer_Level1_Pathway.ogg");
+            Audio.Stop("Assets/Audio/Music/Warhammer_Level1_CrashedShip.ogg");
             SceneManager.isLevel2 = true;
             SceneManager.isBossFight = false;
             SceneManager.LoadSceneWithFade("BetaRelease_Week1_Lvl2");

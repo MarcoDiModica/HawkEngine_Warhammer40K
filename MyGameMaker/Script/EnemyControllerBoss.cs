@@ -385,6 +385,7 @@ public class EnemyControllerBoss : EnemyController
                 if (deathTimer >= deathCoolodown)
                 {
                     Audio.Stop(BossTheme);
+                    Audio.Stop(BossThemePhase2);
                     Engineson.Destroy(gameObject);
                     SceneManager.LoadSceneWithFade("WinScene", 0.5f);
                 }

@@ -44,6 +44,7 @@ public class EnemyControllerBoss : EnemyController
     private const string BossThemePhase2 = "Assets/Audio/Music/Level2_MainTheme_BossFight_Gold.ogg";
 
     private bool isBossMusicPlaying = false;
+    private bool isPhase2MusicPlaying = false;
     //stats
     bool isCombatMusicPlaying = false;
     private float health = 1500.0f;
@@ -188,6 +189,7 @@ public class EnemyControllerBoss : EnemyController
             {
                 Audio.Play(BossTheme, true);
                 isBossMusicPlaying = true;
+                Engineson.print("Boss Phase 1 Music Started");
             }
 
             float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
@@ -205,12 +207,17 @@ public class EnemyControllerBoss : EnemyController
             {
                 currentPhase = BossPhase.PHASE3;
             }
-            else if (currentHealth < 1000)
-            {
-                currentPhase = BossPhase.PHASE2;
-                Audio.Stop(BossTheme);
-                Audio.Play(BossThemePhase2, true);
-            }
+                            else if (currentHealth < 1000)
+                {
+                    currentPhase = BossPhase.PHASE2;
+                    if (!isPhase2MusicPlaying)
+                    {
+                        Audio.Stop(BossTheme);
+                        Audio.Play(BossThemePhase2, true);
+                        isPhase2MusicPlaying = true;
+                        Engineson.print("Boss Phase 2 Music Started");
+                    }
+                }
 
             switch (currentPhase)
             {
@@ -378,7 +385,8 @@ public class EnemyControllerBoss : EnemyController
         {
             renderer?.SetColor(new Vector4(1.0f, 0.0f, 0.0f, 1.0f)); 
             boxcollider.SetActive(false);
-            Audio.Stop(BossTheme); 
+            Audio.Stop(BossTheme);
+            Audio.Stop(BossThemePhase2); 
             if (anim.isAnimFinished)
             {
                 deathTimer += deltaTime;

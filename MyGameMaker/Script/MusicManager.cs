@@ -11,6 +11,8 @@ public class MusicManager : MonoBehaviour
 
     private GameObject churchGO;
     private GameObject bossGO;
+    private bool churchMusicPlayed = false;
+    private bool bossMusicPlayed = false;
 
     public override void Start()
     {
@@ -21,17 +23,22 @@ public class MusicManager : MonoBehaviour
     }
     public override void OnTriggerEnter(GameObject other)
     {
-        if (other == churchGO)
+        // Check if the entering object is the Player
+        if (other.name == "Player")
         {
-            Audio.Stop(lvl2music);
-            Audio.Play(lvl2churchmusic, true);
-           
-        }
-        if (other == bossGO)
-        {
-            Audio.Stop(lvl2churchmusic);
-            Audio.Play(lvl2bossmusic, true);
-            
+            // Check which collider this component is attached to
+            if (gameObject == churchGO && !churchMusicPlayed)
+            {
+                Audio.Stop(lvl2music);
+                Audio.Play(lvl2churchmusic, true);
+                churchMusicPlayed = true;
+            }
+            else if (gameObject == bossGO && !bossMusicPlayed)
+            {
+                Audio.Stop(lvl2churchmusic);
+                Audio.Play(lvl2bossmusic, true);
+                bossMusicPlayed = true;
+            }
         }
     }
 

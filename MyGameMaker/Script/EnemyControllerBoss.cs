@@ -44,6 +44,7 @@ public class EnemyControllerBoss : EnemyController
     private const string BossThemePhase2 = "Assets/Audio/Music/Level2_MainTheme_BossFight_Gold.ogg";
 
     private bool isBossMusicPlaying = false;
+    private bool isPhase2MusicPlaying = false;
     //stats
     bool isCombatMusicPlaying = false;
     private float health = 1500.0f;
@@ -200,9 +201,13 @@ public class EnemyControllerBoss : EnemyController
                 else if (currentHealth < 1000)
                 {
                     currentPhase = BossPhase.PHASE2;
-                    Audio.Stop(BossTheme);
-                    Audio.Play(BossThemePhase2, true);
-            }
+                    if (!isPhase2MusicPlaying)
+                    {
+                        Audio.Stop(BossTheme);
+                        Audio.Play(BossThemePhase2, true);
+                        isPhase2MusicPlaying = true;
+                    }
+                }
 
                 switch (currentPhase)
                 {

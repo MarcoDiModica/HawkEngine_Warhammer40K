@@ -14,6 +14,10 @@ public class MusicManagerLvl1 : MonoBehaviour
     private GameObject townGO;
     private GameObject pathGO;
     private GameObject crashGO;
+    private bool townMusicPlayed = false;
+    private bool pathMusicPlayed = false;
+    private bool crashMusicPlayed = false;
+
     public override void Start()
     {
         Audio.Play(lvl1music, true);
@@ -24,23 +28,28 @@ public class MusicManagerLvl1 : MonoBehaviour
     }
     public override void OnTriggerEnter(GameObject other)
     {
-        if (other == townGO)
+        // Check if the entering object is the Player
+        if (other.name == "Player")
         {
-            Audio.Stop(lvl1music);
-            Audio.Play(lvl1townmusic, true);
-
-        }
-        if (other == pathGO)
-        {
-            Audio.Stop(lvl1townmusic);
-            Audio.Play(lvl1pathmusic, true);
-
-        }
-
-        if (other == crashGO)
-        {
-            Audio.Stop(lvl1pathmusic);
-            Audio.Play(lvl1crashsmusic, true);
+            // Check which collider this component is attached to
+            if (gameObject == townGO && !townMusicPlayed)
+            {
+                Audio.Stop(lvl1music);
+                Audio.Play(lvl1townmusic, true);
+                townMusicPlayed = true;
+            }
+            else if (gameObject == pathGO && !pathMusicPlayed)
+            {
+                Audio.Stop(lvl1townmusic);
+                Audio.Play(lvl1pathmusic, true);
+                pathMusicPlayed = true;
+            }
+            else if (gameObject == crashGO && !crashMusicPlayed)
+            {
+                Audio.Stop(lvl1pathmusic);
+                Audio.Play(lvl1crashsmusic, true);
+                crashMusicPlayed = true;
+            }
         }
     }
 

@@ -9,24 +9,26 @@ public class AudioLevel2 : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        if (!hasStartedMusic)
-        {
-            //Audio.Play(Lvl2Music, true);
-            hasStartedMusic = true;
-        }
+        // Disabled - MusicManager handles level 2 music switching
+        // if (!hasStartedMusic)
+        // {
+        //     Audio.Play(Lvl2Music, true);
+        //     hasStartedMusic = true;
+        // }
 
         
     }
 
     public override void OnTriggerEnter(GameObject other)
     {
-        if (other != null)
-        {
-            if (other.name == "Player")
-            {
-                Audio.Stop(Lvl2Music);
-            }
-        }
+        // Disabled - MusicManager handles level 2 music switching
+        // if (other != null)
+        // {
+        //     if (other.name == "Player")
+        //     {
+        //         Audio.Stop(Lvl2Music);
+        //     }
+        // }
     }
 
 

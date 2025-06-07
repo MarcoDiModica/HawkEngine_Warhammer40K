@@ -5,11 +5,9 @@ using HawkEngine;
 
 public class DestructibleWall : MonoBehaviour
 {
-    public override void OnCollisionEnter(GameObject other)
+    public void DestroyWall()
     {
-        if (other.tag == "Explosion")
-        {
-           Engineson.Destroy(gameObject);
-        }
+        Engineson.print("Destroy Wall");
+        Engineson.Destroy(gameObject);
     }
 }

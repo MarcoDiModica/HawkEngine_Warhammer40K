@@ -49,6 +49,9 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern bool IsAnimationFinished();
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void PlayAnimOnceNoBlend(int index);
+
         private GameObject owner;
 
         public SkeletalAnimation(UIntPtr nativeRigidbody, GameObject owner)

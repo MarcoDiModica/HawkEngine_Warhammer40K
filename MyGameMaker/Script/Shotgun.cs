@@ -192,7 +192,6 @@ public class Shotgun : BaseWeapon
                                 float finalDamage = damage;
                                 if (redThirstManager != null)
                                 {
-                                    redThirstManager.OnShotgunUsed();
                                     if (redThirstManager.IsInBlackRage())
                                         finalDamage += redThirstManager.redThirstBonus;
                                 }
@@ -323,11 +322,25 @@ public class Shotgun : BaseWeapon
                 int numProjectiles = 5;
                 float maxSpreadAngle = 5f;
 
+                if (strongShot)
+                {
+                    maxSpreadAngle = 25;
+                }
+
                 Random random = new Random();
 
                 for (int i = 0; i < numProjectiles; i++)
                 {
-                    Vector3 baseDirection = playerInput.GetCurrentLookDirection();
+
+                    Vector3 baseDirection;
+                    if (playerInput.GetCurrentLookDirection() != Vector3.Zero)
+                    {
+                        baseDirection = playerInput.GetCurrentLookDirection();
+                    }
+                    else
+                    {
+                        baseDirection = Vector3.Normalize(transform.forward);
+                    }
 
                     float randomYaw = (float)(random.NextDouble() * 2 * maxSpreadAngle - maxSpreadAngle);   // izquierda/derecha
                     float randomPitch = (float)(random.NextDouble() * 2 * maxSpreadAngle - maxSpreadAngle); // arriba/abajo
@@ -384,6 +397,8 @@ public class Shotgun : BaseWeapon
                     {
                         playerController.playerShooting.shotgunShotFX.EmitBurst(1);
                     }
+
+                    strongShot = false; // Reset strong shot after use
                 }
             }
         }

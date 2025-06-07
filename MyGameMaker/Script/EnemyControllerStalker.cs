@@ -7,15 +7,16 @@ public class EnemyControllerStalker : EnemyController
 {
     // Enemy Stats
     private float health = 250.0f;
-    private float clawDamage = 8.0f;
-    private float pounceDamage = 10.0f;
+    private float clawDamage = 7.0f;
+    private float pounceDamage = 5.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
+    private RedThirstManager redThirstManager;
 
     // Hurtbox
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
     private float hurtboxTimer = 0f;
-    private Vector3 hurtboxSize = new Vector3(10.0f, 10.0f, 10.0f); // Tamaño de la hurtbox
+    private Vector3 hurtboxSize = new Vector3(10.0f, 10.0f, 10.0f); // TamaÃ±o de la hurtbox
     private Vector3 hurtboxOffset = new Vector3(5.0f, -3.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
     private GameObject hurtboxObject;
 
@@ -76,11 +77,11 @@ public class EnemyControllerStalker : EnemyController
             return;
         }
 
-        collider = gameObject.GetComponent<BoxCollider>();
+        collider = gameObject.GetComponent<CapsuleCollider>();
         if (collider == null)
-        { 
-            Engineson.print("ERROR: Lictor Collider not found!"); 
-            return; 
+        {
+            Engineson.print("ERROR: Lictor Collider not found!");
+            return;
         }
 
         enemyTransform = gameObject.transform;
@@ -105,6 +106,8 @@ public class EnemyControllerStalker : EnemyController
         gameObject.tag = "Stalker";
 
         distToChase = 75f;
+
+        redThirstManager = GameObject.Find("Player").GetComponent<RedThirstManager>();
     }
 
     public override void Update(float deltaTime)
@@ -311,6 +314,7 @@ public class EnemyControllerStalker : EnemyController
                     }
                 }
                 hasDropped = true;
+                redThirstManager.AddRedThirstPoint(1);
                 collider.SetActive(false);
                 break;
 
@@ -334,11 +338,11 @@ public class EnemyControllerStalker : EnemyController
             hasPounce = true;
             isPouncing = false;
             lictorMesh.SetActive(true);
-            
+
 
             //gameObject.GetComponent<Collider>().SetPosition(startPosition);
         }
-        
+
     }
 
     private void HandleSlowedState(float deltaTime)
@@ -413,7 +417,7 @@ public class EnemyControllerStalker : EnemyController
             hasPounce = false;
             isPouncing = true;
             Audio.PlayOneShot(SFX_POUNCE);
-            AddComponent<ParticleFX>().ApplyPreset(26);
+            AddComponent<ParticleFX>().ApplyPreset(35);
             GetComponent<ParticleFX>().EmitBurst(1);
             Engineson.print("Pouncing");
             anim.SetLeapAnimation();

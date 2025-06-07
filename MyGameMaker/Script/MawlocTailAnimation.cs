@@ -31,21 +31,19 @@ public class MawlocTailAnimation : MonoBehaviour
             }
         }
 
-        if (mawlocTailesk?.GetAnimationIndex() != 5)
+        if (mawlocTailesk?.GetAnimationIndex() >= mawlocTailesk?.GetAnimationLength() - 0.25f && !isAnimFinished)
         {
-            if (mawlocTailesk?.GetAnimationIndex() >= mawlocTailesk?.GetAnimationLength() - 1.0f && !isAnimFinished)
-            {
-                mawlocTailesk?.SetAnimationPlayState(false);
-                isAnimFinished = true;
-            }
+            mawlocTailesk?.SetAnimationPlayState(false);
+            isAnimFinished = true;
         }
     }
 
     public void SetBurrowingAnimation()
     {
-        mawlocTailesk?.SetAnimationPlayState(true);
         if (mawlocTailesk?.GetAnimationIndex() != 3)
         {
+            mawlocTailesk?.SetLoop(true);
+            mawlocTailesk?.SetAnimationPlayState(true);
             mawlocTailesk?.SetAnimation(3);
             mawlocTailesk?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
@@ -57,7 +55,9 @@ public class MawlocTailAnimation : MonoBehaviour
         mawlocTailesk?.SetAnimationPlayState(true);
         if (mawlocTailesk?.GetAnimationIndex() != 0)
         {
-            mawlocTailesk?.SetAnimation(0);
+            mawlocTailesk?.SetAnimationPlayState(true);
+            //mawlocTailesk?.SetAnimation(0);
+            mawlocTailesk?.PlayAnimOnceNoBlend(0);
             mawlocTailesk?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
         }
@@ -68,6 +68,7 @@ public class MawlocTailAnimation : MonoBehaviour
         mawlocTailesk?.SetAnimationPlayState(true);
         if (mawlocTailesk?.GetAnimationIndex() != 1)
         {
+            mawlocTailesk?.SetLoop(true);
             mawlocTailesk?.SetAnimation(1);
             mawlocTailesk?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
@@ -79,6 +80,7 @@ public class MawlocTailAnimation : MonoBehaviour
         mawlocTailesk?.SetAnimationPlayState(true);
         if (mawlocTailesk?.GetAnimationIndex() != 2)
         {
+            mawlocTailesk?.SetLoop(true);
             mawlocTailesk?.SetAnimation(2);
             mawlocTailesk?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
@@ -90,18 +92,8 @@ public class MawlocTailAnimation : MonoBehaviour
         mawlocTailesk?.SetAnimationPlayState(true);
         if (mawlocTailesk?.GetAnimationIndex() != 4)
         {
+            mawlocTailesk?.SetLoop(true);
             mawlocTailesk?.SetAnimation(4);
-            mawlocTailesk?.SetAnimationSpeed(1.0f);
-            isAnimFinished = false;
-        }
-    }
-
-    public void SetIdleAnimation()
-    {
-        mawlocTailesk?.SetAnimationPlayState(true);
-        if (mawlocTailesk?.GetAnimationIndex() != 5)
-        {
-            mawlocTailesk?.SetAnimation(5);
             mawlocTailesk?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
         }

@@ -1,6 +1,6 @@
-name: SpawnerTyranidWarrior
-prefabPath: ""
-uuid: 12578899336564199204
+name: SpawnerTyranidWarrior_Instance
+prefabPath: Assets\Prefabs\SpawnerTyranidWarrior.prefab.yaml
+uuid: 2532421825862386911
 tag: Untagged
 active: true
 isStatic: false
@@ -24,15 +24,17 @@ Components:
     Script0:
       name: EnemySpawner
       fields:
-        spawnTimer: 10
+        spawnTimer: 0
         secondsBetweenSpawns: 0
+        firstSpawnTime: 5
         currentEnemiesSpawned: 0
-        maxEnemiesToSpawn: 2
-        warriorEnemyPrefab: Assets\Prefabs\Tyranid_Warrior.prefab.yaml
+        maxEnemiesToSpawn: 0
+        hasSpawnedFirst: false
+        warriorEnemyPrefab: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
         spawnHormagaunt: false
         spawnRanged: false
         spawnStalker: false
-        spawnWarrior: true
+        spawnWarrior: false
         spawnClimberHormagaunt: false
         spawnerActive: false
         spawnRadius: 5

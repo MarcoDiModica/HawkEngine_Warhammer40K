@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
+using System;
 using static Railgun;
 
 public class PlayerShooting : MonoBehaviour
@@ -47,6 +48,15 @@ public class PlayerShooting : MonoBehaviour
     public ParticleFX shotgunShotFX;
     public ParticleFX railgunShotSemiFX;
     public ParticleFX railgunShotAutoFX;
+    public ParticleFX bulletcasingFX;
+    public ParticleFX grenadeShotFX;
+
+
+    private float changeWeaponDelay = 0.5f;
+    private float currentdelay = 0.5f;
+    private bool autoReloading = false;
+    private float autoReloadTimer = 0f;
+    private const float autoReloadDelay = 2f;
 
     private enum GunType
     {
@@ -105,9 +115,19 @@ public class PlayerShooting : MonoBehaviour
         }
 
         rifleShotFX = GameObject.Find("RiffleShotFX").GetComponent<ParticleFX>();
+        rifleShotFX.ApplyPreset(8);
+        rifleShotFX.SetParticleStartRotation(90f);
         shotgunShotFX = GameObject.Find("ShotgunShotFX").GetComponent<ParticleFX>();
+        shotgunShotFX.ApplyPreset(8);
         railgunShotSemiFX = GameObject.Find("RailgunShotSemiFX").GetComponent<ParticleFX>();
+        railgunShotSemiFX.ApplyPreset(8);
         railgunShotAutoFX = GameObject.Find("RailgunShotAutoFX").GetComponent<ParticleFX>();
+        railgunShotAutoFX.ApplyPreset(8);
+        bulletcasingFX = GameObject.Find("BulletCasingFX").GetComponent<ParticleFX>();
+        bulletcasingFX.ApplyPreset(44);
+        grenadeShotFX = GameObject.Find("GrenadeShotFX").GetComponent<ParticleFX>();
+        grenadeShotFX.ApplyPreset(43);
+
 
         boltgunMesh = GameObject.Find("Boltgun");
         shotgunMesh = GameObject.Find("Shotgun");
@@ -135,10 +155,7 @@ public class PlayerShooting : MonoBehaviour
         hasShotgun = playerData.hasShotgun;
         hasRailgun = playerData.hasRailgun;
 
-        if (hasRailgun)
-        {
-            railgun.railgunMode = Railgun.RailgunMode.SEMIAUTOMATIC;
-        }
+       
 
         switch (currentGun)
         {
@@ -157,6 +174,8 @@ public class PlayerShooting : MonoBehaviour
                 break;
         }
 
+        playerData.ShotgunUpgraded = true;
+
     }
 
     public int GetCurrentAmmo()
@@ -165,13 +184,13 @@ public class PlayerShooting : MonoBehaviour
         {
             case GunType.BOLTGUN:
                 return boltgun.GetCurrentAmmo();
-                
+
             case GunType.SHOTGUN:
                 return shotgun.GetCurrentAmmo();
-                
+
             case GunType.RAILGUN:
                 return railgun.GetCurrentAmmo();
-                
+
         }
         return 0;
     }
@@ -182,36 +201,53 @@ public class PlayerShooting : MonoBehaviour
         {
             case GunType.BOLTGUN:
                 return boltgun.GetMaxAmmo();
-                
+
             case GunType.SHOTGUN:
                 return shotgun.GetMaxAmmo();
-               
+
             case GunType.RAILGUN:
                 return railgun.GetMaxAmmo();
-                
+
+        }
+        return 0;
+    }
+
+    public int GetMaxMagazineAmmo()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                return boltgun.magazineSize; 
+            case GunType.SHOTGUN:
+                return shotgun.magazineSize;
         }
         return 0;
     }
 
     public override void Update(float deltaTime)
     {
+        if (currentdelay < changeWeaponDelay)
+        {
+            currentdelay += deltaTime;
+        }
+
+
         playerInput.UpdateLookDirection();
 
         if (playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Q))
         {
             ChangeWeaponRight();
+            currentdelay = 0f;
         }
-        else if (playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.Z))
+        else if (playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.C))
         {
             ChangeWeaponLeft();
+            currentdelay = 0f;
         }
 
-        if (playerInput.IsChangingRailgunMode() && currentGun == GunType.RAILGUN)
-        {
-            railgun?.ChangeMode();
-        }
+        
 
-        if (playerInput?.IsShooting() == true)
+        if (playerInput?.IsShooting() == true && currentdelay >= changeWeaponDelay)
         {
             Shoot();
         }
@@ -257,8 +293,26 @@ public class PlayerShooting : MonoBehaviour
 
         if (playerInput?.IsAbility2Pressed() == true)
         {
-            Engineson.print("Ability 2 pressed");
-            UseAbility2();
+            //Engineson.print("Ability 2 pressed");
+            //UseAbility2();
+        }
+        if (!autoReloading && GetCurrentAmmo() == 0 && currentGun != GunType.RAILGUN)
+        {
+            autoReloading = true;
+            autoReloadTimer = 0f;
+        }
+        if (autoReloading)
+        {
+            autoReloadTimer += deltaTime;
+            if (autoReloadTimer >= autoReloadDelay)
+            {
+                Reload();
+                autoReloading = false;
+            }
+        }
+        if (playerInput?.IsReloading() == true && currentGun != GunType.RAILGUN)
+        {
+            autoReloading = false;
         }
     }
 
@@ -266,31 +320,79 @@ public class PlayerShooting : MonoBehaviour
     {
         try
         {
-            switch (currentGun)
+            Vector3 lookDir = playerInput.GetCurrentLookDirection();
+
+            if (lookDir == Vector3.Zero)
             {
-                case GunType.BOLTGUN:
-                    boltgun?.Shoot();
-                    shotgunShotFX.Stop();
-                    railgunShotAutoFX.Stop();
-                    railgunShotSemiFX.Stop();
-                    break;
-                case GunType.SHOTGUN:
-                    shotgun?.Shoot();
-                    rifleShotFX.Stop();
-                    railgunShotAutoFX.Stop();
-                    railgunShotSemiFX.Stop();
-                    break;
-                case GunType.RAILGUN:
-                    railgun?.Shoot();
-                    break;
+                lookDir = playerInput.GetCurrentMoveDirection();
             }
 
+            if (lookDir != Vector3.Zero)
+            {
+                lookDir = Vector3.Normalize(lookDir);
+                float angle = (float)(Math.Atan2(lookDir.X, lookDir.Z) * (180.0 / Math.PI)) - 45;
+
+
+                switch (currentGun)
+                {
+                    case GunType.BOLTGUN:
+                        rifleShotFX.SetParticleStartRotation(angle);
+                        rifleShotFX.EmitBurst(1);
+                        boltgun?.Shoot();
+                        //bulletcasingFX.Play();
+                        shotgunShotFX.Stop();
+                        railgunShotAutoFX.Stop();
+                        railgunShotSemiFX.Stop();
+                        break;
+
+                    case GunType.SHOTGUN:
+                        shotgunShotFX.SetParticleStartRotation(angle);
+                        shotgunShotFX.EmitBurst(1);
+                        shotgun?.Shoot();
+                        rifleShotFX.Stop();
+                        railgunShotAutoFX.Stop();
+                        railgunShotSemiFX.Stop();
+                        break;
+
+                    case GunType.RAILGUN:
+                        railgunShotSemiFX.SetParticleStartRotation(angle);
+                        railgunShotSemiFX.EmitBurst(1);
+                        railgun?.Shoot();
+                        break;
+                }
+            }
+            else
+            {
+                // Si no hay direccion valida, disparar sin rotar el efecto
+                switch (currentGun)
+                {
+                    case GunType.BOLTGUN:
+                        boltgun?.Shoot();
+                        shotgunShotFX.Stop();
+                        //bulletcasingFX.Play();
+                        railgunShotAutoFX.Stop();
+                        railgunShotSemiFX.Stop();
+                        break;
+
+                    case GunType.SHOTGUN:
+                        shotgun?.Shoot();
+                        rifleShotFX.Stop();
+                        railgunShotAutoFX.Stop();
+                        railgunShotSemiFX.Stop();
+                        break;
+
+                    case GunType.RAILGUN:
+                        railgun?.Shoot();
+                        break;
+                }
+            }
         }
         catch (System.Exception e)
         {
-            Engineson.print($"Error creating projectile: {e.Message}");
+            Engineson.print($"Error during Shoot(): {e.Message}");
         }
     }
+
 
     private void Reload()
     {
@@ -303,7 +405,7 @@ public class PlayerShooting : MonoBehaviour
                 shotgun?.Reload();
                 break;
             case GunType.RAILGUN:
-                
+
                 break;
         }
     }
@@ -329,19 +431,22 @@ public class PlayerShooting : MonoBehaviour
 
     private void ChangeWeaponRight()
     {
+        if (hasBoltgun && !hasShotgun && !hasRailgun)
+        {
+            // No cambiar de arma si solo se tiene la Boltgun  
+            return;
+        }
 
         if (hasShotgun && !hasRailgun)
         {
             if (currentGun == GunType.BOLTGUN)
             {
                 currentGun = GunType.SHOTGUN;
-
             }
             else if (currentGun == GunType.SHOTGUN)
             {
                 currentGun = GunType.BOLTGUN;
             }
-           
         }
         else if (hasShotgun && hasRailgun)
         {
@@ -358,8 +463,6 @@ public class PlayerShooting : MonoBehaviour
                 currentGun = GunType.BOLTGUN;
             }
         }
-
-        
 
         switch (currentGun)
         {
@@ -393,6 +496,11 @@ public class PlayerShooting : MonoBehaviour
 
     private void ChangeWeaponLeft()
     {
+        if (hasBoltgun && !hasShotgun && !hasRailgun)
+        {
+            // No cambiar de arma si solo se tiene la Boltgun  
+            return;
+        }
 
         if (hasShotgun && !hasRailgun)
         {
@@ -404,7 +512,6 @@ public class PlayerShooting : MonoBehaviour
             {
                 currentGun = GunType.BOLTGUN;
             }
-
         }
         else if (hasShotgun && hasRailgun)
         {
@@ -450,7 +557,6 @@ public class PlayerShooting : MonoBehaviour
                 break;
         }
         Engineson.print("Changed weapon left");
-
     }
 
     private void UseAbility1()
@@ -459,81 +565,76 @@ public class PlayerShooting : MonoBehaviour
         {
             case GunType.BOLTGUN:
 
-                    if (boltgun.grenadeLauncher.canThrow)
-                    {
-                        redThirstManager.OnAbilityUsed();
-                    }
+                if ((playerData.BoltgunUpgraded == true))
+                {
+                    //grenadeShotFX.Play();
                     boltgun?.UseAbility1();
+                }
 
-              
+
+
 
                 break;
             case GunType.SHOTGUN:
 
-                    if (shotgun.hookShot.canThrow)
-                    {
-                        redThirstManager.OnAbilityUsed();
-                        redThirstManager.AddRedThirstPoint(1);
-                    }
-                    shotgun?.UseAbility1();
+                if (playerData.ShotgunUpgraded == true)
+                {
 
-               
+                    shotgun?.UseAbility1();
+                }
+
+
+
                 break;
             case GunType.RAILGUN:
 
-                    railgun?.UseAbility1();
-                    redThirstManager.OnAbilityUsed();
+                if (playerData.RailgunUpgraded == true)
+                {
 
-            
+                    railgun?.UseAbility1();
+                }
+
+
                 break;
         }
     }
 
-     private void UseAbility2()
-     {
+    private void UseAbility2()
+    {
         switch (currentGun)
         {
             case GunType.BOLTGUN:
 
                 if (playerData.RailgunUpgraded == true)
                 {
-                    if (boltgun.arcSnare.canThrow)
-                    {
-                        redThirstManager.OnAbilityUsed();
-                    }
+
                     boltgun?.UseAbility2();
                 }
-                   
-                
-               
+
+
+
                 break;
             case GunType.SHOTGUN:
-               
-                if(playerData.ShotgunUpgraded == true)
+
+                if (playerData.ShotgunUpgraded == true)
                 {
-                    if (shotgun.barrage.canThrow)
-                    {
-                        redThirstManager.OnAbilityUsed();
-                    }
+
                     shotgun?.UseAbility2();
                 }
-                   
-                
-               
+
+
+
                 break;
             case GunType.RAILGUN:
-                if(playerData.RailgunUpgraded == true)
+                if (playerData.RailgunUpgraded == true)
                 {
-                    if (railgun.energyBall.canThrow)
-                    {
-                        redThirstManager.OnAbilityUsed();
-                    }
+
                     railgun?.UseAbility2();
                 }
-                
+
                 break;
         }
-     }
+    }
 
     public void CounterAttack(GameObject target)
     {

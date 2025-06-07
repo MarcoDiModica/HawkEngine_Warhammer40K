@@ -110,7 +110,9 @@ public:
 			"Assets/Textures/blood_splash_1.png",
 			"Assets/Textures/blood_splash_2.png",
 			"Assets/Textures/RailgunChargeVFX.png",
-			"Assets/Textures/EnergyBallHittingVFX.png"
+			"Assets/Textures/EnergyBallHittingVFX.png",
+			"Assets/Textures/bullet.png",
+			"Assets/Textures/smoke.png"
 		};
 
 		for (const auto& path : texturePaths) {

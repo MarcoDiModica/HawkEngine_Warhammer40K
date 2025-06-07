@@ -129,6 +129,7 @@
     <Compile Include="CapsuleCollider.cs" />
     <Compile Include="ChapterStandard.cs" />
     <Compile Include="Checkpoint.cs" />
+    <Compile Include="CinematicManager.cs" />
     <Compile Include="Collider.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -137,6 +138,7 @@
     <Compile Include="CoroutineManager.cs" />
     <Compile Include="DestroyEnviormentObject.cs" />
     <Compile Include="DestructibleWall.cs" />
+    <Compile Include="DoorAnimation.cs" />
     <Compile Include="DropManager.cs" />
     <Compile Include="EnemyController.cs" />
     <Compile Include="EnemyControllerBoss.cs" />
@@ -188,6 +190,7 @@
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="BaseAbilities.cs" />
     <Compile Include="MusicManager.cs" />
+    <Compile Include="MusicManagerLvl1.cs" />
     <Compile Include="OptionMenu.cs" />
     <Compile Include="Pathfinding.cs" />
     <Compile Include="PauseMenu.cs" />
@@ -227,6 +230,7 @@
     <Compile Include="SkeletalAnimation.cs" />
     <Compile Include="SoundEnvironmentController.cs" />
     <Compile Include="SoundTrigger.cs" />
+    <Compile Include="SpikeAnimation.cs" />
     <Compile Include="TermagauntAnimation.cs" />
     <Compile Include="TyranidTentaclesAnim.cs" />
     <Compile Include="Test1.cs" />
@@ -240,9 +244,7 @@
     <Compile Include="TyranidCorpse.cs" />
     <Compile Include="TyranidTentacles.cs" />
     <Compile Include="UIButton.cs" />
-    <Compile Include="UICanvas.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="UICanvas.cs" />
     <Compile Include="UIGameplay.cs" />
     <Compile Include="UIImage.cs" />
     <Compile Include="UITransform.cs">
@@ -251,6 +253,7 @@
     <Compile Include="WaitForSeconds.cs" />
     <Compile Include="WarriorAnimation.cs" />
     <Compile Include="WinScreen.cs" />
+    <Compile Include="ZoneController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

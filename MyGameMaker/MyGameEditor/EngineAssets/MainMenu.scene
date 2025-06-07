@@ -144,10 +144,10 @@ GameObject1:
             - 10253
             - 9612
           sprite_offset:
-            - 6835.33203
-            - 3844.80005
+            - 3417.66602
+            - 8650.7998
           anim_speed: 0.5
-          anim_index: 28
+          anim_index: 56
           anim_index_limit: 60
           color:
             - 1
@@ -254,7 +254,7 @@ GameObject1:
             - 0
           scale:
             - 0.181999981
-            - 0.0700000077
+            - 0.187000006
             - 0.400000006
           pivot_offset:
             - 0.5
@@ -263,14 +263,14 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/menu_newGame.png
+          texture_path: Library\Textures\UI\menu_new game.png
           use_animation: false
           sprite_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sheet_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -322,7 +322,7 @@ GameObject1:
             - 0
           scale:
             - 0.181999981
-            - 0.0700000077
+            - 0.187000006
             - 0.400000006
           pivot_offset:
             - 0.5
@@ -334,11 +334,11 @@ GameObject1:
           texture_path: Library/Textures/UI/menu_continue.png
           use_animation: false
           sprite_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sheet_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -390,7 +390,7 @@ GameObject1:
             - 0
           scale:
             - 0.181999981
-            - 0.0700000077
+            - 0.187000006
             - 0.400000006
           pivot_offset:
             - 0.5
@@ -402,11 +402,11 @@ GameObject1:
           texture_path: Library/Textures/UI/menu_options.png
           use_animation: false
           sprite_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sheet_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -458,7 +458,7 @@ GameObject1:
             - 0
           scale:
             - 0.181999981
-            - 0.0700000077
+            - 0.187000006
             - 0.400000006
           pivot_offset:
             - 0.5
@@ -470,11 +470,11 @@ GameObject1:
           texture_path: Library/Textures/UI/menu_exit.png
           use_animation: false
           sprite_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sheet_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -526,7 +526,7 @@ GameObject1:
             - 0
           scale:
             - 0.181999996
-            - 0.0700000003
+            - 0.187000006
             - 1
           pivot_offset:
             - 0.5
@@ -542,11 +542,11 @@ GameObject1:
           texture_path: Library\Textures\UI\menu_credits.png
           use_animation: false
           sprite_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sheet_size:
-            - 469
-            - 103
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -2639,6 +2639,116 @@ GameObject3:
           enabled: true
           position:
             - 0
+            - 2
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 2
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\credits_BG.png
+          use_animation: false
+          sprite_size:
+            - 2360
+            - 2725
+          sheet_size:
+            - 2360
+            - 2725
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+      Children: ~
+GameObject4:
+  name: Canvas_Cinematic
+  prefabPath: ""
+  uuid: 14645508196647998947
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+  Children:
+    - name: CinematicManager
+      prefabPath: ""
+      uuid: 16210432024970194970
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
             - 1
             - 0
           rotation:
@@ -2656,14 +2766,14 @@ GameObject3:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library\Textures\CreditsBG.jpg
+          texture_path: Assets/Textures/FadeToBlackImage.png
           use_animation: false
           sprite_size:
-            - 653
-            - 980
+            - 0
+            - 0
           sheet_size:
-            - 653
-            - 980
+            - 0
+            - 0
           sprite_offset:
             - 0
             - 0
@@ -2671,14 +2781,65 @@ GameObject3:
           anim_index: 0
           anim_index_limit: 0
           color:
-            - 0.385214031
             - 0
             - 0
-            - 1
+            - 0
+            - 0
+        ScriptComponents:
+          Script0:
+            name: CinematicManager
+            fields:
+              imageCooldown: 0.0410000011
       Children: ~
-    - name: Title
+GameObject5:
+  name: Canvas_Fade
+  prefabPath: ""
+  uuid: 15971780212265548051
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+  Children:
+    - name: FadeController
       prefabPath: ""
-      uuid: 13974591660479866522
+      uuid: 11097303880844808094
       tag: Untagged
       active: true
       isStatic: false
@@ -2702,16 +2863,16 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.300000012
-            - 0.370000005
+            - 0
+            - 1
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.400000006
-            - 0.400000006
+            - 1
+            - 1
             - 1
           pivot_offset:
             - 0
@@ -2720,14 +2881,14 @@ GameObject3:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library\Textures\UI\Title_BloodAndThunder.png
+          texture_path: Assets/Textures/FadeToBlackImage.png
           use_animation: false
           sprite_size:
-            - 1920
-            - 1080
+            - 0
+            - 0
           sheet_size:
-            - 1920
-            - 1080
+            - 0
+            - 0
           sprite_offset:
             - 0
             - 0
@@ -2735,2120 +2896,12 @@ GameObject3:
           anim_index: 0
           anim_index_limit: 0
           color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: ART_TEAM
-      prefabPath: ""
-      uuid: 3773532854325993784
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
             - 0
             - 0
             - 0
-          localRotation:
             - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.555999994
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: ART
-          position:
-            - 0
-            - 0
-          color:
-            - 0.719844341
-            - 0.710689485
-            - 0.249284625
-          fontSize: 18
-          boxSize:
-            - 61.2000008
-            - 19.7999992
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Marco_Baldan
-      prefabPath: ""
-      uuid: 4677362689577421834
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.5
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Marco Baldan
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 177
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Daniel_Berrio
-      prefabPath: ""
-      uuid: 5656944225621894462
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.499000013
-            - 0.444999993
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Daniel Berrio
-          position:
-            - 0
-            - 0
-          color:
-            - 0.729411781
-            - 0.131681114
-            - 0.117277965
-          fontSize: 15
-          boxSize:
-            - 168
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Sergi_Gantzer
-      prefabPath: ""
-      uuid: 6835229274118367780
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.409999996
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Sergi Gantzer
-          position:
-            - 0
-            - 0
-          color:
-            - 0.729411781
-            - 0.131681114
-            - 0.117277965
-          fontSize: 15
-          boxSize:
-            - 174
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Pablo_Longaron
-      prefabPath: ""
-      uuid: 16855288433645506713
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.375
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Pablo Longaron
-          position:
-            - 0
-            - 0
-          color:
-            - 0.729411781
-            - 0.131681114
-            - 0.117277965
-          fontSize: 15
-          boxSize:
-            - 198
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Oliver_antonio_Santos
-      prefabPath: ""
-      uuid: 4678726796483478226
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.340000004
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Oliver Antonio Santos
-          position:
-            - 0
-            - 0
-          color:
-            - 0.729411781
-            - 0.131681114
-            - 0.117277965
-          fontSize: 15
-          boxSize:
-            - 273
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Miguel_Tamano
-      prefabPath: ""
-      uuid: 14775740097495579954
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.305000007
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Miguel Tamano
-          position:
-            - 0
-            - 0
-          color:
-            - 0.729411781
-            - 0.131681114
-            - 0.117277965
-          fontSize: 15
-          boxSize:
-            - 180
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Justo_Jose_Tiscornia
-      prefabPath: ""
-      uuid: 6830918342358727136
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.270000011
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Justo Jose Tiscornia
-          position:
-            - 0
-            - 0
-          color:
-            - 0.729411781
-            - 0.131681114
-            - 0.117277965
-          fontSize: 15
-          boxSize:
-            - 252
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Yiwei_Ye
-      prefabPath: ""
-      uuid: 5703546382686360508
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.234999999
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Yiwei Ye
-          position:
-            - 0
-            - 0
-          color:
-            - 0.729411781
-            - 0.131681114
-            - 0.117277965
-          fontSize: 15
-          boxSize:
-            - 108
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: PRODUCER
-      prefabPath: ""
-      uuid: 18286159688553361291
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.694999993
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Producer
-          position:
-            - 0
-            - 0
-          color:
-            - 0.721568644
-            - 0.709803939
-            - 0.250980407
-          fontSize: 18
-          boxSize:
-            - 138.599976
-            - 19.7999992
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Andrea_Dona
-      prefabPath: ""
-      uuid: 14169903408101437742
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.653999984
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Andrea Dona
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 163.5
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Andrea_Dona_enye
-      prefabPath: ""
-      uuid: 14344084609103715985
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.52700001
-            - 0.663999975
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: "-"
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 21
-            - 6
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Miguel_Tamano_enye
-      prefabPath: ""
-      uuid: 4120354167128589526
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.533999979
-            - 0.31400001
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: "-"
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 21
-            - 6
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: PROGRAMMING_TEAM
-      prefabPath: ""
-      uuid: 15614517586760852944
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.25
-            - 0.555999994
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: PROGARMMING
-          position:
-            - 0
-            - 0
-          color:
-            - 0.721568644
-            - 0.709803939
-            - 0.250980407
-          fontSize: 18
-          boxSize:
-            - 187.199982
-            - 19.7999992
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Marco_Di_Modica
-      prefabPath: ""
-      uuid: 11955334996279751372
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.25
-            - 0.5
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Marco Di Modica
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 193.5
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Marc_Avante
-      prefabPath: ""
-      uuid: 10111768265981988831
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.25
-            - 0.444999993
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Marc Avante
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 166.5
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Didac_Garcia
-      prefabPath: ""
-      uuid: 4680479991368532696
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.25
-            - 0.409999996
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Didac Garcia
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 160.5
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: David_Lastra
-      prefabPath: ""
-      uuid: 17380382933318278874
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.25
-            - 0.375
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: David Lastra
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 169.5
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Joan_Marques
-      prefabPath: ""
-      uuid: 8207242602468812978
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.25
-            - 0.340000004
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Joan Marques
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 172.5
-            - 18
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Samuel Martinez
-      prefabPath: ""
-      uuid: 4118800650305293798
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.25
-            - 0.305000007
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Samuel Martinez
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 207
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Pau_Mora
-      prefabPath: ""
-      uuid: 7815622312980618171
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.25
-            - 0.275000006
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Pau Mora
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 118.5
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: DESIGN_TEAM
-      prefabPath: ""
-      uuid: 1976191168230376749
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.75
-            - 0.555999994
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: DESIGN
-          position:
-            - 0
-            - 0
-          color:
-            - 0.719844341
-            - 0.710689485
-            - 0.249284625
-          fontSize: 18
-          boxSize:
-            - 100.800003
-            - 19.7999992
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Jordi_Tur
-      prefabPath: ""
-      uuid: 2516355464895809894
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.75
-            - 0.5
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Jordi Tur
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 115.5
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Alex_Becerra
-      prefabPath: ""
-      uuid: 4755834853983824280
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.75
-            - 0.444999993
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Alex Becerra
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 174
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Salvador_Bernardes
-      prefabPath: ""
-      uuid: 1710059530207935342
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.75
-            - 0.409999996
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Salvador Bernardes
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 259.5
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Noel_Colon
-      prefabPath: ""
-      uuid: 15526689903315584504
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.75
-            - 0.375
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Noel Colon
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 138
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Biel_Linan
-      prefabPath: ""
-      uuid: 12582829715442431827
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.75
-            - 0.344999999
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Biel Linan
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 130.5
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Biel_Linan_enye
-      prefabPath: ""
-      uuid: 6960537519285166447
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.760999978
-            - 0.354000002
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: "-"
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 21
-            - 6
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Ivo_Montes
-      prefabPath: ""
-      uuid: 1776296715053871525
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.75
-            - 0.310000002
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Ivo Montes
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 133.5
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Marc_Garrigo
-      prefabPath: ""
-      uuid: 5939094556716828822
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.25
-            - 0.150000006
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Marc Garrigo
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 165
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Marc_Ripoll
-      prefabPath: ""
-      uuid: 15769168207665131106
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.150000006
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Marc Ripoll
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 148.5
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
-      Children: ~
-    - name: Simon_Stoyanov
-      prefabPath: ""
-      uuid: 278292727796393010
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.75
-            - 0.150000006
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        TextComponent:
-          name: TextComponent
-          enabled: true
-          text: Simon Stoyanov
-          position:
-            - 0
-            - 0
-          color:
-            - 0.709803939
-            - 0.128141299
-            - 0.114125334
-          fontSize: 15
-          boxSize:
-            - 192
-            - 16.5
-          spriteSize:
-            - 0
-            - 0
-          sheetSize:
-            - 0
-            - 0
-          spriteOffset:
-            - 0
-            - 0
+        ScriptComponents:
+          Script0:
+            name: FadeController
+            fields: ~
       Children: ~

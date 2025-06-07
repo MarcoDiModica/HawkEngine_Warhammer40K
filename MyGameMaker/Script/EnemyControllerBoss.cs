@@ -12,9 +12,9 @@ using HawkEngine;
 public class EnemyControllerBoss : EnemyController
 {
     private float hurtboxDuration = 0.5f; 
-    private Vector3 slamHurtboxSize = new Vector3(3.0f, 1.0f, 15.0f);
-    private Vector3 hurtboxOffset = new Vector3(4.0f, 0.0f, 0.0f);
+    private Vector3 slamHurtboxSize = new Vector3(8.0f, 10.0f, 15.0f);
     private GameObject slamHurtboxObject;
+    private BoxCollider boxcollider;
 
     private List<GameObject> clawHurtboxObjects = new List<GameObject>();
 
@@ -39,7 +39,9 @@ public class EnemyControllerBoss : EnemyController
     private const string ClawClip = "Assets/Audio/Mawloc_Claw_Attack.wav";
     private const string AcidClip = "Assets/Audio/Mawloc_Acid_Attack.wav";
     private const string DeathClip = "Assets/Audio/Mawloc_Death.wav";
-    private const string BossTheme = "Assets/Audio/Music/Warhammer_Level2BossThemeBossFight.ogg";
+    private const string BossTheme = "Assets/Audio/Music/Warhammer_Level2_BossFight_Part1.ogg";
+    //private const string BossTheme = "Assets/Audio/Music/Level2_BossFight_BossTheme_Gold.ogg";
+    private const string BossThemePhase2 = "Assets/Audio/Music/Level2_MainTheme_BossFight_Gold.ogg";
 
     private bool isBossMusicPlaying = false;
     //stats
@@ -95,6 +97,8 @@ public class EnemyControllerBoss : EnemyController
 
     private EnemyControllerBossTail tailController;
     private bool hasUnburiedInPhase2 = false;
+    private bool clawDamageAppliedThisFrame = false;
+    private bool slamDamageAppliedThisFrame = false;
 
     private MawlocAnimation anim;
     private PlayerController pc;
@@ -120,17 +124,18 @@ public class EnemyControllerBoss : EnemyController
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
-        rb.SetMass(1000.0f);
+        rb.SetMass(10000.0f);
         tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
         tailController?.gameObject.SetActive(false);
-        currentHealth = 1500.0f;
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
         }
-        collider = gameObject.GetComponent<BoxCollider>();
-        collider.SetSize(new Vector3(3.0f, 2.0f, 3.0f));
-        if (collider == null)
+        //collider = gameObject.GetComponent<CapsuleCollider>();
+        //collider.SetActive(false);
+        boxcollider = gameObject.GetComponent<BoxCollider>();
+        //collider.SetSize(new Vector3(3.0f, 2.0f, 3.0f));
+        if (boxcollider == null)
         {
             Engineson.print("ERROR: PlayerMovement requires a Collider component!");
             return;
@@ -154,9 +159,10 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 1500.0f;
+        currentHealth = 1500f;
         gameObject.tag = "Boss";
         isDead = false;
+        
 //         musicClip = new AudioClip(combatMusic, "BossMusic", true, false);
 //         sound.LoadAudioClip(musicClip);
 
@@ -173,6 +179,7 @@ public class EnemyControllerBoss : EnemyController
             }
 
             float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+            
 
                 if (playerTransform != null)
                 {
@@ -180,7 +187,7 @@ public class EnemyControllerBoss : EnemyController
                     float targetAngle = (float)Math.Atan2(directionToPlayer.X, directionToPlayer.Z) * (180.0f / (float)Math.PI);
                     Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(targetAngle * ((float)Math.PI / 180.0f), 0, 0);
                     enemyTransform.SetRotationQuat(newRotation);
-                    collider.SetRotation(newRotation);
+                    boxcollider.SetRotation(newRotation);
                 }
 
                 if (currentHealth < 500)
@@ -190,7 +197,9 @@ public class EnemyControllerBoss : EnemyController
                 else if (currentHealth < 1000)
                 {
                     currentPhase = BossPhase.PHASE2;
-                }
+                    Audio.Stop(BossTheme);
+                    Audio.Play(BossThemePhase2, true);
+            }
 
                 switch (currentPhase)
                 {
@@ -345,7 +354,7 @@ public class EnemyControllerBoss : EnemyController
             }
         if (isDead)
         {
-            collider.SetActive(false);
+            boxcollider.SetActive(false);
             Audio.Stop(BossTheme); 
             if (anim.isAnimFinished)
             {
@@ -384,18 +393,20 @@ public class EnemyControllerBoss : EnemyController
 
         Vector3 playerPos = playerTransform.position;
 
-        if (slamHurtboxObject != null && IsPlayerInCollider(slamHurtboxObject, playerPos))
+        if (slamHurtboxObject != null && IsPlayerInCollider(slamHurtboxObject, playerPos) && !slamDamageAppliedThisFrame)
         {
             ApplyBossDamage(slamDamage);
+            slamDamageAppliedThisFrame = true;
         }
 
-        if (clawHurtboxObjects != null)
+        if (clawHurtboxObjects != null && !clawDamageAppliedThisFrame)
         {
             foreach (GameObject claw in clawHurtboxObjects)
             {
                 if (claw != null && IsPlayerInCollider(claw, playerPos))
                 {
                     ApplyBossDamage(strikeDamage);
+                    clawDamageAppliedThisFrame = true;
                     break;
                 }
             }
@@ -413,10 +424,9 @@ public class EnemyControllerBoss : EnemyController
 
     private bool IsPlayerInCollider(GameObject hurtbox, Vector3 playerPos)
     {
-        Transform transform = hurtbox.GetComponent<Transform>();
-        Vector3 center = transform.position;
-        Vector3 size = transform.localScale;
-        Vector3 halfSize = size * 0.5f;
+        var bc = hurtbox.GetComponent<BoxCollider>();
+        Vector3 halfSize = bc.GetSize() * 0.5f;
+        Vector3 center = hurtbox.GetComponent<Transform>().position;
 
         return (playerPos.X >= center.X - halfSize.X && playerPos.X <= center.X + halfSize.X) &&
                (playerPos.Y >= center.Y - halfSize.Y && playerPos.Y <= center.Y + halfSize.Y) &&
@@ -457,8 +467,8 @@ public class EnemyControllerBoss : EnemyController
             {      
                 Engineson.print("Unburrowing Attack");
                 enemyTransform.position = playerTransform.position;
-                collider.SetPosition(playerTransform.position);
-                anim.SetUnburrowingAnimation();
+                boxcollider.SetPosition(playerTransform.position);
+                anim.SetUnBurrowHeadAnimation();
                 AddComponent<ParticleFX>().ApplyPreset(25);
                 GetComponent<ParticleFX>().EmitBurst(25);
             }
@@ -475,7 +485,7 @@ public class EnemyControllerBoss : EnemyController
             if (playerTransform != null)
             {
                 enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
-                collider.SetPosition(enemyTransform.position);
+                boxcollider.SetPosition(enemyTransform.position);
                 Engineson.print("Unburrowing Attack Phase 2");
                 anim.SetUnburrowingAnimation();
                 AddComponent<ParticleFX>().ApplyPreset(25);
@@ -493,7 +503,7 @@ public class EnemyControllerBoss : EnemyController
         {
             Audio.PlayOneShot(UnburrowClip);
             enemyTransform.position = fixedPositions[2];
-            collider.SetPosition(enemyTransform.position);
+            boxcollider.SetPosition(enemyTransform.position);
             anim.SetUnburrowingAnimation();
             AddComponent<ParticleFX>().ApplyPreset(25);
             GetComponent<ParticleFX>().EmitBurst(25);
@@ -544,7 +554,6 @@ public class EnemyControllerBoss : EnemyController
             var transform = metalSlideObject.GetComponent<Transform>();
             transform.position = spawnPosition;
             transform.SetScale(3, 3, 3);
-            anim.SetIdleAnimation(); //Temporary, missing metal slide animation
             metalSlideObject.AddComponent<ParticleFX>();
             metalSlideObject.GetComponent<ParticleFX>().ApplyPreset(25);
             metalSlideObject.GetComponent<ParticleFX>().EmitBurst(50);
@@ -576,7 +585,7 @@ public class EnemyControllerBoss : EnemyController
         if (isDead == false)
         {
             enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
-            collider.SetPosition(enemyTransform.position);
+            boxcollider.SetPosition(enemyTransform.position);
             Burrow();
         }
     }
@@ -628,8 +637,11 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("PlaySound Burrowed");
             Audio.PlayOneShot(BurrowClip);
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
-            collider.SetPosition(enemyTransform.position);
-            anim.SetBurrowingAnimation();
+            boxcollider.SetPosition(enemyTransform.position);
+            if (currentPhase != BossPhase.PHASE1)
+            {
+                anim.SetBurrowingAnimation();
+            }
             AddComponent<ParticleFX>().ApplyPreset(25);
             GetComponent<ParticleFX>().EmitBurst(25);
             isBuried = true;
@@ -658,7 +670,7 @@ public class EnemyControllerBoss : EnemyController
         slamHurtboxObject.GetComponent<ParticleFX>().ApplyPreset(24);
         slamHurtboxObject.GetComponent<ParticleFX>().EmitBurst(1);
         slamHurtboxObject.tag = "EnemyAttack";
-
+        slamDamageAppliedThisFrame = false;
         Vector3 forward = enemyTransform.forward;
         Vector3 bossPosition = enemyTransform.position;
 
@@ -670,6 +682,8 @@ public class EnemyControllerBoss : EnemyController
         var hurtboxTransform = slamHurtboxObject.GetComponent<Transform>();
         hurtboxTransform.position = hurtboxPosition;
         hurtboxTransform.SetScale(slamHurtboxSize.X, slamHurtboxSize.Y, slamHurtboxSize.Z);
+        var hurtboxCollider = slamHurtboxObject.GetComponent<BoxCollider>();
+        hurtboxCollider.SetSize(slamHurtboxSize);
 
         float angle = (float)Math.Atan2(forward.X, forward.Z);
         Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, angle);
@@ -685,7 +699,7 @@ public class EnemyControllerBoss : EnemyController
         float segmentLength = 1.5f;
         float height = 1.0f;
         float spacing = 1.0f;
-
+        clawDamageAppliedThisFrame = false;
         Vector3 forward = Vector3.Normalize(enemyTransform.forward);
         Vector3 origin = enemyTransform.position;
 
@@ -707,6 +721,8 @@ public class EnemyControllerBoss : EnemyController
             var hurtboxTransform = clawSegment.GetComponent<Transform>();
             hurtboxTransform.position = position;
             hurtboxTransform.SetScale(size.X, size.Y, size.Z);
+            var hurtboxCollider = clawSegment.GetComponent<BoxCollider>();
+            hurtboxCollider.SetSize(slamHurtboxSize);
 
             float angle = (float)Math.Atan2(forward.X, forward.Z);
             Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, angle);

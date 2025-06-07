@@ -196,6 +196,7 @@ namespace EngineBinds {
 	void SetLoop(MonoObject* skeletalAnimationRef, bool isLoop);
 	void PlayAnimOnce(MonoObject* skeletalAnimationRef, int index, float timeToTransitionAnim);
 	bool IsAnimationFinished(MonoObject* skeletalAnimationRef);
+	void PlayAnimOnceNoBlend(MonoObject* skeletalAnimationRef, int index);
 
 	//Tweening
     void DOMove(MonoObject* transformRef, glm::vec3* targetPosition, float duration, Modes mode);
@@ -241,6 +242,7 @@ namespace EngineBinds {
 	void PlayParticle(MonoObject* particleRef);
 	void StopParticle(MonoObject* particleRef);
 	void EmitBurst(MonoObject* particleRef, int burstCount);
+	void SetParticleStartRotation(MonoObject* particleRef, float startRotation);
 }
 
 #endif // ENGINE_BINDS_H

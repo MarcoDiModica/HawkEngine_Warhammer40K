@@ -78,6 +78,8 @@ public class HUD : MonoBehaviour
     private GameObject Text;
     private UIText text;
 
+    private GameObject fadeCanvas;
+
     private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
 
 
@@ -227,10 +229,7 @@ public class HUD : MonoBehaviour
             {
                 Engineson.print("ERROR: railgun unlocked but not instantiated!");
             }
-            else
-            {
-                railgunScript.railgunMode = Railgun.RailgunMode.SEMIAUTOMATIC;
-            }
+           
         }
 
         redThirstManager = Player.GetComponent<RedThirstManager>();
@@ -337,6 +336,16 @@ public class HUD : MonoBehaviour
         else
         {
             Engineson.print("ERROR: railgun_ammo_text GameObject not found");
+        }
+
+        fadeCanvas = GameObject.Find("Canvas_Fade");
+        if (fadeCanvas == null)
+        {
+            Engineson.print("ERROR: Fade_Canvas not found");
+        }
+        else
+        {
+            fadeCanvas.SetActive(true);
         }
     }
     public override void Update(float deltaTime)
@@ -524,17 +533,7 @@ public class HUD : MonoBehaviour
                     Engineson.print("ERROR: Hud.Update – railgunScript is null!");
                     break;
                 }
-                switch (railgunScript.railgunMode)
-                {
-                    case Railgun.RailgunMode.SEMIAUTOMATIC:
-                        railgunAbility2a.SetActive(true);
-                        railgunAbility2b.SetActive(false);
-                        break;
-                    case Railgun.RailgunMode.AUTOMATIC:
-                        railgunAbility2a.SetActive(false);
-                        railgunAbility2b.SetActive(true);
-                        break;
-                }
+                railgunAbility2a.SetActive(true);
 
                 if (playerShootingScript.hasBoltgun)
                 {
@@ -591,7 +590,7 @@ public class HUD : MonoBehaviour
             magnet.SetActive(false);
         }
 
-        if (playerData.GetHealth() <= 0)
+        if (playerData.GetHealth() <= 0 && SceneManager.isLoadedFromCheckpoint == false)
         {
             lose();
         }

@@ -16,6 +16,7 @@ public class EnemyControllerWarrior : EnemyController
     private Vector3 hurtboxSize = new Vector3(10.0f, 10.0f, 10.0f);
     private Vector3 hurtboxOffset = new Vector3(5.0f, -3.0f, 0.0f);
     private GameObject hurtboxObject;
+    private RedThirstManager redThirstManager;
 
     private float projectileRange = 30;
     private List<BulletData> activeProjectiles = new List<BulletData>();
@@ -58,11 +59,17 @@ public class EnemyControllerWarrior : EnemyController
     public float range;
     public float timeToLerp = 0.4f;
 
-    private bool componentsInitialized = false;    
+    private bool componentsInitialized = false;
     // Death
     private float deathTimer = 0f;
     private float deathCooldown = 2f;
 
+    public void SetVFX(int id = 34)
+    {
+        var vfx = AddComponent<ParticleFX>();
+        vfx.ApplyPreset(id);
+        vfx.Play();
+    }
     public override void Awake()
     {
         try
@@ -106,7 +113,7 @@ public class EnemyControllerWarrior : EnemyController
                 return;
             }
 
-            collider = gameObject.GetComponent<BoxCollider>();
+            collider = gameObject.GetComponent<CapsuleCollider>();
             if (collider == null)
             {
                 Engineson.print("ERROR: Tyranid Warrior Collider not found!");
@@ -152,6 +159,8 @@ public class EnemyControllerWarrior : EnemyController
             timeToLerp = 0.1f;
 
             componentsInitialized = true;
+
+            redThirstManager = playerObj.GetComponent<RedThirstManager>();
         }
         catch (Exception e)
         {
@@ -356,7 +365,7 @@ public class EnemyControllerWarrior : EnemyController
                 Audio.PlayOneShot(DeathSound);
                 hasPlayedDeathSound = true;
             }
-
+            redThirstManager.AddRedThirstPoint(1);
             if (!hasDropped)
             {
                 GameObject dropManager = GameObject.Find("DropManager");
@@ -670,6 +679,7 @@ public class EnemyControllerWarrior : EnemyController
             if (isAttacking)
             {
                 Audio.PlayOneShot(MeleeAttackSound);
+                SetVFX();
 
                 if (pc != null && pc.playerData != null)
                 {
@@ -763,8 +773,7 @@ public class EnemyControllerWarrior : EnemyController
 
             if (particles != null)
             {
-                AddComponent<ParticleFX>().ApplyPreset(19);
-                GetComponent<ParticleFX>().EmitBurst(1);
+                EnemySquirting();
             }
 
             if (currentHealth <= 0)

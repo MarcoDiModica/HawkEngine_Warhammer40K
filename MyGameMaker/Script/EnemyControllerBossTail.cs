@@ -50,25 +50,26 @@ public class EnemyControllerBossTail : EnemyController
 
     private GameObject slashHurtbox;
     private GameObject stabHurtbox;
+    private BoxCollider boxcollider;
 
     public override void Awake()
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
-        playerVelocity = GameObject.Find("Player").GetComponent<Rigidbody>().GetVelocity();
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
         }
         rb = gameObject.GetComponent<Rigidbody>();
-        rb.SetMass(10000.0f);
-        collider = gameObject.GetComponent<BoxCollider>();
-        collider.SetSize(new Vector3(2.0f, 2.0f, 2.0f));
-        if (collider == null)
-        {
-            Engineson.print("ERROR: PlayerMovement requires a Collider component!");
-            return;
-        }
+        //rb.SetMass(10000.0f);
+        //collider = gameObject.GetComponent<CapsuleCollider>();
+        //collider.SetSize(new Vector3(2.0f, 2.0f, 2.0f));
+        boxcollider = gameObject.GetComponent<BoxCollider>();
+        //if (collider == null)
+        //{
+        //    Engineson.print("ERROR: PlayerMovement requires a Collider component!");
+        //    return;
+        //}
         anim = gameObject.GetChild("MawlocTailMesh").GetComponent<MawlocTailAnimation>();
         if (anim == null)
         {
@@ -110,7 +111,7 @@ public class EnemyControllerBossTail : EnemyController
                 float targetAngle = (float)Math.Atan2(directionToPlayer.X, directionToPlayer.Z) * (180.0f / (float)Math.PI);
                 Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(targetAngle * ((float)Math.PI / 180.0f), 0, 0);
                 enemyTransform.SetRotationQuat(newRotation);
-                collider.SetRotation(newRotation);
+                boxcollider.SetRotation(newRotation);
             }
 
             if (waitingToEmerge)
@@ -121,6 +122,7 @@ public class EnemyControllerBossTail : EnemyController
                     currentPositionIndex = FindClosestFixedPosition();
                     Emerge();
                     waitingToEmerge = false;
+                    emergeTimer = 2.0f;
                 }
                 return;
             }
@@ -149,7 +151,7 @@ public class EnemyControllerBossTail : EnemyController
         }
         if (isDead)
         {
-            collider.SetActive(false);
+            boxcollider.SetActive(false);
             //sound?.Stop();
         }
     }
@@ -165,7 +167,7 @@ public class EnemyControllerBossTail : EnemyController
         {
             Burrow();
             enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
-            collider.SetPosition(enemyTransform.position);
+            boxcollider.SetPosition(enemyTransform.position);
             actionTimer = shiftDuration;
         }
     }
@@ -177,7 +179,7 @@ public class EnemyControllerBossTail : EnemyController
             Audio.PlayOneShot(BurrowClip);
             Engineson.print("Burrowed");
             enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
-            collider.SetPosition(enemyTransform.position);
+            boxcollider.SetPosition(enemyTransform.position);
             anim.SetBurrowingAnimation();
             AddComponent<ParticleFX>().ApplyPreset(25);
             GetComponent<ParticleFX>().EmitBurst(25);
@@ -193,7 +195,7 @@ public class EnemyControllerBossTail : EnemyController
             if (playerTransform != null)
             {
                 enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
-                collider.SetPosition(enemyTransform.position);
+                boxcollider.SetPosition(enemyTransform.position);
                 anim.SetUnburrowingAnimation();
                 AddComponent<ParticleFX>().ApplyPreset(25);
                 GetComponent<ParticleFX>().EmitBurst(25);
@@ -271,9 +273,8 @@ public class EnemyControllerBossTail : EnemyController
     private bool IsPlayerInCollider(GameObject hurtbox, Vector3 playerPos)
     {
         var bc = hurtbox.GetComponent<BoxCollider>();
-        Vector3 halfSize = bc.GetSize() * 0.5f;    // <--- your engine�s getter for collider size
+        Vector3 halfSize = bc.GetSize() * 0.5f;
         Vector3 center = hurtbox.GetComponent<Transform>().position;
-        Engineson.print($"Checking {hurtbox.name}: center={center}, halfSize={halfSize}, playerPos={playerPos}");
 
         return (playerPos.X >= center.X - halfSize.X && playerPos.X <= center.X + halfSize.X) &&
                (playerPos.Y >= center.Y - halfSize.Y && playerPos.Y <= center.Y + halfSize.Y) &&

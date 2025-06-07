@@ -137,7 +137,6 @@ public class Boltgun : BaseWeapon
                         bulletHitEnemies[i].Add(hitObject);
 
                         float finalDamage = damage;
-                        redThirstManager.OnShotgunUsed();
 
                         if (redThirstManager.IsInBlackRage())
                             finalDamage += redThirstManager.redThirstBonus;
@@ -218,10 +217,10 @@ public class Boltgun : BaseWeapon
         bulletHitEnemies.RemoveAt(index);
         bulletStartPositions.RemoveAt(index);
     }
-    
+
     public int GetCurrentAmmo()
     {
-       return currentMagazineAmmo;
+        return currentMagazineAmmo;
     }
 
     public int GetMaxAmmo()
@@ -247,7 +246,15 @@ public class Boltgun : BaseWeapon
                                   (transform.forward * localOffset.Z);
             bulletStart.Y += 0.5f;
 
-            Vector3 direction = Vector3.Normalize(playerInput.GetCurrentLookDirection());
+            Vector3 direction;
+            if (playerInput.GetCurrentLookDirection() != Vector3.Zero)
+            {
+                direction = playerInput.GetCurrentLookDirection();
+            }
+            else
+            {
+                direction = Vector3.Normalize(transform.forward);
+            }
 
             float spreadYaw = ((float)random.NextDouble() - 0.5f) * bulletSpreadAngle;
             float spreadPitch = ((float)random.NextDouble() - 0.5f) * bulletSpreadAngle;
@@ -276,8 +283,12 @@ public class Boltgun : BaseWeapon
             ParticleFX particleFX = projectile.GetComponent<ParticleFX>();
             if (particleFX != null)
             {
-                particleFX.ApplyPreset(14);
+
+
+                particleFX.ApplyPreset(51);
+                particleFX.SetParticleStartRotation(yaw);
                 particleFX.EmitBurst(1);
+
             }
 
             bulletsObjects.Add(projectile);

@@ -1405,6 +1405,14 @@ void EngineBinds::PlayAnimOnce(MonoObject* animationRef, int index, float timeTo
 	}
 }
 
+void EngineBinds::PlayAnimOnceNoBlend(MonoObject* animationRef, int index)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->PlayAnimOnceNoBlend(index);
+	}
+}
+
 //Tween
 // tienes que referenciar al componente que vas a usar o al gameobject que vas a usar, en el caso de que sea
 // un gameobject se usara el transform del gameobject
@@ -1649,7 +1657,7 @@ bool EngineBinds::LoadScene(MonoString* sceneName)
     char* C_sceneName = mono_string_to_utf8(sceneName);
     if (Application->scene_serializer->DeSerialize(std::string(C_sceneName)))
     {
-        Application->physicsModule->linkPhysicsToScene = false;
+		//Application->physicsModule->linkPhysicsToScene = false; //Comment this to make the enemies apear on their position 
 		Application->hasChangedScene = true;
 		return true;
     }
@@ -1685,6 +1693,14 @@ void EngineBinds::PlayParticle(MonoObject* particleRef)
 	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
 	if (particle) {
 		particle->Play();
+	}
+}
+
+void EngineBinds::SetParticleStartRotation(MonoObject* particleRef, float startRotation)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->SetStartRotation(startRotation);
 	}
 }
 
@@ -1954,6 +1970,8 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetLoop", (const void*)&EngineBinds::SetLoop);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::PlayAnimOnce", (const void*)&EngineBinds::PlayAnimOnce);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::IsAnimationFinished", (const void*)&EngineBinds::IsAnimationFinished);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::PlayAnimOnceNoBlend", (const void*)&EngineBinds::PlayAnimOnceNoBlend);
+
 
 	// Tween
     
@@ -1998,6 +2016,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.ParticleFX::Play", (const void*)&EngineBinds::PlayParticle);
 	mono_add_internal_call("HawkEngine.ParticleFX::Stop", (const void*)&EngineBinds::StopParticle);
 	mono_add_internal_call("HawkEngine.ParticleFX::EmitBurst", (const void*)&EngineBinds::EmitBurst);
+	mono_add_internal_call("HawkEngine.ParticleFX::SetParticleStartRotation", (const void*)&EngineBinds::SetParticleStartRotation);
 }
 
 template <class T>

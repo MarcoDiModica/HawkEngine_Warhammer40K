@@ -128,6 +128,12 @@ void SkeletalAnimationComponent::PlayAnimOnce(int index, float timeToTransitionA
 	isBlending = true;
 }
 
+void SkeletalAnimationComponent::PlayAnimOnceNoBlend(int index)
+{
+	animation1 = std::make_unique<Animation>(*animations[index].get());
+	animator->PlayAnimationOnce(animation1.get());
+}
+
 void SkeletalAnimationComponent::Destroy()
 {
 	if (animator) {
@@ -197,6 +203,7 @@ void SkeletalAnimationComponent::SetLoop(bool isLoop)
 {
 	loopAnimation = isLoop;
 	animator->isLooping = isLoop;
+	
 }
 
 MonoObject* SkeletalAnimationComponent::GetSharp()

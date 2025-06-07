@@ -70,13 +70,22 @@ void Animator::UpdateAnimation(float dt)
 		m_CurrentAnimation = nullptr;
 		return;
     }*/
-	
+    if (!isLooping && m_CurrentTime >= m_CurrentAnimation->GetDuration()-1.0f)
+    {
+        LOG(LogType::LOG_INFO, "Animation finished no blend");
+        animationFinished = true;
+        return;
+    }
+
     if (m_CurrentAnimation)
     {
+        animationFinished = false;
         m_CurrentTime += m_CurrentAnimation->GetTicksPerSecond() * dt * m_PlaySpeed;
         m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->GetDuration());
         CalculateBoneTransform(&m_CurrentAnimation->GetRootNode(), glm::mat4(1.0f));
     }
+
+
 }
 
 void Animator::PlayAnimation(Animation* pAnimation)

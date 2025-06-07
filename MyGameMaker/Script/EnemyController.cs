@@ -10,7 +10,7 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     // Variables comunes
     protected Transform playerTransform;
     protected Rigidbody rb;
-    protected BoxCollider collider;
+    protected CapsuleCollider collider;
     protected Transform enemyTransform;
     //protected AudioSource sound;
     protected ParticleFX particles;
@@ -70,5 +70,28 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     public float Lerp(float start, float end, float t)
     {
         return start + (end - start) * Math.Min(1, Math.Max(0, t));
+    }
+
+    public void EnemySquirting()
+    {
+        Random random = new Random();
+        int value = random.Next(0, 3);
+        int preset = 35;
+        switch (value)
+        {
+            case 0:
+                preset = 47;
+                break;
+            case 1:
+                preset = 48;
+                break;
+            case 2:
+                preset = 35;
+                break;
+
+        }
+        Engineson.print("preset is " + preset + "value is " + value);
+        AddComponent<ParticleFX>().ApplyPreset(preset);
+        GetComponent<ParticleFX>().EmitBurst(1);
     }
 }

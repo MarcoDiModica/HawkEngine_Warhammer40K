@@ -64,7 +64,6 @@ bool Root::Start()
 {
 	//resourceManager->LoadResources(); // Esto no se mutea
 	//resourceManager->CreateDefaultCube(); // Esto no se mutea
-
 	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 	Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
 	//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
@@ -266,19 +265,19 @@ bool Root::Start()
 	//BoltgunBullets->SetTag("Ammunition");
 	//
 	////Lictor
-	//auto lictor = CreateGameObject("Lictor");
-	//lictor->SetTag("Enemy");
-	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
-	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.6, 1.3, 0.5));
-	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -0.7, 0));
-	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor.fbx");
-	//lictorMesh->SetName("LictorMesh");
-	//lictorMesh->AddComponent<ScriptComponent>()->LoadScript("LictorAnimation");
-	//lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
-	//ParentGameObject(*lictorMesh, *lictor);
-	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
+	/*auto lictor = CreateGameObject("Lictor");
+	lictor->SetTag("Enemy");
+	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
+	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.6, 1.3, 0.5));
+	lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -0.7, 0));
+	auto lictorMesh = CreateGameObjectWithPath("Assets/FBX/LictorFinal.fbx");
+	lictorMesh->SetName("LictorMesh");
+	lictorMesh->AddComponent<ScriptComponent>()->LoadScript("LictorAnimation");
+	lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
+	ParentGameObject(*lictorMesh, *lictor);
+	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");*/
 	//
 	//Climbing Hormagaunt
 	//auto hormagaunt = CreateGameObject("Hormagaunt");
@@ -420,7 +419,7 @@ bool Root::Start()
 	//player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 	//player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
 	//player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-	////player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
+	//player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
 	//
 	//auto riffleShotFX = CreateGameObject("RiffleShotFX");
 	//riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
@@ -466,11 +465,14 @@ bool Root::Start()
 	//inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 	//inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
 	//
-	//auto walkingFX = CreateGameObject("WalkingFX");
+	//auto walkingFX = CreateGameObject("WalkingFX2");
 	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
-	//ParentGameObject(*walkingFX, *player);
-	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
-	
+	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(53);
+
+	//auto redThirstFX = CreateGameObject("RedThirstFX");
+	//redThirstFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
+	//redThirstFX->AddComponent<ParticleFX>()->ApplyPreset(32);
+	//
 	////ARMAS NO TOCAR
 	//
 	//auto boltgun = CreateGameObject("Boltgun");
@@ -490,7 +492,7 @@ bool Root::Start()
 	//shotgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	//shotgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//ParentGameObject(*shotgunMesh, *shotgun);
-	////
+	//
 	//auto railgun = CreateGameObject("Railgun");
 	//railgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//auto railgunMesh = CreateGameObjectWithPath("Assets/railgun.fbx");

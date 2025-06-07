@@ -296,7 +296,7 @@ public class PlayerController : MonoBehaviour
                             isHitRunning = true;
                             playerAnimations.RunningToHitAnimation();
                         }
-                        else if (isShootingStanding)
+                        else if (isShootingStanding || isShootingRunning)
                         {
                             playerAnimations.ShootingStandingToHitAnimation();
                             isShootingStandingHitTimerActive = true;
@@ -401,9 +401,13 @@ public class PlayerController : MonoBehaviour
             {
                 playerAnimations.HitShootingStandingToShootingAnimation();
             }
-            else 
+            else if (isShootingRunning)
             {
-                playerAnimations.HitShootingStandingToIdleAnimation();
+                playerAnimations.HitShootingToShootingRunningAnimation();
+            }
+            else
+            {
+                 playerAnimations.HitShootingStandingToIdleAnimation();
             }
 
         }

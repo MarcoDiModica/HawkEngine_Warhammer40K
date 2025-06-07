@@ -1999,6 +1999,22 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
+    public void HitShootingToShootingRunningAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(9, 32, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
     public void HitShootingStandingToShootingAnimation()
     {
         if (!componentsInitialized || esk == null)
@@ -2006,7 +2022,7 @@ public class PlayerAnimations : MonoBehaviour
 
         try
         {
-            esk.TransitionAnimations(9, 33, 0.1f);
+            esk.TransitionAnimations(9, 41, 0.1f);
             esk.SetAnimationSpeed(2.0f);
         }
         catch (Exception e)

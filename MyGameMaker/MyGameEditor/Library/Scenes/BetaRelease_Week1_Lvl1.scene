@@ -85,7 +85,6 @@ GameObject1:
       Script0:
         name: PlayerCamera
         fields:
-          playerRef: Player
           smoothness: 19
           maxOffsetDistance: 3.5999999
           offsetSmoothness: 5
@@ -188,15 +187,7 @@ GameObject4:
     ScriptComponents:
       Script0:
         name: DropManager
-        fields:
-          MagnetPrefab: Assets\Prefabs\magnetPrefab.prefab.yaml
-          BlackHeartPrefab: Assets\Prefabs\BlackHeartPrefab.prefab.yaml
-          AmmunitionBlessingPrefab: Assets\Prefabs\AmmunitionBlessingPrefab.prefab.yaml
-          ChapterStandardPrefab: Assets\Prefabs\ChapterStandardPrefab.prefab.yaml
-          ShotgunShellsPrefab: Assets\Prefabs\ShotgunShellsNew.prefab.yaml
-          BoltgunBulletsPrefab: Assets\Prefabs\BoltgunBulletsNew.prefab.yaml
-          MedicaeStimmPrefab: Assets\Prefabs\MedicaeStimmPrefab.prefab.yaml
-          PiercingBulletsPrefab: Assets\Prefabs\PiercingBulletsPrefab.prefab.yaml
+        fields: ~
   Children: ~
 GameObject5:
   name: Light_Next_Level
@@ -478,9 +469,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 1.64824975
+          floatSpeed: 1
           floatHeight: 0.5
-          rotationSpeed: 94.1298676
+          rotationSpeed: 50
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -586,9 +577,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 1.04396355
+          floatSpeed: 1
           floatHeight: 0.5
-          rotationSpeed: 71.6492081
+          rotationSpeed: 50
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -3421,7 +3412,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.76617987064941
+            - 89.76473694188401
             - 0
           localScale:
             - 208.60295104980469
@@ -3672,9 +3663,9 @@ GameObject20:
             - 164.68646240234375
             - 1182.335205078125
           localRotation:
-            - -90.000006841530947
-            - 83.400736609575972
-            - 6.8415309504562106e-06
+            - -90.000034797714122
+            - 83.400656161786358
+            - -2.4535416775231011e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -3714,9 +3705,9 @@ GameObject20:
             - 158.47599792480469
             - 1061.107666015625
           localRotation:
-            - -90.000032066250384
-            - -76.296838579876479
-            - 2.5186932764085601e-05
+            - -90.000032066307597
+            - -76.296852338521205
+            - 2.5186989974818382e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -4680,9 +4671,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.993722270715551
-            - 89.841667010024693
-            - 179.99279507166531
+            - 89.993458057645142
+            - 89.848499927345884
+            - 179.99253085867781
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -4722,9 +4713,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.993722270715551
-            - 89.841667010024693
-            - 179.99279507166531
+            - 89.993458057645142
+            - 89.848499927345884
+            - 179.99253085867781
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5226,9 +5217,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.99999664449409
-            - 66.695725202350346
-            - 179.99999490101703
+            - 90.000006711014862
+            - 66.695716879306701
+            - -179.99998980203085
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5268,9 +5259,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.99999664449409
-            - 66.695725202350346
-            - 179.99999490101703
+            - 90.000006711014862
+            - 66.695716879306701
+            - -179.99998980203085
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5310,9 +5301,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.99999664449409
-            - 66.695725202350346
-            - 179.99999490101703
+            - 90.000006711014862
+            - 66.695716879306701
+            - -179.99998980203085
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -6066,9 +6057,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360241669106
-            - 52.153760355639683
-            - -35.460577179108597
+            - 178.3336032357864
+            - 52.153765872309769
+            - -35.460576839329157
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6108,9 +6099,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360241669106
-            - 52.153760355639683
-            - -35.460577179108597
+            - 178.3336032357864
+            - 52.153765872309769
+            - -35.460576839329157
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6150,9 +6141,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360241669106
-            - 52.153760355639683
-            - -35.460577179108597
+            - 178.3336032357864
+            - 52.153765872309769
+            - -35.460576839329157
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -7452,9 +7443,9 @@ GameObject20:
             - 48.267116546630859
             - -1413.0146484375
           localRotation:
-            - 90.000051112517212
-            - 66.469458196973463
-            - -179.99999249225044
+            - 90.000051285823275
+            - 66.469449649343787
+            - 179.99999896010132
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -11472,9 +11463,9 @@ GameObject23:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.999814962597753
-            - 81.207712930060339
-            - 179.99991771774972
+            - 89.999797830931215
+            - 81.207680384492576
+            - 179.99991257418597
           localScale:
             - 41.956031799316406
             - 53.921905517578125
@@ -11640,9 +11631,9 @@ GameObject23:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.98167823785117
-            - -89.823387606659651
-            - -179.97258553756285
+            - 89.98267033757682
+            - -89.832369894386446
+            - -179.97358276142612
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -12490,9 +12481,9 @@ GameObject23:
             - 22.607597351074219
             - -2101.2529296875
           localRotation:
-            - -179.99999134857288
-            - 84.241575839430283
-            - 2.1271352770344651e-05
+            - -179.99999134858226
+            - 84.2415855109587
+            - 2.1271347980752727e-05
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -12532,9 +12523,9 @@ GameObject23:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.1001178841574411
-            - -81.28107403382576
-            - -179.99999172220353
+            - 1.1001203926822019
+            - -81.281074192558776
+            - -179.99999169547775
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -13876,9 +13867,9 @@ GameObject23:
             - 84.565017700195312
             - -2966.651611328125
           localRotation:
-            - -89.995138749871217
-            - -89.763294962558376
-            - -0.0075301522335590298
+            - -89.994638718090656
+            - -89.767894836821753
+            - -0.0080455516924952987
           localScale:
             - 43.324676513671875
             - 43.324676513671875
@@ -14297,7 +14288,7 @@ GameObject23:
             - -2728.593017578125
           localRotation:
             - 89.999993077010672
-            - -71.216278643695048
+            - -71.216285566685457
             - 179.99999307701066
           localScale:
             - 110.40802001953125
@@ -14531,7 +14522,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -14573,7 +14564,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -14615,7 +14606,7 @@ GameObject24:
             - 9911.650390625
           localRotation:
             - -127.54482216474051
-            - -37.029465936556825
+            - -37.029465936556832
             - 30.029442018358075
           localScale:
             - 100
@@ -20568,9 +20559,9 @@ GameObject27:
             - 3.1512765884399414
             - 3.5392885208129883
           localRotation:
-            - 179.846653597451
-            - -57.007504074983153
-            - -179.9722471169585
+            - 179.8466535991324
+            - -57.007584374472245
+            - -179.97224711071263
           localScale:
             - 4.1512908935546875
             - 8.0131254196166992
@@ -21451,7 +21442,7 @@ GameObject28:
             - 13.974271774291992
           localRotation:
             - -1.6902280382883206
-            - -30.665043002100798
+            - -30.665043002100795
             - 0.65932810957335963
           localScale:
             - 31.360137939453125
@@ -23851,7 +23842,7 @@ GameObject29:
             - -148.216064453125
           localRotation:
             - -179.99999499104374
-            - 25.858725770479122
+            - 25.858725770479126
             - -179.99999499104374
           localScale:
             - 10.84910774230957
@@ -23982,9 +23973,9 @@ GameObject29:
             - 3.0124197006225586
             - -194.1514892578125
           localRotation:
-            - -179.99999499104948
-            - 87.96957693443774
-            - -179.99999499104948
+            - -179.99999499103757
+            - 87.969443060134608
+            - -179.99999499103757
           localScale:
             - 12.215158462524414
             - 7.4319052696228027
@@ -24445,7 +24436,7 @@ GameObject29:
             - -57.019905090332031
           localRotation:
             - 0
-            - -21.351410654346925
+            - -21.351410654346921
             - 0
           localScale:
             - 6.2044053077697754
@@ -27138,9 +27129,9 @@ GameObject32:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.515342891
+          floatSpeed: 1
           floatHeight: 0.5
-          rotationSpeed: 81.1886978
+          rotationSpeed: 50
   Children: ~
 GameObject33:
   name: BiblePage_Pueblo
@@ -27223,9 +27214,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.30008745
+          floatSpeed: 1
           floatHeight: 0.5
-          rotationSpeed: 95.5916748
+          rotationSpeed: 50
   Children: ~
 GameObject34:
   name: BiblePage_Pasillo_Zona3
@@ -27308,9 +27299,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.06087899
+          floatSpeed: 1
           floatHeight: 0.5
-          rotationSpeed: 71.3085938
+          rotationSpeed: 50
   Children: ~
 GameObject35:
   name: BiblePage_Ciudad
@@ -27393,9 +27384,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.25080669
+          floatSpeed: 1
           floatHeight: 0.5
-          rotationSpeed: 72.3938141
+          rotationSpeed: 50
   Children: ~
 GameObject36:
   name: Barril_Ciudad1
@@ -27454,6 +27445,7 @@ GameObject36:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject37:
   name: CajaMadera1
@@ -27512,6 +27504,7 @@ GameObject37:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject38:
   name: WoodenBox_Lvl1_prefab_1_Instance
@@ -27570,6 +27563,7 @@ GameObject38:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject39:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance
@@ -27628,6 +27622,7 @@ GameObject39:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject40:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance2
@@ -27686,6 +27681,7 @@ GameObject40:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject41:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance3
@@ -27744,6 +27740,7 @@ GameObject41:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject42:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance4
@@ -27802,6 +27799,7 @@ GameObject42:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject43:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance5
@@ -27860,6 +27858,7 @@ GameObject43:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject44:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance7
@@ -27918,6 +27917,7 @@ GameObject44:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject45:
   name: WoodenBox_Lvl1_prefab_1_Instance2
@@ -27976,6 +27976,7 @@ GameObject45:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject46:
   name: WoodenBox_Lvl1_prefab_1_Instance3
@@ -28034,6 +28035,7 @@ GameObject46:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject47:
   name: WoodenBox_Lvl1_prefab_1_Instance4
@@ -28092,6 +28094,7 @@ GameObject47:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject48:
   name: WoodenBox_Lvl1_prefab_1_Instance5
@@ -28150,6 +28153,7 @@ GameObject48:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject49:
   name: WoodenBox_Lvl1_prefab_1_Instance6
@@ -28208,6 +28212,7 @@ GameObject49:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject50:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance6
@@ -28266,6 +28271,7 @@ GameObject50:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject51:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance8
@@ -28324,6 +28330,7 @@ GameObject51:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject52:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance9
@@ -28382,6 +28389,7 @@ GameObject52:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject53:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance10
@@ -28440,6 +28448,7 @@ GameObject53:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject54:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance11
@@ -28498,6 +28507,7 @@ GameObject54:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject55:
   name: WoodenBox_Lvl1_prefab_1_Instance7
@@ -28556,6 +28566,7 @@ GameObject55:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject56:
   name: WoodenBox_Lvl1_prefab_1_Instance8
@@ -28614,6 +28625,7 @@ GameObject56:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject57:
   name: WoodenBox_Lvl1_prefab_1_Instance10
@@ -28672,6 +28684,7 @@ GameObject57:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject58:
   name: WoodenBox_Lvl1_prefab_1_Instance9
@@ -28730,6 +28743,7 @@ GameObject58:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject59:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance12
@@ -28788,6 +28802,7 @@ GameObject59:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject60:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance13
@@ -28846,6 +28861,7 @@ GameObject60:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject61:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance14
@@ -28904,6 +28920,7 @@ GameObject61:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject62:
   name: WoodenBox_Lvl1_prefab_1_Instance11
@@ -28962,6 +28979,7 @@ GameObject62:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject63:
   name: WoodenBox_Lvl1_prefab_1_Instance12
@@ -29020,6 +29038,7 @@ GameObject63:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject64:
   name: WoodenBox_Lvl1_prefab_1_Instance13
@@ -29078,6 +29097,7 @@ GameObject64:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject65:
   name: WoodenBox_Lvl1_prefab_1_Instance14
@@ -29136,6 +29156,7 @@ GameObject65:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject66:
   name: WoodenBox_Lvl1_prefab_1_Instance15
@@ -29194,6 +29215,7 @@ GameObject66:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject67:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance15
@@ -29252,6 +29274,7 @@ GameObject67:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject68:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance16
@@ -29310,6 +29333,7 @@ GameObject68:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject69:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance17
@@ -29368,6 +29392,7 @@ GameObject69:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject70:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance18
@@ -29426,6 +29451,7 @@ GameObject70:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject71:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance19
@@ -29484,6 +29510,7 @@ GameObject71:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject72:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance20
@@ -29542,6 +29569,7 @@ GameObject72:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject73:
   name: WoodenBox_Lvl1_prefab_1_Instance16
@@ -29600,6 +29628,7 @@ GameObject73:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject74:
   name: WoodenBox_Lvl1_prefab_1_Instance17
@@ -29658,6 +29687,7 @@ GameObject74:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject75:
   name: WoodenBox_Lvl1_prefab_1_Instance18
@@ -29716,6 +29746,7 @@ GameObject75:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject76:
   name: WoodenBox_Lvl1_prefab_1_Instance19
@@ -29774,6 +29805,7 @@ GameObject76:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject77:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance21
@@ -29832,6 +29864,7 @@ GameObject77:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject78:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance22
@@ -29890,6 +29923,7 @@ GameObject78:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject79:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance23
@@ -29948,6 +29982,7 @@ GameObject79:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject80:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance24
@@ -30006,6 +30041,7 @@ GameObject80:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject81:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance25
@@ -30064,6 +30100,7 @@ GameObject81:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject82:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_1_Instance26
@@ -30122,6 +30159,7 @@ GameObject82:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject83:
   name: WoodenBox_Lvl1_prefab_1_Instance20
@@ -30180,6 +30218,7 @@ GameObject83:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject84:
   name: WoodenBox_Lvl1_prefab_1_Instance21
@@ -30238,6 +30277,7 @@ GameObject84:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject85:
   name: WoodenBox_Lvl1_prefab_1_Instance22
@@ -30296,6 +30336,7 @@ GameObject85:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject86:
   name: WoodenBox_Lvl1_prefab_1_Instance23
@@ -30354,6 +30395,7 @@ GameObject86:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject87:
   name: WoodenBox_Lvl1_prefab_1_Instance24
@@ -30412,6 +30454,7 @@ GameObject87:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject88:
   name: Libreria_Sergi_2
@@ -31838,9 +31881,9 @@ GameObject88:
             - 0
             - -25.443840026855469
           localRotation:
-            - 89.987141177902501
-            - 89.872277888484319
-            - 179.98825449943394
+            - 89.989533692700775
+            - 89.872453593152116
+            - 179.990658967054
           localScale:
             - 86.512344360351562
             - 99.999984741210938
@@ -31880,9 +31923,9 @@ GameObject88:
             - 341.29437255859375
             - 124.93968963623047
           localRotation:
-            - 89.987570633197947
-            - 89.932046055395446
-            - 179.98735035956113
+            - 89.982182619262602
+            - 89.937115245057456
+            - 179.9819657607209
           localScale:
             - 96.124794006347656
             - 99.999984741210938
@@ -32301,7 +32344,7 @@ GameObject88:
             - -869.0504150390625
           localRotation:
             - 90
-            - 89.773492223524528
+            - 89.770616221767625
             - 0
           localScale:
             - 100
@@ -33015,8 +33058,8 @@ GameObject88:
             - -924.02191162109375
           localRotation:
             - -90.000024148367501
-            - 0.061903274781471417
-            - -1.2539451308760498e-09
+            - 0.061903336095712573
+            - -1.2539580518854702e-09
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -33728,9 +33771,9 @@ GameObject88:
             - 0
             - -469.199462890625
           localRotation:
-            - -90.000062432597062
-            - 65.587224437801908
-            - -3.4479894512716319e-05
+            - -90.000052939103796
+            - 65.587229349348618
+            - -1.974527001603451e-05
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -34652,9 +34695,9 @@ GameObject88:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 5.90687453246757e-05
-            - -79.275337818401084
-            - -90.000105375176148
+            - 6.5631866030008525e-05
+            - -79.275324394992722
+            - -90.000117083456601
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -34694,9 +34737,9 @@ GameObject88:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 5.90687453246757e-05
-            - -79.275337818401084
-            - -90.000105375176148
+            - 6.5631866030008525e-05
+            - -79.275324394992722
+            - -90.000117083456601
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -35891,7 +35934,7 @@ GameObject108:
         name: Item
         fields:
           isTextVisible: false
-          dialogueText: There is an audio log./n"Here... kzzzt Soldier John Dou, 10th Infantry"./n"The Tyranids are taking more and more territory, we can't hold them back..."/n*Distant explosion. Gunfire in the background.*/n"(gasp) We're falling back. The library... It's the only safe place left"/n"We're entrenched, but I don't know how much longer we can hold..."/n*Tyranid noises in the distance.*/n"Retreat! Retreat!"/n"If anyone hears this... kzzzt may the Emperor protect us."/nThe transmission cuts off./f
+          dialogueText: Esto es parte 1/nAhora parte 2/nFinalmente parte 3/f
   Children: ~
 GameObject109:
   name: ClawsISE
@@ -35931,7 +35974,7 @@ GameObject109:
         name: Item
         fields:
           isTextVisible: false
-          dialogueText: The marks of a creature's attack./f
+          dialogueText: Esto es parte 1/nAhora parte 2/nFinalmente parte 3/f
   Children: ~
 GameObject110:
   name: Canvas_OptionsMenu
@@ -35981,8 +36024,7 @@ GameObject110:
     ScriptComponents:
       Script0:
         name: OptionMenu
-        fields:
-          currentResolution: 1920x1080
+        fields: ~
   Children:
     - name: Canvas_OptionsMenu_
       prefabPath: ""
@@ -38027,7 +38069,7 @@ GameObject111:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -38047,8 +38089,8 @@ GameObject111:
           currentMagazineAmmo: 0
           maxAmmo: 0
           currentTotalAmmo: 0
-          range: 40
-          timeToLerp: 0.5
+          range: 0
+          timeToLerp: 0
   Children:
     - name: TermagauntMesh
       prefabPath: ""
@@ -39638,7 +39680,7 @@ GameObject112:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -39658,8 +39700,8 @@ GameObject112:
           currentMagazineAmmo: 0
           maxAmmo: 0
           currentTotalAmmo: 0
-          range: 100
-          timeToLerp: 0.100000001
+          range: 0
+          timeToLerp: 0.400000006
   Children:
     - name: TyranidWarriorMesh
       prefabPath: ""
@@ -41479,7 +41521,7 @@ GameObject113:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -41499,8 +41541,8 @@ GameObject113:
           currentMagazineAmmo: 0
           maxAmmo: 0
           currentTotalAmmo: 0
-          range: 40
-          timeToLerp: 0.5
+          range: 0
+          timeToLerp: 0
   Children:
     - name: TermagauntMesh
       prefabPath: ""
@@ -43090,7 +43132,7 @@ GameObject114:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -43110,8 +43152,8 @@ GameObject114:
           currentMagazineAmmo: 0
           maxAmmo: 0
           currentTotalAmmo: 0
-          range: 100
-          timeToLerp: 0.100000001
+          range: 0
+          timeToLerp: 0.400000006
   Children:
     - name: TyranidWarriorMesh
       prefabPath: ""
@@ -44931,7 +44973,7 @@ GameObject115:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -44951,8 +44993,8 @@ GameObject115:
           currentMagazineAmmo: 0
           maxAmmo: 0
           currentTotalAmmo: 0
-          range: 40
-          timeToLerp: 0.5
+          range: 0
+          timeToLerp: 0
   Children:
     - name: TermagauntMesh
       prefabPath: ""
@@ -46542,7 +46584,7 @@ GameObject116:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -46562,8 +46604,8 @@ GameObject116:
           currentMagazineAmmo: 0
           maxAmmo: 0
           currentTotalAmmo: 0
-          range: 100
-          timeToLerp: 0.100000001
+          range: 0
+          timeToLerp: 0.400000006
   Children:
     - name: TyranidWarriorMesh
       prefabPath: ""
@@ -48383,7 +48425,7 @@ GameObject117:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -48403,8 +48445,8 @@ GameObject117:
           currentMagazineAmmo: 0
           maxAmmo: 0
           currentTotalAmmo: 0
-          range: 100
-          timeToLerp: 0.100000001
+          range: 0
+          timeToLerp: 0.400000006
   Children:
     - name: TyranidWarriorMesh
       prefabPath: ""
@@ -50224,7 +50266,7 @@ GameObject118:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -50244,8 +50286,8 @@ GameObject118:
           currentMagazineAmmo: 0
           maxAmmo: 0
           currentTotalAmmo: 0
-          range: 100
-          timeToLerp: 0.100000001
+          range: 0
+          timeToLerp: 0.400000006
   Children:
     - name: TyranidWarriorMesh
       prefabPath: ""
@@ -52065,7 +52107,7 @@ GameObject119:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -52085,8 +52127,8 @@ GameObject119:
           currentMagazineAmmo: 0
           maxAmmo: 0
           currentTotalAmmo: 0
-          range: 40
-          timeToLerp: 0.5
+          range: 0
+          timeToLerp: 0
   Children:
     - name: TermagauntMesh
       prefabPath: ""
@@ -53676,7 +53718,7 @@ GameObject120:
       mass: 1
       isKinematic: false
       isFreezed: true
-      friction: 0.5
+      friction: 5
       gravity:
         x: 0
         y: -9.80000019
@@ -53696,8 +53738,8 @@ GameObject120:
           currentMagazineAmmo: 0
           maxAmmo: 0
           currentTotalAmmo: 0
-          range: 40
-          timeToLerp: 0.5
+          range: 0
+          timeToLerp: 0
   Children:
     - name: TermagauntMesh
       prefabPath: ""
@@ -56172,7 +56214,7 @@ GameObject133:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -57842,7 +57884,7 @@ GameObject134:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -59449,7 +59491,7 @@ GameObject135:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -61056,7 +61098,7 @@ GameObject136:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -62663,7 +62705,7 @@ GameObject137:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -64270,7 +64312,7 @@ GameObject138:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -67484,7 +67526,7 @@ GameObject140:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -69091,7 +69133,7 @@ GameObject141:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -70698,7 +70740,7 @@ GameObject142:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -72305,7 +72347,7 @@ GameObject143:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -73912,7 +73954,7 @@ GameObject144:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -75519,7 +75561,7 @@ GameObject145:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -77126,7 +77168,7 @@ GameObject146:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -78733,7 +78775,7 @@ GameObject147:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -80340,7 +80382,7 @@ GameObject148:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -81947,7 +81989,7 @@ GameObject149:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -83554,7 +83596,7 @@ GameObject150:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -85161,7 +85203,7 @@ GameObject151:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -86768,7 +86810,7 @@ GameObject152:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -88375,7 +88417,7 @@ GameObject153:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -89982,7 +90024,7 @@ GameObject154:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -91589,7 +91631,7 @@ GameObject155:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -93196,7 +93238,7 @@ GameObject156:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -94803,7 +94845,7 @@ GameObject157:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -96410,7 +96452,7 @@ GameObject158:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -98017,7 +98059,7 @@ GameObject159:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1
+      mass: 2
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -99568,20 +99610,18 @@ GameObject160:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 5
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 2
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
-          player: Player
+          spawnRadius: 5
   Children: ~
 GameObject161:
   name: SpawnerClimbingHormagaunt_1_Instance
@@ -99611,20 +99651,18 @@ GameObject161:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 5
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
-          player: Player
+          spawnRadius: 5
   Children: ~
 GameObject162:
   name: SpawnerClimbingHormagaunt_1_Instance2
@@ -99654,20 +99692,18 @@ GameObject162:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 5
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 2
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
-          player: Player
+          spawnRadius: 5
   Children: ~
 GameObject163:
   name: SpawnerClimbingHormagaunt_1_Instance3
@@ -99697,20 +99733,18 @@ GameObject163:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 10
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
-          player: Player
+          spawnRadius: 5
   Children: ~
 GameObject164:
   name: SpawnerClimbingHormagaunt_1_Instance4
@@ -99740,20 +99774,18 @@ GameObject164:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 2
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagaunt.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 65
-          player: Player
+          spawnRadius: 5
   Children: ~
 GameObject165:
   name: SpawnerClimbingHormagaunt_1_Instance6
@@ -99783,20 +99815,18 @@ GameObject165:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 5
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagaunt.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 60
-          player: Player
+          spawnRadius: 5
   Children: ~
 GameObject166:
   name: SpawnerClimbingHormagaunt_1_Instance7
@@ -99826,20 +99856,18 @@ GameObject166:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 2
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 65
-          player: Player
+          spawnRadius: 5
   Children: ~
 GameObject167:
   name: SpawnerClimbingHormagaunt_1_Instance8
@@ -99869,20 +99897,18 @@ GameObject167:
         name: EnemySpawner
         fields:
           spawnTimer: 0
-          secondsBetweenSpawns: 8
-          firstSpawnTime: 2
+          secondsBetweenSpawns: 0
+          firstSpawnTime: 0
           currentEnemiesSpawned: 0
-          maxEnemiesToSpawn: 1
+          maxEnemiesToSpawn: 0
           hasSpawnedFirst: false
-          climberHormagauntPrefab: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
           spawnHormagaunt: false
           spawnRanged: false
           spawnStalker: false
           spawnWarrior: false
-          spawnClimberHormagaunt: true
+          spawnClimberHormagaunt: false
           spawnerActive: false
-          spawnRadius: 65
-          player: Player
+          spawnRadius: 5
   Children: ~
 GameObject168:
   name: Medkit
@@ -99941,6 +99967,7 @@ GameObject168:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject169:
   name: Medkit_1_Instance
@@ -99999,6 +100026,7 @@ GameObject169:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject170:
   name: wooden barrel_1_Instance10_1_Instance5_1_Instance3_Instance_Instance
@@ -100057,6 +100085,7 @@ GameObject170:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject171:
   name: Medkit_1_Instance2
@@ -100115,6 +100144,7 @@ GameObject171:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject172:
   name: Medkit_1_Instance3
@@ -100173,6 +100203,7 @@ GameObject172:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject173:
   name: Medkit_1_Instance4
@@ -100231,6 +100262,7 @@ GameObject173:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject174:
   name: Medkit_1_Instance5
@@ -100289,6 +100321,7 @@ GameObject174:
         name: DestroyEnviormentObject
         fields:
           onlyMedicaeStimm: false
+          pawnDestroyedBarrel: false
   Children: ~
 GameObject175:
   name: CheckPoint_Instance6
@@ -100647,9 +100680,9 @@ GameObject184:
         - 3.2896044254302979
         - 10.935238838195801
       localRotation:
-        - -2.6537738700059132
-        - -52.984219813431402
-        - -143.75537597419421
+        - -2.6537714672173385
+        - -52.984220574957796
+        - -143.75537715802534
       localScale:
         - 0.017827585339546204
         - 0.017827583476901054
@@ -101689,7 +101722,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.8578063622423
             - 0
           localScale:
             - 208.60295104980469
@@ -101731,7 +101764,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.8578063622423
             - 0
           localScale:
             - 208.60295104980469
@@ -101773,7 +101806,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.8578063622423
             - 0
           localScale:
             - 208.60295104980469
@@ -101815,7 +101848,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.8578063622423
             - 0
           localScale:
             - 208.60295104980469
@@ -101857,7 +101890,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.8578063622423
             - 0
           localScale:
             - 208.60295104980469
@@ -101899,7 +101932,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.8578063622423
             - 0
           localScale:
             - 208.60295104980469
@@ -101941,7 +101974,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.859093883009095
+            - 89.8578063622423
             - 0
           localScale:
             - 208.60295104980469
@@ -103317,7 +103350,7 @@ GameObject210:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -34.204116821289062
+        - 244.73980712890625
         - 0
         - 9.8202724456787109
       localRotation:
@@ -103404,12 +103437,13 @@ GameObject210:
       Script0:
         name: PlayerShooting
         fields:
-          shootCooldown: 8.33333397
+          shootCooldown: 0.00999999978
           projectileSpeed: 90
           projectileLifetime: 0.5
           hasShotgun: false
           hasRailgun: false
           hasBoltgun: true
+          canChangeWeapon: true
       Script1:
         name: PlayerMovement
         fields:
@@ -103441,8 +103475,6 @@ GameObject210:
           isShootingRunning: false
           isDashing: false
           flashDuration: 0.100000001
-          aimLaser: AimLaser
-          aimLaserEnd: AimLaserEnd
       Script5:
         name: PlayerPowerUp
         fields:
@@ -103647,7 +103679,7 @@ GameObject210:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -7.1054273576010019e-15
+                - 2.8421709430404007e-14
                 - 0.10000045597553253
                 - 2.1847772598266602
               localRotation:
@@ -103670,7 +103702,7 @@ GameObject210:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -6.5962659334672935e-08
+                    - -6.5962694861809723e-08
                     - 8.2646965893218294e-07
                     - 6.7042185492027784e-07
                   localRotation:
@@ -103693,9 +103725,9 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -3.48166793173732e-07
-                        - 0.30000069737434387
-                        - 1.1894658058508867e-07
+                        - -4.4784317765333981e-07
+                        - 0.29999306797981262
+                        - -4.7990323537305812e-07
                       localRotation:
                         - -51.797582275028354
                         - -62.047270226845967
@@ -103716,9 +103748,9 @@ GameObject210:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 6.1180651300674072e-07
-                            - 1.0392309427261353
-                            - -9.9444082479749341e-07
+                            - -1.6368562683055643e-06
+                            - 1.0392320156097412
+                            - 1.0184809980273712e-05
                           localRotation:
                             - -3.5770863821279417
                             - 12.215839497726355
@@ -103739,9 +103771,9 @@ GameObject210:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - -5.3391914889289183e-07
-                                - 1.1680756807327271
-                                - 5.2435592579058721e-07
+                                - 3.91151388612343e-07
+                                - 1.1680746078491211
+                                - -6.9793150032637641e-06
                               localRotation:
                                 - 8.216053962453616
                                 - -3.7747063681976418
@@ -103762,7 +103794,7 @@ GameObject210:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 4.5703578166467196e-07
+                                    - 4.5703581008638139e-07
                                     - 0.3931928277015686
                                     - -1.2115204981455463e-06
                                   localRotation:
@@ -103808,9 +103840,9 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 2.0191801013424993e-06
-                        - 0.90553897619247437
-                        - 9.5318476667216601e-08
+                        - -5.58602141609299e-06
+                        - 0.90553838014602661
+                        - 6.2388359367560042e-08
                       localRotation:
                         - -5.8169511642279756
                         - -14.283795419605307
@@ -103831,12 +103863,12 @@ GameObject210:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 3.2039812936091039e-07
-                            - 0.73520612716674805
-                            - 2.3663292836317851e-07
+                            - -1.1909854720215662e-06
+                            - 0.73520958423614502
+                            - 9.8898487976839533e-07
                           localRotation:
                             - -9.6580358313753027
-                            - 26.698150455055664
+                            - 26.698150455055661
                             - -47.734500214462322
                           localScale:
                             - 0.99999982118606567
@@ -103854,9 +103886,9 @@ GameObject210:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 7.9933658980735345e-07
-                                - 0.80925273895263672
-                                - 2.2957146939006634e-07
+                                - -6.2161680034478195e-06
+                                - 0.80925536155700684
+                                - -1.1914977449123398e-06
                               localRotation:
                                 - 79.109748132815909
                                 - 10.162249545445874
@@ -103877,9 +103909,9 @@ GameObject210:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - -1.735703904159891e-06
-                                    - 0.69208681583404541
-                                    - -2.2334363620757358e-06
+                                    - 7.7500163797594723e-07
+                                    - 0.69208747148513794
+                                    - 5.6275683846251923e-07
                                   localRotation:
                                     - 169.0676850859507
                                     - -37.719808764914916
@@ -103900,9 +103932,9 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.0084818368777632713
-                                        - 0.328377366065979
-                                        - 0.058274686336517334
+                                        - 0.0084821786731481552
+                                        - 0.32837662100791931
+                                        - 0.058278411626815796
                                       localRotation:
                                         - 6.8973030255264076
                                         - 11.500654006654438
@@ -103923,9 +103955,9 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 1.1195176341516344e-07
-                                            - 0.13528174161911011
-                                            - -2.9859877486160258e-06
+                                            - 6.795527696112913e-08
+                                            - 0.13528180122375488
+                                            - 8.2811646961999941e-07
                                           localRotation:
                                             - 0.59058855306942037
                                             - -31.485101897532392
@@ -103946,9 +103978,9 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -4.0019436653437879e-08
-                                                - 0.14031009376049042
-                                                - 2.4867276238182967e-07
+                                                - -3.9283422665903345e-06
+                                                - 0.14030995965003967
+                                                - -6.3139905250864103e-06
                                               localRotation:
                                                 - 3.0021475318393693
                                                 - 6.9385061720234971
@@ -103992,9 +104024,9 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 1.8825986103365722e-07
-                                            - 0.14866040647029877
-                                            - 1.3855095630788128e-06
+                                            - -1.4152825542623759e-06
+                                            - 0.14866252243518829
+                                            - -5.7634283621155191e-06
                                           localRotation:
                                             - 0.66838849058212635
                                             - 4.5332450386906844
@@ -104015,7 +104047,7 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -6.1023484931865823e-07
+                                                - -6.102349061620771e-07
                                                 - 0.11445517838001251
                                                 - -1.6629769561404828e-06
                                               localRotation:
@@ -104061,9 +104093,9 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 5.7431304156807528e-08
-                                            - 0.13784058392047882
-                                            - 9.1686224834575114e-08
+                                            - -1.0940973425022094e-06
+                                            - 0.13784240186214447
+                                            - -3.0512867397192167e-06
                                           localRotation:
                                             - -1.1652069119609458
                                             - 6.5606704387756691
@@ -104084,9 +104116,9 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 8.6397773202406825e-07
-                                                - 0.10049811750650406
-                                                - 3.0464934752671979e-06
+                                                - -4.2073375539075641e-07
+                                                - 0.10049957036972046
+                                                - -2.3597260678798193e-07
                                               localRotation:
                                                 - 0.42800622195420196
                                                 - 0.62468681257466729
@@ -104107,9 +104139,9 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.06865585595369339
-                                        - 0.30464977025985718
-                                        - -0.17370949685573578
+                                        - 0.068656198680400848
+                                        - 0.30464902520179749
+                                        - -0.17370577156543732
                                       localRotation:
                                         - -34.476389384003262
                                         - -16.908074008727571
@@ -104130,9 +104162,9 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 6.7223732003185432e-07
-                                            - 0.092195779085159302
-                                            - 8.3910106241091853e-07
+                                            - -9.1187763473499217e-07
+                                            - 0.092198237776756287
+                                            - -1.6152482658071676e-06
                                           localRotation:
                                             - -3.2520195442628292
                                             - -0.48837182724607137
@@ -104153,9 +104185,9 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -7.7691782962574507e-07
-                                                - 0.076157838106155396
-                                                - -8.8304830114793731e-07
+                                                - 3.734206529770745e-06
+                                                - 0.07615380734205246
+                                                - 3.7662466638721526e-06
                                               localRotation:
                                                 - -2.8262886219761478
                                                 - -0.36686894492722749
@@ -104176,9 +104208,9 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - 0.024536339566111565
-                                        - 0.23643259704113007
-                                        - 0.12960341572761536
+                                        - 0.024536680430173874
+                                        - 0.23643185198307037
+                                        - 0.12960714101791382
                                       localRotation:
                                         - 18.723514204530286
                                         - 26.238325597542236
@@ -104199,9 +104231,9 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -7.9777743167142035e-07
-                                            - 0.14899791777133942
-                                            - 3.0366136343218386e-06
+                                            - 2.012777997606463e-07
+                                            - 0.14899711310863495
+                                            - -5.5589515568499337e-07
                                           localRotation:
                                             - 34.183166862586894
                                             - -0.66938209546891658
@@ -104222,9 +104254,9 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 2.0191801013424993e-06
-                        - 0.90553897619247437
-                        - 9.5318476667216601e-08
+                        - -5.58602141609299e-06
+                        - 0.90553838014602661
+                        - 6.2388359367560042e-08
                       localRotation:
                         - 13.382677414102542
                         - 1.3320428074168016e-05
@@ -104245,9 +104277,9 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 2.0191801013424993e-06
-                        - 0.90553897619247437
-                        - 9.5318476667216601e-08
+                        - -5.58602141609299e-06
+                        - 0.90553838014602661
+                        - 6.2388359367560042e-08
                       localRotation:
                         - -5.6563199524965073
                         - 6.7628615386231949
@@ -104268,9 +104300,9 @@ GameObject210:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - 1.7865386325865984e-07
+                            - 1.7865387746951455e-07
                             - 0.73520660400390625
-                            - 9.1644736244234082e-10
+                            - 9.1644380972866202e-10
                           localRotation:
                             - 71.18047340781429
                             - -15.637695830405388
@@ -104291,9 +104323,9 @@ GameObject210:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 8.7815493543530465e-07
-                                - 0.80925339460372925
-                                - 4.9897803222620496e-08
+                                - -1.1997626643278636e-06
+                                - 0.80925250053405762
+                                - 3.1151475923252292e-06
                               localRotation:
                                 - 74.49900197102474
                                 - -47.639003179051109
@@ -104314,9 +104346,9 @@ GameObject210:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - 1.8614311159126373e-07
-                                    - 0.69208788871765137
-                                    - 3.5864513847627677e-07
+                                    - 1.1185794619450462e-06
+                                    - 0.69209098815917969
+                                    - 2.3764496290823445e-06
                                   localRotation:
                                     - 24.331607605130156
                                     - 54.686419136261108
@@ -104360,9 +104392,9 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -1.5306044076623948e-07
-                                            - 0.13528162240982056
-                                            - 1.4498235145765648e-07
+                                            - -1.2686534489603218e-07
+                                            - 0.13528543710708618
+                                            - -4.9444004446286272e-09
                                           localRotation:
                                             - -13.102785638551001
                                             - 3.6254045701527748
@@ -104383,9 +104415,9 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -3.3579186720089638e-07
-                                                - 0.14030823111534119
-                                                - -5.4491516721100197e-07
+                                                - -1.7147461903732619e-06
+                                                - 0.14030474424362183
+                                                - -1.2898776731162798e-06
                                               localRotation:
                                                 - 10.556116980676627
                                                 - 7.4190279443786125
@@ -104406,9 +104438,9 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.044995367527008057
-                                        - 0.38370537757873535
-                                        - -0.025200383737683296
+                                        - -0.044997502118349075
+                                        - 0.38371261954307556
+                                        - -0.025199305266141891
                                       localRotation:
                                         - 16.025999810844084
                                         - 2.6633212647680078
@@ -104452,9 +104484,9 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - 1.7967740859603509e-06
-                                                - 0.11445572972297668
-                                                - -5.6585400898256921e-07
+                                                - -1.3383330951910466e-05
+                                                - 0.11445725709199905
+                                                - -3.4581563568281126e-07
                                               localRotation:
                                                 - -3.6386282000352805
                                                 - 2.3268198761949148
@@ -104498,9 +104530,9 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 2.655533990036929e-06
-                                            - 0.13784195482730865
-                                            - 8.1378846061852528e-07
+                                            - -3.7419290492834989e-06
+                                            - 0.13783860206604004
+                                            - -1.6500235915373196e-06
                                           localRotation:
                                             - 5.3755796687533381
                                             - -5.1066363046740717
@@ -104521,9 +104553,9 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -1.7212200873473193e-06
-                                                - 0.10049924999475479
-                                                - -7.3634095087982132e-07
+                                                - 1.7647495269557112e-06
+                                                - 0.10049809515476227
+                                                - 3.0128518346828059e-07
                                               localRotation:
                                                 - 0.30419379016809339
                                                 - -0.69346860726091453
@@ -104544,9 +104576,9 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.073667973279953003
-                                        - 0.29853838682174683
-                                        - -0.16958634555339813
+                                        - -0.07366904616355896
+                                        - 0.29854202270507812
+                                        - -0.16958580911159515
                                       localRotation:
                                         - 8.2355510515276187
                                         - 29.269777611376202
@@ -104567,9 +104599,9 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - 1.1122879186586943e-06
+                                            - 1.112288032345532e-06
                                             - 0.092197448015213013
-                                            - 9.1060269369336311e-07
+                                            - 9.1060263684994425e-07
                                           localRotation:
                                             - 7.0835537900420489
                                             - 2.0428281503974435
@@ -104590,9 +104622,9 @@ GameObject210:
                                               name: Transform_Component
                                               enabled: true
                                               localPosition:
-                                                - -2.0172560653008986e-06
-                                                - 0.076157607138156891
-                                                - -9.9019712251902092e-07
+                                                - -8.7985554273473099e-06
+                                                - 0.07615729421377182
+                                                - -4.4721314225171227e-06
                                               localRotation:
                                                 - -0.73545960807154509
                                                 - 2.7535234055663276
@@ -104613,9 +104645,9 @@ GameObject210:
                                       name: Transform_Component
                                       enabled: true
                                       localPosition:
-                                        - -0.024537371471524239
-                                        - 0.23643262684345245
-                                        - 0.12960690259933472
+                                        - -0.024536304175853729
+                                        - 0.23642899096012115
+                                        - 0.12960636615753174
                                       localRotation:
                                         - 26.977985189135623
                                         - -26.238316350120009
@@ -104636,9 +104668,9 @@ GameObject210:
                                           name: Transform_Component
                                           enabled: true
                                           localPosition:
-                                            - -4.6887956273167219e-07
-                                            - 0.14899730682373047
-                                            - -7.4440585251522862e-08
+                                            - -1.8971645658893976e-06
+                                            - 0.14899420738220215
+                                            - 1.621202727619675e-06
                                           localRotation:
                                             - -1.6071674205963442
                                             - 0.66938594038385868
@@ -104698,7 +104730,7 @@ GameObject210:
                                           prefabPath: ""
                                           uuid: 12418002066798083621
                                           tag: Untagged
-                                          active: true
+                                          active: false
                                           isStatic: false
                                           Components:
                                             Transform_Component:
@@ -104740,7 +104772,7 @@ GameObject210:
                                           prefabPath: ""
                                           uuid: 18356958387254418243
                                           tag: Untagged
-                                          active: true
+                                          active: false
                                           isStatic: false
                                           Components:
                                             Transform_Component:
@@ -104805,7 +104837,7 @@ GameObject210:
                                       prefabPath: ""
                                       uuid: 2514290170571567102
                                       tag: Untagged
-                                      active: true
+                                      active: false
                                       isStatic: false
                                       Components:
                                         Transform_Component:
@@ -104870,7 +104902,7 @@ GameObject210:
                                       prefabPath: ""
                                       uuid: 3976416577445253952
                                       tag: Untagged
-                                      active: true
+                                      active: false
                                       isStatic: false
                                       Components:
                                         Transform_Component:
@@ -105357,7 +105389,7 @@ GameObject210:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -6.5962659334672935e-08
+                    - -6.5962694861809723e-08
                     - 8.2646965893218294e-07
                     - 6.7042185492027784e-07
                   localRotation:
@@ -105380,9 +105412,9 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 5.9815795339090982e-07
-                        - 0.30000069737434387
-                        - -7.3357688279429567e-07
+                        - 4.9848256367113208e-07
+                        - 0.29999309778213501
+                        - -1.3471203885728755e-07
                       localRotation:
                         - -90.770546404379047
                         - -30.039006063430612
@@ -105403,9 +105435,9 @@ GameObject210:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -2.0230230290962936e-07
-                            - 1.0392302274703979
-                            - -2.2539795736520318e-06
+                            - -3.0199834100130829e-07
+                            - 1.0392307043075562
+                            - 5.3562066568701994e-06
                           localRotation:
                             - -0.11584665111921563
                             - -1.2686345102919478
@@ -105426,9 +105458,9 @@ GameObject210:
                               name: Transform_Component
                               enabled: true
                               localPosition:
-                                - 2.5921340807144588e-07
-                                - 1.1680759191513062
-                                - 1.0565606771706371e-06
+                                - 2.2654811004940711e-07
+                                - 1.1680756807327271
+                                - -2.7492733352119103e-06
                               localRotation:
                                 - -0.82989309804292488
                                 - 1.531472639229186
@@ -105449,9 +105481,9 @@ GameObject210:
                                   name: Transform_Component
                                   enabled: true
                                   localPosition:
-                                    - -2.6684997322945492e-08
+                                    - -1.7981989230975159e-07
                                     - 0.39319208264350891
-                                    - 1.5742459709144896e-06
+                                    - -2.2373776573658688e-06
                                   localRotation:
                                     - 1.6764375195185752
                                     - -0.15142965680462481
@@ -105495,7 +105527,7 @@ GameObject210:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.59999847412109375
+                - -0.600006103515625
                 - 0.38000014424324036
                 - 0.20000019669532776
               localRotation:
@@ -105518,7 +105550,7 @@ GameObject210:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.59999847412109375
+                - -0.600006103515625
                 - -0.52000045776367188
                 - 0.14000017940998077
               localRotation:
@@ -105541,7 +105573,7 @@ GameObject210:
               name: Transform_Component
               enabled: true
               localPosition:
-                - 0.54148483276367188
+                - 0.5414886474609375
                 - 0.10346605628728867
                 - 0.54889827966690063
               localRotation:
@@ -105587,9 +105619,9 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - 1.1470456939832729e-07
+                        - 1.1470457650375465e-07
                         - 0.51009863615036011
-                        - -1.7052724388122442e-07
+                        - -1.7052721545951499e-07
                       localRotation:
                         - -0.2395991081321871
                         - 0.013063914694693325
@@ -105610,9 +105642,9 @@ GameObject210:
                           name: Transform_Component
                           enabled: true
                           localPosition:
-                            - -1.2078452016339725e-08
+                            - -1.2078457345410243e-08
                             - 0.3931921124458313
-                            - -1.3075531057893386e-07
+                            - -1.30755353211498e-07
                           localRotation:
                             - 2.2921088238508118e-07
                             - 4.4007417060248049
@@ -105633,7 +105665,7 @@ GameObject210:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.26562881469726562
+                - -0.265625
                 - -1.4600000381469727
                 - 1.5136154890060425
               localRotation:
@@ -105656,12 +105688,12 @@ GameObject210:
               name: Transform_Component
               enabled: true
               localPosition:
-                - -0.45172882080078125
+                - -0.45172119140625
                 - 1.9330464601516724
                 - 0.33572039008140564
               localRotation:
                 - -84.316960389188438
-                - 68.793106582909928
+                - 68.793106582909942
                 - 96.092982580919397
               localScale:
                 - 0.9999997615814209
@@ -105679,9 +105711,9 @@ GameObject210:
                   name: Transform_Component
                   enabled: true
                   localPosition:
-                    - -0.090504013001918793
+                    - -0.090503863990306854
                     - 0.94640630483627319
-                    - 0.0034757426474243402
+                    - 0.0034795543178915977
                   localRotation:
                     - -7.5161022256478461e-08
                     - -4.4008270096953099
@@ -105702,9 +105734,9 @@ GameObject210:
                       name: Transform_Component
                       enabled: true
                       localPosition:
-                        - -3.4886081579088568e-08
+                        - -1.8134957713300537e-07
                         - 0.51009857654571533
-                        - 2.7237540507485392e-06
+                        - -1.0881319667532807e-06
                       localRotation:
                         - -1.497861135618709
                         - -0.58804123840423328
@@ -105727,7 +105759,7 @@ GameObject210:
                           localPosition:
                             - 8.0699112459114986e-07
                             - 0.3931916356086731
-                            - -5.3427811508299783e-07
+                            - -5.3427822876983555e-07
                           localRotation:
                             - -4.4989170498158368e-08
                             - -4.400742133858258
@@ -106181,6 +106213,10 @@ GameObject211:
         - 0
         - 0
       isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: MusicManagerLvl1
+        fields: ~
   Children: ~
 GameObject212:
   name: pathCollider
@@ -106215,6 +106251,10 @@ GameObject212:
         - 0
         - 0
       isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: MusicManagerLvl1
+        fields: ~
   Children: ~
 GameObject213:
   name: crashCollider
@@ -106249,6 +106289,10 @@ GameObject213:
         - 0
         - 0
       isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: MusicManagerLvl1
+        fields: ~
   Children: ~
 GameObject214:
   name: Cylinder.543_copy
@@ -106266,9 +106310,9 @@ GameObject214:
         - 5.1115894317626953
         - -15.587105751037598
       localRotation:
-        - 1.1204101716112511
-        - -57.876393512245606
-        - -109.09283504997228
+        - 1.1204050453224212
+        - -57.87639720666283
+        - -109.09282585838542
       localScale:
         - 1.5462901592254639
         - 1.0261286497116089
@@ -106494,9 +106538,9 @@ GameObject219:
         fields:
           spawnerTag: Spawner
           barrierTag: Barrier
-          zoneRadius: 75
-          colliderRadius: 150
-          fallbackDelay: 10
+          zoneRadius: 10
+          colliderRadius: 200
+          fallbackDelay: 5
           isDoorZone: false
   Children:
     - name: SpawnerHormagaunt_Instance
@@ -106526,20 +106570,18 @@ GameObject219:
             name: EnemySpawner
             fields:
               spawnTimer: 0
-              secondsBetweenSpawns: 5
-              firstSpawnTime: 1
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 2
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-              spawnHormagaunt: true
+              spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpikesEntrance
       prefabPath: Assets/Prefabs/Spikes.prefab.yaml
@@ -106884,20 +106926,18 @@ GameObject219:
             name: EnemySpawner
             fields:
               spawnTimer: 0
-              secondsBetweenSpawns: 5
-              firstSpawnTime: 1
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 2
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-              spawnHormagaunt: true
+              spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpawnerTermagant_Instance_Instance
       prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
@@ -106927,19 +106967,17 @@ GameObject219:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 13
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
               spawnHormagaunt: false
-              spawnRanged: true
+              spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpawnerTyranidWarrior_Instance_Instance
       prefabPath: Assets\Prefabs\SpawnerTyranidWarrior.prefab.yaml
@@ -106969,19 +107007,17 @@ GameObject219:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 3
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              warriorEnemyPrefab: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
               spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
-              spawnWarrior: true
+              spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpawnerTyranidWarrior_Instance_Instance2
       prefabPath: Assets\Prefabs\SpawnerTyranidWarrior.prefab.yaml
@@ -107011,19 +107047,17 @@ GameObject219:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 3
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              warriorEnemyPrefab: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
               spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
-              spawnWarrior: true
+              spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpawnerLictor_Instance_Instance
       prefabPath: Assets\Prefabs\SpawnerLictor.prefab.yaml
@@ -107053,19 +107087,17 @@ GameObject219:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 18
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              stalkerEnemyPrefab: Assets\Prefabs\LictorFinal.prefab.yaml
               spawnHormagaunt: false
               spawnRanged: false
-              spawnStalker: true
+              spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpawnerTermagant_Instance_Instance2
       prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
@@ -107095,19 +107127,17 @@ GameObject219:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 13
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
               spawnHormagaunt: false
-              spawnRanged: true
+              spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 65
-              player: Player
+              spawnRadius: 5
       Children: ~
 GameObject220:
   name: SpawnCluster2
@@ -107138,9 +107168,9 @@ GameObject220:
         fields:
           spawnerTag: Spawner
           barrierTag: Barrier
-          zoneRadius: 75
-          colliderRadius: 150
-          fallbackDelay: 10
+          zoneRadius: 10
+          colliderRadius: 200
+          fallbackDelay: 5
           isDoorZone: false
   Children:
     - name: SpawnerHormagaunt_Instance4
@@ -107170,20 +107200,18 @@ GameObject220:
             name: EnemySpawner
             fields:
               spawnTimer: 0
-              secondsBetweenSpawns: 5
-              firstSpawnTime: 1
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 2
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-              spawnHormagaunt: true
+              spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 70
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpawnerHormagaunt_Instance3
       prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
@@ -107212,20 +107240,18 @@ GameObject220:
             name: EnemySpawner
             fields:
               spawnTimer: 0
-              secondsBetweenSpawns: 5
-              firstSpawnTime: 1
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 2
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-              spawnHormagaunt: true
+              spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 70
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpawnerHormagaunt_Instance6
       prefabPath: Assets\Prefabs\SpawnerHormagaunt.prefab.yaml
@@ -107254,20 +107280,18 @@ GameObject220:
             name: EnemySpawner
             fields:
               spawnTimer: 0
-              secondsBetweenSpawns: 5
-              firstSpawnTime: 1
+              secondsBetweenSpawns: 0
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 2
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              hormagauntPrefab: Assets\Prefabs\Hormagaunt.prefab.yaml
-              spawnHormagaunt: true
+              spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 60
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpawnerTermagant_Instance5
       prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
@@ -107297,19 +107321,17 @@ GameObject220:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 13
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
               spawnHormagaunt: false
-              spawnRanged: true
+              spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 60
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpawnerTermagant_Instance6
       prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
@@ -107339,19 +107361,17 @@ GameObject220:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 13
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
               spawnHormagaunt: false
-              spawnRanged: true
+              spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 70
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpawnerTermagant_Instance3
       prefabPath: Assets\Prefabs\SpawnerTermagant.prefab.yaml
@@ -107381,19 +107401,17 @@ GameObject220:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 13
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              rangedEnemyPrefab: Assets\Prefabs\Termagaunt.prefab.yaml
               spawnHormagaunt: false
-              spawnRanged: true
+              spawnRanged: false
               spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 70
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpawnerTyranidWarrior_Instance4
       prefabPath: Assets\Prefabs\SpawnerTyranidWarrior.prefab.yaml
@@ -107423,19 +107441,17 @@ GameObject220:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 3
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              warriorEnemyPrefab: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
               spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
-              spawnWarrior: true
+              spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 60
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpawnerTyranidWarrior_Instance6
       prefabPath: Assets\Prefabs\SpawnerTyranidWarrior.prefab.yaml
@@ -107465,19 +107481,17 @@ GameObject220:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 3
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              warriorEnemyPrefab: Assets\Prefabs\TWarriorBColliderPrefab.prefab.yaml
               spawnHormagaunt: false
               spawnRanged: false
               spawnStalker: false
-              spawnWarrior: true
+              spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 60
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpawnerLictor_Instance2
       prefabPath: Assets\Prefabs\SpawnerLictor.prefab.yaml
@@ -107507,19 +107521,17 @@ GameObject220:
             fields:
               spawnTimer: 0
               secondsBetweenSpawns: 0
-              firstSpawnTime: 22
+              firstSpawnTime: 0
               currentEnemiesSpawned: 0
-              maxEnemiesToSpawn: 1
+              maxEnemiesToSpawn: 0
               hasSpawnedFirst: false
-              stalkerEnemyPrefab: Assets\Prefabs\LictorFinal.prefab.yaml
               spawnHormagaunt: false
               spawnRanged: false
-              spawnStalker: true
+              spawnStalker: false
               spawnWarrior: false
               spawnClimberHormagaunt: false
               spawnerActive: false
-              spawnRadius: 60
-              player: Player
+              spawnRadius: 5
       Children: ~
     - name: SpikesEntrance
       prefabPath: Assets\Prefabs\Spikes.prefab.yaml
@@ -108086,34 +108098,6 @@ GameObject228:
       particleType: 38
   Children: ~
 GameObject229:
-  name: MusicManager
-  prefabPath: ""
-  uuid: 7214311953670876149
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    ScriptComponents:
-      Script0:
-        name: MusicManagerLvl1
-        fields: ~
-  Children: ~
-GameObject230:
   name: ColliderGroundTierra
   prefabPath: ""
   uuid: 1405599282372821203
@@ -108147,7 +108131,7 @@ GameObject230:
         - 0
       isTrigger: false
   Children: ~
-GameObject231:
+GameObject230:
   name: ColliderGroundCiudad
   prefabPath: ""
   uuid: 2439158963238405299
@@ -108181,7 +108165,7 @@ GameObject231:
         - 0
       isTrigger: false
   Children: ~
-GameObject232:
+GameObject231:
   name: Canvas_HUD
   prefabPath: Assets\Prefabs\Canvas_HUD.prefab.yaml
   uuid: 10166634796133587650
@@ -109820,10 +109804,10 @@ GameObject232:
             - 1225
             - 40
           sprite_offset:
-            - 0
+            - 875
             - 0
           anim_speed: 0.5
-          anim_index: 0
+          anim_index: 5
           anim_index_limit: 6
           color:
             - 0.262745112
@@ -109948,10 +109932,10 @@ GameObject232:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 0
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 0
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -110076,10 +110060,10 @@ GameObject232:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 0
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 0
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -111165,7 +111149,7 @@ GameObject232:
       prefabPath: ""
       uuid: 15569205497635253671
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -111289,7 +111273,7 @@ GameObject232:
             - 1
             - 1
       Children: ~
-GameObject233:
+GameObject232:
   name: Canvas_Interaction
   prefabPath: Assets\Prefabs\Canvas_Interaction_Level1.prefab.yaml
   uuid: 6591346108623782193
@@ -111993,7 +111977,7 @@ GameObject233:
             - 0
             - 0
       Children: ~
-GameObject234:
+GameObject233:
   name: Canvas_TitleSM
   prefabPath: Assets\Prefabs\Canvas_TitleSM.prefab.yaml
   uuid: 15444793993539794259
@@ -112107,7 +112091,7 @@ GameObject234:
             - 1
             - 1
       Children: ~
-GameObject235:
+GameObject234:
   name: Canvas_PauseMenu
   prefabPath: Assets\Prefabs\Canvas_PauseMenu.prefab.yaml
   uuid: 15860094252941017456
@@ -112493,7 +112477,7 @@ GameObject235:
           enabled: true
           state: 1
       Children: ~
-GameObject236:
+GameObject235:
   name: Canvas_Fade
   prefabPath: Assets\Prefabs\CanvasFadeLvl1.prefab.yaml
   uuid: 11279144625943510511

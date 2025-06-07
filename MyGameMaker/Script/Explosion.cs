@@ -19,6 +19,9 @@ public class Explosion : MonoBehaviour
 
     public GameObject explosionFXGO;
     private ParticleFX explosionVFX;
+    public GameObject smokeFXGO;
+    private ParticleFX smokeVFX;
+
     private bool playVFX = true;
 
     public override void Start()
@@ -29,6 +32,8 @@ public class Explosion : MonoBehaviour
         playerController = player.GetComponent<PlayerController>();
         explosionVFX = explosionFXGO.GetComponent<ParticleFX>();
         explosionVFX.ApplyPreset(7);
+        //smokeVFX = smokeFXGO.GetComponent<ParticleFX>();
+        //smokeVFX.ApplyPreset(8);
         playVFX = true;
     }
 
@@ -40,20 +45,27 @@ public class Explosion : MonoBehaviour
             {
                 explosionVFX.EmitBurst(1);
                 playVFX = false;
+                //smokeVFX.EmitBurst(1);
+                
             }
             explosionTimer += deltaTime;
             if (explosionTimer >= 0.5f)
             {
-                
                 justExploded = false;
                 flamesActive = true;
                 explosionTimer = 0.0f;
+                flamesTimer = 0.0f;
             }
         }
 
         if (flamesActive)
         {
             flamesTimer += deltaTime;
+            //if (smokeVFX != null && flamesTimer <= flamesDuration)
+            //{
+            //    smokeVFX.EmitBurst(1);
+            //}
+
             if (Math.Floor(flamesTimer) > Math.Floor(flamesTimer - deltaTime))
             {
                 flameDamageActive = true;
@@ -62,7 +74,6 @@ public class Explosion : MonoBehaviour
             {
                 flameDamageActive = false;
             }
-
 
             if (flamesTimer >= flamesDuration)
             {

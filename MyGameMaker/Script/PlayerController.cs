@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     private ParticleFX bloodSplashEffect;
     private CapsuleCollider capsuleCollider;
     private Rigidbody rb;
+    private float runningHitCounter;
+
+    private bool isShootingStandingHitTimerActive;
     //private ShakeManager shakeManager;
     public bool isIdle = false;
     public bool isShootInput = false;
@@ -226,7 +229,19 @@ public class PlayerController : MonoBehaviour
                 rb?.SetMass(100.0f); 
             }
         }
-        
+
+        if (isShootingStandingHitTimerActive)
+        {
+            runningHitCounter += deltaTime;
+            if (runningHitCounter >= 1.0f)
+            {
+              
+
+                isRunning = false;
+                isShootingStandingHitTimerActive = false;
+                runningHitCounter = 0.0f;
+            }
+        }
 
         if (!componentsInitialized || playerData == null)
             return;
@@ -276,15 +291,16 @@ public class PlayerController : MonoBehaviour
                             isHitIdle = true;
                             playerAnimations.IdleToHitAnimation();
                         }
-                        else if (isRunning || isShootingRunning)
+                        else if (isRunning)
                         {
                             isHitRunning = true;
                             playerAnimations.RunningToHitAnimation();
                         }
                         else if (isShootingStanding)
                         {
-                            isHitShooting = true;
                             playerAnimations.ShootingStandingToHitAnimation();
+                            isShootingStandingHitTimerActive = true;
+                            Engineson.print("Shooting standing to hit animation triggered");
                         }
                     }
                 } 

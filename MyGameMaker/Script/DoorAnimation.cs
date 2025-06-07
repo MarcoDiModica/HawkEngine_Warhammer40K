@@ -44,6 +44,7 @@ public class DoorAnimation : MonoBehaviour
             doorAnimation?.PlayAnimOnce(0, 0.1f);
             doorAnimation?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
+            Engineson.print("closing door");
         }
     }
 
@@ -55,6 +56,7 @@ public class DoorAnimation : MonoBehaviour
             doorAnimation?.PlayAnimOnce(1, 0.1f);
             doorAnimation?.SetAnimationSpeed(1.0f);
             isAnimFinished = false;
+            Engineson.print("opening door");
         }
     }
 }

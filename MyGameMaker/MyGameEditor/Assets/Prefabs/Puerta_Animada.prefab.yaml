@@ -1,0 +1,213 @@
+name: Puerta_Animada_1_Instance
+prefabPath: Assets\Prefabs\Puerta_Animada.prefab.yaml
+uuid: 2630406679668592914
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 6.8711280822753906
+      - 2.9258964061737061
+      - -79.158645629882812
+    localRotation:
+      - -1.0017913048829896e-05
+      - -89.999998090904086
+      - -1.1077064131248261e-13
+    localScale:
+      - 0.034770268946886083
+      - 0.034770280122757485
+      - 0.034770268946886618
+Children:
+  - name: Porton Animado
+    prefabPath: ""
+    uuid: 9620834752287869660
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - -4.911557880404871e-06
+          - -2.5089122573263012e-05
+          - 143.49308776855469
+        localRotation:
+          - -90.000014489018881
+          - -1.2051828259181147e-13
+          - -1.9078494110864437e-20
+        localScale:
+          - 100
+          - 100
+          - 100.00000762939453
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 11500858206584390709
+        material:
+          name: Door_low_Porton_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+      SkeletalAnimationComponent:
+        name: SkeletalAnimationComponent
+        enabled: true
+        bone_names:
+          - Bone
+          - Bone_end
+          - Bone.001
+          - Bone.001_end
+        animation_file: skeletal_anim_Porton Animado
+    Children:
+      - name: Bone
+        prefabPath: ""
+        uuid: 849132677618850088
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - -0.968697190284729
+              - 3.315707886031305e-08
+              - 1.5099033134902129e-14
+            localRotation:
+              - 90.000024148364787
+              - 5.1134997421799122e-20
+              - -1.2051827655803009e-13
+            localScale:
+              - 1
+              - 0.99999988079071045
+              - 0.99999994039535522
+        Children:
+          - name: Bone_end
+            prefabPath: ""
+            uuid: 7656907605813954495
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - -4.4408920985006262e-16
+                  - 1
+                  - 9.9347687410045182e-08
+                localRotation:
+                  - -5.1199753485545955e-15
+                  - 0
+                  - 0
+                localScale:
+                  - 1
+                  - 1
+                  - 1
+            Children: ~
+      - name: Bone.001
+        prefabPath: ""
+        uuid: 8707028936692151551
+        tag: Untagged
+        active: true
+        isStatic: false
+        Components:
+          Transform_Component:
+            name: Transform_Component
+            enabled: true
+            localPosition:
+              - -2.6424558162689209
+              - 9.0447386469350022e-08
+              - 4.1300296516055823e-14
+            localRotation:
+              - 90.000024148364787
+              - 5.1134997421799122e-20
+              - -1.2051827655803009e-13
+            localScale:
+              - 1
+              - 0.99999988079071045
+              - 0.99999994039535522
+        Children:
+          - name: Bone.001_end
+            prefabPath: ""
+            uuid: 8680278066587260845
+            tag: Untagged
+            active: true
+            isStatic: false
+            Components:
+              Transform_Component:
+                name: Transform_Component
+                enabled: true
+                localPosition:
+                  - -1.1102230246251565e-16
+                  - 1
+                  - 9.9347687410045182e-08
+                localRotation:
+                  - -5.1199753485545955e-15
+                  - 0
+                  - 0
+                localScale:
+                  - 1
+                  - 1
+                  - 1
+            Children: ~
+  - name: PortonMarco_low
+    prefabPath: ""
+    uuid: 4332705148718090221
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - -90.000014489018881
+          - 0
+          - 0
+        localScale:
+          - 100
+          - 100
+          - 100
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 13882722625806235132
+        material:
+          name: Gate_low_MarcoPorton_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+      SkeletalAnimationComponent:
+        name: SkeletalAnimationComponent
+        enabled: true
+        bone_names: ~
+        animation_file: skeletal_anim_PortonMarco_low
+    Children: ~

@@ -231,6 +231,7 @@
     <Compile Include="SoundEnvironmentController.cs" />
     <Compile Include="SoundTrigger.cs" />
     <Compile Include="SpikeAnimation.cs" />
+    <Compile Include="StopVFX.cs" />
     <Compile Include="TermagauntAnimation.cs" />
     <Compile Include="TyranidTentaclesAnim.cs" />
     <Compile Include="Test1.cs" />

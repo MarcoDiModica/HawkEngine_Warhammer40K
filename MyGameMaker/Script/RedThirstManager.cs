@@ -217,7 +217,7 @@ public class RedThirstManager : MonoBehaviour
         Engineson.print("Black Rage Activated!");
         playerController.playerData.blackRageSpeed = redThirstBonus;
         Engineson.print($"Black Rage Speed: {playerController.playerData.blackRageSpeed}");
-        playerController.playerDash.canDash = false;
+        //playerController.playerDash.canDash = false;
         Angy.Play();
         GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
         gameObject.AddChild(redThirstVFX);
@@ -238,7 +238,7 @@ public class RedThirstManager : MonoBehaviour
         redThirstPoints = 0;
         Engineson.print("Black Rage Deactivated");
         playerController.playerData.blackRageSpeed = 0f;
-        playerController.playerDash.canDash = true;
+        //playerController.playerDash.canDash = true;
     }
     private void HandleBlackRage(float deltaTime)
     {

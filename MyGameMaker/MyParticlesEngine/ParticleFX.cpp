@@ -1854,6 +1854,40 @@ false,										 // Random rotation
 true 									     // Is Local Space
 	};
 
+	const ParticlePreset IVO_Smoke = {
+			ParticleType::IVO_SMOKE,
+			false,						   // PlayOnAwake
+			2.0f,						   // Duration (only if one-shot)
+			glm::vec3(0.95f, 0.7f, 0.2f),   // Start color (light gray)
+			glm::vec3(0.95f, 0.7f, 0.2f),   // End color (dark gray)
+			0.9f,                          // Alpha start
+			0.9f,                          // Alpha end
+			0.5f,                          // Size start
+			2.0f,                          // Size end
+			0.20f,                          // Min lifetime
+			0.40f,                          // Max lifetime
+			0.5f,                          // Min speed
+			4.0f,                          // Max speed
+			4.0f,						   // End Speed
+			glm::vec3(0.0f,-0.1f,0.0f),	   // Gravity (negative for upward)
+			0.2f,                          // Rotation speed
+			3.0f,                         // Emission rate (particles per second)
+			EmitterShape::CONE,            // Shape
+			0.2f,                          // Cone base radius
+			1.0f,                          // Cone height
+			20.0f,                         // Cone angle in degrees
+			glm::vec2(256,256),			   // Sprite size
+			true,						   // Use animation
+			true,						   // Random animation Index
+			0.5f,						   // Animation speed
+			0.0f,						   // Start rotation
+			true,						   // Random rotation
+			0.5f,						   // Min scale
+			0.0f,						   // Max scale
+			"Assets/Textures/niebla30Frames.png", // Texture path
+			false						   // Is Local Space
+	};
+
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -2497,6 +2531,10 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::GUN_TRAIL:
 		preset = ParticlePresets::Gun_trail;
+		SetOneShot(false);
+		break;
+	case ParticleType::IVO_SMOKE:
+		preset = ParticlePresets::IVO_Smoke;
 		SetOneShot(false);
 		break;
 	default:

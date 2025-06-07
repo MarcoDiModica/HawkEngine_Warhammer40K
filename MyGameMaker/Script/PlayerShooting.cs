@@ -79,7 +79,7 @@ public class PlayerShooting : MonoBehaviour
 
     public override void Awake()
     {
-
+        
     }
     public override void Start()
     {
@@ -452,37 +452,72 @@ public class PlayerShooting : MonoBehaviour
     {
         if (hasBoltgun && !hasShotgun && !hasRailgun)
         {
-            // No cambiar de arma si solo se tiene la Boltgun  
             return;
         }
 
         if (hasShotgun && !hasRailgun)
         {
             if (currentGun == GunType.BOLTGUN)
-            {
                 currentGun = GunType.SHOTGUN;
-            }
             else if (currentGun == GunType.SHOTGUN)
-            {
                 currentGun = GunType.BOLTGUN;
-            }
+        }
+        else if (!hasShotgun && hasRailgun)
+        {
+            if (currentGun == GunType.BOLTGUN)
+                currentGun = GunType.RAILGUN;
+            else if (currentGun == GunType.RAILGUN)
+                currentGun = GunType.BOLTGUN;
         }
         else if (hasShotgun && hasRailgun)
         {
             if (currentGun == GunType.BOLTGUN)
-            {
                 currentGun = GunType.SHOTGUN;
-            }
             else if (currentGun == GunType.SHOTGUN)
-            {
                 currentGun = GunType.RAILGUN;
-            }
             else if (currentGun == GunType.RAILGUN)
-            {
                 currentGun = GunType.BOLTGUN;
-            }
         }
 
+        ApplyWeaponChangeEffects();
+    }
+
+    private void ChangeWeaponLeft()
+    {
+        if (hasBoltgun && !hasShotgun && !hasRailgun)
+        {
+            return;
+        }
+
+        if (hasShotgun && !hasRailgun)
+        {
+            if (currentGun == GunType.BOLTGUN)
+                currentGun = GunType.SHOTGUN;
+            else if (currentGun == GunType.SHOTGUN)
+                currentGun = GunType.BOLTGUN;
+        }
+        else if (!hasShotgun && hasRailgun)
+        {
+            if (currentGun == GunType.BOLTGUN)
+                currentGun = GunType.RAILGUN;
+            else if (currentGun == GunType.RAILGUN)
+                currentGun = GunType.BOLTGUN;
+        }
+        else if (hasShotgun && hasRailgun)
+        {
+            if (currentGun == GunType.BOLTGUN)
+                currentGun = GunType.RAILGUN;
+            else if (currentGun == GunType.RAILGUN)
+                currentGun = GunType.SHOTGUN;
+            else if (currentGun == GunType.SHOTGUN)
+                currentGun = GunType.BOLTGUN;
+        }
+
+        ApplyWeaponChangeEffects();
+    }
+
+    private void ApplyWeaponChangeEffects()
+    {
         switch (currentGun)
         {
             case GunType.BOLTGUN:
@@ -491,7 +526,7 @@ public class PlayerShooting : MonoBehaviour
                 shotgunMesh?.SetActive(false);
                 boltgunMesh?.SetActive(true);
                 railgunMesh?.SetActive(false);
-                int audio = Audio.PlayOneShot(boltgunEquiped);
+                Audio.PlayOneShot(boltgunEquiped);
                 break;
             case GunType.SHOTGUN:
                 shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
@@ -499,7 +534,7 @@ public class PlayerShooting : MonoBehaviour
                 shotgunMesh?.SetActive(true);
                 boltgunMesh?.SetActive(false);
                 railgunMesh?.SetActive(false);
-                int audioo = Audio.PlayOneShot(shotgunEquiped);
+                Audio.PlayOneShot(shotgunEquiped);
                 break;
             case GunType.RAILGUN:
                 shootCooldown = 1f / railgun.shootCadence * playerData.bonusCadence;
@@ -507,75 +542,10 @@ public class PlayerShooting : MonoBehaviour
                 shotgunMesh?.SetActive(false);
                 boltgunMesh?.SetActive(false);
                 railgunMesh?.SetActive(true);
-                int audiooo = Audio.PlayOneShot(railgunEquiped);
+                Audio.PlayOneShot(railgunEquiped);
                 break;
         }
-        Engineson.print("Changed weapon right");
-    }
-
-    private void ChangeWeaponLeft()
-    {
-        if (hasBoltgun && !hasShotgun && !hasRailgun)
-        {
-            // No cambiar de arma si solo se tiene la Boltgun  
-            return;
-        }
-
-        if (hasShotgun && !hasRailgun)
-        {
-            if (currentGun == GunType.BOLTGUN)
-            {
-                currentGun = GunType.SHOTGUN;
-            }
-            else if (currentGun == GunType.SHOTGUN)
-            {
-                currentGun = GunType.BOLTGUN;
-            }
-        }
-        else if (hasShotgun && hasRailgun)
-        {
-            if (currentGun == GunType.BOLTGUN)
-            {
-                currentGun = GunType.RAILGUN;
-            }
-            else if (currentGun == GunType.SHOTGUN)
-            {
-                currentGun = GunType.BOLTGUN;
-            }
-            else if (currentGun == GunType.RAILGUN)
-            {
-                currentGun = GunType.SHOTGUN;
-            }
-        }
-
-        switch (currentGun)
-        {
-            case GunType.BOLTGUN:
-                shootCooldown = 1f / boltgun.shootCadence * playerData.bonusCadence;
-                shootTimer = 0;
-                boltgunMesh.SetActive(true);
-                shotgunMesh.SetActive(false);
-                railgunMesh.SetActive(false);
-                int audio = Audio.PlayOneShot(boltgunEquiped);
-                break;
-            case GunType.SHOTGUN:
-                shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
-                shootTimer = 0;
-                boltgunMesh.SetActive(false);
-                shotgunMesh.SetActive(true);
-                railgunMesh.SetActive(false);
-                int audioo = Audio.PlayOneShot(shotgunEquiped);
-                break;
-            case GunType.RAILGUN:
-                shootCooldown = 1f / railgun.shootCadence * playerData.bonusCadence;
-                shootTimer = 0;
-                boltgunMesh.SetActive(false);
-                shotgunMesh.SetActive(false);
-                railgunMesh.SetActive(true);
-                int audiooo = Audio.PlayOneShot(railgunEquiped);
-                break;
-        }
-        Engineson.print("Changed weapon left");
+        Engineson.print("Changed weapon");
     }
 
     private void UseAbility1()

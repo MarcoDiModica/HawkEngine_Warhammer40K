@@ -1967,6 +1967,102 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
+    public void HitIdleToIdleAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(10, 11, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void HitShootingStandingToIdleAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(9, 11, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void HitShootingStandingToShootingAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(9, 33, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void HitRunningToRunningAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(8, 32, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void HitRunningToRunningBackwardsAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(8, 48, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void HitRunningToHitShootingRunningAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(8, 41, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
     public void RunningToHitAnimation()
     {
         if (!componentsInitialized || esk == null)

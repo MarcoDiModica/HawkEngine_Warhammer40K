@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     private ParticleFX bloodSplashEffect;
     private CapsuleCollider capsuleCollider;
     private Rigidbody rb;
+    private float runningHitCounter;
+
+    private bool isShootingStandingHitTimerActive;
     //private ShakeManager shakeManager;
     public bool isIdle = false;
     public bool isShootInput = false;
@@ -78,6 +81,11 @@ public class PlayerController : MonoBehaviour
     private bool isChangingWeaponIdle = false;
     private bool isChangingWeaponRunning = false;
     private bool isChangingWeaponWalking = false;
+
+    private bool isHitIdle = false;
+    private bool isHitRunning = false;
+    private bool isHitShooting = false;
+
     private int frameCounter = 0;
 
 
@@ -221,7 +229,19 @@ public class PlayerController : MonoBehaviour
                 rb?.SetMass(100.0f); 
             }
         }
-        
+
+        if (isShootingStandingHitTimerActive)
+        {
+            runningHitCounter += deltaTime;
+            if (runningHitCounter >= 1.0f)
+            {
+              
+
+                isRunning = false;
+                isShootingStandingHitTimerActive = false;
+                runningHitCounter = 0.0f;
+            }
+        }
 
         if (!componentsInitialized || playerData == null)
             return;
@@ -264,21 +284,41 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    if (isIdle)
+                    if (currentLookingDirection != LookingDirection.Backward)
                     {
-                        playerAnimations.IdleToHitAnimation();
-                    }
-                    else if (isRunning || isShootingRunning)
-                    {
-                        playerAnimations.RunningToHitAnimation();
-                    }
-                    else if (isShootingStanding)
-                    {
-                        playerAnimations.ShootingStandingToHitAnimation();
+                        if (isIdle)
+                        {
+                            isHitIdle = true;
+                            playerAnimations.IdleToHitAnimation();
+                        }
+                        else if (isRunning)
+                        {
+                            isHitRunning = true;
+                            playerAnimations.RunningToHitAnimation();
+                        }
+                        else if (isShootingStanding)
+                        {
+                            playerAnimations.ShootingStandingToHitAnimation();
+                            isShootingStandingHitTimerActive = true;
+                            Engineson.print("Shooting standing to hit animation triggered");
+                        }
                     }
                 } 
-                }
+            }
             playerData.isHit = false;
+        }
+
+        if (isHitIdle)
+        {
+            HitIdleAnimationFinished();
+        }
+        else if (isHitRunning)
+        {
+            HitRunningAnimationFinished();
+        }
+        else if (isHitShooting)
+        {
+            HitShootingAnimationFinished();
         }
 
         HandleDebugControls();
@@ -304,6 +344,68 @@ public class PlayerController : MonoBehaviour
                 }
                 isFlashingColor = false;
             }
+        }
+    }
+
+    private void HitIdleAnimationFinished()
+    {
+
+
+        if (playerAnimations.esk.IsAnimationFinished())
+        {
+            Engineson.print("Hit animation finished");
+            isHitIdle = false;
+            playerAnimations.HitIdleToIdleAnimation();
+
+        }
+    }
+
+    private void HitRunningAnimationFinished()
+    {
+
+
+        if (playerAnimations.esk.IsAnimationFinished())
+        {
+            Engineson.print("Hit animation finished");
+            isHitRunning = false;
+            if (isShootingRunning)
+            {
+                playerAnimations.HitRunningToHitShootingRunningAnimation();
+            }
+            else
+            {
+                if (currentLookingDirection == LookingDirection.Forward)
+                {
+                    playerAnimations.HitRunningToRunningAnimation();
+                }
+                else if (currentLookingDirection == LookingDirection.Backward)
+                {
+                    playerAnimations.HitRunningToRunningBackwardsAnimation();
+                }
+            }
+            
+            
+
+        }
+    }
+
+    private void HitShootingAnimationFinished()
+    {
+
+
+        if (playerAnimations.esk.IsAnimationFinished())
+        {
+            Engineson.print("Hit animation finished");
+            isHitRunning = false;
+            if (isShootingStanding)
+            {
+                playerAnimations.HitShootingStandingToShootingAnimation();
+            }
+            else 
+            {
+                playerAnimations.HitShootingStandingToIdleAnimation();
+            }
+
         }
     }
 
@@ -447,21 +549,25 @@ public class PlayerController : MonoBehaviour
 
         if ((playerInput.IsChangingWeaponLeft() || playerInput.IsChangingWeaponRight()) && playerShooting.canChangeWeapon)
         {
-            if (isIdle || isShootInput && !isShootingRunning)
+            if (playerData.hasShotgun || playerData.hasRailgun)
             {
-                isChangingWeaponIdle = true;
-                playerAnimations.WeaponSwapWhileIdleAnimation();
+                if (isIdle || isShootInput && !isShootingRunning)
+                {
+                    isChangingWeaponIdle = true;
+                    playerAnimations.WeaponSwapWhileIdleAnimation();
+                }
+                else if (isRunning)
+                {
+                    isChangingWeaponRunning = true;
+                    playerAnimations.WeaponSwapWhileRunningAnimation();
+                }
+                else if (isWalking || isShootingRunning)
+                {
+                    isChangingWeaponWalking = true;
+                    playerAnimations.WeaponSwapWhileWalkingStraightAnimation();
+                }
             }
-            else if (isRunning)
-            {
-                isChangingWeaponRunning = true;
-                playerAnimations.WeaponSwapWhileRunningAnimation();
-            }
-            else if (isWalking || isShootingRunning)
-            {
-                isChangingWeaponWalking = true;
-                playerAnimations.WeaponSwapWhileWalkingStraightAnimation();
-            }
+            
         }
 
         if (isChangingWeaponIdle)

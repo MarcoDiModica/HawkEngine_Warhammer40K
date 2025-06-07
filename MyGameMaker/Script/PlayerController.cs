@@ -492,7 +492,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerInput.IsReloading())
         {
-
+            if (playerShooting.GetMaxAmmo() <= 0) return;
             if (playerShooting.GetCurrentAmmo() >= playerShooting.GetMaxMagazineAmmo())
                 return;
 

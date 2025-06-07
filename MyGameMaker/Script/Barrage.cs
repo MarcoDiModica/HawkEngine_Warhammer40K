@@ -10,7 +10,7 @@ public class Barrage : BaseAbilities
     public bool enabled;
     public float cooldown;
     
-
+    private HUD hud;
     private float yHeight = 0.0f;
     private float timer = 0;
     
@@ -37,7 +37,7 @@ public class Barrage : BaseAbilities
     }
     public override void Start()
     {
-
+        hud = GameObject.Find("Canvas_HUD").GetComponent<HUD>();
     }
 
     public override void Update(float deltaTime)
@@ -102,6 +102,7 @@ public class Barrage : BaseAbilities
 
             canThrow = false; // Inicia el cooldown
             abilityTimer = 0.0f;
+            hud.TriggerCooldown(abilityCooldown);
         }
         else
         {

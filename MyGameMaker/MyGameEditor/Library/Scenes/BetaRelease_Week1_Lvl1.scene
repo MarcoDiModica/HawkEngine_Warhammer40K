@@ -478,9 +478,9 @@ GameObject7:
       Script0:
         name: BoltgunUpgradePickUp
         fields:
-          floatSpeed: 0.542688072
+          floatSpeed: 1.64824975
           floatHeight: 0.5
-          rotationSpeed: 47.29636
+          rotationSpeed: 94.1298676
   Children:
     - name: boltgunMesh
       prefabPath: ""
@@ -586,9 +586,9 @@ GameObject8:
       Script0:
         name: ShotgunUpgradePickUp
         fields:
-          floatSpeed: 0.655001998
+          floatSpeed: 1.04396355
           floatHeight: 0.5
-          rotationSpeed: 85.520607
+          rotationSpeed: 71.6492081
   Children:
     - name: shotgunMesh
       prefabPath: ""
@@ -3421,7 +3421,7 @@ GameObject20:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.772871950142431
+            - 89.766432183135194
             - 0
           localScale:
             - 208.60295104980469
@@ -3672,9 +3672,9 @@ GameObject20:
             - 164.68646240234375
             - 1182.335205078125
           localRotation:
-            - -90.000006841531359
-            - 83.400708063154056
-            - 6.8415313589204022e-06
+            - -90.00002081954193
+            - 83.400682702463925
+            - -8.8468622306910861e-06
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -3714,9 +3714,9 @@ GameObject20:
             - 158.47599792480469
             - 1061.107666015625
           localRotation:
-            - -90.000022329887898
-            - -76.296840882286389
-            - 2.0610058463586403e-05
+            - -90.000022329904013
+            - -76.296831728460759
+            - 2.0610074528317326e-05
           localScale:
             - 66.341697692871094
             - 66.341697692871094
@@ -4680,9 +4680,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.993010231801208
-            - 89.840923798523946
-            - 179.99207449496467
+            - 89.993172749339607
+            - 89.840362010570317
+            - 179.99224384272662
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -4722,9 +4722,9 @@ GameObject20:
             - 54.029090881347656
             - 1908.207275390625
           localRotation:
-            - 89.993010231801208
-            - 89.840923798523946
-            - 179.99207449496467
+            - 89.993172749339607
+            - 89.840362010570317
+            - 179.99224384272662
           localScale:
             - 64.568588256835938
             - 64.568588256835938
@@ -5226,9 +5226,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999996775941923
-            - 66.695713392354193
-            - 179.99998631507907
+            - 89.999993288988833
+            - 66.695720103365531
+            - 179.99998980203466
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5268,9 +5268,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999996775941923
-            - 66.695713392354193
-            - 179.99998631507907
+            - 89.999993288988833
+            - 66.695720103365531
+            - 179.99998980203466
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -5310,9 +5310,9 @@ GameObject20:
             - 73.108879089355469
             - -1999.306884765625
           localRotation:
-            - 89.999996775941923
-            - 66.695713392354193
-            - 179.99998631507907
+            - 89.999993288988833
+            - 66.695720103365531
+            - 179.99998980203466
           localScale:
             - 62.525428771972656
             - 62.525428771972656
@@ -6066,9 +6066,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360479206519
-            - 52.153761099889579
-            - -35.460576025032005
+            - 178.33360391534552
+            - 52.153760491639723
+            - -35.460575201138177
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6108,9 +6108,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360479206519
-            - 52.153761099889579
-            - -35.460576025032005
+            - 178.33360391534552
+            - 52.153760491639723
+            - -35.460575201138177
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -6150,9 +6150,9 @@ GameObject20:
             - 123.31528472900391
             - 1696.0714111328125
           localRotation:
-            - 178.33360479206519
-            - 52.153761099889579
-            - -35.460576025032005
+            - 178.33360391534552
+            - 52.153760491639723
+            - -35.460575201138177
           localScale:
             - 1.1724408864974976
             - 1.1724408864974976
@@ -7452,9 +7452,9 @@ GameObject20:
             - 48.267116546630859
             - -1413.0146484375
           localRotation:
-            - 90.000051112517212
-            - 66.469458196973463
-            - -179.99999249225044
+            - 90.000051285823275
+            - 66.469449649343787
+            - 179.99999896010132
           localScale:
             - 83.159156799316406
             - 83.159156799316406
@@ -11472,9 +11472,9 @@ GameObject23:
             - 252.71885681152344
             - -2920.06982421875
           localRotation:
-            - 89.999814963221354
-            - 81.207692379002467
-            - 179.99991771837333
+            - 89.99979783065146
+            - 81.207711224038363
+            - 179.99991257390278
           localScale:
             - 41.956031799316406
             - 53.921905517578125
@@ -11640,9 +11640,9 @@ GameObject23:
             - 238.15408325195312
             - -798.63531494140625
           localRotation:
-            - 89.982769860836086
-            - -89.822928326638134
-            - -179.97365837791233
+            - 89.980948984941861
+            - -89.824592156431365
+            - -179.97184774704246
           localScale:
             - 43.808135986328125
             - 67.105400085449219
@@ -12490,9 +12490,9 @@ GameObject23:
             - 22.607597351074219
             - -2101.2529296875
           localRotation:
-            - -179.99999134857288
-            - 84.241575839430283
-            - 2.1271352770344651e-05
+            - -179.99999134858226
+            - 84.2415855109587
+            - 2.1271347980752727e-05
           localScale:
             - 59.93487548828125
             - 59.934871673583984
@@ -12532,9 +12532,9 @@ GameObject23:
             - 25.520833969116211
             - -854.39703369140625
           localRotation:
-            - 1.1001149950143194
-            - -81.281073858595875
-            - -179.99999163318788
+            - 1.1001173900204007
+            - -81.281074003032273
+            - -179.99999171998078
           localScale:
             - 59.934864044189453
             - 59.934871673583984
@@ -13876,9 +13876,9 @@ GameObject23:
             - 84.565017700195312
             - -2966.651611328125
           localRotation:
-            - -89.992646801065803
-            - -89.764193249255797
-            - -0.010005025450640572
+            - -89.995146957338576
+            - -89.763137711282312
+            - -0.0075219447662016959
           localScale:
             - 43.324676513671875
             - 43.324676513671875
@@ -14296,9 +14296,9 @@ GameObject23:
             - 27.166694641113281
             - -2728.593017578125
           localRotation:
-            - 89.999989615516
-            - -71.216282105193741
-            - 179.999989615516
+            - 89.999976515916089
+            - -71.216269084915822
+            - -179.99999209264232
           localScale:
             - 110.40802001953125
             - 110.40802001953125
@@ -20568,9 +20568,9 @@ GameObject27:
             - 3.1512765884399414
             - 3.5392885208129883
           localRotation:
-            - 179.84665360803609
-            - -57.007418738559061
-            - -179.97224712317345
+            - 179.84665361798022
+            - -57.00749352652636
+            - -179.97224713041012
           localScale:
             - 4.1512908935546875
             - 8.0131254196166992
@@ -21054,9 +21054,9 @@ GameObject28:
             - 3.012509822845459
             - 20.509849548339844
           localRotation:
-            - -1.1131802483122015
-            - 14.358091986244169
-            - -2.8770355888123844
+            - -1.1131805760804401
+            - 14.358091978414031
+            - -2.8770356300186735
           localScale:
             - 14.270356178283691
             - 7.4319057464599609
@@ -23982,9 +23982,9 @@ GameObject29:
             - 3.0124197006225586
             - -194.1514892578125
           localRotation:
-            - 179.99999499104624
-            - 87.96954795149837
-            - 179.99999499104624
+            - 179.9999949910484
+            - 87.969567273503927
+            - 179.9999949910484
           localScale:
             - 12.215158462524414
             - 7.4319052696228027
@@ -27138,9 +27138,9 @@ GameObject32:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 0.756612062
+          floatSpeed: 0.515342891
           floatHeight: 0.5
-          rotationSpeed: 65.0298004
+          rotationSpeed: 81.1886978
   Children: ~
 GameObject33:
   name: BiblePage_Pueblo
@@ -27223,9 +27223,9 @@ GameObject33:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.08016992
+          floatSpeed: 1.30008745
           floatHeight: 0.5
-          rotationSpeed: 75.8199387
+          rotationSpeed: 95.5916748
   Children: ~
 GameObject34:
   name: BiblePage_Pasillo_Zona3
@@ -27308,9 +27308,9 @@ GameObject34:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.56412029
+          floatSpeed: 1.06087899
           floatHeight: 0.5
-          rotationSpeed: 98.8816681
+          rotationSpeed: 71.3085938
   Children: ~
 GameObject35:
   name: BiblePage_Ciudad
@@ -27393,9 +27393,9 @@ GameObject35:
       Script0:
         name: BiblePagePickUp
         fields:
-          floatSpeed: 1.12606394
+          floatSpeed: 1.25080669
           floatHeight: 0.5
-          rotationSpeed: 54.5790291
+          rotationSpeed: 72.3938141
   Children: ~
 GameObject36:
   name: Barril_Ciudad1
@@ -31838,9 +31838,9 @@ GameObject88:
             - 0
             - -25.443840026855469
           localRotation:
-            - 89.989873972794911
-            - 89.874463009798859
-            - 179.99100778490669
+            - 89.987048027599201
+            - 89.872753303699739
+            - 179.98816134913065
           localScale:
             - 86.512344360351562
             - 99.999984741210938
@@ -31880,9 +31880,9 @@ GameObject88:
             - 341.29437255859375
             - 124.93968963623047
           localRotation:
-            - 89.984500429785541
-            - 89.929844041952691
-            - 179.98429040142787
+            - 89.98829023736846
+            - 89.929771467102199
+            - 179.98807167126944
           localScale:
             - 96.124794006347656
             - 99.999984741210938
@@ -32301,7 +32301,7 @@ GameObject88:
             - -869.0504150390625
           localRotation:
             - 90
-            - 89.775497632318363
+            - 89.774270599336802
             - 0
           localScale:
             - 100
@@ -33014,9 +33014,9 @@ GameObject88:
             - 19.999998092651367
             - -924.02191162109375
           localRotation:
-            - -90.000024148367501
-            - 0.061903208750750165
-            - -1.2539312159428279e-09
+            - -90.000024148366222
+            - 0.061903267706751766
+            - 1.1042959960117261e-09
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -33728,9 +33728,9 @@ GameObject88:
             - 0
             - -469.199462890625
           localRotation:
-            - -90.000059268101438
-            - 65.587229349345165
-            - -2.9568355432569616e-05
+            - -90.000056103600002
+            - 65.587224437805361
+            - -2.4656809638720077e-05
           localScale:
             - 99.999992370605469
             - 99.999992370605469
@@ -34652,9 +34652,9 @@ GameObject88:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 5.90687453246757e-05
-            - -79.275337818401084
-            - -90.000105375176148
+            - 6.5631866030008525e-05
+            - -79.275324394992722
+            - -90.000117083456601
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -34694,9 +34694,9 @@ GameObject88:
             - 155.99456787109375
             - -659.51934814453125
           localRotation:
-            - 5.90687453246757e-05
-            - -79.275337818401084
-            - -90.000105375176148
+            - 6.5631866030008525e-05
+            - -79.275324394992722
+            - -90.000117083456601
           localScale:
             - 54.569847106933594
             - 54.569839477539062
@@ -100647,9 +100647,9 @@ GameObject184:
         - 3.2896044254302979
         - 10.935238838195801
       localRotation:
-        - -2.6537755044356541
-        - -52.98422465546026
-        - -143.75537507560193
+        - -2.6537749339577728
+        - -52.984219098736126
+        - -143.75537661231976
       localScale:
         - 0.017827585339546204
         - 0.017827583476901054
@@ -101689,7 +101689,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.869127707477759
+            - 89.860865298617796
             - 0
           localScale:
             - 208.60295104980469
@@ -101731,7 +101731,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.869127707477759
+            - 89.860865298617796
             - 0
           localScale:
             - 208.60295104980469
@@ -101773,7 +101773,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.869127707477759
+            - 89.860865298617796
             - 0
           localScale:
             - 208.60295104980469
@@ -101815,7 +101815,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.869127707477759
+            - 89.860865298617796
             - 0
           localScale:
             - 208.60295104980469
@@ -101857,7 +101857,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.869127707477759
+            - 89.860865298617796
             - 0
           localScale:
             - 208.60295104980469
@@ -101899,7 +101899,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.869127707477759
+            - 89.860865298617796
             - 0
           localScale:
             - 208.60295104980469
@@ -101941,7 +101941,7 @@ GameObject208:
             - -5571.5283203125
           localRotation:
             - -90
-            - 89.869127707477759
+            - 89.860865298617796
             - 0
           localScale:
             - 208.60295104980469
@@ -106266,9 +106266,9 @@ GameObject214:
         - 5.1115894317626953
         - -15.587105751037598
       localRotation:
-        - 1.1204058559448342
-        - -57.876399786845795
-        - -109.09283719961503
+        - 1.1204080168089887
+        - -57.876396358736798
+        - -109.09282938496749
       localScale:
         - 1.5462901592254639
         - 1.0261286497116089
@@ -108513,16 +108513,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.922999978
-            - 0.79400003
+            - 0.904999971
+            - 0.727999985
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0250000004
-            - 0.0500000007
+            - 0.0299999993
+            - 0.0599999987
             - 1
           pivot_offset:
             - 0
@@ -108534,8 +108534,8 @@ GameObject232:
           texture_path: Library/Textures/UI/gun_boltgun_small_icon.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 130
+            - 142
           sheet_size:
             - 130
             - 142
@@ -108577,16 +108577,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.922999978
-            - 0.796000004
+            - 0.904999971
+            - 0.727999985
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0250000004
-            - 0.0500000007
+            - 0.0299999993
+            - 0.0600000024
             - 1
           pivot_offset:
             - 0
@@ -108641,16 +108641,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.922999978
-            - 0.792999983
+            - 0.904999971
+            - 0.727999985
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0250000004
-            - 0.0500000007
+            - 0.0299999993
+            - 0.0599999987
             - 1
           pivot_offset:
             - 0
@@ -108662,8 +108662,8 @@ GameObject232:
           texture_path: Library/Textures/UI/gun_shotgun_small_icon.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 125
+            - 139
           sheet_size:
             - 125
             - 139
@@ -108705,16 +108705,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.954999983
-            - 0.79400003
+            - 0.944999993
+            - 0.727999985
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0250000004
-            - 0.0500000007
+            - 0.0299999993
+            - 0.0599999987
             - 1
           pivot_offset:
             - 0
@@ -108769,16 +108769,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.954999983
-            - 0.796000004
+            - 0.944999993
+            - 0.727999985
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0250000004
-            - 0.0500000007
+            - 0.0299999993
+            - 0.0599999987
             - 1
           pivot_offset:
             - 0
@@ -108833,16 +108833,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.954999983
-            - 0.792999983
+            - 0.944999993
+            - 0.727999985
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0250000004
-            - 0.0500000007
+            - 0.0299999993
+            - 0.0599999987
             - 1
           pivot_offset:
             - 0
@@ -108897,16 +108897,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.917999983
-            - 0.84799999
+            - 0.899999976
+            - 0.796999991
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0689999983
-            - 0.104000002
+            - 0.0799999982
+            - 0.119000003
             - 1
           pivot_offset:
             - 0
@@ -108918,8 +108918,8 @@ GameObject232:
           texture_path: Library/Textures/UI/gun_railgun_icon_panel.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 322
+            - 266
           sheet_size:
             - 322
             - 266
@@ -108961,16 +108961,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.916000009
-            - 0.850000024
+            - 0.899999976
+            - 0.796999991
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0689999983
-            - 0.104000002
+            - 0.0799999982
+            - 0.119000003
             - 1
           pivot_offset:
             - 0
@@ -108982,8 +108982,8 @@ GameObject232:
           texture_path: Library/Textures/UI/gun_shotgun_icon_panel.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 322
+            - 266
           sheet_size:
             - 322
             - 266
@@ -109025,16 +109025,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.916000009
-            - 0.850000024
+            - 0.899999976
+            - 0.796999991
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0689999983
-            - 0.104000002
+            - 0.0799999982
+            - 0.11900001
             - 1
           pivot_offset:
             - 0
@@ -109063,7 +109063,7 @@ GameObject232:
             - 1
             - 1
       Children: ~
-    - name: boltgun_ability_1
+    - name: boltgun_ability
       prefabPath: ""
       uuid: 7226111253171644170
       tag: Untagged
@@ -109089,16 +109089,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.848999977
-            - 0.889999986
+            - 0.814999998
+            - 0.800000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.023
-            - 0.0500000007
+            - 0.0649999976
+            - 0.109999999
             - 1
           pivot_offset:
             - 0
@@ -109127,135 +109127,7 @@ GameObject232:
             - 1
             - 1
       Children: ~
-    - name: boltgun_ability_2
-      prefabPath: ""
-      uuid: 6889533685794486519
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.875999987
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_chainballs.png
-          use_animation: false
-          sprite_size:
-            - 114
-            - 125
-          sheet_size:
-            - 114
-            - 125
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: shotgun_ability_1
-      prefabPath: ""
-      uuid: 3246280818281522766
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.848999977
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_hook.png
-          use_animation: false
-          sprite_size:
-            - 0
-            - 0
-          sheet_size:
-            - 116
-            - 125
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: shotgun_ability_2
+    - name: shotgun_ability
       prefabPath: ""
       uuid: 5991966621356209688
       tag: Untagged
@@ -109281,16 +109153,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.875999987
-            - 0.889999986
+            - 0.814999998
+            - 0.800000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.023
-            - 0.0500000007
+            - 0.0649999976
+            - 0.109999999
             - 1
           pivot_offset:
             - 0
@@ -109302,8 +109174,8 @@ GameObject232:
           texture_path: Library/Textures/UI/powerup_explosion.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 114
+            - 125
           sheet_size:
             - 114
             - 125
@@ -109319,71 +109191,7 @@ GameObject232:
             - 1
             - 1
       Children: ~
-    - name: railgun_ability_1
-      prefabPath: ""
-      uuid: 12941715311931944973
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.848999977
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_railgun_reload.png
-          use_animation: false
-          sprite_size:
-            - 0
-            - 0
-          sheet_size:
-            - 114
-            - 125
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: railgun_ability_2a
+    - name: railgun_ability
       prefabPath: ""
       uuid: 7228281880689251386
       tag: Untagged
@@ -109409,16 +109217,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.875999987
-            - 0.889999986
+            - 0.814999998
+            - 0.800000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.023
-            - 0.0500000007
+            - 0.0649999976
+            - 0.109999999
             - 1
           pivot_offset:
             - 0
@@ -109430,72 +109238,8 @@ GameObject232:
           texture_path: Library/Textures/UI/powerup_railgun_Eball.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
-          sheet_size:
             - 114
             - 125
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: railgun_ability_2b
-      prefabPath: ""
-      uuid: 15743453786480257795
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.875999987
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_railgun_shot.png
-          use_animation: false
-          sprite_size:
-            - 0
-            - 0
           sheet_size:
             - 114
             - 125
@@ -109537,16 +109281,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.91900003
-            - 0.791999996
+            - 0.898999989
+            - 0.720000029
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.064000003
-            - 0.0540000014
+            - 0.0820000023
+            - 0.0670000017
             - 1
           pivot_offset:
             - 0
@@ -109575,9 +109319,9 @@ GameObject232:
             - 1
             - 1
       Children: ~
-    - name: frames
+    - name: lock_L
       prefabPath: ""
-      uuid: 4488032847570964638
+      uuid: 14076127763368232337
       tag: Untagged
       active: true
       isStatic: false
@@ -109601,72 +109345,8 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.847000003
-            - 0.887000024
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0529999994
-            - 0.057
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_frame.png
-          use_animation: false
-          sprite_size:
-            - 292
-            - 152
-          sheet_size:
-            - 292
-            - 152
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-          anim_index: 0
-          anim_index_limit: 0
-          color:
-            - 1
-            - 1
-            - 1
-            - 1
-      Children: ~
-    - name: lock_L
-      prefabPath: ""
-      uuid: 14076127763368232337
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.922999978
-            - 0.795000017
+            - 0.907999992
+            - 0.730000019
             - 0
           rotation:
             - 0
@@ -109686,8 +109366,8 @@ GameObject232:
           texture_path: Library/Textures/UI/lock.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 96
+            - 96
           sheet_size:
             - 96
             - 96
@@ -109707,7 +109387,7 @@ GameObject232:
       prefabPath: ""
       uuid: 12734898124471456503
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -109729,8 +109409,8 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.954999983
-            - 0.795000017
+            - 0.948000014
+            - 0.730000019
             - 0
           rotation:
             - 0
@@ -109750,8 +109430,8 @@ GameObject232:
           texture_path: Library/Textures/UI/lock.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 96
+            - 96
           sheet_size:
             - 96
             - 96
@@ -110268,10 +109948,10 @@ GameObject232:
             - 1225
             - 40
           sprite_offset:
-            - 875
+            - 0
             - 0
           anim_speed: 0.5
-          anim_index: 5
+          anim_index: 0
           anim_index_limit: 6
           color:
             - 0.262745112
@@ -110396,10 +110076,10 @@ GameObject232:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 150
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 3
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -110524,10 +110204,10 @@ GameObject232:
             - 250
             - 80
           sprite_offset:
-            - 100
+            - 150
             - 0
           anim_speed: 0.5
-          anim_index: 2
+          anim_index: 3
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -111073,16 +110753,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.920000017
-            - 0.971000016
+            - 0.898999989
+            - 0.944999993
             - 0
           rotation:
+            - 27328.3047
             - 0
-            - 0
-            - 0
+            - 10304.166
           scale:
-            - 0.0659999996
-            - 0.0299999993
+            - 0.0850000083
+            - 0.0350000001
             - 1
           pivot_offset:
             - 0
@@ -111137,16 +110817,16 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.920000017
-            - 0.967999995
+            - 0.897000015
+            - 0.949000001
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.063000001
-            - 0.0249999985
+            - 0.0850000009
+            - 0.0350000001
             - 1
           pivot_offset:
             - 0
@@ -111201,8 +110881,8 @@ GameObject232:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.959999979
-            - 0.961000025
+            - 0.957000017
+            - 0.938000023
             - 0
           rotation:
             - 0
@@ -111210,7 +110890,7 @@ GameObject232:
             - 0
           scale:
             - 0.0289999992
-            - 0.0160000008
+            - 0.0249999985
             - 1
           pivot_offset:
             - 0
@@ -111266,15 +110946,15 @@ GameObject232:
           enabled: true
           position:
             - 0.99000001
-            - 0.980000019
+            - 0.963999987
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.152999997
-            - 0.131999999
+            - 0.200000018
+            - 0.184999987
             - 1
           pivot_offset:
             - 1
@@ -111396,7 +111076,7 @@ GameObject232:
           enabled: true
           position:
             - 0.961000025
-            - 0.0719999969
+            - 0.115000002
             - 0
           rotation:
             - 0
@@ -111421,10 +111101,10 @@ GameObject232:
             - 0.664203882
             - 0.797665358
             - 0
-          fontSize: 12.5
+          fontSize: 14
           boxSize:
-            - 53.75
-            - 13.75
+            - 60.1999969
+            - 15.3999996
           spriteSize:
             - 0
             - 0
@@ -111462,7 +111142,7 @@ GameObject232:
           enabled: true
           position:
             - 0.961000025
-            - 0.0719999969
+            - 0.115000002
             - 0
           rotation:
             - 0
@@ -111487,7 +111167,7 @@ GameObject232:
             - 0
             - 0.304168224
             - 0.797665358
-          fontSize: 12.5
+          fontSize: 14
           boxSize:
             - 53.75
             - 13.75
@@ -111528,7 +111208,7 @@ GameObject232:
           enabled: true
           position:
             - 0.961000025
-            - 0.0719999969
+            - 0.115000002
             - 0
           rotation:
             - 0
@@ -111553,7 +111233,7 @@ GameObject232:
             - 1
             - 0
             - 0
-          fontSize: 12.5
+          fontSize: 14
           boxSize:
             - 53.75
             - 13.75
@@ -111608,6 +111288,134 @@ GameObject232:
             - 0
             - 1
             - 0
+      Children: ~
+    - name: CDBar
+      prefabPath: ""
+      uuid: 15569205497635253671
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.810000002
+            - 0.899999976
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0649999976
+            - 0.100000001
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/default.png
+          use_animation: false
+          sprite_size:
+            - 1024
+            - 1024
+          sheet_size:
+            - 1024
+            - 1024
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 0
+            - 0
+            - 0
+            - 0.495000005
+      Children: ~
+    - name: frames
+      prefabPath: ""
+      uuid: 4488032847570964638
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.808000028
+            - 0.791000009
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.074000001
+            - 0.124000005
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/powerup_frame.png
+          use_animation: false
+          sprite_size:
+            - 136
+            - 152
+          sheet_size:
+            - 136
+            - 152
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
 GameObject233:
   name: Canvas_Interaction

@@ -15,6 +15,8 @@ public class EnergyBall : BaseAbilities
     BoxCollider collider;
     public bool canThrow = true;
 
+    private HUD hud;
+
 
     private float abilityCooldown = 3.0f; // Cooldown de la habilidad
     private float abilityTimer = 0.0f;    // Contador del cooldown
@@ -37,7 +39,7 @@ public class EnergyBall : BaseAbilities
     }
     public override void Start()
     {
-        
+        hud = GameObject.Find("Canvas_HUD").GetComponent<HUD>();
     }
 
     public override void Update(float deltaTime)
@@ -93,6 +95,7 @@ public class EnergyBall : BaseAbilities
             canThrow = false;
             abilityTimer = 0.0f;
             energyBall.GetComponent<Ball>().needsDestroy = true;
+            hud.TriggerCooldown(abilityCooldown);
         }
         else
         {

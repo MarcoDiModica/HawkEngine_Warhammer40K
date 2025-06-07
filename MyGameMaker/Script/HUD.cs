@@ -26,13 +26,13 @@ public class HUD : MonoBehaviour
     private GameObject lockR;
     private Railgun railgunScript;
 
-    private GameObject boltgunAbility1;
-    private GameObject boltgunAbility2;
-    private GameObject shotgunAbility1;
-    private GameObject shotgunAbility2;
-    private GameObject railgunAbility1;
-    private GameObject railgunAbility2a;
-    private GameObject railgunAbility2b;
+    private GrenadeLauncher grenadeLauncherScript;
+    private Barrage barrageScript;
+    private EnergyBall energyBallScript;
+
+    private GameObject boltgunAbility;
+    private GameObject shotgunAbility;
+    private GameObject railgunAbility;
 
     private UITransform transform_hpBar;
     private UITransform transform_hpBarAnim;
@@ -79,6 +79,9 @@ public class HUD : MonoBehaviour
     private UIText text;
 
     private GameObject fadeCanvas;
+
+    private GameObject CDBar;
+    private UITransform CDBarTransform;
 
     private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
 
@@ -142,7 +145,13 @@ public class HUD : MonoBehaviour
         return pos;
     }
 
+    public void TriggerCooldown(float time)
+    {
+        CDBar.SetActive(true);
+        CDBarTransform.SetScaleUI(new Vector3(0.065f, 0.1f, 1.0f));
+        CDBarTransform.DOScaleYUI(0, time, Modes.LINEAR);
 
+    }
     public override void Awake()
     {
     }
@@ -209,15 +218,11 @@ public class HUD : MonoBehaviour
         lockL = GameObject.Find("lock_L");
         lockR = GameObject.Find("lock_R");
 
-        boltgunAbility1 = GameObject.Find("boltgun_ability_1");
-        boltgunAbility2 = GameObject.Find("boltgun_ability_2");
-        shotgunAbility1 = GameObject.Find("shotgun_ability_1");
-        shotgunAbility2 = GameObject.Find("shotgun_ability_2");
-        railgunAbility1 = GameObject.Find("railgun_ability_1");
-        railgunAbility2a = GameObject.Find("railgun_ability_2a");
-        railgunAbility2b = GameObject.Find("railgun_ability_2b");
+        boltgunAbility = GameObject.Find("boltgun_ability");
+        shotgunAbility = GameObject.Find("shotgun_ability");
+        railgunAbility = GameObject.Find("railgun_ability");
 
-        if (boltgunAbility1 == null || boltgunAbility2 == null || shotgunAbility1 == null || shotgunAbility2 == null || railgunAbility1 == null || railgunAbility2a == null || railgunAbility2b == null)
+        if (boltgunAbility == null || shotgunAbility == null || railgunAbility == null)
         {
             Engineson.print("ERROR: GunAbilities not found");
         }
@@ -347,6 +352,26 @@ public class HUD : MonoBehaviour
         {
             fadeCanvas.SetActive(true);
         }
+
+        grenadeLauncherScript = Player.GetComponent<GrenadeLauncher>();
+        barrageScript = Player.GetComponent<Barrage>();
+        energyBallScript = Player.GetComponent<EnergyBall>();
+        if (grenadeLauncherScript == null || barrageScript == null || energyBallScript == null)
+        {
+            Engineson.print("ERROR: Abilities not found");
+        }
+        CDBar = GameObject.Find("CDBar");
+        if (CDBar == null)
+        {
+            Engineson.print("ERROR: CDBar not found");
+
+        }
+        CDBarTransform = CDBar.GetComponent<UITransform>();
+        if (CDBarTransform == null)
+        {
+            Engineson.print("ERROR: CDBarTransform not found");
+        }
+        CDBar.SetActive(false);
     }
     public override void Update(float deltaTime)
     {
@@ -433,13 +458,9 @@ public class HUD : MonoBehaviour
                 smallShotgunR.SetActive(true);
                 smallRailgunR.SetActive(false);
 
-                boltgunAbility1.SetActive(true);
-                boltgunAbility2.SetActive(true);
-                shotgunAbility1.SetActive(false);
-                shotgunAbility2.SetActive(false);
-                railgunAbility1.SetActive(false);
-                railgunAbility2a.SetActive(false);
-                railgunAbility2b.SetActive(false);
+                boltgunAbility.SetActive(true);
+                shotgunAbility.SetActive(false);
+                railgunAbility.SetActive(false);
 
                 if (playerShootingScript.hasShotgun)
                 {
@@ -480,13 +501,9 @@ public class HUD : MonoBehaviour
 
 
 
-                boltgunAbility1.SetActive(false);
-                boltgunAbility2.SetActive(false);
-                shotgunAbility1.SetActive(true);
-                shotgunAbility2.SetActive(true);
-                railgunAbility1.SetActive(false);
-                railgunAbility2a.SetActive(false);
-                railgunAbility2b.SetActive(false);
+                boltgunAbility.SetActive(false);
+                shotgunAbility.SetActive(true);
+                railgunAbility.SetActive(false);
 
                 if (playerShootingScript.hasRailgun)
                 {
@@ -523,17 +540,11 @@ public class HUD : MonoBehaviour
                 smallShotgunR.SetActive(false);
                 smallRailgunR.SetActive(false);
 
-                boltgunAbility1.SetActive(false);
-                boltgunAbility2.SetActive(false);
-                shotgunAbility1.SetActive(false);
-                shotgunAbility2.SetActive(false);
-                railgunAbility1.SetActive(true);
-                if (railgunScript == null)
-                {
-                    Engineson.print("ERROR: Hud.Update – railgunScript is null!");
-                    break;
-                }
-                railgunAbility2a.SetActive(true);
+                boltgunAbility.SetActive(false);
+                shotgunAbility.SetActive(false);
+                railgunAbility.SetActive(true);
+
+
 
                 if (playerShootingScript.hasBoltgun)
                 {
@@ -559,7 +570,6 @@ public class HUD : MonoBehaviour
                 UpdateRailgunAmmoUI();
                 break;
         }
-
 
 
         if (playerPowerUp.GetHasMedicaeStimm())
@@ -622,6 +632,11 @@ public class HUD : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             redThirstManager.AddRedThirstPoint(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            grenadeLauncherScript.TriggerAbility();
         }
 
     }

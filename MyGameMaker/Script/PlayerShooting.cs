@@ -174,8 +174,6 @@ public class PlayerShooting : MonoBehaviour
                 break;
         }
 
-        playerData.ShotgunUpgraded = true;
-
     }
 
     public int GetCurrentAmmo()

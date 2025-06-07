@@ -11,36 +11,46 @@ public class MusicManagerLvl1 : MonoBehaviour
     private string lvl1pathmusic = "Assets/Audio/Music/Warhammer_Level1_Pathway.ogg";
     private string lvl1crashsmusic = "Assets/Audio/Music/Warhammer_Level1_CrashedShip.ogg";
 
-    private GameObject townGO;
-    private GameObject pathGO;
-    private GameObject crashGO;
+    private bool townMusicPlayed = false;
+    private bool pathMusicPlayed = false;
+    private bool crashMusicPlayed = false;
+
     public override void Start()
     {
-        Audio.Play(lvl1music, true);
-        townGO = GameObject.Find("townCollider");
-        crashGO = GameObject.Find("crashCollider");
-        pathGO = GameObject.Find("pathCollider");
-
+        // Only play initial music if this is the first collider or a master music manager
+        if (gameObject.name == "townCollider" || gameObject.name == "MusicManagerLvl1")
+        {
+            Audio.Play(lvl1music, true);
+        }
     }
+    
     public override void OnTriggerEnter(GameObject other)
     {
-        if (other == townGO)
+        // Check if the entering object is the Player
+        if (other.name == "Player")
         {
-            Audio.Stop(lvl1music);
-            Audio.Play(lvl1townmusic, true);
-
-        }
-        if (other == pathGO)
-        {
-            Audio.Stop(lvl1townmusic);
-            Audio.Play(lvl1pathmusic, true);
-
-        }
-
-        if (other == crashGO)
-        {
-            Audio.Stop(lvl1pathmusic);
-            Audio.Play(lvl1crashsmusic, true);
+            // Check which collider this script is attached to by the GameObject name
+            if (gameObject.name == "townCollider" && !townMusicPlayed)
+            {
+                Audio.Stop(lvl1music);
+                Audio.Play(lvl1townmusic, true);
+                townMusicPlayed = true;
+                Engineson.print("Switched to town music");
+            }
+            else if (gameObject.name == "pathCollider" && !pathMusicPlayed)
+            {
+                Audio.Stop(lvl1townmusic);
+                Audio.Play(lvl1pathmusic, true);
+                pathMusicPlayed = true;
+                Engineson.print("Switched to path music");
+            }
+            else if (gameObject.name == "crashCollider" && !crashMusicPlayed)
+            {
+                Audio.Stop(lvl1pathmusic);
+                Audio.Play(lvl1crashsmusic, true);
+                crashMusicPlayed = true;
+                Engineson.print("Switched to crash music");
+            }
         }
     }
 

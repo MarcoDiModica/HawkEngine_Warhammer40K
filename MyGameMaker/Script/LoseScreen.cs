@@ -190,6 +190,7 @@ public class LoseScreen : MonoBehaviour
             if (selectedButton == button_loadLastCheckpoint)
             {
                 Audio.PlayOneShot(ConfirmSFX);
+                Audio.Stop(LoseMusic);
                 if (SceneManager.isLevel2)
                 {
                     SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl2");
@@ -206,6 +207,7 @@ public class LoseScreen : MonoBehaviour
             else if (selectedButton == button_mainMenuButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
+                Audio.Stop(LoseMusic);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)

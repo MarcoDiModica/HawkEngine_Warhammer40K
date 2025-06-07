@@ -144,10 +144,10 @@ GameObject1:
             - 10253
             - 9612
           sprite_offset:
-            - 3417.66602
-            - 8650.7998
+            - 6835.33203
+            - 4806
           anim_speed: 0.5
-          anim_index: 56
+          anim_index: 34
           anim_index_limit: 60
           color:
             - 1

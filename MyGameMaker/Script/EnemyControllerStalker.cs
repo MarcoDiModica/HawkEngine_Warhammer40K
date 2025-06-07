@@ -54,6 +54,7 @@ public class EnemyControllerStalker : EnemyController
     // Death
     private float deathTimer = 0f;
     private float deathCooldown = 2f;
+    private bool hasChangedVelocity;
 
     public override void Awake()
     {
@@ -108,10 +109,26 @@ public class EnemyControllerStalker : EnemyController
         distToChase = 75f;
 
         redThirstManager = GameObject.Find("Player").GetComponent<RedThirstManager>();
+        rb.SetFriction(5);
     }
 
     public override void Update(float deltaTime)
     {
+        if (SceneManager.isPaused)
+        {
+            if (!hasChangedVelocity && rb != null)
+            {
+                rb.SetVelocity(Vector3.Zero);
+                hasChangedVelocity = true;
+            }
+            return;
+        }
+        else if (hasChangedVelocity)
+        {
+            hasChangedVelocity = false;
+        }
+
+
         if (currentState != EnemyState.DEAD)
         {
             if (currentHealth <= 0)

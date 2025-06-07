@@ -13,6 +13,7 @@ public class DropManager : MonoBehaviour
     public Prefab ShotgunShellsPrefab; 
     public Prefab BoltgunBulletsPrefab; 
     public Prefab MedicaeStimmPrefab;
+    public Prefab DestroyedWood;
     public Prefab PiercingBulletsPrefab;
     private PlayerController playerController;
     public override void Awake()
@@ -267,6 +268,12 @@ public class DropManager : MonoBehaviour
     {
         var medicaeStimm = Instantiate(MedicaeStimmPrefab);
         medicaeStimm.transform.position = position;
+    }
+
+    public void SpawnDestroyedBarrel(Vector3 position)
+    {
+        var destroyedBarrel = Instantiate(DestroyedWood);
+        destroyedBarrel.transform.position = position;
     }
 
     public void SpawnPiercingBullets(Vector3 position)

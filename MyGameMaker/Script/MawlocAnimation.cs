@@ -23,6 +23,16 @@ public class MawlocAnimation : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        if (SceneManager.isPaused)
+        {
+            if (mawlocesk?.GetAnimationIndex() != 0)
+            {
+                mawlocesk?.SetAnimation(0);
+                mawlocesk?.SetAnimationSpeed(0.0f);
+            }
+            return;
+        }
+
         if (mawlocesk != null)
         {
             float length = mawlocesk.GetAnimationLength();

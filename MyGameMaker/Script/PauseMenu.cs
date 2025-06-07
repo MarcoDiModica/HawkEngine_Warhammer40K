@@ -207,8 +207,10 @@ public class PauseMenu : MonoBehaviour
         }
 
         // Detectar clic del ratón
-        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1) || Input.GetControllerButtonDown(ControllerButton.A))
+        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse) || Input.GetControllerButtonDown(ControllerButton.A))
         {
+            if(selectedButtonIndex == -1) return;
+            
             UIButton selectedButton = buttons[selectedButtonIndex];
             selectedButton.SetState(ButtonState.CLICKED);
 
@@ -216,6 +218,7 @@ public class PauseMenu : MonoBehaviour
             {
                 Audio.PlayOneShot(ConfirmSFX);
                 gameObject.SetActive(false);
+                SceneManager.SetPause(false);
             }
             else if (selectedButton == button_optionsMenuButton)
             {
@@ -226,10 +229,11 @@ public class PauseMenu : MonoBehaviour
             else if (selectedButton == button_mainMenuButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
+                SceneManager.SetPause(false);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)
-            {
+            {              
                 Audio.PlayOneShot(ConfirmSFX);
            
                 // Aquí puedes agregar la lógica para salir del juego

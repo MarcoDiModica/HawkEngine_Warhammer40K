@@ -94,10 +94,14 @@ public class EnemyControllerBossTail : EnemyController
     public override void Start()
     {
         //enemyTransform.position = fixedPositions[currentPositionIndex];
+       
     }
 
     public override void Update(float deltaTime)
     {
+        if (SceneManager.isPaused)
+            return;
+
         if (!isDead)
         {
             actionTimer -= deltaTime;

@@ -269,23 +269,26 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    if (isIdle)
+                    if (currentLookingDirection != LookingDirection.Backward)
                     {
-                        isHitIdle = true;
-                        playerAnimations.IdleToHitAnimation();
-                    }
-                    else if (isRunning || isShootingRunning)
-                    {
-                        isHitRunning = true;
-                        playerAnimations.RunningToHitAnimation();
-                    }
-                    else if (isShootingStanding)
-                    {
-                        isHitShooting = true;
-                        playerAnimations.ShootingStandingToHitAnimation();
+                        if (isIdle)
+                        {
+                            isHitIdle = true;
+                            playerAnimations.IdleToHitAnimation();
+                        }
+                        else if (isRunning || isShootingRunning)
+                        {
+                            isHitRunning = true;
+                            playerAnimations.RunningToHitAnimation();
+                        }
+                        else if (isShootingStanding)
+                        {
+                            isHitShooting = true;
+                            playerAnimations.ShootingStandingToHitAnimation();
+                        }
                     }
                 } 
-                }
+            }
             playerData.isHit = false;
         }
 

@@ -86,11 +86,39 @@ public class HUD : MonoBehaviour
 
     void win()
     {
+        // Stop all currently playing game music before going to win screen
+        // Level 1 music tracks
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_RuinedCity.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_RuinedTown.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_Pathway.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_CrashedShip.ogg");
+        // Level 2 music tracks
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_Livingquarter.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_Church.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_TelecommunicationsHub.ogg");
+        // Boss music tracks
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_BossFight_Part1.ogg");
+        Audio.Stop("Assets/Audio/Music/Level2_MainTheme_BossFight_Gold.ogg");
+        
         SceneManager.LoadScene("WinScene");
     }
 
     void lose()
     {
+        // Stop all currently playing game music before going to lose screen
+        // Level 1 music tracks
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_RuinedCity.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_RuinedTown.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_Pathway.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_CrashedShip.ogg");
+        // Level 2 music tracks
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_Livingquarter.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_Church.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_TelecommunicationsHub.ogg");
+        // Boss music tracks
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_BossFight_Part1.ogg");
+        Audio.Stop("Assets/Audio/Music/Level2_MainTheme_BossFight_Gold.ogg");
+        
         SceneManager.LoadScene("LoseScene");
     }
 

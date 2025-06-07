@@ -364,6 +364,16 @@ public class EnemyControllerBoss : EnemyController
             CheckBossHurtboxes();
         }
 
+        if (isFlashingColor)
+        {
+            flashTimer -= deltaTime;
+            if (flashTimer <= 0.0f && renderer != null)
+            {
+                renderer.SetColor(originalColor);
+                isFlashingColor = false;
+            }
+        }
+
         if (isDead)
         {
             renderer?.SetColor(new Vector4(1.0f, 0.0f, 0.0f, 1.0f)); 

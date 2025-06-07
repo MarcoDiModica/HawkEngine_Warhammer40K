@@ -9,22 +9,24 @@ public class AudioLevel1 : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        if (!hasStartedMusic)
-        {
-            Audio.Play(Lvl1Music, true);
-            hasStartedMusic = true;
-        }
+        // Disabled - MusicManagerLvl1 handles level 1 music switching
+        // if (!hasStartedMusic)
+        // {
+        //     Audio.Play(Lvl1Music, true);
+        //     hasStartedMusic = true;
+        // }
 
     }
     public override void OnTriggerEnter(GameObject other)
     {
-        if (other != null)
-        {
-            if (other.name == "Player")
-            {
-                Audio.Stop(Lvl1Music);
-            }
-        }
+        // Disabled - MusicManagerLvl1 handles level 1 music switching
+        // if (other != null)
+        // {
+        //     if (other.name == "Player")
+        //     {
+        //         Audio.Stop(Lvl1Music);
+        //     }
+        // }
     }
 
 

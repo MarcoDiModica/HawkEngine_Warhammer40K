@@ -170,75 +170,87 @@ MonoObject* MeshRenderer::GetSharp()
 void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPos) const {
 	if (!shader) return;
 
-	auto scene = Application->root->GetActiveScene();
-	if (!scene) return;
+	static std::vector<PointLight> cachedPointLights;
+	static std::vector<SpotLight> cachedSpotLights;
+	static DirectionalLight cachedDirLight = {};
+	static bool cachedHasDirectionalLight = false;
+	static bool lightsCacheValid = false;
+	static int frameCounter = 0;
 
-	std::vector<PointLight> pointLights;
-	std::vector<SpotLight> spotLights;
-	DirectionalLight dirLight = {};
-	bool hasDirectionalLight = false;
+	frameCounter++;
+	if (!lightsCacheValid || frameCounter >= 30) {
+		frameCounter = 0;
+		lightsCacheValid = true;
 
-	for (const auto& lightObj : scene->_lights) {
-		if (!lightObj || !lightObj->IsActive()) continue;
+		cachedPointLights.clear();
+		cachedSpotLights.clear();
+		cachedHasDirectionalLight = false;
 
-		auto lightComponent = lightObj->GetComponent<LightComponent>();
-		if (!lightComponent) continue;
+		auto scene = Application->root->GetActiveScene();
+		if (scene) {
+			for (const auto& lightObj : scene->_lights) {
+				if (!lightObj || !lightObj->IsActive()) continue;
 
-		switch (lightComponent->GetLightType()) {
-		case LightType::POINT:
-			if (pointLights.size() < 32) {
-				pointLights.push_back(lightComponent->GetPointLight());
+				auto lightComponent = lightObj->GetComponent<LightComponent>();
+				if (!lightComponent) continue;
+
+				switch (lightComponent->GetLightType()) {
+				case LightType::POINT:
+					if (cachedPointLights.size() < 32) {
+						cachedPointLights.push_back(lightComponent->GetPointLight());
+					}
+					break;
+
+				case LightType::DIRECTIONAL:
+					if (!cachedHasDirectionalLight) {
+						cachedDirLight = lightComponent->GetDirectionalLight();
+						cachedHasDirectionalLight = true;
+					}
+					break;
+
+				case LightType::SPOT:
+					if (cachedSpotLights.size() < 16) {
+						cachedSpotLights.push_back(lightComponent->GetSpotLight());
+					}
+					break;
+				}
 			}
-			break;
-
-		case LightType::DIRECTIONAL:
-			if (!hasDirectionalLight) {
-				dirLight = lightComponent->GetDirectionalLight();
-				hasDirectionalLight = true;
-			}
-			break;
-
-		case LightType::SPOT:
-			if (spotLights.size() < 16) {
-				spotLights.push_back(lightComponent->GetSpotLight());
-			}
-			break;
 		}
 	}
 
-	shader->SetUniform("numPointLights", static_cast<int>(pointLights.size()));
-	shader->SetUniform("numSpotLights", static_cast<int>(spotLights.size()));
-	shader->SetUniform("hasDirectionalLight", hasDirectionalLight ? 1 : 0);
+	shader->SetUniform("numPointLights", static_cast<int>(cachedPointLights.size()));
+	shader->SetUniform("numSpotLights", static_cast<int>(cachedSpotLights.size()));
+	shader->SetUniform("hasDirectionalLight", cachedHasDirectionalLight ? 1 : 0);
 
-	for (size_t i = 0; i < pointLights.size(); ++i) {
+	for (size_t i = 0; i < cachedPointLights.size(); ++i) {
 		std::string base = "pointLights[" + std::to_string(i) + "]";
-		shader->SetUniform(base + ".position", pointLights[i].position);
-		shader->SetUniform(base + ".color", pointLights[i].color);
-		shader->SetUniform(base + ".intensity", pointLights[i].intensity);
-		shader->SetUniform(base + ".range", pointLights[i].range);
-		shader->SetUniform(base + ".constant", pointLights[i].constant);
-		shader->SetUniform(base + ".linear", pointLights[i].linear);
-		shader->SetUniform(base + ".quadratic", pointLights[i].quadratic);
+		shader->SetUniform(base + ".position", cachedPointLights[i].position);
+		shader->SetUniform(base + ".color", cachedPointLights[i].color);
+		shader->SetUniform(base + ".intensity", cachedPointLights[i].intensity);
+		shader->SetUniform(base + ".range", cachedPointLights[i].range);
+		shader->SetUniform(base + ".constant", cachedPointLights[i].constant);
+		shader->SetUniform(base + ".linear", cachedPointLights[i].linear);
+		shader->SetUniform(base + ".quadratic", cachedPointLights[i].quadratic);
 	}
 
-	for (size_t i = 0; i < spotLights.size(); ++i) {
+	for (size_t i = 0; i < cachedSpotLights.size(); ++i) {
 		std::string base = "spotLights[" + std::to_string(i) + "]";
-		shader->SetUniform(base + ".position", spotLights[i].position);
-		shader->SetUniform(base + ".direction", spotLights[i].direction);
-		shader->SetUniform(base + ".color", spotLights[i].color);
-		shader->SetUniform(base + ".intensity", spotLights[i].intensity);
-		shader->SetUniform(base + ".range", spotLights[i].range);
-		shader->SetUniform(base + ".innerCone", spotLights[i].innerCone);
-		shader->SetUniform(base + ".outerCone", spotLights[i].outerCone);
-		shader->SetUniform(base + ".constant", spotLights[i].constant);
-		shader->SetUniform(base + ".linear", spotLights[i].linear);
-		shader->SetUniform(base + ".quadratic", spotLights[i].quadratic);
+		shader->SetUniform(base + ".position", cachedSpotLights[i].position);
+		shader->SetUniform(base + ".direction", cachedSpotLights[i].direction);
+		shader->SetUniform(base + ".color", cachedSpotLights[i].color);
+		shader->SetUniform(base + ".intensity", cachedSpotLights[i].intensity);
+		shader->SetUniform(base + ".range", cachedSpotLights[i].range);
+		shader->SetUniform(base + ".innerCone", cachedSpotLights[i].innerCone);
+		shader->SetUniform(base + ".outerCone", cachedSpotLights[i].outerCone);
+		shader->SetUniform(base + ".constant", cachedSpotLights[i].constant);
+		shader->SetUniform(base + ".linear", cachedSpotLights[i].linear);
+		shader->SetUniform(base + ".quadratic", cachedSpotLights[i].quadratic);
 	}
 
-	if (hasDirectionalLight) {
-		shader->SetUniform("dirLight.direction", dirLight.direction);
-		shader->SetUniform("dirLight.color", dirLight.color);
-		shader->SetUniform("dirLight.intensity", dirLight.intensity);
+	if (cachedHasDirectionalLight) {
+		shader->SetUniform("dirLight.direction", cachedDirLight.direction);
+		shader->SetUniform("dirLight.color", cachedDirLight.color);
+		shader->SetUniform("dirLight.intensity", cachedDirLight.intensity);
 	}
 
 	shader->SetUniform("viewPos", viewPos);

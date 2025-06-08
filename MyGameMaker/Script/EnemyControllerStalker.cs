@@ -241,10 +241,10 @@ public class EnemyControllerStalker : EnemyController
                 rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
 
                 // Invisibility
-                if (distanceToPlayer < invisibilityRange && currentState != EnemyState.ATTACK && !isPouncing)
-                {
-                    Invisibility();
-                }
+               // if (distanceToPlayer < invisibilityRange && currentState != EnemyState.ATTACK && !isPouncing)
+               // {
+               //     Invisibility();
+               // }
 
                 // Pounce
                 if (distanceToPlayer < pounceRange && hasPounce && !isPouncing)

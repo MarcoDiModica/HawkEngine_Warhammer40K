@@ -630,15 +630,27 @@ public class PlayerController : MonoBehaviour
     }
     private void UpdateCharacterState()
     {
-        if (isShootInput && !isDashing)
+        bool blockFootsteps = isShootInput || isDashing || playerData.isHit;
+
+        if (blockFootsteps)
         {
             SetShootingState();
-            return;
+
+            StopFootsteps();
+
+            if (effectsInitialized)
+            {
+                walkingFX.Stop();
+            }
         }
 
-        if (moveDirection != Vector3.Zero)
+        if (moveDirection != Vector3.Zero && !blockFootsteps)
         {
-            if (effectsInitialized)
+            bool shouldBeRunning = playerMovement != null &&
+                                  (playerMovement.moveSpeed > playerMovement.walkSpeed ||
+                                   isRunningInput);
+
+            if (effectsInitialized && walkingFX != null && walkingFX.enabled)
             {
                 walkingFX.Play();
             }
@@ -648,11 +660,7 @@ public class PlayerController : MonoBehaviour
                 PlayFootstep();
             }
 
-            bool shouldBeRunning = playerMovement != null &&
-                                  (playerMovement.moveSpeed > playerMovement.walkSpeed ||
-                                   isRunningInput);
-
-            if (shouldBeRunning && !isRunning && !isDashing)
+            if (shouldBeRunning && !isRunning)
             {
                 isWalking = false;
                 isIdle = false;
@@ -683,7 +691,7 @@ public class PlayerController : MonoBehaviour
                 SetRunningAnimation();
             }
         }
-        else
+        else if (!blockFootsteps)
         {
             StopFootsteps();
 
@@ -704,12 +712,17 @@ public class PlayerController : MonoBehaviour
                 currentLookingDirection = LookingDirection.Idle;
                 currentShootingDirection = ShootingDirection.Idle;
             }
-            else if (!isIdle && !isDashing)
+            else if (!isIdle)
             {
                 SetIdleState();
                 currentLookingDirection = LookingDirection.Idle;
                 currentShootingDirection = ShootingDirection.Idle;
             }
+        }
+        else
+        {
+            StopFootsteps();
+            if (effectsInitialized) walkingFX.Stop();
         }
     }
 

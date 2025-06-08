@@ -113,7 +113,7 @@ public class InteractionSystem : MonoBehaviour
             }
             else if (interactionTimer > interactionCooldown)
             {
-                if (Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B))
+                if (Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.A))
                 {
                     var item = currentInteractable.GetComponent<Item>();
                     if (item != null)

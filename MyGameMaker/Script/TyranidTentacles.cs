@@ -5,6 +5,8 @@ public class TyranidTentacles : MonoBehaviour
 {
     private Collider tentacleCollider;
     private GameObject player;
+    private GameObject interactionCanvas;
+    private Interaction interactionScript;
     private PlayerController playerController;
     private TyranidTentaclesAnim tentacleAnim;
     private TyranidTentaclesAnim tentacleAnim2;
@@ -35,6 +37,8 @@ public class TyranidTentacles : MonoBehaviour
             Engineson.print("ERROR: TyranidTentaclesAnim2 script not found.");
         if (tentacleAnim3 == null)
             Engineson.print("ERROR: TyranidTentaclesAnim3 script not found.");
+        interactionCanvas = GameObject.Find("Canvas_Interaction");
+        interactionScript = interactionCanvas?.GetComponent<Interaction>();
     }
 
     public override void Update(float deltaTime)
@@ -75,6 +79,7 @@ public class TyranidTentacles : MonoBehaviour
         isPlayerStunned = true;
         stunTimer = 0f;
         canInteractToEscape = false;
+        interactionScript.SpawnInteractText(canInteractToEscape);
 
         if (!playerController.playerData.GodMode)
             playerController.BlockMovement();
@@ -100,6 +105,7 @@ public class TyranidTentacles : MonoBehaviour
         isPlayerExposed = false;
         isPlayerStunned = false;
         canInteractToEscape = false;
+        interactionScript.SpawnInteractText(canInteractToEscape);
         exposureTimer = 0f;
         stunTimer = 0f;
         player = null;

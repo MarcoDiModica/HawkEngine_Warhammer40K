@@ -48,7 +48,7 @@ public class EnemyControllerBoss : EnemyController
     //stats
     bool isCombatMusicPlaying = false;
     private float health = 1500.0f;
-    private float contactDamage = 10.0f;
+    private float contactDamage = 5.0f;
 
     // unburrowing attack stats
     private float unburrowingAttackCooldown = 5.0f;
@@ -93,7 +93,7 @@ public class EnemyControllerBoss : EnemyController
     private bool phase3Started = false;
     private bool hasTeleportedToCenter = false;
     private bool isPhase3Attacking = false;
-    private float metalSlideDamage = 8.0f;
+    private float metalSlideDamage = 10.0f;
     private bool metalSlideDamageApplied = false;
 
     private EnemyControllerBossTail tailController;

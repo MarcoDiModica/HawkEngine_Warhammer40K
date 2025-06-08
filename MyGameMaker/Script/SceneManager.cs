@@ -66,7 +66,7 @@ namespace HawkEngine
             PlayerInput playerInput = player?.GetComponent<PlayerInput>();
             PlayerController playerController = player?.GetComponent<PlayerController>();
             playerInput?.BlockInput();
-            Audio.PauseAll();
+            // Audio.PauseAll(); // Removed - let music managers handle transitions naturally
 
             if (playerController?.playerData != null)
             {
@@ -124,7 +124,7 @@ namespace HawkEngine
             {
 
                 playerInput?.BlockInput();
-                Audio.PauseAll();
+                // Audio.PauseAll(); // Removed - let music continue during pause
                 if (playerController?.playerData != null)
                 {
                     playerHealthPausedTemp = playerController.playerData.GetHealthTemp();

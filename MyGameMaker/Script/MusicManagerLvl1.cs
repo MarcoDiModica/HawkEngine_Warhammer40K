@@ -11,6 +11,7 @@ public class MusicManagerLvl1 : MonoBehaviour
     private string lvl1pathmusic = "Assets/Audio/Music/Warhammer_Level1_Pathway.ogg";
     private string lvl1crashsmusic = "Assets/Audio/Music/Warhammer_Level1_CrashedShip.ogg";
 
+    private bool lvl1musicPlayed = false;
     private bool townMusicPlayed = false;
     private bool pathMusicPlayed = false;
     private bool crashMusicPlayed = false;
@@ -21,6 +22,7 @@ public class MusicManagerLvl1 : MonoBehaviour
         if (gameObject.name == "townCollider" || gameObject.name == "MusicManagerLvl1")
         {
             Audio.Play(lvl1music, true);
+            lvl1musicPlayed = true;
         }
     }
     
@@ -32,7 +34,10 @@ public class MusicManagerLvl1 : MonoBehaviour
             // Check which collider this script is attached to by the GameObject name
             if (gameObject.name == "townCollider" && !townMusicPlayed)
             {
-                Audio.Stop(lvl1music);
+                if (lvl1musicPlayed)
+                {
+                    Audio.Stop(lvl1music);
+                }
                 Audio.Play(lvl1townmusic, true);
                 townMusicPlayed = true;
                 Engineson.print("Switched to town music");

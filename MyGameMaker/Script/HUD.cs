@@ -191,6 +191,7 @@ public class HUD : MonoBehaviour
         }
         else if (abilityName == "Grenade")
         {
+            Engineson.print("TriggerCooldown: Grenade ability triggered with time: " + time);
             CDBarGrenade.SetActive(true);
             CDBarTransformGrenade.SetScaleUI(new Vector3(0.065f, 0.1f, 1.0f));
             CDBarTransformGrenade.DOScaleYUI(0, time, Modes.LINEAR);

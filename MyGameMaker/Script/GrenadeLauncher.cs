@@ -23,7 +23,7 @@ public class GrenadeLauncher : BaseAbilities
     private float explosionCooldown = 1.0f;
     private float explosionTimer = 0.0f;
 
-    private float abilityCooldown = 8.0f; // Cooldown de la habilidad
+    private float abilityCooldown = 4.0f; // Cooldown de la habilidad
     private float abilityTimer = 0.0f;    // Contador del cooldown
 
    // private AudioSource sound;

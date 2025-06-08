@@ -1,6 +1,6 @@
-name: Canvas_TitleSM
-prefabPath: Assets\Prefabs\Canvas_TitleSM.prefab.yaml
-uuid: 15444793993539794259
+name: Canvas_Controls
+prefabPath: Assets/Prefabs/Canvas_Controls.prefab.yaml
+uuid: 15300489847270049996
 tag: Untagged
 active: false
 isStatic: false
@@ -43,14 +43,10 @@ Components:
   UICanvasComponent:
     name: UICanvasComponent
     enabled: true
-  ScriptComponents:
-    Script0:
-      name: LocationTitle
-      fields: ~
 Children:
-  - name: Title
+  - name: Controls_Image
     prefabPath: ""
-    uuid: 7575903569088132683
+    uuid: 9240088299778950982
     tag: Untagged
     active: true
     isStatic: false
@@ -76,7 +72,7 @@ Children:
         enabled: true
         position:
           - 0
-          - 1
+          - 0
           - 0
         rotation:
           - 0
@@ -88,12 +84,12 @@ Children:
           - 1
         pivot_offset:
           - 0
-          - 1
+          - 0
           - 0
       UIImageComponent:
         name: UIImageComponent
         enabled: true
-        texture_path: Library\Textures\UI\location_sacarium_mortis.png
+        texture_path: Library\Textures\UI\controlls_menu.png
         use_animation: false
         sprite_size:
           - 2560

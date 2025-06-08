@@ -1,6 +1,6 @@
-name: CajaMadera1_1_Instance
+name: CajaMadera1_1_Instance_Instance
 prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
-uuid: 12544303147130845223
+uuid: 1929486645368155958
 tag: Destroyable
 active: true
 isStatic: false
@@ -13,22 +13,22 @@ Components:
       - 4.2351647362715017e-22
       - 7.5031118392944336
     localRotation:
-      - -90.000009659346318
+      - -90.00000769819961
       - 0
       - 0
     localScale:
-      - 1.25
-      - 1.25
-      - 1.25
+      - 1.5375000238418579
+      - 1.5375000238418717
+      - 1.5375000238418717
   BoxColliderComponent:
     size:
-      - 1.60000002
-      - 1.89999998
+      - 2.70000005
+      - 2.70000005
       - 3.5999999
     offset:
       - 0
       - 1
-      - 1.89999998
+      - 2.29999995
     isTrigger: false
   ScriptComponents:
     Script0:
@@ -131,17 +131,17 @@ Children:
         name: Transform_Component
         enabled: true
         localPosition:
-          - -3.8146972647368216e-07
-          - -1.4305406380092087
-          - 0.91348860859283532
+          - -3.8146973224684189e-07
+          - -1.4305406808853149
+          - 0.91348862648010254
         localRotation:
-          - 2.6349806741723203e-13
+          - 2.6349807946960217e-13
           - -0
           - 0
         localScale:
           - 1
-          - 1.0000000342285502
-          - 1.0000000342285502
+          - 1
+          - 1
       ParticleFX:
         name: ParticleFX
         enabled: true

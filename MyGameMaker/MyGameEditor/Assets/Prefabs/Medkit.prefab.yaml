@@ -1,6 +1,6 @@
-name: Medkit
-prefabPath: Assets/Prefabs/Medkit.prefab.yaml
-uuid: 2395089655681620673
+name: Medkit_Instance
+prefabPath: Assets\Prefabs\Medkit.prefab.yaml
+uuid: 506629900149383194
 tag: Destroyable
 active: true
 isStatic: false
@@ -22,8 +22,8 @@ Components:
       - 1.1974426507949829
   BoxColliderComponent:
     size:
-      - 3.20000005
-      - 2.79999995
+      - 3.79999995
+      - 3.5
       - 5.69999981
     offset:
       - 0

@@ -274,50 +274,20 @@ static void RenderGameView() {
 		return;
 	}
 
-	GLint lastProgram;
-	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
-
-	GLint lastFBO;
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFBO);
-
-	GLint lastVP[4];
-	glGetIntegerv(GL_VIEWPORT, lastVP);
-
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
 	glViewport(0, 0, 1280, 720);
 
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glPushAttrib(GL_ALL_ATTRIB_BITS);
-
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-
 	glm::dmat4 projectionMatrix = gameCamera->projection();
 	glm::dmat4 viewMatrix = gameCamera->view();
 
 	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
 	glLoadMatrixd(glm::value_ptr(projectionMatrix));
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 	glLoadMatrixd(glm::value_ptr(viewMatrix));
-
-	glUseProgram(0);
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	for (GLenum i = 0; i < 5; i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-	glActiveTexture(GL_TEXTURE0);
 
 	for (auto& object : Application->root->GetActiveScene()->children()) 
 	{
@@ -326,34 +296,6 @@ static void RenderGameView() {
 			RenderObjectAndChildren(object);
 		}
 	}
-
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-
-	glPopAttrib();
-
-	glUseProgram(0);
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	for (GLenum i = 0; i < 5; i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-	glActiveTexture(GL_TEXTURE0);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
-	glViewport(lastVP[0], lastVP[1], lastVP[2], lastVP[3]);
-
-	if (lastProgram > 0) {
-		glUseProgram(lastProgram);
-	}
-
-	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 }
 
 #pragma region UNDO_REDO
@@ -809,7 +751,6 @@ static void GameRelease() {
 		return;
 	}
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
 
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
@@ -818,36 +759,31 @@ static void GameRelease() {
 	auto activeScene = Application->root->GetActiveScene();
 	if (!activeScene) return;
 
-	activeScene->_lights.clear();
+	UpdateLightSystem();
 
-	std::vector<std::shared_ptr<GameObject>> UI;
+	auto sceneChildrenCopy = activeScene->children();
+	std::vector<GameObject*> objects;
 
-	for (auto& object : activeScene->children()) {
-		if (object->HasComponent<UICanvasComponent>()) {
-			UI.push_back(object);
-			continue;
+	for (const auto& objPtr : sceneChildrenCopy) {
+		if (!objPtr) continue;
+		GameObject* object = objPtr.get();
+		if (!object) continue;
+		objects.push_back(object);
+
+		for (const auto& childPtr : object->GetChildren()) {
+			if (!childPtr) continue;
+			GameObject* child = childPtr.get();
+			if (!child) continue;
+			objects.push_back(child);
 		}
 
 		if (object->IsActive()) {
-			std::function<void(std::shared_ptr<GameObject>)> addLightsRecursive = [&](std::shared_ptr<GameObject> obj) {
-				if (!obj || !obj->IsActive()) return;
 
-				if (obj->HasComponent<LightComponent>()) {
-					activeScene->_lights.push_back(obj);
-				}
-
-				for (const auto& child : obj->GetChildren()) {
-					addLightsRecursive(child);
-				}
-				};
-
-			addLightsRecursive(object);
-
-			object->Update(static_cast<float>(Application->GetDt()));
-
+			object->Update(Application->GetDt());
+			
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
-				break;
+				return;
 			}
 		}
 	}
@@ -855,14 +791,6 @@ static void GameRelease() {
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
-
-	for (const auto& i : UI) {
-		if (i->IsActive()) {
-			i->Update(static_cast<float>(Application->GetDt()));
-		}
-	}
-
-	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 }
 
 int main(int argc, char** argv) {

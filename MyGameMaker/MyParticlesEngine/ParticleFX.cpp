@@ -2033,21 +2033,7 @@ void ParticleFX::Update(float deltaTime) {
 }
 
 void ParticleFX::RenderGameView() {
-	GLint lastProgram;
-	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
-
-	GLint lastVAO;
-	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &lastVAO);
-
-	GLint lastTexture;
-	glActiveTexture(GL_TEXTURE0);
-	glGetIntegerv(GL_TEXTURE_BINDING_2D, &lastTexture);
-
-	GLboolean lastDepthTest = glIsEnabled(GL_DEPTH_TEST);
-	GLboolean lastBlend = glIsEnabled(GL_BLEND);
-	GLint lastBlendSrc, lastBlendDst;
-	glGetIntegerv(GL_BLEND_SRC_ALPHA, &lastBlendSrc);
-	glGetIntegerv(GL_BLEND_DST_ALPHA, &lastBlendDst);
+	if (!owner || owner->IsDestroyed()) return;
 
 	glm::vec3 cameraPosition = Application->root->mainCamera->GetTransform()->GetPosition();
 	glm::vec3 cameraUp = Application->root->mainCamera->GetTransform()->GetUp();
@@ -2069,20 +2055,6 @@ void ParticleFX::RenderGameView() {
 	}
 
 	renderer->UpdateAndRender(0.0f);
-
-	glUseProgram(lastProgram);
-	glBindVertexArray(lastVAO);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, lastTexture);
-
-	if (lastDepthTest) glEnable(GL_DEPTH_TEST);
-	else glDisable(GL_DEPTH_TEST);
-
-	if (lastBlend) glEnable(GL_BLEND);
-	else glDisable(GL_BLEND);
-
-	glBlendFunc(lastBlendSrc, lastBlendDst);
 }
 
 void ParticleFX::Destroy() {

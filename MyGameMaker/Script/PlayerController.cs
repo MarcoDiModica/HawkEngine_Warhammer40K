@@ -86,6 +86,9 @@ public class PlayerController : MonoBehaviour
     private bool isHitRunning = false;
     private bool isHitShooting = false;
 
+    private float shootingCooldown = 0.5f;
+    private float shootingCounter = 0f;
+
     private int frameCounter = 0;
 
 
@@ -536,7 +539,7 @@ public class PlayerController : MonoBehaviour
 
         if (isReloadingIdle)
         {
-            ReloadingIdleAnimationFinished();
+            ReloadingIdleAnimationFinished(deltaTime);
         }
         else if (isReloadingRunning)
         {
@@ -544,7 +547,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (isReloadingWalking)
         {
-            ReloadingWalkingAnimationFinished();
+            ReloadingWalkingAnimationFinished(deltaTime);
         }
 
         if ((playerInput.IsChangingWeaponLeft() || playerInput.IsChangingWeaponRight()) && playerShooting.canChangeWeapon)
@@ -813,12 +816,12 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void ReloadingIdleAnimationFinished()
+    private void ReloadingIdleAnimationFinished(float deltaTime)
     {
-
-        
-        if (playerAnimations.esk.IsAnimationFinished())
+        shootingCounter += deltaTime;
+        if (shootingCounter >= shootingCooldown)
         {
+            shootingCounter = 0f;
             Engineson.print("Reloading animation finished");
             isReloadingIdle = false;
             if (playerInput.IsShooting())
@@ -865,10 +868,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ReloadingWalkingAnimationFinished()
+    private void ReloadingWalkingAnimationFinished(float deltaTime)
     {
-        if (playerAnimations.esk.IsAnimationFinished())
+        shootingCounter += deltaTime;
+        if (shootingCounter >= shootingCooldown)
         {
+            shootingCounter = 0f;
             Engineson.print("Reloading animation finished");
             isReloadingWalking = false;
             if (playerInput.IsShooting())

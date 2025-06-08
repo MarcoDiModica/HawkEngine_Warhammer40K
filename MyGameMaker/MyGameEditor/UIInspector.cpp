@@ -3366,6 +3366,13 @@ bool UIInspector::Draw() {
 		}
 		ImGui::PopStyleColor();
 
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.5f, 0.0f, 0.0f, 1.0f));
+		if (ImGui::Button("Load From Prefab Complete")) {
+			const std::string& prefabPath = selectedObject->GetPrefabSourcePath();
+			PrefabManager::ReloadGoToPrefab(selectedObject, prefabPath);
+			LOG(LogType::LOG_INFO, "[Inspector] Reloaded GameObject from prefab: %s", prefabPath.c_str());
+		}
+		ImGui::PopStyleColor();
 	}
 
     ComponentDrawer::DrawComponents(selectedObject, snap, snapValue);

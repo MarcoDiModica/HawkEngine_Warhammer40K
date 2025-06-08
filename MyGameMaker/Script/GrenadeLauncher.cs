@@ -123,7 +123,7 @@ public class GrenadeLauncher : BaseAbilities
 
         canThrow = false; // Inicia el cooldown
         abilityTimer = 0.0f;
-        hud.TriggerCooldown(abilityCooldown);
+        hud.TriggerCooldown("Grenade", abilityCooldown);
     }
 
     void Explode()

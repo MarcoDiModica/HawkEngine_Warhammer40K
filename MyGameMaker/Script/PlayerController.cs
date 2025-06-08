@@ -733,7 +733,6 @@ public class PlayerController : MonoBehaviour
 
         if (moveDirection.LengthSquared() < epsilon)
         {
-            // No se está moviendo
             return;
         }
 

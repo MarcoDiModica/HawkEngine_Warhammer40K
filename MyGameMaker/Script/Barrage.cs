@@ -5,15 +5,14 @@ using static BaseWeapon;
 
 public class Barrage : BaseAbilities
 {
-
     public string name;
     public bool enabled;
     public float cooldown;
-    
+
     private HUD hud;
     private float yHeight = 0.0f;
     private float timer = 0;
-    
+
     public GameObject grenade;
     Rigidbody rigidbody;
     BoxCollider collider;
@@ -22,27 +21,27 @@ public class Barrage : BaseAbilities
     private float explosionCooldown = 1.0f;
     private float explosionTimer = 0.0f;
 
-    private float abilityCooldown = 3.0f; // Cooldown de la habilidad
-    private float abilityTimer = 0.0f;    // Contador del cooldown
+    private float abilityCooldown = 3.0f;
+    private float abilityTimer = 0.0f;
     private float time = 0.0f;
 
-   // private AudioSource sound;
     private string barrageShotAudio = "Assets/Audio/SFX/Weapons/Shotgun/BarrageShot.wav";
-   // private AudioClip barrageFX;
-
 
     public override void Awake()
     {
-
     }
+
     public override void Start()
     {
         hud = GameObject.Find("Canvas_HUD").GetComponent<HUD>();
+        if (hud == null)
+        {
+            Engineson.print("ERROR: HUD no encontrado.");
+        }
     }
 
     public override void Update(float deltaTime)
     {
-        // Manejo del cooldown de la habilidad
         if (!canThrow)
         {
             abilityTimer += deltaTime;
@@ -66,69 +65,52 @@ public class Barrage : BaseAbilities
 
                 if (rigidbody.GetVelocity().Y <= 0.1f && timer > 0.1f && yHeight > grenadeY)
                 {
-                    
+                    // Evento de colisión o detonación aquí si fuera necesario
                 }
             }
         }
-
-        
     }
-
-
 
     public override void TriggerAbility()
     {
-        if (canThrow)
+        if (!canThrow)
         {
-            Engineson.print("Lanzando granada...");
-            Audio.PlayOneShot(barrageShotAudio);
+            Engineson.print("Habilidad en cooldown. Espera...");
+            return;
+        }
 
-            grenade = Engineson.CreateGameObject("Barrage", null);
+        Engineson.print("Lanzando granada...");
+        Audio.PlayOneShot(barrageShotAudio);
 
+        grenade = Engineson.CreateGameObject("Barrage", null);
 
+        if (grenade == null)
+        {
+            Engineson.print("ERROR: No se pudo crear la granada.");
+            return;
+        }
 
-            if (grenade == null)
-            {
-                Engineson.print("ERROR: No se pudo crear la granada.");
-                return;
-            }
+        grenade.AddScript("BarrageBullet");
+        grenade.GetComponent<BarrageBullet>().Init(gameObject);
 
+        canThrow = false;
+        abilityTimer = 0.0f;
 
-
-
-            grenade.AddScript("BarrageBullet");
-            grenade.GetComponent<BarrageBullet>().Init(gameObject);
-
-
-            canThrow = false; // Inicia el cooldown
-            abilityTimer = 0.0f;
-            hud.TriggerCooldown(abilityCooldown);
+        if (hud != null)
+        {
+            hud.TriggerCooldown("Barrage",abilityCooldown);
+            Engineson.print("HUD cooldown disparado por " + abilityCooldown + "s.");
         }
         else
         {
-            Engineson.print("Habilidad en cooldown. Espera...");
+            Engineson.print("HUD es null, no se puede mostrar cooldown.");
         }
-
-        if (!canThrow)
-        {
-            abilityTimer += time;
-            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
-
-            if (abilityTimer >= abilityCooldown)
-            {
-                canThrow = true;
-                abilityTimer = 0.0f;
-                Engineson.print("Cooldown terminado. Habilidad lista.");
-            }
-        }
-
     }
 
     public override void ResetCooldowns()
     {
         canThrow = true;
+        abilityTimer = 0.0f;
     }
-
-
 }
 

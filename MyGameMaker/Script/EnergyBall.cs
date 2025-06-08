@@ -95,7 +95,7 @@ public class EnergyBall : BaseAbilities
             canThrow = false;
             abilityTimer = 0.0f;
             energyBall.GetComponent<Ball>().needsDestroy = true;
-            hud.TriggerCooldown(abilityCooldown);
+            hud.TriggerCooldown("EnergyBall",abilityCooldown);
         }
         else
         {

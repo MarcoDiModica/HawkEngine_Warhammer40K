@@ -85,8 +85,11 @@ public class HUD : MonoBehaviour
 
     private GameObject fadeCanvas;
 
-    private GameObject CDBar;
-    private UITransform CDBarTransform;
+    public GameObject CDBarBarrage;
+    public UITransform CDBarTransformBarrage;
+
+    public GameObject CDBarGrenade;
+    public UITransform CDBarTransformGrenade;
 
     private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
 
@@ -178,12 +181,20 @@ public class HUD : MonoBehaviour
         return pos;
     }
 
-    public void TriggerCooldown(float time)
+    public void TriggerCooldown(string abilityName, float time)
     {
-        CDBar.SetActive(true);
-        CDBarTransform.SetScaleUI(new Vector3(0.065f, 0.1f, 1.0f));
-        CDBarTransform.DOScaleYUI(0, time, Modes.LINEAR);
-
+        if (abilityName == "Barrage")
+        {
+            CDBarBarrage.SetActive(true);
+            CDBarTransformBarrage.SetScaleUI(new Vector3(0.065f, 0.1f, 1.0f));
+            CDBarTransformBarrage.DOScaleYUI(0, time, Modes.LINEAR);
+        }
+        else if (abilityName == "Grenade")
+        {
+            CDBarGrenade.SetActive(true);
+            CDBarTransformGrenade.SetScaleUI(new Vector3(0.065f, 0.1f, 1.0f));
+            CDBarTransformGrenade.DOScaleYUI(0, time, Modes.LINEAR);
+        }
     }
     public override void Awake()
     {
@@ -401,18 +412,31 @@ public class HUD : MonoBehaviour
         {
             Engineson.print("ERROR: Abilities not found");
         }
-        CDBar = GameObject.Find("CDBar");
-        if (CDBar == null)
+        CDBarGrenade = GameObject.Find("CDBar");
+        if (CDBarGrenade == null)
         {
             Engineson.print("ERROR: CDBar not found");
 
         }
-        CDBarTransform = CDBar.GetComponent<UITransform>();
-        if (CDBarTransform == null)
+        CDBarTransformGrenade = CDBarGrenade.GetComponent<UITransform>();
+        if (CDBarTransformGrenade == null)
         {
             Engineson.print("ERROR: CDBarTransform not found");
         }
-        CDBar.SetActive(false);
+        CDBarGrenade.SetActive(false);
+
+        CDBarBarrage = GameObject.Find("CDBarBarrage");
+        if (CDBarBarrage == null)
+        {
+            Engineson.print("ERROR: CDBarBarrage not found");
+
+        }
+        CDBarTransformBarrage = CDBarBarrage.GetComponent<UITransform>();
+        if (CDBarTransformBarrage == null)
+        {
+            Engineson.print("ERROR: CDBarTransformBarrage not found");
+        }
+        CDBarBarrage.SetActive(false);
     }
     public override void Update(float deltaTime)
     {

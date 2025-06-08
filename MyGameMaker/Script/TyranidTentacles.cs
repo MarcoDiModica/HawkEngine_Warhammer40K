@@ -60,7 +60,7 @@ public class TyranidTentacles : MonoBehaviour
                 canInteractToEscape = true;
 
                 //Interact Button
-                if (Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B))
+                if (Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.A))
                 {
                     ReleasePlayer();
                     ResetState();

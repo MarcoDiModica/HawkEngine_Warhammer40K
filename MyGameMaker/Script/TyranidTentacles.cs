@@ -78,7 +78,7 @@ public class TyranidTentacles : MonoBehaviour
         player.GetComponent<Collider>().SetPosition(new Vector3(gameObject.transform.position.X - 1, gameObject.transform.position.Y + 0.1f, gameObject.transform.position.Z - 1));
         isPlayerStunned = true;
         stunTimer = 0f;
-        canInteractToEscape = false;
+        canInteractToEscape = true;
         interactionScript.SpawnInteractText(canInteractToEscape);
 
         if (!playerController.playerData.GodMode)

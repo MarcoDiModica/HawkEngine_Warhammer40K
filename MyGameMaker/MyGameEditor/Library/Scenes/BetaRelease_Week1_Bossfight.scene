@@ -667,178 +667,6 @@ GameObject10:
             - 0
           isTrigger: false
       Children: ~
-    - name: Cylinder.006_copy_copy_2
-      prefabPath: ""
-      uuid: 463251749726749431
-      tag: Untagged
-      active: true
-      isStatic: false
-      useManualBoundingBox: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -606.35394287109375
-            - -15.195431709289551
-            - -79.659263610839844
-          localRotation:
-            - -90.000007093551375
-            - 58.676850735004713
-            - 7.0935513677441977e-06
-          localScale:
-            - 6.7094449996948242
-            - 8.99993896484375
-            - 5.4227023124694824
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 16985549430831654082
-          material:
-            name: Estalacmitas_DefaultMaterial_BaseColor
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cylinder.019_copy_copy_copy_copy
-      prefabPath: ""
-      uuid: 17963885246548455515
-      tag: Untagged
-      active: true
-      isStatic: false
-      useManualBoundingBox: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -601.85870361328125
-            - -29.31329345703125
-            - -31.182197570800781
-          localRotation:
-            - 90.000006929052773
-            - 70.61942011503784
-            - 179.99999307094723
-          localScale:
-            - 2.6595499515533447
-            - 2.6595499515533447
-            - 5.5798664093017578
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 7994363321730715637
-          material:
-            name: Estalacmita1_Base_color
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cylinder.019_copy_copy_2
-      prefabPath: ""
-      uuid: 2356637303777615973
-      tag: Untagged
-      active: true
-      isStatic: false
-      useManualBoundingBox: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -635.54046630859375
-            - -14.667819023132324
-            - -78.395698547363281
-          localRotation:
-            - 79.976764321501079
-            - 70.411031546277314
-            - 171.71681609097783
-          localScale:
-            - 2.6595499515533447
-            - 2.6595499515533447
-            - 5.3766937255859375
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 7994363321730715637
-          material:
-            name: Estalacmita1_Base_color
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cylinder.019
-      prefabPath: ""
-      uuid: 11388603022525165852
-      tag: Untagged
-      active: true
-      isStatic: false
-      useManualBoundingBox: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -560.90386962890625
-            - -7.9284439086914062
-            - -34.6810302734375
-          localRotation:
-            - 89.999995066233708
-            - 2.3582247407569423
-            - 179.9999949922763
-          localScale:
-            - 2.6595497131347656
-            - 2.6595494747161865
-            - 2.6595494747161865
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: 7994363321730715637
-          material:
-            name: Estalacmita1_Base_color
-            color:
-              - 1
-              - 1
-              - 1
-              - 1
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
     - name: Cylinder.015_copy_3
       prefabPath: ""
       uuid: 8459786057452587383
@@ -8315,7 +8143,7 @@ GameObject26:
   prefabPath: Assets\Prefabs\Canvas_HUD.prefab.yaml
   uuid: 10579956976276371221
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   useManualBoundingBox: false
   Components:
@@ -9975,10 +9803,10 @@ GameObject26:
             - 1225
             - 40
           sprite_offset:
-            - 700
+            - 175
             - 0
           anim_speed: 0.5
-          anim_index: 4
+          anim_index: 1
           anim_index_limit: 6
           color:
             - 0.262745112
@@ -10105,10 +9933,10 @@ GameObject26:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 0.180392161
@@ -10235,10 +10063,10 @@ GameObject26:
             - 250
             - 80
           sprite_offset:
-            - 50
+            - 100
             - 0
           anim_speed: 0.5
-          anim_index: 1
+          anim_index: 2
           anim_index_limit: 4
           color:
             - 0.180392161

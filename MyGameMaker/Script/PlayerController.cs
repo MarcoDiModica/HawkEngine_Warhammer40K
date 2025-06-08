@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection;
     Vector3 lookDirection;
     private bool once = false;
+    private bool startedReloading = false;
+    private float ayuda = 0f;
+    private float ayudaCooldown = 0.5f;
 
     private float elapsedTime = 0f;
     private bool isInteracting = false;
@@ -509,7 +512,15 @@ public class PlayerController : MonoBehaviour
                 else if (isRunning)
                 {
                     isReloadingRunning = true;
-                    playerAnimations.ReloadBoltgunWhileRunningAnimation();
+                    if (currentLookingDirection== LookingDirection.Backward || currentShootingDirection == ShootingDirection.Backward)
+                    {
+                        playerAnimations.ReloadBoltgunWhileRunningBackwardAnimation();
+                    }
+                    else
+                    {
+                        playerAnimations.ReloadBoltgunWhileRunningAnimation();
+                    }
+                   
                 }
                 else if (isWalking || isShootingRunning)
                 {
@@ -523,11 +534,20 @@ public class PlayerController : MonoBehaviour
                 {
                     isReloadingIdle = true;
                     playerAnimations.ReloadShotgunWhileIdleAnimation();
+                    Engineson.print("Reloading shotgun while idle animation triggered");
                 }
                 else if (isRunning)
                 {
                     isReloadingRunning = true;
-                    playerAnimations.ReloadShotgunWhileRunningAnimation();
+                    if (currentLookingDirection == LookingDirection.Backward || currentShootingDirection == ShootingDirection.Backward)
+                    {
+                        playerAnimations.ReloadShotgunWhileRunningBackwardAnimation();
+                    }
+                    else
+                    {
+                        playerAnimations.ReloadShotgunWhileRunningAnimation();
+                    }
+
                 }
                 else if (isWalking || isShootingRunning)
                 {
@@ -543,7 +563,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (isReloadingRunning)
         {
-            ReloadingRunningAnimationFinished();
+            ReloadingRunningAnimationFinished(deltaTime);
         }
         else if (isReloadingWalking)
         {
@@ -744,88 +764,116 @@ public class PlayerController : MonoBehaviour
         {
             lookDir = moveDir;
         }
-
-        float dot = Vector3.Dot(lookDir, moveDir);
-
-        if (dot > 0.7f && (currentLookingDirection != LookingDirection.Forward || isShootingRunning))
+        if (isReloadingIdle)
         {
-            
-            if (currentLookingDirection == LookingDirection.Idle && !isShootingRunning)
+            if(startedReloading == false)
             {
-               
-                playerAnimations.IdleToRunAnimation();
-            }
-            else if (currentLookingDirection == LookingDirection.Backward || isShootingRunning)
-            {
-                if (isShootingRunning)
+                if (playerShooting.GetCurrentGun() == 0)
                 {
-                    
-                    switch (currentShootingDirection)
-                    {
-                        
-                        case ShootingDirection.Left:
-                            playerAnimations.ShootingWalkingLeftToRunAnimation();
-                            break;
-                        case ShootingDirection.Right:
-                            playerAnimations.ShootingWalkingRightToRunAnimation();
-                            break;
-                        case ShootingDirection.Forward:
-                            playerAnimations.ShootingWalkingStraightToRunAnimation();
-                            break;
-                        case ShootingDirection.Backward:
-                            playerAnimations.ShootingWalkingBackwardsToRunAnimation();
-                            break;
-                    }
+                    playerAnimations.ReloadBoltgunIdleToReloadBoltgunRunning();
                 }
-                else
+                else if (playerShooting.GetCurrentGun() == 1)
                 {
-                    playerAnimations.RunningBackwardsToRunningForwardAnimation();
-                   
+                    playerAnimations.ReloadShotgunIdleToReloadShotgunRunning();
                 }
-                
+                startedReloading = true;
             }
             
-
-            currentLookingDirection = LookingDirection.Forward;
         }
-        else if (dot < -0.7f && (currentLookingDirection != LookingDirection.Backward || isShootingRunning))
+        else
         {
+            float dot = Vector3.Dot(lookDir, moveDir);
+            //if (currentLookingDirection == LookingDirection.Backward && isReloadingRunning == false)
+            //{
+            //    playerAnimations.IdleToRunBackwardsAnimation();
+            //}
+           
+            if (dot > 0.7f && (currentLookingDirection != LookingDirection.Forward || isShootingRunning))
+            {
 
-            if (currentLookingDirection == LookingDirection.Idle)
-            {
-                playerAnimations.IdleToRunBackwardsAnimation();
-            }
-            else if (currentLookingDirection == LookingDirection.Forward || isShootingRunning)
-            {
-                if (isShootingRunning)
+                if (currentLookingDirection == LookingDirection.Idle && !isShootingRunning)
                 {
-                    switch (currentShootingDirection)
+
+                    playerAnimations.IdleToRunAnimation();
+                }
+                else if (currentLookingDirection == LookingDirection.Backward || isShootingRunning)
+                {
+                    if (isShootingRunning)
                     {
-                        case ShootingDirection.Left:
-                            playerAnimations.ShootingWalkingLeftToRunBackwardsAnimation();
-                            break;
-                        case ShootingDirection.Right:
-                            playerAnimations.ShootingWalkingRightToRunBackwardsAnimation();
-                            break;
-                        case ShootingDirection.Forward:
-                            playerAnimations.ShootingWalkingStraightToRunBackwardsAnimation();
-                            break;
-                        case ShootingDirection.Backward:
-                            playerAnimations.ShootingWalkingBackwardsToRunBackwardsAnimation();
-                            break;
-                    }
-                }
-                else
-                {
-                    playerAnimations.RunningForwardToRunningBackwardsAnimation();
-                }
-                
-            }
-            
 
-            currentLookingDirection = LookingDirection.Backward;
+                        switch (currentShootingDirection)
+                        {
+
+                            case ShootingDirection.Left:
+                                playerAnimations.ShootingWalkingLeftToRunAnimation();
+                                break;
+                            case ShootingDirection.Right:
+                                playerAnimations.ShootingWalkingRightToRunAnimation();
+                                break;
+                            case ShootingDirection.Forward:
+                                playerAnimations.ShootingWalkingStraightToRunAnimation();
+                                break;
+                            case ShootingDirection.Backward:
+                                playerAnimations.ShootingWalkingBackwardsToRunAnimation();
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        playerAnimations.RunningBackwardsToRunningForwardAnimation();
+
+                    }
+
+                }
+
+
+                currentLookingDirection = LookingDirection.Forward;
+            }
+            else if (dot < -0.7f && (currentLookingDirection != LookingDirection.Backward || isShootingRunning))
+            {
+
+                if (currentLookingDirection == LookingDirection.Idle)
+                {
+                    playerAnimations.IdleToRunBackwardsAnimation();
+                }
+                else if (currentLookingDirection == LookingDirection.Forward || isShootingRunning)
+                {
+                    if (isShootingRunning)
+                    {
+                        switch (currentShootingDirection)
+                        {
+                            case ShootingDirection.Left:
+                                playerAnimations.ShootingWalkingLeftToRunBackwardsAnimation();
+                                break;
+                            case ShootingDirection.Right:
+                                playerAnimations.ShootingWalkingRightToRunBackwardsAnimation();
+                                break;
+                            case ShootingDirection.Forward:
+                                playerAnimations.ShootingWalkingStraightToRunBackwardsAnimation();
+                                break;
+                            case ShootingDirection.Backward:
+                                playerAnimations.ShootingWalkingBackwardsToRunBackwardsAnimation();
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        playerAnimations.RunningForwardToRunningBackwardsAnimation();
+                    }
+
+                }
+
+
+                currentLookingDirection = LookingDirection.Backward;
+            }
+            currentShootingDirection = ShootingDirection.Idle;
+            if (startedReloading)
+            {
+                playerAnimations.ReloadBoltgunIdleToRunningAnim();
+                startedReloading = false;
+            }
         }
-        currentShootingDirection = ShootingDirection.Idle;
+        
     }
 
 
@@ -852,30 +900,67 @@ public class PlayerController : MonoBehaviour
             {
                 if (playerShooting.GetCurrentGun() == 0)
                 {
-                    playerAnimations.ReloadBoltgunIdleToIdleAnim();
+                    if (isRunning)
+                    {
+                        playerAnimations.ReloadBoltgunIdleToRunningAnim();
+                    }
+                    else
+                    {
+                        playerAnimations.ReloadBoltgunIdleToIdleAnim();
+                    }
+                   
                 }
                 else if (playerShooting.GetCurrentGun() == 1)
                 {
-                    playerAnimations.ReloadShotgunIdleToIdleAnim();
+
+                    if (isRunning)
+                    {
+                        playerAnimations.ReloadShotgunIdleToRunningAnim();
+                    }
+                    else
+                    {
+                        playerAnimations.ReloadShotgunIdleToIdleAnim();
+                    }
                 }
             }
             
         }
     }
 
-    private void ReloadingRunningAnimationFinished()
+    private void ReloadingRunningAnimationFinished(float deltaTime)
     {
-        if (playerAnimations.esk.IsAnimationFinished())
+        ayuda += deltaTime;
+        if (ayuda >= ayudaCooldown)
         {
             Engineson.print("Reloading animation finished");
             isReloadingRunning = false;
+            ayuda = 0f;
             if (playerShooting.GetCurrentGun() == 0)
             {
-                playerAnimations.ReloadBoltgunRunningToRunningAnimation();
+               
+                if (currentLookingDirection == LookingDirection.Backward)
+                {
+                    playerAnimations.ReloadBoltgunRunningToRunningBackwardsAnimation();
+                }
+                else
+                {
+                    playerAnimations.ReloadBoltgunRunningToRunningAnimation();
+                }
+               
+               
             }
             else if (playerShooting.GetCurrentGun() == 1)
             {
-                playerAnimations.ReloadShotgunRunningToRunningAnimation();
+            
+
+                if (currentLookingDirection == LookingDirection.Backward)
+                {
+                    playerAnimations.ReloadShotgunbRunningToRunningBackwardsAnimation();
+                }
+                else
+                {
+                    playerAnimations.ReloadShotgunRunningToRunningAnimation();
+                }
             }
             
         }

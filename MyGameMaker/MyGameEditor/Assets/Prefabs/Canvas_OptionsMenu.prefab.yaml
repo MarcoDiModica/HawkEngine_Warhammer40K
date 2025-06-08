@@ -1,8 +1,8 @@
 name: Canvas_OptionsMenu
 prefabPath: Assets\Prefabs\Canvas_OptionsMenu.prefab.yaml
-uuid: 2164386902305167382
+uuid: 16036347093729760973
 tag: Untagged
-active: false
+active: true
 isStatic: false
 useManualBoundingBox: false
 Components:
@@ -118,7 +118,7 @@ Children:
     prefabPath: ""
     uuid: 6037461699344994438
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     useManualBoundingBox: false
     Components:
@@ -183,7 +183,7 @@ Children:
     prefabPath: ""
     uuid: 5220584198167118793
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     useManualBoundingBox: false
     Components:
@@ -248,7 +248,7 @@ Children:
     prefabPath: ""
     uuid: 1443958785827056631
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     useManualBoundingBox: false
     Components:
@@ -313,7 +313,7 @@ Children:
     prefabPath: ""
     uuid: 4093795068509980976
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     useManualBoundingBox: false
     Components:
@@ -378,7 +378,7 @@ Children:
     prefabPath: ""
     uuid: 10009967293575906137
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     useManualBoundingBox: false
     Components:
@@ -426,8 +426,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
           - 25
           - 36
@@ -447,7 +447,7 @@ Children:
     prefabPath: ""
     uuid: 1875487165481965906
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     useManualBoundingBox: false
     Components:
@@ -495,8 +495,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
           - 25
           - 36
@@ -516,7 +516,7 @@ Children:
     prefabPath: ""
     uuid: 10054175911002723645
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     useManualBoundingBox: false
     Components:
@@ -560,7 +560,7 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
           - 30
@@ -581,7 +581,7 @@ Children:
     prefabPath: ""
     uuid: 8973463647592140314
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     useManualBoundingBox: false
     Components:
@@ -625,7 +625,7 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
           - 30
@@ -669,8 +669,8 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.513999999
-          - 0.414000005
+          - 0.513000011
+          - 0.354999989
           - 0
         rotation:
           - 0
@@ -694,8 +694,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_checkbox.png
         use_animation: false
         sprite_size:
-          - 32
-          - 32
+          - 35
+          - 35
         sheet_size:
           - 35
           - 35
@@ -715,7 +715,7 @@ Children:
     prefabPath: ""
     uuid: 736504712872897227
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
     useManualBoundingBox: false
     Components:
@@ -738,15 +738,15 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.513999999
-          - 0.414000005
+          - 0.513000011
+          - 0.354999989
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0140000004
+          - 0.0140000014
           - 0.0249999985
           - 1
         pivot_offset:
@@ -759,8 +759,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_checkbox_hovered.png
         use_animation: false
         sprite_size:
-          - 32
-          - 32
+          - 37
+          - 37
         sheet_size:
           - 37
           - 37
@@ -803,8 +803,8 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.50999999
-          - 0.389999986
+          - 0.509000003
+          - 0.328000009
           - 0
         rotation:
           - 0
@@ -824,8 +824,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_check.png
         use_animation: false
         sprite_size:
-          - 42
-          - 42
+          - 35
+          - 35
         sheet_size:
           - 35
           - 35
@@ -868,8 +868,8 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.479999989
-          - 0.504999995
+          - 0.483999997
+          - 0.435000002
           - 0
         rotation:
           - 0
@@ -877,7 +877,7 @@ Children:
           - 0
         scale:
           - 0.0970000103
-          - 0.0600000024
+          - 0.0149999997
           - 1
         pivot_offset:
           - 0
@@ -886,14 +886,14 @@ Children:
       UIImageComponent:
         name: UIImageComponent
         enabled: true
-        texture_path: Library\Textures\UI\options__menu_sliderBar.png
+        texture_path: Library\Textures\UI\options__menu_sliderBar_hovered.png
         use_animation: false
         sprite_size:
-          - 234
-          - 22
+          - 218
+          - 10
         sheet_size:
-          - 215
-          - 9
+          - 218
+          - 10
         sprite_offset:
           - 0
           - 0
@@ -934,7 +934,7 @@ Children:
         enabled: true
         position:
           - 0.574999988
-          - 0.504999995
+          - 0.435000002
           - 0
         rotation:
           - 0
@@ -954,8 +954,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_slider.png
         use_animation: false
         sprite_size:
-          - 14
-          - 43
+          - 13
+          - 36
         sheet_size:
           - 13
           - 36
@@ -999,7 +999,7 @@ Children:
         enabled: true
         position:
           - 0.474999994
-          - 0.504999995
+          - 0.435000002
           - 0
         rotation:
           - 0
@@ -1023,8 +1023,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
           - 25
           - 36
@@ -1068,7 +1068,7 @@ Children:
         enabled: true
         position:
           - 0.600000024
-          - 0.504999995
+          - 0.435000002
           - 0
         rotation:
           - 0
@@ -1092,8 +1092,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
           - 25
           - 36
@@ -1137,7 +1137,7 @@ Children:
         enabled: true
         position:
           - 0.476000011
-          - 0.504999995
+          - 0.435000002
           - 0
         rotation:
           - 0
@@ -1157,7 +1157,7 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
           - 30
@@ -1202,7 +1202,7 @@ Children:
         enabled: true
         position:
           - 0.598999977
-          - 0.504999995
+          - 0.435000002
           - 0
         rotation:
           - 0
@@ -1222,7 +1222,7 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
           - 30
@@ -1266,8 +1266,8 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.479999989
-          - 0.545000017
+          - 0.483999997
+          - 0.495000005
           - 0
         rotation:
           - 0
@@ -1275,7 +1275,7 @@ Children:
           - 0
         scale:
           - 0.0970000029
-          - 0.0599999987
+          - 0.0160000008
           - 1
         pivot_offset:
           - 0
@@ -1284,14 +1284,14 @@ Children:
       UIImageComponent:
         name: UIImageComponent
         enabled: true
-        texture_path: Library\Textures\UI\options__menu_sliderBar.png
+        texture_path: Library\Textures\UI\options__menu_sliderBar_hovered.png
         use_animation: false
         sprite_size:
-          - 234
-          - 22
+          - 218
+          - 10
         sheet_size:
-          - 215
-          - 9
+          - 218
+          - 10
         sprite_offset:
           - 0
           - 0
@@ -1332,7 +1332,7 @@ Children:
         enabled: true
         position:
           - 0.574999988
-          - 0.545000017
+          - 0.495000005
           - 0
         rotation:
           - 0
@@ -1352,8 +1352,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_slider.png
         use_animation: false
         sprite_size:
-          - 14
-          - 43
+          - 13
+          - 36
         sheet_size:
           - 13
           - 36
@@ -1397,7 +1397,7 @@ Children:
         enabled: true
         position:
           - 0.474999994
-          - 0.545000017
+          - 0.495000005
           - 0
         rotation:
           - 0
@@ -1421,8 +1421,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
           - 25
           - 36
@@ -1466,7 +1466,7 @@ Children:
         enabled: true
         position:
           - 0.600000024
-          - 0.545000017
+          - 0.495000005
           - 0
         rotation:
           - 0
@@ -1490,8 +1490,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
           - 25
           - 36
@@ -1535,7 +1535,7 @@ Children:
         enabled: true
         position:
           - 0.476000011
-          - 0.545000017
+          - 0.495000005
           - 0
         rotation:
           - 0
@@ -1555,7 +1555,7 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
           - 30
@@ -1600,7 +1600,7 @@ Children:
         enabled: true
         position:
           - 0.598999977
-          - 0.545000017
+          - 0.495000005
           - 0
         rotation:
           - 0
@@ -1620,7 +1620,7 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
           - 30
@@ -1664,16 +1664,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.479999989
-          - 0.584999979
+          - 0.485000014
+          - 0.560000002
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0970000029
-          - 0.0599999987
+          - 0.0970000103
+          - 0.0149999997
           - 1
         pivot_offset:
           - 0
@@ -1682,14 +1682,14 @@ Children:
       UIImageComponent:
         name: UIImageComponent
         enabled: true
-        texture_path: Library\Textures\UI\options__menu_sliderBar.png
+        texture_path: Library\Textures\UI\options__menu_sliderBar_hovered.png
         use_animation: false
         sprite_size:
-          - 234
-          - 22
+          - 218
+          - 10
         sheet_size:
-          - 215
-          - 9
+          - 218
+          - 10
         sprite_offset:
           - 0
           - 0
@@ -1730,7 +1730,7 @@ Children:
         enabled: true
         position:
           - 0.574999988
-          - 0.584999979
+          - 0.560000002
           - 0
         rotation:
           - 0
@@ -1750,8 +1750,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_slider.png
         use_animation: false
         sprite_size:
-          - 14
-          - 43
+          - 13
+          - 36
         sheet_size:
           - 13
           - 36
@@ -1795,7 +1795,7 @@ Children:
         enabled: true
         position:
           - 0.474999994
-          - 0.584999979
+          - 0.560000002
           - 0
         rotation:
           - 0
@@ -1819,8 +1819,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
           - 25
           - 36
@@ -1864,7 +1864,7 @@ Children:
         enabled: true
         position:
           - 0.600000024
-          - 0.584999979
+          - 0.560000002
           - 0
         rotation:
           - 0
@@ -1888,8 +1888,8 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
           - 25
           - 36
@@ -1933,7 +1933,7 @@ Children:
         enabled: true
         position:
           - 0.476000011
-          - 0.584999979
+          - 0.560000002
           - 0
         rotation:
           - 0
@@ -1953,7 +1953,7 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
           - 30
@@ -1998,7 +1998,7 @@ Children:
         enabled: true
         position:
           - 0.598999977
-          - 0.584999979
+          - 0.560000002
           - 0
         rotation:
           - 0
@@ -2018,7 +2018,7 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
           - 30

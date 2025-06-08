@@ -630,37 +630,15 @@ public class PlayerController : MonoBehaviour
     }
     private void UpdateCharacterState()
     {
-        bool isWalkingState = moveDirection != Vector3.Zero && !isDashing && !playerData.isHit;
-
         if (isShootInput && !isDashing)
         {
             SetShootingState();
+            return;
         }
 
-        // Hard stop footstep audio spam if hit and still shooting
-        if (playerData.isHit)
+        if (moveDirection != Vector3.Zero)
         {
-            if (isFootstepPlaying)
-            {
-                StopFootsteps();
-            }
-
-            // Replace the problematic line with the helper method.  
-            if (effectsInitialized && IsParticleFXPlaying(walkingFX))
-            {
-                walkingFX.Stop();
-            }
-           
-            return; // fully skip walking/sound logic
-        }
-
-        if (isWalkingState)
-        {
-            bool shouldBeRunning = playerMovement != null &&
-                                  (playerMovement.moveSpeed > playerMovement.walkSpeed ||
-                                   isRunningInput);
-
-            if (effectsInitialized && IsParticleFXPlaying(walkingFX))
+            if (effectsInitialized)
             {
                 walkingFX.Stop();
             }
@@ -670,7 +648,11 @@ public class PlayerController : MonoBehaviour
                 PlayFootstep();
             }
 
-            if (shouldBeRunning && !isRunning)
+            bool shouldBeRunning = playerMovement != null &&
+                                  (playerMovement.moveSpeed > playerMovement.walkSpeed ||
+                                   isRunningInput);
+
+            if (shouldBeRunning && !isRunning && !isDashing)
             {
                 isWalking = false;
                 isIdle = false;

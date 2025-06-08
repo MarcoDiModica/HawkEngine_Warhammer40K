@@ -8,21 +8,25 @@ public class DestroyEnviormentObject : MonoBehaviour
 
     public DropManager dropManager;
     public bool onlyMedicaeStimm = false;
+    private const string destroyBox = "Assets/Audio/Destroyables/destroyBox.wav";
+    private const string destroyBox2 = "Assets/Audio/Destroyables/destroyBox2.wav";
     public void DestroyObject()
     {
         //gameObject.GetComponent<Transform>().position = new Vector3(0, -100, 0);
         //gameObject.GetComponent<Collider>().SetTrigger(true);
-        if(dropManager != null)
+        if (dropManager != null)
         {
             if (onlyMedicaeStimm)
             {
                 dropManager.SpawnMedicaeStimm(gameObject.transform.position);
+                Audio.PlayOneShot(destroyBox);
             }
             else
             {
                 dropManager.SpawnPrefabFromDestroyableObject(gameObject.transform.position);
+                Audio.PlayOneShot(destroyBox2);
             }
-            
+
         }
         else
         {
@@ -39,7 +43,7 @@ public class DestroyEnviormentObject : MonoBehaviour
         }
 
         //Engineson.Destroy(gameObject);
-        
+
         if (destroyedMesh == null)
         {
             Engineson.print("DestroyedMesh not found in " + gameObject.name);
@@ -62,7 +66,7 @@ public class DestroyEnviormentObject : MonoBehaviour
         dropManager = GameObject.Find("DropManager").GetComponent<DropManager>();
         if (dropManager == null)
         {
-           Engineson.print("DropManager not found");
+            Engineson.print("DropManager not found");
         }
     }
 

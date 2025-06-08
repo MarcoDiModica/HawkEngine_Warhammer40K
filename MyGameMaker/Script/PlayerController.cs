@@ -418,37 +418,37 @@ public class PlayerController : MonoBehaviour
     private void CheckTerrain()
     {
         RayCast ray = new RayCast();
-
         Vector3 rayStart = transform.position + transform.forward * 3 + new Vector3(0, 3f, 0);
         ray.PerformRaycast(rayStart, new Vector3(0, -1f, 0), 5f);
 
         if (ray.hit.isHit)
         {
             string terrainTag = ray.hit.gameObject.tag;
-            Engineson.print($"Terrain hit: {terrainTag}");
-
+            TerrainType newTerrain;
+            
             switch (terrainTag)
             {
                 case "Solid":
-                    currentTerrainType = TerrainType.Solid;
+                    newTerrain = TerrainType.Solid;
                     break;
                 case "Dirt":
-                    currentTerrainType = TerrainType.Dirt;
+                    newTerrain = TerrainType.Dirt;
                     break;
                 case "Metal":
-                    currentTerrainType = TerrainType.Metal;
+                    newTerrain = TerrainType.Metal;
                     break;
                 default:
-                    currentTerrainType = TerrainType.Solid; // Default case
+                    newTerrain = TerrainType.Solid;
                     break;
             }
 
-            if (currentTerrainType != previousTerrain)
+            if (newTerrain != currentTerrainType)
             {
-                Engineson.print($"Terrain changed from {previousTerrain} to {currentTerrainType}");
-                previousTerrain = currentTerrainType;
+                Engineson.print($"Terrain changed: {currentTerrainType} -> {newTerrain}");
+                currentTerrainType = newTerrain;
+                previousTerrain = newTerrain;
 
-                if (isFootstepPlaying)
+                if (isFootstepPlaying && moveDirection != Vector3.Zero)
                 {
                     StopFootsteps();
                     PlayFootstep();
@@ -1562,32 +1562,33 @@ public class PlayerController : MonoBehaviour
     private string currentFootstep = "";
     private void PlayFootstep()
     {
-        
-
-        StopFootsteps();
-        Engineson.print("PlayFootStep");
-
+        string selectedFootstep;
         switch (currentTerrainType)
         {
             case TerrainType.Solid:
-                Engineson.print("Playing solid footstep sound");
-                Audio.Play(RunfootstepsSolid, true);
+                selectedFootstep = RunfootstepsSolid;
                 break;
             case TerrainType.Dirt:
-                Engineson.print("Playing dirt footstep sound");
-                Audio.Play(RunfootstepsDirt, true);
+                selectedFootstep = RunfootstepsDirt;
                 break;
             case TerrainType.Metal:
-                Engineson.print("Playing metal footstep sound");
-                Audio.Play(RunfootstepsMetal, true);
+                selectedFootstep = RunfootstepsMetal;
+                break;
+            default:
+                selectedFootstep = RunfootstepsSolid;
                 break;
         }
-        
-        
 
+        if (isFootstepPlaying && selectedFootstep == currentFootstep)
+            return; // already playing this one  
+
+        StopFootsteps();
+        Engineson.print("PlayFootstep: " + selectedFootstep);
+
+        Audio.Play(selectedFootstep, true);
+        currentFootstep = selectedFootstep;
         isFootstepPlaying = true;
         hasStoppedFootsteps = false;
-        
     }
 
     private void StopFootsteps()

@@ -787,10 +787,6 @@ static void EditorRenderer(MyGUI* gui) {
 #endif // PROFILE
 
 		gui->Render();
-
-		const auto t1 = hrclock::now();
-		const auto dt = t1 - t0;
-		//if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
 	}
 }
 
@@ -917,7 +913,6 @@ int main(int argc, char** argv) {
 #ifndef _BUILD
 			lights.clear();
 			Application->root->GetActiveScene()->_lights.clear();
-			Application->gui->Render();
 			EditorRenderer(Application->gui);
 			RenderGameView();
 

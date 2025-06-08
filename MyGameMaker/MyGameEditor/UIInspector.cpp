@@ -756,8 +756,19 @@ private:
 		ImGui::Text("Light Type");
 		ImGui::SameLine(labelWidth);
 		ImGui::PushItemWidth(-1);
-		if (ImGui::Combo("##Type", (int*)&lightType, "None\0Point\0Directional\0")) {
+		if (ImGui::Combo("##Type", (int*)&lightType, "None\0Point\0Directional\0Spot\0")) {
 			light->SetLightType(lightType);
+		}
+		ImGui::PopItemWidth();
+
+		vec3 color = light->GetColor();
+		float colorArray[3] = { color.x, color.y, color.z };
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Color");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::ColorEdit3("##Color", colorArray)) {
+			light->SetColor(vec3(colorArray[0], colorArray[1], colorArray[2]));
 		}
 		ImGui::PopItemWidth();
 
@@ -780,146 +791,90 @@ private:
 
 			ImGui::BeginGroup();
 
-			vec3 diffuse = light->GetDiffuse();
-			vec3 specular = light->GetSpecular();
-			vec3 ambient = light->GetAmbient();
-			float radius = light->GetRadius();
-			float constant = light->GetConstant();
-			float linear = light->GetLinear();
-			float quadratic = light->GetQuadratic();
-
+			float range = light->GetRange();
 			ImGui::AlignTextToFramePadding();
 			ImGui::Text("Range");
 			ImGui::SameLine(labelWidth);
 			ImGui::PushItemWidth(-1);
-			if (ImGui::DragFloat("##Range", &radius, 0.1f, 0.0f, 1000.0f)) {
-				light->SetRadius(radius);
+			if (ImGui::DragFloat("##Range", &range, 0.1f, 0.1f, 1000.0f)) {
+				light->SetRange(range);
 			}
 			ImGui::PopItemWidth();
 
-			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Constant");
-			ImGui::SameLine(labelWidth);
-			ImGui::PushItemWidth(-1);
-			if (ImGui::DragFloat("##Constant", &constant, 0.01f, 0.0f, 10.0f)) {
-				light->SetConstant(constant);
-			}
-			ImGui::PopItemWidth();
-
-			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Linear");
-			ImGui::SameLine(labelWidth);
-			ImGui::PushItemWidth(-1);
-			if (ImGui::DragFloat("##Linear", &linear, 0.01f, 0.0f, 10.0f)) {
-				light->SetLinear(linear);
-			}
-			ImGui::PopItemWidth();
-
-			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Quadratic");
-			ImGui::SameLine(labelWidth);
-			ImGui::PushItemWidth(-1);
-			if (ImGui::DragFloat("##Quadratic", &quadratic, 0.01f, 0.0f, 10.0f)) {
-				light->SetQuadratic(quadratic);
-			}
-			ImGui::PopItemWidth();
-
-			ImGui::Separator();
-			ImGui::Text("Colors");
-			ImGui::Spacing();
-
-			float ambientFloat[3] = { static_cast<float>(ambient.x), static_cast<float>(ambient.y), static_cast<float>(ambient.z) };
-			float diffuseFloat[3] = { static_cast<float>(diffuse.x), static_cast<float>(diffuse.y), static_cast<float>(diffuse.z) };
-			float specularFloat[3] = { static_cast<float>(specular.x), static_cast<float>(specular.y), static_cast<float>(specular.z) };
-
-			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Ambient");
-			ImGui::SameLine(labelWidth);
-			ImGui::PushItemWidth(-1);
-			if (ImGui::ColorEdit3("##Ambient", ambientFloat)) {
-				light->SetAmbient(vec3(ambientFloat[0], ambientFloat[1], ambientFloat[2]));
-			}
-			ImGui::PopItemWidth();
-
-			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Diffuse");
-			ImGui::SameLine(labelWidth);
-			ImGui::PushItemWidth(-1);
-			if (ImGui::ColorEdit3("##Diffuse", diffuseFloat)) {
-				light->SetDiffuse(vec3(diffuseFloat[0], diffuseFloat[1], diffuseFloat[2]));
-			}
-			ImGui::PopItemWidth();
-
-			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Specular");
-			ImGui::SameLine(labelWidth);
-			ImGui::PushItemWidth(-1);
-			if (ImGui::ColorEdit3("##Specular", specularFloat)) {
-				light->SetSpecular(vec3(specularFloat[0], specularFloat[1], specularFloat[2]));
-			}
-			ImGui::PopItemWidth();
+			ImGui::Text("Attenuation (auto-calculated)");
+			ImGui::TextDisabled("Constant: %.3f, Linear: %.3f, Quadratic: %.6f",
+				light->GetPointLight().constant,
+				light->GetPointLight().linear,
+				light->GetPointLight().quadratic);
 
 			ImGui::EndGroup();
 		}
-		if (lightType == LightType::DIRECTIONAL)
-		{
+		else if (lightType == LightType::DIRECTIONAL) {
 			ImGui::Separator();
 			ImGui::Text("Directional Light Properties");
 			ImGui::Spacing();
 
 			ImGui::BeginGroup();
 
-			// Dirección de la luz
-			glm::vec3 direction = light->GetDirection();
-			float directionArray[3] = { direction.x, direction.y, direction.z };
-			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Direction");
-			ImGui::SameLine(labelWidth);
-			ImGui::PushItemWidth(-1);
-			if (ImGui::DragFloat3("##Direction", directionArray, 0.1f, -1.0f, 1.0f)) {
-				light->SetDirection(glm::vec3(directionArray[0], directionArray[1], directionArray[2]));
-			}
-			ImGui::PopItemWidth();
-
-			// Color difuso
-			glm::vec3 diffuse = light->GetDiffuse();
-			float diffuseArray[3] = { diffuse.x, diffuse.y, diffuse.z };
-			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Diffuse Color");
-			ImGui::SameLine(labelWidth);
-			ImGui::PushItemWidth(-1);
-			if (ImGui::ColorEdit3("##DiffuseColor", diffuseArray)) {
-				light->SetDiffuse(glm::vec3(diffuseArray[0], diffuseArray[1], diffuseArray[2]));
-			}
-			ImGui::PopItemWidth();
-
-			// Color especular
-			glm::vec3 specular = light->GetSpecular();
-			float specularArray[3] = { specular.x, specular.y, specular.z };
-			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Specular Color");
-			ImGui::SameLine(labelWidth);
-			ImGui::PushItemWidth(-1);
-			if (ImGui::ColorEdit3("##SpecularColor", specularArray)) {
-				light->SetSpecular(glm::vec3(specularArray[0], specularArray[1], specularArray[2]));
-			}
-			ImGui::PopItemWidth();
-
-			// Color ambiental
-			glm::vec3 ambient = light->GetAmbient();
-			float ambientArray[3] = { ambient.x, ambient.y, ambient.z };
-			ImGui::AlignTextToFramePadding();
-			ImGui::Text("Ambient Color");
-			ImGui::SameLine(labelWidth);
-			ImGui::PushItemWidth(-1);
-			if (ImGui::ColorEdit3("##AmbientColor", ambientArray)) {
-				light->SetAmbient(glm::vec3(ambientArray[0], ambientArray[1], ambientArray[2]));
-			}
-			ImGui::PopItemWidth();
+			ImGui::TextDisabled("Direction is based on object rotation");
+			ImGui::Text("Current Direction: (%.2f, %.2f, %.2f)",
+				light->GetDirectionalLight().direction.x,
+				light->GetDirectionalLight().direction.y,
+				light->GetDirectionalLight().direction.z);
 
 			ImGui::EndGroup();
 		}
+		else if (lightType == LightType::SPOT) {
+			ImGui::Separator();
+			ImGui::Text("Spot Light Properties");
+			ImGui::Spacing();
 
+			ImGui::BeginGroup();
+
+			float range = light->GetRange();
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Range");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Range", &range, 0.1f, 0.1f, 1000.0f)) {
+				light->SetRange(range);
+			}
+			ImGui::PopItemWidth();
+
+			float innerCone = light->GetInnerConeAngle();
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Inner Cone");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##InnerCone", &innerCone, 1.0f, 0.0f, 90.0f, "%.1f°")) {
+				light->SetInnerConeAngle(innerCone);
+			}
+			ImGui::PopItemWidth();
+
+			float outerCone = light->GetOuterConeAngle();
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Outer Cone");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##OuterCone", &outerCone, 1.0f, 0.0f, 90.0f, "%.1f°")) {
+				light->SetOuterConeAngle(outerCone);
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::TextDisabled("Direction is based on object rotation");
+			ImGui::Text("Current Direction: (%.2f, %.2f, %.2f)",
+				light->GetSpotLight().direction.x,
+				light->GetSpotLight().direction.y,
+				light->GetSpotLight().direction.z);
+
+			ImGui::Text("Attenuation (auto-calculated)");
+			ImGui::TextDisabled("Constant: %.3f, Linear: %.3f, Quadratic: %.6f",
+				light->GetSpotLight().constant,
+				light->GetSpotLight().linear,
+				light->GetSpotLight().quadratic);
+
+			ImGui::EndGroup();
+		}
 	}
     #pragma endregion
 

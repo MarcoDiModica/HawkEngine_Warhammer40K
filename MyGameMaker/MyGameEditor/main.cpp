@@ -108,14 +108,31 @@ static void init_openGL() {
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
+	glDepthRange(0.0, 1.0);
+
+	glEnable(GL_POLYGON_OFFSET_FILL);
+	glPolygonOffset(1.0f, 1.0f);
+
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
+
+	glClearColor(0.08f, 0.08f, 0.12f, 1.0f);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	if (GLEW_EXT_texture_filter_anisotropic) {
+		GLfloat maxAnisotropy;
+		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAnisotropy);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAnisotropy);
+	}
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -652,26 +669,33 @@ static void RenderOutline(GameObject* object) {
 	}
 }
 
-static void UpdateChildrenLights(shared_ptr<GameObject> object) {
-
+static void UpdateLightSystem() {
 	auto activeScene = Application->root->GetActiveScene();
-	if (object->HasComponent<LightComponent>()) {
-		auto& lights = activeScene->_lights;
-		auto it = std::find(lights.begin(), lights.end(), object);
-		if (it == lights.end()) {
-			lights.push_back(object);
-		}
-	}
+	if (!activeScene) return;
 
-	for (const auto& child : object->GetChildren()) {
-		if (child->IsActive()) {
-			UpdateChildrenLights(child);
-		}
+	activeScene->_lights.clear();
+
+	auto sceneChildren = activeScene->children();
+	for (const auto& objPtr : sceneChildren) {
+		if (!objPtr || !objPtr->IsActive()) continue;
+
+		std::function<void(std::shared_ptr<GameObject>)> addLightsRecursive = [&](std::shared_ptr<GameObject> obj) {
+			if (!obj || !obj->IsActive()) return;
+
+			if (obj->HasComponent<LightComponent>()) {
+				activeScene->_lights.push_back(obj);
+			}
+
+			for (const auto& child : obj->GetChildren()) {
+				addLightsRecursive(child);
+			}
+			};
+
+		addLightsRecursive(objPtr);
 	}
 }
 
-static void RenderEditor()
-{
+static void RenderEditor() {
 	UISceneWindow* sceneWindow = static_cast<UISceneWindow*>(Application->gui->UISceneWindowPanel);
 	bool useMSAA = sceneWindow->msaaSamples > 0;
 
@@ -690,55 +714,42 @@ static void RenderEditor()
 
 	auto activeScene = Application->root->GetActiveScene();
 	if (!activeScene) return;
-	auto sceneChildrenCopy = Application->root->GetActiveScene()->children();
+
+	UpdateLightSystem();
+
+	auto sceneChildrenCopy = activeScene->children();
 	std::vector<GameObject*> objects;
+
 	for (const auto& objPtr : sceneChildrenCopy) {
 		if (!objPtr) continue;
 		GameObject* object = objPtr.get();
 		if (!object) continue;
 		objects.push_back(object);
+
 		for (const auto& childPtr : object->GetChildren()) {
 			if (!childPtr) continue;
 			GameObject* child = childPtr.get();
 			if (!child) continue;
 			objects.push_back(child);
 		}
+
 		if (object->IsActive()) {
-			/*if (object->HasComponent<UICanvasComponent>()) {
-				continue;
-			}*/
 			object->Update(FIXED_TIME_STEP);
-			
+
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
 				return;
 			}
-			
-			if (object->HasComponent<LightComponent>()) {
-				auto& lights = activeScene->_lights;
-				auto it = std::find(lights.begin(), lights.end(), objPtr);
-				if (it == lights.end()) {
-					lights.push_back(objPtr);
-				}
-			}
-
-			UpdateChildrenLights(objPtr);
 		}
 	}
-	
+
 	Application->physicsModule->DrawDebugDrawer();
 
 	objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
+
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
-
-	/*std::vector<GameObject*> selectedObjects = Application->input->GetSelectedGameObjects();
-	for (auto& object : objects) {
-		if (object->IsActive()) {
-			RenderOutline(object);
-		}
-	}*/
 
 	MousePickingCheck(objects);
 
@@ -756,8 +767,6 @@ static void RenderEditor()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
-
-
 
 static void EditorRenderer(MyGUI* gui) {
 	if (Application->window->IsOpen()) {
@@ -810,29 +819,39 @@ static void GameRelease() {
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	auto activeScene = Application->root->GetActiveScene();
+	if (!activeScene) return;
+
+	activeScene->_lights.clear();
+
 	std::vector<std::shared_ptr<GameObject>> UI;
 
-	for (auto& object : Application->root->GetActiveScene()->children())
-	{
+	for (auto& object : activeScene->children()) {
 		if (object->HasComponent<UICanvasComponent>()) {
 			UI.push_back(object);
 			continue;
 		}
-		if (object->IsActive())
-		{
+
+		if (object->IsActive()) {
+			std::function<void(std::shared_ptr<GameObject>)> addLightsRecursive = [&](std::shared_ptr<GameObject> obj) {
+				if (!obj || !obj->IsActive()) return;
+
+				if (obj->HasComponent<LightComponent>()) {
+					activeScene->_lights.push_back(obj);
+				}
+
+				for (const auto& child : obj->GetChildren()) {
+					addLightsRecursive(child);
+				}
+				};
+
+			addLightsRecursive(object);
+
 			object->Update(static_cast<float>(Application->GetDt()));
 
-			if (Application->hasChangedScene)
-			{
+			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
 				break;
-			}
-		}
-		if (object->HasComponent<LightComponent>()) {
-			auto& lights = Application->root->GetActiveScene()->_lights;
-			auto it = std::find(lights.begin(), lights.end(), object->shared_from_this());
-			if (it == lights.end()) {
-				lights.push_back(object->shared_from_this());
 			}
 		}
 	}
@@ -841,10 +860,8 @@ static void GameRelease() {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
 
-	for (const auto & i : UI)
-	{
-		if (i->IsActive())
-		{
+	for (const auto& i : UI) {
+		if (i->IsActive()) {
 			i->Update(static_cast<float>(Application->GetDt()));
 		}
 	}

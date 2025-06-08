@@ -3,36 +3,25 @@
 #include "TransformComponent.h"
 #include "GameObject.h"
 #include "Shaders.h"
+#include <algorithm>
 
-LightComponent::LightComponent(GameObject* owner) : Component(owner) { name = "LightComponent"; }
+LightComponent::LightComponent(GameObject* owner) : Component(owner) {
+	name = "LightComponent";
+	CalculateAttenuation();
+}
 
-void LightComponent::Awake()
-{
-
+void LightComponent::Awake() {
 }
 
 void LightComponent::Start() {
-    // init aqui
+	UpdateLightData();
 }
 
 void LightComponent::Update(float deltaTime) {
-    switch (type) 
-    {
-        case LightType::POINT:
-            UpdatePointLight();
-            break;
-        case LightType::DIRECTIONAL:
-            UpdateDirectionalLight();
-            break;
-        case LightType::NONE:
-			break;
-        default:
-			break;
-    }
+	UpdateLightData();
 }
 
 void LightComponent::Destroy() {
-	// limpia aqui
 }
 
 std::unique_ptr<Component> LightComponent::Clone(GameObject* owner) {
@@ -41,106 +30,136 @@ std::unique_ptr<Component> LightComponent::Clone(GameObject* owner) {
 	return light;
 }
 
-void LightComponent::SetLightType(LightType type) {
-	this->type = type;
-	if (type == LightType::DIRECTIONAL) {
+void LightComponent::SetLightType(LightType newType) {
+	this->type = newType;
+
+	switch (type) {
+	case LightType::DIRECTIONAL:
 		owner->SetName("DirectionalLight");
+		break;
+	case LightType::POINT:
+		owner->SetName("PointLight");
+		break;
+	case LightType::SPOT:
+		owner->SetName("SpotLight");
+		break;
+	default:
+		break;
 	}
-	
+
+	UpdateLightData();
 }
 
 LightType LightComponent::GetLightType() const {
 	return type;
 }
 
-vec3 LightComponent::GetAmbient() const {
-    return ambient;
+void LightComponent::SetColor(const vec3& newColor) {
+	this->color = newColor;
+	UpdateLightData();
 }
 
-vec3 LightComponent::GetDiffuse() const {
-    return diffuse;
+vec3 LightComponent::GetColor() const {
+	return color;
 }
 
-vec3 LightComponent::GetSpecular() const {
-    return specular;
-}
-
-float LightComponent::GetConstant() const {
-    return constant;
-}
-
-float LightComponent::GetLinear() const {
-    return linear;
-}
-
-float LightComponent::GetQuadratic() const {
-    return quadratic;
-}
-
-float LightComponent::GetRadius() const {
-    return radius;
-}
-
-glm::vec3 LightComponent::GetDirection() const {
-    return direction;
+void LightComponent::SetIntensity(float newIntensity) {
+	this->intensity = std::max(0.0f, newIntensity);
+	UpdateLightData();
 }
 
 float LightComponent::GetIntensity() const {
-    return intensity;
+	return intensity;
 }
 
-void LightComponent::SetAmbient(const vec3& ambient) {
-    this->ambient = ambient;
+void LightComponent::SetRange(float newRange) {
+	this->range = std::max(0.1f, newRange);
+	CalculateAttenuation();
+	UpdateLightData();
 }
 
-void LightComponent::SetDiffuse(const vec3& diffuse) {
-    this->diffuse = diffuse;
+float LightComponent::GetRange() const {
+	return range;
 }
 
-void LightComponent::SetSpecular(const vec3& specular) {
-    this->specular = specular;
+void LightComponent::SetInnerConeAngle(float angle) {
+	this->innerConeAngle = std::clamp(angle, 0.0f, 90.0f);
+	if (innerConeAngle > outerConeAngle) {
+		outerConeAngle = innerConeAngle;
+	}
+	UpdateLightData();
 }
 
-void LightComponent::SetConstant(float constant) {
-    this->constant = constant;
+float LightComponent::GetInnerConeAngle() const {
+	return innerConeAngle;
 }
 
-void LightComponent::SetLinear(float linear) {
-    this->linear = linear;
+void LightComponent::SetOuterConeAngle(float angle) {
+	this->outerConeAngle = std::clamp(angle, 0.0f, 90.0f);
+	if (outerConeAngle < innerConeAngle) {
+		innerConeAngle = outerConeAngle;
+	}
+	UpdateLightData();
 }
 
-void LightComponent::SetQuadratic(float quadratic) {
-    this->quadratic = quadratic;
+float LightComponent::GetOuterConeAngle() const {
+	return outerConeAngle;
 }
 
-void LightComponent::SetRadius(float radius) {
-    this->radius = radius;
+void LightComponent::CalculateAttenuation() {
+	constant = 1.0f;
+	linear = 4.5f / range;
+	quadratic = 75.0f / (range * range);
 }
 
-void LightComponent::SetDirection(const glm::vec3& direction) {
-	this->direction = direction;
+void LightComponent::UpdateLightData() {
+	if (!owner || !owner->GetComponent<Transform_Component>()) return;
+
+	auto transform = owner->GetComponent<Transform_Component>();
+
+	switch (type) {
+	case LightType::POINT:
+		pointLight.position = transform->GetPosition();
+		pointLight.color = color;
+		pointLight.intensity = intensity;
+		pointLight.range = range;
+		pointLight.constant = constant;
+		pointLight.linear = linear;
+		pointLight.quadratic = quadratic;
+		break;
+
+	case LightType::DIRECTIONAL:
+		directionalLight.direction = glm::normalize(transform->GetForward());
+		directionalLight.color = color;
+		directionalLight.intensity = intensity;
+		break;
+
+	case LightType::SPOT:
+		spotLight.position = transform->GetPosition();
+		spotLight.direction = glm::normalize(transform->GetForward());
+		spotLight.color = color;
+		spotLight.intensity = intensity;
+		spotLight.range = range;
+		spotLight.innerCone = glm::cos(glm::radians(innerConeAngle));
+		spotLight.outerCone = glm::cos(glm::radians(outerConeAngle));
+		spotLight.constant = constant;
+		spotLight.linear = linear;
+		spotLight.quadratic = quadratic;
+		break;
+
+	default:
+		break;
+	}
 }
 
-void LightComponent::SetIntensity(float intensity) {
-    this->intensity = intensity;
+PointLight LightComponent::GetPointLight() const {
+	return pointLight;
 }
 
-void LightComponent::UpdatePointLight() {
-    pointLight.position = owner->GetComponent<Transform_Component>()->GetPosition();
-	pointLight.ambient = ambient;
-	pointLight.diffuse = diffuse;
-	pointLight.specular = specular;
-	pointLight.constant = constant;
-	pointLight.linear = linear;
-	pointLight.quadratic = quadratic;
-	pointLight.radius = radius;
-	pointLight.intensity = intensity;
+DirectionalLight LightComponent::GetDirectionalLight() const {
+	return directionalLight;
 }
 
-void LightComponent::UpdateDirectionalLight() {
-	dirLight.direction = owner->GetComponent<Transform_Component>()->GetForward();
-	dirLight.ambient = ambient;
-	dirLight.diffuse = diffuse;
-	dirLight.specular = specular;
-	dirLight.intensity = intensity;
+SpotLight LightComponent::GetSpotLight() const {
+	return spotLight;
 }

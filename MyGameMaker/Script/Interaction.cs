@@ -35,6 +35,7 @@ public class Interaction : MonoBehaviour
         {
             Box.SetActive(true);
             dialogueTextGo.SetActive(true);
+            dialogueText.SetBoxSize(1200f, 200f);
         }
         else
         {
@@ -57,6 +58,7 @@ public class Interaction : MonoBehaviour
 
     public void SetDialogueText(string text)
     {
+        dialogueText.SetBoxSize(1200f, 200f);
         dialogueText.SetText(text);
         dialogueText.SetBoxSize(1200f, 200f);
     }

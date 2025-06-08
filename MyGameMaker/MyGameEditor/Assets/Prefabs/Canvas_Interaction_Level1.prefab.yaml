@@ -202,15 +202,15 @@ Children:
         enabled: true
         position:
           - 0.5
-          - 0.76700002
+          - 0.240999997
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.5
-          - 1
+          - 0.25999999
+          - 0.074000001
           - 1
         pivot_offset:
           - 0.5
@@ -219,14 +219,14 @@ Children:
       UIImageComponent:
         name: UIImageComponent
         enabled: true
-        texture_path: Library\Textures\PressE.png
+        texture_path: Library\Textures\UI\Popups_press_A.png
         use_animation: false
         sprite_size:
-          - 433
-          - 577
+          - 890
+          - 134
         sheet_size:
-          - 433
-          - 577
+          - 890
+          - 134
         sprite_offset:
           - 0
           - 0
@@ -288,9 +288,9 @@ Children:
           - 0
           - 0
         color:
+          - 1
           - 0
-          - 0.13611114
-          - 0.564202309
+          - 0
         fontSize: 31.7999992
         boxSize:
           - 1200

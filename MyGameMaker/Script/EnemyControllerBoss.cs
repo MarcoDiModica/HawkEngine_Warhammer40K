@@ -101,6 +101,8 @@ public class EnemyControllerBoss : EnemyController
     private bool clawDamageAppliedThisFrame = false;
     private bool slamDamageAppliedThisFrame = false;
 
+    public Prefab metalSlide;
+
     private MawlocAnimation anim;
     private PlayerController pc;
     private float deathTimer = 0f;
@@ -578,7 +580,7 @@ public class EnemyControllerBoss : EnemyController
             Vector3 spawnPosition = playerTransform.position + metalSlideStartOffset;
 
             anim.SetRoarAnimation();
-            metalSlideObject = Engineson.CreateGameObject("MetalSlide", null);
+            metalSlideObject = Instantiate(metalSlide);
             //metalSlideObject.AddComponent<MeshRenderer>();
             metalSlideObject.AddComponent<BoxCollider>();
             metalSlideObject.GetComponent<BoxCollider>().SetTrigger(true);
@@ -587,6 +589,7 @@ public class EnemyControllerBoss : EnemyController
             var transform = metalSlideObject.GetComponent<Transform>();
             transform.position = spawnPosition;
             transform.SetScale(3, 3, 3);
+
             metalSlideObject.AddComponent<ParticleFX>();
             metalSlideObject.GetComponent<ParticleFX>().ApplyPreset(25);
             metalSlideObject.GetComponent<ParticleFX>().EmitBurst(50);

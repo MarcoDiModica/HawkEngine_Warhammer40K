@@ -632,6 +632,12 @@ public class PlayerController : MonoBehaviour
     {
         if (isShootInput && !isDashing)
         {
+            StopFootsteps();
+            if (effectsInitialized)
+            {
+                walkingFX.Stop();
+            }
+
             SetShootingState();
             return;
         }
@@ -643,7 +649,11 @@ public class PlayerController : MonoBehaviour
                 walkingFX.Stop();
             }
 
-            if (!isFootstepPlaying)
+            if (isShootInput)
+            {
+                StopFootsteps();
+            }
+            else if (!isFootstepPlaying)
             {
                 PlayFootstep();
             }
@@ -711,6 +721,7 @@ public class PlayerController : MonoBehaviour
                 currentShootingDirection = ShootingDirection.Idle;
             }
         }
+
     }
 
 

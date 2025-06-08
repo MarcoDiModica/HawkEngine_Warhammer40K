@@ -809,7 +809,6 @@ static void GameRelease() {
 		return;
 	}
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
 
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
@@ -818,51 +817,40 @@ static void GameRelease() {
 	auto activeScene = Application->root->GetActiveScene();
 	if (!activeScene) return;
 
-	activeScene->_lights.clear();
+	UpdateLightSystem();
 
-	std::vector<std::shared_ptr<GameObject>> UI;
+	auto sceneChildrenCopy = activeScene->children();
+	std::vector<GameObject*> uiObject;
 
-	for (auto& object : activeScene->children()) {
+	for (const auto& objPtr : sceneChildrenCopy) {
+		if (!objPtr) continue;
+		GameObject* object = objPtr.get();
+		if (!object) continue;
+
 		if (object->HasComponent<UICanvasComponent>()) {
-			UI.push_back(object);
+			uiObject.push_back(object);
 			continue;
 		}
 
 		if (object->IsActive()) {
-			std::function<void(std::shared_ptr<GameObject>)> addLightsRecursive = [&](std::shared_ptr<GameObject> obj) {
-				if (!obj || !obj->IsActive()) return;
-
-				if (obj->HasComponent<LightComponent>()) {
-					activeScene->_lights.push_back(obj);
-				}
-
-				for (const auto& child : obj->GetChildren()) {
-					addLightsRecursive(child);
-				}
-				};
-
-			addLightsRecursive(object);
-
-			object->Update(static_cast<float>(Application->GetDt()));
+			object->Update(Application->GetDt());
 
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
-				break;
+				return;
 			}
+		}
+	}
+
+	for (const auto& object : uiObject) {
+		if (object->IsActive()) {
+			object->Update(Application->GetDt());
 		}
 	}
 
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
-
-	for (const auto& i : UI) {
-		if (i->IsActive()) {
-			i->Update(static_cast<float>(Application->GetDt()));
-		}
-	}
-
-	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 }
 
 int main(int argc, char** argv) {

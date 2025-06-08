@@ -630,29 +630,39 @@ public class PlayerController : MonoBehaviour
     }
     private void UpdateCharacterState()
     {
-        bool blockFootsteps = isShootInput || isDashing || playerData.isHit;
+        bool isWalkingState = moveDirection != Vector3.Zero && !isDashing && !playerData.isHit;
 
-        if (blockFootsteps)
+        if (isShootInput && !isDashing)
         {
             SetShootingState();
+        }
 
-            StopFootsteps();
+        // Hard stop footstep audio spam if hit and still shooting
+        if (playerData.isHit)
+        {
+            if (isFootstepPlaying)
+            {
+                StopFootsteps();
+            }
 
-            if (effectsInitialized)
+            // Replace the problematic line with the helper method.  
+            if (effectsInitialized && IsParticleFXPlaying(walkingFX))
             {
                 walkingFX.Stop();
             }
+           
+            return; // fully skip walking/sound logic
         }
 
-        if (moveDirection != Vector3.Zero && !blockFootsteps)
+        if (isWalkingState)
         {
             bool shouldBeRunning = playerMovement != null &&
                                   (playerMovement.moveSpeed > playerMovement.walkSpeed ||
                                    isRunningInput);
 
-            if (effectsInitialized && walkingFX != null && walkingFX.enabled)
+            if (effectsInitialized && IsParticleFXPlaying(walkingFX))
             {
-                walkingFX.Play();
+                walkingFX.Stop();
             }
 
             if (!isFootstepPlaying)
@@ -691,7 +701,7 @@ public class PlayerController : MonoBehaviour
                 SetRunningAnimation();
             }
         }
-        else if (!blockFootsteps)
+        else
         {
             StopFootsteps();
 
@@ -712,19 +722,16 @@ public class PlayerController : MonoBehaviour
                 currentLookingDirection = LookingDirection.Idle;
                 currentShootingDirection = ShootingDirection.Idle;
             }
-            else if (!isIdle)
+            else if (!isIdle && !isDashing)
             {
                 SetIdleState();
                 currentLookingDirection = LookingDirection.Idle;
                 currentShootingDirection = ShootingDirection.Idle;
             }
         }
-        else
-        {
-            StopFootsteps();
-            if (effectsInitialized) walkingFX.Stop();
-        }
     }
+
+
 
     private void SetRunningAnimation()
     {
@@ -1586,5 +1593,14 @@ public class PlayerController : MonoBehaviour
         {
             playerInput.UnBlockMovement();
         }
+    }
+
+    // Add a helper method to check if the ParticleFX is playing.  
+    private bool IsParticleFXPlaying(ParticleFX particleFX)
+    {
+        // Assuming the ParticleFX class does not have an IsPlaying method,  
+        // you can implement a workaround based on its state or behavior.  
+        // For example, check if the particleFX is enabled or emitting particles.  
+        return particleFX != null && particleFX.enabled;
     }
 }

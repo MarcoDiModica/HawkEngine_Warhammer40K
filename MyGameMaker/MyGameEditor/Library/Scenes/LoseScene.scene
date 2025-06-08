@@ -7,6 +7,7 @@ GameObject0:
   tag: Untagged
   active: true
   isStatic: false
+  useManualBoundingBox: false
   Components:
     Transform_Component:
       name: Transform_Component
@@ -40,7 +41,6 @@ GameObject0:
           maxOffsetDistance: 3.5999999
           offsetSmoothness: 5
           returnDelay: 0.200000003
-          dashFOV: 35
   Children: ~
 GameObject1:
   name: Canvas_lose_screen
@@ -49,6 +49,7 @@ GameObject1:
   tag: Untagged
   active: true
   isStatic: false
+  useManualBoundingBox: false
   Components:
     Transform_Component:
       name: Transform_Component
@@ -98,6 +99,7 @@ GameObject1:
       tag: Untagged
       active: true
       isStatic: false
+      useManualBoundingBox: false
       Components:
         Transform_Component:
           name: Transform_Component
@@ -139,15 +141,22 @@ GameObject1:
           texture_path: Library/Textures/UI/GAME_OVER_screen.png
           use_animation: false
           sprite_size:
-            - 2560
-            - 1440
+            - 1920
+            - 1080
           sheet_size:
-            - 2560
-            - 1440
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: MM_button
       prefabPath: ""
@@ -155,6 +164,7 @@ GameObject1:
       tag: Untagged
       active: true
       isStatic: false
+      useManualBoundingBox: false
       Components:
         Transform_Component:
           name: Transform_Component
@@ -176,7 +186,7 @@ GameObject1:
           enabled: true
           position:
             - 0.537
-            - 0.754999995
+            - 0.790000021
             - 0
           rotation:
             - 0
@@ -205,6 +215,13 @@ GameObject1:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
@@ -216,6 +233,7 @@ GameObject1:
       tag: Untagged
       active: true
       isStatic: false
+      useManualBoundingBox: false
       Components:
         Transform_Component:
           name: Transform_Component
@@ -237,7 +255,7 @@ GameObject1:
           enabled: true
           position:
             - 0.763000011
-            - 0.754999995
+            - 0.790000021
             - 0
           rotation:
             - 0
@@ -266,10 +284,17 @@ GameObject1:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
-          state: 1
+          state: 4
       Children: ~
     - name: LLC_button
       prefabPath: ""
@@ -277,6 +302,7 @@ GameObject1:
       tag: Untagged
       active: true
       isStatic: false
+      useManualBoundingBox: false
       Components:
         Transform_Component:
           name: Transform_Component
@@ -298,7 +324,7 @@ GameObject1:
           enabled: true
           position:
             - 0.282000005
-            - 0.754999995
+            - 0.790000021
             - 0
           rotation:
             - 0
@@ -327,8 +353,82 @@ GameObject1:
             - 0
             - 0
           anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
           state: 1
+      Children: ~
+    - name: GAME OVER
+      prefabPath: ""
+      uuid: 10464094894989291964
+      tag: Untagged
+      active: true
+      isStatic: false
+      useManualBoundingBox: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.5
+            - 0.760999978
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1.00899994
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        TextComponent:
+          name: TextComponent
+          enabled: true
+          text: GAME OVER
+          position:
+            - 0
+            - 0
+          color:
+            - 1
+            - 0
+            - 0
+          fontSize: 48.7999992
+          boxSize:
+            - 429.440002
+            - 53.6800003
+          spriteSize:
+            - 0
+            - 0
+          sheetSize:
+            - 0
+            - 0
+          spriteOffset:
+            - 0
+            - 0
       Children: ~

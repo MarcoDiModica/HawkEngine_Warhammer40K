@@ -49,6 +49,7 @@ public class Interaction : MonoBehaviour
         if(condition)
         {
             interactText.SetActive(true);
+            Engineson.print("SpawnInteractText: Interact text spawned.");
         }
         else
         {

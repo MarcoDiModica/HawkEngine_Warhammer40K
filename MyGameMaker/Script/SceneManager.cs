@@ -124,7 +124,7 @@ namespace HawkEngine
             {
 
                 playerInput?.BlockInput();
-                // Audio.PauseAll(); // Removed - let music continue during pause
+                Audio.PauseAll(); // Removed - let music continue during pause
                 if (playerController?.playerData != null)
                 {
                     playerHealthPausedTemp = playerController.playerData.GetHealthTemp();
@@ -143,6 +143,7 @@ namespace HawkEngine
                     playerController.playerData.SetTempHealth(playerHealthPausedTemp);
                     playerController.playerData.SetHealth(playerHealthPaused);
                 }
+                Audio.ResumeAll();
             }
           
         }

@@ -1,129 +1,93 @@
-# 🦅 HawkEngine 🦅 #
+# 🦅 HawkEngine 🦅
 
-## OUR MEMBERS ##
+HawkEngine is a game engine built in C++20, featuring C# scripting via Mono and a robust ImGui-based editor. It supports advanced rendering, animation, audio, physics, and UI systems, making it ideal for both 2D and 3D game development.
 
-[Marco Baldán](https://github.com/Marco-v-BaldanII)
+---
 
-![406182133-f955f5f8-faa2-436e-9f16-2e8abad89754](https://github.com/user-attachments/assets/c772cb8b-8550-4f84-9078-067bf60e0a97)
+## ✨ Main Features
 
-Imported mono , managed initialization. Figured out and layed the groundwork for binding classes from C++ to C#. Created and binded the C# GameObject and the Engineson class.
+### 🎬 Animation / Skeletal Animation
+- **Skeletal Animation**: Import and play skeletal animations with support for multiple animation clips, blending, and real-time control. The engine supports bone hierarchies and GPU skinning for efficient character animation.
+- **Animator Component**: Attach to GameObjects to manage animation states, transitions, and parameters, enabling complex character behaviors.
 
-[Marco di Modica](https://github.com/MarcoDiModica)
+### 🔊 Audio System (FMOD)
+- **FMOD Integration**: Leverage FMOD for high-quality audio playback, including 2D/3D sound, spatialization, and real-time effects.
+- **Audio Components**: Add sound sources and listeners to GameObjects, with support for music, ambient sounds, and SFX.
+- **Audio Manager**: Centralized control for all audio events, volume, and playback states.
 
-![smaller_github_image](https://github.com/user-attachments/assets/f955f5f8-faa2-436e-9f16-2e8abad89754)
+### 🖥️ Editor Interface (ImGui)
+- **ImGui-based Editor**: Fast, responsive, and fully customizable editor interface using ImGui.
+- **Dockable Panels**: Includes Hierarchy, Inspector, Console, Scene View, Game View, Asset Browser, and more.
+- **Theme Support**: Easily switch between color schemes and layouts.
 
-Implemented ScriptComponent, refactorised Scripting entire solution for organisation purposes, some C# binding, general cleanup and error solving and Inspector Script visualisation (wip).
+### 🕵️ Inspector
+- **Component Editing**: Inspect and modify all GameObject components in real time.
+- **Property Reflection**: Automatic display and editing of properties for both C++ and C# components, supporting custom editors.
 
-[Jordi Tur](https://github.com/Jordopol) 
+### 📚 Asset Library
+- **Asset Browser**: Browse, import, and manage assets such as models, textures, audio files, and scripts.
+- **Drag & Drop**: Assign assets to GameObjects and components via drag-and-drop for rapid iteration.
 
-![image](https://github.com/user-attachments/assets/cb62d16b-1dcb-485c-a54f-875e61abd02d)
+### 🌳 Hierarchy Editor
+- **Scene Graph Visualization**: View and manage the parent-child relationships of all GameObjects in the scene.
+- **Multi-Selection & Grouping**: Select, group, and manipulate multiple objects simultaneously.
 
-Implemented Transform and MeshRenderer Components C# translations and bindings, developed various script components and thoroughly tested the functions.
+### 🖼️ Viewport / Game Viewport
+- **Scene Viewport**: Real-time rendering of the scene with camera controls, gizmos, and object manipulation.
+- **Game Viewport**: Preview the game as it will run, including UI overlays and post-processing effects.
 
-[Dídac García](https://github.com/D1dii)
+### 💬 Console
+- **Log Output**: View engine logs, warnings, and errors in real time.
+- **Command Input**: Execute engine commands and scripts directly from the console.
 
-![smaller_github_image_2](https://github.com/user-attachments/assets/8b41f1d5-24c7-457c-9e1d-c0de226f629f)
+### 🎮 Input System (SDL)
+- **Unified Input Handling**: Keyboard, mouse, and gamepad support using SDL.
+- **Custom Bindings**: Map actions to keys or buttons for flexible and user-friendly controls.
 
-Implemented Input and Camera class with all their functions
+### 🌎 Scene Management & Serialization
+- **Scene System**: Create, load, and save multiple scenes with full support for undo/redo.
+- **Serialization**: Save and load scenes in both YAML and binary formats for flexibility and performance.
+- **Prefab System**: Create reusable GameObject templates for rapid prototyping.
 
-# CONTROLS #
+### 🏗️ ECS System (Entity-Component-System)
+- **Modular Architecture**: High-performance ECS design for flexible and scalable game logic.
+- **Built-in Components**:
+  - Camera, Light, MeshRenderer, Material, Image, Shader, Mesh, Model, Transform, ParticleFX, ScriptComponent, Physics (RigidBody, Colliders), UI (Canvas, Image, Button, Text, etc.)
 
-- Press Left Click on the inspector to select an object
+### 📦 Resource Manager
+- **Asset Caching**: Efficient loading and reuse of meshes, textures, materials, and audio.
+- **Hot Reloading**: Update assets in the editor without restarting the engine.
 
-This Shader Sub-system has been worked on by 
+### 💻 Scripting System (C# / Mono CLI)
+- **Mono Integration**: Write gameplay logic in C# with full access to engine APIs.
+- **Live Reloading**: Hot-reload scripts during development for rapid iteration.
+- **Component Model**: Attach C# scripts as components to GameObjects, supporting inheritance and custom logic.
 
-[Marc Avante Caballe](https://github.com/MarcoXAvante)
+### 🔄 Tweening
+- **Animation Tweens**: Smoothly interpolate values for UI, transforms, and more.
+- **Custom Easing**: Support for various easing functions to create natural motion.
 
-<img src="https://github.com/user-attachments/assets/f1aae89c-c225-4486-837c-d07e25270a84"  width="125" height="125">
+### ✨ Particle System
+- **Preset Library**: Built-in particle presets (smoke, fire, explosions, etc.) for quick effects.
+- **Custom Emitters**: Create and configure new particle effects with full control over emission, shape, and animation.
+- **Instanced Rendering**: Efficient GPU-based particle rendering for high performance.
 
-Marc improved the water shader fixed all the problems with merging the main and mantaining the clean code
+### 🧲 Physics (Bullet)
+- **Bullet Physics Integration**: Realistic rigid body dynamics, collision detection, and constraints.
+- **Collider Components**: Box, Sphere, Capsule, and Mesh colliders for versatile physical interactions.
+- **Physics Materials**: Control friction, restitution, and mass for each object.
 
-[Salvador Bernades Iglesias](https://github.com/SalvaBernades)
+### 🖌️ UI System
+- **UI Canvas**: Hierarchical UI system for HUDs, menus, and overlays.
+- **UI Components**: Image, Button, Text, and custom widgets, all editable in the editor.
+- **Editor Integration**: Design and preview UI layouts directly in the editor.
 
-<img src="https://github.com/user-attachments/assets/8a6c54bf-d038-4427-9174-2e66982bf848"  width="125" height="125">
+---
 
-Salva made Save Shaders with an array & change GO shaders and helped Joan with integration in the inspector
+## 👥 Contributors
 
-[Joan Marques Besses](https://github.com/joanmarquesbesses)
+- ASDFG
 
-<img src="https://github.com/user-attachments/assets/9b90a359-e898-46ce-9296-c30f7f5cd664"  width="125" height="125">
+---
 
-Joan made the shader template, implementation to the inspector and the shader component
-
-[Justo Jose Tiscornia Sierra](https://github.com/Jusstox)
-
-<img src="https://github.com/user-attachments/assets/7dc35c0a-f959-430d-ae43-226ec5788871" width="125" height="125">
-
-Justo Made the library linking, default shader integration and organizated the readME 
-
-
-## SCRIPTING CONTROLS ##
-
-- UP ARROW: move tank , move projectile (z positive).
-
-- DOWN ARROW: move tank, move projectile (z negative).
-
-- LEFT ARROW: move tank, move projectile (x positive).
-
-- RIGHT ARROW: move tank, move projectile (x negative).
-
-- D: reset projectile position.
-
-- SPACE (HOLD) + MOVING MOUSE: reorient turret.
-
-- E (DISABLED): instantiate new projectile.
-
-## FEATURES ##
-
-This branch Includes a new test of a water shader with foam 
-
-You can chose the tyoe of shader you want!
-
-## LICENSES ##
-
-This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking 
-with closed source software. Check our LICENSE* for further details.
-
-
-##VIDEO AND GIF##
-
-[Shader Video!](https://youtu.be/j0p4dMhfLWY)
-
-![gifa](https://github.com/user-attachments/assets/43ec0552-ac5d-489c-a151-82ceea3b8657)
-
-![gifb](https://github.com/user-attachments/assets/07375d54-2e56-41d5-9daa-62ee68266a61)
-
-## SCRIPTING FEATURES ##
-
-- Added MonoBehaviour environment.
-
-- Added ScriptComponent (editor interactability work in progress).
-
-- Added Engine Binds to translate between Cpp and C# functions.
-
-- Added C# translations for GameObject, TransformComponent, MeshRendererComponent and CameraComponent.
-
-- Added a simple example to portray ScriptComponent functionalities.
-
-## PROBLEMS TO SOLVE ##
-
-- Some core functionalities need to either be implemented or changed.
-
-- Creating new C# Components is a tedius procedure.
-
-- Interactability via the editor is not finished.
-
-- Many improvements for user experience should be performed.
-
-- Scripts work always, including when not in play mode.
-
-## GIFS ##
-
-![2025-01-23 21-28-22](https://github.com/user-attachments/assets/54af0e23-5aab-4898-b67d-9209790702b7)
-
-![2025-01-23 21-27-28](https://github.com/user-attachments/assets/854108ad-ce55-4fe8-a15a-e2accf9d0589)
-
-## LICENSES ##
-
-This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking 
-with closed source software. Check our LICENSE* for further details.
+For more information, visit the [HawkEngine GitHub Repository](https://github.com/CITM-UPC/HawkEngine).

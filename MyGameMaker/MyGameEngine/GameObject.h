@@ -121,6 +121,9 @@ public:
     void SetPrefabSourcePath(const std::string& path) { prefabSourcePath = path; }
     void TraverseHierarchy(std::function<void(GameObject*)> func);
 
+	bool useManualBoundingBox = false;
+	BoundingBox manualBoundingBox;
+
 private:
     friend class SceneSerializer;
     friend class GameObject;

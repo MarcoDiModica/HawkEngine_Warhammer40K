@@ -1887,8 +1887,42 @@ true 									     // Is Local Space
 			"Assets/Textures/niebla30Frames.png", // Texture path
 			false						   // Is Local Space
 	};
-
+	const ParticlePreset Ivo_Blackrage = {
+		ParticleType::IVO_BLACKRAGE,
+		true,									   // PlayOnAwake
+		1,										   // Duration (only if one-shot)
+		glm::vec3(0.15,0,0),   					   // Start color (white)
+		glm::vec3(0.15,0,0),   					   // End color (white)
+		0.23f,                          		   // Alpha start
+		0.23f,                          		   // Alpha end
+		150.0f,                          		   // Size start
+		150.0f,                          		   // Size end
+		5,                          			   // Min lifetime
+		5,                         				   // Max lifetime
+		0.0f,                          			   // Min speed
+		0.0f,                          			   // Max speed
+		0.0f,									   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+		0,                          			   // Rotation speed
+		1.f,                         			   // Emission rate (particles per second)
+		EmitterShape::POINT,            		   // Shape
+		0.2f,                          			   // Cone base radius
+		1.0f,                          			   // Cone height
+		20.0f,                         			   // Cone angle in degrees
+		glm::vec2(256,256),		   				   // Sprite size
+		true,									   // Use animation
+		false,									   // Random animation Index
+		7.2f,									   // Animation speed
+		0.0f,									   // Start rotation
+		true,									   // Random rotation
+		1.0f,									   // Min scale
+		1.0f,									   // Max scale
+		"Assets/Textures/niebla30Frames.png", 	   // Texture path
+		false 									   // Is Local Space
+	};
 }
+
+
 
 ParticleFX::ParticleFX(GameObject* owner)
 	: Component(owner)
@@ -2539,6 +2573,10 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::IVO_SMOKE:
 		preset = ParticlePresets::IVO_Smoke;
+		SetOneShot(false);
+		break;
+	case ParticleType::IVO_BLACKRAGE:
+		preset = ParticlePresets::Ivo_Blackrage;
 		SetOneShot(false);
 		break;
 	default:

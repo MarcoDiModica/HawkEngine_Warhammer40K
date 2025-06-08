@@ -170,61 +170,81 @@ MonoObject* MeshRenderer::GetSharp()
 void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPos) const {
 	if (!shader) return;
 
-	int numPointLights = static_cast<int>(Application->root->GetActiveScene()->_lights.size());
-	shader->SetUniform("numPointLights", numPointLights);
-	bool hasDirLight = false;
+	auto scene = Application->root->GetActiveScene();
+	if (!scene) return;
 
-	int i = 0;
-	for (const auto& light : Application->root->GetActiveScene()->_lights) {
-		if (!light) continue;
-		if (!light->GetComponent<Transform_Component>() || !light->GetComponent<LightComponent>()) continue;
-		if (light->GetComponent<LightComponent>()->GetLightType() == LightType::POINT)
-		{
-			std::string pointLightstr = "pointLights[" + std::to_string(i) + "]";
-			auto transformComponent = light->GetComponent<Transform_Component>();
-			auto lightComponent = light->GetComponent<LightComponent>();
+	std::vector<PointLight> pointLights;
+	std::vector<SpotLight> spotLights;
+	DirectionalLight dirLight = {};
+	bool hasDirectionalLight = false;
 
-			if (!transformComponent || !lightComponent) continue;
+	for (const auto& lightObj : scene->_lights) {
+		if (!lightObj || !lightObj->IsActive()) continue;
 
-			shader->SetUniform(pointLightstr + ".position", transformComponent->GetPosition());
-			shader->SetUniform(pointLightstr + ".ambient", lightComponent->GetAmbient());
-			shader->SetUniform(pointLightstr + ".diffuse", lightComponent->GetDiffuse());
-			shader->SetUniform(pointLightstr + ".specular", lightComponent->GetSpecular());
-			shader->SetUniform(pointLightstr + ".constant", lightComponent->GetConstant());
-			shader->SetUniform(pointLightstr + ".linear", lightComponent->GetLinear());
-			shader->SetUniform(pointLightstr + ".quadratic", lightComponent->GetQuadratic());
-			shader->SetUniform(pointLightstr + ".radius", lightComponent->GetRadius());
-			shader->SetUniform(pointLightstr + ".intensity", lightComponent->GetIntensity());
-			i++;
-		}
-		if (light->GetComponent<LightComponent>()->GetLightType() == LightType::DIRECTIONAL)
-		{
-			hasDirLight = true;
-			auto lightComponent = light->GetComponent<LightComponent>();
-			shader->SetUniform("dirLight.ambient", lightComponent->GetAmbient());
-			shader->SetUniform("dirLight.diffuse", lightComponent->GetDiffuse());
-			shader->SetUniform("dirLight.specular", lightComponent->GetSpecular());
-			shader->SetUniform("dirLight.direction", lightComponent->GetDirection());
-			shader->SetUniform("dirLight.intensity", lightComponent->GetIntensity());
+		auto lightComponent = lightObj->GetComponent<LightComponent>();
+		if (!lightComponent) continue;
+
+		switch (lightComponent->GetLightType()) {
+		case LightType::POINT:
+			if (pointLights.size() < 32) {
+				pointLights.push_back(lightComponent->GetPointLight());
+			}
+			break;
+
+		case LightType::DIRECTIONAL:
+			if (!hasDirectionalLight) {
+				dirLight = lightComponent->GetDirectionalLight();
+				hasDirectionalLight = true;
+			}
+			break;
+
+		case LightType::SPOT:
+			if (spotLights.size() < 16) {
+				spotLights.push_back(lightComponent->GetSpotLight());
+			}
+			break;
 		}
 	}
-	if (hasDirLight == false) 
-	{
-		shader->SetUniform("dirLight.ambient", vec3(0, 0, 0));
-		shader->SetUniform("dirLight.diffuse", vec3(0, 0, 0));
-		shader->SetUniform("dirLight.specular", vec3(0, 0, 0));
-		shader->SetUniform("dirLight.direction", vec3(0,0,0));
-		shader->SetUniform("dirLight.intensity", 0);
+
+	shader->SetUniform("numPointLights", static_cast<int>(pointLights.size()));
+	shader->SetUniform("numSpotLights", static_cast<int>(spotLights.size()));
+	shader->SetUniform("hasDirectionalLight", hasDirectionalLight ? 1 : 0);
+
+	for (size_t i = 0; i < pointLights.size(); ++i) {
+		std::string base = "pointLights[" + std::to_string(i) + "]";
+		shader->SetUniform(base + ".position", pointLights[i].position);
+		shader->SetUniform(base + ".color", pointLights[i].color);
+		shader->SetUniform(base + ".intensity", pointLights[i].intensity);
+		shader->SetUniform(base + ".range", pointLights[i].range);
+		shader->SetUniform(base + ".constant", pointLights[i].constant);
+		shader->SetUniform(base + ".linear", pointLights[i].linear);
+		shader->SetUniform(base + ".quadratic", pointLights[i].quadratic);
 	}
-	//shader->SetUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-	//shader->SetUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-	//shader->SetUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-	//shader->SetUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
-	//shader->SetUniform("dirLight.intensity", 3.0f);
+
+	for (size_t i = 0; i < spotLights.size(); ++i) {
+		std::string base = "spotLights[" + std::to_string(i) + "]";
+		shader->SetUniform(base + ".position", spotLights[i].position);
+		shader->SetUniform(base + ".direction", spotLights[i].direction);
+		shader->SetUniform(base + ".color", spotLights[i].color);
+		shader->SetUniform(base + ".intensity", spotLights[i].intensity);
+		shader->SetUniform(base + ".range", spotLights[i].range);
+		shader->SetUniform(base + ".innerCone", spotLights[i].innerCone);
+		shader->SetUniform(base + ".outerCone", spotLights[i].outerCone);
+		shader->SetUniform(base + ".constant", spotLights[i].constant);
+		shader->SetUniform(base + ".linear", spotLights[i].linear);
+		shader->SetUniform(base + ".quadratic", spotLights[i].quadratic);
+	}
+
+	if (hasDirectionalLight) {
+		shader->SetUniform("dirLight.direction", dirLight.direction);
+		shader->SetUniform("dirLight.color", dirLight.color);
+		shader->SetUniform("dirLight.intensity", dirLight.intensity);
+	}
+
+	shader->SetUniform("viewPos", viewPos);
 
 	glBindVertexArray(mesh->model.get()->GetModelData().vA);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
-
 }
 
 void MeshRenderer::BindMeshForRendering() const {

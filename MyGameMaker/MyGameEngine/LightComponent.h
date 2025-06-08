@@ -6,136 +6,173 @@
 class SceneSerializer;
 
 enum class LightType {
-    NONE,
-    POINT,
-    DIRECTIONAL
+	NONE,
+	POINT,
+	DIRECTIONAL,
+	SPOT
 };
 
 struct PointLight {
-    vec3 position;
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
-    float constant;
-    float linear;
-    float quadratic;
-    float radius;
-    float intensity;
+	vec3 position;
+	vec3 color;
+	float intensity;
+	float range;
+	float constant;
+	float linear;
+	float quadratic;
 };
 
-struct DirLight {
-    vec3 direction;
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
-    float intensity;
+struct DirectionalLight {
+	vec3 direction;
+	vec3 color;
+	float intensity;
+};
+
+struct SpotLight {
+	vec3 position;
+	vec3 direction;
+	vec3 color;
+	float intensity;
+	float range;
+	float innerCone;
+	float outerCone;
+	float constant;
+	float linear;
+	float quadratic;
 };
 
 class LightComponent : public Component {
 public:
-    LightComponent(GameObject* owner);
+	LightComponent(GameObject* owner);
 
-    void Awake() override;
-    void Start() override;
-    void Update(float deltaTime) override;
-    void Destroy() override;
+	void Awake() override;
+	void Start() override;
+	void Update(float deltaTime) override;
+	void Destroy() override;
 
-    std::unique_ptr<Component> Clone(GameObject* owner) override;
+	std::unique_ptr<Component> Clone(GameObject* owner) override;
 
-    ComponentType GetType() const override { return ComponentType::LIGHT; }
+	ComponentType GetType() const override { return ComponentType::LIGHT; }
 
-    void SetLightType(LightType type);
-    LightType GetLightType() const;
+	void SetLightType(LightType type);
+	LightType GetLightType() const;
 
-    void SetDirection(const glm::vec3& direction);
-    glm::vec3 GetDirection() const;
+	void SetColor(const vec3& color);
+	vec3 GetColor() const;
 
-    vec3 GetAmbient() const;
-    vec3 GetDiffuse() const;
-    vec3 GetSpecular() const;
-    float GetConstant() const;
-    float GetLinear() const;
-    float GetQuadratic() const;
-    float GetRadius() const;
-    float GetIntensity() const;
+	void SetIntensity(float intensity);
+	float GetIntensity() const;
 
+	void SetRange(float range);
+	float GetRange() const;
 
-  
-    void SetAmbient(const vec3& ambient);
-    void SetDiffuse(const vec3& diffuse);
-    void SetSpecular(const vec3& specular);
-    void SetConstant(float constant);
-    void SetLinear(float linear);
-    void SetQuadratic(float quadratic);
-    void SetRadius(float radius);
-    void SetIntensity(float intensity);
+	void SetInnerConeAngle(float angle);
+	float GetInnerConeAngle() const;
+
+	void SetOuterConeAngle(float angle);
+	float GetOuterConeAngle() const;
+
+	PointLight GetPointLight() const;
+	DirectionalLight GetDirectionalLight() const;
+	SpotLight GetSpotLight() const;
 
 private:
-    void UpdatePointLight();
-    void UpdateDirectionalLight();
+	void UpdateLightData();
+	void CalculateAttenuation();
 
-    LightType type = LightType::POINT;
+	LightType type = LightType::POINT;
+
+	vec3 color = vec3(1.0f, 1.0f, 1.0f);
+	float intensity = 1.0f;
+	float range = 10.0f;
+	float innerConeAngle = 30.0f;
+	float outerConeAngle = 45.0f;
+
+	float constant = 1.0f;
+	float linear = 0.09f;
+	float quadratic = 0.032f;
+
 	PointLight pointLight;
-	DirLight dirLight;
-
-    vec3 ambient = glm::vec3(0.2f, 0.2f, 0.2f);
-    vec3 diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
-    vec3 specular = glm::vec3(-0.2f, -1.0f, -0.3f);
-    float constant = 1.0f;
-    float linear = 0.09f;
-    float quadratic = 0.032f;
-    float radius = 1.0f;
-    float intensity = 3.0f;
-    glm::vec3 direction = { -1.0f, -1.0f, 0.0f };
+	DirectionalLight directionalLight;
+	SpotLight spotLight;
 
 protected:
+	friend class SceneSerializer;
 
-    friend class SceneSerializer;
-YAML::Node encode() override {
+	YAML::Node encode() override {
+		YAML::Node node = Component::encode();
 
-    YAML::Node node = Component::encode();
+		node["light_type"] = static_cast<int>(type);
+		node["color"] = YAML::Node(YAML::NodeType::Sequence);
+		node["color"].push_back(color.r);
+		node["color"].push_back(color.g);
+		node["color"].push_back(color.b);
+		node["intensity"] = intensity;
+		node["range"] = range;
+		node["inner_cone_angle"] = innerConeAngle;
+		node["outer_cone_angle"] = outerConeAngle;
 
-    node["light_type"] = static_cast<int>(type);
-    node["ambient"] = YAML::Node(YAML::NodeType::Sequence);
-    node["ambient"].push_back(ambient.r);
-    node["ambient"].push_back(ambient.g);
-    node["ambient"].push_back(ambient.b);
-    node["diffuse"] = YAML::Node(YAML::NodeType::Sequence);
-    node["diffuse"].push_back(diffuse.r);
-    node["diffuse"].push_back(diffuse.g);
-    node["diffuse"].push_back(diffuse.b);
-    node["specular"] = YAML::Node(YAML::NodeType::Sequence);
-    node["specular"].push_back(specular.r);
-    node["specular"].push_back(specular.g);
-    node["specular"].push_back(specular.b);
-    node["constant"] = constant;
-    node["linear"] = linear;
-    node["quadratic"] = quadratic;
-    node["radius"] = radius;
-    node["intensity"] = intensity;
-    node["direction"] = YAML::Node(YAML::NodeType::Sequence);
-    node["direction"].push_back(direction.x);
-    node["direction"].push_back(direction.y);
-    node["direction"].push_back(direction.z);
+		return node;
+	}
 
-    return node;
-}
+	bool decode(const YAML::Node& node) override {
+		Component::decode(node);
 
-    bool decode(const YAML::Node& node) override {
+		type = static_cast<LightType>(node["light_type"].as<int>());
 
-        Component::decode(node);
+		if (node["color"] && node["color"].IsSequence() && node["color"].size() == 3) {
+			color = { node["color"][0].as<float>(), node["color"][1].as<float>(), node["color"][2].as<float>() };
+		}
+		else if (node["diffuse"] && node["diffuse"].IsSequence() && node["diffuse"].size() == 3) {
+			color = { node["diffuse"][0].as<float>(), node["diffuse"][1].as<float>(), node["diffuse"][2].as<float>() };
+		}
+		else {
+			color = vec3(1.0f, 1.0f, 1.0f);
+		}
 
-        type = static_cast<LightType>(node["light_type"].as<int>());
-        ambient = { node["ambient"][0].as<float>(), node["ambient"][1].as<float>(), node["ambient"][2].as<float>() };
-        diffuse = { node["diffuse"][0].as<float>(), node["diffuse"][1].as<float>(), node["diffuse"][2].as<float>() };
-        specular = { node["specular"][0].as<float>(), node["specular"][1].as<float>(), node["specular"][2].as<float>() };
-        constant = node["constant"].as<float>();
-        linear = node["linear"].as<float>();
-        quadratic = node["quadratic"].as<float>();
-        radius = node["radius"].as<float>();
-        intensity = node["intensity"].as<float>();
-        direction = { node["direction"][0].as<float>(), node["direction"][1].as<float>(), node["direction"][2].as<float>() };
+		if (node["intensity"]) {
+			intensity = node["intensity"].as<float>();
+		}
+		else {
+			intensity = 1.0f;
+		}
 
-        return true;
-    }
+		if (node["range"]) {
+			range = node["range"].as<float>();
+		}
+		else if (node["radius"]) {
+			range = node["radius"].as<float>();
+		}
+		else {
+			range = 10.0f;
+		}
+
+		if (node["inner_cone_angle"]) {
+			innerConeAngle = node["inner_cone_angle"].as<float>();
+		}
+		else {
+			innerConeAngle = 30.0f;
+		}
+
+		if (node["outer_cone_angle"]) {
+			outerConeAngle = node["outer_cone_angle"].as<float>();
+		}
+		else {
+			outerConeAngle = 45.0f;
+		}
+
+		if (node["constant"]) {
+			constant = node["constant"].as<float>();
+		}
+		if (node["linear"]) {
+			linear = node["linear"].as<float>();
+		}
+		if (node["quadratic"]) {
+			quadratic = node["quadratic"].as<float>();
+		}
+
+		CalculateAttenuation();
+
+		return true;
+	}
 };

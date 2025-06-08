@@ -73,6 +73,14 @@ YAML::Node SceneSerializer::SerializeGameObject(GameObject& gameObject) {
 	node["tag"] = gameObject.tag;
 	node["active"] = gameObject.IsActive();
 	node["isStatic"] = gameObject.isStatic;
+	node["useManualBoundingBox"] = gameObject.m_useManualBoundingBox;
+
+	if (gameObject.m_useManualBoundingBox) {
+		YAML::Node bboxNode = YAML::Node();
+		bboxNode["min"] = std::vector<double>{ gameObject.m_manualBoundingBox.min.x, gameObject.m_manualBoundingBox.min.y, gameObject.m_manualBoundingBox.min.z };
+		bboxNode["max"] = std::vector<double>{ gameObject.m_manualBoundingBox.max.x, gameObject.m_manualBoundingBox.max.y, gameObject.m_manualBoundingBox.max.z };
+		node["manualBoundingBox"] = bboxNode;
+	}
 
 	node["Components"] = SerializeComponents(gameObject);
 
@@ -298,6 +306,24 @@ std::shared_ptr<GameObject> SceneSerializer::DeserializeGameObject(const YAML::N
 
 	if (node["isStatic"].IsDefined()) {
 		gameObject->isStatic = node["isStatic"].as<bool>();
+	}
+
+	if (node["useManualBoundingBox"]) {
+		gameObject->m_useManualBoundingBox = node["useManualBoundingBox"].as<bool>();
+
+		if (gameObject->m_useManualBoundingBox && node["manualBoundingBox"]) {
+			YAML::Node bboxNode = node["manualBoundingBox"];
+
+			if (bboxNode["min"] && bboxNode["max"]) {
+				std::vector<float> min = bboxNode["min"].as<std::vector<float>>();
+				std::vector<float> max = bboxNode["max"].as<std::vector<float>>();
+
+				if (min.size() >= 3 && max.size() >= 3) {
+					gameObject->m_manualBoundingBox.min = glm::vec3(min[0], min[1], min[2]);
+					gameObject->m_manualBoundingBox.max = glm::vec3(max[0], max[1], max[2]);
+				}
+			}
+		}
 	}
 
 	if (node["Components"].IsDefined()) {

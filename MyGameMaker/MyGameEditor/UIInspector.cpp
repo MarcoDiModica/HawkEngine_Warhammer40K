@@ -217,6 +217,91 @@ private:
 			ImGui::TreePop();
 		}
 
+		if (ImGui::TreeNodeEx("Bounding Box", ImGuiTreeNodeFlags_DefaultOpen)) {
+			GameObject* gameObject = meshRenderer->GetOwner();
+
+			bool useManual = gameObject->IsUsingManualBoundingBox();
+			if (ImGui::Checkbox("Use Manual Bounding Box", &useManual)) {
+				gameObject->UseManualBoundingBox(useManual);
+			}
+
+			if (ImGui::IsItemHovered()) {
+				ImGui::BeginTooltip();
+				ImGui::Text("Override the automatically calculated bounding box");
+				ImGui::EndTooltip();
+			}
+
+			BoundingBox bbox;
+			if (useManual) {
+				// Get the current manual bounding box in local space
+				bbox = gameObject->localBoundingBox();
+			}
+			else {
+				// Get the auto-calculated bounding box
+				if (meshRenderer->GetMesh()) {
+					bbox = meshRenderer->GetMesh()->boundingBox();
+				}
+			}
+
+			// Display the current bounding box values
+			glm::vec3 bboxMin = bbox.min;
+			glm::vec3 bboxMax = bbox.max;
+			glm::vec3 bboxSize = bboxMax - bboxMin;
+
+			ImGui::Separator();
+			ImGui::Text("Current Bounds:");
+			AlignedProperty("Minimum", "X: %.3f, Y: %.3f, Z: %.3f", labelWidth,
+				bboxMin.x, bboxMin.y, bboxMin.z);
+			AlignedProperty("Maximum", "X: %.3f, Y: %.3f, Z: %.3f", labelWidth,
+				bboxMax.x, bboxMax.y, bboxMax.z);
+			AlignedProperty("Size", "X: %.3f, Y: %.3f, Z: %.3f", labelWidth,
+				bboxSize.x, bboxSize.y, bboxSize.z);
+
+			ImGui::Separator();
+
+			// Edit manual bounding box if enabled
+			if (useManual) {
+				ImGui::Text("Edit Manual Bounds:");
+				float minValues[3] = { bboxMin.x, bboxMin.y, bboxMin.z };
+				float maxValues[3] = { bboxMax.x, bboxMax.y, bboxMax.z };
+
+				ImGui::AlignTextToFramePadding();
+				ImGui::Text("Min");
+				ImGui::SameLine(labelWidth);
+				ImGui::PushItemWidth(-1);
+				bool minChanged = ImGui::DragFloat3("##Min", minValues, 0.1f);
+				ImGui::PopItemWidth();
+
+				ImGui::AlignTextToFramePadding();
+				ImGui::Text("Max");
+				ImGui::SameLine(labelWidth);
+				ImGui::PushItemWidth(-1);
+				bool maxChanged = ImGui::DragFloat3("##Max", maxValues, 0.1f);
+				ImGui::PopItemWidth();
+
+				// Update bounding box if values changed
+				if (minChanged || maxChanged) {
+					BoundingBox newBBox;
+					newBBox.min = glm::vec3(minValues[0], minValues[1], minValues[2]);
+					newBBox.max = glm::vec3(maxValues[0], maxValues[1], maxValues[2]);
+					gameObject->SetManualBoundingBox(newBBox);
+				}
+
+				if (ImGui::Button("Reset to Auto", ImVec2(-1, 0))) {
+					gameObject->UseManualBoundingBox(false);
+				}
+			}
+			else {
+				if (ImGui::Button("Convert to Manual", ImVec2(-1, 0))) {
+					// Create a manual bounding box from the current auto-calculated one
+					gameObject->SetManualBoundingBox(bbox);
+					gameObject->UseManualBoundingBox(true);
+				}
+			}
+
+			ImGui::TreePop();
+		}
+
 		if (ImGui::TreeNodeEx("Material", ImGuiTreeNodeFlags_DefaultOpen)) {
 			auto material = meshRenderer->GetMaterial();
 			if (!material) {
@@ -484,6 +569,13 @@ private:
 		ImGui::Text("%s", label);
 		ImGui::SameLine(labelWidth);
 		ImGui::Text("%s", value);
+	}
+
+	static void AlignedProperty(const char* label, const char* format, float labelWidth, float x, float y, float z) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("%s", label);
+		ImGui::SameLine(labelWidth);
+		ImGui::Text(format, x, y, z);
 	}
 
 	static void AlignedProperty(const char* label, int value, float labelWidth) {

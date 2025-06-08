@@ -119,6 +119,10 @@ public:
 
 	void setBoundingBox(const BoundingBox& bbox) { _boundingBox = bbox; }
 
+	void CalculateBoundingBoxFromVertices();
+	bool IsBoundingBoxValid() const;
+	void LogBoundingBoxInfo() const;
+
 protected:
     friend class SceneSerializer;
     friend class MeshRenderer;

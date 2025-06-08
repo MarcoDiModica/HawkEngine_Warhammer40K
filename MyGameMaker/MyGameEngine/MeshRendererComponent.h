@@ -46,7 +46,8 @@ public:
 	void Render() const;
 	void RenderMainCamera() const;
 
-	MonoObject* CsharpReference = nullptr;
+    void DrawBoundingBox() const;
+    MonoObject* CsharpReference = nullptr;
 	MonoObject* GetSharp() override;
 
 	void SetupLightProperties(Shaders* shader, const glm::vec3& viewPos) const;

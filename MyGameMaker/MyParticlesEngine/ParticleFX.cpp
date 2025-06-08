@@ -1953,6 +1953,10 @@ void ParticleFX::Start() {
 }
 
 void ParticleFX::Update(float deltaTime) {
+	if (!owner->IsActive()) {
+		return;
+	}
+
 	GLint lastProgram;
 	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
 

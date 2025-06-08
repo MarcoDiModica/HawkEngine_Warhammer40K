@@ -474,3 +474,62 @@ void MeshRenderer::RenderMainCamera() const {
 		glUseProgram(lastProgram);
 	}
 }
+
+void MeshRenderer::DrawBoundingBox() const {
+    BoundingBox bbox;
+    
+    if (owner->IsUsingManualBoundingBox()) {
+        bbox = owner->boundingBox();
+    } else if (mesh) {
+		bbox = mesh->boundingBox();
+    } else {
+        return;
+    }
+    
+    glDisable(GL_LIGHTING);
+    glColor3f(0.0f, 1.0f, 0.0f);
+    
+    glBegin(GL_LINES);
+    
+    // Bottom face
+    glVertex3f(bbox.min.x, bbox.min.y, bbox.min.z);
+    glVertex3f(bbox.max.x, bbox.min.y, bbox.min.z);
+    
+    glVertex3f(bbox.max.x, bbox.min.y, bbox.min.z);
+    glVertex3f(bbox.max.x, bbox.min.y, bbox.max.z);
+    
+    glVertex3f(bbox.max.x, bbox.min.y, bbox.max.z);
+    glVertex3f(bbox.min.x, bbox.min.y, bbox.max.z);
+    
+    glVertex3f(bbox.min.x, bbox.min.y, bbox.max.z);
+    glVertex3f(bbox.min.x, bbox.min.y, bbox.min.z);
+    
+    // Top face
+    glVertex3f(bbox.min.x, bbox.max.y, bbox.min.z);
+    glVertex3f(bbox.max.x, bbox.max.y, bbox.min.z);
+    
+    glVertex3f(bbox.max.x, bbox.max.y, bbox.min.z);
+    glVertex3f(bbox.max.x, bbox.max.y, bbox.max.z);
+    
+    glVertex3f(bbox.max.x, bbox.max.y, bbox.max.z);
+    glVertex3f(bbox.min.x, bbox.max.y, bbox.max.z);
+    
+    glVertex3f(bbox.min.x, bbox.max.y, bbox.max.z);
+    glVertex3f(bbox.min.x, bbox.max.y, bbox.min.z);
+    
+    // Connecting edges
+    glVertex3f(bbox.min.x, bbox.min.y, bbox.min.z);
+    glVertex3f(bbox.min.x, bbox.max.y, bbox.min.z);
+    
+    glVertex3f(bbox.max.x, bbox.min.y, bbox.min.z);
+    glVertex3f(bbox.max.x, bbox.max.y, bbox.min.z);
+    
+    glVertex3f(bbox.max.x, bbox.min.y, bbox.max.z);
+    glVertex3f(bbox.max.x, bbox.max.y, bbox.max.z);
+    
+    glVertex3f(bbox.min.x, bbox.min.y, bbox.max.z);
+    glVertex3f(bbox.min.x, bbox.max.y, bbox.max.z);
+    
+    glEnd();
+    glEnable(GL_LIGHTING);
+}

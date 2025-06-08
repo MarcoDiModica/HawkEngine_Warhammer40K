@@ -14,6 +14,7 @@
 #include <assimp/cimport.h>
 #include <GL/glew.h>
 #include <glm/gtc/type_ptr.hpp>
+#include <algorithm> 
 
 #include "GameObject.h"
 #include "../MyGameEditor/App.h"
@@ -29,7 +30,7 @@ Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))
 Mesh::~Mesh() {}
 
 void Mesh::drawBoundingBox(const BoundingBox& bbox) {
-	glLineWidth(2.0);
+	glLineWidth(3.0);
 	drawWiredQuad(bbox.v000(), bbox.v001(), bbox.v011(), bbox.v010());
 	drawWiredQuad(bbox.v100(), bbox.v101(), bbox.v111(), bbox.v110());
 	drawWiredQuad(bbox.v000(), bbox.v001(), bbox.v101(), bbox.v100());
@@ -1101,6 +1102,7 @@ void Mesh::loadToOpenGL()
 		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (const void*)0);
 	}
 
+	CalculateBoundingBoxFromVertices();
 
 	//buffer de index
 	(glCreateBuffers(1, &model->GetModelData().iBID));
@@ -1110,4 +1112,30 @@ void Mesh::loadToOpenGL()
 	(glBindBuffer(GL_ARRAY_BUFFER, 0));
 	(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 	(glBindVertexArray(0));
+}
+
+void Mesh::CalculateBoundingBoxFromVertices() {
+    if (model->GetModelData().vertexData.empty()) {
+        _boundingBox = BoundingBox();
+        return;
+    }
+
+    glm::vec3 minVertex = model->GetModelData().vertexData[0].position;
+    glm::vec3 maxVertex = model->GetModelData().vertexData[0].position;
+
+    for (const auto& vertex : model->GetModelData().vertexData) {
+        minVertex = glm::vec3(
+            std::min(minVertex.x, static_cast<float>(vertex.position.x)),
+            std::min(minVertex.y, static_cast<float>(vertex.position.y)),
+            std::min(minVertex.z, static_cast<float>(vertex.position.z))
+        );					
+        maxVertex = glm::vec3(
+            std::max(maxVertex.x, static_cast<float>(vertex.position.x)),
+            std::max(maxVertex.y, static_cast<float>(vertex.position.y)),
+            std::max(maxVertex.z, static_cast<float>(vertex.position.z))
+        );
+    }
+
+    _boundingBox.min = glm::dvec3(minVertex);
+    _boundingBox.max = glm::dvec3(maxVertex);
 }

@@ -121,6 +121,13 @@ public:
     void SetPrefabSourcePath(const std::string& path) { prefabSourcePath = path; }
     void TraverseHierarchy(std::function<void(GameObject*)> func);
 
+	BoundingBox TransformBoundingBox(const BoundingBox& bbox, const glm::dmat4& transform) const;
+	BoundingBox CombineBoundingBoxes(const BoundingBox& bbox1, const BoundingBox& bbox2) const;
+
+	void SetManualBoundingBox(const BoundingBox& bbox);
+	void UseManualBoundingBox(bool use);
+	bool IsUsingManualBoundingBox() const;
+
 private:
     friend class SceneSerializer;
     friend class GameObject;
@@ -128,6 +135,9 @@ private:
     void DrawAccumultedMatrix() const;
     void DrawInstancedMatrix() const;
     void DrawPushPopMatrix() const;
+
+	bool m_useManualBoundingBox = false;
+	BoundingBox m_manualBoundingBox;
 
     std::string name;
     HawkUUID m_UUID;

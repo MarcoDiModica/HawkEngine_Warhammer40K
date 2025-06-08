@@ -463,41 +463,106 @@ Transform_Component* GameObject::GetTransform() const {
 
 BoundingBox GameObject::boundingBox() const
 {
-    BoundingBox combinedBoundingBox{};
-
-    if (HasComponent<MeshRenderer>()) {
-        auto meshRenderer = GetComponent<MeshRenderer>();
-        combinedBoundingBox = meshRenderer->GetMesh()->boundingBox();
-    }
-    else if (!children.empty()) {
-        combinedBoundingBox = children.front()->boundingBox();
+    if (m_useManualBoundingBox) {
+        return TransformBoundingBox(m_manualBoundingBox, GetTransform()->GetMatrix());
     }
 
-    for (auto it = children.begin() + (HasComponent<MeshRenderer>() || children.empty() ? 0 : 1); it != children.end(); ++it) {
-        combinedBoundingBox = combinedBoundingBox + (*it)->boundingBox();
+    BoundingBox localBBox = localBoundingBox();
+
+    if (localBBox.min == localBBox.max) {
+        return localBBox;
     }
 
-    return GetTransform()->GetMatrix() * combinedBoundingBox;
+    glm::dmat4 transform = GetTransform()->GetMatrix();
+    return TransformBoundingBox(localBBox, transform);
 }
 
+BoundingBox GameObject::localBoundingBox() const
+{
+    if (m_useManualBoundingBox) {
+        return m_manualBoundingBox;
+    }
 
-BoundingBox GameObject::localBoundingBox() const {
-    BoundingBox combinedBoundingBox{};
+    BoundingBox combinedBoundingBox;
+    bool hasInitialBox = false;
 
     if (HasComponent<MeshRenderer>()) {
         auto meshRenderer = GetComponent<MeshRenderer>();
-        combinedBoundingBox = meshRenderer->GetMesh()->boundingBox();
+        if (meshRenderer->GetMesh()) {
+            combinedBoundingBox = meshRenderer->GetMesh()->boundingBox();
+            hasInitialBox = true;
+        }
     }
-    if (!children.empty()) {
 
-        combinedBoundingBox = children.front()->boundingBox();
-    }
-    
-    for (auto it = children.begin() + (HasComponent<MeshRenderer>() || children.empty() ? 0 : 1); it != children.end(); ++it) {
-        combinedBoundingBox = combinedBoundingBox + (*it)->boundingBox();
+    for (const auto& child : children) {
+        if (!child) continue;
+
+        BoundingBox childBBox = child->boundingBox();
+
+        if (!hasInitialBox) {
+            combinedBoundingBox = childBBox;
+            hasInitialBox = true;
+        }
+        else {
+            combinedBoundingBox = CombineBoundingBoxes(combinedBoundingBox, childBBox);
+        }
     }
 
     return combinedBoundingBox;
+}
+
+BoundingBox GameObject::TransformBoundingBox(const BoundingBox& bbox, const glm::dmat4& transform) const
+{
+	if (bbox.min == bbox.max) {
+		return bbox;
+	}
+
+	std::vector<glm::dvec3> vertices = {
+		bbox.v000(), bbox.v001(), bbox.v010(), bbox.v011(),
+		bbox.v100(), bbox.v101(), bbox.v110(), bbox.v111()
+	};
+
+	std::vector<glm::dvec3> transformedVertices;
+	transformedVertices.reserve(8);
+
+	for (const auto& vertex : vertices) {
+		glm::dvec4 transformedVertex = transform * glm::dvec4(vertex, 1.0);
+		transformedVertices.push_back(glm::dvec3(transformedVertex));
+	}
+
+	BoundingBox result;
+	result.min = transformedVertices[0];
+	result.max = transformedVertices[0];
+
+	for (const auto& vertex : transformedVertices) {
+		result.min = glm::min(result.min, vertex);
+		result.max = glm::max(result.max, vertex);
+	}
+
+	return result;
+}
+
+BoundingBox GameObject::CombineBoundingBoxes(const BoundingBox& bbox1, const BoundingBox& bbox2) const
+{
+	BoundingBox result;
+	result.min = glm::min(bbox1.min, bbox2.min);
+	result.max = glm::max(bbox1.max, bbox2.max);
+	return result;
+}
+
+void GameObject::SetManualBoundingBox(const BoundingBox& bbox)
+{
+    m_manualBoundingBox = bbox;
+}
+
+void GameObject::UseManualBoundingBox(bool use)
+{
+    m_useManualBoundingBox = use;
+}
+
+bool GameObject::IsUsingManualBoundingBox() const
+{
+    return m_useManualBoundingBox;
 }
 
 void GameObject::SetParent(GameObject* parent) {

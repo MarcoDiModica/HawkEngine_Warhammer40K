@@ -4,6 +4,7 @@ uuid: 8467635903990795185
 tag: Untagged
 active: true
 isStatic: false
+useManualBoundingBox: false
 Components:
   Transform_Component:
     name: Transform_Component
@@ -51,8 +52,9 @@ Children:
     prefabPath: ""
     uuid: 16878544583696461210
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -100,10 +102,10 @@ Children:
           - 3560
           - 538
         sprite_offset:
-          - 0
+          - 890
           - 0
         anim_speed: 0.5
-        anim_index: 0
+        anim_index: 1
         anim_index_limit: 3
         color:
           - 1
@@ -117,6 +119,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -181,6 +184,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -245,6 +249,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -295,7 +300,7 @@ Children:
           - 1780
           - 0
         anim_speed: 0.5
-        anim_index: 2
+        anim_index: 0
         anim_index_limit: 3
         color:
           - 1
@@ -309,6 +314,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -373,6 +379,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -437,6 +444,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -487,7 +495,7 @@ Children:
           - 1780
           - 0
         anim_speed: 0.5
-        anim_index: 2
+        anim_index: 0
         anim_index_limit: 3
         color:
           - 1

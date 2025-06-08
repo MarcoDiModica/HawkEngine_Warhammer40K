@@ -4,14 +4,15 @@ uuid: 7417968142418403327
 tag: Melee
 active: true
 isStatic: false
+useManualBoundingBox: false
 Components:
   Transform_Component:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 52.802703857421875
+      - -12.012600898742676
       - 0
-      - -2.7913699150085449
+      - 19.244709014892578
     localRotation:
       - 0
       - -0
@@ -81,7 +82,7 @@ Components:
       - 0
     isTrigger: false
   RigidbodyComponent:
-    mass: 1
+    mass: 2
     isKinematic: false
     isFreezed: true
     friction: 0.5
@@ -107,8 +108,18 @@ Children:
     prefabPath: ""
     uuid: 17006855275563467050
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
+    useManualBoundingBox: true
+    manualBoundingBox:
+      min:
+        - -200
+        - -200
+        - -200
+      max:
+        - 200
+        - 200
+        - 200
     Components:
       Transform_Component:
         name: Transform_Component
@@ -224,18 +235,19 @@ Children:
         tag: Untagged
         active: true
         isStatic: false
+        useManualBoundingBox: false
         Components:
           Transform_Component:
             name: Transform_Component
             enabled: true
             localPosition:
-              - -0.039187345653772354
+              - -0.038994684815406799
               - 98.123992919921875
-              - -35.655204772949219
+              - -35.655208587646484
             localRotation:
-              - 78.538464180792246
-              - -1.4901983734060593
-              - -0.37117236121895658
+              - 78.538464181938664
+              - -1.490198456051266
+              - -0.37117242879035667
             localScale:
               - 100.00001525878906
               - 99.999977111816406
@@ -247,18 +259,19 @@ Children:
             tag: Untagged
             active: true
             isStatic: false
+            useManualBoundingBox: false
             Components:
               Transform_Component:
                 name: Transform_Component
                 enabled: true
                 localPosition:
-                  - 1.0320982255507261e-06
-                  - 0.37227663397789001
-                  - 7.9953821341405273e-08
+                  - -2.2410740712075494e-06
+                  - 0.37227681279182434
+                  - 6.6238456497558218e-08
                 localRotation:
-                  - -1.0185721170876876
-                  - -0.0023972645825350134
-                  - 0.00034330323695470422
+                  - -1.0185716902177091
+                  - -0.0023972453875555663
+                  - 0.00034330535034181873
                 localScale:
                   - 0.99999988079071045
                   - 0.99999994039535522
@@ -270,22 +283,23 @@ Children:
                 tag: Untagged
                 active: true
                 isStatic: false
+                useManualBoundingBox: false
                 Components:
                   Transform_Component:
                     name: Transform_Component
                     enabled: true
                     localPosition:
-                      - -5.2665575367427664e-07
-                      - 0.23583289980888367
-                      - -1.6088038989892084e-07
+                      - 6.2906951825425494e-07
+                      - 0.23583288490772247
+                      - -1.5599616176587006e-07
                     localRotation:
-                      - -7.29296202628767
-                      - 0.0020287183857294238
-                      - 0.00085874686407012835
+                      - -7.2929620262885591
+                      - 0.0020287461866148595
+                      - 0.00085868493960226434
                     localScale:
-                      - 0.99999994039535522
-                      - 1.0000001192092896
-                      - 1.0000001192092896
+                      - 1
+                      - 1
+                      - 1
                 Children:
                   - name: spine_03.x
                     prefabPath: ""
@@ -293,22 +307,23 @@ Children:
                     tag: Untagged
                     active: true
                     isStatic: false
+                    useManualBoundingBox: false
                     Components:
                       Transform_Component:
                         name: Transform_Component
                         enabled: true
                         localPosition:
-                          - 1.3916087482357398e-07
-                          - 0.17099250853061676
-                          - 4.4024027090472373e-08
+                          - -1.5942231357257697e-06
+                          - 0.17099255323410034
+                          - 8.3027934749679844e-08
                         localRotation:
-                          - -1.8293460297256141
-                          - -8.2333534283644832e-05
-                          - -3.7634616066483791e-07
+                          - -1.829344108979754
+                          - -8.2422949213689222e-05
+                          - -2.5201838746842312e-07
                         localScale:
-                          - 1.0000002384185791
-                          - 0.99999982118606567
-                          - 0.99999964237213135
+                          - 1.0000001192092896
+                          - 0.99999994039535522
+                          - 0.9999997615814209
                     Children:
                       - name: c_subneck_1.x
                         prefabPath: ""
@@ -316,20 +331,21 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 1.5569990807762224e-07
-                              - 0.15294972062110901
-                              - 0.024442611262202263
+                              - 5.3837612767893006e-07
+                              - 0.15294964611530304
+                              - 0.024442512542009354
                             localRotation:
-                              - -20.059173475458728
-                              - 0.015278063136273948
-                              - 0.010839460724379402
+                              - -20.059176838369925
+                              - 0.015278154679303192
+                              - 0.010839348422386071
                             localScale:
-                              - 0.99999988079071045
+                              - 0.99999994039535522
                               - 0.9999997615814209
                               - 0.99999982118606567
                         Children:
@@ -339,18 +355,19 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 5.1275566192998667e-07
-                                  - 0.11079003661870956
-                                  - 8.5815543116041226e-08
+                                  - 2.8253662094357423e-06
+                                  - 0.11078999191522598
+                                  - 1.1542020672550279e-07
                                 localRotation:
-                                  - -1.8027284009147437
-                                  - 0.00027187009930103507
-                                  - 0.00036961572647737858
+                                  - -1.8027301082508003
+                                  - 0.00027187752774223962
+                                  - 0.00036957904572067088
                                 localScale:
                                   - 1
                                   - 0.99999994039535522
@@ -362,20 +379,21 @@ Children:
                                 tag: Untagged
                                 active: true
                                 isStatic: false
+                                useManualBoundingBox: false
                                 Components:
                                   Transform_Component:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - 1.6122166357490642e-07
-                                      - 0.11079033464193344
-                                      - -2.3818761007987632e-07
+                                      - -1.7647429331191233e-06
+                                      - 0.11079034209251404
+                                      - -1.7160515142222721e-07
                                     localRotation:
-                                      - -28.358858056579543
-                                      - 0.078328372088243614
-                                      - -0.041913294662474641
+                                      - -28.35885805646662
+                                      - 0.078328245338632349
+                                      - -0.041913197281015863
                                     localScale:
-                                      - 1.0000002384185791
+                                      - 1.0000001192092896
                                       - 1.0000001192092896
                                       - 0.99999964237213135
                                 Children:
@@ -385,22 +403,23 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0.11149842292070389
+                                          - 0.11149919778108597
                                           - 0.25231030583381653
-                                          - 0.25097459554672241
+                                          - 0.25097456574440002
                                         localRotation:
                                           - 163.84641690010704
                                           - 7.847020792228478
                                           - -169.70979297500449
                                         localScale:
-                                          - 1.0000001192092896
-                                          - 1.0000001192092896
                                           - 1.0000002384185791
+                                          - 1.0000001192092896
+                                          - 1.0000003576278687
                                     Children:
                                       - name: c_eyebrow_03.l
                                         prefabPath: ""
@@ -408,21 +427,22 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0.00040855800034478307
-                                              - -0.041006270796060562
-                                              - 0.033513527363538742
+                                              - 0.00040612849988974631
+                                              - -0.041006818413734436
+                                              - 0.033513803035020828
                                             localRotation:
-                                              - 59.599584497669333
-                                              - -87.196784262610237
-                                              - -44.390648764094671
+                                              - 59.599610991429572
+                                              - -87.196855639646756
+                                              - -44.390686671591681
                                             localScale:
-                                              - 1.0000002384185791
                                               - 1.0000001192092896
+                                              - 1
                                               - 1.0000001192092896
                                         Children: ~
                                       - name: c_eyebrow_02.l
@@ -431,18 +451,19 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - -0.0015734353801235557
-                                              - -0.035325329750776291
-                                              - 0.013326574116945267
+                                              - -0.0015752949984744191
+                                              - -0.035325765609741211
+                                              - 0.013326838612556458
                                             localRotation:
-                                              - -86.226728964286139
-                                              - -86.540590346935602
-                                              - 89.151877045839399
+                                              - -86.22672413398557
+                                              - -86.54059443091343
+                                              - 89.151881876139939
                                             localScale:
                                               - 1
                                               - 1
@@ -454,20 +475,21 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0.00088060565758496523
-                                              - -0.038136929273605347
-                                              - -0.01140181627124548
+                                              - 0.00087967398576438427
+                                              - -0.038137156516313553
+                                              - -0.011401714757084846
                                             localRotation:
-                                              - -99.083909086330124
-                                              - -82.348241835759836
-                                              - 86.968678511495781
+                                              - -99.083913651745092
+                                              - -82.348248772982274
+                                              - 86.968675856761919
                                             localScale:
-                                              - 1
+                                              - 0.99999994039535522
                                               - 1
                                               - 1.0000001192092896
                                         Children: ~
@@ -477,14 +499,15 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0.011413127183914185
-                                              - -0.047117907553911209
-                                              - -0.038730252534151077
+                                              - 0.011411268264055252
+                                              - -0.047118388116359711
+                                              - -0.038730069994926453
                                             localRotation:
                                               - -90.243427376522959
                                               - -85.644005275315308
@@ -492,7 +515,7 @@ Children:
                                             localScale:
                                               - 1.0000001192092896
                                               - 1.0000002384185791
-                                              - 1.0000002384185791
+                                              - 1.0000001192092896
                                         Children: ~
                                   - name: c_eyebrow_full.r
                                     prefabPath: ""
@@ -500,21 +523,22 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - -0.10685286670923233
-                                          - 0.25865855813026428
+                                          - -0.10685133188962936
+                                          - 0.25865858793258667
                                           - 0.25613519549369812
                                         localRotation:
-                                          - 159.79771325217786
-                                          - -7.6007651625199015
-                                          - 170.28598686441237
+                                          - 159.79771319051389
+                                          - -7.6007643202802191
+                                          - 170.28598671897714
                                         localScale:
                                           - 1.0000003576278687
-                                          - 1.0000004768371582
+                                          - 1.0000003576278687
                                           - 1.0000004768371582
                                     Children:
                                       - name: c_eyebrow_03.r
@@ -523,20 +547,21 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0.00072679389268159866
-                                              - -0.04430161789059639
-                                              - 0.036526594310998917
+                                              - 0.00072509294841438532
+                                              - -0.044301293790340424
+                                              - 0.036526549607515335
                                             localRotation:
-                                              - 1.3798784254474024
-                                              - 89.985008107749152
-                                              - 1.3799314009461834
+                                              - 1.9761914381995194
+                                              - 90
+                                              - 1.9762460738666281
                                             localScale:
-                                              - 1
+                                              - 0.99999994039535522
                                               - 1.0000001192092896
                                               - 1
                                         Children: ~
@@ -546,22 +571,23 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - -0.00034153723390772939
-                                              - -0.04430161789059639
-                                              - 0.011863649822771549
+                                              - -0.00034133443841710687
+                                              - -0.044301580637693405
+                                              - 0.011863714084029198
                                             localRotation:
-                                              - 0.21522469597430907
+                                              - 0.25325292035229219
                                               - 90
-                                              - 0.21494049990625511
+                                              - 0.25296955438426882
                                             localScale:
+                                              - 1
                                               - 1.0000001192092896
-                                              - 1
-                                              - 1
+                                              - 0.99999994039535522
                                         Children: ~
                                       - name: c_eyebrow_01.r
                                         prefabPath: ""
@@ -569,22 +595,23 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - -0.0014051260659471154
-                                              - -0.044301696121692657
-                                              - -0.01274453941732645
+                                              - -0.0014057016232982278
+                                              - -0.044301647692918777
+                                              - -0.012744605541229248
                                             localRotation:
-                                              - 0.099749901686543949
-                                              - 90
-                                              - 0.099355057072890732
+                                              - 0.101566063249068
+                                              - 89.963494662233686
+                                              - 0.10117219016358034
                                             localScale:
                                               - 0.99999988079071045
-                                              - 1.0000001192092896
-                                              - 1
+                                              - 1.0000002384185791
+                                              - 0.99999988079071045
                                         Children: ~
                                       - name: c_eyebrow_01_end.r
                                         prefabPath: ""
@@ -592,20 +619,21 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - -0.0024887514300644398
-                                              - -0.04430176317691803
+                                              - -0.0024900904390960932
+                                              - -0.044301584362983704
                                               - -0.037798777222633362
                                             localRotation:
-                                              - 0.10450972259249457
-                                              - 89.984991528959895
-                                              - 0.10465980091263193
+                                              - 0.072218932808247385
+                                              - 90
+                                              - 0.072369584167707793
                                             localScale:
-                                              - 1.0000002384185791
+                                              - 1.0000001192092896
                                               - 1.0000001192092896
                                               - 0.99999994039535522
                                         Children: ~
@@ -615,20 +643,21 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - -1.5466704326172476e-06
-                                          - 0.094657815992832184
-                                          - 0.0377812460064888
+                                          - -9.6952476269507315e-07
+                                          - 0.094657883048057556
+                                          - 0.037781201303005219
                                         localRotation:
-                                          - 108.12365887544476
-                                          - 0.82368655032060001
-                                          - 0.3270849008331303
+                                          - 108.12365887534295
+                                          - 0.82368659352679019
+                                          - 0.32708486951360011
                                         localScale:
-                                          - 0.99999994039535522
+                                          - 1
                                           - 1.0000001192092896
                                           - 0.99999982118606567
                                     Children:
@@ -638,18 +667,19 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 0.080269485712051392
-                                              - 0.21143363416194916
-                                              - 0.0062247500754892826
+                                              - 0.080271415412425995
+                                              - 0.21143367886543274
+                                              - 0.0062248534522950649
                                             localRotation:
-                                              - -89.999839175187674
-                                              - 25.205323910915546
-                                              - 90.0001636847974
+                                              - -89.999837745188756
+                                              - 25.205325340908214
+                                              - 90.000162254811244
                                             localScale:
                                               - 1
                                               - 0.99999988079071045
@@ -661,22 +691,23 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - -0.080267451703548431
-                                              - 0.21143350005149841
-                                              - 0.0062250248156487942
+                                              - -0.080265522003173828
+                                              - 0.21143351495265961
+                                              - 0.0062250723131000996
                                             localRotation:
                                               - -90.00004610425438
                                               - -25.205320834037611
                                               - -90.000091175035294
                                             localScale:
-                                              - 1.0000001192092896
-                                              - 0.99999964237213135
-                                              - 0.9999997615814209
+                                              - 1
+                                              - 0.99999970197677612
+                                              - 0.99999982118606567
                                         Children: ~
                                       - name: c_lips_bot.x
                                         prefabPath: ""
@@ -684,14 +715,15 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 3.6778442336071748e-07
-                                              - 0.32400599122047424
-                                              - -0.027743477374315262
+                                              - 3.6787966450901877e-07
+                                              - 0.32400602102279663
+                                              - -0.027743451297283173
                                             localRotation:
                                               - -89.99985664342222
                                               - 25.204393289002791
@@ -707,18 +739,19 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - -0.00049753970233723521
-                                              - -0.027589738368988037
-                                              - 0.083491750061511993
+                                              - -0.00049465044867247343
+                                              - -0.027589680626988411
+                                              - 0.083491869270801544
                                             localRotation:
-                                              - -138.81510846220817
-                                              - -0.099471085233283449
-                                              - 179.84707707663193
+                                              - -138.81510846228198
+                                              - -0.099471025897874321
+                                              - 179.84707707042429
                                             localScale:
                                               - 0.76172029972076416
                                               - 0.76172047853469849
@@ -730,22 +763,23 @@ Children:
                                             tag: Untagged
                                             active: true
                                             isStatic: false
+                                            useManualBoundingBox: false
                                             Components:
                                               Transform_Component:
                                                 name: Transform_Component
                                                 enabled: true
                                                 localPosition:
-                                                  - -8.8526212493889034e-07
-                                                  - 0.1152976006269455
-                                                  - 1.3793118647242864e-08
+                                                  - 1.260996640439771e-07
+                                                  - 0.11529760807752609
+                                                  - 8.4422403290318471e-08
                                                 localRotation:
-                                                  - -18.575009816437539
-                                                  - -0.11694268816024991
-                                                  - -0.065369622622715853
+                                                  - -18.575011501503802
+                                                  - -0.11694267921936358
+                                                  - -0.065369723791848564
                                                 localScale:
-                                                  - 0.9999997615814209
-                                                  - 1
+                                                  - 0.99999964237213135
                                                   - 0.99999994039535522
+                                                  - 1
                                             Children:
                                               - name: tong_03.x
                                                 prefabPath: ""
@@ -753,18 +787,19 @@ Children:
                                                 tag: Untagged
                                                 active: true
                                                 isStatic: false
+                                                useManualBoundingBox: false
                                                 Components:
                                                   Transform_Component:
                                                     name: Transform_Component
                                                     enabled: true
                                                     localPosition:
-                                                      - -0.012752676382660866
-                                                      - 0.24791644513607025
-                                                      - 0.0088283568620681763
+                                                      - -0.01274812500923872
+                                                      - 0.24791654944419861
+                                                      - 0.0088283838704228401
                                                     localRotation:
-                                                      - -21.814711630295299
-                                                      - -5.2868703533500998
-                                                      - -3.117609576839095
+                                                      - -21.814709926827344
+                                                      - -5.2868703741661509
+                                                      - -3.1176100837520577
                                                     localScale:
                                                       - 0.99999988079071045
                                                       - 1.0000002384185791
@@ -776,22 +811,23 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0.00039243677747435868
-                                          - 0.15781491994857788
-                                          - 0.34548571705818176
+                                          - 0.00039262775680981576
+                                          - 0.15781489014625549
+                                          - 0.34548565745353699
                                         localRotation:
-                                          - -0.1807703108550188
-                                          - -89.985002385036381
-                                          - 0.18077036745374023
+                                          - -0.0059180457878306916
+                                          - -89.985002385109297
+                                          - 0.0059181466025415149
                                         localScale:
-                                          - 0.99999994039535522
                                           - 1
-                                          - 0.99999982118606567
+                                          - 1
+                                          - 0.99999988079071045
                                     Children: ~
                                   - name: c_lips_top.l
                                     prefabPath: ""
@@ -799,18 +835,19 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0.09161849319934845
-                                          - 0.12279988825321198
+                                          - 0.091618500649929047
+                                          - 0.12279990315437317
                                           - 0.2266194075345993
                                         localRotation:
-                                          - 1.3019528235402442
+                                          - 0.44761420858794743
                                           - -90
-                                          - -1.3019525216175063
+                                          - -0.44761413313315873
                                         localScale:
                                           - 1.0000002384185791
                                           - 1
@@ -822,21 +859,22 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - -0.090663686394691467
-                                          - 0.11536464840173721
-                                          - 0.22835718095302582
+                                          - -0.090662345290184021
+                                          - 0.11536455899477005
+                                          - 0.22835712134838104
                                         localRotation:
-                                          - 0.18884031563959341
-                                          - 90
-                                          - 0.18884045713404901
+                                          - 0.89517363471922673
+                                          - 89.985008858071808
+                                          - 0.89517378570292194
                                         localScale:
                                           - 1
-                                          - 1
+                                          - 0.99999994039535522
                                           - 1
                                     Children: ~
                                   - name: c_lips_smile.l
@@ -845,20 +883,21 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - 0.10551100969314575
-                                          - 0.082733713090419769
-                                          - 0.077473126351833344
+                                          - 0.10551024973392487
+                                          - 0.082733854651451111
+                                          - 0.077473118901252747
                                         localRotation:
-                                          - 0.11699233915904032
+                                          - 2.4401052897797109
                                           - -90
-                                          - -0.11699223068051014
+                                          - -2.4401051388524437
                                         localScale:
-                                          - 1.0000001192092896
+                                          - 1
                                           - 1.0000001192092896
                                           - 1
                                     Children:
@@ -868,21 +907,22 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - 1.3614736360523239e-07
-                                              - 0.0023590931668877602
-                                              - 0.00041084931581281126
+                                              - 1.3724404368531395e-07
+                                              - 0.0023590095806866884
+                                              - 0.00041007861727848649
                                             localRotation:
-                                              - -1.3929273294881098e-08
-                                              - -1.3036887294376113e-06
-                                              - -0.0010534787225736091
+                                              - -2.269432787638329e-08
+                                              - -1.3226061383818546e-06
+                                              - -0.0010523877432609804
                                             localScale:
                                               - 1.0000001192092896
-                                              - 1
+                                              - 0.99999994039535522
                                               - 1
                                         Children: ~
                                   - name: c_lips_smile.r
@@ -891,18 +931,19 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - -0.10551257431507111
-                                          - 0.082733765244483948
-                                          - 0.077473357319831848
+                                          - -0.10550988465547562
+                                          - 0.082733720541000366
+                                          - 0.077473290264606476
                                         localRotation:
-                                          - 0.51755027166277945
-                                          - 89.985008858096108
-                                          - 0.51755040373351557
+                                          - 0.44761413312520215
+                                          - 89.963508715436234
+                                          - 0.44761420859590401
                                         localScale:
                                           - 0.99999994039535522
                                           - 1.0000001192092896
@@ -914,21 +955,22 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
                                             enabled: true
                                             localPosition:
-                                              - -1.11646933476095e-07
-                                              - 0.0023588545154780149
-                                              - 0.00041130583849735558
+                                              - -6.8072026238041872e-08
+                                              - 0.002359011908993125
+                                              - 0.00041246146429330111
                                             localRotation:
-                                              - 1.4440245939144921e-08
-                                              - 1.4266215382758189e-06
-                                              - 0.0010509970260330749
+                                              - 7.9695216582385271e-09
+                                              - 1.4181721105573785e-06
+                                              - 0.0010517749272164756
                                             localScale:
                                               - 1
-                                              - 1
+                                              - 0.99999994039535522
                                               - 1
                                         Children: ~
                       - name: shoulder.l
@@ -937,14 +979,15 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 0.049841232597827911
-                              - 0.032837223261594772
-                              - -0.058782860636711121
+                              - 0.049844317138195038
+                              - 0.032837085425853729
+                              - -0.058782830834388733
                             localRotation:
                               - -163.01138406274407
                               - -18.6122248983615
@@ -960,22 +1003,23 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - -1.2817787364838296e-07
-                                  - 0.16584932804107666
-                                  - -2.8370041604830476e-07
+                                  - -1.2971662499694503e-07
+                                  - 0.16584677994251251
+                                  - 5.5763666750863194e-07
                                 localRotation:
-                                  - -84.361344949301056
-                                  - -23.78276434033754
-                                  - -12.586322862014525
+                                  - -84.361335867239035
+                                  - -23.782764280931069
+                                  - -12.586322355226731
                                 localScale:
-                                  - 0.9999997615814209
-                                  - 0.99999994039535522
                                   - 0.99999982118606567
+                                  - 0.99999994039535522
+                                  - 0.99999988079071045
                             Children:
                               - name: forearm_stretch.l
                                 prefabPath: ""
@@ -983,21 +1027,22 @@ Children:
                                 tag: Untagged
                                 active: true
                                 isStatic: false
+                                useManualBoundingBox: false
                                 Components:
                                   Transform_Component:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - 1.0409173967218521e-07
-                                      - 0.55363130569458008
-                                      - 1.7480255110058351e-07
+                                      - 2.0680660384186922e-07
+                                      - 0.5536312460899353
+                                      - -1.8959079284286418e-07
                                     localRotation:
-                                      - -6.8247910388493396e-06
-                                      - 6.662435053711101e-06
-                                      - -116.21820698013396
+                                      - -9.19563038551302e-06
+                                      - 7.5399548649122117e-06
+                                      - -116.21822218696785
                                     localScale:
                                       - 0.99999994039535522
-                                      - 1.0000001192092896
+                                      - 1
                                       - 1.0000002384185791
                                 Children:
                                   - name: hand.l
@@ -1006,18 +1051,19 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - -7.9656047091702931e-08
-                                          - 0.30724161863327026
-                                          - 3.2844539532561612e-07
+                                          - -1.4059392583476438e-07
+                                          - 0.30724155902862549
+                                          - 5.1157957159375655e-07
                                         localRotation:
-                                          - -3.4858699024302258
-                                          - 0.21940326933428483
-                                          - 108.96700568762562
+                                          - -3.4858704484990342
+                                          - 0.2194018311128153
+                                          - 108.96700573034502
                                         localScale:
                                           - 1.0000001192092896
                                           - 1.0000001192092896
@@ -1029,21 +1075,22 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - -0.049841441214084625
-                              - 0.032837145030498505
-                              - -0.058782912790775299
+                              - -0.049839906394481659
+                              - 0.03283701092004776
+                              - -0.058782964944839478
                             localRotation:
-                              - -163.01138406274407
-                              - 18.6122248983615
-                              - -87.996245602391042
+                              - -163.01138476238361
+                              - 18.612223028270176
+                              - -87.996245986508285
                             localScale:
                               - 1.0000002384185791
-                              - 1.0000003576278687
+                              - 1.0000004768371582
                               - 1.0000001192092896
                         Children:
                           - name: arm_stretch.r
@@ -1052,21 +1099,22 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 6.2163024949768442e-08
-                                  - 0.16584835946559906
-                                  - 8.0631089360849728e-08
+                                  - 5.3014783674143473e-09
+                                  - 0.16584761440753937
+                                  - 3.0519831284436805e-07
                                 localRotation:
-                                  - -84.21796602784633
-                                  - 31.349039073293365
-                                  - 13.565591193402875
+                                  - -84.217944850366777
+                                  - 31.349032432014841
+                                  - 13.565594405936125
                                 localScale:
-                                  - 0.99999964237213135
-                                  - 0.99999988079071045
+                                  - 0.99999958276748657
+                                  - 0.99999994039535522
                                   - 0.99999964237213135
                             Children:
                               - name: forearm_stretch.r
@@ -1075,20 +1123,21 @@ Children:
                                 tag: Untagged
                                 active: true
                                 isStatic: false
+                                useManualBoundingBox: false
                                 Components:
                                   Transform_Component:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - -3.2516219050648942e-08
-                                      - 0.55363088846206665
-                                      - -2.8348569003355806e-07
+                                      - 7.338052796512784e-07
+                                      - 0.5536314845085144
+                                      - 1.8422657603878179e-06
                                     localRotation:
-                                      - 1.4724338126050301e-05
-                                      - 7.1741036398762579e-06
-                                      - 112.99644419089726
+                                      - 1.4113348146128515e-05
+                                      - 6.6305986745063975e-06
+                                      - 112.99644419089717
                                     localScale:
-                                      - 1
+                                      - 0.99999994039535522
                                       - 0.99999964237213135
                                       - 1.0000002384185791
                                 Children:
@@ -1098,18 +1147,19 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
                                         enabled: true
                                         localPosition:
-                                          - -7.4513248904395368e-09
-                                          - 0.30724170804023743
-                                          - -9.0371941041667014e-09
+                                          - -4.0105145870938941e-08
+                                          - 0.30724194645881653
+                                          - -3.2141019801201764e-07
                                         localRotation:
-                                          - -4.850018621996032
-                                          - 4.4533821949438632
-                                          - -112.23363300856035
+                                          - -4.8500183306086688
+                                          - 4.4533832950038068
+                                          - -112.23362355304987
                                         localScale:
                                           - 1.0000005960464478
                                           - 1.0000003576278687
@@ -1121,20 +1171,21 @@ Children:
                     tag: Untagged
                     active: true
                     isStatic: false
+                    useManualBoundingBox: false
                     Components:
                       Transform_Component:
                         name: Transform_Component
                         enabled: true
                         localPosition:
-                          - 0.049171820282936096
-                          - 0.018627235665917397
-                          - -0.08290565013885498
+                          - 0.049170088022947311
+                          - 0.018627185374498367
+                          - -0.082905583083629608
                         localRotation:
-                          - 164.62097417553528
-                          - -15.339930697587642
-                          - 85.577781913200965
+                          - 164.6209754302466
+                          - -15.339931855688945
+                          - 85.577781900833031
                         localScale:
-                          - 0.99999994039535522
+                          - 1
                           - 1
                           - 1.0000001192092896
                     Children:
@@ -1144,22 +1195,23 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 1.2627508816365207e-08
-                              - 0.12816879153251648
-                              - 1.8672399448860233e-07
+                              - 1.2703974050509714e-07
+                              - 0.12817154824733734
+                              - 1.0230060070171021e-06
                             localRotation:
-                              - -50.6747532591097
-                              - 5.6597025849736822
-                              - -21.540307502770471
+                              - -50.674749904249381
+                              - 5.6597015642039148
+                              - -21.540306891633271
                             localScale:
                               - 1
-                              - 0.9999995231628418
-                              - 1.0000001192092896
+                              - 0.99999958276748657
+                              - 1
                         Children:
                           - name: forearm_stretch_dupli_001.l
                             prefabPath: ""
@@ -1167,22 +1219,23 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 2.4247879082395229e-07
-                                  - 0.22907166182994843
-                                  - -2.8947252417310665e-07
+                                  - 7.0414023412013194e-07
+                                  - 0.22907096147537231
+                                  - -1.593488718754088e-06
                                 localRotation:
-                                  - 1.7233982559183564e-05
-                                  - 2.2585730093091799e-05
-                                  - -71.94208542042773
+                                  - 1.7594820848726791e-05
+                                  - 2.2879506152896386e-05
+                                  - -71.942085420427603
                                 localScale:
                                   - 1.0000004768371582
-                                  - 1.0000001192092896
-                                  - 0.99999994039535522
+                                  - 1
+                                  - 1
                             Children:
                               - name: hand_dupli_001.l
                                 prefabPath: ""
@@ -1190,14 +1243,15 @@ Children:
                                 tag: Untagged
                                 active: true
                                 isStatic: false
+                                useManualBoundingBox: false
                                 Components:
                                   Transform_Component:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - 2.6639489192348265e-07
-                                      - 0.20310348272323608
-                                      - -2.6586516810311878e-07
+                                      - 7.9968032196120475e-08
+                                      - 0.20310355722904205
+                                      - 9.1025562198865373e-08
                                     localRotation:
                                       - -23.350904731996653
                                       - -12.772775051647383
@@ -1213,21 +1267,22 @@ Children:
                     tag: Untagged
                     active: true
                     isStatic: false
+                    useManualBoundingBox: false
                     Components:
                       Transform_Component:
                         name: Transform_Component
                         enabled: true
                         localPosition:
-                          - -0.049171779304742813
-                          - 0.01862725242972374
-                          - -0.082905814051628113
+                          - -0.04917004331946373
+                          - 0.018627207726240158
+                          - -0.082905784249305725
                         localRotation:
                           - 164.62112318670336
                           - 15.33991454805242
                           - -85.57773095151687
                         localScale:
-                          - 0.99999982118606567
                           - 0.99999988079071045
+                          - 0.99999982118606567
                           - 1.0000001192092896
                     Children:
                       - name: arm_stretch_dupli_001.r
@@ -1236,21 +1291,22 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 1.0795605476232595e-07
-                              - 0.12816748023033142
-                              - -2.7205118158235564e-07
+                              - 9.2430369136309309e-08
+                              - 0.12816783785820007
+                              - -1.1657413523380455e-07
                             localRotation:
-                              - -53.166005435192609
-                              - -30.70600140778123
-                              - 9.7492948983848731
+                              - -53.166008812774493
+                              - -30.70599964932299
+                              - 9.7492955750899082
                             localScale:
                               - 0.99999982118606567
-                              - 0.99999856948852539
+                              - 0.99999862909317017
                               - 1
                         Children:
                           - name: forearm_stretch_dupli_001.r
@@ -1259,18 +1315,19 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 5.9704440502628131e-08
-                                  - 0.22907218337059021
-                                  - 2.7352868414709519e-07
+                                  - 2.4921840235947457e-07
+                                  - 0.22907270491123199
+                                  - 1.2955107422385481e-06
                                 localRotation:
-                                  - 2.2680176173425017e-05
-                                  - -1.2750262886548862e-05
-                                  - 95.691965754603373
+                                  - 2.2284036703635901e-05
+                                  - -1.4816068459048321e-05
+                                  - 95.691965754603004
                                 localScale:
                                   - 1.0000015497207642
                                   - 1
@@ -1282,22 +1339,23 @@ Children:
                                 tag: Untagged
                                 active: true
                                 isStatic: false
+                                useManualBoundingBox: false
                                 Components:
                                   Transform_Component:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - 3.499113176985702e-08
-                                      - 0.20310355722904205
-                                      - 2.8495003334683133e-07
+                                      - -3.2082053280646505e-07
+                                      - 0.20310363173484802
+                                      - -4.0471184092893964e-07
                                     localRotation:
-                                      - -14.145616659635134
-                                      - 21.593194030981728
-                                      - -77.933420697594556
+                                      - -14.145620441358393
+                                      - 21.593190243627554
+                                      - -77.933430030307434
                                     localScale:
+                                      - 1
                                       - 1.0000001192092896
-                                      - 1.0000001192092896
-                                      - 1.0000001192092896
+                                      - 1
                                 Children: ~
           - name: c_tail_00.x
             prefabPath: ""
@@ -1305,21 +1363,22 @@ Children:
             tag: Untagged
             active: true
             isStatic: false
+            useManualBoundingBox: false
             Components:
               Transform_Component:
                 name: Transform_Component
                 enabled: true
                 localPosition:
-                  - 1.3997095038575935e-06
-                  - -0.0062116710469126701
-                  - 7.5089395977556705e-05
+                  - -1.1008595492967288e-06
+                  - -0.0062114926986396313
+                  - 7.514210301451385e-05
                 localRotation:
-                  - -175.86022722143011
-                  - -0.40119980474325595
-                  - 8.2018749412203729
+                  - -175.86021353601959
+                  - -0.40119982533198734
+                  - 8.2018748926242644
                 localScale:
-                  - 0.99999982118606567
-                  - 1.0000001192092896
+                  - 0.99999994039535522
+                  - 1.0000002384185791
                   - 1.0000002384185791
             Children:
               - name: c_tail_01.x
@@ -1328,21 +1387,22 @@ Children:
                 tag: Untagged
                 active: true
                 isStatic: false
+                useManualBoundingBox: false
                 Components:
                   Transform_Component:
                     name: Transform_Component
                     enabled: true
                     localPosition:
-                      - -9.6851874786807457e-07
-                      - 0.40412500500679016
-                      - -2.2558054979526787e-07
+                      - -9.6163239504676312e-07
+                      - 0.40412503480911255
+                      - -1.7509155725292658e-07
                     localRotation:
-                      - 1.2157475293145921
-                      - -0.024858358054860273
-                      - -8.2113745646145642
+                      - 1.2157468959304056
+                      - -0.024858474706234559
+                      - -8.21137541734522
                     localScale:
                       - 1.0000001192092896
-                      - 1
+                      - 0.99999994039535522
                       - 0.99999982118606567
                 Children:
                   - name: c_tail_02.x
@@ -1351,22 +1411,23 @@ Children:
                     tag: Untagged
                     active: true
                     isStatic: false
+                    useManualBoundingBox: false
                     Components:
                       Transform_Component:
                         name: Transform_Component
                         enabled: true
                         localPosition:
-                          - 1.4720269803092378e-07
-                          - 0.33925369381904602
-                          - 9.0299501209756272e-08
+                          - 1.9449873889243463e-06
+                          - 0.33925443887710571
+                          - 1.0180674081539109e-07
                         localRotation:
-                          - 0.67656606603476255
-                          - -0.10266282786563326
-                          - -8.2107720810638654
+                          - 0.67656575147196518
+                          - -0.10266291731344249
+                          - -8.2107720813101768
                         localScale:
-                          - 0.99999982118606567
-                          - 0.99999994039535522
                           - 0.9999997615814209
+                          - 0.99999994039535522
+                          - 0.99999982118606567
                     Children:
                       - name: c_tail_03.x
                         prefabPath: ""
@@ -1374,22 +1435,23 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 5.0326161726843566e-07
-                              - 0.22678923606872559
-                              - 1.7390833306762943e-07
+                              - -1.8120134654964204e-06
+                              - 0.22678828239440918
+                              - 2.0744820972140587e-07
                             localRotation:
-                              - -4.44327965212862
-                              - -0.83997498809567872
-                              - -8.1686242016829826
+                              - -4.4432783965263738
+                              - -0.8399747764696387
+                              - -8.1686225145099378
                             localScale:
                               - 0.9999997615814209
+                              - 0.99999982118606567
                               - 0.9999997615814209
-                              - 0.99999988079071045
                         Children:
                           - name: c_tail_04.x
                             prefabPath: ""
@@ -1397,22 +1459,23 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 3.0394392069865717e-07
-                                  - 0.25114554166793823
-                                  - -1.2171576635466863e-08
+                                  - 4.0212299268205243e-07
+                                  - 0.25114506483078003
+                                  - -1.3309399093941465e-07
                                 localRotation:
-                                  - 1.5508212514692232
-                                  - 0.023494401972619001
-                                  - -8.2113704720025655
+                                  - 1.5508209392704988
+                                  - 0.023494277497753797
+                                  - -8.2113713254119745
                                 localScale:
-                                  - 0.99999988079071045
                                   - 0.99999982118606567
-                                  - 0.9999997615814209
+                                  - 0.99999982118606567
+                                  - 0.99999982118606567
                             Children:
                               - name: c_tail_05.x
                                 prefabPath: ""
@@ -1420,22 +1483,23 @@ Children:
                                 tag: Untagged
                                 active: true
                                 isStatic: false
+                                useManualBoundingBox: false
                                 Components:
                                   Transform_Component:
                                     name: Transform_Component
                                     enabled: true
                                     localPosition:
-                                      - -1.1520891121108434e-06
-                                      - 0.23845331370830536
-                                      - -6.1380177385217394e-08
+                                      - 8.9047870233116555e-07
+                                      - 0.23845537006855011
+                                      - 2.4020707201088953e-08
                                     localRotation:
-                                      - 2.1580000335964971
-                                      - 0.11111000291463526
-                                      - -8.2106646820986739
+                                      - 2.1579995896069786
+                                      - 0.11111020409653202
+                                      - -8.2106663822108938
                                     localScale:
                                       - 0.99999994039535522
                                       - 0.99999994039535522
-                                      - 1
+                                      - 0.99999994039535522
                                 Children: ~
           - name: thigh_b_str.l
             prefabPath: ""
@@ -1443,21 +1507,22 @@ Children:
             tag: Untagged
             active: true
             isStatic: false
+            useManualBoundingBox: false
             Components:
               Transform_Component:
                 name: Transform_Component
                 enabled: true
                 localPosition:
-                  - 0.038181178271770477
-                  - 0.16527508199214935
-                  - 0.042036879807710648
+                  - 0.038181181997060776
+                  - 0.16527502238750458
+                  - 0.042036835104227066
                 localRotation:
                   - -157.36964652948421
                   - 43.386876145092941
                   - 130.10786604410401
                 localScale:
-                  - 1
                   - 1.0000001192092896
+                  - 1.0000002384185791
                   - 1.0000003576278687
             Children:
               - name: thigh_stretch.l
@@ -1466,18 +1531,19 @@ Children:
                 tag: Untagged
                 active: true
                 isStatic: false
+                useManualBoundingBox: false
                 Components:
                   Transform_Component:
                     name: Transform_Component
                     enabled: true
                     localPosition:
-                      - -2.9151030389584776e-07
-                      - 0.14963710308074951
-                      - 4.8767894611501106e-08
+                      - 6.8562928845494753e-07
+                      - 0.14963547885417938
+                      - -3.1017967216939724e-07
                     localRotation:
-                      - -68.237312708895971
-                      - 40.433850167639875
-                      - 14.516230498162857
+                      - -68.237313131246353
+                      - 40.433853515449414
+                      - 14.516228317663776
                     localScale:
                       - 0.99999970197677612
                       - 1.0000008344650269
@@ -1489,20 +1555,21 @@ Children:
                     tag: Untagged
                     active: true
                     isStatic: false
+                    useManualBoundingBox: false
                     Components:
                       Transform_Component:
                         name: Transform_Component
                         enabled: true
                         localPosition:
-                          - 1.8112565669525793e-07
-                          - 0.37440958619117737
-                          - -4.4874420268570248e-07
+                          - -1.2524638748345751e-07
+                          - 0.37441009283065796
+                          - 5.4667947324560373e-07
                         localRotation:
-                          - -13.765511982258165
-                          - 8.9131790792095824
-                          - 67.220739301280503
+                          - -13.765513882727914
+                          - 8.9131793316698467
+                          - 67.22073912501277
                         localScale:
-                          - 0.99999970197677612
+                          - 0.99999964237213135
                           - 1.0000003576278687
                           - 1.0000002384185791
                     Children:
@@ -1512,22 +1579,23 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - 1.8853614225378124e-09
-                              - 0.35727369785308838
-                              - 7.0864223289390793e-07
+                              - -5.1658639677043539e-07
+                              - 0.35727310180664062
+                              - -2.8659992494795006e-06
                             localRotation:
-                              - -145.09631553692353
-                              - 81.170706639759729
-                              - 143.99105498362215
+                              - -145.09632229262269
+                              - 81.170721351805796
+                              - 143.99106173932134
                             localScale:
                               - 0.99999988079071045
                               - 0.99999988079071045
-                              - 0.9999997615814209
+                              - 0.99999982118606567
                         Children:
                           - name: toes_01.l
                             prefabPath: ""
@@ -1535,21 +1603,22 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - 9.4544361672888044e-08
-                                  - 0.39389276504516602
-                                  - 4.926002006300223e-08
+                                  - -2.1329444734874414e-06
+                                  - 0.39389294385910034
+                                  - -5.5729901760059875e-07
                                 localRotation:
                                   - 136.74193198353785
                                   - 15.063751165337944
                                   - 154.27613186383329
                                 localScale:
-                                  - 1.0000002384185791
-                                  - 0.99999994039535522
+                                  - 1.0000001192092896
+                                  - 1
                                   - 1.0000001192092896
                             Children: ~
           - name: thigh_b_str.r
@@ -1558,20 +1627,21 @@ Children:
             tag: Untagged
             active: true
             isStatic: false
+            useManualBoundingBox: false
             Components:
               Transform_Component:
                 name: Transform_Component
                 enabled: true
                 localPosition:
-                  - -0.038185331970453262
-                  - 0.165274977684021
-                  - 0.042031154036521912
+                  - -0.038186877965927124
+                  - 0.16527511179447174
+                  - 0.042031075805425644
                 localRotation:
                   - -160.95747728840485
                   - -60.881740159871704
                   - -110.34020088720621
                 localScale:
-                  - 0.99999982118606567
+                  - 0.99999988079071045
                   - 0.99999964237213135
                   - 1.0000001192092896
             Children:
@@ -1581,22 +1651,23 @@ Children:
                 tag: Untagged
                 active: true
                 isStatic: false
+                useManualBoundingBox: false
                 Components:
                   Transform_Component:
                     name: Transform_Component
                     enabled: true
                     localPosition:
-                      - 3.9829895825960193e-08
-                      - 0.14963732659816742
-                      - 7.2088761626787345e-09
+                      - 1.1066894956002216e-08
+                      - 0.14963676035404205
+                      - 5.1521872990178963e-08
                     localRotation:
-                      - -71.180839800940475
-                      - -28.973458520850098
-                      - -9.3741446400511936
+                      - -71.18083766605946
+                      - -28.973459807677486
+                      - -9.3741453793255953
                     localScale:
                       - 0.99999988079071045
                       - 1.0000069141387939
-                      - 1
+                      - 1.0000001192092896
                 Children:
                   - name: leg_stretch.r
                     prefabPath: ""
@@ -1604,20 +1675,21 @@ Children:
                     tag: Untagged
                     active: true
                     isStatic: false
+                    useManualBoundingBox: false
                     Components:
                       Transform_Component:
                         name: Transform_Component
                         enabled: true
                         localPosition:
-                          - 2.4861540737219912e-07
-                          - 0.37441012263298035
-                          - 3.872923457493016e-07
+                          - 3.0977895448813797e-07
+                          - 0.37441003322601318
+                          - 2.2114015507668228e-08
                         localRotation:
-                          - 1.5263881663999084
-                          - 2.4386520632473112
-                          - -90.611347137799697
+                          - 1.5263885595747935
+                          - 2.4386489695789808
+                          - -90.611347170624882
                         localScale:
-                          - 0.99999338388442993
+                          - 0.99999344348907471
                           - 1.0000004768371582
                           - 0.99999982118606567
                     Children:
@@ -1627,14 +1699,15 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
                             enabled: true
                             localPosition:
-                              - -2.4067867343546823e-07
-                              - 0.35727348923683167
-                              - 6.5574766949794139e-07
+                              - -9.4834439323676634e-07
+                              - 0.35727337002754211
+                              - 2.2360150069289375e-06
                             localRotation:
                               - -123.55687180089977
                               - -69.012622902935902
@@ -1650,14 +1723,15 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
                                 enabled: true
                                 localPosition:
-                                  - -1.2342619584160275e-06
-                                  - 0.39389258623123169
-                                  - -7.1351308861267171e-08
+                                  - 6.7949872573080938e-07
+                                  - 0.39389270544052124
+                                  - -1.4309277318602653e-08
                                 localRotation:
                                   - 121.9361876336333
                                   - -4.8584518047840168
@@ -1667,3 +1741,46 @@ Children:
                                   - 1.0000003576278687
                                   - 1.0000001192092896
                             Children: ~
+  - name: sombraRipoll
+    prefabPath: ""
+    uuid: 15057352638708126275
+    tag: Untagged
+    active: true
+    isStatic: false
+    useManualBoundingBox: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0.32610682185773854
+          - 0
+          - 0.015000237756312984
+        localRotation:
+          - -90.000009334667297
+          - 0
+          - 0
+        localScale:
+          - 0.52444449463008491
+          - 0.52444449463009191
+          - 0.52444449463009191
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 2086049413150786760
+        material:
+          name: shadow
+          color:
+            - 1
+            - 1
+            - 1
+            - 0.721568644
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~

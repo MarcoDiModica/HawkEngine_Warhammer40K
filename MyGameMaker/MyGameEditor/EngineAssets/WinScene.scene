@@ -2,10 +2,12 @@ SceneMetadata:
   SceneName: WinScene
 GameObject0:
   name: MainCamera
-  uuid: 7927253676980226603
+  prefabPath: ""
+  uuid: 2020641940501927770
   tag: Untagged
   active: true
   isStatic: false
+  useManualBoundingBox: false
   Components:
     Transform_Component:
       name: Transform_Component
@@ -31,17 +33,23 @@ GameObject0:
       near_plane: 0.10000000000000001
       far_plane: 500
       priority: 1
-    AudioListener: ~
     ScriptComponents:
       Script0:
         name: PlayerCamera
+        fields:
+          smoothness: 19
+          maxOffsetDistance: 3.5999999
+          offsetSmoothness: 5
+          returnDelay: 0.200000003
   Children: ~
 GameObject1:
   name: Canvas_win_screen
-  uuid: 11865478482851031812
+  prefabPath: Assets\Prefabs\Canvas_win_screen.prefab.yaml
+  uuid: 8351203443256412590
   tag: Untagged
   active: true
   isStatic: false
+  useManualBoundingBox: false
   Components:
     Transform_Component:
       name: Transform_Component
@@ -58,15 +66,6 @@ GameObject1:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -92,12 +91,15 @@ GameObject1:
     ScriptComponents:
       Script0:
         name: WinScreen
+        fields: ~
   Children:
     - name: win_screen
-      uuid: 8349355552188450256
+      prefabPath: ""
+      uuid: 580163217924526292
       tag: Untagged
       active: true
       isStatic: false
+      useManualBoundingBox: false
       Components:
         Transform_Component:
           name: Transform_Component
@@ -137,12 +139,32 @@ GameObject1:
           name: UIImageComponent
           enabled: true
           texture_path: Library/Textures/UI/WIN_screen.png
+          use_animation: false
+          sprite_size:
+            - 1920
+            - 1080
+          sheet_size:
+            - 1920
+            - 1080
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
       Children: ~
     - name: Menu_Button
-      uuid: 10015700247078082326
+      prefabPath: ""
+      uuid: 16942033288024270079
       tag: Untagged
       active: true
       isStatic: false
+      useManualBoundingBox: false
       Components:
         Transform_Component:
           name: Transform_Component
@@ -163,8 +185,8 @@ GameObject1:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.38499999
-            - 0.861000001
+            - 0.377999991
+            - 0.894999981
             - 0
           rotation:
             - 0
@@ -172,7 +194,7 @@ GameObject1:
             - 0
           scale:
             - 0.184
-            - 0.064000003
+            - 0.180999994
             - 1
           pivot_offset:
             - 0.5
@@ -181,17 +203,37 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/WinMenu.png
+          texture_path: Library\Textures\UI\menu_continue.png
+          use_animation: false
+          sprite_size:
+            - 1920
+            - 1080
+          sheet_size:
+            - 1920
+            - 1080
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 0.968901932
+            - 1
+            - 0.385214031
+            - 1
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
           state: 1
       Children: ~
     - name: Quit_Button
-      uuid: 16016774379067841439
+      prefabPath: ""
+      uuid: 1152489699870358097
       tag: Untagged
       active: true
       isStatic: false
+      useManualBoundingBox: false
       Components:
         Transform_Component:
           name: Transform_Component
@@ -212,8 +254,8 @@ GameObject1:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.578999996
-            - 0.861000001
+            - 0.620999992
+            - 0.893999994
             - 0
           rotation:
             - 0
@@ -221,7 +263,7 @@ GameObject1:
             - 0
           scale:
             - 0.184
-            - 0.064000003
+            - 0.180999994
             - 1
           pivot_offset:
             - 0.5
@@ -230,9 +272,161 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/WinQuit.png
+          texture_path: Library\Textures\UI\menu_exit.png
+          use_animation: false
+          sprite_size:
+            - 1920
+            - 1080
+          sheet_size:
+            - 1920
+            - 1080
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+          anim_index: 0
+          anim_index_limit: 0
+          color:
+            - 0.968627453
+            - 1
+            - 0.384313732
+            - 1
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
           state: 1
+      Children: ~
+    - name: Victory
+      prefabPath: ""
+      uuid: 13682902190613443939
+      tag: Untagged
+      active: true
+      isStatic: false
+      useManualBoundingBox: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.499000013
+            - 0.792999983
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        TextComponent:
+          name: TextComponent
+          enabled: true
+          text: VICTORY
+          position:
+            - 0
+            - 0
+          color:
+            - 0
+            - 0
+            - 0
+          fontSize: 57.2999992
+          boxSize:
+            - 372.449982
+            - 63.0299988
+          spriteSize:
+            - 0
+            - 0
+          sheetSize:
+            - 0
+            - 0
+          spriteOffset:
+            - 0
+            - 0
+      Children: ~
+    - name: Victory_copy
+      prefabPath: ""
+      uuid: 11182663021226019216
+      tag: Untagged
+      active: true
+      isStatic: false
+      useManualBoundingBox: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.5
+            - 0.800000012
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        TextComponent:
+          name: TextComponent
+          enabled: true
+          text: VICTORY
+          position:
+            - 0
+            - 0
+          color:
+            - 0.778210104
+            - 0.635891497
+            - 0
+          fontSize: 54.7000008
+          boxSize:
+            - 355.550049
+            - 60.170002
+          spriteSize:
+            - 0
+            - 0
+          sheetSize:
+            - 0
+            - 0
+          spriteOffset:
+            - 0
+            - 0
       Children: ~

@@ -1,9 +1,10 @@
-name: Canvas_OptionsMenu_1_Instance
+name: Canvas_OptionsMenu
 prefabPath: Assets\Prefabs\Canvas_OptionsMenu.prefab.yaml
-uuid: 5294828603316348298
+uuid: 16036347093729760973
 tag: Untagged
 active: true
 isStatic: false
+useManualBoundingBox: false
 Components:
   Transform_Component:
     name: Transform_Component
@@ -54,6 +55,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -118,6 +120,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -182,6 +185,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -246,6 +250,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -310,6 +315,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -374,6 +380,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -442,6 +449,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -510,6 +518,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -574,6 +583,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -638,6 +648,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -706,6 +717,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -770,6 +782,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -834,6 +847,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -898,6 +912,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -962,6 +977,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1030,6 +1046,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1098,6 +1115,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1162,6 +1180,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1226,6 +1245,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1290,6 +1310,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1354,6 +1375,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1422,6 +1444,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1490,6 +1513,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1554,6 +1578,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1618,6 +1643,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1682,6 +1708,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1746,6 +1773,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1814,6 +1842,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1882,6 +1911,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1946,6 +1976,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component

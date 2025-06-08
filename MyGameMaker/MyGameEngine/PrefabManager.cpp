@@ -97,6 +97,27 @@ std::shared_ptr<GameObject> PrefabManager::LoadPrefab(const std::string& path)
     }
 }
 
+void PrefabManager::ReloadGoToPrefab(GameObject* go, const std::string& prefabPath)
+{
+    if (!go || prefabPath.empty()) return;
+
+    auto originalTransform = go->GetTransform();
+    
+	std::ifstream fin(prefabPath);
+	if (!fin.is_open()) {
+		LOG(LogType::LOG_ERROR, "[LoadPrefab] Cannot open prefab at: %s", prefabPath.c_str());
+	}
+
+	YAML::Node prefabNode = YAML::Load(fin);
+	fin.close();
+
+    go = Application->scene_serializer->DeserializeGameObject(prefabNode).get();
+
+    go->GetTransform()->SetPosition(originalTransform->GetPosition());
+    go->GetTransform()->SetRotation(originalTransform->GetEulerAngles());
+    go->GetTransform()->SetScale(originalTransform->GetScale());
+	LOG(LogType::LOG_INFO, "[ReloadGoToPrefab] Successfully reloaded GameObject from prefab: %s", prefabPath.c_str());
+}
 
 std::string PrefabManager::GetPrefabDirectory() {  
    return "Assets/Prefabs/";  

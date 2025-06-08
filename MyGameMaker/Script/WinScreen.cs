@@ -143,7 +143,7 @@ public class WinScreen : MonoBehaviour
             if (i == selectedButtonIndex)
             {
                 buttons[i].SetState(ButtonState.HOVERED);
-                transforms[i].DOScaleUI(new Vector3(0.22f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+                transforms[i].DOScaleUI(new Vector3(0.22f, 0.181f, 0.5f), 0.3f, Modes.EASE_OUT);
 
                 if (!hasPlayedHoverSound[i])
                 {
@@ -154,7 +154,7 @@ public class WinScreen : MonoBehaviour
             else
             {
                 buttons[i].SetState(ButtonState.DEFAULT);
-                transforms[i].DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+                transforms[i].DOScaleUI(new Vector3(0.182f, 0.181f, 0.4f), 0.3f, Modes.EASE_OUT);
                 hasPlayedHoverSound[i] = false;
             }
 

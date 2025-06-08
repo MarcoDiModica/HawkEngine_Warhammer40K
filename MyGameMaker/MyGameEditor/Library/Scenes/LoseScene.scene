@@ -185,8 +185,8 @@ GameObject1:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.537
-            - 0.790000021
+            - 0.50999999
+            - 0.829999983
             - 0
           rotation:
             - 0
@@ -194,7 +194,7 @@ GameObject1:
             - 0
           scale:
             - 0.174999997
-            - 0.0579999983
+            - 0.165000007
             - 1
           pivot_offset:
             - 0.5
@@ -203,14 +203,14 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/game_over_MM.png
+          texture_path: Library\Textures\UI\menu_main_menu.png
           use_animation: false
           sprite_size:
-            - 440
-            - 86
+            - 1920
+            - 1080
           sheet_size:
-            - 440
-            - 86
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -254,16 +254,16 @@ GameObject1:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.763000011
-            - 0.790000021
+            - 0.699999988
+            - 0.829999983
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.180999994
-            - 0.0599999987
+            - 0.174999997
+            - 0.165000007
             - 1
           pivot_offset:
             - 0.5
@@ -272,14 +272,14 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/game_over_quit.png
+          texture_path: Library\Textures\UI\menu_exit.png
           use_animation: false
           sprite_size:
-            - 440
-            - 86
+            - 1920
+            - 1080
           sheet_size:
-            - 440
-            - 86
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -294,7 +294,7 @@ GameObject1:
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
-          state: 4
+          state: 1
       Children: ~
     - name: LLC_button
       prefabPath: ""
@@ -323,16 +323,16 @@ GameObject1:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.282000005
-            - 0.790000021
+            - 0.314999998
+            - 0.829999983
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.261000007
-            - 0.0590000004
+            - 0.174999997
+            - 0.165000007
             - 1
           pivot_offset:
             - 0.5
@@ -341,14 +341,14 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/game_over_LLC.png
+          texture_path: Library\Textures\UI\menu_continue.png
           use_animation: false
           sprite_size:
-            - 668
-            - 86
+            - 1920
+            - 1080
           sheet_size:
-            - 668
-            - 86
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0

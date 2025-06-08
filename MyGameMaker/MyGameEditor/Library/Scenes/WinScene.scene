@@ -194,7 +194,7 @@ GameObject1:
             - 0
           scale:
             - 0.184
-            - 0.064000003
+            - 0.180999994
             - 1
           pivot_offset:
             - 0.5
@@ -203,14 +203,14 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/WinMenu.png
+          texture_path: Library\Textures\UI\menu_continue.png
           use_animation: false
           sprite_size:
-            - 445
-            - 87
+            - 1920
+            - 1080
           sheet_size:
-            - 445
-            - 87
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -218,9 +218,9 @@ GameObject1:
           anim_index: 0
           anim_index_limit: 0
           color:
+            - 0.968901932
             - 1
-            - 1
-            - 1
+            - 0.385214031
             - 1
         UIButtonComponent:
           name: UIButtonComponent
@@ -263,7 +263,7 @@ GameObject1:
             - 0
           scale:
             - 0.184
-            - 0.064000003
+            - 0.180999994
             - 1
           pivot_offset:
             - 0.5
@@ -272,14 +272,14 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/WinQuit.png
+          texture_path: Library\Textures\UI\menu_exit.png
           use_animation: false
           sprite_size:
-            - 455
-            - 90
+            - 1920
+            - 1080
           sheet_size:
-            - 455
-            - 90
+            - 1920
+            - 1080
           sprite_offset:
             - 0
             - 0
@@ -287,9 +287,9 @@ GameObject1:
           anim_index: 0
           anim_index_limit: 0
           color:
+            - 0.968627453
             - 1
-            - 1
-            - 1
+            - 0.384313732
             - 1
         UIButtonComponent:
           name: UIButtonComponent

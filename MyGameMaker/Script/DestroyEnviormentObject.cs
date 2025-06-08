@@ -35,7 +35,13 @@ public class DestroyEnviormentObject : MonoBehaviour
 
         GameObject normalMesh = gameObject.GetChild("wooden box");
         GameObject destroyedMesh = gameObject.GetChild("DestroyedBox");
+      
         GameObject vfx = gameObject.GetChild("VFX");
+
+        if (vfx == null)
+        {
+            vfx = gameObject.GetChild("VFX_2");
+        }
 
         if (normalMesh != null)
         {

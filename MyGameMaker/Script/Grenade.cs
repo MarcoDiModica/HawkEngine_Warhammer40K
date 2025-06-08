@@ -49,7 +49,7 @@ public class Grenade : MonoBehaviour
         {
 
 
-            particleFX.ApplyPreset(43);
+            particleFX.ApplyPreset(51);
             //    particleFX.EmitBurst(100);
             particleFX.EmitBurst(1);
 
@@ -90,7 +90,7 @@ public class Grenade : MonoBehaviour
         explosion = Engineson.CreateGameObject("Explosion", null);
         Audio.PlayOneShot(granadeExplosion);
         explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
-        explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
+        explosion.GetComponent<Transform>().SetScale(10f, 0.25f, 10f);
         gameObject.AddChild(explosion);
         explosionFX = Engineson.CreateGameObject("ExplosionGranadeFX", null);
         gameObject.AddChild(explosionFX);

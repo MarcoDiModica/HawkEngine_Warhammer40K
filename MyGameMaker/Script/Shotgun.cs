@@ -34,6 +34,10 @@ public class Shotgun : BaseWeapon
     private float strongshotTimer = 0.0f;
     private float strongshotCooldown = 1.5f;
 
+    private float abilityCooldown = 5.0f;
+    private float abilityTimer = 0.0f;
+    private bool abilityOnCooldown = false;
+
     private bool componentsInitialized = false;
 
     public override void Awake()
@@ -119,7 +123,17 @@ public class Shotgun : BaseWeapon
                 timeSinceLastShot += deltaTime;
             }
 
-            if (isReloading)
+            if (abilityOnCooldown)
+            {
+                abilityTimer += deltaTime;
+                if (abilityTimer >= abilityCooldown)
+                {
+                    abilityOnCooldown = false;
+                    abilityTimer = 0.0f;
+                }
+            }
+
+                if (isReloading)
             {
                 reloadTimer += deltaTime;
                 if (reloadTimer >= reloadTime)
@@ -447,12 +461,16 @@ public class Shotgun : BaseWeapon
 
         try
         {
-            if (!strongShot)
+            if (!abilityOnCooldown)
             {
-                damage = damage * 2;
-                strongShot = true;
+                if (!strongShot)
+                {
+                    damage = damage * 2;
+                    strongShot = true;
+                }
+                abilityOnCooldown = true;
+                Shoot();
             }
-            Shoot();
         }
         catch (Exception e)
         {

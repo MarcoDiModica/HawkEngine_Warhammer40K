@@ -15,6 +15,13 @@ public class EnemyControllerRanged : EnemyController
     private TermagauntAnimation anim;
     private RedThirstManager redThirstManager;
 
+    private bool isCombatMusicPlaying = false;
+    private const string MUSIC_COMBAT = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+    private const string SFX_DEATH = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav";
+    private const string SFX_ATTACK = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav";
+    private const string SFX_HIT = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav";
+
+
     private float health = 50.0f;
     private float damage = 10.0f;
 
@@ -36,7 +43,6 @@ public class EnemyControllerRanged : EnemyController
     public float range;
     public float timeToLerp;
 
-    private bool isCombatMusicPlaying = false;
 
     private bool componentsInitialized = false;
     private float deathTimer = 0f;
@@ -176,6 +182,7 @@ public class EnemyControllerRanged : EnemyController
             if (currentHealth <= 0 && !isDead)
             {
                 Engineson.print("This enemy has died.");
+                Audio.PlayOneShot(SFX_DEATH);
                 if (anim != null)
                 {
                     anim.SetDeathAnimation();
@@ -591,6 +598,8 @@ public class EnemyControllerRanged : EnemyController
                 anim.SetAttackAnimation();
             }
 
+            Audio.PlayOneShot(SFX_ATTACK);
+
             bulletsObjects.Add(projectile);
             bulletsPos.Add(bulletStart);
             bulletDirections.Add(direction);
@@ -623,6 +632,7 @@ public class EnemyControllerRanged : EnemyController
                 anim.SetHitAnimation();
             }
 
+            Audio.PlayOneShot(SFX_HIT);
             Engineson.print("Enemy took damage: " + damage);
         }
         catch (Exception e)

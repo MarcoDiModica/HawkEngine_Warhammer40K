@@ -4,6 +4,7 @@ uuid: 6591346108623782193
 tag: Untagged
 active: true
 isStatic: false
+useManualBoundingBox: false
 Components:
   Transform_Component:
     name: Transform_Component
@@ -53,6 +54,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -117,6 +119,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -181,6 +184,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -245,6 +249,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -289,8 +294,8 @@ Children:
           - 0
         color:
           - 1
-          - 0
-          - 0
+          - 1
+          - 1
         fontSize: 31.7999992
         boxSize:
           - 1200
@@ -311,6 +316,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -379,6 +385,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -443,6 +450,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -509,6 +517,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -577,6 +586,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -641,6 +651,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component

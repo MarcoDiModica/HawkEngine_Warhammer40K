@@ -1,9 +1,10 @@
 name: Canvas_PauseMenu
-prefabPath: ""
-uuid: 11283441919564461973
+prefabPath: Assets\Prefabs\Canvas_PauseMenu.prefab.yaml
+uuid: 15860094252941017456
 tag: Untagged
 active: false
 isStatic: false
+useManualBoundingBox: false
 Components:
   Transform_Component:
     name: Transform_Component
@@ -39,9 +40,6 @@ Components:
       - 0
       - 1
       - 0
-  SoundComponent:
-    name: SoundComponent
-    enabled: true
   UICanvasComponent:
     name: UICanvasComponent
     enabled: true
@@ -56,6 +54,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -106,6 +105,13 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Resume_Button
     prefabPath: ""
@@ -113,6 +119,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -163,6 +170,13 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
       UIButtonComponent:
         name: UIButtonComponent
         enabled: true
@@ -174,6 +188,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -195,7 +210,7 @@ Children:
         enabled: true
         position:
           - 0.5
-          - 0.426999986
+          - 0.425000012
           - 0
         rotation:
           - 0
@@ -224,17 +239,25 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
       UIButtonComponent:
         name: UIButtonComponent
         enabled: true
         state: 1
     Children: ~
-  - name: MainMenu_Button
+  - name: Controls_Button
     prefabPath: ""
-    uuid: 11667810225204397874
+    uuid: 7790856102066568623
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -256,7 +279,76 @@ Children:
         enabled: true
         position:
           - 0.5
-          - 0.528999984
+          - 0.52700001
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.14199999
+          - 0.0829999968
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\pause_controls.png
+        use_animation: false
+        sprite_size:
+          - 375
+          - 108
+        sheet_size:
+          - 375
+          - 108
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: MainMenu_Button
+    prefabPath: ""
+    uuid: 11667810225204397874
+    tag: Untagged
+    active: true
+    isStatic: false
+    useManualBoundingBox: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.5
+          - 0.629000008
           - 0
         rotation:
           - 0
@@ -285,6 +377,13 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
       UIButtonComponent:
         name: UIButtonComponent
         enabled: true
@@ -296,6 +395,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -317,7 +417,7 @@ Children:
         enabled: true
         position:
           - 0.5
-          - 0.630999982
+          - 0.731000006
           - 0
         rotation:
           - 0
@@ -346,6 +446,13 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
       UIButtonComponent:
         name: UIButtonComponent
         enabled: true

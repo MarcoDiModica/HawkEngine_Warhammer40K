@@ -430,6 +430,7 @@ public class EnemyControllerBoss : EnemyController
         if (slamHurtboxObject != null && IsPlayerInCollider(slamHurtboxObject, playerPos) && !slamDamageAppliedThisFrame)
         {
             ApplyBossDamage(slamDamage);
+
             slamDamageAppliedThisFrame = true;
         }
 
@@ -711,19 +712,28 @@ public class EnemyControllerBoss : EnemyController
         Vector3 bossPosition = enemyTransform.position;
 
         float halfLength = slamHurtboxSize.Z / 2.0f;
-        float offset = 5.0f;
+        float width = 1 + (1 * 0.5f);
+        float length = 1.5f;
+        float height = 1.0f;
+        float spacing = 1.0f;
+        Vector3 origin = enemyTransform.position;
+        Vector3 size = new Vector3(width, height, length);
 
-        Vector3 hurtboxPosition = bossPosition + forward * (halfLength + offset) + new Vector3(0, 5, 0);
+        Vector3 offset = forward * ((length + spacing) *6.5f);
+        Vector3 position = origin + offset + new Vector3(0, 2, 0);
+
+        Vector3 hurtboxPosition = bossPosition + forward * 2.14f + new Vector3(0, 5, 0);
 
         var hurtboxTransform = slamHurtboxObject.GetComponent<Transform>();
-        hurtboxTransform.position = hurtboxPosition;
-        hurtboxTransform.SetScale(slamHurtboxSize.X, slamHurtboxSize.Y, slamHurtboxSize.Z);
+        hurtboxTransform.position = position;
+        hurtboxTransform.SetScale(size.X, size.Y, size.Z);
         var hurtboxCollider = slamHurtboxObject.GetComponent<BoxCollider>();
         hurtboxCollider.SetSize(slamHurtboxSize);
 
         float angle = (float)Math.Atan2(forward.X, forward.Z);
         Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, angle);
         hurtboxTransform.SetRotationQuat(rotation);
+
     }
 
     private void CreateClawHurtbox()

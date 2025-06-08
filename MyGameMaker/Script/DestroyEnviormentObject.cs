@@ -8,6 +8,8 @@ public class DestroyEnviormentObject : MonoBehaviour
 
     public DropManager dropManager;
     public bool onlyMedicaeStimm = false;
+    private const string destroyBox = "Assets/Audio/Destroyables/destroyBox.wav";
+    private const string destroyBox2 = "Assets/Audio/Destroyables/destroyBox2.wav";
     public void DestroyObject()
     {
         //gameObject.GetComponent<Transform>().position = new Vector3(0, -100, 0);
@@ -17,10 +19,12 @@ public class DestroyEnviormentObject : MonoBehaviour
             if (onlyMedicaeStimm)
             {
                 dropManager.SpawnMedicaeStimm(gameObject.transform.position);
+                Audio.PlayOneShot(destroyBox);
             }
             else
             {
                 dropManager.SpawnPrefabFromDestroyableObject(gameObject.transform.position);
+                Audio.PlayOneShot(destroyBox2);
             }
             
         }

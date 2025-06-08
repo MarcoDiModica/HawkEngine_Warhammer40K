@@ -50,7 +50,7 @@ public class PlayerShooting : MonoBehaviour
     public ParticleFX shotgunShotFX;
     public ParticleFX railgunShotSemiFX;
     public ParticleFX railgunShotAutoFX;
-    public ParticleFX bulletcasingFX;
+
     public ParticleFX grenadeShotFX;
 
 
@@ -129,8 +129,6 @@ public class PlayerShooting : MonoBehaviour
         railgunShotSemiFX.ApplyPreset(8);
         railgunShotAutoFX = GameObject.Find("RailgunShotAutoFX").GetComponent<ParticleFX>();
         railgunShotAutoFX.ApplyPreset(8);
-        bulletcasingFX = GameObject.Find("BulletCasingFX").GetComponent<ParticleFX>();
-        bulletcasingFX.ApplyPreset(44);
         grenadeShotFX = GameObject.Find("GrenadeShotFX").GetComponent<ParticleFX>();
         grenadeShotFX.ApplyPreset(43);
 
@@ -249,10 +247,6 @@ public class PlayerShooting : MonoBehaviour
             canChangeWeapon = true;
         }
 
-        if (playerInput?.IsShooting() != true)
-        {
-            bulletcasingFX.Stop();
-        }
 
         playerInput.UpdateLookDirection();
 
@@ -362,7 +356,6 @@ public class PlayerShooting : MonoBehaviour
                         rifleShotFX.SetParticleStartRotation(angle);
                         rifleShotFX.Play();
                         boltgun?.Shoot();
-                        bulletcasingFX.EmitBurst(1);
                         shotgunShotFX.Stop();
                         railgunShotAutoFX.Stop();
                         railgunShotSemiFX.Stop();
@@ -390,9 +383,7 @@ public class PlayerShooting : MonoBehaviour
                 {
                     case GunType.BOLTGUN:
                         boltgun?.Shoot();
-                        bulletcasingFX.Play();
                         shotgunShotFX.Stop();
-                        //bulletcasingFX.Play();
                         railgunShotAutoFX.Stop();
                         railgunShotSemiFX.Stop();
                         break;

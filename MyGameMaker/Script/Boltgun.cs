@@ -35,6 +35,8 @@ public class Boltgun : BaseWeapon
     private bool isReloading = false;
     private float reloadTimer = 0.0f;
 
+    public ParticleFX bulletcasingFX;
+
     //bullet spresd
     private float bulletSpreadAngle = 6.5f;
     private static readonly Random random = new Random();
@@ -67,7 +69,9 @@ public class Boltgun : BaseWeapon
         //{
         //    Engineson.print("ERROR: ShakeManager not found");
         //}
-
+        bulletcasingFX = GameObject.Find("BulletCasingFX").GetComponent<ParticleFX>();
+        bulletcasingFX.ApplyPreset(44);
+        bulletcasingFX.Stop();
     }
 
     public override void Update(float deltaTime)
@@ -286,8 +290,9 @@ public class Boltgun : BaseWeapon
 
 
                 particleFX.ApplyPreset(51);
-                particleFX.SetParticleStartRotation(yaw);
+                particleFX.SetParticleStartRotation(yaw);               
                 particleFX.EmitBurst(1);
+                bulletcasingFX.EmitBurst(1);
 
             }
 

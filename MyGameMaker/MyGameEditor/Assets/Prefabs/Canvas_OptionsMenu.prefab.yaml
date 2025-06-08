@@ -1,8 +1,8 @@
-name: Canvas_OptionsMenu
-prefabPath: ""
-uuid: 11199687553851354564
+name: Canvas_OptionsMenu_1_Instance
+prefabPath: Assets\Prefabs\Canvas_OptionsMenu.prefab.yaml
+uuid: 5294828603316348298
 tag: Untagged
-active: false
+active: true
 isStatic: false
 Components:
   Transform_Component:
@@ -20,9 +20,6 @@ Components:
       - 1
       - 1
       - 1
-  SoundComponent:
-    name: SoundComponent
-    enabled: true
   UITransformComponent:
     name: UITransformComponent
     enabled: true
@@ -48,7 +45,8 @@ Components:
   ScriptComponents:
     Script0:
       name: OptionMenu
-      fields: ~
+      fields:
+        currentResolution: 1920x1080
 Children:
   - name: Canvas_OptionsMenu_
     prefabPath: ""
@@ -106,12 +104,19 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Resolution_1280x720
     prefabPath: ""
     uuid: 6037461699344994438
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     Components:
       Transform_Component:
@@ -163,12 +168,19 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Resolution_1920x1080
     prefabPath: ""
     uuid: 5220584198167118793
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     Components:
       Transform_Component:
@@ -220,12 +232,19 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Resolution_2560x1440
     prefabPath: ""
     uuid: 1443958785827056631
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     Components:
       Transform_Component:
@@ -277,12 +296,19 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Resolution_3840x2160
     prefabPath: ""
     uuid: 4093795068509980976
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     Components:
       Transform_Component:
@@ -334,12 +360,19 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Resolution_left
     prefabPath: ""
     uuid: 10009967293575906137
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     Components:
       Transform_Component:
@@ -386,21 +419,28 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Resolution_right
     prefabPath: ""
     uuid: 1875487165481965906
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     Components:
       Transform_Component:
@@ -447,21 +487,28 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Resolution_lefthover
     prefabPath: ""
     uuid: 10054175911002723645
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     Components:
       Transform_Component:
@@ -504,21 +551,28 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
-          - 28
+          - 30
           - 30
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Resolution_righthover
     prefabPath: ""
     uuid: 8973463647592140314
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
     Components:
       Transform_Component:
@@ -561,15 +615,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
-          - 28
+          - 30
           - 30
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Fullscreen_checkbox
     prefabPath: ""
@@ -597,8 +658,8 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.513999999
-          - 0.414000005
+          - 0.513000011
+          - 0.354999989
           - 0
         rotation:
           - 0
@@ -622,21 +683,28 @@ Children:
         texture_path: Library\Textures\UI\options__menu_checkbox.png
         use_animation: false
         sprite_size:
-          - 32
-          - 32
+          - 35
+          - 35
         sheet_size:
-          - 32
-          - 32
+          - 35
+          - 35
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Fullscreen_checkboxhover
     prefabPath: ""
     uuid: 736504712872897227
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
     Components:
       Transform_Component:
@@ -658,15 +726,15 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.513999999
-          - 0.414000005
+          - 0.513000011
+          - 0.354999989
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0140000004
+          - 0.0140000014
           - 0.0249999985
           - 1
         pivot_offset:
@@ -679,15 +747,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_checkbox_hovered.png
         use_animation: false
         sprite_size:
-          - 32
-          - 32
+          - 37
+          - 37
         sheet_size:
-          - 32
-          - 32
+          - 37
+          - 37
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Fullscreen_tick
     prefabPath: ""
@@ -715,8 +790,8 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.50999999
-          - 0.389999986
+          - 0.509000003
+          - 0.328000009
           - 0
         rotation:
           - 0
@@ -736,15 +811,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_check.png
         use_animation: false
         sprite_size:
-          - 42
-          - 42
+          - 35
+          - 35
         sheet_size:
-          - 42
-          - 42
+          - 35
+          - 35
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Master_bar
     prefabPath: ""
@@ -772,8 +854,8 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.479999989
-          - 0.504999995
+          - 0.483999997
+          - 0.435000002
           - 0
         rotation:
           - 0
@@ -781,7 +863,7 @@ Children:
           - 0
         scale:
           - 0.0970000103
-          - 0.0600000024
+          - 0.0149999997
           - 1
         pivot_offset:
           - 0
@@ -790,18 +872,25 @@ Children:
       UIImageComponent:
         name: UIImageComponent
         enabled: true
-        texture_path: Library\Textures\UI\options__menu_sliderBar.png
+        texture_path: Library\Textures\UI\options__menu_sliderBar_hovered.png
         use_animation: false
         sprite_size:
-          - 234
-          - 22
+          - 218
+          - 10
         sheet_size:
-          - 234
-          - 22
+          - 218
+          - 10
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Master_slider
     prefabPath: ""
@@ -830,7 +919,7 @@ Children:
         enabled: true
         position:
           - 0.574999988
-          - 0.504999995
+          - 0.435000002
           - 0
         rotation:
           - 0
@@ -850,15 +939,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_slider.png
         use_animation: false
         sprite_size:
-          - 14
-          - 43
+          - 13
+          - 36
         sheet_size:
-          - 14
-          - 43
+          - 13
+          - 36
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Master_left
     prefabPath: ""
@@ -887,7 +983,7 @@ Children:
         enabled: true
         position:
           - 0.474999994
-          - 0.504999995
+          - 0.435000002
           - 0
         rotation:
           - 0
@@ -911,15 +1007,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Master_right
     prefabPath: ""
@@ -948,7 +1051,7 @@ Children:
         enabled: true
         position:
           - 0.600000024
-          - 0.504999995
+          - 0.435000002
           - 0
         rotation:
           - 0
@@ -972,15 +1075,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Master_lefthover
     prefabPath: ""
@@ -1009,7 +1119,7 @@ Children:
         enabled: true
         position:
           - 0.476000011
-          - 0.504999995
+          - 0.435000002
           - 0
         rotation:
           - 0
@@ -1029,15 +1139,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
-          - 28
+          - 30
           - 30
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Master_righthover
     prefabPath: ""
@@ -1066,7 +1183,7 @@ Children:
         enabled: true
         position:
           - 0.598999977
-          - 0.504999995
+          - 0.435000002
           - 0
         rotation:
           - 0
@@ -1086,15 +1203,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
-          - 28
+          - 30
           - 30
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: BGM_bar
     prefabPath: ""
@@ -1122,8 +1246,8 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.479999989
-          - 0.545000017
+          - 0.483999997
+          - 0.495000005
           - 0
         rotation:
           - 0
@@ -1131,7 +1255,7 @@ Children:
           - 0
         scale:
           - 0.0970000029
-          - 0.0599999987
+          - 0.0160000008
           - 1
         pivot_offset:
           - 0
@@ -1140,18 +1264,25 @@ Children:
       UIImageComponent:
         name: UIImageComponent
         enabled: true
-        texture_path: Library\Textures\UI\options__menu_sliderBar.png
+        texture_path: Library\Textures\UI\options__menu_sliderBar_hovered.png
         use_animation: false
         sprite_size:
-          - 234
-          - 22
+          - 218
+          - 10
         sheet_size:
-          - 234
-          - 22
+          - 218
+          - 10
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: BGM_slider
     prefabPath: ""
@@ -1180,7 +1311,7 @@ Children:
         enabled: true
         position:
           - 0.574999988
-          - 0.545000017
+          - 0.495000005
           - 0
         rotation:
           - 0
@@ -1200,15 +1331,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_slider.png
         use_animation: false
         sprite_size:
-          - 14
-          - 43
+          - 13
+          - 36
         sheet_size:
-          - 14
-          - 43
+          - 13
+          - 36
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: BGM_left
     prefabPath: ""
@@ -1237,7 +1375,7 @@ Children:
         enabled: true
         position:
           - 0.474999994
-          - 0.545000017
+          - 0.495000005
           - 0
         rotation:
           - 0
@@ -1261,15 +1399,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: BGM_right
     prefabPath: ""
@@ -1298,7 +1443,7 @@ Children:
         enabled: true
         position:
           - 0.600000024
-          - 0.545000017
+          - 0.495000005
           - 0
         rotation:
           - 0
@@ -1322,15 +1467,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: BGM_lefthover
     prefabPath: ""
@@ -1359,7 +1511,7 @@ Children:
         enabled: true
         position:
           - 0.476000011
-          - 0.545000017
+          - 0.495000005
           - 0
         rotation:
           - 0
@@ -1379,15 +1531,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
-          - 28
+          - 30
           - 30
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: BGM_righthover
     prefabPath: ""
@@ -1416,7 +1575,7 @@ Children:
         enabled: true
         position:
           - 0.598999977
-          - 0.545000017
+          - 0.495000005
           - 0
         rotation:
           - 0
@@ -1436,15 +1595,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
-          - 28
+          - 30
           - 30
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: SFX_bar
     prefabPath: ""
@@ -1472,16 +1638,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.479999989
-          - 0.584999979
+          - 0.485000014
+          - 0.560000002
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0970000029
-          - 0.0599999987
+          - 0.0970000103
+          - 0.0149999997
           - 1
         pivot_offset:
           - 0
@@ -1490,18 +1656,25 @@ Children:
       UIImageComponent:
         name: UIImageComponent
         enabled: true
-        texture_path: Library\Textures\UI\options__menu_sliderBar.png
+        texture_path: Library\Textures\UI\options__menu_sliderBar_hovered.png
         use_animation: false
         sprite_size:
-          - 234
-          - 22
+          - 218
+          - 10
         sheet_size:
-          - 234
-          - 22
+          - 218
+          - 10
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: SFX_slider
     prefabPath: ""
@@ -1530,7 +1703,7 @@ Children:
         enabled: true
         position:
           - 0.574999988
-          - 0.584999979
+          - 0.560000002
           - 0
         rotation:
           - 0
@@ -1550,15 +1723,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_slider.png
         use_animation: false
         sprite_size:
-          - 14
-          - 43
+          - 13
+          - 36
         sheet_size:
-          - 14
-          - 43
+          - 13
+          - 36
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: SFX_left
     prefabPath: ""
@@ -1587,7 +1767,7 @@ Children:
         enabled: true
         position:
           - 0.474999994
-          - 0.584999979
+          - 0.560000002
           - 0
         rotation:
           - 0
@@ -1611,15 +1791,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: SFX_right
     prefabPath: ""
@@ -1648,7 +1835,7 @@ Children:
         enabled: true
         position:
           - 0.600000024
-          - 0.584999979
+          - 0.560000002
           - 0
         rotation:
           - 0
@@ -1672,15 +1859,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right.png
         use_animation: false
         sprite_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sheet_size:
-          - 24
-          - 30
+          - 25
+          - 36
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: SFX_lefthover
     prefabPath: ""
@@ -1709,7 +1903,7 @@ Children:
         enabled: true
         position:
           - 0.476000011
-          - 0.584999979
+          - 0.560000002
           - 0
         rotation:
           - 0
@@ -1729,15 +1923,22 @@ Children:
         texture_path: Library\Textures\UI\options__menu_left_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
-          - 28
+          - 30
           - 30
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: SFX_righthover
     prefabPath: ""
@@ -1766,7 +1967,7 @@ Children:
         enabled: true
         position:
           - 0.598999977
-          - 0.584999979
+          - 0.560000002
           - 0
         rotation:
           - 0
@@ -1786,13 +1987,20 @@ Children:
         texture_path: Library\Textures\UI\options__menu_right_hovered.png
         use_animation: false
         sprite_size:
-          - 28
+          - 30
           - 30
         sheet_size:
-          - 28
+          - 30
           - 30
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~

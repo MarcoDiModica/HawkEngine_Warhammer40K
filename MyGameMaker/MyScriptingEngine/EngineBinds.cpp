@@ -1666,7 +1666,6 @@ bool EngineBinds::LoadScene(MonoString* sceneName)
     char* C_sceneName = mono_string_to_utf8(sceneName);
     if (Application->scene_serializer->DeSerialize(std::string(C_sceneName)))
     {
-		//Application->physicsModule->linkPhysicsToScene = false; //Comment this to make the enemies apear on their position 
 		Application->hasChangedScene = true;
 		return true;
     }
@@ -1675,9 +1674,12 @@ bool EngineBinds::LoadScene(MonoString* sceneName)
 
 void EngineBinds::SetScenePlay()
 {
+	Application->physicsModule->ResetAllColliderTransforms();
+	Application->play = true;
 	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+	Application->physicsModule->linkPhysicsToScene = true;
 	SceneManagement->Awake();
-	SceneManagement->currentScene->Start();
+	SceneManagement->Start();
 }
 
 void EngineBinds::ApplyPreset(MonoObject* particleRef, int particleType)

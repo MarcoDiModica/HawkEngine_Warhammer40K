@@ -223,10 +223,15 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 		Application->root->CreateScene(sceneName);
 		Application->root->SetActiveScene(sceneName);
 
+		ShaderManager::GetInstance().Initialize();
+
 		LOG(LogType::LOG_INFO, "Scene created: %s", sceneName.c_str());
 
 		//Application->root->GetResourceManager()->ClearAllMeshes();
 		//Application->root->GetResourceManager()->ClearAllMaterials();
+
+		//Application->root->GetResourceManager()->LoadMaterials();
+		//Application->root->GetResourceManager()->LoadModels();
 
 		for (int i = 0; ; i++) {
 			YAML::Node objectNode = rootNode["GameObject" + std::to_string(i)];
@@ -252,6 +257,15 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 			}
 		}
 		g_PendingScriptReferences.clear();
+
+		for (const auto& gameObject : Application->root->GetActiveScene()->_children) {
+			if (gameObject->HasComponent<MeshRenderer>()) {
+				auto meshRenderer = gameObject->GetComponent<MeshRenderer>();
+				if (meshRenderer->GetMesh()) {
+					meshRenderer->GetMesh()->loadToOpenGL();
+				}
+			}
+		}
 
 		LOG(LogType::LOG_INFO, "Scene deserialized successfully: %s", sceneName.c_str());
 		Application->root->UpdateCameraPriority();

@@ -94,6 +94,8 @@ bool App::Start() {
 
 	physicsModule->Start();
 
+	Application->window->SetTitle("Warhammer 40k: Blood & Thunder");
+
 	return true;
 }
 
@@ -110,9 +112,9 @@ bool App::Update()
 	if (ret) ret = DoUpdate();
 	if (ret) ret = PostUpdate();
 
-	Application->window->SetTitle(
+	/*Application->window->SetTitle(
 		std::string("HawkEngine - FPS: ") + std::to_string(m_fps.load()) +
-		" - Frame Time: " + std::to_string(m_deltaTime * 1000.0) + "ms");
+		" - Frame Time: " + std::to_string(m_deltaTime * 1000.0) + "ms");*/
 
 	FinishUpdate();
 

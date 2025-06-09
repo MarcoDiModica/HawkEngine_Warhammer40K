@@ -144,6 +144,8 @@ protected:
 		   color = glm::vec4(colorVec[0], colorVec[1], colorVec[2], colorVec[3]);
 	   }
 
+	   mesh->loadToOpenGL();
+
        /*shader = node["shader"].as<Shaders*>();*/  
        /*mesh = node["mesh"].as<std::shared_ptr<Mesh>>();*/  
 

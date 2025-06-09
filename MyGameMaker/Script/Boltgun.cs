@@ -47,12 +47,22 @@ public class Boltgun : BaseWeapon
     }
     public override void Start()
     {
+        playerController = gameObject.GetComponent<PlayerController>();
+        playerData = playerController.playerData;
+        if (SceneManager.loadAmmo)
+        {
+            currentMagazineAmmo = playerData.boltgunCurrentAmmo;
+            currentTotalAmmo = playerData.boltgunMaxAmmo;
+        }
+        else
+        {
+            currentMagazineAmmo = magazineSize;
+            currentTotalAmmo = 180;
+        }
         damage = 14.0f;
         shootCadence = 0.12f;
         magazineSize = 40;
-        currentMagazineAmmo = magazineSize;
         maxAmmo = 240;
-        currentTotalAmmo = 180;
         reloadTime = 0.5f;
         range = 80f;
         timeToLerp = 0.45f;
@@ -60,8 +70,7 @@ public class Boltgun : BaseWeapon
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
         arcSnare = gameObject.GetComponent<ArcSnare>();
-        playerController = gameObject.GetComponent<PlayerController>();
-        playerData = playerController.playerData;
+ 
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
         playerInput = gameObject.GetComponent<PlayerInput>();
         //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();

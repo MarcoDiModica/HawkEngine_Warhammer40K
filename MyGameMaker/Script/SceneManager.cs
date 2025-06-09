@@ -25,6 +25,8 @@ namespace HawkEngine
         private static float playerHealthPausedTemp;
         private static float playerHealthPaused;
 
+        public static bool loadAmmo = false;
+
         public static bool isPaused = false;
 
         //funciones
@@ -45,6 +47,7 @@ namespace HawkEngine
 
         public static void LoadSceneFromCheckpoint(string sceneName)
         {
+            loadAmmo = false;
             Tweening.CleanTweens();
             if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
             {
@@ -61,6 +64,14 @@ namespace HawkEngine
 
         public static void LoadSceneWithFade(string sceneName, float fadeTime = 1.0f)
         {
+            loadAmmo = false; 
+            bool hasBoltgun = true;
+            bool hasBoltgunUpgraded = true;
+            bool hasShotgun = true;
+            bool hasShotgunUpgraded = true;
+            bool hasRailgun = true;
+            bool hasRailgunUpgraded = true;
+
 
             GameObject player = GameObject.Find("Player");
             PlayerInput playerInput = player?.GetComponent<PlayerInput>();
@@ -70,7 +81,18 @@ namespace HawkEngine
 
             if (playerController?.playerData != null)
             {
+                playerHealthPausedTemp = playerController.playerData.GetHealthTemp();
+                playerHealthPaused = playerController.playerData.GetHealth();
+                hasBoltgun = playerController.playerData.hasBoltgun;
+                hasBoltgunUpgraded = playerController.playerData.BoltgunUpgraded;
+                hasShotgun = playerController.playerData.hasShotgun;
+                hasShotgunUpgraded = playerController.playerData.ShotgunUpgraded;
+                hasRailgun = playerController.playerData.hasRailgun;
+                hasRailgunUpgraded = playerController.playerData.RailgunUpgraded;
+
                 playerController.playerData.GodMode = true;
+                playerController.playerData.SetTempHealth(playerHealthPausedTemp);
+                playerController.playerData.SetHealth(playerHealthPaused);
             }
 
             GameObject fadeObj = GameObject.Find("FadeController"); // debe tener UIImage + FadeController
@@ -86,6 +108,30 @@ namespace HawkEngine
                     if (playerController?.playerData != null)
                     {
                         playerController.playerData.GodMode = false;
+                        playerController.playerData.SetTempHealth(playerHealthPausedTemp);
+                        playerController.playerData.SetHealth(playerHealthPaused);
+                        playerController.playerData.biblePages = playerController.GetComponent<RedThirstManager>().biblePages;
+                        if (hasBoltgun)
+                        {
+                            playerController.playerData.hasBoltgun = hasBoltgun;
+                            playerController.playerData.BoltgunUpgraded = hasBoltgunUpgraded;
+                            playerController.playerData.boltgunCurrentAmmo = playerController.GetComponent<Boltgun>().currentMagazineAmmo;
+                            playerController.playerData.boltgunMaxAmmo = playerController.GetComponent<Boltgun>().currentTotalAmmo; 
+                            loadAmmo = true;
+                        }
+                        if (hasShotgun)
+                        {
+                            playerController.playerData.hasShotgun = hasShotgun;
+                            playerController.playerData.ShotgunUpgraded = hasShotgunUpgraded;
+                            playerController.playerData.shotgunCurrentAmmo = playerController.GetComponent<Shotgun>().currentMagazineAmmo;
+                            playerController.playerData.shotgunMaxAmmo = playerController.GetComponent<Shotgun>().currentTotalAmmo;
+                            loadAmmo = true; 
+                        }
+                        if (hasRailgun)
+                        {
+                            playerController.playerData.hasRailgun = hasRailgun;
+                            playerController.playerData.RailgunUpgraded = hasRailgunUpgraded;
+                        }
                     }
                     Tweening.CleanTweens();
 

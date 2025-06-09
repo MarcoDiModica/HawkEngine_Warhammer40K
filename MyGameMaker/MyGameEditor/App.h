@@ -54,6 +54,8 @@ public:
 	bool PostUpdate();
 	void FinishUpdate();
 
+	void quit() { quitGame = true; }
+
 	void AddLog(LogType type, const char* entry);
 	const std::vector<LogInfo>& GetLogs() const;
 	void CleanLogs();
@@ -140,6 +142,8 @@ public:
 
 	bool play = false;
 	bool hasChangedScene = false;
+
+	bool quitGame = false;
 
 private:
 	using high_res_clock = std::chrono::high_resolution_clock;

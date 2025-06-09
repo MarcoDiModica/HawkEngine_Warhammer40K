@@ -252,8 +252,7 @@ public class PauseMenu : MonoBehaviour
             else if (selectedButton == button_quitButton)
             {              
                 Audio.PlayOneShot(ConfirmSFX);
-           
-                // Aqu� puedes agregar la l�gica para salir del juego
+                Engineson.Quit();
             }
         }
     }

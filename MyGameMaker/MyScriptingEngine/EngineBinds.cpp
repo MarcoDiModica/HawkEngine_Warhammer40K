@@ -634,6 +634,15 @@ glm::vec3 EngineBinds::GetMousePosition() {
     return pos;
 }
 
+void EngineBinds::QuitGame()
+{
+	if (Application) {
+		Application->quit();
+	} else {
+		LOG(LogType::LOG_ERROR, "Application instance is null in QuitGame");
+	}
+}
+
 // Transform
 void EngineBinds::SetPosition(MonoObject* transformRef, float x, float y, float z) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
@@ -1806,6 +1815,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
     mono_add_internal_call("MonoBehaviour::Instantiate", (const void*)InstantiatePrefab);
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
+    mono_add_internal_call("HawkEngine.Engineson::Quit", (const void*)QuitGame);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
     mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GameObjectGetTag);
     mono_add_internal_call("HawkEngine.GameObject::SetName", (const void*) SetName );
@@ -1821,7 +1831,6 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
     mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)GameObjectSetActive);
     mono_add_internal_call("HawkEngine.GameObject::IsActive", (const void*)GameObjectIsActive);
-
 
 
     // Input

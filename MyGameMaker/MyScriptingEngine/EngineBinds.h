@@ -59,6 +59,9 @@ namespace EngineBinds {
     int GetAxis(MonoString* axisName);
     glm::vec3 GetMousePosition();
 
+    //quit
+	void QuitGame();
+
      // Controller
     bool GetControllerButton(int buttonID);
     bool GetControllerButtonDown(int buttonID);

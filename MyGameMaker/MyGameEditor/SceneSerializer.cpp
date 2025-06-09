@@ -454,7 +454,7 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 		else if (componentName == "UIImageComponent") {
 			auto image = gameObject->AddComponent<UIImageComponent>();
 			image->decode(componentData);
-			image->SetTexture(image->GetTexture()->image_path);
+			//image->SetTexture(image->GetTexture()->image_path);
 		}
 		else if (componentName == "UIButtonComponent") {
 			auto button = gameObject->AddComponent<UIButtonComponent>();

@@ -228,7 +228,9 @@ public:
 			return;
 		}
 
-		if (deltaTime <= 0.0f) {
+		if (!glIsBuffer(instanceVBO) || !glIsVertexArray(vao) ||
+			!glIsBuffer(vbo) || !glIsBuffer(ebo)) {
+			LOG(LogType::LOG_ERROR, "Invalid OpenGL buffers detected");
 			return;
 		}
 

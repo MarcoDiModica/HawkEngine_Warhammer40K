@@ -2110,7 +2110,7 @@ void ParticleFX::RenderGameView() {
 		}
 	}
 
-	renderer->UpdateAndRender(Application->GetDt());
+	renderer->UpdateAndRender(0.0f);
 
 	glUseProgram(lastProgram);
 	glBindVertexArray(lastVAO);
@@ -2181,6 +2181,11 @@ std::unique_ptr<Component> ParticleFX::Clone(GameObject* owner) {
 }
 
 void ParticleFX::EmitParticle() {
+	if (!material || !material->imagePtr) {
+		LOG(LogType::LOG_ERROR, "Material or imagePtr is null in EmitParticle");
+		return;
+	}
+
 	ParticleData particle;
 
 	particle.duration = duration;

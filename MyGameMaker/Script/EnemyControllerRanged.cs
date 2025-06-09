@@ -195,8 +195,6 @@ public class EnemyControllerRanged : EnemyController
                     collider.SetActive(false);
                 }
 
-                enemyTransform.DOScale(new Vector3(0,0,0), 1.0f, Modes.EASE_OUT);
-
                 if (anim.isAnimFinished)
                 {
                     deathTimer += deltaTime;

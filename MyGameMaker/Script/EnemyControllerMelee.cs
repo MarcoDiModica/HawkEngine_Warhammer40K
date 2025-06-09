@@ -526,9 +526,6 @@ public class EnemyControllerMelee : EnemyController
                 hasDropped = true;
             }
 
-
-
-
             if (isFlashingColor)
             {
                 flashTimer -= deltaTime;
@@ -544,7 +541,6 @@ public class EnemyControllerMelee : EnemyController
                     bool once = false;
                     if (enemyTransform != null && !once)
                     {
-                        enemyTransform.DOScale(Vector3.Zero, 0.1f, Modes.EASE_OUT);
                         once = true;
                     }
 
@@ -807,14 +803,13 @@ public class EnemyControllerMelee : EnemyController
     {
         try
         {
-            if (particles != null)
-            {
-                // Emit blood particles
-                EnemySquirting();
-            }
-
             if (currentHealth <= 0)
                 return;
+
+            if (particles != null)
+            {
+                EnemySquirting();
+            }
 
             currentHealth -= damage;
 
@@ -905,7 +900,7 @@ public class EnemyControllerMelee : EnemyController
         {
             if (renderer != null)
             {
-                renderer.SetColor(color);
+                renderer?.SetColor(color);
                 isFlashingColor = true;
                 flashTimer = duration;
             }

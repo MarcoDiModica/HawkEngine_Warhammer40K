@@ -1987,6 +1987,10 @@ void ParticleFX::Start() {
 }
 
 void ParticleFX::Update(float deltaTime) {
+	if (!owner || !owner->GetTransform()) {
+		return; 
+	}
+
 	GLint lastProgram;
 	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
 
@@ -2067,6 +2071,10 @@ void ParticleFX::Update(float deltaTime) {
 }
 
 void ParticleFX::RenderGameView() {
+	if (!owner || !owner->GetTransform()) {
+		return; 
+	}
+
 	GLint lastProgram;
 	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
 
@@ -2094,7 +2102,7 @@ void ParticleFX::RenderGameView() {
 
 	if (material) {
 		ParticleShader* particleShader = static_cast<ParticleShader*>(
-			ShaderManager::GetInstance().GetShader(material->GetShaderType()));
+		ShaderManager::GetInstance().GetShader(material->GetShaderType()));
 
 		if (particleShader) {
 			particleShader->SetCameraPosition(cameraPosition);
@@ -2102,7 +2110,7 @@ void ParticleFX::RenderGameView() {
 		}
 	}
 
-	renderer->UpdateAndRender(0.0f);
+	renderer->UpdateAndRender(Application->GetDt());
 
 	glUseProgram(lastProgram);
 	glBindVertexArray(lastVAO);

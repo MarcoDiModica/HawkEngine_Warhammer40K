@@ -162,6 +162,10 @@ protected:
 
 template <IsComponent T, typename... Args>
 T* GameObject::AddComponent(Args&&... args) {
+    if (destroyed || !this) {
+        return nullptr;
+	}
+
     if constexpr (std::is_same_v<T, ScriptComponent>) {
         std::unique_ptr<T> newComponent = std::make_unique<T>(this, std::forward<Args>(args)...);
         T* result = newComponent.get();
@@ -186,24 +190,39 @@ T* GameObject::AddComponent(Args&&... args) {
 
 template <typename T>
 T* GameObject::GetComponent() const {
-    if (destroyed || !this) {
-        return nullptr;
+	if (destroyed || !this) {
+		return nullptr;
 	}
 
-    if (cachedComponentType == typeid(T) && cachedComponent != nullptr) {
-		return dynamic_cast<T*>(cachedComponent.get());
+	try {
+		if (cachedComponent && cachedComponentType == typeid(T)) {
+			return dynamic_cast<T*>(cachedComponent.get());
+		}
+	}
+	catch (...) {
+		return nullptr;
 	}
 
-    for (const auto& scriptComponent : scriptComponents) {
-        if (dynamic_cast<T*>(scriptComponent.get()) != nullptr) {
-            return dynamic_cast<T*>(scriptComponent.get());
-        }
-    }
+	for (const auto& scriptComponent : scriptComponents) {
+		try {
+			if (dynamic_cast<T*>(scriptComponent.get()) != nullptr) {
+				return dynamic_cast<T*>(scriptComponent.get());
+			}
+		}
+		catch (...) {
+			return nullptr;
+		}
+	}
 
-    const auto& it = components.find(typeid(T));
-    if (it != components.end()) {
-        return dynamic_cast<T*>(it->second.get());
-    }
+	try {
+		const auto& it = components.find(typeid(T));
+		if (it != components.end()) {
+			return dynamic_cast<T*>(it->second.get());
+		}
+	}
+	catch (...) {
+		return nullptr;
+	}
 
 	return nullptr;
 }

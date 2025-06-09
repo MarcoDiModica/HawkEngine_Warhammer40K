@@ -204,7 +204,7 @@ void SceneSerializer::TraverseGameObjects(std::shared_ptr<GameObject> gameObject
 	if (gameObject->HasComponent<UIImageComponent>()) {
 		auto imageComponent = gameObject->GetComponent<UIImageComponent>();
 		if (imageComponent && imageComponent->GetTexture()) {
-			imageComponent->LoadMesh();
+			imageComponent->SetTexture(imageComponent->GetTexture()->image_path);
 		}
 	}
 
@@ -454,6 +454,7 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 		else if (componentName == "UIImageComponent") {
 			auto image = gameObject->AddComponent<UIImageComponent>();
 			image->decode(componentData);
+			image->SetTexture(image->GetTexture()->image_path);
 		}
 		else if (componentName == "UIButtonComponent") {
 			auto button = gameObject->AddComponent<UIButtonComponent>();

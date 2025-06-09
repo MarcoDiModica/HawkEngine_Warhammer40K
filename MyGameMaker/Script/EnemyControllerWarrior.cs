@@ -808,6 +808,8 @@ public class EnemyControllerWarrior : EnemyController
             if (currentHealth <= 0)
                 return;
 
+            currentHealth -= damage;
+
             if (particles != null)
             {
                 EnemySquirting();
@@ -816,7 +818,6 @@ public class EnemyControllerWarrior : EnemyController
             StartFlashColor(flashColor, flashDuration);
 
             Audio.PlayOneShot(HitSound);
-            currentHealth -= damage;
 
             if (anim != null)
             {
@@ -886,7 +887,7 @@ public class EnemyControllerWarrior : EnemyController
         {
             if (renderer != null)
             {
-                renderer.SetColor(color);
+                renderer?.SetColor(color);
                 isFlashingColor = true;
                 flashTimer = duration;
             }

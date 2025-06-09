@@ -67,9 +67,10 @@ public:
 
 	void SetAnimationIndex(int index) { animIndex = index; }
 
+	std::string texturePath;
+
 private:
 	//texture
-	std::string texturePath;
 	std::shared_ptr<Image> texture;
 	std::shared_ptr<Mesh> mesh;
 	glm::vec4 color = glm::vec4(1.0f);

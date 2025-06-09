@@ -213,6 +213,7 @@ public class LoseScreen : MonoBehaviour
             else if (selectedButton == button_quitButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
+                Engineson.Quit();
                 // Aqu� puedes agregar la l�gica para salir del juego
             }
         }

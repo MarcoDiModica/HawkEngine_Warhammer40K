@@ -154,50 +154,35 @@ public class Boltgun : BaseWeapon
                         if (redThirstManager.IsInBlackRage())
                             finalDamage += redThirstManager.redThirstBonus;
 
-                        try
+                        switch (tag)
                         {
-                            switch (tag)
-                            {
-                                case "Melee":
-                                    var melee = hitObject.GetComponent<EnemyControllerMelee>();
-                                    if (melee != null && melee.isDead)
-                                        melee.TakeDamage(finalDamage);
-                                    break;
-                                case "Ranged":
-                                    var ranged = hitObject.GetComponent<EnemyControllerRanged>();
-                                    if (ranged != null && !ranged.isDead)
-                                        ranged.TakeDamage(finalDamage);
-                                    break;
-                                case "Stalker":
-                                    var stalker = hitObject.GetComponent<EnemyControllerStalker>();
-                                    if (stalker != null && stalker.isDead)
-                                        stalker.TakeDamage(finalDamage);
-                                    break;
-                                case "Boss":
-                                    var boss = hitObject.GetComponent<EnemyControllerBoss>();
-                                    if (boss != null && boss.isDead)
-                                        boss.TakeDamage(finalDamage);
-                                    break;
-                                case "Warrior":
-                                    var warrior = hitObject.GetComponent<EnemyControllerWarrior>();
-                                    if (warrior != null && warrior.isDead)
-                                        warrior.TakeDamage(finalDamage);
-                                    break;
-                                case "Destroyable":
-                                    var destroyable = hitObject.GetComponent<DestroyEnviormentObject>();
-                                    if (destroyable != null)
-                                        destroyable.DestroyObject();
-                                    break;
-                                case "ExplosiveBarrel":
-                                    var barrel = hitObject.GetComponent<ExplosiveBarrel>();
-                                    if (barrel != null)
-                                        barrel.Explode();
-                                    break;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Engineson.print($"ERROR: Exception when applying hit to {tag}: {ex.Message}");
+                            case "Melee":
+                                if (hitObject.GetComponent<EnemyControllerMelee>() != null)
+                                    hitObject.GetComponent<EnemyControllerMelee>().TakeDamage(finalDamage);
+                                break;
+                            case "Ranged":
+                                if (hitObject.GetComponent<EnemyControllerRanged>() != null)
+                                    hitObject.GetComponent<EnemyControllerRanged>().TakeDamage(finalDamage);
+                                break;
+                            case "Stalker":
+                                if (hitObject.GetComponent<EnemyControllerStalker>() != null)
+                                    hitObject.GetComponent<EnemyControllerStalker>().TakeDamage(finalDamage);
+                                break;
+                            case "Boss":
+                                if (hitObject.GetComponent<EnemyControllerBoss>() != null)
+                                    hitObject.GetComponent<EnemyControllerBoss>().TakeDamage(finalDamage);
+                                break;
+                            case "Warrior":
+                                if (hitObject.GetComponent<EnemyControllerWarrior>() != null)
+                                    hitObject.GetComponent<EnemyControllerWarrior>().TakeDamage(finalDamage);
+                                break;
+                            case "Destroyable":
+                                if (hitObject.GetComponent<DestroyEnviormentObject>() != null)
+                                    hitObject.GetComponent<DestroyEnviormentObject>().DestroyObject();
+                                break;
+                            case "ExplosiveBarrel":
+                                hitObject.GetComponent<ExplosiveBarrel>()?.Explode();
+                                break;
                         }
                     }
 

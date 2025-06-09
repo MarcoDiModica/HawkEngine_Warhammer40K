@@ -27,6 +27,7 @@
 #include <MyGameEngine/PrefabManager.h>
 #include "MyAudioEngine/AudioManager.h"
 
+#include <thread> 
 // GameObject
 
 MonoObject* EngineBinds::GetGameObject(MonoObject* ref) {
@@ -1664,6 +1665,7 @@ void EngineBinds::SetTextBoxSize(MonoObject* textRef, float sizex, float sizey)
 bool EngineBinds::LoadScene(MonoString* sceneName)
 {
     char* C_sceneName = mono_string_to_utf8(sceneName);
+	SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
     if (Application->scene_serializer->DeSerialize(std::string(C_sceneName)))
     {
 		Application->hasChangedScene = true;

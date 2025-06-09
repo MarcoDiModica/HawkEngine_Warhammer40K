@@ -272,7 +272,7 @@ void MeshRenderer::UnbindMeshAfterRendering() const {
 }
 
 void MeshRenderer::DrawMeshElements() const {
-	if (!mesh || !mesh->model) return;
+	if (!mesh || !material || !owner || !mesh->model) return;
 
 	glDrawElements(GL_TRIANGLES, mesh->model->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
 }

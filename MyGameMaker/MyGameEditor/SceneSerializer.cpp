@@ -191,6 +191,37 @@ void SceneSerializer::RemoveComponentByName(GameObject* gameObject, const std::s
 	}
 }
 
+void SceneSerializer::TraverseGameObjects(std::shared_ptr<GameObject> gameObject) {
+	if (!gameObject) return;
+
+	if (gameObject->HasComponent<MeshRenderer>()) {
+		auto meshRenderer = gameObject->GetComponent<MeshRenderer>();
+		if (meshRenderer && meshRenderer->GetMesh()) {
+			meshRenderer->GetMesh()->loadToOpenGL();
+		}
+	}
+
+	if (gameObject->HasComponent<UIImageComponent>()) {
+		auto imageComponent = gameObject->GetComponent<UIImageComponent>();
+		if (imageComponent && imageComponent->GetTexture()) {
+			imageComponent->LoadMesh();
+		}
+	}
+
+	for (const auto& child : gameObject->GetChildren()) {
+		TraverseGameObjects(child);
+	}
+}
+
+void SceneSerializer::TraverseAllGameObjects() {
+	std::shared_ptr<Scene> activeScene = Application->root->GetActiveScene();
+	if (!activeScene) return;
+
+	for (const auto& gameObject : activeScene->_children) {
+		TraverseGameObjects(gameObject);
+	}
+}
+
 bool SceneSerializer::DeSerialize(const std::string& path) {
 	try {
 		YAML::Node rootNode = LoadFromFile(path);
@@ -223,15 +254,7 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 		Application->root->CreateScene(sceneName);
 		Application->root->SetActiveScene(sceneName);
 
-		ShaderManager::GetInstance().Initialize();
-
 		LOG(LogType::LOG_INFO, "Scene created: %s", sceneName.c_str());
-
-		//Application->root->GetResourceManager()->ClearAllMeshes();
-		//Application->root->GetResourceManager()->ClearAllMaterials();
-
-		//Application->root->GetResourceManager()->LoadMaterials();
-		//Application->root->GetResourceManager()->LoadModels();
 
 		for (int i = 0; ; i++) {
 			YAML::Node objectNode = rootNode["GameObject" + std::to_string(i)];
@@ -258,14 +281,7 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 		}
 		g_PendingScriptReferences.clear();
 
-		/*for (const auto& gameObject : Application->root->GetActiveScene()->_children) {
-			if (gameObject->HasComponent<MeshRenderer>()) {
-				auto meshRenderer = gameObject->GetComponent<MeshRenderer>();
-				if (meshRenderer->GetMesh()) {
-					meshRenderer->GetMesh()->loadToOpenGL();
-				}
-			}
-		}*/
+		TraverseAllGameObjects();
 
 		LOG(LogType::LOG_INFO, "Scene deserialized successfully: %s", sceneName.c_str());
 		Application->root->UpdateCameraPriority();
@@ -275,6 +291,7 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 	}
 	catch (const YAML::Exception& e) {
 		LOG(LogType::LOG_ERROR, "YAML Exception during deserialization: %s", e.what());
+		TraverseAllGameObjects();
 		Application->root->UpdateCameraPriority();
 		Application->physicsModule->ResetAllColliderTransforms();
 
@@ -282,14 +299,12 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 	}
 	catch (const std::exception& e) {
 		LOG(LogType::LOG_ERROR, "Exception during deserialization: %s", e.what());
+		TraverseAllGameObjects();
 		Application->root->UpdateCameraPriority();
 		Application->physicsModule->ResetAllColliderTransforms();
 
 		return false;
 	}
-
-	
-	//Application->root->GetActiveScene()->Start();
 }
 
 std::shared_ptr<GameObject> SceneSerializer::DeserializeGameObject(const YAML::Node& node) {

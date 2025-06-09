@@ -80,6 +80,8 @@ public class TyranidTentacles : MonoBehaviour
         stunTimer = 0f;
         canInteractToEscape = true;
         interactionScript.SpawnInteractText(canInteractToEscape);
+        if (HUD.InteractionElement != null)
+            HUD.InteractionElement.SetActive(true);
 
         if (!playerController.playerData.GodMode)
             playerController.BlockMovement();
@@ -96,7 +98,8 @@ public class TyranidTentacles : MonoBehaviour
         tentacleAnim?.PlayHideAnim();
         tentacleAnim2?.PlayHideAnim();
         tentacleAnim3?.PlayHideAnim();
-
+        if (HUD.InteractionElement != null)
+            HUD.InteractionElement.SetActive(false);
         ResetState();
     }
 
@@ -106,6 +109,8 @@ public class TyranidTentacles : MonoBehaviour
         isPlayerStunned = false;
         canInteractToEscape = false;
         interactionScript.SpawnInteractText(canInteractToEscape);
+        if (HUD.InteractionElement != null)
+            HUD.InteractionElement.SetActive(false);
         exposureTimer = 0f;
         stunTimer = 0f;
         player = null;

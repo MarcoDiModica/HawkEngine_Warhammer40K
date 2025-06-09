@@ -80,6 +80,8 @@ public class HUD : MonoBehaviour
     private float damageFlashTimer = 0f;
     private const float damageFlashDuration = 0.1f;
 
+    public static GameObject InteractionElement { get; private set; }
+
     private GameObject Text;
     private UIText text;
 
@@ -321,6 +323,16 @@ public class HUD : MonoBehaviour
         if (playerPowerUp == null)
         {
             Engineson.print("ERROR: PlayerPowerUp not found");
+        }
+
+        InteractionElement = GameObject.Find("Interaction");
+        if (InteractionElement == null)
+        {
+            Engineson.print("ERROR: Interaction element not found");
+        }
+        else
+        {
+            InteractionElement.SetActive(false);
         }
 
         pauseMenu = GameObject.Find("Canvas_PauseMenu");

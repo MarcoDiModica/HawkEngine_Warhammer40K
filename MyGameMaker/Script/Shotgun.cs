@@ -351,7 +351,7 @@ public class Shotgun : BaseWeapon
 
                 timeSinceLastShot = 0f;
 
-                if (playerData != null && !playerData.infiniteBullets)
+                if (playerData != null && !playerData.GodMode)
                     currentMagazineAmmo--;
 
                 int audio = Audio.PlayOneShot(shotgunShot);

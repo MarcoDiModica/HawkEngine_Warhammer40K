@@ -855,7 +855,7 @@ public class EnemyControllerMelee : EnemyController
     {
         try
         {
-            if (other == null || pc == null || !isLeaping)
+            if (other == null || pc == null || !isLeaping || isDead)
                 return;
 
             if (other.tag == "Player")

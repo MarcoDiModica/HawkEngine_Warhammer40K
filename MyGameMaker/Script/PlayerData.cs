@@ -2,7 +2,6 @@
 
 public class PlayerData
 {
-
     private static PlayerData instance = null;
 
     float health;
@@ -21,10 +20,17 @@ public class PlayerData
     public bool hasBoltgun = true;
     public bool hasShotgun = false;
     public bool hasRailgun = false;
+    public float biblePages = 0;
     public bool BoltgunUpgraded = false;
     public bool ShotgunUpgraded = false;
     public bool RailgunUpgraded = false;
     private string HealthSFX = "Assets/Audio/UI/Lose_Temporary_heart_2.wav";
+
+    // Variables for weapon bullets  
+    public int boltgunCurrentAmmo = 30;
+    public int boltgunMaxAmmo = 120;
+    public int shotgunCurrentAmmo = 8;
+    public int shotgunMaxAmmo = 50;
 
     private PlayerData()
     {
@@ -46,7 +52,7 @@ public class PlayerData
 
     public void TakeDamage(float damage)
     {
-        //First take damage from the temporary health, then, if it is 0, take damage from the max health
+        //First take damage from the temporary health, then, if it is 0, take damage from the max health  
         if (healthTemp > 0)
         {
             isHit = true;
@@ -62,9 +68,6 @@ public class PlayerData
             isHit = true;
             health -= damage;
         }
-
-        //Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
-
     }
 
     public void SetHealth(float health)
@@ -73,13 +76,13 @@ public class PlayerData
         {
             this.health = maxHealth;
             return;
-        }else if (health < 0)
+        }
+        else if (health < 0)
         {
             this.health = 0;
             return;
         }
         this.health = health;
-        //Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
     }
 
     public void SetTempHealth(float health)
@@ -116,14 +119,13 @@ public class PlayerData
             }
         }
         Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
-
     }
+
     public float GetHealth() { return health; }
     public void FullHealth()
     {
         health = maxHealth;
         healthTemp = maxHealthTemp;
-        //Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
     }
     public float GetHealthTemp() { return healthTemp; }
 

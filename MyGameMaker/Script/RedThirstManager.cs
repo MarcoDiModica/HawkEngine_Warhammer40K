@@ -51,11 +51,20 @@ public class RedThirstManager : MonoBehaviour
 
     public override void Start()
     {
+        if (SceneManager.loadAmmo)
+        {
+            biblePages = playerController.playerData.biblePages;
+        }
         redThirstBonus = 5f;
     }
 
     public override void Update(float deltaTime)
     {
+        //if (Input.GetKeyDown(KeyCode.B))
+        //{
+        //    biblePages += 1f;
+        //}
+
         if (isActivatingIdle)
         {
             FinishIdleBlackRageAnimation();

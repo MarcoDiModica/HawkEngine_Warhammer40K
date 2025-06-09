@@ -226,6 +226,10 @@ public class PlayerController : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        //if (Input.GetKeyDown(KeyCode.F5))
+        //{
+        //    SceneManager.LoadSceneWithFade("BetaRelease_Week1_Lvl2", 0.5f);
+        //}
         //In case the rb component is not well initialized, the set mass is made on the 2nd frame
         if (frameCounter < 2)
         {

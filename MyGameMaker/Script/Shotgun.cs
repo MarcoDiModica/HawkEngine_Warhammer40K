@@ -48,13 +48,35 @@ public class Shotgun : BaseWeapon
     {
         try
         {
+            playerController = gameObject.GetComponent<PlayerController>();
+            if (playerController == null)
+            {
+                Engineson.print("ERROR: PlayerController component not found on Shotgun");
+                return;
+            }
+            playerData = playerController.playerData;
+            if (playerData == null)
+            {
+                Engineson.print("ERROR: PlayerData not found on PlayerController");
+                return;
+            }
+
+
+            if (SceneManager.loadAmmo)
+            {
+                currentMagazineAmmo = playerData.shotgunCurrentAmmo;
+                currentTotalAmmo = playerData.shotgunMaxAmmo;
+            }
+            else
+            {
+                currentMagazineAmmo = magazineSize;
+                currentTotalAmmo = 24;
+            }
             // Initialize weapon properties
             damage = 20.0f;
             shootCadence = 0.4f;
             magazineSize = 8;
-            currentMagazineAmmo = magazineSize;
             maxAmmo = 50;
-            currentTotalAmmo = 24;
             reloadTime = 0.75f;
             range = 20f;
             timeToLerp = 0.3f;

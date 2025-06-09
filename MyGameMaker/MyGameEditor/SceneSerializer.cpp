@@ -258,14 +258,14 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 		}
 		g_PendingScriptReferences.clear();
 
-		for (const auto& gameObject : Application->root->GetActiveScene()->_children) {
+		/*for (const auto& gameObject : Application->root->GetActiveScene()->_children) {
 			if (gameObject->HasComponent<MeshRenderer>()) {
 				auto meshRenderer = gameObject->GetComponent<MeshRenderer>();
 				if (meshRenderer->GetMesh()) {
 					meshRenderer->GetMesh()->loadToOpenGL();
 				}
 			}
-		}
+		}*/
 
 		LOG(LogType::LOG_INFO, "Scene deserialized successfully: %s", sceneName.c_str());
 		Application->root->UpdateCameraPriority();
@@ -375,6 +375,8 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			}
 
 			meshRenderer->decode(componentData);
+
+			meshRenderer->GetMesh()->loadToOpenGL();
 		}
 		else if (componentName == "CameraComponent") {
 			auto camera = gameObject->AddComponent<CameraComponent>();

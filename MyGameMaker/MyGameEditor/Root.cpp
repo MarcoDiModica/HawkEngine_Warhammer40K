@@ -71,8 +71,8 @@ bool Root::Start()
 		//resourceManager->LoadResources();
 
 		//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
-		Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
-		//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
+		//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl1.scene");
+		Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Lvl2.scene");
 		//Application->scene_serializer->DeSerialize("Library/Scenes/BetaRelease_Week1_Bossfight.scene");
 	}
 	// Esto no se mutea

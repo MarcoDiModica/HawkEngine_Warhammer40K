@@ -77,6 +77,8 @@ void Window::Open(const char* title, unsigned short width, unsigned short height
 	else {
 		LOG(LogType::LOG_ERROR, "Failed to load icon: %s", SDL_GetError());
 	}
+
+	//ToggleFullscreen(); 
 }
 
 void Window::Close() {

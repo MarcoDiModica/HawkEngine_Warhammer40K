@@ -480,7 +480,8 @@ void Tweening::Update(float deltaTime) {
 	}
 
 	for (auto& tween : tweens) {
-		if (tween.object == nullptr || tween.object->IsDestroyed()) {
+		if (!tween.object) {
+			if (tween.object->IsDestroyed()) continue;
 			continue;
 		}
 

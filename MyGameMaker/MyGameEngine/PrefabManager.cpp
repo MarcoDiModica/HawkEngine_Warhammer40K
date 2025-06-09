@@ -114,7 +114,7 @@ void PrefabManager::ReloadGoToPrefab(GameObject* go, const std::string& prefabPa
     go = Application->scene_serializer->DeserializeGameObject(prefabNode).get();
 
     go->GetTransform()->SetPosition(originalTransform->GetPosition());
-    go->GetTransform()->SetRotation(originalTransform->GetEulerAngles());
+    go->GetTransform()->SetRotationQuat(originalTransform->GetRotation());
     go->GetTransform()->SetScale(originalTransform->GetScale());
 	LOG(LogType::LOG_INFO, "[ReloadGoToPrefab] Successfully reloaded GameObject from prefab: %s", prefabPath.c_str());
 }

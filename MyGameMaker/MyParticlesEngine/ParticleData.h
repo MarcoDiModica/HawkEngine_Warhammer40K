@@ -224,6 +224,14 @@ public:
 			return;
 		}
 
+		if (activeParticles == 0) {
+			return;
+		}
+
+		if (deltaTime <= 0.0f) {
+			return;
+		}
+
 		std::vector<InstanceData> instances;
 		instances.reserve(activeParticles);
 
@@ -281,18 +289,22 @@ public:
 				particleData[i].spriteSize = particleData[i].sheetSize;
 			}
 			
-		
-			
-
 			InstanceData instance;
 			instance.playOnAwake = particleData[i].playOnAwake;
 			instance.duration = particleData[i].duration;
 
-			if (particleData[i].isLocalSpace) 
+			if (particleData[i].isLocalSpace)
 			{
-				instance.position = particleData[i].position + (glm::vec3)particleData[i].parent->GetTransform()->GetPosition();
+				if (particleData[i].parent != nullptr && particleData[i].parent->GetTransform() != nullptr)
+				{
+					instance.position = particleData[i].position + (glm::vec3)particleData[i].parent->GetTransform()->GetPosition();
+				}
+				else
+				{
+					instance.position = particleData[i].position;
+				}
 			}
-			else 
+			else
 			{
 				instance.position = particleData[i].position;
 			}

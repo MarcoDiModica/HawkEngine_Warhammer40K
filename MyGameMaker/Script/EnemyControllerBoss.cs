@@ -385,7 +385,7 @@ public class EnemyControllerBoss : EnemyController
 
         if (isDead)
         {
-            renderer?.SetColor(new Vector4(1.0f, 0.0f, 0.0f, 1.0f)); 
+            renderer?.SetColor(new Vector4(1.0f, 1.0f, 1.0f, 1.0f)); 
             boxcollider.SetActive(false);
             Audio.Stop(BossTheme);
             Audio.Stop(BossThemePhase2); 

@@ -41,12 +41,7 @@ public class Test1 : MonoBehaviour
         {
             ToggleMusic();
         }
-
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            CycleVolume();
-        }
-
+      
         if (Input.GetKeyDown(KeyCode.B))
         {
             SwitchBackgroundMusic();

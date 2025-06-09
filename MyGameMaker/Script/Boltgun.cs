@@ -247,7 +247,7 @@ public class Boltgun : BaseWeapon
         {
             timeSinceLastShot = 0f;
 
-            if (!playerData.infiniteBullets)
+            if (!playerData.GodMode)
                 currentMagazineAmmo--;
 
             int audio = Audio.PlayOneShot(boltgunShot);

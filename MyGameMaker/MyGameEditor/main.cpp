@@ -898,6 +898,11 @@ int main(int argc, char** argv) {
 
 		case LOOP:
 
+			if (Application->quitGame) {
+				state = FREE;
+				break;
+			}
+
 #ifndef _BUILD
 			lights.clear();
 			Application->root->GetActiveScene()->_lights.clear();

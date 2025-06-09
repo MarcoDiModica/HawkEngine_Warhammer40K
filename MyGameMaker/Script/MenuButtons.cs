@@ -345,6 +345,7 @@ public class MenuButtons : MonoBehaviour
             }
             else if (selectedButton == button_quitButton)
             {
+                Engineson.Quit();
                 Audio.PlayOneShot(ConfirmSFX);
             }
         }

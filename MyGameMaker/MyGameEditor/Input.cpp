@@ -228,6 +228,9 @@ bool Input::processSDLEvents()
             switch (event.key.keysym.sym) {
             case SDLK_1:
                 break;
+            case SDLK_F11:
+                Application->window->ToggleFullscreen();
+				break;
             case SDLK_DELETE: {
                 int i = 0;
                 while (i < InputManagement->selectedObjects.size()) {

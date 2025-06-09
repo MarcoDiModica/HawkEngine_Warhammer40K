@@ -57,7 +57,7 @@ public class EnemyControllerWarrior : EnemyController
     public int maxAmmo;
     public int currentTotalAmmo;
     public float range;
-    public float timeToLerp = 0.4f;
+    public float timeToLerp = 0.6f;
 
     private bool componentsInitialized = false;
     // Death
@@ -400,7 +400,7 @@ public class EnemyControllerWarrior : EnemyController
                 Audio.PlayOneShot(DeathSound);
                 hasPlayedDeathSound = true;
             }
-            redThirstManager.AddRedThirstPoint(1);
+            redThirstManager?.AddRedThirstPoint(1);
             if (!hasDropped)
             {
                 GameObject dropManager = GameObject.Find("DropManager");
@@ -805,6 +805,8 @@ public class EnemyControllerWarrior : EnemyController
     {
         try
         {
+            if (currentHealth <= 0)
+                return;
 
             if (particles != null)
             {
@@ -812,9 +814,6 @@ public class EnemyControllerWarrior : EnemyController
             }
 
             StartFlashColor(flashColor, flashDuration);
-
-            if (currentHealth <= 0)
-                return;
 
             Audio.PlayOneShot(HitSound);
             currentHealth -= damage;

@@ -432,3 +432,34 @@ GameObject1:
             - 0
             - 0
       Children: ~
+GameObject2:
+  name: Empty
+  prefabPath: ""
+  uuid: 12300514705218668238
+  tag: Untagged
+  active: true
+  isStatic: false
+  useManualBoundingBox: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: TimerToMenu
+        fields:
+          timer: 0
+          timeToMenu: 15
+  Children: ~

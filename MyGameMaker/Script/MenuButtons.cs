@@ -43,6 +43,11 @@ public class MenuButtons : MonoBehaviour
     private string HoveredSFX = "Assets/Audio/UI/Hovered.wav";
     private string MainMenuMusic = "Assets/Audio/Music/MainTheme_BetaBuild2.ogg";
 
+    private string thunderSFX = "Assets/Audio/Thunder_Sound_effect.wav";
+    private float elapsedTime = 0.0f;
+    private bool hasPlayedThunder = false;
+    private float nextThunderTime = 2.5f;
+
     //     private AudioSource sound;
     //     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     //     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
@@ -148,6 +153,10 @@ public class MenuButtons : MonoBehaviour
         //         sound.LoadAudioClip(buttonHoveredFX);
         //         sound.LoadAudioClip(buttonClickedFX);
         //         sound.LoadAudioClip(buttonStartGameFX);
+
+        elapsedTime = 0.0f;
+        hasPlayedThunder = false;
+        nextThunderTime = 2.5f;
     }
 
     private bool IsBlockingMenuActive()
@@ -373,6 +382,14 @@ public class MenuButtons : MonoBehaviour
         {
             Engineson.print("ERROR: No Canvas object found");
             return;
+        }
+
+        elapsedTime += deltaTime;
+
+        if (elapsedTime >= nextThunderTime)
+        {
+            Audio.PlayOneShot(thunderSFX);
+            nextThunderTime += 5.0f;
         }
 
         if (creditsCanvas.IsActive() == true && creditsBGTransform != null)

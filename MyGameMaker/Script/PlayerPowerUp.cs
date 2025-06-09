@@ -272,8 +272,7 @@ public class PlayerPowerUp : MonoBehaviour
 
             BoltgunBullets boltgunBullets = other.GetComponent<BoltgunBullets>();
             if (boltgunBullets != null && playerController.playerShooting != null &&
-                playerController.playerShooting.boltgun != null &&
-                playerController.playerShooting.boltgun.currentTotalAmmo < playerController.playerShooting.boltgun.maxAmmo)
+                playerController.playerShooting.boltgun != null)
             {
                 boltgunBullets.OnPickUp(playerController);
                 int audioBoltgun = Audio.PlayOneShot(BoltgunBulletsPicked);
@@ -283,8 +282,7 @@ public class PlayerPowerUp : MonoBehaviour
             {
                 ShotgunShells shotgunShells = other.GetComponent<ShotgunShells>();
                 if (shotgunShells != null && playerController.playerShooting != null &&
-                    playerController.playerShooting.shotgun != null &&
-                    playerController.playerShooting.shotgun.currentTotalAmmo < playerController.playerShooting.shotgun.maxAmmo)
+                    playerController.playerShooting.shotgun != null )
                 {
                     shotgunShells.OnPickUp(playerController);
                     int audioShotgunShells = Audio.PlayOneShot(ShotgunShellsPicked);

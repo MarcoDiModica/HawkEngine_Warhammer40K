@@ -196,6 +196,12 @@ public class EnemyControllerWarrior : EnemyController
         if (!componentsInitialized)
             return;
 
+        if (needsCleanup)
+        {
+            CleanAllBullets();
+            needsCleanup = false;
+        }
+
         try
         {
             if (currentState == EnemyState.DEAD)
@@ -389,17 +395,19 @@ public class EnemyControllerWarrior : EnemyController
         }
     }
 
+    bool once = false;
+    private bool needsCleanup;
     private void HandleDeadState(float deltaTime)
     {
         try
         {
             renderer?.SetColor(new Vector4(1, 1, 1, 1));
 
-            if (!hasPlayedDeathSound)
-            {
-                Audio.PlayOneShot(DeathSound);
-                hasPlayedDeathSound = true;
-            }
+            //if (!hasPlayedDeathSound)
+            //{
+            //    Audio.PlayOneShot(DeathSound);
+            //    hasPlayedDeathSound = true;
+            //}
             redThirstManager?.AddRedThirstPoint(1);
             if (!hasDropped)
             {
@@ -415,22 +423,23 @@ public class EnemyControllerWarrior : EnemyController
                 hasDropped = true;
             }
 
-            if (anim != null)
-            {
-                anim.SetDeathAnimation();
-            }
+            anim?.SetDeathAnimation();
 
-            if (collider != null)
-            {
-                collider.SetActive(false);
-            }
+            collider?.SetActive(false);
+
+            CleanAllBullets();
 
             if (anim.isAnimFinished)
             {
                 deathTimer += deltaTime;
                 if (deathTimer >= deathCooldown)
                 {
-                    Engineson.Destroy(gameObject);
+                    if (!once)
+                    {
+                        CleanAllBullets();
+                        Engineson.Destroy(gameObject);
+                        once = true;
+                    }
                     return;
                 }
             }
@@ -625,11 +634,11 @@ public class EnemyControllerWarrior : EnemyController
 
     private void RemoveBulletAtIndex(int index)
     {
+        if (index < 0 || index >= bulletsObjects.Count)
+            return;
+
         try
         {
-            if (index < 0 || index >= bulletsObjects.Count)
-                return;
-
             if (bulletsObjects[index] != null)
             {
                 Engineson.Destroy(bulletsObjects[index]);
@@ -646,7 +655,7 @@ public class EnemyControllerWarrior : EnemyController
         catch (Exception e)
         {
             Engineson.print($"ERROR removing bullet at index {index}: {e.Message}");
-            CleanAllBullets();
+            needsCleanup = true;
         }
     }
 
@@ -805,24 +814,20 @@ public class EnemyControllerWarrior : EnemyController
     {
         try
         {
-            if (currentHealth <= 0)
-                return;
+            if (currentHealth <= 0) return;
 
             currentHealth -= damage;
 
             if (particles != null)
             {
-                EnemySquirting();
+                //EnemySquirting();
             }
 
             StartFlashColor(flashColor, flashDuration);
 
-            Audio.PlayOneShot(HitSound);
+            //Audio.PlayOneShot(HitSound);
 
-            if (anim != null)
-            {
-                anim.SetHurtAnimation();
-            }
+            anim?.SetHurtAnimation();
         }
         catch (Exception e)
         {

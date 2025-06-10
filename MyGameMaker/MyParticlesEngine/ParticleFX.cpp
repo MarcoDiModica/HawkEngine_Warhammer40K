@@ -2181,11 +2181,6 @@ std::unique_ptr<Component> ParticleFX::Clone(GameObject* owner) {
 }
 
 void ParticleFX::EmitParticle() {
-	if (!material || !material->imagePtr) {
-		LOG(LogType::LOG_ERROR, "Material or imagePtr is null in EmitParticle");
-		return;
-	}
-
 	ParticleData particle;
 
 	particle.duration = duration;
@@ -2234,8 +2229,14 @@ void ParticleFX::EmitParticle() {
 
 	particle.gravity = gravity;
 
-	particle.sheetSize = glm::vec2(material->imagePtr->width(),material->imagePtr->height());
-	
+	if (!material || !material->imagePtr) {
+		LOG(LogType::LOG_ERROR, "Material or imagePtr is null in EmitParticle");
+		return;
+	}
+	else {
+		particle.sheetSize = glm::vec2(material->imagePtr->width(), material->imagePtr->height());
+	}
+
 	particle.spriteSize = spriteSize;
 	
 	particle.useAnimation = useAnimation;

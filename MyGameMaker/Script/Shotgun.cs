@@ -133,172 +133,279 @@ public class Shotgun : BaseWeapon
         }
     }
 
+    private Dictionary<GameObject, int> hitCountThisFrame = new Dictionary<GameObject, int>();
+    private const int MAX_HITS_PER_ENEMY = 3;
+
     public override void Update(float deltaTime)
     {
         if (!componentsInitialized)
             return;
 
-        try
+        hitCountThisFrame.Clear();
+
+        if (timeSinceLastShot <= shootCadence + 0.5f)
         {
-            if (timeSinceLastShot <= shootCadence + 0.5f)
-            {
-                timeSinceLastShot += deltaTime;
-            }
+            timeSinceLastShot += deltaTime;
+        }
 
-            if (abilityOnCooldown)
+        if (abilityOnCooldown)
+        {
+            abilityTimer += deltaTime;
+            if (abilityTimer >= abilityCooldown)
             {
-                abilityTimer += deltaTime;
-                if (abilityTimer >= abilityCooldown)
+                abilityOnCooldown = false;
+                abilityTimer = 0.0f;
+            }
+        }
+
+        if (isReloading)
+        {
+            reloadTimer += deltaTime;
+            if (reloadTimer >= reloadTime)
+            {
+                isReloading = false;
+                reloadTimer = 0.0f;
+            }
+        }
+
+        if (strongShot)
+        {
+            strongshotTimer += deltaTime;
+            if (strongshotTimer >= strongshotCooldown)
+            {
+                Engineson.print("Damage reset");
+                damage = damage / 2;
+                strongShot = false;
+                strongshotTimer = 0.0f;
+            }
+        }
+
+        if (bulletsObjects.Count != bulletsPos.Count ||
+            bulletsObjects.Count != bulletDirections.Count ||
+            bulletsObjects.Count != bulletIntervals.Count ||
+            bulletsObjects.Count != bulletLifetimes.Count ||
+            bulletsObjects.Count != bulletHitEnemies.Count ||
+            bulletsObjects.Count != bulletStartPositions.Count)
+        {
+            Engineson.print("ERROR: Bullet collections out of sync, cleaning bullets");
+            CleanBullets();
+            return;
+        }
+
+        List<GameObject> objectsDestroyedThisFrame = new List<GameObject>();
+
+        for (int i = bulletsObjects.Count - 1; i >= 0; i--)
+        {
+            if (i >= bulletsObjects.Count || bulletsObjects[i] == null)
+            {
+                if (i < bulletsObjects.Count)
                 {
-                    abilityOnCooldown = false;
-                    abilityTimer = 0.0f;
+                    RemoveBulletAtIndex(i);
                 }
+                continue;
             }
 
-                if (isReloading)
+            try
             {
-                reloadTimer += deltaTime;
-                if (reloadTimer >= reloadTime)
+                bulletIntervals[i] += deltaTime;
+                bulletLifetimes[i] += deltaTime;
+
+                Vector3 currentPos = bulletsPos[i];
+                Vector3 direction = bulletDirections[i];
+                float speed = range / timeToLerp;
+                Vector3 displacement = direction * speed * deltaTime;
+                Vector3 newPos = currentPos + displacement;
+
+                bool shouldDestroy = false;
+                GameObject hitObject = null;
+
+                RayCast ray = new RayCast();
+                ray.PerformRaycast(currentPos, direction, displacement.Length());
+
+                if (ray.hit.isHit)
+                    hitObject = ray.hit.gameObject;
+
+                if (hitObject != null && !objectsDestroyedThisFrame.Contains(hitObject))
                 {
-                    isReloading = false;
-                    reloadTimer = 0.0f;
-                }
-            }
+                    string tag = hitObject.tag;
 
-            if (strongShot)
-            {
-                strongshotTimer += deltaTime;
-                if (strongshotTimer >= strongshotCooldown)
-                {
-                    Engineson.print("Damage reset");
-                    damage = damage / 2;
-                    strongShot = false;
-                    strongshotTimer = 0.0f;
-                }
-            }
-
-            if (bulletsObjects.Count != bulletsPos.Count ||
-                bulletsObjects.Count != bulletDirections.Count ||
-                bulletsObjects.Count != bulletIntervals.Count ||
-                bulletsObjects.Count != bulletLifetimes.Count ||
-                bulletsObjects.Count != bulletHitEnemies.Count ||
-                bulletsObjects.Count != bulletStartPositions.Count)
-            {
-                Engineson.print("ERROR: Bullet collections out of sync, cleaning bullets");
-                CleanBullets();
-                return;
-            }
-
-            for (int i = bulletsObjects.Count - 1; i >= 0; i--)
-            {
-                if (i >= bulletsObjects.Count || bulletsObjects[i] == null)
-                {
-                    continue;
-                }
-
-                try
-                {
-                    bulletIntervals[i] += deltaTime;
-                    bulletLifetimes[i] += deltaTime;
-
-                    Vector3 currentPos = bulletsPos[i];
-                    Vector3 direction = bulletDirections[i];
-                    float speed = range / timeToLerp;
-                    Vector3 displacement = direction * speed * deltaTime;
-                    Vector3 newPos = currentPos + displacement;
-
-                    bool shouldDestroy = false;
-                    GameObject hitObject = null;
-
-                    RayCast ray = new RayCast();
-                    ray.PerformRaycast(currentPos, direction, displacement.Length());
-
-                    if (ray.hit.isHit)
-                        hitObject = ray.hit.gameObject;
-
-                    if (hitObject != null)
+                    if (tag != "PowerUp" && tag != "Ammunition" && tag != "Player")
                     {
-                        string tag = hitObject.tag;
-                        if (tag != "PowerUp" && tag != "Ammunition" && tag != "Player")
+                        if (!hitCountThisFrame.ContainsKey(hitObject))
+                        {
+                            hitCountThisFrame[hitObject] = 0;
+                        }
+
+                        if (hitCountThisFrame[hitObject] < MAX_HITS_PER_ENEMY)
                         {
                             if (!bulletHitEnemies[i].Contains(hitObject))
                             {
                                 bulletHitEnemies[i].Add(hitObject);
+                                hitCountThisFrame[hitObject]++;
 
                                 float finalDamage = damage;
-                                if (redThirstManager != null)
+                                if (redThirstManager != null && redThirstManager.IsInBlackRage())
                                 {
-                                    if (redThirstManager.IsInBlackRage())
-                                        finalDamage += redThirstManager.redThirstBonus;
+                                    finalDamage += redThirstManager.redThirstBonus;
                                 }
 
-                                Engineson.print("Hit for this amount:" + finalDamage);
+                                Engineson.print($"Shotgun hit #{hitCountThisFrame[hitObject]} on {tag} for damage: {finalDamage}");
+
+                                bool targetDestroyed = false;
 
                                 switch (tag)
                                 {
                                     case "Melee":
-                                        EnemyControllerMelee melee = hitObject.GetComponent<EnemyControllerMelee>();
-                                        if (melee != null) melee.TakeDamage(finalDamage);
-                                        if (strongShot) melee.getStunned();
+                                        var meleeEnemy = hitObject.GetComponent<EnemyControllerMelee>();
+                                        if (meleeEnemy != null && meleeEnemy.currentHealth > 0)
+                                        {
+                                            float healthBefore = meleeEnemy.currentHealth;
+                                            meleeEnemy.TakeDamage(finalDamage);
+                                            if (strongShot && meleeEnemy.currentHealth > 0)
+                                                meleeEnemy.getStunned();
+                                            if (healthBefore > 0 && meleeEnemy.currentHealth <= 0)
+                                            {
+                                                targetDestroyed = true;
+                                                objectsDestroyedThisFrame.Add(hitObject);
+                                            }
+                                        }
                                         break;
+
                                     case "Ranged":
-                                        EnemyControllerRanged ranged = hitObject.GetComponent<EnemyControllerRanged>();
-                                        if (ranged != null) ranged.TakeDamage(finalDamage);
-                                        if (strongShot) ranged.getStunned();
+                                        var rangedEnemy = hitObject.GetComponent<EnemyControllerRanged>();
+                                        if (rangedEnemy != null && rangedEnemy.currentHealth > 0)
+                                        {
+                                            float healthBefore = rangedEnemy.currentHealth;
+                                            rangedEnemy.TakeDamage(finalDamage);
+                                            if (strongShot && rangedEnemy.currentHealth > 0)
+                                                rangedEnemy.getStunned();
+                                            if (healthBefore > 0 && rangedEnemy.currentHealth <= 0)
+                                            {
+                                                targetDestroyed = true;
+                                                objectsDestroyedThisFrame.Add(hitObject);
+                                            }
+                                        }
                                         break;
+
                                     case "Stalker":
-                                        EnemyControllerStalker stalker = hitObject.GetComponent<EnemyControllerStalker>();
-                                        if (stalker != null) stalker.TakeDamage(finalDamage);
-                                        if (strongShot) stalker.getStunned();
+                                        var stalkerEnemy = hitObject.GetComponent<EnemyControllerStalker>();
+                                        if (stalkerEnemy != null && stalkerEnemy.currentHealth > 0)
+                                        {
+                                            float healthBefore = stalkerEnemy.currentHealth;
+                                            stalkerEnemy.TakeDamage(finalDamage);
+                                            if (strongShot && stalkerEnemy.currentHealth > 0)
+                                                stalkerEnemy.getStunned();
+                                            if (healthBefore > 0 && stalkerEnemy.currentHealth <= 0)
+                                            {
+                                                targetDestroyed = true;
+                                                objectsDestroyedThisFrame.Add(hitObject);
+                                            }
+                                        }
                                         break;
+
                                     case "Boss":
-                                        EnemyControllerBoss boss = hitObject.GetComponent<EnemyControllerBoss>();
-                                        if (boss != null) boss.TakeDamage(finalDamage);
+                                        var bossEnemy = hitObject.GetComponent<EnemyControllerBoss>();
+                                        if (bossEnemy != null && bossEnemy.currentHealth > 0)
+                                        {
+                                            bossEnemy.TakeDamage(finalDamage);
+                                        }
                                         break;
+
                                     case "Warrior":
-                                        EnemyControllerWarrior warrior = hitObject.GetComponent<EnemyControllerWarrior>();
-                                        if (warrior != null) warrior.TakeDamage(finalDamage);
-                                        if (strongShot) warrior.getStunned();
+                                        var warriorEnemy = hitObject.GetComponent<EnemyControllerWarrior>();
+                                        if (warriorEnemy != null && warriorEnemy.currentHealth > 0)
+                                        {
+                                            float healthBefore = warriorEnemy.currentHealth;
+                                            warriorEnemy.TakeDamage(finalDamage);
+                                            if (strongShot && warriorEnemy.currentHealth > 0)
+                                                warriorEnemy.getStunned();
+                                            if (healthBefore > 0 && warriorEnemy.currentHealth <= 0)
+                                            {
+                                                targetDestroyed = true;
+                                                objectsDestroyedThisFrame.Add(hitObject);
+                                            }
+                                        }
                                         break;
+
                                     case "Destroyable":
-                                        DestroyEnviormentObject destroyable = hitObject.GetComponent<DestroyEnviormentObject>();
-                                        if (destroyable != null) destroyable.DestroyObject();
+                                        var destroyable = hitObject.GetComponent<DestroyEnviormentObject>();
+                                        if (destroyable != null)
+                                        {
+                                            destroyable.DestroyObject();
+                                            targetDestroyed = true;
+                                            objectsDestroyedThisFrame.Add(hitObject);
+                                        }
+                                        break;
+
+                                    case "ExplosiveBarrel":
+                                        var barrel = hitObject.GetComponent<ExplosiveBarrel>();
+                                        if (barrel != null)
+                                        {
+                                            barrel.Explode();
+                                            targetDestroyed = true;
+                                            objectsDestroyedThisFrame.Add(hitObject);
+                                        }
                                         break;
                                 }
-                            }
 
-                            if (playerData != null &&
-                                (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss" && tag != "Warrior")))
-                            {
-                                shouldDestroy = true;
+                                if (targetDestroyed)
+                                {
+                                    CleanDeadReferencesFromAllBullets(hitObject);
+                                }
                             }
                         }
-                    }
 
-                    bulletsPos[i] = newPos;
-
-                    Transform bulletTransform = bulletsObjects[i].GetComponent<Transform>();
-                    if (bulletTransform != null)
-                    {
-                        bulletTransform.position = newPos;
-                    }
-
-                    float distanceTraveled = Vector3.Distance(bulletStartPositions[i], newPos);
-                    if (distanceTraveled > range || shouldDestroy || bulletLifetimes[i] > 2.0f)
-                    {
-                        RemoveBulletAtIndex(i);
+                        if (playerData != null &&
+                            (!playerData.isPiercing || (playerData.isPiercing &&
+                             tag != "Melee" && tag != "Ranged" && tag != "Boss" && tag != "Warrior")))
+                        {
+                            shouldDestroy = true;
+                        }
                     }
                 }
-                catch (Exception e)
+
+                bulletsPos[i] = newPos;
+
+                Transform bulletTransform = bulletsObjects[i].GetComponent<Transform>();
+                if (bulletTransform != null)
                 {
-                    Engineson.print($"ERROR updating bullet {i}: {e.Message}");
+                    bulletTransform.position = newPos;
+                }
+
+                float distanceTraveled = Vector3.Distance(bulletStartPositions[i], newPos);
+                if (distanceTraveled > range || shouldDestroy || bulletLifetimes[i] > 2.0f)
+                {
                     RemoveBulletAtIndex(i);
                 }
+            }
+            catch (Exception e)
+            {
+                Engineson.print($"ERROR updating shotgun bullet {i}: {e.Message}");
+                RemoveBulletAtIndex(i);
+            }
+        }
+    }
+
+    private void CleanDeadReferencesFromAllBullets(GameObject deadObject)
+    {
+        try
+        {
+            for (int i = 0; i < bulletHitEnemies.Count; i++)
+            {
+                if (bulletHitEnemies[i] != null && bulletHitEnemies[i].Contains(deadObject))
+                {
+                    bulletHitEnemies[i].Remove(deadObject);
+                }
+            }
+
+            if (hitCountThisFrame.ContainsKey(deadObject))
+            {
+                hitCountThisFrame.Remove(deadObject);
             }
         }
         catch (Exception e)
         {
-            Engineson.print($"ERROR in Shotgun.Update: {e.Message}");
+            Engineson.print($"ERROR cleaning dead references: {e.Message}");
         }
     }
 

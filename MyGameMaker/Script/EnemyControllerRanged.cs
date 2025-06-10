@@ -48,7 +48,7 @@ public class EnemyControllerRanged : EnemyController
     private float deathTimer = 0f;
     private float deathCooldown = 2f;
     private bool hasChangedVelocity;
-
+    private bool needsCleanup;
     public override void Awake()
     {
         try
@@ -167,6 +167,11 @@ public class EnemyControllerRanged : EnemyController
             hasChangedVelocity = false;
         }
 
+        if (needsCleanup)
+        {
+            CleanBullets();
+            needsCleanup = false;
+        }
 
         if (!componentsInitialized)
             return;
@@ -443,9 +448,10 @@ public class EnemyControllerRanged : EnemyController
         catch (Exception e)
         {
             Engineson.print($"ERROR removing bullet at index {index}: {e.Message}");
-            CleanBullets();
+            needsCleanup = true;
         }
     }
+
     private void HandleSlowedState(float deltaTime)
     {
         try

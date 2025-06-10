@@ -169,7 +169,7 @@ public:
 			}
 		}
 
-		if (index >= maxParticles) {
+		if (index >= particleData.size()) {
 			return -1;
 		}
 
@@ -329,6 +329,12 @@ public:
 			instances.push_back(instance);
 		}
 
+		if (!glIsBuffer(instanceVBO) || !glIsVertexArray(vao) ||
+			!glIsBuffer(vbo) || !glIsBuffer(ebo)) {
+			LOG(LogType::LOG_ERROR, "Invalid OpenGL buffers detected");
+			return;
+		}
+
 		if (!instances.empty() && glIsBuffer(instanceVBO) && glIsVertexArray(vao)) {
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -339,6 +345,8 @@ public:
 
 			glBindVertexArray(vao);
 			glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, static_cast<GLsizei>(instances.size()));
+
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glBindVertexArray(0);
 
 			glDepthMask(GL_TRUE);

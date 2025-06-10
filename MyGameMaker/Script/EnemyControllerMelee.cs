@@ -70,6 +70,8 @@ public class EnemyControllerMelee : EnemyController
 
     private bool hasChangedVelocity = false;
 
+    private ParticleFX leapParticles;
+
     private Vector3 GetDodgeDirection(Vector3 forward)
     {
         try
@@ -188,6 +190,12 @@ public class EnemyControllerMelee : EnemyController
                 lastPathfindingPosition = enemyTransform.position;
                 chasePath = null;
                 pathInitialized = false;
+            }
+
+            if (leapParticles == null)
+            {
+                leapParticles = gameObject.AddComponent<ParticleFX>();
+                leapParticles.ApplyPreset(9);
             }
 
             currentState = EnemyState.IDLE;
@@ -465,11 +473,9 @@ public class EnemyControllerMelee : EnemyController
 
             try
             {
-                ParticleFX leapParticles = AddComponent<ParticleFX>();
                 if (leapParticles != null)
                 {
-                    //leapParticles.ApplyPreset(9);
-                    // leapParticles.EmitBurst(1);
+                    //leapParticles.EmitBurst(1);
                 }
             }
             catch (Exception particleEx)
@@ -808,19 +814,16 @@ public class EnemyControllerMelee : EnemyController
 
             if (particles != null)
             {
-                EnemySquirting();
+                //EnemySquirting();
             }
 
             currentHealth -= damage;
 
             StartFlashColor(flashColor, flashDuration);
 
-            if (anim != null)
-            {
-                anim.SetHitAnimation();
-            }
+            anim?.SetHitAnimation();
 
-            Audio.PlayOneShot(SFX_HIT);
+            //Audio.PlayOneShot(SFX_HIT);
         }
         catch (Exception e)
         {

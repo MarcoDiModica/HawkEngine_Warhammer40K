@@ -42,6 +42,7 @@ public class EnemyControllerStalker : EnemyController
     private GameObject lictorMesh;
 
     // Pounce
+    private ParticleFX pounceParticles;
     private float pounceRange = 30.0f;
     private float pounceTimer = 0f;
     private float pounceDuration = 1.5f;
@@ -112,6 +113,9 @@ public class EnemyControllerStalker : EnemyController
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Stalker";
+
+        pounceParticles = gameObject.AddComponent<ParticleFX>();
+        pounceParticles.ApplyPreset(35);
 
         distToChase = 75f;
 
@@ -453,8 +457,7 @@ public class EnemyControllerStalker : EnemyController
             hasPounce = false;
             isPouncing = true;
             Audio.PlayOneShot(SFX_POUNCE);
-            AddComponent<ParticleFX>().ApplyPreset(35);
-            GetComponent<ParticleFX>().EmitBurst(1);
+            pounceParticles.EmitBurst(1);
             Engineson.print("Pouncing");
             anim.SetLeapAnimation();
             rb.SetVelocity(rb.GetVelocity() * 120f);

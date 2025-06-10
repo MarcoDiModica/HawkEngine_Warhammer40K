@@ -278,6 +278,18 @@ void MeshRenderer::DrawMeshElements() const {
 	if (modelData.indexData.empty() || modelData.iBID == 0)
 		return;
 
+	GLint currentVAO;
+	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &currentVAO);
+	if (currentVAO != modelData.vA) {
+		glBindVertexArray(modelData.vA);
+	}
+
+	GLint currentElementArrayBuffer;
+	glGetIntegerv(GL_ELEMENT_ARRAY_BUFFER_BINDING, &currentElementArrayBuffer);
+	if (currentElementArrayBuffer != modelData.iBID) {
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelData.iBID);
+	}
+
 	glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(modelData.indexData.size()), GL_UNSIGNED_INT, nullptr);
 }
 

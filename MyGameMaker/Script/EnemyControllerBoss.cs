@@ -63,8 +63,8 @@ public class EnemyControllerBoss : EnemyController
     private float postAttackDelay = 2.0f;
     private float burrowTime = 2.0f;
     private bool isPreparingAttack = false;
-    private float slamDamage = 10.0f;
-    private float strikeDamage = 15.0f;
+    private float slamDamage = 15.0f;
+    private float strikeDamage = 20.0f;
     //private Vector3[] fixedPositions = new Vector3[]
     //{
     //    new Vector3(10,-21.807f,1020),

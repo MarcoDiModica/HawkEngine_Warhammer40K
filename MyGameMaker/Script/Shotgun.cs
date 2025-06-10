@@ -73,7 +73,7 @@ public class Shotgun : BaseWeapon
                 currentTotalAmmo = 24;
             }
             // Initialize weapon properties
-            damage = 20.0f;
+            damage = 15.0f;
             shootCadence = 0.4f;
             magazineSize = 8;
             maxAmmo = 50;

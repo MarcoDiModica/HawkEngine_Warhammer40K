@@ -180,6 +180,7 @@ public class EnemyControllerRanged : EnemyController
         {
             if (isDead)
             {
+                CleanBullets();
                 renderer?.SetColor(new Vector4(1, 1, 1, 1));
                 return;
             }
@@ -322,7 +323,7 @@ public class EnemyControllerRanged : EnemyController
             Engineson.print($"ERROR in EnemyControllerRanged.Update: {e.Message}");
         }
 
-        if (isFlashingColor)
+        if (isFlashingColor && !isDead)
         {
             flashTimer -= deltaTime;
             if (flashTimer <= 0.0f && renderer != null)
@@ -626,7 +627,7 @@ public class EnemyControllerRanged : EnemyController
 
             if (particles != null)
             {
-                EnemySquirting();
+                //EnemySquirting();
             }
 
             StartFlashColor(flashColor, flashDuration);
@@ -636,7 +637,7 @@ public class EnemyControllerRanged : EnemyController
                 anim.SetHitAnimation();
             }
 
-            Audio.PlayOneShot(SFX_HIT);
+            //Audio.PlayOneShot(SFX_HIT);
             Engineson.print("Enemy took damage: " + damage);
         }
         catch (Exception e)

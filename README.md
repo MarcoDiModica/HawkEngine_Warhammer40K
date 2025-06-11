@@ -11,7 +11,7 @@ HawkEngine is a game engine built in C++20, featuring C# scripting via Mono and 
 - **Animator Component**: Attach to GameObjects to manage animation states, transitions, and parameters, enabling complex character behaviors.
 
 ### 🔊 Audio System (FMOD)
-- **FMOD Integration**: Leverage FMOD for high-quality audio playback, including 2D/3D sound, spatialization, and real-time effects.
+- **FMOD Integration**: Leverage FMOD for high-quality audio playbook, including 2D/3D sound, spatialization, and real-time effects.
 - **Audio Components**: Add sound sources and listeners to GameObjects, with support for music, ambient sounds, and SFX.
 - **Audio Manager**: Centralized control for all audio events, volume, and playback states.
 
@@ -85,29 +85,29 @@ HawkEngine is a game engine built in C++20, featuring C# scripting via Mono and 
 
 ## 👥 Contributors
 
-- Marco Di Modica @MarcoDiModica
-- Pau Mora @Peluchomp
-- David Lastra @DavidLastra8
-- Ivo Montes @Ivomm9
-- Didac Garcia @D1dii
-- Alex Becerra @Bonifacioo04
-- Marc Avante @MarcoXAvante
-- Samuel Martinez @Samu163
-- Jordi Tur @Jordopol
-- Marco Baldan @Marco-v-Baldanll
-- Joan Marques @joanmarquesmesses
-- Noel Colon @Noelswag
-- Salva Bernades @SavaBernades
-- Yiwey ye @Yeeway69
-- Biel Linan @Drauguer
-- Miguel Tamano @migon25
-- Pablo Longaron @PabloL2003
-- Daniel Berrio @Onnda
-- Pol Celaya @pcelaya
-- Justo Tiscornia @Jusstox
-- Andrea Dona @poderoculto5
-- Sergi Gantzer @sgantzer12
-- Oliver @Esnaiper
+- Marco Di Modica [@MarcoDiModica](https://github.com/MarcoDiModica)
+- Pau Mora [@Peluchomp](https://github.com/Peluchomp)
+- David Lastra [@DavidLastra8](https://github.com/DavidLastra8)
+- Ivo Montes [@Ivomm9](https://github.com/Ivomm9)
+- Didac Garcia [@D1dii](https://github.com/D1dii)
+- Alex Becerra [@Bonifacioo04](https://github.com/Bonifacioo04)
+- Marc Avante [@MarcoXAvante](https://github.com/MarcoXAvante)
+- Samuel Martinez [@Samu163](https://github.com/Samu163)
+- Jordi Tur [@Jordopol](https://github.com/Jordopol)
+- Marco Baldan [@Marco-v-Baldanll](https://github.com/Marco-v-Baldanll)
+- Joan Marques [@joanmarquesmesses](https://github.com/joanmarquesmesses)
+- Noel Colon [@Noelswag](https://github.com/Noelswag)
+- Salva Bernades [@SavaBernades](https://github.com/SavaBernades)
+- Yiwey ye [@Yeeway69](https://github.com/Yeeway69)
+- Biel Linan [@Drauguer](https://github.com/Drauguer)
+- Miguel Tamano [@migon25](https://github.com/migon25)
+- Pablo Longaron [@PabloL2003](https://github.com/PabloL2003)
+- Daniel Berrio [@Onnda](https://github.com/Onnda)
+- Pol Celaya [@pcelaya](https://github.com/pcelaya)
+- Justo Tiscornia [@Jusstox](https://github.com/Jusstox)
+- Andrea Dona [@poderoculto5](https://github.com/poderoculto5)
+- Sergi Gantzer [@sgantzer12](https://github.com/sgantzer12)
+- Oliver [@Esnaiper](https://github.com/Esnaiper)
 
 ---
 

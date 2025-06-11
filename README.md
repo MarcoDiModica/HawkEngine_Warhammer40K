@@ -85,7 +85,29 @@ HawkEngine is a game engine built in C++20, featuring C# scripting via Mono and 
 
 ## 👥 Contributors
 
-- ASDFG
+- Marco Di Modica @MarcoDiModica
+- Pau Mora @Peluchomp
+- David Lastra @DavidLastra8
+- Ivo Montes @Ivomm9
+- Didac Garcia @D1dii
+- Alex Becerra @Bonifacioo04
+- Marc Avante @MarcoXAvante
+- Samuel Martinez @Samu163
+- Jordi Tur @Jordopol
+- Marco Baldan @Marco-v-Baldanll
+- Joan Marques @joanmarquesmesses
+- Noel Colon @Noelswag
+- Salva Bernades @SavaBernades
+- Yiwey ye @Yeeway69
+- Biel Linan @Drauguer
+- Miguel Tamano @migon25
+- Pablo Longaron @PabloL2003
+- Daniel Berrio @Onnda
+- Pol Celaya @pcelaya
+- Justo Tiscornia @Jusstox
+- Andrea Dona @poderoculto5
+- Sergi Gantzer @sgantzer12
+- Oliver @Esnaiper
 
 ---
 

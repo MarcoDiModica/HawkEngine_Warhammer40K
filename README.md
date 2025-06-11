@@ -49,10 +49,9 @@ HawkEngine is a game engine built in C++20, featuring C# scripting via Mono and 
 - **Serialization**: Save and load scenes in both YAML and binary formats for flexibility and performance.
 - **Prefab System**: Create reusable GameObject templates for rapid prototyping.
 
-### 🏗️ ECS System (Entity-Component-System)
-- **Modular Architecture**: High-performance ECS design for flexible and scalable game logic.
+### 🏗️ GameObject - Components
 - **Built-in Components**:
-  - Camera, Light, MeshRenderer, Material, Image, Shader, Mesh, Model, Transform, ParticleFX, ScriptComponent, Physics (RigidBody, Colliders), UI (Canvas, Image, Button, Text, etc.)
+  - Camera, Light, MeshRenderer, Transform, ParticleFX, ScriptComponent, Physics (RigidBody, Colliders), UI (Canvas, Image, Button, Text, etc.)
 
 ### 📦 Resource Manager
 - **Asset Caching**: Efficient loading and reuse of meshes, textures, materials, and audio.

@@ -7,15 +7,16 @@ public class EnemyControllerStalker : EnemyController
 {
     // Enemy Stats
     private float health = 250.0f;
-    private float clawDamage = 10.0f;
-    private float pounceDamage = 7.0f;
+    private float clawDamage = 7.0f;
+    private float pounceDamage = 5.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
+    private RedThirstManager redThirstManager;
 
     // Hurtbox
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
     private float hurtboxTimer = 0f;
-    private Vector3 hurtboxSize = new Vector3(10.0f, 10.0f, 10.0f); // Tamaño de la hurtbox
+    private Vector3 hurtboxSize = new Vector3(10.0f, 10.0f, 10.0f); // TamaÃ±o de la hurtbox
     private Vector3 hurtboxOffset = new Vector3(5.0f, -3.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
     private GameObject hurtboxObject;
 
@@ -41,6 +42,7 @@ public class EnemyControllerStalker : EnemyController
     private GameObject lictorMesh;
 
     // Pounce
+    private ParticleFX pounceParticles;
     private float pounceRange = 30.0f;
     private float pounceTimer = 0f;
     private float pounceDuration = 1.5f;
@@ -53,6 +55,7 @@ public class EnemyControllerStalker : EnemyController
     // Death
     private float deathTimer = 0f;
     private float deathCooldown = 2f;
+    private bool hasChangedVelocity;
 
     public override void Awake()
     {
@@ -76,11 +79,18 @@ public class EnemyControllerStalker : EnemyController
             return;
         }
 
+        renderer = lictorMesh?.GetComponent<MeshRenderer>();
+        if (renderer == null)
+        {
+            Engineson.print("ERROR: Lictor MeshRenderer not found!");
+            return;
+        }
+
         collider = gameObject.GetComponent<CapsuleCollider>();
         if (collider == null)
-        { 
-            Engineson.print("ERROR: Lictor Collider not found!"); 
-            return; 
+        {
+            Engineson.print("ERROR: Lictor Collider not found!");
+            return;
         }
 
         enemyTransform = gameObject.transform;
@@ -104,15 +114,37 @@ public class EnemyControllerStalker : EnemyController
         currentHealth = maxHealth;
         gameObject.tag = "Stalker";
 
+        pounceParticles = gameObject.AddComponent<ParticleFX>();
+        pounceParticles.ApplyPreset(35);
+
         distToChase = 75f;
+
+        redThirstManager = GameObject.Find("Player").GetComponent<RedThirstManager>();
+        rb.SetFriction(5);
     }
 
     public override void Update(float deltaTime)
     {
+        if (SceneManager.isPaused)
+        {
+            if (!hasChangedVelocity && rb != null)
+            {
+                rb.SetVelocity(Vector3.Zero);
+                hasChangedVelocity = true;
+            }
+            return;
+        }
+        else if (hasChangedVelocity)
+        {
+            hasChangedVelocity = false;
+        }
+
+
         if (currentState != EnemyState.DEAD)
         {
             if (currentHealth <= 0)
             {
+                renderer?.SetColor(new Vector4(1, 1, 1, 1));
                 currentState = EnemyState.DEAD;
                 anim.SetDefeatAnimation();
                 Audio.PlayOneShot(SFX_DEATH);
@@ -152,6 +184,16 @@ public class EnemyControllerStalker : EnemyController
                         anim.SetIdleAnimation();
                     }
                 }
+            }
+        }
+
+        if (isFlashingColor)
+        {
+            flashTimer -= deltaTime;
+            if (flashTimer <= 0.0f && renderer != null)
+            {
+                renderer.SetColor(originalColor);
+                isFlashingColor = false;
             }
         }
 
@@ -203,10 +245,10 @@ public class EnemyControllerStalker : EnemyController
                 rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
 
                 // Invisibility
-                if (distanceToPlayer < invisibilityRange && currentState != EnemyState.ATTACK && !isPouncing)
-                {
-                    Invisibility();
-                }
+               // if (distanceToPlayer < invisibilityRange && currentState != EnemyState.ATTACK && !isPouncing)
+               // {
+               //     Invisibility();
+               // }
 
                 // Pounce
                 if (distanceToPlayer < pounceRange && hasPounce && !isPouncing)
@@ -311,6 +353,7 @@ public class EnemyControllerStalker : EnemyController
                     }
                 }
                 hasDropped = true;
+                redThirstManager.AddRedThirstPoint(1);
                 collider.SetActive(false);
                 break;
 
@@ -334,11 +377,11 @@ public class EnemyControllerStalker : EnemyController
             hasPounce = true;
             isPouncing = false;
             lictorMesh.SetActive(true);
-            
+
 
             //gameObject.GetComponent<Collider>().SetPosition(startPosition);
         }
-        
+
     }
 
     private void HandleSlowedState(float deltaTime)
@@ -387,6 +430,7 @@ public class EnemyControllerStalker : EnemyController
     {
         if (currentHealth > 0)
         {
+            StartFlashColor(flashColor, flashDuration);
             currentHealth -= damage;
             anim.SetStunnedAnimation();
             //particles.ApplyPreset(19);
@@ -413,8 +457,7 @@ public class EnemyControllerStalker : EnemyController
             hasPounce = false;
             isPouncing = true;
             Audio.PlayOneShot(SFX_POUNCE);
-            AddComponent<ParticleFX>().ApplyPreset(35);
-            GetComponent<ParticleFX>().EmitBurst(1);
+            pounceParticles.EmitBurst(1);
             Engineson.print("Pouncing");
             anim.SetLeapAnimation();
             rb.SetVelocity(rb.GetVelocity() * 120f);
@@ -493,6 +536,23 @@ public class EnemyControllerStalker : EnemyController
         if (hurtboxObject != null)
         {
             Engineson.Destroy(hurtboxObject);
+        }
+    }
+
+    public void StartFlashColor(Vector4 color, float duration)
+    {
+        try
+        {
+            if (renderer != null)
+            {
+                renderer.SetColor(color);
+                isFlashingColor = true;
+                flashTimer = duration;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in StartFlashColor: {e.Message}");
         }
     }
 }

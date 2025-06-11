@@ -41,14 +41,9 @@ public class EnemySpawner : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < spawnRadius)
+        if (!spawnerActive && Vector3.Distance(transform.position, player.transform.position) < spawnRadius)
         {
             spawnerActive = true;
-        }
-        else
-        {
-            spawnerActive = false;
-            spawnTimer = 0;
         }
 
         if (spawnerActive)

@@ -22,6 +22,10 @@ public class Scene2ToScene3 : MonoBehaviour
         if (changeScene)
         {
             changeScene = false;
+            // Stop Level 2 music before transitioning to Boss fight
+            Audio.Stop("Assets/Audio/Music/Warhammer_Level2_Livingquarter.ogg");
+            Audio.Stop("Assets/Audio/Music/Warhammer_Level2_Church.ogg");
+            Audio.Stop("Assets/Audio/Music/Warhammer_Level2_TelecommunicationsHub.ogg");
             SceneManager.isLevel2 = false;
             SceneManager.isBossFight = true;
             SceneManager.LoadSceneWithFade("BetaRelease_Week1_Bossfight", 0.5f);

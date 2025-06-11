@@ -19,6 +19,8 @@ public class RedThirstManager : MonoBehaviour
     private const float RED_THIRST_DECAY_TIME = 5f;
 
     private float blackRageTimer = 0f;
+    private float comboTimer = 0f;
+    private const float COMBO_TIME_LIMIT = 3f;
     private const float BLACK_RAGE_DURATION = 5f;
     private const float BLACK_RAGE_EXTENSION = 2f;
     private PlayerController playerController;
@@ -36,7 +38,7 @@ public class RedThirstManager : MonoBehaviour
     private bool isActivatingWalking = false;
 
     private ParticleFX Angy;
-    
+
     public override void Awake()
     {
         playerController = gameObject.GetComponent<PlayerController>();
@@ -49,27 +51,19 @@ public class RedThirstManager : MonoBehaviour
 
     public override void Start()
     {
-    
+        if (SceneManager.loadAmmo)
+        {
+            biblePages = playerController.playerData.biblePages;
+        }
+        redThirstBonus = 5f;
     }
 
     public override void Update(float deltaTime)
     {
-        if (abilityCount > 0)
-        {
-            abilityUseTimer += deltaTime;
-            if (abilityUseTimer >= abilityTimeLimit)
-            {
-                ResetAbilityCombo();
-            }
-        }
-        if (differentGunsUsed > 0)
-        {
-            differentGunsUsedTimer += deltaTime;
-            if (differentGunsUsedTimer >= differentGunsUsedTimeLimit)
-            {
-                ResetWeaponCombo();
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.B))
+        //{
+        //    biblePages += 1f;
+        //}
 
         if (isActivatingIdle)
         {
@@ -83,7 +77,7 @@ public class RedThirstManager : MonoBehaviour
         {
             FinishWalkingBlackRageAnimation();
         }
-
+        HandleCombo(deltaTime);
         //redThirstDamageBonus = 5f + (biblePages * biblePages);
         if (isInBlackRage)
         {
@@ -91,9 +85,9 @@ public class RedThirstManager : MonoBehaviour
         }
         else
         {
-           
+
         }
-        if(Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.U))
         {
             AddRedThirstPoint(1);
             GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
@@ -133,7 +127,7 @@ public class RedThirstManager : MonoBehaviour
         if (playerController.playerAnimations.esk.IsAnimationFinished())
         {
             isActivatingWalking = false;
-            switch(playerController.currentShootingDirection)
+            switch (playerController.currentShootingDirection)
             {
                 case PlayerController.ShootingDirection.Forward:
                     playerController.playerAnimations.ActiveBlackRageToWalkingForwardAnimation();
@@ -151,87 +145,27 @@ public class RedThirstManager : MonoBehaviour
         }
     }
 
-    public void OnAbilityUsed()
-    {
-        abilityCount++;
+   public void HandleCombo(float deltaTime)
+   {
+        comboTimer += deltaTime;
 
-        if (abilityCount == 2)
+        if (comboTimer >= COMBO_TIME_LIMIT)
         {
-            AddRedThirstPoint(1);
-            ResetAbilityCombo();
+            redThirstPoints = 0;
         }
-        lastActionTime = 0f;
-        GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
-        gameObject.AddChild(redThirstVFX);
-        redThirstVFX.AddComponent<ParticleFX>();
-        ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
-        if (particleFX != null)
-        {
-            particleFX.ApplyPreset(32);
-            //particleFX.EmitBurst(100);
-            particleFX.EmitBurst(1);
-        }
-    }
-
-    public void OnWeaponUsed()
-    {
-        //differentGunsUsed++;
-        if(boltgunUsed && shotgunUsed || boltgunUsed && railgunUsed || shotgunUsed && railgunUsed)
-        {
-            AddRedThirstPoint(1);
-            ResetWeaponCombo();
-        }
-        lastActionTime = 0f;
-        //if (differentGunsUsed == 2)
-        //{
-        //    AddRedThirstPoint(1);
-        //    ResetWeaponCombo();
-        //}
-        //lastActionTime = 0f;
-        GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
-        gameObject.AddChild(redThirstVFX);
-        redThirstVFX.AddComponent<ParticleFX>();
-        ParticleFX particleFX = redThirstVFX.GetComponent<ParticleFX>();
-        if (particleFX != null)
-        {
-            particleFX.ApplyPreset(32);
-            //particleFX.EmitBurst(100);
-            particleFX.EmitBurst(1);
-        }
-    }
-    public void OnBoltgunUsed()
-    {
-        boltgunUsed = true;
-        OnWeaponUsed();
-
-    }
-    public void OnShotgunUsed()
-    {
-        shotgunUsed = true;
-        OnWeaponUsed();
-    }
-    public void OnRailgunUsed()
-    {
-        railgunUsed = true;
-        OnWeaponUsed();
-    }
-    private void ResetWeaponCombo()
-    {
-        differentGunsUsed = 0;
-        differentGunsUsedTimer = 0f;
-        boltgunUsed = false;
-        shotgunUsed = false;
-        railgunUsed = false;
-    }
-    private void ResetAbilityCombo()
-    {
-        abilityCount = 0;
-        abilityUseTimer = 0f;
-    }
-
+   }
     public void AddRedThirstPoint(int points)
     {
-        //Actualizar el HUD por cada Red Thirst Point
+        // Reiniciar comboTimer cada vez que se llama a esta función  
+        comboTimer = 0f;
+
+        // Si está en Black Rage, reiniciar el temporizador  
+        if (isInBlackRage && blackRageTimer >= 3f)
+        {
+            blackRageTimer = 3f;
+        }
+
+        // Actualizar el HUD por cada Red Thirst Point  
         redThirstPoints += points;
         if (redThirstPoints > maxRedThirstPoints)
         {
@@ -242,7 +176,7 @@ public class RedThirstManager : MonoBehaviour
         if (redThirstPoints >= maxRedThirstPoints && isInBlackRage == false)
         {
             ActivateBlackRage();
-            
+
             if (playerController.isIdle || playerController.isShootingStanding)
             {
                 isActivatingIdle = true;
@@ -272,7 +206,6 @@ public class RedThirstManager : MonoBehaviour
                         break;
                 }
             }
-
         }
 
         redThirstDecayTimer = 0f;
@@ -282,7 +215,8 @@ public class RedThirstManager : MonoBehaviour
     public void AddBiblePages(float points)
     {
         biblePages += points;
-        redThirstBonus = 5f + (biblePages * biblePages);
+
+        redThirstBonus = redThirstBonus + 5;
     }
 
     private void ActivateBlackRage()
@@ -291,7 +225,8 @@ public class RedThirstManager : MonoBehaviour
         blackRageTimer = 0f;
         Engineson.print("Black Rage Activated!");
         playerController.playerData.blackRageSpeed = redThirstBonus;
-        playerController.playerDash.canDash = false;
+        Engineson.print($"Black Rage Speed: {playerController.playerData.blackRageSpeed}");
+        //playerController.playerDash.canDash = false;
         Angy.Play();
         GameObject redThirstVFX = Engineson.CreateGameObject("RedThirstVFX", null);
         gameObject.AddChild(redThirstVFX);
@@ -312,7 +247,7 @@ public class RedThirstManager : MonoBehaviour
         redThirstPoints = 0;
         Engineson.print("Black Rage Deactivated");
         playerController.playerData.blackRageSpeed = 0f;
-        playerController.playerDash.canDash = true;
+        //playerController.playerDash.canDash = true;
     }
     private void HandleBlackRage(float deltaTime)
     {

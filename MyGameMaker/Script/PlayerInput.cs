@@ -53,10 +53,7 @@ public class PlayerInput : MonoBehaviour
 
       
 
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            SceneManager.LoadScene("Level2");
-        }
+      
     }
 
     private void UpdateMovementDirection()

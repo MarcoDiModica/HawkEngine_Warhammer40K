@@ -24,6 +24,8 @@ public class LoseScreen : MonoBehaviour
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
     private string LoseMusic = "Assets/Audio/Music/Warhammer_LoseScreen.ogg";
+    private string HoveredSFX = "Assets/Audio/UI/Hovered.wav";
+
     //     private AudioClip buttonHoveredFX;
     //     private AudioClip buttonClickedFX;
 
@@ -151,18 +153,18 @@ public class LoseScreen : MonoBehaviour
             if (i == selectedButtonIndex)
             {
                 buttons[i].SetState(ButtonState.HOVERED);
-                transforms[i].DOScaleUI(new Vector3(0.22f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+                transforms[i].DOScaleUI(new Vector3(0.22f, 0.181f, 0.5f), 0.3f, Modes.EASE_OUT);
 
                 if (!hasPlayedHoverSound[i])
                 {
-                    //sound?.Play(buttonHoveredFX);
+                    Audio.Play(HoveredSFX);
                     hasPlayedHoverSound[i] = true;
                 }
             }
             else
             {
                 buttons[i].SetState(ButtonState.DEFAULT);
-                transforms[i].DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+                transforms[i].DOScaleUI(new Vector3(0.182f, 0.181f, 0.4f), 0.3f, Modes.EASE_OUT);
                 hasPlayedHoverSound[i] = false;
             }
 
@@ -188,6 +190,7 @@ public class LoseScreen : MonoBehaviour
             if (selectedButton == button_loadLastCheckpoint)
             {
                 Audio.PlayOneShot(ConfirmSFX);
+                Audio.Stop(LoseMusic);
                 if (SceneManager.isLevel2)
                 {
                     SceneManager.LoadSceneFromCheckpoint("BetaRelease_Week1_Lvl2");
@@ -204,11 +207,13 @@ public class LoseScreen : MonoBehaviour
             else if (selectedButton == button_mainMenuButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
+                Audio.Stop(LoseMusic);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
+                Engineson.Quit();
                 // Aqu� puedes agregar la l�gica para salir del juego
             }
         }

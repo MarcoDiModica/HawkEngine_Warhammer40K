@@ -1,0 +1,42 @@
+name: MetalSlide
+prefabPath: ""
+uuid: 17246668630886156535
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - -89.8079833984375
+      - 12.441222190856934
+      - -0.43950223922729492
+    localRotation:
+      - -90.00001616485963
+      - 0
+      - 0
+    localScale:
+      - 3.030348539352417
+      - 3.0303485393525373
+      - 3.0303485393525373
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 11849809522211451117
+    material:
+      name: Rocks_Overworld_DefaultMaterial_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+        - 1
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+Children: ~

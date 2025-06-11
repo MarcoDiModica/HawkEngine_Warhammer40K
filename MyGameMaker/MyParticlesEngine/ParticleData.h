@@ -169,7 +169,7 @@ public:
 			}
 		}
 
-		if (index >= maxParticles) {
+		if (index >= particleData.size()) {
 			return -1;
 		}
 
@@ -224,8 +224,20 @@ public:
 			return;
 		}
 
+		GLenum error = glGetError();
+		if (error != GL_NO_ERROR) {
+			return;
+		}
+
+		if (!glIsBuffer(instanceVBO) || !glIsVertexArray(vao) ||
+			!glIsBuffer(vbo) || !glIsBuffer(ebo)) {
+			Cleanup();
+			Initialize();
+			return;
+		}
+
 		std::vector<InstanceData> instances;
-		instances.reserve(activeParticles);
+		size_t validParticles = 0;
 
 		for (size_t i = 0; i < particleData.size(); ++i) {
 			if (!particleData[i].active) {
@@ -234,66 +246,76 @@ public:
 
 			particleData[i].velocity += particleData[i].gravity * deltaTime;
 			particleData[i].age += deltaTime;
-
-
 			particleData[i].position += particleData[i].velocity * deltaTime;
-
-			
 
 			if (particleData[i].age >= particleData[i].maxLifetime) {
 				particleData[i].active = false;
-				activeParticles--;
+				continue;
+			}
+
+			validParticles++;
+
+			float lifetimeFraction = particleData[i].age / particleData[i].maxLifetime;
+
+			if (glm::length(particleData[i].gravity) == 0.0f) {
+				particleData[i].velocity = glm::mix(particleData[i].velocity, particleData[i].endVelocity, lifetimeFraction);
+			}
+
+			particleData[i].rotation += particleData[i].rotationSpeed / 360.0f;
+
+			if (particleData[i].useAnimation && particleData[i].sheetSize != glm::vec2(0, 0)) {
+				particleData[i].indexTimer += deltaTime;
+
+				if (particleData[i].indexTimer >= particleData[i].animSpeed) {
+					int maxIndex = CalculateMaxIndex(particleData[i].sheetSize, particleData[i].spriteSize);
+
+					if (particleData[i].animIndex >= maxIndex) {
+						particleData[i].animIndex = 0;
+					}
+					else {
+						particleData[i].animIndex++;
+					}
+
+					particleData[i].indexTimer = 0.0f;
+					particleData[i].spriteOffset = CalculateSpriteOffset(
+						particleData[i].animIndex,
+						particleData[i].sheetSize,
+						particleData[i].spriteSize
+					);
+				}
+			}
+			else {
+				particleData[i].spriteOffset = glm::vec2(0.0f, 0.0f);
+				particleData[i].spriteSize = particleData[i].sheetSize;
+			}
+		}
+
+		activeParticles = validParticles;
+
+		if (validParticles == 0) {
+			return;
+		}
+
+		instances.reserve(validParticles);
+
+		for (size_t i = 0; i < particleData.size(); ++i) {
+			if (!particleData[i].active) {
 				continue;
 			}
 
 			float lifetimeFraction = particleData[i].age / particleData[i].maxLifetime;
 
-			if (glm::length(particleData[i].gravity) == 0.0f)
-			{
-				particleData[i].velocity = glm::mix(particleData[i].velocity, particleData[i].endVelocity, lifetimeFraction);
-			}
-			
-		    particleData[i].rotation += particleData[i].rotationSpeed/360.0f;		
-
-			if (particleData[i].useAnimation && particleData[i].sheetSize != glm::vec2(0, 0))
-			{
-				particleData[i].indexTimer += deltaTime;
-
-				if (particleData[i].indexTimer >= particleData[i].animSpeed )
-				{
-					if (particleData[i].indexTimer >= CalculateMaxIndex(particleData[i].sheetSize, particleData[i].spriteSize))
-					{
-						particleData[i].indexTimer = 0;
-						particleData[i].animIndex = 0;
-					}
-					else
-					{
-						particleData[i].animIndex++;
-					}
-					particleData[i].indexTimer = 0.0f;
-					particleData[i].spriteOffset = CalculateSpriteOffset(particleData[i].animIndex, particleData[i].sheetSize, particleData[i].spriteSize);
-
-				}
-			}
-			else 
-			{
-				particleData[i].spriteOffset = glm::vec2(0.0f, 0.0f);
-				particleData[i].spriteSize = particleData[i].sheetSize;
-			}
-			
-		
-			
-
 			InstanceData instance;
 			instance.playOnAwake = particleData[i].playOnAwake;
 			instance.duration = particleData[i].duration;
 
-			if (particleData[i].isLocalSpace) 
-			{
-				instance.position = particleData[i].position + (glm::vec3)particleData[i].parent->GetTransform()->GetPosition();
+			if (particleData[i].isLocalSpace &&
+				particleData[i].parent != nullptr &&
+				particleData[i].parent->GetTransform() != nullptr) {
+				instance.position = particleData[i].position +
+					static_cast<glm::vec3>(particleData[i].parent->GetTransform()->GetPosition());
 			}
-			else 
-			{
+			else {
 				instance.position = particleData[i].position;
 			}
 
@@ -315,20 +337,62 @@ public:
 			instances.push_back(instance);
 		}
 
-		if (!instances.empty() && glIsBuffer(instanceVBO) && glIsVertexArray(vao)) {
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glDepthMask(GL_FALSE);
-
-			glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
-			glBufferSubData(GL_ARRAY_BUFFER, 0, instances.size() * sizeof(InstanceData), instances.data());
-
-			glBindVertexArray(vao);
-			glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, static_cast<GLsizei>(instances.size()));
-			glBindVertexArray(0);
-
-			glDepthMask(GL_TRUE);
+		if (instances.empty()) {
+			return;
 		}
+
+		if (instances.size() > maxParticles) {
+			return;
+		}
+
+		if (!glIsBuffer(instanceVBO) || !glIsVertexArray(vao)) {
+			return;
+		}
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDepthMask(GL_FALSE);
+
+		glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
+
+		GLint bufferSize;
+		glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &bufferSize);
+		size_t requiredSize = instances.size() * sizeof(InstanceData);
+
+		if (static_cast<size_t>(bufferSize) < requiredSize) {
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glDepthMask(GL_TRUE);
+			return;
+		}
+
+		glBufferSubData(GL_ARRAY_BUFFER, 0, requiredSize, instances.data());
+
+		error = glGetError();
+		if (error != GL_NO_ERROR) {
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glDepthMask(GL_TRUE);
+			return;
+		}
+
+		glBindVertexArray(vao);
+
+		error = glGetError();
+		if (error != GL_NO_ERROR) {
+			glBindVertexArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glDepthMask(GL_TRUE);
+			return;
+		}
+
+		glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, static_cast<GLsizei>(instances.size()));
+
+		error = glGetError();
+		if (error != GL_NO_ERROR) {
+		}
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+		glDepthMask(GL_TRUE);
 	}
 
 	void Cleanup() {

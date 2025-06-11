@@ -1,9 +1,10 @@
 name: Canvas_Interaction
 prefabPath: Assets\Prefabs\Canvas_Interaction_Level1.prefab.yaml
-uuid: 1136688395884097080
+uuid: 6591346108623782193
 tag: Untagged
 active: true
 isStatic: false
+useManualBoundingBox: false
 Components:
   Transform_Component:
     name: Transform_Component
@@ -51,8 +52,9 @@ Children:
     prefabPath: ""
     uuid: 13130904076925775302
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -105,6 +107,11 @@ Children:
         anim_speed: 0
         anim_index: 0
         anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Text
     prefabPath: ""
@@ -112,6 +119,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -164,6 +172,11 @@ Children:
         anim_speed: 0
         anim_index: 0
         anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: InteractText
     prefabPath: ""
@@ -171,6 +184,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -192,15 +206,15 @@ Children:
         enabled: true
         position:
           - 0.5
-          - 0.76700002
+          - 0.240999997
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.5
-          - 1
+          - 0.25999999
+          - 0.074000001
           - 1
         pivot_offset:
           - 0.5
@@ -209,27 +223,33 @@ Children:
       UIImageComponent:
         name: UIImageComponent
         enabled: true
-        texture_path: Library\Textures\PressE.png
+        texture_path: Library\Textures\UI\Popups_press_A.png
         use_animation: false
         sprite_size:
-          - 433
-          - 577
+          - 890
+          - 134
         sheet_size:
-          - 433
-          - 577
+          - 890
+          - 134
         sprite_offset:
           - 0
           - 0
         anim_speed: 0
         anim_index: 0
         anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: DialogueText
     prefabPath: ""
     uuid: 10956309997784768477
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -273,13 +293,13 @@ Children:
           - 0
           - 0
         color:
-          - 0
-          - 0.13611114
-          - 0.564202309
+          - 1
+          - 1
+          - 1
         fontSize: 31.7999992
         boxSize:
-          - 515.159973
-          - 178.079987
+          - 1200
+          - 200
         spriteSize:
           - 0
           - 0
@@ -294,8 +314,9 @@ Children:
     prefabPath: ""
     uuid: 15346485695273935848
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -348,6 +369,11 @@ Children:
         anim_speed: 0
         anim_index: 0
         anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
       UIButtonComponent:
         name: UIButtonComponent
         enabled: true
@@ -357,8 +383,9 @@ Children:
     prefabPath: ""
     uuid: 17300986230180643534
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -411,13 +438,19 @@ Children:
         anim_speed: 0
         anim_index: 0
         anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Choice1Text
     prefabPath: ""
     uuid: 3167637819058028581
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -482,8 +515,9 @@ Children:
     prefabPath: ""
     uuid: 1107335598865238639
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -536,6 +570,11 @@ Children:
         anim_speed: 0
         anim_index: 0
         anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
       UIButtonComponent:
         name: UIButtonComponent
         enabled: true
@@ -545,8 +584,9 @@ Children:
     prefabPath: ""
     uuid: 10939971732139258591
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -599,13 +639,19 @@ Children:
         anim_speed: 0
         anim_index: 0
         anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~
   - name: Choice2Text
     prefabPath: ""
     uuid: 4040656339884535183
     tag: Untagged
-    active: true
+    active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component

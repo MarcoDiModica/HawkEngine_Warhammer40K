@@ -39,7 +39,7 @@ public class BoltgunBullets : PickUp
     public override void Update(float deltaTime)
     {
         elapsedTime += deltaTime;
-        PowerUpMovment(elapsedTime, deltaTime);
+      //  PowerUpMovment(elapsedTime, deltaTime);
         if (elapsedTime >= lifeTime)
         {
             DestroyPickUp();
@@ -74,7 +74,7 @@ public class BoltgunBullets : PickUp
             return;
 
         float newY = startPos.Y + (float)Math.Sin(time * floatSpeed) * floatHeight;
-        Transform.position = new Vector3(Transform.position.X, newY, Transform.position.Z);
+        Transform.position += new Vector3(Transform.position.X, newY, Transform.position.Z);
 
         Transform.Rotate((rotationSpeed * dt) * ((float)Math.PI / 180f), Vector3.UnitY);
     }

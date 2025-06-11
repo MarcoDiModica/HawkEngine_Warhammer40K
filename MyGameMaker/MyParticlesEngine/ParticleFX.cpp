@@ -1854,7 +1854,75 @@ false,										 // Random rotation
 true 									     // Is Local Space
 	};
 
+	const ParticlePreset IVO_Smoke = {
+			ParticleType::IVO_SMOKE,
+			false,						   // PlayOnAwake
+			2.0f,						   // Duration (only if one-shot)
+			glm::vec3(0.95f, 0.7f, 0.2f),   // Start color (light gray)
+			glm::vec3(0.95f, 0.7f, 0.2f),   // End color (dark gray)
+			0.9f,                          // Alpha start
+			0.9f,                          // Alpha end
+			0.5f,                          // Size start
+			2.0f,                          // Size end
+			0.20f,                          // Min lifetime
+			0.40f,                          // Max lifetime
+			0.5f,                          // Min speed
+			4.0f,                          // Max speed
+			4.0f,						   // End Speed
+			glm::vec3(0.0f,-0.1f,0.0f),	   // Gravity (negative for upward)
+			0.2f,                          // Rotation speed
+			3.0f,                         // Emission rate (particles per second)
+			EmitterShape::CONE,            // Shape
+			0.2f,                          // Cone base radius
+			1.0f,                          // Cone height
+			20.0f,                         // Cone angle in degrees
+			glm::vec2(256,256),			   // Sprite size
+			true,						   // Use animation
+			true,						   // Random animation Index
+			0.5f,						   // Animation speed
+			0.0f,						   // Start rotation
+			true,						   // Random rotation
+			0.5f,						   // Min scale
+			0.0f,						   // Max scale
+			"Assets/Textures/niebla30Frames.png", // Texture path
+			false						   // Is Local Space
+	};
+	const ParticlePreset Ivo_Blackrage = {
+		ParticleType::IVO_BLACKRAGE,
+		true,									   // PlayOnAwake
+		1,										   // Duration (only if one-shot)
+		glm::vec3(0.15,0,0),   					   // Start color (white)
+		glm::vec3(0.15,0,0),   					   // End color (white)
+		0.23f,                          		   // Alpha start
+		0.23f,                          		   // Alpha end
+		150.0f,                          		   // Size start
+		150.0f,                          		   // Size end
+		5,                          			   // Min lifetime
+		5,                         				   // Max lifetime
+		0.0f,                          			   // Min speed
+		0.0f,                          			   // Max speed
+		0.0f,									   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   		   // Gravity (negative for upward)
+		0,                          			   // Rotation speed
+		1.f,                         			   // Emission rate (particles per second)
+		EmitterShape::POINT,            		   // Shape
+		0.2f,                          			   // Cone base radius
+		1.0f,                          			   // Cone height
+		20.0f,                         			   // Cone angle in degrees
+		glm::vec2(256,256),		   				   // Sprite size
+		true,									   // Use animation
+		false,									   // Random animation Index
+		7.2f,									   // Animation speed
+		0.0f,									   // Start rotation
+		true,									   // Random rotation
+		1.0f,									   // Min scale
+		1.0f,									   // Max scale
+		"Assets/Textures/niebla30Frames.png", 	   // Texture path
+		false 									   // Is Local Space
+	};
 }
+
+
 
 ParticleFX::ParticleFX(GameObject* owner)
 	: Component(owner)
@@ -1919,6 +1987,10 @@ void ParticleFX::Start() {
 }
 
 void ParticleFX::Update(float deltaTime) {
+	if (!owner || !owner->GetTransform()) {
+		return; 
+	}
+
 	GLint lastProgram;
 	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
 
@@ -1999,6 +2071,10 @@ void ParticleFX::Update(float deltaTime) {
 }
 
 void ParticleFX::RenderGameView() {
+	if (!owner || !owner->GetTransform()) {
+		return; 
+	}
+
 	GLint lastProgram;
 	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
 
@@ -2026,7 +2102,7 @@ void ParticleFX::RenderGameView() {
 
 	if (material) {
 		ParticleShader* particleShader = static_cast<ParticleShader*>(
-			ShaderManager::GetInstance().GetShader(material->GetShaderType()));
+		ShaderManager::GetInstance().GetShader(material->GetShaderType()));
 
 		if (particleShader) {
 			particleShader->SetCameraPosition(cameraPosition);
@@ -2153,8 +2229,14 @@ void ParticleFX::EmitParticle() {
 
 	particle.gravity = gravity;
 
-	particle.sheetSize = glm::vec2(material->imagePtr->width(),material->imagePtr->height());
-	
+	if (!material || !material->imagePtr) {
+		LOG(LogType::LOG_ERROR, "Material or imagePtr is null in EmitParticle");
+		return;
+	}
+	else {
+		particle.sheetSize = glm::vec2(material->imagePtr->width(), material->imagePtr->height());
+	}
+
 	particle.spriteSize = spriteSize;
 	
 	particle.useAnimation = useAnimation;
@@ -2497,6 +2579,14 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::GUN_TRAIL:
 		preset = ParticlePresets::Gun_trail;
+		SetOneShot(false);
+		break;
+	case ParticleType::IVO_SMOKE:
+		preset = ParticlePresets::IVO_Smoke;
+		SetOneShot(false);
+		break;
+	case ParticleType::IVO_BLACKRAGE:
+		preset = ParticlePresets::Ivo_Blackrage;
 		SetOneShot(false);
 		break;
 	default:

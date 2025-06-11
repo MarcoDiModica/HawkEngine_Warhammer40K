@@ -27,6 +27,7 @@
 #include <MyGameEngine/PrefabManager.h>
 #include "MyAudioEngine/AudioManager.h"
 
+#include <thread> 
 // GameObject
 
 MonoObject* EngineBinds::GetGameObject(MonoObject* ref) {
@@ -632,6 +633,15 @@ glm::vec3 EngineBinds::GetMousePosition() {
     pos.y = InputManagement->GetMouseY();
     pos.z = InputManagement->GetMouseZ();
     return pos;
+}
+
+void EngineBinds::QuitGame()
+{
+	if (Application) {
+		Application->quit();
+	} else {
+		LOG(LogType::LOG_ERROR, "Application instance is null in QuitGame");
+	}
 }
 
 // Transform
@@ -1655,9 +1665,9 @@ void EngineBinds::SetTextBoxSize(MonoObject* textRef, float sizex, float sizey)
 bool EngineBinds::LoadScene(MonoString* sceneName)
 {
     char* C_sceneName = mono_string_to_utf8(sceneName);
+	SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
     if (Application->scene_serializer->DeSerialize(std::string(C_sceneName)))
     {
-		//Application->physicsModule->linkPhysicsToScene = false; //Comment this to make the enemies apear on their position 
 		Application->hasChangedScene = true;
 		return true;
     }
@@ -1666,9 +1676,12 @@ bool EngineBinds::LoadScene(MonoString* sceneName)
 
 void EngineBinds::SetScenePlay()
 {
+	Application->physicsModule->ResetAllColliderTransforms();
+	Application->play = true;
 	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+	Application->physicsModule->linkPhysicsToScene = true;
 	SceneManagement->Awake();
-	SceneManagement->currentScene->Start();
+	SceneManagement->Start();
 }
 
 void EngineBinds::ApplyPreset(MonoObject* particleRef, int particleType)
@@ -1806,6 +1819,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
     mono_add_internal_call("MonoBehaviour::Instantiate", (const void*)InstantiatePrefab);
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
+    mono_add_internal_call("HawkEngine.Engineson::Quit", (const void*)QuitGame);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
     mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GameObjectGetTag);
     mono_add_internal_call("HawkEngine.GameObject::SetName", (const void*) SetName );
@@ -1821,7 +1835,6 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
     mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)GameObjectSetActive);
     mono_add_internal_call("HawkEngine.GameObject::IsActive", (const void*)GameObjectIsActive);
-
 
 
     // Input

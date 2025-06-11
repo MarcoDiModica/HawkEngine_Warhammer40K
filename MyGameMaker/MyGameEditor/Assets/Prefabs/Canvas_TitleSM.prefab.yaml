@@ -1,9 +1,10 @@
 name: Canvas_TitleSM
-prefabPath: ""
-uuid: 7090175036182397745
+prefabPath: Assets\Prefabs\Canvas_TitleSM.prefab.yaml
+uuid: 15444793993539794259
 tag: Untagged
-active: true
+active: false
 isStatic: false
+useManualBoundingBox: false
 Components:
   Transform_Component:
     name: Transform_Component
@@ -53,6 +54,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -103,4 +105,11 @@ Children:
           - 0
           - 0
         anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~

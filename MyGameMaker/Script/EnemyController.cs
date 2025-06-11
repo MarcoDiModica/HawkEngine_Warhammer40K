@@ -90,8 +90,9 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
                 break;
 
         }
-        Engineson.print("preset is " + preset + "value is " + value);
+
         AddComponent<ParticleFX>().ApplyPreset(preset);
-        GetComponent<ParticleFX>().EmitBurst(1);
+        
+        GetComponent<ParticleFX>()?.EmitBurst(1);
     }
 }

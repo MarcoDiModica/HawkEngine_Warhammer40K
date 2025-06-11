@@ -16,6 +16,7 @@ public class EnemyControllerMelee : EnemyController
     private float dodgeTimer = 0f;
     private HormagauntAnimation anim;
     private PlayerController pc;
+    private RedThirstManager redThirstManager;
 
     private bool isCombatMusicPlaying = false;
     private const string MUSIC_COMBAT = "Assets/Audio/PlaceHolder_CombatMusic.wav";
@@ -26,8 +27,8 @@ public class EnemyControllerMelee : EnemyController
     private const string SFX_LEAP = "Assets/Audio/SFX/Enemies/Hormagaunt/Hormagaunt_Leap_Atack.wav";
 
     private float health = 50.0f;
-    private float clawDamage = 7.0f;
-    private float leapDamage = 7.0f;
+    private float clawDamage = 10.0f;
+    private float leapDamage = 0.0f;
     private float distanceToPlayer;
     private bool hasDropped = false;
 
@@ -66,6 +67,10 @@ public class EnemyControllerMelee : EnemyController
     public bool isSpawning = false;
     public float spawnTimer = 0.0f;
     public float spawnDuration = 4.0f;
+
+    private bool hasChangedVelocity = false;
+
+    private ParticleFX leapParticles;
 
     private Vector3 GetDodgeDirection(Vector3 forward)
     {
@@ -187,19 +192,42 @@ public class EnemyControllerMelee : EnemyController
                 pathInitialized = false;
             }
 
+            if (leapParticles == null)
+            {
+                leapParticles = gameObject.AddComponent<ParticleFX>();
+                leapParticles.ApplyPreset(9);
+            }
+
             currentState = EnemyState.IDLE;
 
             componentsInitialized = true;
             Engineson.print("EnemyControllerMelee initialized successfully");
+
+            redThirstManager = playerObj.GetComponent<RedThirstManager>();
         }
         catch (Exception e)
         {
             Engineson.print($"ERROR in EnemyControllerMelee.Start: {e.Message}");
         }
+        rb.SetMass(2);
     }
 
     public override void Update(float deltaTime)
     {
+        if (SceneManager.isPaused)
+        {
+            if (!hasChangedVelocity && rb != null)
+            {
+                rb.SetVelocity(Vector3.Zero);
+                hasChangedVelocity = true;
+            }
+            return;
+        }
+        else if (hasChangedVelocity)
+        {
+            hasChangedVelocity = false;
+        }
+
         if (!componentsInitialized)
             return;
 
@@ -319,7 +347,8 @@ public class EnemyControllerMelee : EnemyController
                 if (isSlowed)
                 {
                     desiredVelocity = directDir * slowedSpeed;
-                } else
+                }
+                else
                 {
                     desiredVelocity = directDir * speedMovement;
                 }
@@ -412,7 +441,7 @@ public class EnemyControllerMelee : EnemyController
         collider.SetActive(false);
         try
         {
- 
+
             spawnTimer += deltaTime;
             anim.SetClimbingAnimation();
 
@@ -444,11 +473,9 @@ public class EnemyControllerMelee : EnemyController
 
             try
             {
-                ParticleFX leapParticles = AddComponent<ParticleFX>();
                 if (leapParticles != null)
                 {
-                    //leapParticles.ApplyPreset(9);
-                   // leapParticles.EmitBurst(1);
+                    //leapParticles.EmitBurst(1);
                 }
             }
             catch (Exception particleEx)
@@ -480,7 +507,7 @@ public class EnemyControllerMelee : EnemyController
                 isSlowed = false;
                 slowedTimer = 0.0f;
             }
-        } 
+        }
         catch (Exception e)
         {
             Engineson.print($"Error in HandleSlowedState: {e.Message}");
@@ -505,9 +532,6 @@ public class EnemyControllerMelee : EnemyController
                 hasDropped = true;
             }
 
-
-
-
             if (isFlashingColor)
             {
                 flashTimer -= deltaTime;
@@ -523,7 +547,6 @@ public class EnemyControllerMelee : EnemyController
                     bool once = false;
                     if (enemyTransform != null && !once)
                     {
-                        enemyTransform.DOScale(Vector3.Zero, 0.1f, Modes.EASE_OUT);
                         once = true;
                     }
 
@@ -552,7 +575,7 @@ public class EnemyControllerMelee : EnemyController
         {
             currentState = EnemyState.DEAD;
             isDead = true;
-
+            redThirstManager.AddRedThirstPoint(1);
             renderer?.SetColor(new Vector4(1, 1, 1, 1));
 
             if (anim != null)
@@ -786,25 +809,21 @@ public class EnemyControllerMelee : EnemyController
     {
         try
         {
-            if (particles != null)
-            {
-                // Emit blood particles
-                EnemySquirting();
-            }
-
             if (currentHealth <= 0)
                 return;
+
+            if (particles != null)
+            {
+                //EnemySquirting();
+            }
 
             currentHealth -= damage;
 
             StartFlashColor(flashColor, flashDuration);
 
-            if (anim != null)
-            {
-                anim.SetHitAnimation();
-            }
+            anim?.SetHitAnimation();
 
-            Audio.PlayOneShot(SFX_HIT);
+            //Audio.PlayOneShot(SFX_HIT);
         }
         catch (Exception e)
         {
@@ -839,8 +858,7 @@ public class EnemyControllerMelee : EnemyController
     {
         try
         {
-            if (other == null || pc == null || !isLeaping)
-                return;
+            if (other == null || pc == null || !isLeaping || isDead) return;
 
             if (other.tag == "Player")
             {
@@ -884,7 +902,7 @@ public class EnemyControllerMelee : EnemyController
         {
             if (renderer != null)
             {
-                renderer.SetColor(color);
+                renderer?.SetColor(color);
                 isFlashingColor = true;
                 flashTimer = duration;
             }

@@ -16,6 +16,7 @@ public class EnemyControllerWarrior : EnemyController
     private Vector3 hurtboxSize = new Vector3(10.0f, 10.0f, 10.0f);
     private Vector3 hurtboxOffset = new Vector3(5.0f, -3.0f, 0.0f);
     private GameObject hurtboxObject;
+    private RedThirstManager redThirstManager;
 
     private float projectileRange = 30;
     private List<BulletData> activeProjectiles = new List<BulletData>();
@@ -56,12 +57,13 @@ public class EnemyControllerWarrior : EnemyController
     public int maxAmmo;
     public int currentTotalAmmo;
     public float range;
-    public float timeToLerp = 0.4f;
+    public float timeToLerp = 0.6f;
 
-    private bool componentsInitialized = false;    
+    private bool componentsInitialized = false;
     // Death
     private float deathTimer = 0f;
     private float deathCooldown = 2f;
+    private bool hasChangedVelocity;
 
     public void SetVFX(int id = 34)
     {
@@ -144,6 +146,13 @@ public class EnemyControllerWarrior : EnemyController
                 return;
             }
 
+            renderer = meshObject?.GetComponent<MeshRenderer>();
+            if (renderer == null)
+            {
+                Engineson.print("ERROR: MeshRenderer component not found!");
+                return;
+            }
+
             particles = gameObject.AddComponent<ParticleFX>();
             if (particles != null)
             {
@@ -156,8 +165,11 @@ public class EnemyControllerWarrior : EnemyController
             projectileDamage = 20.0f;
             range = 100f;
             timeToLerp = 0.1f;
+            rb.SetFriction(5);
 
             componentsInitialized = true;
+
+            redThirstManager = playerObj.GetComponent<RedThirstManager>();
         }
         catch (Exception e)
         {
@@ -167,8 +179,28 @@ public class EnemyControllerWarrior : EnemyController
 
     public override void Update(float deltaTime)
     {
+        if (SceneManager.isPaused)
+        {
+            if (!hasChangedVelocity && rb != null)
+            {
+                rb.SetVelocity(Vector3.Zero);
+                hasChangedVelocity = true;
+            }
+            return;
+        }
+        else if (hasChangedVelocity)
+        {
+            hasChangedVelocity = false;
+        }
+
         if (!componentsInitialized)
             return;
+
+        if (needsCleanup)
+        {
+            CleanAllBullets();
+            needsCleanup = false;
+        }
 
         try
         {
@@ -214,6 +246,16 @@ public class EnemyControllerWarrior : EnemyController
 
                 default:
                     break;
+            }
+
+            if (isFlashingColor)
+            {
+                flashTimer -= deltaTime;
+                if (flashTimer <= 0.0f && renderer != null)
+                {
+                    renderer.SetColor(originalColor);
+                    isFlashingColor = false;
+                }
             }
 
             CleanupProjectiles();
@@ -353,16 +395,20 @@ public class EnemyControllerWarrior : EnemyController
         }
     }
 
+    bool once = false;
+    private bool needsCleanup;
     private void HandleDeadState(float deltaTime)
     {
         try
         {
-            if (!hasPlayedDeathSound)
-            {
-                Audio.PlayOneShot(DeathSound);
-                hasPlayedDeathSound = true;
-            }
+            renderer?.SetColor(new Vector4(1, 1, 1, 1));
 
+            //if (!hasPlayedDeathSound)
+            //{
+            //    Audio.PlayOneShot(DeathSound);
+            //    hasPlayedDeathSound = true;
+            //}
+            redThirstManager?.AddRedThirstPoint(1);
             if (!hasDropped)
             {
                 GameObject dropManager = GameObject.Find("DropManager");
@@ -377,22 +423,23 @@ public class EnemyControllerWarrior : EnemyController
                 hasDropped = true;
             }
 
-            if (anim != null)
-            {
-                anim.SetDeathAnimation();
-            }
+            anim?.SetDeathAnimation();
 
-            if (collider != null)
-            {
-                collider.SetActive(false);
-            }
+            collider?.SetActive(false);
+
+            CleanAllBullets();
 
             if (anim.isAnimFinished)
             {
                 deathTimer += deltaTime;
                 if (deathTimer >= deathCooldown)
                 {
-                    Engineson.Destroy(gameObject);
+                    if (!once)
+                    {
+                        CleanAllBullets();
+                        Engineson.Destroy(gameObject);
+                        once = true;
+                    }
                     return;
                 }
             }
@@ -587,11 +634,11 @@ public class EnemyControllerWarrior : EnemyController
 
     private void RemoveBulletAtIndex(int index)
     {
+        if (index < 0 || index >= bulletsObjects.Count)
+            return;
+
         try
         {
-            if (index < 0 || index >= bulletsObjects.Count)
-                return;
-
             if (bulletsObjects[index] != null)
             {
                 Engineson.Destroy(bulletsObjects[index]);
@@ -608,7 +655,7 @@ public class EnemyControllerWarrior : EnemyController
         catch (Exception e)
         {
             Engineson.print($"ERROR removing bullet at index {index}: {e.Message}");
-            CleanAllBullets();
+            needsCleanup = true;
         }
     }
 
@@ -767,22 +814,20 @@ public class EnemyControllerWarrior : EnemyController
     {
         try
         {
+            if (currentHealth <= 0) return;
+
+            currentHealth -= damage;
 
             if (particles != null)
             {
-                EnemySquirting();
+                //EnemySquirting();
             }
 
-            if (currentHealth <= 0)
-                return;
+            StartFlashColor(flashColor, flashDuration);
 
-            Audio.PlayOneShot(HitSound);
-            currentHealth -= damage;
+            //Audio.PlayOneShot(HitSound);
 
-            if (anim != null)
-            {
-                anim.SetHurtAnimation();
-            }
+            anim?.SetHurtAnimation();
         }
         catch (Exception e)
         {
@@ -839,6 +884,22 @@ public class EnemyControllerWarrior : EnemyController
         catch (Exception e)
         {
             Engineson.print($"ERROR in UpdateProjectiles: {e.Message}");
+        }
+    }
+    public void StartFlashColor(Vector4 color, float duration)
+    {
+        try
+        {
+            if (renderer != null)
+            {
+                renderer?.SetColor(color);
+                isFlashingColor = true;
+                flashTimer = duration;
+            }
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in StartFlashColor: {e.Message}");
         }
     }
 

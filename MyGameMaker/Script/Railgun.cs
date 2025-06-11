@@ -36,13 +36,10 @@ public class Railgun : BaseWeapon
     public float shakeIntensity = 0.4f;
     public float shakeDuration = 0.25f;
     public float shakeSpeed = 0.2f;
-    public enum RailgunMode
-    {
-        SEMIAUTOMATIC,
-        AUTOMATIC
-    }
+   
+    public float maxShotCadenceTimer = 0f;
 
-    public RailgunMode railgunMode = RailgunMode.SEMIAUTOMATIC;
+    
 
     public override void Awake()
     {
@@ -51,7 +48,7 @@ public class Railgun : BaseWeapon
     public override void Start()
     {
         damage = 100.0f;
-        shootCadence = 0.16f;
+        shootCadence = 2f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 0;
@@ -68,11 +65,7 @@ public class Railgun : BaseWeapon
         laserBeam = gameObject.GetComponent<LaserBeam>();
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
         playerInput = gameObject.GetComponent<PlayerInput>();
-        //shakeManager = GameObject.Find("ShakeManager")?.GetComponent<ShakeManager>();
-        //if (shakeManager == null)
-        //{
-        //    Engineson.print("ERROR: ShakeManager not found");
-        //}
+        
 
     }
 
@@ -83,18 +76,17 @@ public class Railgun : BaseWeapon
             timeSinceLastShot += deltaTime;
         }
 
-        if (railgunMode == RailgunMode.AUTOMATIC)
+        if (shootCadence <= 0.45f)
         {
+            shootCadence = 0.45f;
+            maxShotCadenceTimer += deltaTime;
 
-            damage = 50.0f;
-            shootCadence = 0.66f;
-            magazineSize = 4;
-        }
-        else
-        {
-            damage = 100.0f;
-            shootCadence = 2f;
-            magazineSize = 10;
+            if (maxShotCadenceTimer >= 2f)
+            {
+
+                isCooling = true;
+                isRecharged = false;
+            }
         }
 
         if (isCooling)
@@ -146,7 +138,7 @@ public class Railgun : BaseWeapon
                         bulletHitEnemies[i].Add(hitObject);
 
                         float finalDamage = damage;
-                        redThirstManager.OnShotgunUsed();
+
 
                         if (redThirstManager.IsInBlackRage())
                             finalDamage += redThirstManager.redThirstBonus;
@@ -214,13 +206,17 @@ public class Railgun : BaseWeapon
     {
         isReloading = false;
 
-        if (currentMagazineAmmo > 0 && !isCooling && isRecharged && timeSinceLastShot >= shootCadence)
+        if (!isCooling && isRecharged && timeSinceLastShot >= shootCadence)
         {
-            //shakeManager.ApplyShake(shakeIntensity, shakeDuration, shakeSpeed);
+
+            if (shootCadence > 0.45f)
+            {
+                shootCadence -= 0.75f;
+            }
+            
 
             timeSinceLastShot = 0f;
-            if (!playerData.infiniteBullets)
-                currentMagazineAmmo--;
+           
 
             int audio = Audio.PlayOneShot(railgunShot);
 
@@ -249,17 +245,9 @@ public class Railgun : BaseWeapon
             projectile.transform.position = bulletStart;
             projectile.transform.SetRotation(pitch, yaw, 0f);
             projectile.AddComponent<ParticleFX>();
-            if (railgunMode == RailgunMode.AUTOMATIC)
-            {
-                projectile.GetComponent<ParticleFX>().ApplyPreset(13);
-                projectile.GetComponent<ParticleFX>().EmitBurst(1);
-            }
-            else
-            {
-                projectile.AddComponent<ParticleFX>().ApplyPreset(14);
-                projectile.GetComponent<ParticleFX>().EmitBurst(1);
-            }
-         
+            projectile.AddComponent<ParticleFX>().ApplyPreset(14);
+            projectile.GetComponent<ParticleFX>().EmitBurst(1);
+
             bulletsObjects.Add(projectile);
             bulletsPos.Add(bulletStart);
             bulletDirections.Add(direction);
@@ -269,11 +257,6 @@ public class Railgun : BaseWeapon
           
         }
 
-        if (currentMagazineAmmo <= 0)
-        {
-            isCooling = true;
-            isRecharged = false;
-        }
     }
 
     public void Cooling()
@@ -281,7 +264,8 @@ public class Railgun : BaseWeapon
         isCooling = false;
         isRecharged = true;
         coolTimer = 0f;
-        currentMagazineAmmo = magazineSize;
+        maxShotCadenceTimer = 0f;
+        shootCadence = 2f;
         int audioo = Audio.PlayOneShot(railgunReload);
     }
 
@@ -289,10 +273,10 @@ public class Railgun : BaseWeapon
     {
         isReloading = false;
         reloadTimer = 0f;
-        currentMagazineAmmo++;
-        if (currentMagazineAmmo >= magazineSize)
+        shootCadence += 0.5f;
+        if (shootCadence >= 2f)
         {
-            currentMagazineAmmo = magazineSize;
+            shootCadence = 2f;
         }
     }
 
@@ -303,14 +287,7 @@ public class Railgun : BaseWeapon
 
     public override void UseAbility1()
     {
-        if (railgunMode == RailgunMode.SEMIAUTOMATIC)
-        {
-            energyBall.TriggerAbility();
-        } 
-        else
-        {
-            laserBeam.TriggerAbility();
-        }
+        energyBall.TriggerAbility();
     }
 
     public override void CleanBullets()
@@ -334,19 +311,10 @@ public class Railgun : BaseWeapon
         }
     }
 
-    public void ChangeMode()
-    {
-        if (railgunMode == RailgunMode.SEMIAUTOMATIC)
-        {
-            railgunMode = RailgunMode.AUTOMATIC;
-        }
-        else
-        {
-            railgunMode = RailgunMode.SEMIAUTOMATIC;
-        }
-    }
+   
 
     public override void ResetCooldowns()
     {
+
     }
 }

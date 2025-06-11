@@ -1,9 +1,10 @@
-name: ClimbingHormagauntRight_Instance
+name: ClimbingHormagauntRight_Instance_Instance
 prefabPath: Assets\Prefabs\ClimbingHormagauntRight.prefab.yaml
-uuid: 4844687279108925372
+uuid: 9973393138968607416
 tag: Melee
 active: true
 isStatic: false
+useManualBoundingBox: false
 Components:
   Transform_Component:
     name: Transform_Component
@@ -13,9 +14,9 @@ Components:
       - 0
       - 10
     localRotation:
-      - -179.99999499104388
+      - 179.99999499104388
       - 0.46854428531310782
-      - -179.99999499104388
+      - 179.99999499104388
     localScale:
       - 1.7999999523162842
       - 1.7999999523162842
@@ -107,8 +108,9 @@ Children:
     prefabPath: ""
     uuid: 14776177190412027377
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -224,6 +226,7 @@ Children:
         tag: Untagged
         active: true
         isStatic: false
+        useManualBoundingBox: false
         Components:
           Transform_Component:
             name: Transform_Component
@@ -247,6 +250,7 @@ Children:
             tag: Untagged
             active: true
             isStatic: false
+            useManualBoundingBox: false
             Components:
               Transform_Component:
                 name: Transform_Component
@@ -256,9 +260,9 @@ Children:
                   - 0.37227654457092285
                   - 7.0269386753807339e-08
                 localRotation:
-                  - -1.0185721170876889
-                  - -0.0023972652080643912
-                  - 0.00034330321645887176
+                  - -1.0185721170876896
+                  - -0.0023972654164969858
+                  - 0.00034330321831161926
                 localScale:
                   - 0.99999988079071045
                   - 0.99999994039535522
@@ -270,6 +274,7 @@ Children:
                 tag: Untagged
                 active: true
                 isStatic: false
+                useManualBoundingBox: false
                 Components:
                   Transform_Component:
                     name: Transform_Component
@@ -293,6 +298,7 @@ Children:
                     tag: Untagged
                     active: true
                     isStatic: false
+                    useManualBoundingBox: false
                     Components:
                       Transform_Component:
                         name: Transform_Component
@@ -316,6 +322,7 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
@@ -339,6 +346,7 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
@@ -362,6 +370,7 @@ Children:
                                 tag: Untagged
                                 active: true
                                 isStatic: false
+                                useManualBoundingBox: false
                                 Components:
                                   Transform_Component:
                                     name: Transform_Component
@@ -385,6 +394,7 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
@@ -394,9 +404,9 @@ Children:
                                           - 0.25231030583381653
                                           - 0.2509746253490448
                                         localRotation:
-                                          - 163.8464155442384
-                                          - 7.8470244754606684
-                                          - -169.70979272469688
+                                          - 163.84641561232903
+                                          - 7.8470253225826232
+                                          - -169.70979283977957
                                         localScale:
                                           - 1.0000001192092896
                                           - 1.0000001192092896
@@ -408,6 +418,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -417,9 +428,9 @@ Children:
                                               - -0.041006095707416534
                                               - 0.033513326197862625
                                             localRotation:
-                                              - 59.599719475097423
-                                              - -87.196770181625297
-                                              - -44.390787332995231
+                                              - 59.599742333009488
+                                              - -87.196845689254204
+                                              - -44.390814421699197
                                             localScale:
                                               - 1.0000002384185791
                                               - 1.0000001192092896
@@ -431,6 +442,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -440,9 +452,9 @@ Children:
                                               - -0.035324987024068832
                                               - 0.013326235115528107
                                             localRotation:
-                                              - -86.226765303620283
-                                              - -86.540543519557318
-                                              - 89.151923169103625
+                                              - -86.226749938224117
+                                              - -86.540575119005481
+                                              - 89.151907680378486
                                             localScale:
                                               - 1
                                               - 1
@@ -454,6 +466,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -463,9 +476,9 @@ Children:
                                               - -0.038136735558509827
                                               - -0.011401966214179993
                                             localRotation:
-                                              - -99.083893459680752
-                                              - -82.348303836970956
-                                              - 86.968665802369017
+                                              - -99.083901102442042
+                                              - -82.348313504399883
+                                              - 86.968673445130293
                                             localScale:
                                               - 1
                                               - 1
@@ -477,6 +490,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -486,9 +500,9 @@ Children:
                                               - -0.047117531299591064
                                               - -0.038730546832084656
                                             localRotation:
-                                              - -90.243423234287562
-                                              - -85.643941276478117
-                                              - 89.541046418355123
+                                              - -90.243423353798434
+                                              - -85.643938859905404
+                                              - 89.541046537865967
                                             localScale:
                                               - 1.0000001192092896
                                               - 1.0000002384185791
@@ -500,6 +514,7 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
@@ -509,9 +524,9 @@ Children:
                                           - 0.25865858793258667
                                           - 0.25613534450531006
                                         localRotation:
-                                          - 159.79771181806538
-                                          - -7.6007680074274226
-                                          - 170.28598659431515
+                                          - 159.79771187972932
+                                          - -7.6007688496671113
+                                          - 170.2859867397504
                                         localScale:
                                           - 1.0000003576278687
                                           - 1.0000004768371582
@@ -523,6 +538,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -532,9 +548,9 @@ Children:
                                               - -0.04430161789059639
                                               - 0.036526661366224289
                                             localRotation:
-                                              - 1.3790531334360594
-                                              - 89.964622909922639
-                                              - 1.3791060334522078
+                                              - 1.3788807920601815
+                                              - 89.970833233955915
+                                              - 1.3789336920742499
                                             localScale:
                                               - 1
                                               - 1.0000001192092896
@@ -546,6 +562,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -555,9 +572,9 @@ Children:
                                               - -0.044301651418209076
                                               - 0.011863518506288528
                                             localRotation:
-                                              - 0.00028419472887128368
-                                              - 89.98017317910751
-                                              - -1.3420168089630126e-09
+                                              - 0.00028421391054391383
+                                              - 89.97947863161518
+                                              - 1.7821232148524854e-08
                                             localScale:
                                               - 1.0000001192092896
                                               - 1
@@ -569,6 +586,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -578,9 +596,9 @@ Children:
                                               - -0.044301573187112808
                                               - -0.012744635343551636
                                             localRotation:
-                                              - 0.00039478892203622041
-                                              - 89.981641813256715
-                                              - -4.6236603853478188e-08
+                                              - 0.00039475971862293151
+                                              - 89.980174126430811
+                                              - -7.5440017124812252e-08
                                             localScale:
                                               - 0.99999988079071045
                                               - 1.0000001192092896
@@ -592,6 +610,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -601,9 +620,9 @@ Children:
                                               - -0.044301576912403107
                                               - -0.037798888981342316
                                             localRotation:
-                                              - 0.10448922594343894
-                                              - 89.979468574351742
-                                              - 0.10463930898025828
+                                              - 0.10448437622407541
+                                              - 89.979134204992448
+                                              - 0.1046344545443865
                                             localScale:
                                               - 1.0000002384185791
                                               - 1.0000001192092896
@@ -615,6 +634,7 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
@@ -638,6 +658,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -647,9 +668,9 @@ Children:
                                               - 0.21143388748168945
                                               - 0.0062245712615549564
                                             localRotation:
-                                              - -89.999837745175995
-                                              - 25.205337215051632
-                                              - 90.000162254824005
+                                              - -89.999842252242033
+                                              - 25.205344582124717
+                                              - 90.000157747757967
                                             localScale:
                                               - 1
                                               - 0.99999988079071045
@@ -661,6 +682,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -684,6 +706,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -693,9 +716,9 @@ Children:
                                               - 0.32400614023208618
                                               - -0.027743592858314514
                                             localRotation:
-                                              - -89.999878744483482
-                                              - 25.204388781997174
-                                              - 90.000104095516235
+                                              - -89.999880174487942
+                                              - 25.204387351996942
+                                              - 90.000105525511827
                                             localScale:
                                               - 1.0000001192092896
                                               - 1.0000004768371582
@@ -707,6 +730,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -730,6 +754,7 @@ Children:
                                             tag: Untagged
                                             active: true
                                             isStatic: false
+                                            useManualBoundingBox: false
                                             Components:
                                               Transform_Component:
                                                 name: Transform_Component
@@ -739,9 +764,9 @@ Children:
                                                   - 0.11529754102230072
                                                   - 2.5382917101524072e-08
                                                 localRotation:
-                                                  - -18.575014871991524
-                                                  - -0.11694258441211465
-                                                  - -0.065369621050151858
+                                                  - -18.575014871996835
+                                                  - -0.11694257124676316
+                                                  - -0.065369623203106339
                                                 localScale:
                                                   - 0.9999997615814209
                                                   - 1
@@ -753,6 +778,7 @@ Children:
                                                 tag: Untagged
                                                 active: true
                                                 isStatic: false
+                                                useManualBoundingBox: false
                                                 Components:
                                                   Transform_Component:
                                                     name: Transform_Component
@@ -762,9 +788,9 @@ Children:
                                                       - 0.24791671335697174
                                                       - 0.008828422985970974
                                                     localRotation:
-                                                      - -21.814706592427548
-                                                      - -5.2868697509385667
-                                                      - -3.1176099166630031
+                                                      - -21.814704918271186
+                                                      - -5.2868692699611364
+                                                      - -3.1176100835888234
                                                     localScale:
                                                       - 0.99999988079071045
                                                       - 1.0000002384185791
@@ -776,6 +802,7 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
@@ -785,9 +812,9 @@ Children:
                                           - 0.15781493484973907
                                           - 0.34548574686050415
                                         localRotation:
-                                          - 7.5466060967726554e-08
-                                          - -89.98163969042082
-                                          - -2.413320379400709e-12
+                                          - 7.5464768924159241e-08
+                                          - -89.980167689685317
+                                          - -1.1190278202598462e-12
                                         localScale:
                                           - 0.99999994039535522
                                           - 1
@@ -799,6 +826,7 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
@@ -808,9 +836,9 @@ Children:
                                           - 0.12280000001192093
                                           - 0.22661972045898438
                                         localRotation:
-                                          - 3.018620962976106e-07
-                                          - -89.961265652622714
-                                          - -7.4839900351916325e-12
+                                          - 3.0186019869243462e-07
+                                          - -89.960908509581927
+                                          - -5.5863848591953442e-12
                                         localScale:
                                           - 1.0000002384185791
                                           - 1
@@ -822,6 +850,7 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
@@ -831,9 +860,9 @@ Children:
                                           - 0.11536469310522079
                                           - 0.22835731506347656
                                         localRotation:
-                                          - -1.697799421742197e-07
-                                          - 89.980167689685317
-                                          - 1.3272903782343188e-11
+                                          - -1.6980069814235277e-07
+                                          - 89.979477647702907
+                                          - -7.4740683834140082e-12
                                         localScale:
                                           - 1
                                           - 1
@@ -845,6 +874,7 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
@@ -854,9 +884,9 @@ Children:
                                           - 0.082733795046806335
                                           - 0.077473372220993042
                                         localRotation:
-                                          - 9.4336217792933547e-08
-                                          - -89.980167689685317
-                                          - -6.6683542128252459e-12
+                                          - 9.4336598563825831e-08
+                                          - -89.979477647702907
+                                          - -7.0536230887492485e-12
                                         localScale:
                                           - 1.0000001192092896
                                           - 1.0000001192092896
@@ -868,6 +898,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -891,6 +922,7 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
@@ -900,9 +932,9 @@ Children:
                                           - 0.082733757793903351
                                           - 0.077473320066928864
                                         localRotation:
-                                          - 0.51745490782417669
-                                          - 89.979467925098916
-                                          - 0.51745509648329491
+                                          - 0.51743836554384171
+                                          - 89.979133540223046
+                                          - 0.51743851647104422
                                         localScale:
                                           - 0.99999994039535522
                                           - 1.0000001192092896
@@ -914,6 +946,7 @@ Children:
                                         tag: Untagged
                                         active: true
                                         isStatic: false
+                                        useManualBoundingBox: false
                                         Components:
                                           Transform_Component:
                                             name: Transform_Component
@@ -937,6 +970,7 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
@@ -960,6 +994,7 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
@@ -969,9 +1004,9 @@ Children:
                                   - 0.16584871709346771
                                   - -1.0408638217995758e-07
                                 localRotation:
-                                  - -84.361345498136885
-                                  - -23.782752032404424
-                                  - -12.586326460772121
+                                  - -84.361345644980105
+                                  - -23.782747490880329
+                                  - -12.586328056177651
                                 localScale:
                                   - 0.9999997615814209
                                   - 0.99999994039535522
@@ -983,6 +1018,7 @@ Children:
                                 tag: Untagged
                                 active: true
                                 isStatic: false
+                                useManualBoundingBox: false
                                 Components:
                                   Transform_Component:
                                     name: Transform_Component
@@ -1006,6 +1042,7 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
@@ -1015,9 +1052,9 @@ Children:
                                           - 0.30724173784255981
                                           - -5.333001951157712e-08
                                         localRotation:
-                                          - -3.4858691474975898
-                                          - 0.21940330596750796
-                                          - 108.96700012618231
+                                          - -3.4858690235469081
+                                          - 0.21940313230780917
+                                          - 108.96700013170374
                                         localScale:
                                           - 1.0000001192092896
                                           - 1.0000001192092896
@@ -1029,6 +1066,7 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
@@ -1052,6 +1090,7 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
@@ -1061,9 +1100,9 @@ Children:
                                   - 0.16584856808185577
                                   - 3.2360083501714598e-09
                                 localRotation:
-                                  - -84.217966520196796
-                                  - 31.34904468923877
-                                  - 13.565597749477124
+                                  - -84.217966853008832
+                                  - 31.349043658492771
+                                  - 13.565600015361085
                                 localScale:
                                   - 0.99999964237213135
                                   - 0.99999988079071045
@@ -1075,6 +1114,7 @@ Children:
                                 tag: Untagged
                                 active: true
                                 isStatic: false
+                                useManualBoundingBox: false
                                 Components:
                                   Transform_Component:
                                     name: Transform_Component
@@ -1098,6 +1138,7 @@ Children:
                                     tag: Untagged
                                     active: true
                                     isStatic: false
+                                    useManualBoundingBox: false
                                     Components:
                                       Transform_Component:
                                         name: Transform_Component
@@ -1107,9 +1148,9 @@ Children:
                                           - 0.30724173784255981
                                           - -8.3971102071700443e-08
                                         localRotation:
-                                          - -4.850019599915667
-                                          - 4.4533801493750609
-                                          - -112.23363864594408
+                                          - -4.8500198376481762
+                                          - 4.4533797948896172
+                                          - -112.2336386401815
                                         localScale:
                                           - 1.0000005960464478
                                           - 1.0000003576278687
@@ -1121,6 +1162,7 @@ Children:
                     tag: Untagged
                     active: true
                     isStatic: false
+                    useManualBoundingBox: false
                     Components:
                       Transform_Component:
                         name: Transform_Component
@@ -1130,9 +1172,9 @@ Children:
                           - 0.01862734742462635
                           - -0.082905605435371399
                         localRotation:
-                          - 164.62097427593434
-                          - -15.339935609132759
-                          - 85.577782551261848
+                          - 164.62097553064567
+                          - -15.339936767234088
+                          - 85.577782538893857
                         localScale:
                           - 0.99999994039535522
                           - 1
@@ -1144,6 +1186,7 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
@@ -1167,6 +1210,7 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
@@ -1190,6 +1234,7 @@ Children:
                                 tag: Untagged
                                 active: true
                                 isStatic: false
+                                useManualBoundingBox: false
                                 Components:
                                   Transform_Component:
                                     name: Transform_Component
@@ -1213,6 +1258,7 @@ Children:
                     tag: Untagged
                     active: true
                     isStatic: false
+                    useManualBoundingBox: false
                     Components:
                       Transform_Component:
                         name: Transform_Component
@@ -1236,6 +1282,7 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
@@ -1245,9 +1292,9 @@ Children:
                               - 0.1281684935092926
                               - 2.9912428090028698e-08
                             localRotation:
-                              - -53.166001666546414
-                              - -30.706002043893154
-                              - 9.7492924204993479
+                              - -53.166001468692251
+                              - -30.706002450864073
+                              - 9.7492915772648487
                             localScale:
                               - 0.99999982118606567
                               - 0.99999856948852539
@@ -1259,6 +1306,7 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
@@ -1268,8 +1316,8 @@ Children:
                                   - 0.2290719747543335
                                   - 1.2648062863718224e-07
                                 localRotation:
-                                  - 2.2680174507988497e-05
-                                  - -1.2750265787425211e-05
+                                  - 2.268017499726126e-05
+                                  - -1.2750267541106946e-05
                                   - 95.691960691087516
                                 localScale:
                                   - 1.0000015497207642
@@ -1282,6 +1330,7 @@ Children:
                                 tag: Untagged
                                 active: true
                                 isStatic: false
+                                useManualBoundingBox: false
                                 Components:
                                   Transform_Component:
                                     name: Transform_Component
@@ -1291,9 +1340,9 @@ Children:
                                       - 0.20310328900814056
                                       - 9.9333030689763291e-09
                                     localRotation:
-                                      - -14.145614881320496
-                                      - 21.593200146635834
-                                      - -77.933421095118717
+                                      - -14.14561515089288
+                                      - 21.59320462299582
+                                      - -77.933421681267532
                                     localScale:
                                       - 1.0000001192092896
                                       - 1.0000001192092896
@@ -1305,6 +1354,7 @@ Children:
             tag: Untagged
             active: true
             isStatic: false
+            useManualBoundingBox: false
             Components:
               Transform_Component:
                 name: Transform_Component
@@ -1314,9 +1364,9 @@ Children:
                   - -0.006211849395185709
                   - 7.5062547693960369e-05
                 localRotation:
-                  - -175.86022721571976
-                  - -0.40119972495826584
-                  - 8.2018749440839667
+                  - -175.8602272138163
+                  - -0.40119969836326907
+                  - 8.2018749450384973
                 localScale:
                   - 0.99999982118606567
                   - 1.0000001192092896
@@ -1328,6 +1378,7 @@ Children:
                 tag: Untagged
                 active: true
                 isStatic: false
+                useManualBoundingBox: false
                 Components:
                   Transform_Component:
                     name: Transform_Component
@@ -1337,9 +1388,9 @@ Children:
                       - 0.40412527322769165
                       - -2.0565931890814682e-07
                     localRotation:
-                      - 1.2157474238278587
-                      - -0.024858379000313659
-                      - -8.2113745648139105
+                      - 1.2157474247829474
+                      - -0.024858392305546009
+                      - -8.2113745649552836
                     localScale:
                       - 1.0000001192092896
                       - 1
@@ -1351,6 +1402,7 @@ Children:
                     tag: Untagged
                     active: true
                     isStatic: false
+                    useManualBoundingBox: false
                     Components:
                       Transform_Component:
                         name: Transform_Component
@@ -1374,6 +1426,7 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
@@ -1383,9 +1436,9 @@ Children:
                               - 0.22678905725479126
                               - 1.7710236477341823e-07
                             localRotation:
-                              - -4.4432809723774378
-                              - -0.83997464037040781
-                              - -8.1686225009362072
+                              - -4.4432818347773733
+                              - -0.83997454181546993
+                              - -8.1686224984472489
                             localScale:
                               - 0.9999997615814209
                               - 0.9999997615814209
@@ -1397,6 +1450,7 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
@@ -1406,9 +1460,9 @@ Children:
                                   - 0.25114500522613525
                                   - -6.3890233548136166e-08
                                 localRotation:
-                                  - 1.5508212539971848
-                                  - 0.023494374013856498
-                                  - -8.2113679173982472
+                                  - 1.5508212549990028
+                                  - 0.023494362476809281
+                                  - -8.2113670658934517
                                 localScale:
                                   - 0.99999988079071045
                                   - 0.99999982118606567
@@ -1420,6 +1474,7 @@ Children:
                                 tag: Untagged
                                 active: true
                                 isStatic: false
+                                useManualBoundingBox: false
                                 Components:
                                   Transform_Component:
                                     name: Transform_Component
@@ -1429,9 +1484,9 @@ Children:
                                       - 0.23845416307449341
                                       - -5.3670234478886414e-08
                                     localRotation:
-                                      - 2.1579993912023214
-                                      - 0.11111001028412471
-                                      - -8.2106646825825322
+                                      - 2.1579991773891365
+                                      - 0.11111000830607917
+                                      - -8.21066468282703
                                     localScale:
                                       - 0.99999994039535522
                                       - 0.99999994039535522
@@ -1443,6 +1498,7 @@ Children:
             tag: Untagged
             active: true
             isStatic: false
+            useManualBoundingBox: false
             Components:
               Transform_Component:
                 name: Transform_Component
@@ -1466,6 +1522,7 @@ Children:
                 tag: Untagged
                 active: true
                 isStatic: false
+                useManualBoundingBox: false
                 Components:
                   Transform_Component:
                     name: Transform_Component
@@ -1489,6 +1546,7 @@ Children:
                     tag: Untagged
                     active: true
                     isStatic: false
+                    useManualBoundingBox: false
                     Components:
                       Transform_Component:
                         name: Transform_Component
@@ -1512,6 +1570,7 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
@@ -1521,9 +1580,9 @@ Children:
                               - 0.3572736382484436
                               - -3.5685520316519614e-08
                             localRotation:
-                              - -145.09631553692353
-                              - 81.170706639759729
-                              - 143.99105498362215
+                              - -145.09633210074102
+                              - 81.17071097376936
+                              - 143.99104320262597
                             localScale:
                               - 0.99999988079071045
                               - 0.99999988079071045
@@ -1535,6 +1594,7 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
@@ -1558,6 +1618,7 @@ Children:
             tag: Untagged
             active: true
             isStatic: false
+            useManualBoundingBox: false
             Components:
               Transform_Component:
                 name: Transform_Component
@@ -1567,9 +1628,9 @@ Children:
                   - 0.16527479887008667
                   - 0.042031127959489822
                 localRotation:
-                  - -160.95747583217027
-                  - -60.881729118615333
-                  - -110.34022184826439
+                  - -160.95747875755313
+                  - -60.8817336809593
+                  - -110.34022066698806
                 localScale:
                   - 0.99999982118606567
                   - 0.99999964237213135
@@ -1581,6 +1642,7 @@ Children:
                 tag: Untagged
                 active: true
                 isStatic: false
+                useManualBoundingBox: false
                 Components:
                   Transform_Component:
                     name: Transform_Component
@@ -1604,6 +1666,7 @@ Children:
                     tag: Untagged
                     active: true
                     isStatic: false
+                    useManualBoundingBox: false
                     Components:
                       Transform_Component:
                         name: Transform_Component
@@ -1613,9 +1676,9 @@ Children:
                           - 0.3744100034236908
                           - 7.1725487771345797e-08
                         localRotation:
-                          - 1.5263877080162664
-                          - 2.4386531178007198
-                          - -90.61134713351305
+                          - 1.5263874788244454
+                          - 2.4386536450774248
+                          - -90.611347131369726
                         localScale:
                           - 0.99999338388442993
                           - 1.0000004768371582
@@ -1627,6 +1690,7 @@ Children:
                         tag: Untagged
                         active: true
                         isStatic: false
+                        useManualBoundingBox: false
                         Components:
                           Transform_Component:
                             name: Transform_Component
@@ -1636,9 +1700,9 @@ Children:
                               - 0.35727348923683167
                               - 6.0277002944530977e-08
                             localRotation:
-                              - -123.55687152097167
-                              - -69.012650012238979
-                              - -179.90090318225478
+                              - -123.55687068954269
+                              - -69.012655501667268
+                              - -179.90090401368374
                             localScale:
                               - 1.0000001192092896
                               - 0.99999988079071045
@@ -1650,6 +1714,7 @@ Children:
                             tag: Untagged
                             active: true
                             isStatic: false
+                            useManualBoundingBox: false
                             Components:
                               Transform_Component:
                                 name: Transform_Component
@@ -1667,3 +1732,46 @@ Children:
                                   - 1.0000003576278687
                                   - 1.0000001192092896
                             Children: ~
+  - name: sombraRipoll
+    prefabPath: ""
+    uuid: 7921251747918250830
+    tag: Untagged
+    active: true
+    isStatic: false
+    useManualBoundingBox: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - -0.0020028017830661868
+          - 2.1410406285818531e-08
+          - -0.24490649373318085
+        localRotation:
+          - 89.999985697167205
+          - -0.46854425801941446
+          - 179.99999503183861
+        localScale:
+          - 0.35333330966044058
+          - 0.35333330966044529
+          - 0.35333333024272678
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 2086049413150786760
+        material:
+          name: shadow
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~

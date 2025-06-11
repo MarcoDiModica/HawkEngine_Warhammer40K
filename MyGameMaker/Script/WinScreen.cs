@@ -13,6 +13,7 @@ public class WinScreen : MonoBehaviour
 
     private string WinMusic = "Assets/Audio/Music/Warhammer_WinScreen.ogg";
     private string ConfirmSFX = "Assets/Audio/UI/Confirm.wav";
+    private string HoveredSFX = "Assets/Audio/UI/Hovered.wav";
     //     private AudioSource sound;
     //     private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
     //     private ButtonState prevState_quitButton = ButtonState.DEFAULT;
@@ -142,18 +143,18 @@ public class WinScreen : MonoBehaviour
             if (i == selectedButtonIndex)
             {
                 buttons[i].SetState(ButtonState.HOVERED);
-                transforms[i].DOScaleUI(new Vector3(0.22f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+                transforms[i].DOScaleUI(new Vector3(0.22f, 0.181f, 0.5f), 0.3f, Modes.EASE_OUT);
 
                 if (!hasPlayedHoverSound[i])
                 {
-                    //sound?.Play(buttonHoveredFX);
+                    Audio.Play(HoveredSFX);
                     hasPlayedHoverSound[i] = true;
                 }
             }
             else
             {
                 buttons[i].SetState(ButtonState.DEFAULT);
-                transforms[i].DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+                transforms[i].DOScaleUI(new Vector3(0.182f, 0.181f, 0.4f), 0.3f, Modes.EASE_OUT);
                 hasPlayedHoverSound[i] = false;
             }
 
@@ -166,7 +167,7 @@ public class WinScreen : MonoBehaviour
             }
         }
 
-        // Detectar clic del ratón
+        // Detectar clic del ratï¿½n
         if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1) || Input.GetControllerButtonDown(ControllerButton.A))
         {
             UIButton selectedButton = buttons[selectedButtonIndex];
@@ -175,12 +176,14 @@ public class WinScreen : MonoBehaviour
             if (selectedButton == button_mainMenuButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
+                Audio.Stop(WinMusic);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
-                // Aquí puedes agregar la lógica para salir del juego
+                Engineson.Quit();
+                // Aquï¿½ puedes agregar la lï¿½gica para salir del juego
             }
         }
     }

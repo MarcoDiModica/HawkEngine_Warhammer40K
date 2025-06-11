@@ -480,7 +480,8 @@ void Tweening::Update(float deltaTime) {
 	}
 
 	for (auto& tween : tweens) {
-		if (tween.object == nullptr || tween.object->IsDestroyed()) {
+		if (!tween.object) {
+			if (tween.object->IsDestroyed()) continue;
 			continue;
 		}
 
@@ -505,7 +506,8 @@ void Tweening::Update(float deltaTime) {
 		case TweenType::POSITION_X:
 		case TweenType::POSITION_Y:
 		case TweenType::POSITION_Z: {
-			if (tween.object && tween.object->GetTransform()) {
+			if (tween.object) {
+				if (!tween.object->GetTransform()) continue;
 				glm::dvec3 currentPosition = CalculatePosition(tween.startPosition, tween.targetPosition, t, tween.mode);
 				tween.object->GetTransform()->SetPosition(currentPosition);
 			}
@@ -528,7 +530,8 @@ void Tweening::Update(float deltaTime) {
 		case TweenType::ROTATION_X:
 		case TweenType::ROTATION_Y:
 		case TweenType::ROTATION_Z: {
-			if (tween.object && tween.object->GetTransform()) {
+			if (tween.object) {
+				if (!tween.object->GetTransform()) continue;
 				glm::dvec3 currentRotation = CalculateRotation(tween.startRotation, tween.targetRotation, t, tween.mode);
 				tween.object->GetTransform()->SetRotation(glm::radians(currentRotation));
 			}
@@ -551,7 +554,8 @@ void Tweening::Update(float deltaTime) {
 		case TweenType::SCALE_X:
 		case TweenType::SCALE_Y:
 		case TweenType::SCALE_Z: {
-			if (tween.object && tween.object->GetTransform()) {
+			if (tween.object) {
+				if (!tween.object->GetTransform()) continue;
 				glm::dvec3 currentScale = CalculateScale(tween.startScale, tween.targetScale, t, tween.mode);
 				tween.object->GetTransform()->SetScale(currentScale);
 			}

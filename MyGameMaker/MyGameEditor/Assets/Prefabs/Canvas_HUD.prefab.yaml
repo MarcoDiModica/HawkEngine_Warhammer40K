@@ -1,9 +1,10 @@
 name: Canvas_HUD
 prefabPath: Assets\Prefabs\Canvas_HUD.prefab.yaml
-uuid: 12949476511572047555
+uuid: 10352085229208467377
 tag: Untagged
 active: true
 isStatic: false
+useManualBoundingBox: false
 Components:
   Transform_Component:
     name: Transform_Component
@@ -53,6 +54,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -117,6 +119,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -181,6 +184,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -245,6 +249,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -309,6 +314,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -329,16 +335,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.922999978
-          - 0.79400003
+          - 0.904999971
+          - 0.727999985
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0250000004
-          - 0.0500000007
+          - 0.0299999993
+          - 0.0599999987
           - 1
         pivot_offset:
           - 0
@@ -350,8 +356,8 @@ Children:
         texture_path: Library/Textures/UI/gun_boltgun_small_icon.png
         use_animation: false
         sprite_size:
-          - 0
-          - 0
+          - 130
+          - 142
         sheet_size:
           - 130
           - 142
@@ -373,6 +379,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -393,16 +400,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.922999978
-          - 0.796000004
+          - 0.904999971
+          - 0.727999985
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0250000004
-          - 0.0500000007
+          - 0.0299999993
+          - 0.0600000024
           - 1
         pivot_offset:
           - 0
@@ -437,6 +444,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -457,16 +465,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.922999978
-          - 0.792999983
+          - 0.904999971
+          - 0.727999985
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0250000004
-          - 0.0500000007
+          - 0.0299999993
+          - 0.0599999987
           - 1
         pivot_offset:
           - 0
@@ -478,8 +486,8 @@ Children:
         texture_path: Library/Textures/UI/gun_shotgun_small_icon.png
         use_animation: false
         sprite_size:
-          - 0
-          - 0
+          - 125
+          - 139
         sheet_size:
           - 125
           - 139
@@ -501,6 +509,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -521,16 +530,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.954999983
-          - 0.79400003
+          - 0.944999993
+          - 0.727999985
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0250000004
-          - 0.0500000007
+          - 0.0299999993
+          - 0.0599999987
           - 1
         pivot_offset:
           - 0
@@ -565,6 +574,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -585,16 +595,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.954999983
-          - 0.796000004
+          - 0.944999993
+          - 0.727999985
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0250000004
-          - 0.0500000007
+          - 0.0299999993
+          - 0.0599999987
           - 1
         pivot_offset:
           - 0
@@ -629,6 +639,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -649,16 +660,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.954999983
-          - 0.792999983
+          - 0.944999993
+          - 0.727999985
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0250000004
-          - 0.0500000007
+          - 0.0299999993
+          - 0.0599999987
           - 1
         pivot_offset:
           - 0
@@ -693,6 +704,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -713,16 +725,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.917999983
-          - 0.84799999
+          - 0.899999976
+          - 0.796999991
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0689999983
-          - 0.104000002
+          - 0.0799999982
+          - 0.119000003
           - 1
         pivot_offset:
           - 0
@@ -734,8 +746,8 @@ Children:
         texture_path: Library/Textures/UI/gun_railgun_icon_panel.png
         use_animation: false
         sprite_size:
-          - 0
-          - 0
+          - 322
+          - 266
         sheet_size:
           - 322
           - 266
@@ -757,6 +769,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -777,16 +790,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.916000009
-          - 0.850000024
+          - 0.899999976
+          - 0.796999991
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0689999983
-          - 0.104000002
+          - 0.0799999982
+          - 0.119000003
           - 1
         pivot_offset:
           - 0
@@ -798,8 +811,8 @@ Children:
         texture_path: Library/Textures/UI/gun_shotgun_icon_panel.png
         use_animation: false
         sprite_size:
-          - 0
-          - 0
+          - 322
+          - 266
         sheet_size:
           - 322
           - 266
@@ -821,6 +834,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -841,16 +855,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.916000009
-          - 0.850000024
+          - 0.899999976
+          - 0.796999991
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0689999983
-          - 0.104000002
+          - 0.0799999982
+          - 0.11900001
           - 1
         pivot_offset:
           - 0
@@ -879,12 +893,13 @@ Children:
           - 1
           - 1
     Children: ~
-  - name: boltgun_ability_1
+  - name: boltgun_ability
     prefabPath: ""
     uuid: 7226111253171644170
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -905,16 +920,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.848999977
-          - 0.889999986
+          - 0.818000019
+          - 0.800000012
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.023
-          - 0.0500000007
+          - 0.057
+          - 0.108999997
           - 1
         pivot_offset:
           - 0
@@ -943,140 +958,13 @@ Children:
           - 1
           - 1
     Children: ~
-  - name: boltgun_ability_2
-    prefabPath: ""
-    uuid: 6889533685794486519
-    tag: Untagged
-    active: true
-    isStatic: false
-    Components:
-      Transform_Component:
-        name: Transform_Component
-        enabled: true
-        localPosition:
-          - 0
-          - 0
-          - 0
-        localRotation:
-          - 0
-          - -0
-          - 0
-        localScale:
-          - 1
-          - 1
-          - 1
-      UITransformComponent:
-        name: UITransformComponent
-        enabled: true
-        position:
-          - 0.875999987
-          - 0.889999986
-          - 0
-        rotation:
-          - 0
-          - 0
-          - 0
-        scale:
-          - 0.023
-          - 0.0500000007
-          - 1
-        pivot_offset:
-          - 0
-          - 0
-          - 0
-      UIImageComponent:
-        name: UIImageComponent
-        enabled: true
-        texture_path: Library/Textures/UI/powerup_chainballs.png
-        use_animation: false
-        sprite_size:
-          - 114
-          - 125
-        sheet_size:
-          - 114
-          - 125
-        sprite_offset:
-          - 0
-          - 0
-        anim_speed: 0
-        anim_index: 0
-        anim_index_limit: 0
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-    Children: ~
-  - name: shotgun_ability_1
-    prefabPath: ""
-    uuid: 3246280818281522766
-    tag: Untagged
-    active: false
-    isStatic: false
-    Components:
-      Transform_Component:
-        name: Transform_Component
-        enabled: true
-        localPosition:
-          - 0
-          - 0
-          - 0
-        localRotation:
-          - 0
-          - -0
-          - 0
-        localScale:
-          - 1
-          - 1
-          - 1
-      UITransformComponent:
-        name: UITransformComponent
-        enabled: true
-        position:
-          - 0.848999977
-          - 0.889999986
-          - 0
-        rotation:
-          - 0
-          - 0
-          - 0
-        scale:
-          - 0.023
-          - 0.0500000007
-          - 1
-        pivot_offset:
-          - 0
-          - 0
-          - 0
-      UIImageComponent:
-        name: UIImageComponent
-        enabled: true
-        texture_path: Library/Textures/UI/powerup_hook.png
-        use_animation: false
-        sprite_size:
-          - 0
-          - 0
-        sheet_size:
-          - 116
-          - 125
-        sprite_offset:
-          - 0
-          - 0
-        anim_speed: 0
-        anim_index: 0
-        anim_index_limit: 0
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-    Children: ~
-  - name: shotgun_ability_2
+  - name: shotgun_ability
     prefabPath: ""
     uuid: 5991966621356209688
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1097,16 +985,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.875999987
-          - 0.889999986
+          - 0.818000019
+          - 0.800000012
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.023
-          - 0.0500000007
+          - 0.0579999983
+          - 0.109999999
           - 1
         pivot_offset:
           - 0
@@ -1118,8 +1006,8 @@ Children:
         texture_path: Library/Textures/UI/powerup_explosion.png
         use_animation: false
         sprite_size:
-          - 0
-          - 0
+          - 114
+          - 125
         sheet_size:
           - 114
           - 125
@@ -1135,76 +1023,13 @@ Children:
           - 1
           - 1
     Children: ~
-  - name: railgun_ability_1
-    prefabPath: ""
-    uuid: 12941715311931944973
-    tag: Untagged
-    active: false
-    isStatic: false
-    Components:
-      Transform_Component:
-        name: Transform_Component
-        enabled: true
-        localPosition:
-          - 0
-          - 0
-          - 0
-        localRotation:
-          - 0
-          - -0
-          - 0
-        localScale:
-          - 1
-          - 1
-          - 1
-      UITransformComponent:
-        name: UITransformComponent
-        enabled: true
-        position:
-          - 0.848999977
-          - 0.889999986
-          - 0
-        rotation:
-          - 0
-          - 0
-          - 0
-        scale:
-          - 0.023
-          - 0.0500000007
-          - 1
-        pivot_offset:
-          - 0
-          - 0
-          - 0
-      UIImageComponent:
-        name: UIImageComponent
-        enabled: true
-        texture_path: Library/Textures/UI/powerup_railgun_reload.png
-        use_animation: false
-        sprite_size:
-          - 0
-          - 0
-        sheet_size:
-          - 114
-          - 125
-        sprite_offset:
-          - 0
-          - 0
-        anim_speed: 0
-        anim_index: 0
-        anim_index_limit: 0
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-    Children: ~
-  - name: railgun_ability_2a
+  - name: railgun_ability
     prefabPath: ""
     uuid: 7228281880689251386
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1225,16 +1050,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.875999987
-          - 0.889999986
+          - 0.818000019
+          - 0.800000012
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.023
-          - 0.0500000007
+          - 0.0579999983
+          - 0.109999999
           - 1
         pivot_offset:
           - 0
@@ -1246,72 +1071,8 @@ Children:
         texture_path: Library/Textures/UI/powerup_railgun_Eball.png
         use_animation: false
         sprite_size:
-          - 0
-          - 0
-        sheet_size:
           - 114
           - 125
-        sprite_offset:
-          - 0
-          - 0
-        anim_speed: 0
-        anim_index: 0
-        anim_index_limit: 0
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-    Children: ~
-  - name: railgun_ability_2b
-    prefabPath: ""
-    uuid: 15743453786480257795
-    tag: Untagged
-    active: false
-    isStatic: false
-    Components:
-      Transform_Component:
-        name: Transform_Component
-        enabled: true
-        localPosition:
-          - 0
-          - 0
-          - 0
-        localRotation:
-          - 0
-          - -0
-          - 0
-        localScale:
-          - 1
-          - 1
-          - 1
-      UITransformComponent:
-        name: UITransformComponent
-        enabled: true
-        position:
-          - 0.875999987
-          - 0.889999986
-          - 0
-        rotation:
-          - 0
-          - 0
-          - 0
-        scale:
-          - 0.023
-          - 0.0500000007
-          - 1
-        pivot_offset:
-          - 0
-          - 0
-          - 0
-      UIImageComponent:
-        name: UIImageComponent
-        enabled: true
-        texture_path: Library/Textures/UI/powerup_railgun_shot.png
-        use_animation: false
-        sprite_size:
-          - 0
-          - 0
         sheet_size:
           - 114
           - 125
@@ -1333,6 +1094,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1353,16 +1115,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.91900003
-          - 0.791999996
+          - 0.898999989
+          - 0.720000029
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.064000003
-          - 0.0540000014
+          - 0.0820000023
+          - 0.0670000017
           - 1
         pivot_offset:
           - 0
@@ -1391,76 +1153,13 @@ Children:
           - 1
           - 1
     Children: ~
-  - name: frames
-    prefabPath: ""
-    uuid: 4488032847570964638
-    tag: Untagged
-    active: true
-    isStatic: false
-    Components:
-      Transform_Component:
-        name: Transform_Component
-        enabled: true
-        localPosition:
-          - 0
-          - 0
-          - 0
-        localRotation:
-          - 0
-          - -0
-          - 0
-        localScale:
-          - 1
-          - 1
-          - 1
-      UITransformComponent:
-        name: UITransformComponent
-        enabled: true
-        position:
-          - 0.847000003
-          - 0.887000024
-          - 0
-        rotation:
-          - 0
-          - 0
-          - 0
-        scale:
-          - 0.0529999994
-          - 0.057
-          - 1
-        pivot_offset:
-          - 0
-          - 0
-          - 0
-      UIImageComponent:
-        name: UIImageComponent
-        enabled: true
-        texture_path: Library/Textures/UI/powerup_frame.png
-        use_animation: false
-        sprite_size:
-          - 292
-          - 152
-        sheet_size:
-          - 292
-          - 152
-        sprite_offset:
-          - 0
-          - 0
-        anim_speed: 0
-        anim_index: 0
-        anim_index_limit: 0
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-    Children: ~
   - name: lock_L
     prefabPath: ""
     uuid: 14076127763368232337
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1481,8 +1180,8 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.922999978
-          - 0.795000017
+          - 0.907999992
+          - 0.730000019
           - 0
         rotation:
           - 0
@@ -1490,7 +1189,7 @@ Children:
           - 0
         scale:
           - 0.0250000004
-          - 0.0500000007
+          - 0.0450000018
           - 1
         pivot_offset:
           - 0
@@ -1502,11 +1201,11 @@ Children:
         texture_path: Library/Textures/UI/lock.png
         use_animation: false
         sprite_size:
-          - 0
-          - 0
+          - 75
+          - 75
         sheet_size:
-          - 96
-          - 96
+          - 75
+          - 75
         sprite_offset:
           - 0
           - 0
@@ -1514,8 +1213,8 @@ Children:
         anim_index: 0
         anim_index_limit: 0
         color:
-          - 1
-          - 1
+          - 0
+          - 0.731517792
           - 1
           - 1
     Children: ~
@@ -1523,8 +1222,9 @@ Children:
     prefabPath: ""
     uuid: 12734898124471456503
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1545,8 +1245,8 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.954999983
-          - 0.795000017
+          - 0.948000014
+          - 0.730000019
           - 0
         rotation:
           - 0
@@ -1554,7 +1254,7 @@ Children:
           - 0
         scale:
           - 0.0250000004
-          - 0.0500000007
+          - 0.0450000018
           - 1
         pivot_offset:
           - 0
@@ -1566,11 +1266,11 @@ Children:
         texture_path: Library/Textures/UI/lock.png
         use_animation: false
         sprite_size:
-          - 0
-          - 0
+          - 75
+          - 75
         sheet_size:
-          - 96
-          - 96
+          - 75
+          - 75
         sprite_offset:
           - 0
           - 0
@@ -1579,80 +1279,17 @@ Children:
         anim_index_limit: 0
         color:
           - 1
-          - 1
-          - 1
-          - 1
-    Children: ~
-  - name: nodash
-    prefabPath: ""
-    uuid: 17150060484897842893
-    tag: Untagged
-    active: false
-    isStatic: false
-    Components:
-      Transform_Component:
-        name: Transform_Component
-        enabled: true
-        localPosition:
-          - 0
-          - 0
-          - 0
-        localRotation:
-          - 0
-          - -0
-          - 0
-        localScale:
-          - 1
-          - 1
-          - 1
-      UITransformComponent:
-        name: UITransformComponent
-        enabled: true
-        position:
-          - 0.105999999
-          - 0.800000012
-          - 0
-        rotation:
-          - 0
-          - 0
-          - 0
-        scale:
-          - 0.0229999982
-          - 0.0299999993
-          - 1
-        pivot_offset:
-          - 0
-          - 0
-          - 0
-      UIImageComponent:
-        name: UIImageComponent
-        enabled: true
-        texture_path: Library/Textures/UI/status_nodash.png
-        use_animation: false
-        sprite_size:
-          - 51
-          - 40
-        sheet_size:
-          - 51
-          - 40
-        sprite_offset:
-          - 0
-          - 0
-        anim_speed: 0
-        anim_index: 0
-        anim_index_limit: 0
-        color:
-          - 1
-          - 1
-          - 1
+          - 0.38132298
+          - 0.38132298
           - 1
     Children: ~
   - name: msup
     prefabPath: ""
     uuid: 901689037527342971
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1673,16 +1310,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.133000001
-          - 0.800000012
+          - 0.119999997
+          - 0.779999971
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0229999982
-          - 0.0299999993
+          - 0.0250000004
+          - 0.0450000018
           - 1
         pivot_offset:
           - 0
@@ -1694,11 +1331,11 @@ Children:
         texture_path: Library\Textures\UI\powerup_sprint.png
         use_animation: false
         sprite_size:
-          - 99
-          - 82
+          - 60
+          - 60
         sheet_size:
-          - 99
-          - 82
+          - 60
+          - 60
         sprite_offset:
           - 0
           - 0
@@ -1715,8 +1352,9 @@ Children:
     prefabPath: ""
     uuid: 7024405179481283790
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1737,16 +1375,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.153999999
-          - 0.800000012
+          - 0.150000006
+          - 0.779999971
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0229999982
-          - 0.0299999993
+          - 0.0250000004
+          - 0.0450000018
           - 1
         pivot_offset:
           - 0
@@ -1758,75 +1396,11 @@ Children:
         texture_path: Library\Textures\UI\powerup_bullets.png
         use_animation: false
         sprite_size:
-          - 100
-          - 87
+          - 60
+          - 60
         sheet_size:
-          - 100
-          - 87
-        sprite_offset:
-          - 0
-          - 0
-        anim_speed: 0
-        anim_index: 0
-        anim_index_limit: 0
-        color:
-          - 1
-          - 1
-          - 1
-          - 1
-    Children: ~
-  - name: defenseup
-    prefabPath: ""
-    uuid: 4108163678017308570
-    tag: Untagged
-    active: false
-    isStatic: false
-    Components:
-      Transform_Component:
-        name: Transform_Component
-        enabled: true
-        localPosition:
-          - 0
-          - 0
-          - 0
-        localRotation:
-          - 0
-          - -0
-          - 0
-        localScale:
-          - 1
-          - 1
-          - 1
-      UITransformComponent:
-        name: UITransformComponent
-        enabled: true
-        position:
-          - 0.173999995
-          - 0.800000012
-          - 0
-        rotation:
-          - 0
-          - 0
-          - 0
-        scale:
-          - 0.0229999982
-          - 0.0299999993
-          - 1
-        pivot_offset:
-          - 0
-          - 0
-          - 0
-      UIImageComponent:
-        name: UIImageComponent
-        enabled: true
-        texture_path: Library\Textures\UI\powerup_shield.png
-        use_animation: false
-        sprite_size:
-          - 99
-          - 81
-        sheet_size:
-          - 99
-          - 81
+          - 60
+          - 60
         sprite_offset:
           - 0
           - 0
@@ -1843,8 +1417,9 @@ Children:
     prefabPath: ""
     uuid: 5943946144905729836
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1865,16 +1440,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.196999997
-          - 0.800000012
+          - 0.180000007
+          - 0.779999971
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0229999982
-          - 0.0299999993
+          - 0.0250000004
+          - 0.0450000055
           - 1
         pivot_offset:
           - 0
@@ -1886,11 +1461,11 @@ Children:
         texture_path: Library\Textures\UI\powerup_cadence.png
         use_animation: false
         sprite_size:
-          - 99
-          - 69
+          - 60
+          - 60
         sheet_size:
-          - 99
-          - 69
+          - 60
+          - 60
         sprite_offset:
           - 0
           - 0
@@ -1907,8 +1482,9 @@ Children:
     prefabPath: ""
     uuid: 17898626938220245274
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1929,16 +1505,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.222000003
-          - 0.800000012
+          - 0.209999993
+          - 0.779999971
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0229999982
-          - 0.0299999993
+          - 0.0250000004
+          - 0.0450000018
           - 1
         pivot_offset:
           - 0
@@ -1950,11 +1526,11 @@ Children:
         texture_path: Library\Textures\UI\powerup_damage.png
         use_animation: false
         sprite_size:
-          - 98
-          - 80
+          - 60
+          - 60
         sheet_size:
-          - 98
-          - 80
+          - 60
+          - 60
         sprite_offset:
           - 0
           - 0
@@ -1971,8 +1547,9 @@ Children:
     prefabPath: ""
     uuid: 4693695904719673995
     tag: Untagged
-    active: false
+    active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -1993,16 +1570,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.248999998
-          - 0.800000012
+          - 0.239999995
+          - 0.779999971
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0229999982
-          - 0.0299999993
+          - 0.0249999985
+          - 0.0450000055
           - 1
         pivot_offset:
           - 0
@@ -2014,11 +1591,11 @@ Children:
         texture_path: Library\Textures\UI\powerup_magnet.png
         use_animation: false
         sprite_size:
-          - 98
-          - 87
+          - 60
+          - 60
         sheet_size:
-          - 98
-          - 87
+          - 60
+          - 60
         sprite_offset:
           - 0
           - 0
@@ -2037,6 +1614,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2084,15 +1662,15 @@ Children:
           - 1225
           - 40
         sprite_offset:
-          - 700
+          - 175
           - 0
         anim_speed: 0.5
-        anim_index: 4
+        anim_index: 1
         anim_index_limit: 6
         color:
-          - 1
-          - 1
-          - 1
+          - 0.262745112
+          - 0
+          - 0
           - 1
     Children: ~
   - name: red_thirst_bar
@@ -2101,6 +1679,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2154,9 +1733,9 @@ Children:
         anim_index: 0
         anim_index_limit: 0
         color:
-          - 1
-          - 1
-          - 1
+          - 0.262745112
+          - 0
+          - 0
           - 1
     Children: ~
   - name: blood_animation_main
@@ -2165,6 +1744,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2186,7 +1766,7 @@ Children:
         enabled: true
         position:
           - 0.363000005
-          - 0.839999974
+          - 0.838
           - 0
         rotation:
           - 0
@@ -2212,15 +1792,15 @@ Children:
           - 250
           - 80
         sprite_offset:
-          - 50
+          - 100
           - 0
         anim_speed: 0.5
-        anim_index: 1
+        anim_index: 2
         anim_index_limit: 4
         color:
-          - 1
-          - 1
-          - 1
+          - 0.180392161
+          - 0.0705882385
+          - 0.0705882385
           - 1
     Children: ~
   - name: blood_bar1
@@ -2229,6 +1809,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2250,7 +1831,7 @@ Children:
         enabled: true
         position:
           - 0.0850000009
-          - 0.839999974
+          - 0.836000025
           - 0
         rotation:
           - 0
@@ -2282,9 +1863,9 @@ Children:
         anim_index: 0
         anim_index_limit: 0
         color:
-          - 1
-          - 1
-          - 1
+          - 0.180392161
+          - 0.0705882385
+          - 0.0705882385
           - 1
     Children: ~
   - name: blood_animation_temp
@@ -2293,6 +1874,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2313,7 +1895,7 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.291999996
+          - 0.305999994
           - 0.897000015
           - 0
         rotation:
@@ -2340,15 +1922,15 @@ Children:
           - 250
           - 80
         sprite_offset:
-          - 50
+          - 100
           - 0
         anim_speed: 0.5
-        anim_index: 1
+        anim_index: 2
         anim_index_limit: 4
         color:
-          - 1
-          - 1
-          - 1
+          - 0.180392161
+          - 0.0705882385
+          - 0.0705882385
           - 1
     Children: ~
   - name: blood_bar2
@@ -2357,6 +1939,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2378,14 +1961,14 @@ Children:
         enabled: true
         position:
           - 0.0970000029
-          - 0.897000015
+          - 0.898000002
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.207000002
+          - 0.213
           - 0.0270000007
           - 1
         pivot_offset:
@@ -2410,9 +1993,9 @@ Children:
         anim_index: 0
         anim_index_limit: 0
         color:
-          - 1
-          - 1
-          - 1
+          - 0.180392161
+          - 0.0705882385
+          - 0.0705882385
           - 1
     Children: ~
   - name: healthframe
@@ -2421,6 +2004,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2441,16 +2025,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.0680000037
-          - 0.785000026
+          - 0.0820000023
+          - 0.815999985
           - 0
         rotation:
-          - 0
-          - 0
-          - 0
+          - 360
+          - -1.39999592
+          - 360
         scale:
-          - 0.335000008
-          - 0.181999996
+          - 0.317000002
+          - 0.120000005
           - 1
         pivot_offset:
           - 0
@@ -2462,11 +2046,11 @@ Children:
         texture_path: Library\Textures\UI\healthbar_longbar_frame.png
         use_animation: false
         sprite_size:
-          - 308
-          - 114
+          - 977
+          - 208
         sheet_size:
-          - 308
-          - 114
+          - 977
+          - 208
         sprite_offset:
           - 0
           - 0
@@ -2485,6 +2069,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2505,16 +2090,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.00700000022
-          - 0.774999976
+          - -0.00600000005
+          - 0.75
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.100000001
-          - 0.200000003
+          - 0.123000011
+          - 0.231999993
           - 1
         pivot_offset:
           - 0
@@ -2526,11 +2111,11 @@ Children:
         texture_path: Library\Textures\UI\Canister_0.png
         use_animation: false
         sprite_size:
-          - 195
-          - 225
+          - 304
+          - 332
         sheet_size:
-          - 195
-          - 225
+          - 304
+          - 332
         sprite_offset:
           - 0
           - 0
@@ -2549,6 +2134,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2569,16 +2155,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.00700000022
-          - 0.774999976
+          - -0.00600000005
+          - 0.75
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.100000001
-          - 0.200000003
+          - 0.123000011
+          - 0.231999993
           - 1
         pivot_offset:
           - 0
@@ -2590,11 +2176,11 @@ Children:
         texture_path: Library\Textures\UI\Canister_1.png
         use_animation: false
         sprite_size:
-          - 195
-          - 225
+          - 304
+          - 332
         sheet_size:
-          - 195
-          - 225
+          - 304
+          - 332
         sprite_offset:
           - 0
           - 0
@@ -2613,6 +2199,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2633,16 +2220,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.00700000022
-          - 0.774999976
+          - -0.00600000005
+          - 0.75
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.100000001
-          - 0.200000003
+          - 0.123000011
+          - 0.231999993
           - 1
         pivot_offset:
           - 0
@@ -2654,11 +2241,11 @@ Children:
         texture_path: Library\Textures\UI\Canister_2.png
         use_animation: false
         sprite_size:
-          - 195
-          - 225
+          - 304
+          - 332
         sheet_size:
-          - 195
-          - 225
+          - 304
+          - 332
         sprite_offset:
           - 0
           - 0
@@ -2677,6 +2264,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2697,16 +2285,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.00700000022
-          - 0.774999976
+          - -0.00600000005
+          - 0.75
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.100000001
-          - 0.200000003
+          - 0.123000011
+          - 0.231999993
           - 1
         pivot_offset:
           - 0
@@ -2718,11 +2306,11 @@ Children:
         texture_path: Library\Textures\UI\Canister_3.png
         use_animation: false
         sprite_size:
-          - 195
-          - 225
+          - 304
+          - 332
         sheet_size:
-          - 195
-          - 225
+          - 304
+          - 332
         sprite_offset:
           - 0
           - 0
@@ -2741,6 +2329,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2761,16 +2350,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.00700000022
-          - 0.774999976
+          - -0.00600000005
+          - 0.75
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.100000001
-          - 0.200000003
+          - 0.123000011
+          - 0.231999993
           - 1
         pivot_offset:
           - 0
@@ -2782,11 +2371,11 @@ Children:
         texture_path: Library\Textures\UI\Canister_4.png
         use_animation: false
         sprite_size:
-          - 195
-          - 225
+          - 304
+          - 332
         sheet_size:
-          - 195
-          - 225
+          - 304
+          - 332
         sprite_offset:
           - 0
           - 0
@@ -2805,6 +2394,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2825,16 +2415,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.00700000022
-          - 0.774999976
+          - -0.00600000005
+          - 0.75
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.100000001
-          - 0.200000003
+          - 0.123000011
+          - 0.231999993
           - 1
         pivot_offset:
           - 0
@@ -2846,11 +2436,11 @@ Children:
         texture_path: Library\Textures\UI\Canister_5.png
         use_animation: false
         sprite_size:
-          - 195
-          - 225
+          - 304
+          - 332
         sheet_size:
-          - 195
-          - 225
+          - 304
+          - 332
         sprite_offset:
           - 0
           - 0
@@ -2869,6 +2459,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2889,16 +2480,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.920000017
-          - 0.971000016
+          - 0.898999989
+          - 0.944999993
           - 0
         rotation:
+          - 27328.3047
           - 0
-          - 0
-          - 0
+          - 10304.166
         scale:
-          - 0.0659999996
-          - 0.0299999993
+          - 0.0850000083
+          - 0.0350000001
           - 1
         pivot_offset:
           - 0
@@ -2933,6 +2524,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -2953,16 +2545,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.920000017
-          - 0.967999995
+          - 0.897000015
+          - 0.949000001
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.063000001
-          - 0.0249999985
+          - 0.0850000009
+          - 0.0350000001
           - 1
         pivot_offset:
           - 0
@@ -2987,8 +2579,8 @@ Children:
         anim_index_limit: 0
         color:
           - 1
-          - 1
-          - 1
+          - 0.0933852196
+          - 0.0933852196
           - 1
     Children: ~
   - name: overheat_warning
@@ -2997,6 +2589,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -3017,16 +2610,16 @@ Children:
         name: UITransformComponent
         enabled: true
         position:
-          - 0.959999979
-          - 0.961000025
+          - 0.957000017
+          - 0.947000027
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.0289999992
-          - 0.0160000008
+          - 0.0249999985
+          - 0.0340000018
           - 1
         pivot_offset:
           - 0
@@ -3051,8 +2644,8 @@ Children:
         anim_index_limit: 0
         color:
           - 1
-          - 1
-          - 1
+          - 0.315175116
+          - 0.315175116
           - 1
     Children: ~
   - name: weapon_switcher_frame
@@ -3061,6 +2654,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -3082,15 +2676,15 @@ Children:
         enabled: true
         position:
           - 0.99000001
-          - 0.980000019
+          - 0.963999987
           - 0
         rotation:
           - 0
           - 0
           - 0
         scale:
-          - 0.152999997
-          - 0.131999999
+          - 0.200000018
+          - 0.184999987
           - 1
         pivot_offset:
           - 1
@@ -3102,11 +2696,11 @@ Children:
         texture_path: Library\Textures\UI\gunswitcher_frame.png
         use_animation: false
         sprite_size:
-          - 779
-          - 381
+          - 722
+          - 353
         sheet_size:
-          - 779
-          - 381
+          - 722
+          - 353
         sprite_offset:
           - 0
           - 0
@@ -3125,6 +2719,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -3173,7 +2768,7 @@ Children:
           - 0
         fontSize: 29.6000004
         boxSize:
-          - 195.359985
+          - 310.799988
           - 32.5600014
         spriteSize:
           - 0
@@ -3191,6 +2786,7 @@ Children:
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -3212,7 +2808,7 @@ Children:
         enabled: true
         position:
           - 0.961000025
-          - 0.0719999969
+          - 0.115000002
           - 0
         rotation:
           - 0
@@ -3237,10 +2833,10 @@ Children:
           - 0.664203882
           - 0.797665358
           - 0
-        fontSize: 12.5
+        fontSize: 14
         boxSize:
-          - 53.75
-          - 13.75
+          - 60.1999969
+          - 15.3999996
         spriteSize:
           - 0
           - 0
@@ -3257,6 +2853,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -3278,7 +2875,7 @@ Children:
         enabled: true
         position:
           - 0.961000025
-          - 0.0719999969
+          - 0.115000002
           - 0
         rotation:
           - 0
@@ -3303,7 +2900,7 @@ Children:
           - 0
           - 0.304168224
           - 0.797665358
-        fontSize: 12.5
+        fontSize: 14
         boxSize:
           - 53.75
           - 13.75
@@ -3323,6 +2920,7 @@ Children:
     tag: Untagged
     active: false
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -3344,7 +2942,7 @@ Children:
         enabled: true
         position:
           - 0.961000025
-          - 0.0719999969
+          - 0.115000002
           - 0
         rotation:
           - 0
@@ -3369,7 +2967,7 @@ Children:
           - 1
           - 0
           - 0
-        fontSize: 12.5
+        fontSize: 14
         boxSize:
           - 53.75
           - 13.75
@@ -3385,10 +2983,11 @@ Children:
     Children: ~
   - name: Controller_popup
     prefabPath: ""
-    uuid: 8668360135312636502
+    uuid: 299177235251689669
     tag: Untagged
     active: true
     isStatic: false
+    useManualBoundingBox: false
     Components:
       Transform_Component:
         name: Transform_Component
@@ -3424,4 +3023,134 @@ Children:
           - 0
           - 1
           - 0
+    Children: ~
+  - name: CDBar
+    prefabPath: ""
+    uuid: 15569205497635253671
+    tag: Untagged
+    active: false
+    isStatic: false
+    useManualBoundingBox: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.810000002
+          - 0.899999976
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.0649999976
+          - 0.100000001
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Assets/default.png
+        use_animation: false
+        sprite_size:
+          - 1024
+          - 1024
+        sheet_size:
+          - 1024
+          - 1024
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 0
+          - 0
+          - 0
+          - 0.495000005
+    Children: ~
+  - name: frames
+    prefabPath: ""
+    uuid: 4488032847570964638
+    tag: Untagged
+    active: true
+    isStatic: false
+    useManualBoundingBox: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.813000023
+          - 0.791000009
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.0649999976
+          - 0.125
+          - 1
+        pivot_offset:
+          - 0
+          - 0
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/powerup_frame.png
+        use_animation: false
+        sprite_size:
+          - 136
+          - 152
+        sheet_size:
+          - 136
+          - 152
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+        anim_index: 0
+        anim_index_limit: 0
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
     Children: ~

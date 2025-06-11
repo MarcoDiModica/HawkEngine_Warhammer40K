@@ -73,6 +73,15 @@ YAML::Node SceneSerializer::SerializeGameObject(GameObject& gameObject) {
 	node["tag"] = gameObject.tag;
 	node["active"] = gameObject.IsActive();
 	node["isStatic"] = gameObject.isStatic;
+	node["useManualBoundingBox"] = gameObject.useManualBoundingBox;
+
+	if (gameObject.useManualBoundingBox) {
+		YAML::Node bboxNode = YAML::Node();
+		bboxNode["min"] = std::vector<float>{ (float)gameObject.manualBoundingBox.min.x, (float)gameObject.manualBoundingBox.min.y, (float)gameObject.manualBoundingBox.min.z };
+		bboxNode["max"] = std::vector<float>{ (float)gameObject.manualBoundingBox.max.x, (float)gameObject.manualBoundingBox.max.y, (float)gameObject.manualBoundingBox.max.z };
+		node["manualBoundingBox"] = bboxNode;
+	}
+
 
 	node["Components"] = SerializeComponents(gameObject);
 
@@ -182,6 +191,37 @@ void SceneSerializer::RemoveComponentByName(GameObject* gameObject, const std::s
 	}
 }
 
+void SceneSerializer::TraverseGameObjects(std::shared_ptr<GameObject> gameObject) {
+	if (!gameObject) return;
+
+	if (gameObject->HasComponent<MeshRenderer>()) {
+		auto meshRenderer = gameObject->GetComponent<MeshRenderer>();
+		if (meshRenderer && meshRenderer->GetMesh()) {
+			meshRenderer->GetMesh()->loadToOpenGL();
+		}
+	}
+
+	if (gameObject->HasComponent<UIImageComponent>()) {
+		auto imageComponent = gameObject->GetComponent<UIImageComponent>();
+		if (imageComponent && imageComponent->GetTexture()) {
+			imageComponent->SetTexture(imageComponent->GetTexture()->image_path);
+		}
+	}
+
+	for (const auto& child : gameObject->GetChildren()) {
+		TraverseGameObjects(child);
+	}
+}
+
+void SceneSerializer::TraverseAllGameObjects() {
+	std::shared_ptr<Scene> activeScene = Application->root->GetActiveScene();
+	if (!activeScene) return;
+
+	for (const auto& gameObject : activeScene->_children) {
+		TraverseGameObjects(gameObject);
+	}
+}
+
 bool SceneSerializer::DeSerialize(const std::string& path) {
 	try {
 		YAML::Node rootNode = LoadFromFile(path);
@@ -216,9 +256,6 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 
 		LOG(LogType::LOG_INFO, "Scene created: %s", sceneName.c_str());
 
-		//Application->root->GetResourceManager()->ClearAllMeshes();
-		//Application->root->GetResourceManager()->ClearAllMaterials();
-
 		for (int i = 0; ; i++) {
 			YAML::Node objectNode = rootNode["GameObject" + std::to_string(i)];
 			if (!objectNode || !objectNode["name"].IsDefined()) {
@@ -244,6 +281,8 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 		}
 		g_PendingScriptReferences.clear();
 
+		TraverseAllGameObjects();
+
 		LOG(LogType::LOG_INFO, "Scene deserialized successfully: %s", sceneName.c_str());
 		Application->root->UpdateCameraPriority();
 		Application->physicsModule->ResetAllColliderTransforms();
@@ -252,6 +291,7 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 	}
 	catch (const YAML::Exception& e) {
 		LOG(LogType::LOG_ERROR, "YAML Exception during deserialization: %s", e.what());
+		TraverseAllGameObjects();
 		Application->root->UpdateCameraPriority();
 		Application->physicsModule->ResetAllColliderTransforms();
 
@@ -259,14 +299,12 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 	}
 	catch (const std::exception& e) {
 		LOG(LogType::LOG_ERROR, "Exception during deserialization: %s", e.what());
+		TraverseAllGameObjects();
 		Application->root->UpdateCameraPriority();
 		Application->physicsModule->ResetAllColliderTransforms();
 
 		return false;
 	}
-
-	
-	//Application->root->GetActiveScene()->Start();
 }
 
 std::shared_ptr<GameObject> SceneSerializer::DeserializeGameObject(const YAML::Node& node) {
@@ -299,6 +337,25 @@ std::shared_ptr<GameObject> SceneSerializer::DeserializeGameObject(const YAML::N
 	if (node["isStatic"].IsDefined()) {
 		gameObject->isStatic = node["isStatic"].as<bool>();
 	}
+
+	if (node["useManualBoundingBox"]) {
+		gameObject->useManualBoundingBox = node["useManualBoundingBox"].as<bool>();
+
+		if (gameObject->useManualBoundingBox && node["manualBoundingBox"]) {
+			YAML::Node bboxNode = node["manualBoundingBox"];
+
+			if (bboxNode["min"] && bboxNode["max"]) {
+				std::vector<float> min = bboxNode["min"].as<std::vector<float>>();
+				std::vector<float> max = bboxNode["max"].as<std::vector<float>>();
+
+				if (min.size() >= 3 && max.size() >= 3) {
+					gameObject->manualBoundingBox.min = glm::vec3(min[0], min[1], min[2]);
+					gameObject->manualBoundingBox.max = glm::vec3(max[0], max[1], max[2]);
+				}
+			}
+		}
+	}
+
 
 	if (node["Components"].IsDefined()) {
 		DeserializeComponents(gameObject.get(), node["Components"]);
@@ -333,6 +390,8 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			}
 
 			meshRenderer->decode(componentData);
+
+			meshRenderer->GetMesh()->loadToOpenGL();
 		}
 		else if (componentName == "CameraComponent") {
 			auto camera = gameObject->AddComponent<CameraComponent>();
@@ -395,6 +454,7 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 		else if (componentName == "UIImageComponent") {
 			auto image = gameObject->AddComponent<UIImageComponent>();
 			image->decode(componentData);
+			//image->SetTexture(image->GetTexture()->image_path);
 		}
 		else if (componentName == "UIButtonComponent") {
 			auto button = gameObject->AddComponent<UIButtonComponent>();

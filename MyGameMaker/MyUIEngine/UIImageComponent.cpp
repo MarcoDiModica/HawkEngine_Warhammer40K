@@ -121,7 +121,7 @@ void UIImageComponent::Update(float deltaTime)
 		spriteSize = sheetSize;
 	}
 
-	if (texture->image_path != "") {
+	if (texture->image_path != "" && texture) {
 		texture->bind();
 		shader->SetUniform("u_HasTexture", true);
 		shader->SetUniform("texture1", 0);

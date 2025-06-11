@@ -1,0 +1,505 @@
+name: Canvas_Tutorial
+prefabPath: Assets\Prefabs\Canvas_Tutorial.prefab.yaml
+uuid: 8467635903990795185
+tag: Untagged
+active: true
+isStatic: false
+useManualBoundingBox: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0
+      - 0
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  UITransformComponent:
+    name: UITransformComponent
+    enabled: true
+    position:
+      - 0
+      - 0
+      - 0
+    rotation:
+      - 0
+      - 0
+      - 0
+    scale:
+      - 1
+      - 1
+      - 1
+    pivot_offset:
+      - 0
+      - 1
+      - 0
+  UICanvasComponent:
+    name: UICanvasComponent
+    enabled: true
+  ScriptComponents:
+    Script0:
+      name: Tutorial
+      fields: ~
+Children:
+  - name: Move
+    prefabPath: ""
+    uuid: 16878544583696461210
+    tag: Untagged
+    active: true
+    isStatic: false
+    useManualBoundingBox: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.101000004
+          - 0.330000013
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.300000012
+          - 0.300000012
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\Popup_move_spritesheet.png
+        use_animation: true
+        sprite_size:
+          - 890
+          - 538
+        sheet_size:
+          - 3560
+          - 538
+        sprite_offset:
+          - 890
+          - 0
+        anim_speed: 0.5
+        anim_index: 1
+        anim_index_limit: 3
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: Aim
+    prefabPath: ""
+    uuid: 5022984542962769087
+    tag: Untagged
+    active: false
+    isStatic: false
+    useManualBoundingBox: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.100000001
+          - 0.330000013
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.300000012
+          - 0.300000012
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\Popup_aim_spritesheet.png
+        use_animation: true
+        sprite_size:
+          - 890
+          - 538
+        sheet_size:
+          - 3560
+          - 538
+        sprite_offset:
+          - 890
+          - 0
+        anim_speed: 0.5
+        anim_index: 0
+        anim_index_limit: 3
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: Shoot
+    prefabPath: ""
+    uuid: 16591885920040294338
+    tag: Untagged
+    active: false
+    isStatic: false
+    useManualBoundingBox: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.100000001
+          - 0.330000013
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.300000012
+          - 0.300000012
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\Popup_shoot_spritesheet.png
+        use_animation: true
+        sprite_size:
+          - 890
+          - 538
+        sheet_size:
+          - 3560
+          - 538
+        sprite_offset:
+          - 890
+          - 0
+        anim_speed: 0.5
+        anim_index: 0
+        anim_index_limit: 3
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: Dash
+    prefabPath: ""
+    uuid: 13421704822517838993
+    tag: Untagged
+    active: false
+    isStatic: false
+    useManualBoundingBox: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.100000001
+          - 0.330000013
+          - 0
+        rotation:
+          - 1379.76392
+          - 0
+          - 360
+        scale:
+          - 0.300000012
+          - 0.300000012
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\Popup_dash_spritesheet.png
+        use_animation: true
+        sprite_size:
+          - 890
+          - 538
+        sheet_size:
+          - 3560
+          - 538
+        sprite_offset:
+          - 1780
+          - 0
+        anim_speed: 0.5
+        anim_index: 0
+        anim_index_limit: 3
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: Reload
+    prefabPath: ""
+    uuid: 9960768324616225922
+    tag: Untagged
+    active: false
+    isStatic: false
+    useManualBoundingBox: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.100000001
+          - 0.330000013
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.300000012
+          - 0.300000012
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\Popup_reload_spritesheet.png
+        use_animation: true
+        sprite_size:
+          - 890
+          - 538
+        sheet_size:
+          - 3560
+          - 538
+        sprite_offset:
+          - 890
+          - 0
+        anim_speed: 0.5
+        anim_index: 0
+        anim_index_limit: 3
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: SwitchWeapon
+    prefabPath: ""
+    uuid: 5331263267064761280
+    tag: Untagged
+    active: false
+    isStatic: false
+    useManualBoundingBox: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.100000001
+          - 0.330000013
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.300000012
+          - 0.300000012
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\Popup_switchWeapon_spritesheet.png
+        use_animation: true
+        sprite_size:
+          - 890
+          - 538
+        sheet_size:
+          - 3560
+          - 538
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0.5
+        anim_index: 0
+        anim_index_limit: 3
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
+    Children: ~
+  - name: WeaponAbility
+    prefabPath: ""
+    uuid: 7847055161558379421
+    tag: Untagged
+    active: false
+    isStatic: false
+    useManualBoundingBox: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.100000001
+          - 0.330000013
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.300000012
+          - 0.300000012
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\Popup_weaponAbility_spritesheet.png
+        use_animation: true
+        sprite_size:
+          - 890
+          - 538
+        sheet_size:
+          - 3560
+          - 538
+        sprite_offset:
+          - 1780
+          - 0
+        anim_speed: 0.5
+        anim_index: 0
+        anim_index_limit: 3
+        color:
+          - 1
+          - 1
+          - 1
+          - 1
+    Children: ~

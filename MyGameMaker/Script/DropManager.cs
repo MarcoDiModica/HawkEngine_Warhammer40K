@@ -13,6 +13,7 @@ public class DropManager : MonoBehaviour
     public Prefab ShotgunShellsPrefab; 
     public Prefab BoltgunBulletsPrefab; 
     public Prefab MedicaeStimmPrefab;
+    public Prefab DestroyedWood;
     public Prefab PiercingBulletsPrefab;
     private PlayerController playerController;
     public override void Awake()
@@ -200,29 +201,37 @@ public class DropManager : MonoBehaviour
 
     public void SpawnPrefabFromDestroyableObject(Vector3 position)
     {
-        // 12.5% Shotgun Shells
-        // 12.5% Boltgun Bullets
-        // 75% Nothing
+        // 12.5% Shotgun Shells  
+        // 12.5% Boltgun Bullets  
+        // 75% Nothing  
 
         Random randomGeneral = new Random();
         float randomValueGeneral = randomGeneral.Next(0, 100);
 
-        if (randomValueGeneral < 12.5f) 
+        if (randomValueGeneral < 50f)
         {
-            if (randomValueGeneral < 6.25f) 
+            if (playerController.playerData.hasShotgun)
             {
-                // 12.5% chance
-                SpawnShotgunShells(position);
+                if (randomValueGeneral < 25f)
+                {
+                    // 12.5% chance  
+                    SpawnShotgunShells(position);
+                }
+                else
+                {
+                    // 12.5% chance  
+                    SpawnBoltgunBullets(position);
+                }
             }
-            else 
+            else
             {
-                // 12.5% chance
+                // Si el jugador no tiene escopeta, siempre drop de Boltgun  
                 SpawnBoltgunBullets(position);
             }
         }
         else
         {
-            // 75% chance
+            // 75% chance  
         }
     }
 
@@ -267,6 +276,12 @@ public class DropManager : MonoBehaviour
     {
         var medicaeStimm = Instantiate(MedicaeStimmPrefab);
         medicaeStimm.transform.position = position;
+    }
+
+    public void SpawnDestroyedBarrel(Vector3 position)
+    {
+        var destroyedBarrel = Instantiate(DestroyedWood);
+        destroyedBarrel.transform.position = position;
     }
 
     public void SpawnPiercingBullets(Vector3 position)

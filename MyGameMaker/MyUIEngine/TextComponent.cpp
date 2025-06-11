@@ -51,6 +51,10 @@ MonoObject* TextComponent::GetSharp() {
 
 void TextComponent::SetText(const std::string& text) {
     m_text = text;
+    if (!m_overrideBoxSize) {
+        const float scaleFactor = m_fontSize / 10.0f;
+        m_boxSize = FontManager::GetInstance().CalculateTextBoxSize(m_text, scaleFactor);
+    }
 }
 
 void TextComponent::SetPosition(const glm::vec2& position) {
@@ -161,9 +165,8 @@ void TextComponent::Render() const {
 }
 
 void TextComponent::SetBoxSize(float x, float y) {
-    m_boxSize.x = x;
-	m_boxSize.y = y;
-    /*m_overrideBoxSize = true;*/
+    m_boxSize = glm::vec2(x, y);
+    m_overrideBoxSize = true;
 }
 
 

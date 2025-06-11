@@ -1,6 +1,6 @@
-name: WoodenBox_Lvl1_prefab
-prefabPath: Assets/Prefabs/WoodenBox_Lvl1_prefab.prefab.yaml
-uuid: 11917533091187017491
+name: CajaMadera1_1_Instance_Instance
+prefabPath: Assets\Prefabs\WoodenBox_Lvl1_prefab.prefab.yaml
+uuid: 1929486645368155958
 tag: Destroyable
 active: true
 isStatic: false
@@ -9,48 +9,191 @@ Components:
     name: Transform_Component
     enabled: true
     localPosition:
-      - 40.205650329589844
-      - 0
-      - -1.3086915016174316
+      - -4.527277946472168
+      - 4.2351647362715017e-22
+      - 7.5031118392944336
     localRotation:
-      - -90.000009334667638
+      - -90.00000769819961
       - 0
       - 0
     localScale:
-      - 1.25
-      - 1.2500000000000167
-      - 1.2500000000000167
-  MeshRenderer:
-    name: MeshRenderer
-    enabled: true
-    mesh:
-      name: 15390588685034517731
-    material:
-      name: wooden barrel and box low_DefaultMaterial_BaseColor
-      color:
-        - 1
-        - 1
-        - 1
-        - 1
-    color:
-      - 1
-      - 1
-      - 1
-  Shader:
-    name: Shader
-    enabled: true
+      - 1.5375000238418579
+      - 1.5375000238418717
+      - 1.5375000238418717
   BoxColliderComponent:
     size:
-      - 1
-      - 1
+      - 2.70000005
+      - 2.70000005
       - 3.5999999
     offset:
       - 0
       - 1
-      - 1.89999998
+      - 2.29999995
     isTrigger: false
   ScriptComponents:
     Script0:
       name: DestroyEnviormentObject
-      fields: ~
-Children: ~
+      fields:
+        onlyMedicaeStimm: false
+Children:
+  - name: wooden box
+    prefabPath: ""
+    uuid: 9278833148931458
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0.029354477301239967
+          - -0.021857764571905136
+          - -0.51018112897872925
+        localRotation:
+          - -1.6364722258140834e-06
+          - 0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 15390588685034517731
+        material:
+          name: wooden barrel and box low_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 1
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~
+  - name: DestroyedBox
+    prefabPath: ""
+    uuid: 14973539240180780242
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0.0073143006302416325
+          - -1.3939307928085327
+          - -1.8728695749814506e-07
+        localRotation:
+          - 90.000009659346318
+          - -0
+          - 0
+        localScale:
+          - 0.0060000000521540642
+          - 0.0060000000521540642
+          - 0.0060000000521540642
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: 798532158152224588
+        material:
+          name: CajaRota_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+            - 0
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+    Children: ~
+  - name: VFX
+    prefabPath: ""
+    uuid: 15691253018671444475
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - -3.8146973224684189e-07
+          - -1.4305406808853149
+          - 0.91348862648010254
+        localRotation:
+          - 2.6349807946960217e-13
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      ParticleFX:
+        name: ParticleFX
+        enabled: true
+        emitterShape: 2
+        emissionRate: 3
+        particlesPerSecond: 3
+        minLifetime: 0.200000003
+        maxLifetime: 0.400000006
+        minSpeed: 0.5
+        maxSpeed: 4
+        startSize: 0.5
+        endSize: 2
+        minSize: 0.5
+        maxSize: 0
+        startColor:
+          - 0.949999988
+          - 0.699999988
+          - 0.200000003
+        endColor:
+          - 0.949999988
+          - 0.699999988
+          - 0.200000003
+        startAlpha: 0.899999976
+        endAlpha: 0.899999976
+        rotationSpeed: 0.200000003
+        gravity:
+          - 0
+          - -0.100000001
+          - 0
+        shapeParam1: 0.200000003
+        shapeParam2: 1
+        shapeParam3: 20
+        isOneShot: false
+        isPlaying: false
+        isPaused: false
+        burstEmitted: false
+        spriteSize:
+          - 256
+          - 256
+        useAnimation: true
+        animSpeed: 0.5
+        startRotation: 0
+        randomRotation: true
+        material:
+          billboardType: 0
+          particleType: 54
+          softness: 0
+          useColorGradient: false
+          texturePath: Assets/Textures/niebla30Frames.png
+        particleType: 54
+      ScriptComponents:
+        Script0:
+          name: StopVFX
+          fields: ~
+    Children: ~

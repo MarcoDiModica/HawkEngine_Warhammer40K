@@ -33,6 +33,8 @@ public:
 	std::vector<PendingReference> g_PendingScriptReferences;
 	void ApplyComponentDelta(GameObject* gameObject, const YAML::Node& prefabComponents);
 	void RemoveComponentByName(GameObject* gameObject, const std::string& name);
+	void TraverseGameObjects(std::shared_ptr<GameObject> gameObject);
+	void TraverseAllGameObjects();
 private:
 	YAML::Node SerializeComponents(GameObject& gameObject);
 	void SerializeChildren(YAML::Node& parentNode, GameObject& gameObject);

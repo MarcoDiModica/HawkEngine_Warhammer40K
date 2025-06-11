@@ -5,8 +5,10 @@ using System.Numerics;
 public class PauseMenu : MonoBehaviour
 {
     private GameObject optionsMenu;
+    private GameObject controlsMenu;
     private GameObject resumeButton;
     private GameObject optionsMenuButton;
+    private GameObject controlsButton;
     private GameObject mainMenuButton;
     private GameObject quitButton;
     private GameObject HUD;
@@ -14,11 +16,13 @@ public class PauseMenu : MonoBehaviour
 
     private UIButton button_resumeButton;
     private UIButton button_optionsMenuButton;
+    private UIButton button_controlsButton;
     private UIButton button_mainMenuButton;
     private UIButton button_quitButton;
 
     private UITransform transform_resumeButton;
     private UITransform transform_optionsMenuButton;
+    private UITransform transform_controlsButton;
     private UITransform transform_mainMenuButton;
     private UITransform transform_quitButton;
 
@@ -32,6 +36,7 @@ public class PauseMenu : MonoBehaviour
 
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+    private string HoveredSFX = "Assets/Audio/UI/Hovered.wav";
 
     private int selectedButtonIndex = -1;
     private UIButton[] buttons;
@@ -55,28 +60,32 @@ public class PauseMenu : MonoBehaviour
     public override void Start()
     {
         optionsMenu = GameObject.Find("Canvas_OptionsMenu");
+        controlsMenu = GameObject.Find("Canvas_Controls");
         resumeButton = GameObject.Find("Resume_Button");
         optionsMenuButton = GameObject.Find("Options_Button");
+        controlsButton = GameObject.Find("Controls_Button");
         mainMenuButton = GameObject.Find("MainMenu_Button");
         quitButton = GameObject.Find("Exit_Button");
         //sound = gameObject.GetComponent<Audio>();
 
         button_resumeButton = resumeButton.GetComponent<UIButton>();
         button_optionsMenuButton = optionsMenuButton.GetComponent<UIButton>();
+        button_controlsButton = controlsButton.GetComponent<UIButton>();
         button_mainMenuButton = mainMenuButton.GetComponent<UIButton>();
         button_quitButton = quitButton.GetComponent<UIButton>();
 
         transform_resumeButton = resumeButton.GetComponent<UITransform>();
         transform_optionsMenuButton = optionsMenuButton.GetComponent<UITransform>();
+        transform_controlsButton = controlsButton.GetComponent<UITransform>();
         transform_mainMenuButton = mainMenuButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
 
-        buttons = new UIButton[] { button_resumeButton, button_optionsMenuButton, button_mainMenuButton, button_quitButton };
-        transforms = new UITransform[] { transform_resumeButton, transform_optionsMenuButton, transform_mainMenuButton, transform_quitButton };
+        buttons = new UIButton[] { button_resumeButton, button_optionsMenuButton, button_controlsButton, button_mainMenuButton, button_quitButton };
+        transforms = new UITransform[] { transform_resumeButton, transform_optionsMenuButton,transform_controlsButton, transform_mainMenuButton, transform_quitButton };
 
         hasPlayedHoverSound = new bool[buttons.Length];
 
-        if (resumeButton == null || optionsMenuButton == null || mainMenuButton == null || quitButton == null)
+        if (resumeButton == null || optionsMenuButton == null || controlsButton == null || mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button object found");
             return;
@@ -164,7 +173,6 @@ public class PauseMenu : MonoBehaviour
             currentInputMethod = InputMethod.None;
         }
 
-        // Detectar si el ratón está sobre un botón
         for (int i = 0; i < buttons.Length; i++)
         {
             if (buttons[i] == null)
@@ -186,8 +194,7 @@ public class PauseMenu : MonoBehaviour
 
                 if (!hasPlayedHoverSound[i])
                 {
-                    //sound?.LoadAudio(buttonHovered);
-                    //sound?.Play();
+                    Audio.Play(HoveredSFX);
                     hasPlayedHoverSound[i] = true;
                 }
             }
@@ -206,9 +213,11 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
-        // Detectar clic del ratón
-        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1) || Input.GetControllerButtonDown(ControllerButton.A))
+        // Detectar clic del ratï¿½n
+        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse) || Input.GetControllerButtonDown(ControllerButton.A))
         {
+            if(selectedButtonIndex == -1) return;
+            
             UIButton selectedButton = buttons[selectedButtonIndex];
             selectedButton.SetState(ButtonState.CLICKED);
 
@@ -216,6 +225,7 @@ public class PauseMenu : MonoBehaviour
             {
                 Audio.PlayOneShot(ConfirmSFX);
                 gameObject.SetActive(false);
+                SceneManager.SetPause(false);
             }
             else if (selectedButton == button_optionsMenuButton)
             {
@@ -223,16 +233,26 @@ public class PauseMenu : MonoBehaviour
                 optionsMenu.SetActive(true);
                 gameObject.SetActive(false);
             }
+            else if (selectedButton == button_controlsButton)
+            {
+                Audio.PlayOneShot(ConfirmSFX);
+                controlsMenu.SetActive(true);
+
+            }
             else if (selectedButton == button_mainMenuButton)
             {
                 Audio.PlayOneShot(ConfirmSFX);
+                
+                Audio.StopAll();
+                
+                
+                SceneManager.SetPause(false);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)
-            {
+            {              
                 Audio.PlayOneShot(ConfirmSFX);
-           
-                // Aquí puedes agregar la lógica para salir del juego
+                Engineson.Quit();
             }
         }
     }
@@ -242,8 +262,25 @@ public class PauseMenu : MonoBehaviour
     }
     public override void Update(float deltaTime)
     {
+        if (Input.GetControllerButtonDown(ControllerButton.B))
+        {
+            if (optionsMenu.IsActive())
+            {
+                optionsMenu.SetActive(false);
+                gameObject.SetActive(true);
+            }
+            else if (controlsMenu.IsActive())
+            {
+                controlsMenu.SetActive(false);
+                gameObject.SetActive(true);
+            }
+            else
+            {
+                SceneManager.SetPause(false);
+                gameObject.SetActive(false);
+            }
+        }
 
-
-        NavigateMenu();
+            NavigateMenu();
     }
 }

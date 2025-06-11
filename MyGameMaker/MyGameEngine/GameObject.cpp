@@ -465,6 +465,10 @@ BoundingBox GameObject::boundingBox() const
 {
     BoundingBox combinedBoundingBox{};
 
+    if (useManualBoundingBox) {
+		return GetTransform()->GetMatrix() * manualBoundingBox;
+    }
+
     if (HasComponent<MeshRenderer>()) {
         auto meshRenderer = GetComponent<MeshRenderer>();
         combinedBoundingBox = meshRenderer->GetMesh()->boundingBox();

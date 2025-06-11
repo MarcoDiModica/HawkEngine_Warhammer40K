@@ -24,6 +24,16 @@ public class TermagauntAnimation : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        if (SceneManager.isPaused)
+        {
+            if (termagauntesk?.GetAnimationIndex() != 8)
+            {
+                termagauntesk?.SetAnimation(8);
+                termagauntesk?.SetAnimationSpeed(0.0f);
+            }
+            return;
+        }
+
         if (termagauntesk != null)
         {
             float length = termagauntesk.GetAnimationLength();

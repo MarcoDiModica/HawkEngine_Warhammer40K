@@ -26,13 +26,13 @@ public class HUD : MonoBehaviour
     private GameObject lockR;
     private Railgun railgunScript;
 
-    private GameObject boltgunAbility1;
-    private GameObject boltgunAbility2;
-    private GameObject shotgunAbility1;
-    private GameObject shotgunAbility2;
-    private GameObject railgunAbility1;
-    private GameObject railgunAbility2a;
-    private GameObject railgunAbility2b;
+    private GrenadeLauncher grenadeLauncherScript;
+    private Barrage barrageScript;
+    private EnergyBall energyBallScript;
+
+    private GameObject boltgunAbility;
+    private GameObject shotgunAbility;
+    private GameObject railgunAbility;
 
     private UITransform transform_hpBar;
     private UITransform transform_hpBarAnim;
@@ -43,9 +43,7 @@ public class HUD : MonoBehaviour
 
     private RedThirstManager redThirstManager;
 
-    private GameObject nodash;
     private GameObject msup;
-    private GameObject defenseup;
     private GameObject attackup;
     private GameObject noreload;
     private GameObject asup;
@@ -72,24 +70,64 @@ public class HUD : MonoBehaviour
     private GameObject optionMenu;
 
     private UIImage hpBarAnimImage;
+    private UIImage hpBarImage;
+    private UIImage tempHpBarImage;
     private UIImage hpTempBarAnimImage;
     private UIImage redThirstBarAnimImage;
+
+    private float previousHealth;
+    private float previousTempHealth;
+    private float damageFlashTimer = 0f;
+    private const float damageFlashDuration = 0.1f;
+
+    public static GameObject InteractionElement { get; private set; }
 
     private GameObject Text;
     private UIText text;
 
     private GameObject fadeCanvas;
 
+    private GameObject CDBar;
+    private UITransform CDBarTransform;
+
     private string MenuSFX = "Assets/Audio/UI/Open_Menu.wav";
 
 
     void win()
     {
+        // Stop all currently playing game music before going to win screen
+        // Level 1 music tracks
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_RuinedCity.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_RuinedTown.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_Pathway.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_CrashedShip.ogg");
+        // Level 2 music tracks
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_Livingquarter.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_Church.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_TelecommunicationsHub.ogg");
+        // Boss music tracks
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_BossFight_Part1.ogg");
+        Audio.Stop("Assets/Audio/Music/Level2_MainTheme_BossFight_Gold.ogg");
+        
         SceneManager.LoadScene("WinScene");
     }
 
     void lose()
     {
+        // Stop all currently playing game music before going to lose screen
+        // Level 1 music tracks
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_RuinedCity.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_RuinedTown.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_Pathway.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level1_CrashedShip.ogg");
+        // Level 2 music tracks
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_Livingquarter.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_Church.ogg");
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_TelecommunicationsHub.ogg");
+        // Boss music tracks
+        Audio.Stop("Assets/Audio/Music/Warhammer_Level2_BossFight_Part1.ogg");
+        Audio.Stop("Assets/Audio/Music/Level2_MainTheme_BossFight_Gold.ogg");
+        
         SceneManager.LoadScene("LoseScene");
     }
 
@@ -142,7 +180,13 @@ public class HUD : MonoBehaviour
         return pos;
     }
 
+    public void TriggerCooldown(float time)
+    {
+        CDBar.SetActive(true);
+        CDBarTransform.SetScaleUI(new Vector3(0.065f, 0.1f, 1.0f));
+        CDBarTransform.DOScaleYUI(0, time, Modes.LINEAR);
 
+    }
     public override void Awake()
     {
     }
@@ -185,6 +229,16 @@ public class HUD : MonoBehaviour
             Engineson.print("ERROR: UITransform not found");
         }
 
+        hpBarImage = hpBar.GetComponent<UIImage>();
+        tempHpBarImage = hpTempBar.GetComponent<UIImage>();
+
+        if (hpBarImage == null || tempHpBarImage == null)
+        {
+            Engineson.print("ERROR: hpBar or hpTempBar UIImage component not found");
+        }
+
+        previousHealth = playerData.GetHealth();
+
         //transform_hpBar.SetScaleUI(new Vector3(1, 1, 1));
 
         bigBoltGun = GameObject.Find("boltgun");
@@ -209,15 +263,11 @@ public class HUD : MonoBehaviour
         lockL = GameObject.Find("lock_L");
         lockR = GameObject.Find("lock_R");
 
-        boltgunAbility1 = GameObject.Find("boltgun_ability_1");
-        boltgunAbility2 = GameObject.Find("boltgun_ability_2");
-        shotgunAbility1 = GameObject.Find("shotgun_ability_1");
-        shotgunAbility2 = GameObject.Find("shotgun_ability_2");
-        railgunAbility1 = GameObject.Find("railgun_ability_1");
-        railgunAbility2a = GameObject.Find("railgun_ability_2a");
-        railgunAbility2b = GameObject.Find("railgun_ability_2b");
+        boltgunAbility = GameObject.Find("boltgun_ability");
+        shotgunAbility = GameObject.Find("shotgun_ability");
+        railgunAbility = GameObject.Find("railgun_ability");
 
-        if (boltgunAbility1 == null || boltgunAbility2 == null || shotgunAbility1 == null || shotgunAbility2 == null || railgunAbility1 == null || railgunAbility2a == null || railgunAbility2b == null)
+        if (boltgunAbility == null || shotgunAbility == null || railgunAbility == null)
         {
             Engineson.print("ERROR: GunAbilities not found");
         }
@@ -229,10 +279,7 @@ public class HUD : MonoBehaviour
             {
                 Engineson.print("ERROR: railgun unlocked but not instantiated!");
             }
-            else
-            {
-                railgunScript.railgunMode = Railgun.RailgunMode.SEMIAUTOMATIC;
-            }
+           
         }
 
         redThirstManager = Player.GetComponent<RedThirstManager>();
@@ -251,14 +298,12 @@ public class HUD : MonoBehaviour
         {
             Engineson.print("ERROR: RedThirstBar not found");
         }
-        nodash = GameObject.Find("nodash");
         msup = GameObject.Find("msup");
-        defenseup = GameObject.Find("defenseup");
         attackup = GameObject.Find("attackup");
         noreload = GameObject.Find("noreload");
         asup = GameObject.Find("asup");
         magnet = GameObject.Find("magnet");
-        if (nodash == null || msup == null || defenseup == null || attackup == null || noreload == null || asup == null || magnet == null)
+        if ( msup == null || attackup == null || noreload == null || asup == null || magnet == null)
         {
             Engineson.print("ERROR: Buffs not found");
         }
@@ -278,6 +323,16 @@ public class HUD : MonoBehaviour
         if (playerPowerUp == null)
         {
             Engineson.print("ERROR: PlayerPowerUp not found");
+        }
+
+        InteractionElement = GameObject.Find("Interaction");
+        if (InteractionElement == null)
+        {
+            Engineson.print("ERROR: Interaction element not found");
+        }
+        else
+        {
+            InteractionElement.SetActive(false);
         }
 
         pauseMenu = GameObject.Find("Canvas_PauseMenu");
@@ -350,6 +405,26 @@ public class HUD : MonoBehaviour
         {
             fadeCanvas.SetActive(true);
         }
+
+        grenadeLauncherScript = Player.GetComponent<GrenadeLauncher>();
+        barrageScript = Player.GetComponent<Barrage>();
+        energyBallScript = Player.GetComponent<EnergyBall>();
+        if (grenadeLauncherScript == null || barrageScript == null || energyBallScript == null)
+        {
+            Engineson.print("ERROR: Abilities not found");
+        }
+        CDBar = GameObject.Find("CDBar");
+        if (CDBar == null)
+        {
+            Engineson.print("ERROR: CDBar not found");
+
+        }
+        CDBarTransform = CDBar.GetComponent<UITransform>();
+        if (CDBarTransform == null)
+        {
+            Engineson.print("ERROR: CDBarTransform not found");
+        }
+        CDBar.SetActive(false);
     }
     public override void Update(float deltaTime)
     {
@@ -360,6 +435,62 @@ public class HUD : MonoBehaviour
         transform_redThirstBar.SetScaleUI(new Vector3(0.056f, CalculateRedThirstBarHeight(), 1.0f));
         transform_redThirstBarAnim.DOMoveYUI(CalculateRedThirstBarAnimPos(), 0f, Modes.LINEAR);
 
+        float currentHealth = playerData.GetHealth();
+        float currentHealthTemp = playerData.GetHealthTemp();
+
+        // Si currentHealthTemp es 0, usar currentHealth para el flash y actualizar previousHealth
+        if (currentHealthTemp == 0f)
+        {
+            if (currentHealth < previousHealth)
+            {
+                damageFlashTimer = damageFlashDuration;
+
+                if (hpBarImage != null) hpBarImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+                if (hpBarAnimImage != null) hpBarAnimImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+                if (tempHpBarImage != null) tempHpBarImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+                if (hpTempBarAnimImage != null) hpTempBarAnimImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+            }
+
+            if (damageFlashTimer > 0f)
+            {
+                damageFlashTimer -= deltaTime;
+                if (damageFlashTimer <= 0f)
+                {
+                    if (hpBarImage != null) hpBarImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                    if (hpBarAnimImage != null) hpBarAnimImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                    if (tempHpBarImage != null) tempHpBarImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                    if (hpTempBarAnimImage != null) hpTempBarAnimImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                }
+            }
+
+            previousHealth = currentHealth;
+        }
+        else
+        {
+            if (currentHealthTemp < previousHealth)
+            {
+                damageFlashTimer = damageFlashDuration;
+
+                if (hpBarImage != null) hpBarImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+                if (hpBarAnimImage != null) hpBarAnimImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+                if (tempHpBarImage != null) tempHpBarImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+                if (hpTempBarAnimImage != null) hpTempBarAnimImage.SetImageColor(new Vector4(0.27f, 0.13f, 0.13f, 1f));
+            }
+
+            if (damageFlashTimer > 0f)
+            {
+                damageFlashTimer -= deltaTime;
+                if (damageFlashTimer <= 0f)
+                {
+                    if (hpBarImage != null) hpBarImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                    if (hpBarAnimImage != null) hpBarAnimImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                    if (tempHpBarImage != null) tempHpBarImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                    if (hpTempBarAnimImage != null) hpTempBarAnimImage.SetImageColor(new Vector4(0.18f, 0.07f, 0.07f, 1f));
+                }
+            }
+
+            previousHealth = currentHealthTemp;
+        }
 
         if (playerShootingScript.hasRailgun && railgunScript == null)
         {
@@ -409,15 +540,13 @@ public class HUD : MonoBehaviour
 
         if (redThirstManager.IsInBlackRage())
         {
-            nodash.SetActive(true);
             msup.SetActive(true);
-            defenseup.SetActive(true);
+            attackup.SetActive(true);
         }
         else
         {
-            nodash.SetActive(false);
             msup.SetActive(false);
-            defenseup.SetActive(false);
+            attackup.SetActive(false);
         }
 
         switch (playerShootingScript.GetCurrentGun())
@@ -436,13 +565,9 @@ public class HUD : MonoBehaviour
                 smallShotgunR.SetActive(true);
                 smallRailgunR.SetActive(false);
 
-                boltgunAbility1.SetActive(true);
-                boltgunAbility2.SetActive(true);
-                shotgunAbility1.SetActive(false);
-                shotgunAbility2.SetActive(false);
-                railgunAbility1.SetActive(false);
-                railgunAbility2a.SetActive(false);
-                railgunAbility2b.SetActive(false);
+                boltgunAbility.SetActive(true);
+                shotgunAbility.SetActive(false);
+                railgunAbility.SetActive(false);
 
                 if (playerShootingScript.hasShotgun)
                 {
@@ -483,13 +608,9 @@ public class HUD : MonoBehaviour
 
 
 
-                boltgunAbility1.SetActive(false);
-                boltgunAbility2.SetActive(false);
-                shotgunAbility1.SetActive(true);
-                shotgunAbility2.SetActive(true);
-                railgunAbility1.SetActive(false);
-                railgunAbility2a.SetActive(false);
-                railgunAbility2b.SetActive(false);
+                boltgunAbility.SetActive(false);
+                shotgunAbility.SetActive(true);
+                railgunAbility.SetActive(false);
 
                 if (playerShootingScript.hasRailgun)
                 {
@@ -526,27 +647,11 @@ public class HUD : MonoBehaviour
                 smallShotgunR.SetActive(false);
                 smallRailgunR.SetActive(false);
 
-                boltgunAbility1.SetActive(false);
-                boltgunAbility2.SetActive(false);
-                shotgunAbility1.SetActive(false);
-                shotgunAbility2.SetActive(false);
-                railgunAbility1.SetActive(true);
-                if (railgunScript == null)
-                {
-                    Engineson.print("ERROR: Hud.Update – railgunScript is null!");
-                    break;
-                }
-                switch (railgunScript.railgunMode)
-                {
-                    case Railgun.RailgunMode.SEMIAUTOMATIC:
-                        railgunAbility2a.SetActive(true);
-                        railgunAbility2b.SetActive(false);
-                        break;
-                    case Railgun.RailgunMode.AUTOMATIC:
-                        railgunAbility2a.SetActive(false);
-                        railgunAbility2b.SetActive(true);
-                        break;
-                }
+                boltgunAbility.SetActive(false);
+                shotgunAbility.SetActive(false);
+                railgunAbility.SetActive(true);
+
+
 
                 if (playerShootingScript.hasBoltgun)
                 {
@@ -574,7 +679,6 @@ public class HUD : MonoBehaviour
         }
 
 
-
         if (playerPowerUp.GetHasMedicaeStimm())
         {
             msup.SetActive(true);
@@ -597,10 +701,12 @@ public class HUD : MonoBehaviour
         if (playerPowerUp.GetHasMagnet())
         {
             magnet.SetActive(true);
+            asup.SetActive(true);
         }
         else
         {
             magnet.SetActive(false);
+            asup.SetActive(false);
         }
 
         if (playerData.GetHealth() <= 0 && SceneManager.isLoadedFromCheckpoint == false)
@@ -613,17 +719,18 @@ public class HUD : MonoBehaviour
             win();
         }
 
-
         if (Input.GetKeyDown(KeyCode.P) || Input.GetControllerButtonDown(ControllerButton.Start))
         {
             Audio.PlayOneShot(MenuSFX);
             if (pauseMenu.IsActive())
             {
                 pauseMenu.SetActive(false);
+                SceneManager.SetPause(false);
             }
             else
             {
                 pauseMenu.SetActive(true);
+                SceneManager.SetPause(true);
             }
             optionMenu.SetActive(false);
         }
@@ -635,6 +742,11 @@ public class HUD : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             redThirstManager.AddRedThirstPoint(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            grenadeLauncherScript.TriggerAbility();
         }
 
     }

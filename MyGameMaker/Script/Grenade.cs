@@ -31,7 +31,7 @@ public class Grenade : MonoBehaviour
     public void Init(Vector3 pos, Vector3 dir)
     {
         //AddComponent<MeshRenderer>();      
-        GetComponent<Transform>().position = pos + dir * 4.0f + new Vector3(0, 2, 0);
+        GetComponent<Transform>().position = pos + dir * 4.0f + new Vector3(0, 3, 0);
         GetComponent<Transform>().SetScale(0.25f, 0.25f, 0.25f);
         AddComponent<CapsuleCollider>();
         AddComponent<Rigidbody>();
@@ -39,7 +39,7 @@ public class Grenade : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         rigidbody.SetMass(0.05f);
         rigidbody.SetGravity(new Vector3(0.0f, -9.81f, 0.0f) * 20);
-        rigidbody.AddForce(dir * 150);
+        rigidbody.AddForce(dir * 250);
         rigidbody.SetFriction(0.5f);
         granadeVFX = Engineson.CreateGameObject("ExplosionGranadeFX", null);
         gameObject.AddChild(granadeVFX);
@@ -49,7 +49,7 @@ public class Grenade : MonoBehaviour
         {
 
 
-            particleFX.ApplyPreset(43);
+            particleFX.ApplyPreset(51);
             //    particleFX.EmitBurst(100);
             particleFX.EmitBurst(1);
 
@@ -90,7 +90,7 @@ public class Grenade : MonoBehaviour
         explosion = Engineson.CreateGameObject("Explosion", null);
         Audio.PlayOneShot(granadeExplosion);
         explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
-        explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
+        explosion.GetComponent<Transform>().SetScale(10f, 0.25f, 10f);
         gameObject.AddChild(explosion);
         explosionFX = Engineson.CreateGameObject("ExplosionGranadeFX", null);
         gameObject.AddChild(explosionFX);

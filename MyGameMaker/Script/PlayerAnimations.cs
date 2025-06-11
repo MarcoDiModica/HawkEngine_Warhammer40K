@@ -173,7 +173,66 @@ public class PlayerAnimations : MonoBehaviour
             Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
         }
     }
+    public void ReloadBoltgunIdleToRunningAnim()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
 
+        try
+        {
+            esk.TransitionAnimations(32, 32, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+    public void ReloadBoltgunIdleToReloadBoltgunRunning()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(21, 20, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+    public void ReloadShotgunIdleToReloadShotgunRunning()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(27, 26, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+    public void ReloadShotgunIdleToRunningAnim()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(27, 32, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
     public void ReloadBoltgunIdleToShootingStandingAnim()
     {
         if (!componentsInitialized || esk == null)
@@ -189,7 +248,38 @@ public class PlayerAnimations : MonoBehaviour
             Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
         }
     }
+    
+    public void ReloadBoltgunRunningToRunningBackwardsAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
 
+        try
+        {
+            esk.TransitionAnimations(22, 48, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
+
+    public void ReloadShotgunbRunningToRunningBackwardsAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(26, 48, 0.1f);
+            esk.SetAnimationSpeed(2f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetStandardIdleAnimation: {e.Message}");
+        }
+    }
     public void ReloadBoltgunRunningToRunningAnimation()
     {
         if (!componentsInitialized || esk == null)
@@ -1967,6 +2057,102 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
+    public void HitIdleToIdleAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(10, 11, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void HitShootingStandingToIdleAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(9, 11, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void HitShootingStandingToShootingAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(9, 33, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void HitRunningToRunningAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(8, 32, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void HitRunningToRunningBackwardsAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(8, 48, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
+    public void HitRunningToHitShootingRunningAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.TransitionAnimations(8, 41, 0.1f);
+            esk.SetAnimationSpeed(2.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+
     public void RunningToHitAnimation()
     {
         if (!componentsInitialized || esk == null)
@@ -2415,8 +2601,36 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
-    
+    public void ReloadBoltgunWhileRunningBackwardAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
 
+        try
+        {
+            esk.PlayAnimOnce(22, 0.1f);
+            esk.SetAnimationSpeed(4.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
+    public void ReloadShotgunWhileRunningBackwardAnimation()
+    {
+        if (!componentsInitialized || esk == null)
+            return;
+
+        try
+        {
+            esk.PlayAnimOnce(28, 0.1f);
+            esk.SetAnimationSpeed(4.0f);
+        }
+        catch (Exception e)
+        {
+            Engineson.print($"ERROR in SetRunningAnimation: {e.Message}");
+        }
+    }
     public void ReloadBoltgunWhileRunningAnimation()
     {
         if (!componentsInitialized || esk == null)
